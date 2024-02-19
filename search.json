@@ -231,28 +231,483 @@
     ]
   },
   {
-    "objectID": "temp.html",
-    "href": "temp.html",
-    "title": "Plots Demo",
+    "objectID": "cont_indir_Pontryagin.html",
+    "href": "cont_indir_Pontryagin.html",
+    "title": "Pontryagin’s maximum principle",
     "section": "",
-    "text": "Plot function pair (x(u), y(u)). See Figure 1 for an example.\n\n\nCode\nusing Plots\n\nplot(sin, \n     x-&gt;sin(2x), \n     0, \n     2π, \n     leg=false, \n     fill=(0,:lavender))\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1: Parametric Plots"
+    "text": "Back to top",
+    "crumbs": [
+      "8. Continuous-time optimal control - indirect approach via Pontryagin's maximum principle",
+      "Pontryagin's maximum principle"
+    ]
   },
   {
-    "objectID": "temp.html#parametric-plots",
-    "href": "temp.html#parametric-plots",
-    "title": "Plots Demo",
+    "objectID": "dynamic_programming.html",
+    "href": "dynamic_programming.html",
+    "title": "Optimal control via dynamic programming",
     "section": "",
-    "text": "Plot function pair (x(u), y(u)). See Figure 1 for an example.\n\n\nCode\nusing Plots\n\nplot(sin, \n     x-&gt;sin(2x), \n     0, \n     2π, \n     leg=false, \n     fill=(0,:lavender))\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1: Parametric Plots"
+    "text": "Back to top",
+    "crumbs": [
+      "5. Discrete-time optimal control – dynamic programming",
+      "Optimal control via dynamic programming"
+    ]
   },
   {
-    "objectID": "discr_indir_LQR_fin_horizon.html",
-    "href": "discr_indir_LQR_fin_horizon.html",
-    "title": "Discrete-time LQR-optimal control on a finite horizon",
+    "objectID": "discr_dir_control.html",
+    "href": "discr_dir_control.html",
+    "title": "Control on a finite horizon as an optimization",
+    "section": "",
+    "text": "We start by considering a nonlinear discrete-time system modelled by the state equation \n\\bm x_{k+1} = \\mathbf f_k(\\bm x_k,\\bm u_k),\n where\n\n\\bm x_k\\in \\mathbb R^n is the state at the discrete time k\\in \\mathbb Z,\n\\bm u_k\\in \\mathbb R^m is the control at the discrete time k,\n\\mathbf f_k: \\mathbb{R}^n \\times \\mathbb{R}^m \\times \\mathbb Z \\to \\mathbb{R}^n is a state transition function (in general not only nonlinear but also time-varying, with the convention that the dependence on k is expressed through the lower index).\n\nA general nonlinear discrete-time optimal control problem (OCP) is then formulated as\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm u_i,\\ldots, \\bm u_{N-1}, \\bm x_{i},\\ldots, \\bm x_N}&\\quad \\left(\\phi(\\bm x_N,N) + \\sum_{k=i}^{N-1} L_k(\\bm x_k,\\bm u_k) \\right)\\\\\n\\text{subject to}  &\\quad \\bm x_{k+1} = \\mathbf f_k(\\bm x_k,\\bm u_k),\\quad k=i, \\ldots, N-1,\\\\\n                    &\\quad \\bm u_k \\in \\mathcal U_k,\\quad k=i, \\ldots, N-1,\\\\\n                    &\\quad \\bm x_k \\in \\mathcal X_k,\\quad k=i, \\ldots, N,\n\\end{aligned}\n where\n\ni is the initial discreete time,\nN is the final discrete time,\n\\phi() is a terminal cost function that penalizes the state at the final time,\nL_k() is a running (also stage) cost function,\nand \\mathcal U_k and \\mathcal X_k are sets of feasible controls and states – these sets are typically expressed using equations and inequalities. Should they be constant, the notation is just \\mathcal U and \\mathcal X.\n\nOftentimes it is convenient to handle the constraints of the initial and final states separately:\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm u_i,\\ldots, \\bm u_{N-1}, \\bm x_{i},\\ldots, \\bm x_N}&\\quad \\left(\\phi(\\bm x_N,N) + \\sum_{k=i}^{N-1} L_k(\\bm x_k,\\bm u_k) \\right)\\\\\n\\text{subject to}  &\\quad \\bm x_{k+1} = \\mathbf f_k(\\bm x_k,\\bm u_k),\\quad k=i, \\ldots, N-1,\\\\\n                    &\\quad \\bm u_k \\in \\mathcal U_k,\\quad k=i, \\ldots, N-1,\\\\\n                    &\\quad \\bm x_k \\in \\mathcal X_k,\\quad k=i+1, \\ldots, N-1,\\\\\n                    &\\quad \\bm x_i \\in \\mathcal X_\\mathrm{init},\\\\\n                    &\\quad \\bm x_N \\in \\mathcal X_\\mathrm{final}.\n\\end{aligned}\n\nIn particular, at the initial time just one particular state is often considered. At the final time, the state might be required to be equal to some given value, it might be required to be in some set defined through equations or inequalities, or it might be left unconstrained. Finally, the constraints on the control and states typically (but not always) come in the form of lower and upper bounds. The optimal control problem then specializes to \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm u_i,\\ldots, \\bm u_{N-1}, \\bm x_{i},\\ldots, \\bm x_N}&\\quad \\left(\\phi(\\bm x_N,N) + \\sum_{k=i}^{N-1} L_k(\\bm x_k,\\bm u_k) \\right)\\\\\n\\text{subject to}  &\\quad \\bm x_{k+1} = \\mathbf f_k(\\bm x_k,\\bm u_k),\\quad k=i, \\ldots, N-1,\\\\\n                    &\\quad \\bm u_{\\min} \\leq \\bm u_k \\leq \\bm u_{\\max},\\\\\n                    &\\quad \\bm x_{\\min} \\leq \\bm x_k \\leq \\bm x_{\\max},\\\\\n                    &\\quad\\bm x_i = \\mathbf r_\\text{init},\\\\\n                    &\\quad \\left(\\bm x_N = \\mathbf r_\\text{final}, \\; \\text{or} \\; \\mathbf h_\\text{final}(\\bm x_N) =  \\mathbf 0, \\text{or} \\; \\mathbf g_\\text{final}(\\bm x_N) \\leq  \\mathbf 0\\right),                    \n\\end{aligned}\n where\n\n\\bm u_{\\min} and \\bm u_{\\max} are lower and upper bounds on the control, respectively,\n\\bm x_{\\min} and \\bm x_{\\max} are lower and upper bounds on the state, respectively,\n\\mathbf r_\\text{init} is a constant (fixed) initial state,\n\\mathbf r_\\text{final} is a constant (fixed) final state,\nand the functions \\mathbf g_\\text{final}() and \\mathbf h_\\text{final}() can be used to define the constraint set for the final state.\n\nThis optimal control problem is an instance of a general nonlinear programming (NLP) problem\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bar{\\bm x}\\in\\mathbb{R}^{n(N-i)},\\bar{\\bm u}\\in\\mathbb{R}^{m(N-i)}} &\\quad J(\\bar{\\bm x},\\bar{\\bm u})\\\\\n\\text{subject to} &\\quad \\mathbf h(\\bar{\\bm x},\\bar{\\bm u}) =0,\\\\\n&\\quad \\mathbf g(\\bar{\\bm x},\\bar{\\bm u}) \\leq \\mathbf 0,\n\\end{aligned}\n where \\bar{\\bm u} and \\bar{\\bm x} are vectors obtained by stacking control and state vectors for individual times\n\n\\begin{aligned}\n\\bar{\\bm u} &= \\operatorname*{vec}(\\bm u_i,\\ldots, \\bm u_{N-1}) = \\begin{bmatrix}\\bm u_i\\\\ \\bm u_{i+1}\\\\ \\vdots \\\\ \\bm u_{N-1} \\end{bmatrix}\\\\\n\\bar{\\bm x} &= \\operatorname*{vec}(\\bm x_{i+1},\\ldots, \\bm x_N) = \\begin{bmatrix}\\bm x_{i+1}\\\\ \\bm x_{i+2}\\\\ \\vdots \\\\ \\bm x_{N} \\end{bmatrix}\n\\end{aligned}\n\n\n\n\n\n\n\nNote\n\n\n\n\nIf the initial \\bm x_i is fixed, which it typically is, it does not have to be considered as an optimization variable. But there may be applications where it is desirable to optimize over \\bm x_i as well.\nThe last control that affects the state trajectory on the interval [i,N] is \\bm u_{N-1}.",
+    "crumbs": [
+      "3. Discrete-time optimal control – direct approach",
+      "Control on a finite horizon as an optimization"
+    ]
+  },
+  {
+    "objectID": "discr_dir_control.html#general-nonlinear-optimal-control-problem",
+    "href": "discr_dir_control.html#general-nonlinear-optimal-control-problem",
+    "title": "Control on a finite horizon as an optimization",
+    "section": "",
+    "text": "We start by considering a nonlinear discrete-time system modelled by the state equation \n\\bm x_{k+1} = \\mathbf f_k(\\bm x_k,\\bm u_k),\n where\n\n\\bm x_k\\in \\mathbb R^n is the state at the discrete time k\\in \\mathbb Z,\n\\bm u_k\\in \\mathbb R^m is the control at the discrete time k,\n\\mathbf f_k: \\mathbb{R}^n \\times \\mathbb{R}^m \\times \\mathbb Z \\to \\mathbb{R}^n is a state transition function (in general not only nonlinear but also time-varying, with the convention that the dependence on k is expressed through the lower index).\n\nA general nonlinear discrete-time optimal control problem (OCP) is then formulated as\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm u_i,\\ldots, \\bm u_{N-1}, \\bm x_{i},\\ldots, \\bm x_N}&\\quad \\left(\\phi(\\bm x_N,N) + \\sum_{k=i}^{N-1} L_k(\\bm x_k,\\bm u_k) \\right)\\\\\n\\text{subject to}  &\\quad \\bm x_{k+1} = \\mathbf f_k(\\bm x_k,\\bm u_k),\\quad k=i, \\ldots, N-1,\\\\\n                    &\\quad \\bm u_k \\in \\mathcal U_k,\\quad k=i, \\ldots, N-1,\\\\\n                    &\\quad \\bm x_k \\in \\mathcal X_k,\\quad k=i, \\ldots, N,\n\\end{aligned}\n where\n\ni is the initial discreete time,\nN is the final discrete time,\n\\phi() is a terminal cost function that penalizes the state at the final time,\nL_k() is a running (also stage) cost function,\nand \\mathcal U_k and \\mathcal X_k are sets of feasible controls and states – these sets are typically expressed using equations and inequalities. Should they be constant, the notation is just \\mathcal U and \\mathcal X.\n\nOftentimes it is convenient to handle the constraints of the initial and final states separately:\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm u_i,\\ldots, \\bm u_{N-1}, \\bm x_{i},\\ldots, \\bm x_N}&\\quad \\left(\\phi(\\bm x_N,N) + \\sum_{k=i}^{N-1} L_k(\\bm x_k,\\bm u_k) \\right)\\\\\n\\text{subject to}  &\\quad \\bm x_{k+1} = \\mathbf f_k(\\bm x_k,\\bm u_k),\\quad k=i, \\ldots, N-1,\\\\\n                    &\\quad \\bm u_k \\in \\mathcal U_k,\\quad k=i, \\ldots, N-1,\\\\\n                    &\\quad \\bm x_k \\in \\mathcal X_k,\\quad k=i+1, \\ldots, N-1,\\\\\n                    &\\quad \\bm x_i \\in \\mathcal X_\\mathrm{init},\\\\\n                    &\\quad \\bm x_N \\in \\mathcal X_\\mathrm{final}.\n\\end{aligned}\n\nIn particular, at the initial time just one particular state is often considered. At the final time, the state might be required to be equal to some given value, it might be required to be in some set defined through equations or inequalities, or it might be left unconstrained. Finally, the constraints on the control and states typically (but not always) come in the form of lower and upper bounds. The optimal control problem then specializes to \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm u_i,\\ldots, \\bm u_{N-1}, \\bm x_{i},\\ldots, \\bm x_N}&\\quad \\left(\\phi(\\bm x_N,N) + \\sum_{k=i}^{N-1} L_k(\\bm x_k,\\bm u_k) \\right)\\\\\n\\text{subject to}  &\\quad \\bm x_{k+1} = \\mathbf f_k(\\bm x_k,\\bm u_k),\\quad k=i, \\ldots, N-1,\\\\\n                    &\\quad \\bm u_{\\min} \\leq \\bm u_k \\leq \\bm u_{\\max},\\\\\n                    &\\quad \\bm x_{\\min} \\leq \\bm x_k \\leq \\bm x_{\\max},\\\\\n                    &\\quad\\bm x_i = \\mathbf r_\\text{init},\\\\\n                    &\\quad \\left(\\bm x_N = \\mathbf r_\\text{final}, \\; \\text{or} \\; \\mathbf h_\\text{final}(\\bm x_N) =  \\mathbf 0, \\text{or} \\; \\mathbf g_\\text{final}(\\bm x_N) \\leq  \\mathbf 0\\right),                    \n\\end{aligned}\n where\n\n\\bm u_{\\min} and \\bm u_{\\max} are lower and upper bounds on the control, respectively,\n\\bm x_{\\min} and \\bm x_{\\max} are lower and upper bounds on the state, respectively,\n\\mathbf r_\\text{init} is a constant (fixed) initial state,\n\\mathbf r_\\text{final} is a constant (fixed) final state,\nand the functions \\mathbf g_\\text{final}() and \\mathbf h_\\text{final}() can be used to define the constraint set for the final state.\n\nThis optimal control problem is an instance of a general nonlinear programming (NLP) problem\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bar{\\bm x}\\in\\mathbb{R}^{n(N-i)},\\bar{\\bm u}\\in\\mathbb{R}^{m(N-i)}} &\\quad J(\\bar{\\bm x},\\bar{\\bm u})\\\\\n\\text{subject to} &\\quad \\mathbf h(\\bar{\\bm x},\\bar{\\bm u}) =0,\\\\\n&\\quad \\mathbf g(\\bar{\\bm x},\\bar{\\bm u}) \\leq \\mathbf 0,\n\\end{aligned}\n where \\bar{\\bm u} and \\bar{\\bm x} are vectors obtained by stacking control and state vectors for individual times\n\n\\begin{aligned}\n\\bar{\\bm u} &= \\operatorname*{vec}(\\bm u_i,\\ldots, \\bm u_{N-1}) = \\begin{bmatrix}\\bm u_i\\\\ \\bm u_{i+1}\\\\ \\vdots \\\\ \\bm u_{N-1} \\end{bmatrix}\\\\\n\\bar{\\bm x} &= \\operatorname*{vec}(\\bm x_{i+1},\\ldots, \\bm x_N) = \\begin{bmatrix}\\bm x_{i+1}\\\\ \\bm x_{i+2}\\\\ \\vdots \\\\ \\bm x_{N} \\end{bmatrix}\n\\end{aligned}\n\n\n\n\n\n\n\nNote\n\n\n\n\nIf the initial \\bm x_i is fixed, which it typically is, it does not have to be considered as an optimization variable. But there may be applications where it is desirable to optimize over \\bm x_i as well.\nThe last control that affects the state trajectory on the interval [i,N] is \\bm u_{N-1}.",
+    "crumbs": [
+      "3. Discrete-time optimal control – direct approach",
+      "Control on a finite horizon as an optimization"
+    ]
+  },
+  {
+    "objectID": "discr_dir_control.html#linear-quadratic-regulation-lqr-on-a-finite-horizon",
+    "href": "discr_dir_control.html#linear-quadratic-regulation-lqr-on-a-finite-horizon",
+    "title": "Control on a finite horizon as an optimization",
+    "section": "Linear quadratic regulation (LQR) on a finite horizon",
+    "text": "Linear quadratic regulation (LQR) on a finite horizon\nWe start by considering a simple problem of regulation, wherein the goal is to bring the system either exactly or approximately to zero final state, that is, \\bm r_N=\\mathbf 0 and we want \\bm x_N=\\mathbf r_N or \\bm x_N\\approx\\mathbf r_N, respectively.\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\mathbf u_0,\\ldots, \\mathbf u_{N-1}, \\mathbf x_{0},\\ldots, \\mathbf x_N} &\\quad  \\frac{1}{2} \\bm x_N^\\top \\mathbf S \\bm x_N + \\frac{1}{2} \\sum_{k=0}^{N-1} \\left(\\bm x_k^\\top \\mathbf Q \\bm x_k + \\bm u_k^\\top \\mathbf R \\bm u_k \\right)\\\\\n\\text{subject to}   &\\quad \\bm x_{k+1} = \\mathbf A\\bm x_k + \\mathbf B\\bm u_k,\\quad k = 0, \\ldots, N-1, \\\\\n                    &\\quad \\bm x_0 = \\mathbf r_0,\\\\\n                    &\\quad \\bm x_N = \\mathbf 0\\;  (\\text{or}\\, \\bm x_N \\approx \\mathbf 0).\n\\end{aligned}\n\nReferring to the two options for the last constraint,\n\nif the condition \\bm x_N=\\mathbf 0 on the final state is strictly enforced, the terminal state cost (the term \\frac{1}{2} \\bm x_N^\\top \\mathbf S \\bm x_N in the cost function) is redundant and can be removed;\nif the final state condition can be relaxed to \\bm x_N\\approx\\mathbf 0, it is by increasing the weight \\mathbf S in the terminal cost function \\frac{1}{2} \\bm x_N^\\top \\mathbf S \\bm x_N that \\bm x_N can be made arbitrarily close to \\mathbf 0.\n\n\n\n\n\n\n\nTip\n\n\n\nIt is a standard dilemma in optimization, not only in optimal control, that if we want to satisfy some requirement, we can either strictly enforce it through constraints or we can seemingly relax it and set a cost to be paid for not satysfying it.\n\n\n\nSimultaneous (sparse) formulation\nBelow we rewrite the latter, that is, \\bm x_N\\approx\\mathbf 0, in the “unrolled” form, where we stack the state and control variables into “long” vectors \\bar{\\bm x} and \\bar{\\bm u}. Doing the same for the former is straightforward.\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bar{\\bm u},\\bar{\\bm x}} & \\frac{1}{2}\\left(\\begin{bmatrix} \\bm x_1^\\top & \\bm x_2^\\top & \\ldots & \\bm x_N^\\top \\end{bmatrix}\n\\underbrace{\\begin{bmatrix}\\mathbf Q & & & \\\\ & \\mathbf Q & &\\\\ & &\\ddots & \\\\ & & & \\mathbf S \\end{bmatrix}}_{\\overline{\\mathbf Q}}\n\\underbrace{\\begin{bmatrix} \\bm x_1 \\\\ \\bm x_2 \\\\ \\vdots \\\\ \\bm x_N \\end{bmatrix}}_{\\bar{\\bm x}}\\right.\\\\\n&\\qquad +\\left.\n\\begin{bmatrix} \\bm u_0^\\top & \\bm u_1^\\top & \\ldots & \\bm u_{N-1}^\\top \\end{bmatrix}\n\\underbrace{\\begin{bmatrix}\\mathbf R & & & \\\\ & \\mathbf R & &\\\\ & &\\ddots & \\\\ & & & \\mathbf R \\end{bmatrix}}_{\\overline{\\mathbf R}}\n\\underbrace{\\begin{bmatrix} \\bm u_0 \\\\ \\bm u_1 \\\\ \\vdots \\\\ \\bm u_{N-1} \\end{bmatrix}}_{\\bar{\\bm u}}\\right)\n+ \\underbrace{\\frac{1}{2}\\bm x_0^\\top \\mathbf Q \\bm x_0}_{\\mathrm{constant}}\n\\end{aligned}\n subject to \n\\begin{bmatrix} \\bm x_1 \\\\ \\bm x_2 \\\\ \\bm x_3\\\\ \\vdots \\\\ \\bm x_N \\end{bmatrix} = \\underbrace{\\begin{bmatrix}\\mathbf 0 & & & &\\\\\\mathbf A & \\mathbf 0 & & &\\\\ &\\mathbf A &\\mathbf 0 & & \\\\ & & &\\ddots & \\\\& & &\\mathbf A & \\mathbf 0 \\end{bmatrix}}_{\\overline{\\mathbf A}}\n\\begin{bmatrix} \\bm x_1 \\\\ \\bm x_2 \\\\ \\bm x_3\\\\ \\vdots \\\\ \\bm x_N \\end{bmatrix} + \\underbrace{\\begin{bmatrix}\\mathbf B & & & & \\\\ & \\mathbf B & & & \\\\& &\\mathbf B & \\\\ & & &\\ddots \\\\ & & & & \\mathbf B \\end{bmatrix}}_{\\overline{\\mathbf B}}\\begin{bmatrix} \\bm u_0 \\\\ \\bm u_1 \\\\ \\bm u_2\\\\\\vdots \\\\ \\bm u_{N-1} \\end{bmatrix} + \\underbrace{\\begin{bmatrix}\\mathbf A\\\\\\mathbf 0\\\\\\mathbf 0\\\\\\vdots\\\\\\mathbf 0\\end{bmatrix}}_{\\overline{\\mathbf A}_0}\\bm x_0.   \n\nNote that the last term in the cost function can be discarded because it is constant.\nThe terms with the \\bar{\\bm x} vector can be combined and we get\n\n\\begin{bmatrix} \\mathbf 0 \\\\ \\mathbf 0 \\\\ \\mathbf 0\\\\ \\vdots \\\\ \\mathbf 0 \\end{bmatrix} = \\underbrace{\\begin{bmatrix}-\\mathbf I & & & &\\\\\\mathbf A & -\\mathbf I & & &\\\\ &\\mathbf A &-\\mathbf I & & \\\\ & & &\\ddots & \\\\& & &\\mathbf A & -\\mathbf I \\end{bmatrix}}_{\\overline{\\mathbf A} - \\mathbf I}\n\\begin{bmatrix} \\mathbf x_1 \\\\ \\mathbf x_2 \\\\ \\mathbf x_3\\\\ \\vdots \\\\ \\mathbf x_N \\end{bmatrix} + \\underbrace{\\begin{bmatrix}\\mathbf B & & & & \\\\ & \\mathbf B & & & \\\\& &\\mathbf B & \\\\ & & &\\ddots \\\\ & & & & \\mathbf B \\end{bmatrix}}_{\\overline{\\mathbf B}}\\begin{bmatrix} \\mathbf u_0 \\\\ \\mathbf u_1 \\\\ \\mathbf u_2\\\\\\vdots \\\\ \\mathbf u_{N-1} \\end{bmatrix} + \\underbrace{\\begin{bmatrix}\\mathbf A\\\\\\mathbf 0\\\\\\mathbf 0\\\\\\vdots\\\\\\mathbf 0\\end{bmatrix}}_{\\overline{\\mathbf A}_0}\\bm x_0.\n\\tag{1}\nUpon stacking the two “long” vectors into \\bar{\\bm z} we reformulate the optimization problem as \n\\operatorname*{minimize}_{\\widetilde{\\mathbf z}\\in\\mathbb{R}^{2N}}\\quad \\frac{1}{2}\\underbrace{\\begin{bmatrix}\\bar{\\bm x}^\\top &\\bar{\\bm u}^\\top\\end{bmatrix}}_{\\bar{\\bm z}^\\top} \\underbrace{\\begin{bmatrix}\\overline{\\mathbf Q} & \\\\ & \\overline{\\mathbf R} \\end{bmatrix}}_{\\widetilde{\\mathbf Q}}\\underbrace{\\begin{bmatrix}\\bar{\\bm x}\\\\\\bar{\\bm u}\\end{bmatrix}}_{\\bar{\\bm z}}\n subject to \n\\mathbf 0 = \\underbrace{\\begin{bmatrix}(\\overline{\\mathbf A}-\\mathbf I) & \\overline{\\mathbf B}\\end{bmatrix}}_{\\widetilde{\\mathbf A}}\\underbrace{\\begin{bmatrix}\\bar{\\bm x}\\\\\\bar{\\bm u}\\end{bmatrix}}_{\\bar{\\bm z}} + \\underbrace{\\overline{\\mathbf A}_0 \\mathbf x_0}_{\\tilde{\\mathbf b}}.\n\nTo summarize, we have reformulated the optimal control problem as a linearly constrained quadratic program \n\\begin{aligned}\n\\underset{\\bar{\\bm z}\\in\\mathbb{R}^{2N}}{\\text{minimize}} &\\quad \\frac{1}{2}\\bar{\\bm z}^\\top \\widetilde{\\mathbf Q} \\bar{\\bm z}\\\\\n\\text{subject to} &\\quad \\widetilde{\\mathbf A} \\bar{\\bm z} + \\tilde{\\bm b} = \\mathbf 0.\n\\end{aligned}\n\n\n\nCode\nfunction direct_dlqr_simultaneous(A,B,x₀,Q,R,S,N)\n    Qbar = BlockArray(spzeros(N*n,N*n),repeat([n],N),repeat([n],N))\n    for i=1:(N-1)\n        Qbar[Block(i,i)] = Q\n    end\n    Qbar[Block(N,N)] = S\n    Rbar = BlockArray(spzeros(N*m,N*m),repeat([m],N),repeat([m],N))\n    for i=1:N\n        Rbar[Block(i,i)] = R\n    end\n    Qtilde = blockdiag(sparse(Qbar),sparse(Rbar))                               # The matrix defining the quadratic cost.\n    Bbar = BlockArray(spzeros(N*n,N*m),repeat([n],N),repeat([m],N))\n    for i=1:N\n        Bbar[Block(i,i)] = B\n    end\n    Abar = BlockArray(sparse(-1.0*I,n*N,n*N),repeat([n],N),repeat([n],N))\n    for i=2:N\n        Abar[Block(i,(i-1))] = A\n    end\n    Atilde = sparse([Abar Bbar])                                                # The matrix defining the linear (affine) equation.\n    A0bar = spzeros(n*N,n)\n    A0bar[1:n,1:n] = A\n    btilde = A0bar*sparse(x₀)                                                   # The constant offset for the linear (affine) equation.\n    K = [Qtilde Atilde'; Atilde spzeros(size(Atilde,1),size(Atilde,1))]         # Sparse KKT matrix.\n    F = qdldl(K)                                                                # KKT matrix LDL factorization.\n    k = [spzeros(size(Atilde,1)); -btilde]                                      # Right hand side of the KKT system\n    xtildeλ = solve(F,k)                                                        # Solving the KKT system using the factorization.\n    xopt = reshape(xtildeλ[1:(n*N)],(n,:))\n    uopt = reshape(xtildeλ[(n*N+1):(n+m)*N+1],(m,:))\n    return xopt,uopt\nend\n\nn = 2               # Number of state variables.\nm = 1               # Number of (control) input variables. \nA = rand(n,n)       # State matrix.\nB = rand(n,m)       # Input coupling matrix.\nx₀ = [1.0, 3.0]     # Initial state.\n\nN = 10              # Time horizon.\n\ns = [1.0, 2.0]      \nq = [1.0, 2.0]\nr = [1.0]\n\nS = diagm(0=&gt;s)     # Matrix defining the terminal state cost.\nQ = diagm(0=&gt;q)     # Matrix defining the running state dost.\nR = diagm(0=&gt;r)     # Matrix defining the cost of control.\n\nuopts,xopts = direct_dlqr_simultaneous(A,B,x₀,Q,R,S,N)\n\nusing Plots\np1 = plot(0:(N-1),uopts,marker=:diamond,label=\"u\",linetype=:steppost)\nxlabel!(\"k\")\nylabel!(\"u\")\n\np2 = plot(0:N,hcat(x0,xopts)',marker=:diamond,label=[\"x1\" \"x2\"],linetype=:steppost)\nxlabel!(\"k\")\nylabel!(\"x\")\n\nplot(p1,p2,layout=(2,1))\n\n\nThis constrained optimization problem can still be solved without invoking a numerical solver for solving quadratic programs (QP). We do it by introducing a vector \\boldsymbol\\lambda of Lagrange multipliers to form the Lagrange function \n\\mathcal{L}(\\bar{\\bm z}, \\boldsymbol \\lambda) = \\frac{1}{2}\\bar{\\bm z}^\\top \\widetilde{\\mathbf Q} \\bar{\\bm z} + \\boldsymbol\\lambda^\\top(\\widetilde{\\mathbf A} \\bar{\\bm z} + \\tilde{\\mathbf b}),\n for which the gradients with respect to \\bar{\\bm z} and \\boldsymbol\\lambda are \n\\begin{aligned}\n\\nabla_{\\tilde{\\bm{z}}} \\mathcal{L}(\\bar{\\bm z}, \\boldsymbol\\lambda) &= \\widetilde{\\mathbf Q}\\bar{\\bm z} + \\tilde{\\mathbf A}^\\top\\boldsymbol\\lambda,\\\\\n\\nabla_{\\boldsymbol{\\lambda}} \\mathcal{L}(\\tilde{\\bm x}, \\boldsymbol\\lambda) &=\\widetilde{\\mathbf A} \\bar{\\bm z} + \\tilde{\\mathbf b}.\n\\end{aligned}\n\nRequiring that the overall gradient vanishes leads to the following KKT set of linear equations \n\\begin{bmatrix}\n  \\widetilde{\\mathbf Q} & \\widetilde{\\mathbf A}^\\top\\\\ \\widetilde{\\mathbf A} & \\mathbf 0\n\\end{bmatrix}\n\\begin{bmatrix}\n\\bar{\\bm z}\\\\\\boldsymbol\\lambda\n\\end{bmatrix}\n=\n\\begin{bmatrix}\n\\mathbf 0\\\\ -\\tilde{\\mathbf b}\n\\end{bmatrix}.\n\nSolving this could be accomplished by using some general solver for linear systems or by using some more tailored solver for symmetric indefinite systems (based on LDL factorization, for example ldl in Matlab).\n\nAdding constraints on controls and states\nWhen solving a real optimal control problem, we may want to impose inequality constraints on \\bm u_k due to saturation of actuators. We may also want to add constraints on \\bm x_k as well, which may reflect some performance specifications. In both cases, the KKT system above would have to be augmented and we resort to some already finetuned numerical solver for quadratic programming (QP) instead.\n\n\n\nSequential (dense) formulation\nWe can express \\bar{\\bm x} as a function of \\bar{\\bm u} and \\bm x_0. This can be done in a straightforward way using (Equation 1), namely, \n\\bar{\\bm x} = (\\mathbf I-\\overline{\\mathbf A})^{-1}\\overline{\\mathbf B} \\bm u + (\\mathbf I-\\overline{\\mathbf A})^{-1} \\overline{\\mathbf A}_0 \\bm x_0.\n\nHowever, instead of solving the sets of equations, we can do this substitution in a more insightful way. Write down the state equation for several discrete times\n\n\\begin{aligned}\n\\bm x_1 &= \\mathbf A\\bm x_0 + \\mathbf B\\bm u_0\\\\\n\\bm x_2 &= \\mathbf A\\bm x_0 + \\mathbf B\\bm u_0\\\\\n     &= \\mathbf A(\\mathbf A\\bm x_0 + \\mathbf B\\bm u_0)+ \\mathbf B\\bm u_0\\\\\n     &= \\mathbf A^2\\bm x_0 + \\mathbf A\\mathbf B\\bm u_0 + \\mathbf B\\bm u_0\\\\\n     &\\vdots\\\\\n\\bm x_k &= \\mathbf A^k\\bm x_0 + \\mathbf A^{k-1}\\mathbf B\\bm u_0 +\\mathbf A^{k-2}\\mathbf B\\bm u_1 +\\ldots \\mathbf B\\bm u_{k-1}.\n\\end{aligned}\n\nRewriting into matrix-vector form (and extending the time k up to the final time N) \n\\begin{bmatrix}\n\\bm x_1\\\\\\bm x_2\\\\\\vdots\\\\\\bm x_N\n\\end{bmatrix}\n=\n\\underbrace{\n\\begin{bmatrix}\n  \\mathbf B & & & \\\\\n  \\mathbf A\\mathbf B & \\mathbf B & & \\\\\n  \\vdots & & \\ddots &\\\\\n  \\mathbf A^{N-1}\\mathbf B & \\mathbf A^{N-2}\\mathbf B & & \\mathbf B\n\\end{bmatrix}}_{\\widehat{\\mathbf C}}\n  \\begin{bmatrix}\n\\bm u_0\\\\\\bm u_1\\\\\\vdots\\\\\\bm u_{N-1}\n\\end{bmatrix}\n+\n\\underbrace{\n  \\begin{bmatrix}\n\\mathbf A\\\\\\mathbf A^2\\\\\\vdots\\\\\\mathbf A^N\n\\end{bmatrix}}_{\\widehat{\\mathbf A}}\\bm x_0\n\nFor convenience, let’s rewrite the compact relation between \\bar{\\bm x} and \\bar{\\bm u} and \\mathbf x_0 \n\\bar{\\bm x} = \\widehat{\\mathbf C} \\bar{\\bm u} + \\widehat{\\mathbf A} \\bm x_0.\n\\tag{2}\nWe can now substitute this into the original cost, which then becomes independent of \\mathbf x, which we reflect by using a new name \\tilde J \n\\begin{aligned}\n\\tilde J(\\bar{\\bm u};\\mathbf x_0) &= \\frac{1}{2}(\\widehat{\\mathbf C} \\bar{\\bm u} + \\widehat{\\mathbf A} \\mathbf x_0)^\\top\\overline{\\mathbf Q} (\\widehat{\\mathbf C} \\bar{\\bm u} + \\widehat{\\mathbf A} \\mathbf x_0) + \\frac{1}{2}\\bar{\\bm u}^\\top\\overline{\\mathbf R} \\bar{\\bm u} + \\frac{1}{2}\\mathbf x_0^\\top\\mathbf Q\\mathbf x_0\\\\\n&= \\frac{1}{2}\\bar{\\bm u}^\\top\\widehat{\\mathbf C}^\\top \\overline{\\mathbf Q} \\widehat{\\mathbf C} \\bar{\\bm u} + \\mathbf x_0^\\top\\widehat{\\mathbf A}^\\top \\overline{\\mathbf Q} \\widehat{\\mathbf C} \\bar{\\bm u} + \\frac{1}{2} \\mathbf x_0^\\top\\widehat{\\mathbf A}^\\top \\overline{\\mathbf Q} \\widehat{\\mathbf A} \\mathbf x_0 + \\frac{1}{2}\\bar{\\bm u}^\\top\\overline{\\mathbf R} \\bar{\\bm u} + \\frac{1}{2}\\mathbf x_0^\\top\\mathbf Q\\mathbf x_0\\\\\n&= \\frac{1}{2}\\bar{\\bm u}^\\top(\\widehat{\\mathbf C}^\\top \\overline{\\mathbf Q} \\widehat{\\mathbf C} + \\overline{\\mathbf R})\\bar{\\bm u} + \\mathbf x_0^\\top\\widehat{\\mathbf A}^\\top \\overline{\\mathbf Q} \\widehat{\\mathbf C} \\bar{\\bm u} + \\frac{1}{2} \\mathbf x_0^\\top(\\widehat{\\mathbf A}^\\top \\overline{\\mathbf Q} \\widehat{\\mathbf A} + \\mathbf Q)\\mathbf x_0.\n\\end{aligned}\n\nThe last term (the one independent of \\bar{\\bm u}) does not have an impact on the optimal \\bar{\\bm u} and therefore it can be discarded, but such minor modification perhaps does no justify a new name for the cost function and we write it as \n\\tilde J(\\bar{\\bm u};\\mathbf x_0) = \\frac{1}{2}\\bar{\\bm u}^\\top\\underbrace{(\\widehat{\\mathbf C}^\\top \\overline{\\mathbf Q} \\widehat{\\mathbf C} + \\overline{\\mathbf R})}_{\\mathbf H}\\bar{\\bm u} +  \\mathbf x_0^\\top\\underbrace{\\widehat{\\mathbf A}^\\top \\overline{\\mathbf Q} \\widehat{\\mathbf C}}_{\\mathbf F^\\top} \\bar{\\bm u}.\n\nThis cost is a function of \\bar{\\bm u}, the initial state \\mathbf x_0 is regarded as a fixed parameter. Its gradient is \n\\nabla_{\\bar{\\bm u}} \\tilde J = \\mathbf H\\bar{\\bm u}+\\mathbf F\\mathbf x_0.\n\nSetting it to zero leads to the following linear system of equations \n\\mathbf H\\bar{\\bm u}=-\\mathbf F\\mathbf x_0\n that needs to be solved for \\bar{\\bm u}. Formally, we write the solution as \n\\bar{\\bm u} = -\\mathbf H^{-1} \\mathbf F \\mathbf x_0.\n\n\n\n\n\n\n\nNote\n\n\n\nSolving linear equations by direct computation of the matrix inverse is not a recommended practice. Use dedicated solvers of linear equations instead. For example, in Matlab use the backslash operator, which invokes the most suitable solver.\n\n\n\nAdding the constraints on controls\nAdding constraints on \\bar{\\bm u} is straightforward. It is just that instead of a linear system we will have a linear system with additional inequality constraints. Let’s get one.\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bar{\\bm u}} & \\quad \\frac{1}{2}\\bar{\\bm u}^T \\mathbf H \\bar{\\bm u} + \\bm x_0^T\\mathbf F^T \\bar{\\bm u}\\\\\n\\text{subject to} &\\quad \\bar{\\bm u} \\leq \\bar{\\mathbf u}_\\mathrm{max}\\\\\n               &\\quad \\bar{\\bm u} \\geq \\bar{\\mathbf u}_\\mathrm{min},\n\\end{aligned}\n which we can rewrite more explicitly (in the matrix-vector format) as \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bar{\\bm u}} & \\quad \\frac{1}{2}\\bar{\\bm u}^T \\mathbf H \\bar{\\bm u} + \\bm x_0^T\\mathbf F^T \\bar{\\bm u}\\\\\n\\text{subject to} & \\begin{bmatrix}\n                  \\mathbf{I}  &    &         &    \\\\\n                    & \\mathbf{I}  &         &    \\\\\n                    &    & \\ddots  &    \\\\\n                    &    &         &  \\mathbf{I} \\\\\n                    -\\mathbf{I}   &   &     &    \\\\\n                    & -\\mathbf{I} &         &    \\\\\n                    &    & \\ddots  &    \\\\\n                    &    &         &  -\\mathbf{I}\n                 \\end{bmatrix}\n                 \\begin{bmatrix}\n                  \\mathbf u_0 \\\\ \\mathbf u_1 \\\\ \\vdots \\\\ \\mathbf u_{N-1}\n                 \\end{bmatrix}\n                 \\leq\n                 \\begin{bmatrix}\n                  \\mathbf u_\\mathbf{max} \\\\ \\mathbf u_\\mathrm{max} \\\\ \\vdots \\\\ \\mathbf u_\\mathrm{max}\\\\ -\\mathbf u_\\mathrm{min} \\\\ -\\mathbf u_\\mathrm{min} \\\\ \\vdots \\\\ -\\mathbf u_\\mathrm{min}\n                 \\end{bmatrix}.\n\\end{aligned}\n\n\n\nAdding the constraints on states\nWe might feel a little bit uneasy about loosing an immediate access to \\bar{\\bm x}. But the game is not lost. We just need to express \\bar{\\bm x} as a function of \\bar{\\bm u} and \\bm x_0 and impose the constraint on the result. But such expression is already available, see (Equation 2). Therefore, we can formulate the constraint, say, an upper bound on \\bm x as \n\\bm x_k \\leq \\mathbf x_\\mathrm{max}\n as \n\\bar{\\mathbf x}_\\mathrm{min} \\leq \\widehat{\\mathbf C} \\bar{\\bm u} + \\widehat{\\mathbf A} \\bm x_0 \\leq \\bar{\\mathbf x}_\\mathrm{max},\n where the the bars in \\bar{\\mathbf x}_\\mathrm{min} and \\bar{\\mathbf x}_\\mathrm{max} obviously indicates that these vectors were obtained by stacking the corresponding vectors for all times k=1,\\ldots,N.",
+    "crumbs": [
+      "3. Discrete-time optimal control – direct approach",
+      "Control on a finite horizon as an optimization"
+    ]
+  },
+  {
+    "objectID": "rocond_mu_synthesis.html",
+    "href": "rocond_mu_synthesis.html",
+    "title": "Mu synthesis",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "12. Robust control",
+      "Mu synthesis"
+    ]
+  },
+  {
+    "objectID": "opt_algo_constrained.html",
+    "href": "opt_algo_constrained.html",
+    "title": "Algorithms for constrained optimization",
+    "section": "",
+    "text": "n-m, n, m, n+m",
+    "crumbs": [
+      "2. Optimization – algorithms",
+      "Algorithms for constrained optimization"
+    ]
+  },
+  {
+    "objectID": "opt_algo_constrained.html#primal-methods",
+    "href": "opt_algo_constrained.html#primal-methods",
+    "title": "Algorithms for constrained optimization",
+    "section": "Primal methods",
+    "text": "Primal methods\n\nWith m equality constraints, they work in the space of dimension n-m.\nThree advantages\n\neach point generated by the iterative algoritm is feasible – if terminated early, such point is feaible.\nif they generate a converging sequence, it typically converges at least to a local constrained minimum.\nit does not rely on a special structure of the problem, it can be even nonconvex.\n\nbut it needs a feasible initial point.\nThey may fail for inequality constraints.\n\nThey are particularly useful for linear/affine constraints or simple nonlinear constraints (norm balls or ellipsoids).\n\nProjected gradient method\n\n\nActive set methods\n\n\nSequential quadratic programming (SQP)\nKKT conditions for a nonlinear program with equality constraints solved by Newton’s method.\nInterpretation: at each iteration, we solve a quadratic program (QP) with linear constraints.",
+    "crumbs": [
+      "2. Optimization – algorithms",
+      "Algorithms for constrained optimization"
+    ]
+  },
+  {
+    "objectID": "opt_algo_constrained.html#penalty-and-barrier-methods",
+    "href": "opt_algo_constrained.html#penalty-and-barrier-methods",
+    "title": "Algorithms for constrained optimization",
+    "section": "Penalty and barrier methods",
+    "text": "Penalty and barrier methods",
+    "crumbs": [
+      "2. Optimization – algorithms",
+      "Algorithms for constrained optimization"
+    ]
+  },
+  {
+    "objectID": "opt_algo_constrained.html#dual-methods",
+    "href": "opt_algo_constrained.html#dual-methods",
+    "title": "Algorithms for constrained optimization",
+    "section": "Dual methods",
+    "text": "Dual methods",
+    "crumbs": [
+      "2. Optimization – algorithms",
+      "Algorithms for constrained optimization"
+    ]
+  },
+  {
+    "objectID": "opt_algo_constrained.html#primal-dual-methods",
+    "href": "opt_algo_constrained.html#primal-dual-methods",
+    "title": "Algorithms for constrained optimization",
+    "section": "Primal-dual methods",
+    "text": "Primal-dual methods",
+    "crumbs": [
+      "2. Optimization – algorithms",
+      "Algorithms for constrained optimization"
+    ]
+  },
+  {
+    "objectID": "cont_indir_LQR_fin_horizon.html",
+    "href": "cont_indir_LQR_fin_horizon.html",
+    "title": "Indirect approach to LQR on a finite horizon",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "7. Continuous-time optimal control - indirect approach via calculus of variations",
+      "Indirect approach to LQR on a finite horizon"
+    ]
+  },
+  {
+    "objectID": "rocond_H_infinity_control.html",
+    "href": "rocond_H_infinity_control.html",
+    "title": "Hinfinity-optimal control",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "12. Robust control",
+      "Hinfinity-optimal control"
+    ]
+  },
+  {
+    "objectID": "opt_algo_unconstrained.html",
+    "href": "opt_algo_unconstrained.html",
+    "title": "Algorithms for unconstrained optimization",
+    "section": "",
+    "text": "Our motivation for studying numerical algorithms for unconstrained optimization remains the same as when we studied the conditions of optimality for such unconstrained problems – such algorithms constitute building blocks for constrained optimization problems. Indeed, many algorithms for constrained problems are based on reformulating the constrained problem into an unconstrained one and then applying the algorithms studied in this section.\nIt may be useful to recapitulate our motivation for studying optimization algorithms in general – after all, there are dozens of commercial or free&open-source software tools for solving optimization problems. Why not just use them? There are two answers beyond the traditional “at a grad school we should understand what we are using”:\nThere is certainly no shortage of algorithms for unconstrained optimization. In this crash course we can cover only a few. But the few we cover here certainly form a solid theoretical basis and provide practically usable tools.\nOne possible way to classify the algorithms is based on whether they use derivatives of the objective function or not. In this course, we prefer the latter approach as it leads to more efficient algorithms. For the former methods, we can refer to the literature (the prominent example is Nelder-Mead method).",
+    "crumbs": [
+      "2. Optimization – algorithms",
+      "Algorithms for unconstrained optimization"
+    ]
+  },
+  {
+    "objectID": "opt_algo_unconstrained.html#derivative-based-methods",
+    "href": "opt_algo_unconstrained.html#derivative-based-methods",
+    "title": "Algorithms for unconstrained optimization",
+    "section": "Derivative-based methods",
+    "text": "Derivative-based methods\nIteratively:\n\nDescent methods\n\nFix the search direction d_k, and the find the step length \\alpha_k that minimizes f(x_k + \\alpha_k d_k). The search direction is updated at each iteration.\n\nTrust region methods\n\nFix the region in which a simpler (typically a quadratic) function approximates the original cost function reasonably accurately, then find the minimum of this simpler cost function.\n\n\n(for a circular region this amounts to setting the radius, which can be viewed as setting the step length \\alpha_k)\nsearch direction d_k that minimizes f(x_k + \\alpha_k d_k)\n\nDescent methods\n\nSteepest descent (aka gradient) method\nNewton’s method\nQuasi-Newton’s methods\n\n\nStep size (step length) determination (aka line search)\n\n\nSteepest descent method\n\n\nNewton’s method\n\n\nQuasi-Newton’s methods\n\n\n\nTrust region methods",
+    "crumbs": [
+      "2. Optimization – algorithms",
+      "Algorithms for unconstrained optimization"
+    ]
+  },
+  {
+    "objectID": "discr_dir_mpc_solvers.html",
+    "href": "discr_dir_mpc_solvers.html",
+    "title": "Numerical solvers for MPC",
+    "section": "",
+    "text": "Essentially QP solvers with some extra features for MPC:\n\nwarmstarting requires fesibility of the previous solution. If only a fixed number of iterations is allowed (in favor of predictable timing), for some methods the iterations may temporarily lose feasibility.\n…\nqpOASES\nOSQP\nDAQP\nqpSWIFT\nProxQP\nPiQP\nECOS\nHPIPM\n\n\n\n\n Back to top",
+    "crumbs": [
+      "3. Discrete-time optimal control – direct approach",
+      "Numerical solvers for MPC"
+    ]
+  },
+  {
+    "objectID": "discr_indir_DARE.html",
+    "href": "discr_indir_DARE.html",
+    "title": "Discrete-time algebraic Riccati equation (DARE)",
     "section": "",
     "text": "Back to top",
     "crumbs": [
       "4. Discrete-time optimal control – indirect approach",
-      "Discrete-time LQR-optimal control on a finite horizon"
+      "Discrete-time algebraic Riccati equation (DARE)"
+    ]
+  },
+  {
+    "objectID": "opt_solvers.html",
+    "href": "opt_solvers.html",
+    "title": "Numerical solvers",
+    "section": "",
+    "text": "Gurobi Optimizer\nIBM ILOG CPLEX\nKnitro\nMOSEK\nIpopt\nSNOPT\nNLPQLP\nfmincon\nfminunc\nfminsearch\nfminbnd\nfminimax\nfmincon\nOptimization Toolbox for Matlab\nJuMP\nConvex.jl\nOptim.jl\nNLopt.jl\nBlackBoxOptim.jl\nBayesianOptimization.jl\nCMAES.jl\nDirectSearch.jl\nEvolutionary.jl\n\n\n\n\n Back to top",
+    "crumbs": [
+      "2. Optimization – algorithms",
+      "Numerical solvers"
+    ]
+  },
+  {
+    "objectID": "dynamic_programming_LQR.html",
+    "href": "dynamic_programming_LQR.html",
+    "title": "LQR via dynamic programming",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "5. Discrete-time optimal control – dynamic programming",
+      "LQR via dynamic programming"
+    ]
+  },
+  {
+    "objectID": "uncertainty.html",
+    "href": "uncertainty.html",
+    "title": "Uncertainty modelling",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "11. Uncertainty modelling and analysis",
+      "Uncertainty modelling"
+    ]
+  },
+  {
+    "objectID": "opt_theory_unconstrained.html",
+    "href": "opt_theory_unconstrained.html",
+    "title": "Theory for unconstrained optimization",
+    "section": "",
+    "text": "…",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Theory for unconstrained optimization"
+    ]
+  },
+  {
+    "objectID": "opt_theory_unconstrained.html#local-vs-global-optimality",
+    "href": "opt_theory_unconstrained.html#local-vs-global-optimality",
+    "title": "Theory for unconstrained optimization",
+    "section": "",
+    "text": "…",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Theory for unconstrained optimization"
+    ]
+  },
+  {
+    "objectID": "opt_theory_unconstrained.html#conditions-of-optimality",
+    "href": "opt_theory_unconstrained.html#conditions-of-optimality",
+    "title": "Theory for unconstrained optimization",
+    "section": "Conditions of optimality",
+    "text": "Conditions of optimality\nHere we consider two types of conditions of optimality for unconstrained minimization problems: necessary and sufficient conditions. Necessary conditions must be satisfied at the minimum, but even when they are, the optimality is not guaranteed. On the other hand, the sufficient conditions need not be satisfied at the minimum, but if they are, the optimality is guaranteed. We show the necessary conditions of the first and second order, while the sufficient condition only of the second order.\n\nScalar optimization variable\n\nWe recall here the fundamental assumption made at the beginning of our introduction to optimization – we only consider optimization variables that are real-valued (first, just scalar x \\in \\mathbb R, later vectors \\bm x \\in \\mathbb R^n), and objective functions f() that are sufficiently smooth – all the derivatives exist. Then the conditions of optimality can be derived upon inspecting the Taylor series approximation of the cost function around the minimum.\n\nTaylor series approximation around the optimum\nDenote x^* as the (local) minimum of the function f(x). The Taylor series expansion of f(x) around x^* is\n\nf(x^*+\\alpha) = f(x^*)+\\left.\\frac{\\mathrm{d}f(x)}{\\mathrm{d} x}\\right|_{x=x^*}\\alpha + \\frac{1}{2}\\left.\\frac{\\mathrm{d^2}f(x)}{\\mathrm{d} x^2}\\right|_{x=x^*}\\alpha^2 + {\\color{blue}\\mathcal{O}(\\alpha^3)},\n where \\mathcal{O}() is called Big O and has the property that \n\\lim_{\\alpha\\rightarrow 0}\\frac{\\mathcal{O}(\\alpha^3)}{\\alpha^3} \\leq M&lt;\\infty.\n\nAlternatively, we can write the Taylor series expansion as \nf(x^*+\\alpha) = f(x^*)+\\left.\\frac{\\mathrm{d}f(x)}{\\mathrm{d} x}\\right|_{x=x^*}\\alpha + \\frac{1}{2}\\left.\\frac{\\mathrm{d^2}f(x)}{\\mathrm{d} x^2}\\right|_{x=x^*}\\alpha^2 + {\\color{red}o(\\alpha^2)},\n using the little o with the property that \n\\lim_{\\alpha\\rightarrow 0}\\frac{o(\\alpha^2)}{\\alpha^2} = 0.\n\nWhether \\mathcal{O}() or \\mathcal{o}() concepts are used, it is just a matter of personal preference. They both express that the higher-order terms in the expansion tend to be negligible compare to the first- and second-order term as \\alpha is getting smaller. \\mathcal O(\\alpha^3) goes to zero at least as fast as a cubic function, while o(\\alpha^2) goes to zero faster than a quadratic function.\nIt is indeed important to understand that this negligibility of the higher-order terms is only valid asymptotically – for a particular \\alpha it may easily happend that, say, the third-order term is still dominating.\n\n\nFirst-order necessary conditions of optimality\nFor \\alpha sufficiently small, the first-order Taylor series expansion is a good approximation of the function f(x) around the minimum. Since \\alpha enters this expansion linearly, the cost function can increase or decrease with \\alpha, depending on the sign of the first derivative. The only way to ensure that the function as a (local) minimu at x^* is to have the first derivative equal to zero, that is \\boxed{\n\\left.\\frac{\\mathrm{d}f(x)}{\\mathrm{d} x}\\right|_{x=x^*} = 0.}\n\n\n\nSecond-order necessary conditions of optimality\nOnce the first-order necessary condition of optimality is satisfied, the dominating term (as \\alpha is getting smalle) is the second-order term \\frac{1}{2}\\left.\\frac{\\mathrm{d^2}f(x)}{\\mathrm{d} x^2}\\right|_{x=x^*}\\alpha^2. Since \\alpha is squared, it is the sign of the second derivative that determines the contribution of the whole second-order term to the cost function value. For the minimum, the second derivative must be nonnegative, that is\n\n\\boxed{\\left.\\frac{\\mathrm{d^2}f(x)}{\\mathrm{d} x^2}\\right|_{x=x^*} \\geq 0.}\n\nFor completeness we state that the sign must be nonpositive for the maximum.\n\n\nSecond-order sufficient condition of optimality\nFollowing the same line of reasoning as above, the if the second derivative is positive, the miniumum is guaranteed, that is, the sufficient condition of optimality is \n\\boxed{\\left.\\frac{\\mathrm{d^2}f(x)}{\\mathrm{d} x^2}\\right|_{x=x^*} &gt; 0.}\n\nIf the second derivative fails to be positive and is just zero (thus still satisfying the necessary condition), does it mean that the point is not a minimum? No. We must examine higher order terms.\n\n\n\nVector optimization variable\n\n\nFirst-order necessary conditions of optimality\nOne way to handle the vector variables is to convert the vector problem into a scalar one by fixing a direction to an arbitrary vector \\bm d and then considering the scalar function of the form f(\\bm x^* + \\alpha \\bm d). For convenience we define a new function \ng(\\alpha) \\coloneqq f(\\bm x^* + \\alpha \\bm d)\n and from now on we can invoke the results for scalar functions. Namely, we expand the g() function around zero as \ng(\\alpha) = g(0) + \\frac{\\mathrm{d}g(\\alpha)}{\\mathrm{d}\\alpha}\\bigg|_{\\alpha=0}\\alpha + \\frac{1}{2}\\frac{\\mathrm{d}^2 g(\\alpha)}{\\mathrm{d}\\alpha^2}\\bigg|_{\\alpha=0}\\alpha^2 + \\mathcal{O}(\\alpha^3),\n and argue that the first-order necessary condition of optimality is \n\\frac{\\mathrm{d}g(\\alpha)}{\\mathrm{d}\\alpha}\\bigg|_{\\alpha=0} = 0.\n\nNow, invoking the chain rule, we go back from g() to f() \n\\frac{\\mathrm{d}g(\\alpha)}{\\mathrm{d}\\alpha}\\bigg|_{\\alpha=0} = \\frac{\\partial f(\\bm x)}{\\partial\\bm x}\\bigg|_{\\bm x=\\bm x^*} \\frac{\\partial(\\bm x^* + \\alpha \\bm d)}{\\partial\\alpha}\\bigg|_{\\alpha=0} = \\frac{\\partial f(\\bm x)}{\\partial\\bm x}\\bigg|_{\\bm x=\\bm x^*}\\,\\bm d = 0,\n where \\frac{\\partial f(\\bm x)}{\\partial\\bm x}\\bigg|_{\\bm x=\\bm x^*} is a row vector of partial derivatives of f() evaluated at \\bm x^*. Since the vector \\bm d is arbitrary, the necessary condition is that\n\n\\frac{\\partial f(\\bm x)}{\\partial\\bm x}\\bigg|_{\\bm x=\\bm x^*} = \\mathbf 0,  \n\nMore often than not we use the column vector to store partial derivatives. We call it the gradient of the function f() and denoted it as \n\\nabla f(\\bm x) \\coloneqq \\begin{bmatrix}\\frac{\\partial f(\\bm x)}{\\partial x_1} \\\\ \\frac{\\partial f(\\bm x)}{\\partial x_n} \\\\ \\vdots \\\\ \\frac{\\partial f(\\bm x)}{\\partial x_n}\\end{bmatrix}.  \n\nThe first-order necessary condition of optimality using gradients is then \n\\boxed{\\left.\\nabla f(\\bm x)\\right|_{x=x^*} = \\mathbf 0.  }\n\n\n\n\n\n\n\nGradient is a column vector\n\n\n\nIn some literature the gradient \\nabla f(\\bm x) is defined as a row vector. For the condition of optimality it does not matteer since all we require is that all partial derivatives vanish. But for other purposes in our text we regard the gradient as a vector living in the same vector space \\mathbb R^n as the optimization variable. The row vector is sometimes denoted as \\mathrm Df(\\bm x).\n\n\n\nComputing the gradient of a scalar function of a vector variable\nA convenient way is to compute the differential fist and then to identify the derivative in it. Recall that the differential is the first-order approximation to the increment of the function due to a change in the variable\n\n\\Delta f \\approx \\mathrm{d}f = \\nabla f(x)^\\top \\mathrm d \\bm x.\n\nFinding the differential of a function is conceptually easier than finding the derivative since it is a scalar quantity. When searching for the differential of a composed function, we follow the same rules as for the derivative (such as that the one for finding the differential of a product). Let’s illustrate it using an example.\n\nExample 1 For the function \nf(\\mathbf x) = \\frac{1}{2}\\bm{x}^\\top\\mathbf{Q}\\bm{x} + \\mathbf{r}^\\top\\bm{x},\n where \\mathbf Q is symetric, the differential is \n\\mathrm{d}f = \\frac{1}{2}\\mathrm d\\bm{x}^\\top\\mathbf{Q}\\bm{x} + \\frac{1}{2}\\bm{x}^\\top\\mathbf{Q}\\mathrm d\\bm{x} + \\mathbf{r}^\\top\\mathrm{d}\\bm{x},\n in which the first two terms can be combined thanks to the fact that they are scalars \n\\mathrm{d}f = \\left(\\bm{x}^\\top\\frac{\\mathbf{Q} + \\mathbf{Q}^\\top}{2} + \\mathbf{r}^\\top\\right)\\mathrm{d}\\bm{x},\n and finally, since we assumed that \\mathbf Q is a symmetric matrix, we get \n\\mathrm{d}f = \\left(\\mathbf{Q}\\bm{x} + \\mathbf{r}\\right)^\\top\\mathrm{d}\\bm{x},\n from which we can identify the gradient as \n\\nabla f(\\mathbf{x}) = \\mathbf{Q}\\mathbf{x} + \\mathbf{r}.\n\nThe first-order condition of optimality is then \n\\boxed{\\mathbf{Q}\\mathbf{x} = -\\mathbf{r}.}\n\nAlthough this was just an example, it is actually a very useful one. Keep this result in mind – necessary condition of optimality of a quadratic function comes in the form of a set of linear equations.\n\n\n\n\nSecond-order necessary conditions of optimality\nAs before, we fix the direction \\bm d and consider the function g(\\alpha) = f(\\bm x^* + \\alpha \\bm d). We expand the expression for the first derivative as \n\\frac{\\mathrm d g(\\alpha)}{\\mathrm d \\alpha} = \\sum_{i=1}^{n}\\frac{\\partial f(\\bm x)}{\\partial x_i}\\bigg|_{\\bm x = \\bm x^*} d_i,\n and differentiating this once again, we get the second derivative \n\\frac{\\mathrm d^2 g(\\alpha)}{\\mathrm d \\alpha^2} = \\sum_{i,j=1}^{n}\\frac{\\partial^2 f(\\bm x)}{\\partial x_ix_j}\\bigg|_{\\bm x = \\bm x^*}d_id_j\n\n\n\\begin{aligned}\n\\frac{\\mathrm d^2 g(\\alpha)}{\\mathrm d \\alpha^2}\\bigg|_{\\alpha=0} &= \\sum_{i,j=1}^{n}\\frac{\\text{d}^2}{\\text{d}x_ix_j}f(\\bm x)\\bigg|_{\\bm x = \\bm x^*}d_id_j\\\\\n&= \\mathbf d^\\text{T} \\underbrace{\\nabla^\\text{2}f(\\mathbf x)\\bigg|_{\\bm x = \\bm x^*}}_\\text{Hessian} \\mathbf d.\n\\end{aligned}\n where \\nabla^2 f(\\mathbf x) is the Hessian (the symmetrix matrix of the second-order mixed partial derivatives) \n\\nabla^2 f(x) = \\begin{bmatrix}\n                 \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_1^2} && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_1\\partial x_2} && \\ldots && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_1\\partial x_n}\\\\\n                 \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_2\\partial x_1} && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_2^2} && \\ldots && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_2\\partial x_n}\\\\\n                 \\vdots\\\\\n                 \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_n\\partial x_1} && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_n\\partial x_2} && \\ldots && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_n\\partial x_n}.\n                \\end{bmatrix}\n\nSince \\bm d is arbitrary, the second-order necessary condition of optimality is then \n\\boxed{\\nabla^\\text{2}f(\\mathbf x)\\bigg|_{\\bm x = \\bm x^*} \\succeq 0,}\n where, once again, the inequality \\succeq reads that the matrix is positive semidefinite.\n\n\nSecond-order sufficient condition of optimality\n\n\\boxed{\\nabla^2 f(\\mathbf x)\\bigg|_{\\bm x = \\bm x^*} \\succ 0,}\n where, once again, the inequality \\succ reads that the matrix is positive definite.\n\nExample 2 For the quadratic function f(\\mathbf x) = \\frac{1}{2}\\mathbf{x}^\\mathrm{T}\\mathbf{Q}\\mathbf{x} + \\mathbf{r}^\\mathrm{T}\\mathbf{x}, the Hessian is \n\\nabla^2 f(\\mathbf{x}) = \\mathbf{Q}\n and the second-order necessary condition of optimality is \n\\boxed{\\mathbf{Q} \\succeq 0.}\n\nSecond-order sufficient condition of optimality is then \n\\boxed{\\mathbf{Q} \\succ 0.}\n\nOnce again, this was more than just an example – quadratic functions are so important for us that it is worth remembering this result.",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Theory for unconstrained optimization"
+    ]
+  },
+  {
+    "objectID": "opt_theory_unconstrained.html#classification-of-stationary-points",
+    "href": "opt_theory_unconstrained.html#classification-of-stationary-points",
+    "title": "Theory for unconstrained optimization",
+    "section": "Classification of stationary points",
+    "text": "Classification of stationary points\nFor a stationary (also critical) \\bm x^*, that is, one that satisfies the first-order necessary condition \n\\nabla f(\\bm x^*) = 0,\n\nwe can classify it as\n\nMinimum: \\nabla^2 f(x^*)\\succ 0\nMaximum: \\nabla^2 f(x^*)\\prec 0\nSaddle point: \\nabla^2 f(x^*) indefinite\nSingular point (we cannot decide): \\nabla^2 f(x^*)=0\n\n\nExample 3 (Minimum of a quadratic function) We consider a quadratic function f(\\mathbf x) = \\frac{1}{2}\\mathbf{x}^\\mathrm{T}\\mathbf{Q}\\mathbf{x} + \\mathbf{r}^\\mathrm{T}\\mathbf{x} for a particular \\mathbf{Q} and \\mathbf{r}.\n\n\nCode\nQ = [1 1; 1 2]\nr = [0, 1]\n\nusing LinearAlgebra\nx_stationary = -Q\\r\neigvals(Q) \n\n\n2-element Vector{Float64}:\n 0.38196601125010515\n 2.618033988749895\n\n\nThe matrix is positive definite, so the stationary point is a minimum. In fact, the minimum. Surface and contour plots of the function are shown below.\n\nCode\nf(x) = 1/2*dot(x,Q*x)+dot(x,r)\nx1_data = x2_data = -4:0.1:4;  \nf_data = [f([x1,x2]) for x2=x2_data, x1=x1_data];\n\nusing Plots\ndisplay(surface(x1_data,x2_data,f_data))\ncontour(x1_data,x2_data,f_data)\ndisplay(plot!([x_stationary[1]], [x_stationary[2]], marker=:circle, label=\"Stationary point\"))\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n(a) Surface plot\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Contour plot\n\n\n\n\n\n\n\nFigure 1: Minimum of a quadratic function\n\n\n\n\n\nExample 4 (Saddle point of a quadratic function)  \n\n\nCode\nQ = [-1 1; 1 2]\nr = [0, 1]\n\nusing LinearAlgebra\nx_stationary = -Q\\r\neigvals(Q)\n\n\n2-element Vector{Float64}:\n -1.3027756377319946\n  2.302775637731995\n\n\nThe matrix is indefinite, so the stationary point is a saddle point. Surface and contour plots of the function are shown below.\n\nCode\nf(x) = 1/2*dot(x,Q*x)+dot(x,r)\n\nx1_data = x2_data = -4:0.1:4;  \nf_data = [f([x1,x2]) for x2=x2_data, x1=x1_data];\n\nusing Plots\ndisplay(surface(x1_data,x2_data,f_data))\ncontour(x1_data,x2_data,f_data)\ndisplay(plot!([x_stationary[1]], [x_stationary[2]], marker=:circle, label=\"Stationary point\"))\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n(a) Surface plot\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Contour plot\n\n\n\n\n\n\n\nFigure 2: Saddle point of a quadratic function\n\n\n\n\n\nExample 5 (Singular point of a quadratic function)  \n\n\nCode\nQ = [2 0; 0 0]\nr = [3, 0]\n\nusing LinearAlgebra\neigvals(Q)\n\n\n2-element Vector{Float64}:\n 0.0\n 2.0\n\n\nThe matrix Q is singular, which has two consequences:\n\nWe cannot compute the stationary point since Q is not invertible. In fact, there is a whole line (a subspace) of stationary points.\nThe matrix Q is positive semidefinite, which generally means that optimality cannot be concluded. But in this particular case of a quadratic function, there are no higher-order terms in the Taylor series expansion, so the stationary point is a minimum.\n\nSurface and contour plots of the function are shown below.\n\nCode\nf(x) = 1/2*dot(x,Q*x)+dot(x,r)\n\nx1_data = x2_data = -4:0.1:4;  \nf_data = [f([x1,x2]) for x2=x2_data, x1=x1_data];\n\nusing Plots\ndisplay(surface(x1_data,x2_data,f_data))\ndisplay(contour(x1_data,x2_data,f_data))\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n(a) Surface plot\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Contour plot\n\n\n\n\n\n\n\nFigure 3: Singular point of a quadratic function\n\n\n\n\n\nExample 6 (Singular point of a non-quadratic function) Consider the function f(\\bm x) = x_1^2 + x_2^4. Its gradient is \\nabla f(\\bm x) = \\begin{bmatrix}2x_1\\\\ 4x_2^3\\end{bmatrix} and it vanishes at \\bm x^* = \\begin{bmatrix}0\\\\ 0\\end{bmatrix}. The Hessian is \\nabla^2 f(\\bm x) = \\begin{bmatrix}2 & 0\\\\ 0 & 12x_2^2\\end{bmatrix}, which when evaluated at the stationary point is \\nabla^2 f(\\bm x)\\bigg|_{\\bm x=\\mathbf 0} = \\begin{bmatrix}2 & 0\\\\ 0 & 0\\end{bmatrix}, which is positive semidefinite. We cannot conclude if the function attains a minimum at \\bm x^*.\nWe need to examine higher-order terms in the Taylor series expansion. The third derivatives are \n\\frac{\\partial^3 f}{\\partial x_1^3} = 0, \\quad \\frac{\\partial^3 f}{\\partial x_1^2\\partial x_2} = 0, \\quad \\frac{\\partial^3 f}{\\partial x_1\\partial x_2^2} = 0, \\quad \\frac{\\partial^3 f}{\\partial x_2^3} = 24x_2,\n and when evaluated at zero, they all vanish.\nAll but one fourth derivatives also vanish. The one that does not is \n\\frac{\\partial^4 f}{\\partial x_2^4} = 24,\n which is positive, and since the associated derivative is of the even order, the power si also even, hence the function attains a minimum at \\bm x^* = \\begin{bmatrix}0\\\\ 0\\end{bmatrix}.\nThis can also be visually confirmed by the surface and contour plots of the function.\n\nCode\nf(x) = x[1]^2 + x[2]^4\n\nx1_data = x2_data = -4:0.1:4;  \nf_data = [f([x1,x2]) for x2=x2_data, x1=x1_data];\n\nusing Plots\ndisplay(surface(x1_data,x2_data,f_data))\ncontour(x1_data,x2_data,f_data)\ndisplay(plot!([x_stationary[1]], [x_stationary[2]], marker=:circle, label=\"Stationary point\"))\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n(a) Surface plot\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Contour plot\n\n\n\n\n\n\n\nFigure 4: Singular point of a non-quadratic function",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Theory for unconstrained optimization"
+    ]
+  },
+  {
+    "objectID": "cont_dir_collocation.html",
+    "href": "cont_dir_collocation.html",
+    "title": "Collocation methods for optimal control",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "9. Continuous-time optimal control - direct approach via numerical optimization",
+      "Collocation methods for optimal control"
+    ]
+  },
+  {
+    "objectID": "cont_indir_time_optimal.html",
+    "href": "cont_indir_time_optimal.html",
+    "title": "Time-optimal control",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "8. Continuous-time optimal control - indirect approach via Pontryagin's maximum principle",
+      "Time-optimal control"
+    ]
+  },
+  {
+    "objectID": "cont_indir_CARE.html",
+    "href": "cont_indir_CARE.html",
+    "title": "Continuous-time Riccati equation",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "7. Continuous-time optimal control - indirect approach via calculus of variations",
+      "Continuous-time Riccati equation"
+    ]
+  },
+  {
+    "objectID": "discr_dir_mpc_recursive_feasibility.html",
+    "href": "discr_dir_mpc_recursive_feasibility.html",
+    "title": "Recursive feasibility",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "6. More on MPC",
+      "Recursive feasibility"
+    ]
+  },
+  {
+    "objectID": "cont_indir_LQR_inf_horizon.html",
+    "href": "cont_indir_LQR_inf_horizon.html",
+    "title": "Indirect approach to LQR on an infinite horizon",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "7. Continuous-time optimal control - indirect approach via calculus of variations",
+      "Indirect approach to LQR on an infinite horizon"
+    ]
+  },
+  {
+    "objectID": "opt_algo_derivatives.html",
+    "href": "opt_algo_derivatives.html",
+    "title": "Computing derivatives",
+    "section": "",
+    "text": "We have already argued that using derivatives within gives us a huge advantage in solving optimization problems.\nThere are three ways to compute derivatives:",
+    "crumbs": [
+      "2. Optimization – algorithms",
+      "Computing derivatives"
+    ]
+  },
+  {
+    "objectID": "opt_algo_derivatives.html#symbolic-methods",
+    "href": "opt_algo_derivatives.html#symbolic-methods",
+    "title": "Computing derivatives",
+    "section": "Symbolic methods",
+    "text": "Symbolic methods\nThese are essentially the methods that we have all learnt to apply using a pen and paper. A bunch of rules.",
+    "crumbs": [
+      "2. Optimization – algorithms",
+      "Computing derivatives"
+    ]
+  },
+  {
+    "objectID": "opt_algo_derivatives.html#numerical-finite-difference-fd-methods",
+    "href": "opt_algo_derivatives.html#numerical-finite-difference-fd-methods",
+    "title": "Computing derivatives",
+    "section": "Numerical finite-difference (FD) methods",
+    "text": "Numerical finite-difference (FD) methods",
+    "crumbs": [
+      "2. Optimization – algorithms",
+      "Computing derivatives"
+    ]
+  },
+  {
+    "objectID": "opt_algo_derivatives.html#algorithmic-also-automatic-differentiation-methods",
+    "href": "opt_algo_derivatives.html#algorithmic-also-automatic-differentiation-methods",
+    "title": "Computing derivatives",
+    "section": "Algorithmic (also Automatic) differentiation methods",
+    "text": "Algorithmic (also Automatic) differentiation methods",
+    "crumbs": [
+      "2. Optimization – algorithms",
+      "Computing derivatives"
+    ]
+  },
+  {
+    "objectID": "LTR.html",
+    "href": "LTR.html",
+    "title": "Loop transfer recovery (LTR)",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "10. Some extensions: LQG, LTR, H2",
+      "Loop transfer recovery (LTR)"
+    ]
+  },
+  {
+    "objectID": "reduction_order_model.html",
+    "href": "reduction_order_model.html",
+    "title": "Model order reduction",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "14. Model and controller order reduction",
+      "Model order reduction"
+    ]
+  },
+  {
+    "objectID": "stochastic_LQR.html",
+    "href": "stochastic_LQR.html",
+    "title": "Stochastic LQR control",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "10. Some extensions: LQG, LTR, H2",
+      "Stochastic LQR control"
+    ]
+  },
+  {
+    "objectID": "opt_problems.html",
+    "href": "opt_problems.html",
+    "title": "Optimization problems",
+    "section": "",
+    "text": "We formulate a general optimization problem (also a mathematical program) as \n\\begin{aligned}\n\\operatorname*{minimize} \\quad & f(\\bm x) \\\\\n\\text{subject to} \\quad & \\bm x \\in \\mathcal{X},\n\\end{aligned}\n where f is a scalar function, \\bm x can be a scalar, a vector, a matrix or perhaps even a variable of yet another type, and \\mathcal{X} is a set of values that \\bm x can take, also called the feasible set.\n\n\n\n\n\n\nNote\n\n\n\nThe term “program” here has nothing to do with a computer program. Instead, it was used by the US military during the WWII to refer to plans or schedules in training and logistics.\n\n\nIf maximization of the objective function f() is desired, we can simply multiply the objective function by -1 and minimize the resulting function.\nTypically there are two types of constraints that can be imposed on the optimization variable \\bm x:\n\nexplicit characterization of the set such as \\bm x \\in \\mathbb{R}^n or \\bm x \\in \\mathbb{Z}^n, possibly even a direction enumeration such as \\bm x \\in \\{0,1\\}^n in the case of binary variables,\nimplicit characterization of the set using equations and inequalities such as g_i(\\bm x) \\leq 0 and h_i(\\bm x) = 0 for i = 1, \\ldots, m and j = 1, \\ldots, p.\n\nAn example of a more structured and yet sufficiently general optimization problems over several real and integer variables is \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^{n_x}, \\, \\bm y \\in \\mathbb{Z}^{n_y}} \\quad & f(\\bm x, \\bm y) \\\\\n\\text{subject to} \\quad & g_i(\\bm x, \\bm y) \\leq 0, \\quad i = 1, \\ldots, m, \\\\\n& h_j(\\bm x, \\bm y) = 0, \\quad j = 1, \\ldots, p.\n\\end{aligned}\n\nIndeed, for named sets such as \\mathbb R or \\mathbb Z, it is common to place the set constraints directly underneath the word “minimize”. But it is just one convention, and these constraints could be listed into the “subject to” section as well.\n\n\n\n\n\n\nInteger optimization not in this course\n\n\n\nIn this course we are only going to consider optimization problems with real-valued variables. This decision does not suggest that optimization with integer variables is less relevant for optimal control, quite the opposite! It is just that the theory and algorithms for integer or mixed integer optimization are based on different principles than those for real variables. And they can hardly fit into a single course. Good news for the interested students is that a graduate course named Combinatorial algorithms (B3B35KOA) covering integer optimization in detail is offered by the Cybernetics and Robotics study program at CTU FEE. Applications of integer optimization to optimal control are part of the course on Hybrid systems (B3B39HYS).\n\n\nThe form of an optimization problem that we are going to use in our course most often than not is \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & f(\\bm x) \\\\\n\\text{subject to} \\quad & g_i(\\bm x) \\leq 0, \\quad i = 1, \\ldots, m, \\\\\n& h_i(\\bm x) = 0, \\quad i = 1, \\ldots, p,\n\\end{aligned}\n which can also be written using vector-valued functions (reflected in the use of the bold face for their names) \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & f(\\bm x) \\\\\n\\text{subject to} \\quad & \\mathbf g(\\bm x) \\leq 0,\\\\\n& \\mathbf h(\\bm x) = 0.\n\\end{aligned}",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Optimization problems"
+    ]
+  },
+  {
+    "objectID": "opt_problems.html#optimization-problem-formulation",
+    "href": "opt_problems.html#optimization-problem-formulation",
+    "title": "Optimization problems",
+    "section": "",
+    "text": "We formulate a general optimization problem (also a mathematical program) as \n\\begin{aligned}\n\\operatorname*{minimize} \\quad & f(\\bm x) \\\\\n\\text{subject to} \\quad & \\bm x \\in \\mathcal{X},\n\\end{aligned}\n where f is a scalar function, \\bm x can be a scalar, a vector, a matrix or perhaps even a variable of yet another type, and \\mathcal{X} is a set of values that \\bm x can take, also called the feasible set.\n\n\n\n\n\n\nNote\n\n\n\nThe term “program” here has nothing to do with a computer program. Instead, it was used by the US military during the WWII to refer to plans or schedules in training and logistics.\n\n\nIf maximization of the objective function f() is desired, we can simply multiply the objective function by -1 and minimize the resulting function.\nTypically there are two types of constraints that can be imposed on the optimization variable \\bm x:\n\nexplicit characterization of the set such as \\bm x \\in \\mathbb{R}^n or \\bm x \\in \\mathbb{Z}^n, possibly even a direction enumeration such as \\bm x \\in \\{0,1\\}^n in the case of binary variables,\nimplicit characterization of the set using equations and inequalities such as g_i(\\bm x) \\leq 0 and h_i(\\bm x) = 0 for i = 1, \\ldots, m and j = 1, \\ldots, p.\n\nAn example of a more structured and yet sufficiently general optimization problems over several real and integer variables is \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^{n_x}, \\, \\bm y \\in \\mathbb{Z}^{n_y}} \\quad & f(\\bm x, \\bm y) \\\\\n\\text{subject to} \\quad & g_i(\\bm x, \\bm y) \\leq 0, \\quad i = 1, \\ldots, m, \\\\\n& h_j(\\bm x, \\bm y) = 0, \\quad j = 1, \\ldots, p.\n\\end{aligned}\n\nIndeed, for named sets such as \\mathbb R or \\mathbb Z, it is common to place the set constraints directly underneath the word “minimize”. But it is just one convention, and these constraints could be listed into the “subject to” section as well.\n\n\n\n\n\n\nInteger optimization not in this course\n\n\n\nIn this course we are only going to consider optimization problems with real-valued variables. This decision does not suggest that optimization with integer variables is less relevant for optimal control, quite the opposite! It is just that the theory and algorithms for integer or mixed integer optimization are based on different principles than those for real variables. And they can hardly fit into a single course. Good news for the interested students is that a graduate course named Combinatorial algorithms (B3B35KOA) covering integer optimization in detail is offered by the Cybernetics and Robotics study program at CTU FEE. Applications of integer optimization to optimal control are part of the course on Hybrid systems (B3B39HYS).\n\n\nThe form of an optimization problem that we are going to use in our course most often than not is \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & f(\\bm x) \\\\\n\\text{subject to} \\quad & g_i(\\bm x) \\leq 0, \\quad i = 1, \\ldots, m, \\\\\n& h_i(\\bm x) = 0, \\quad i = 1, \\ldots, p,\n\\end{aligned}\n which can also be written using vector-valued functions (reflected in the use of the bold face for their names) \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & f(\\bm x) \\\\\n\\text{subject to} \\quad & \\mathbf g(\\bm x) \\leq 0,\\\\\n& \\mathbf h(\\bm x) = 0.\n\\end{aligned}",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Optimization problems"
+    ]
+  },
+  {
+    "objectID": "opt_problems.html#properties-of-optimization-problems",
+    "href": "opt_problems.html#properties-of-optimization-problems",
+    "title": "Optimization problems",
+    "section": "Properties of optimization problems",
+    "text": "Properties of optimization problems\nIt is now the presence/absence and the properties of individual components in the optimization problem defined above that characterize classes of optimization problems. In particular, we can identify the following properties:\n\nUnconstrained vs constrained\n\nPractically relevant problems are almost always constrained. But still there are good reasons to study unconstrained problems too, as many theoretical results and algorithms for constrained problems are based on transformations to unconstrained problems.\n\nLinear vs nonlinear\n\nBy linear problems we mean problems where the objective function and all the functions defining the constraints are linear (or actually affine) functions of the optimization variable \\bm x. Such problems constitute the simplest class of optimization problems, are very well understood, and there are efficient algorithms for solving them. In contrast, nonlinear problems are typically more difficult to solve (but see the discussion of the role of convexity below).\n\nSmooth vs nonsmooth\n\nEfficient algorithms for optimization over real variables benefit heavily from knowledge of the derivatives of the objective and constraint functions. If the functions are differentiable (aka smooth), we say that the whole optimization problem is smooth. Nonsmooth problems are typically a more difficult to analyze and solve (but again, see the discussion of the role of convexity below).\n\nConvex vs nonconvex\n\nIf the objective function and the feasible set are convex (the latter holds when the functions defining the inequality constraints are convex and the functions defining the equality constrains are affine), the whole optimization problem is convex. Convex optimization problems are very well understood and there are efficient algorithms for solving them. In contrast, nonconvex problems are typically more difficult to solve. It turns out that convexity is a lot more important property than linearity and smoothness when it comes to solving optimization problems efficiently.",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Optimization problems"
+    ]
+  },
+  {
+    "objectID": "opt_problems.html#classes-of-optimization-problems",
+    "href": "opt_problems.html#classes-of-optimization-problems",
+    "title": "Optimization problems",
+    "section": "Classes of optimization problems",
+    "text": "Classes of optimization problems\nBased on the properties discussed above, we can identify the following distinct classes of optimization problems:\n\nLinear program (LP)\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & \\mathbf c^\\top \\bm x \\\\\n\\text{subject to} \\quad & \\mathbf A_\\mathrm{ineq}\\bm x \\leq \\mathbf b_\\mathrm{ineq},\\\\\n& \\mathbf A_\\mathrm{eq}\\bm x = \\mathbf b_\\mathrm{eq}.\n\\end{aligned}\n\nAn LP is obviously linear, hence it is also smooth and convex.\nSome theoretical results and numerical algorithms require a linear program in a specific form, called the standard form: \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & \\mathbf c^\\top \\bm x \\\\\n\\text{subject to} \\quad & \\mathbf A\\bm x = \\mathbf b,\\\\\n& \\bm x \\geq \\mathbf 0,\n\\end{aligned}\n where the inequality \\bm x \\geq \\mathbf 0 is understood componentwise, that is, x_i \\geq 0 for all i = 1, \\ldots, n.\n\n\nQuadratic program (QP)\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & \\bm x^\\top \\mathbf Q \\bm x +  \\mathbf c^\\top \\bm x \\\\\n\\text{subject to} \\quad & \\mathbf A_\\mathrm{ineq}\\bm x \\leq \\mathbf b_\\mathrm{ineq},\\\\\n& \\mathbf A_\\mathrm{eq}\\bm x = \\mathbf b_\\mathrm{eq}.\n\\end{aligned}\n\nEven though the QP is nonlinear, it is smooth and if the matrix \\mathbf Q is positive semidefinite, it is convex. Its analysis and numerical solution are not much more difficult than those of an LP problem.\n\nQuadratically constrained quadratic program (QCQP)\nIt is worth emphasizing that for the standard QP the constraints are still given by a system of linear equations and inequalities. Sometimes we can encounter problems in which not only the cost function but also the functions defining the constraints are quadratic as in \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & \\bm x^\\top \\mathbf Q \\bm x +  \\mathbf c^\\top \\bm x \\\\\n\\text{subject to} \\quad & \\bm x^\\top \\mathbf A_i\\bm x + \\mathbf b_i \\bm x + c_i \\leq \\mathbf 0, \\quad i=1, \\ldots, m.\n\\end{aligned}\n\nA QCQP problem is convex if and only if the the constraints define a convex feasible set, which is the case when all the matrices \\mathbf A_i are positive semidefinite.\n\n\n\nConic program (CP)\nFirst, what is a cone? It is a set such that if something is in the cone, then a multiple of it by a nonnegative number is still in the set. We are going to restrict ourselves to regular cones, which are are pointed, closed and convex. An example of such regular cone in a plane is in Figure 1 below.\n\n\n\n\n\n\nFigure 1: Regular (pointed, convex, closed) cone in a plane\n\n\n\nNow, what is the point in using cones in optimization? Reformulation of nonlinear optimization problems using cones constitutes a systematic way to identify what these (conic) optimization problems have in common with linear programs, for which powerful theory and efficient algorithms exist.\nNote that an LP in the standard form can be written as \n\\begin{aligned}\n\\operatorname*{minimize} &\\quad \\mathbf c^\\top \\bm x\\\\\n\\text{subject to} &\\quad \\mathbf A\\bm x = \\mathbf b,\\\\\n&\\quad \\bm x\\in \\mathbb{R}_+^n,\n\\end{aligned}\n where \\mathbb R_+^n is a positive orthant. Now, the positive orthant is a convex cone! We can then see the LP as an instance of a general conic optimization problem (conic program)\n\n\\begin{aligned}\n\\operatorname*{minimize} &\\quad \\mathbf c^\\top \\bm x\\\\\n\\text{subject to} &\\quad \\mathbf A\\bm x = \\mathbf b,\\\\\n&\\quad \\bm x\\in \\mathcal{K},\n\\end{aligned}\n where \\mathcal{K} is a cone in \\mathbb R^n.\n\n\n\n\n\n\nInequality as belonging to a cone\n\n\n\nA fundamental idea unrolled here: the inequality \\bm x\\geq 0 can be interpreted as \\bm x belonging to a componentwise nonegative cone, that is \\bm x \\in \\mathbb R_+^n. What if some other cone \\mathcal K is considered? What would be the interpretation of the inequality then?\n\n\nSometimes in order to emphasize that the inequality is induced by the cone \\mathcal K, we write it as \\geq_\\mathcal{K}. Another convention – the one we actually adopt here – is to use another symbol for the inequality \\succeq to distinguish it from the componentwise meaning, assuming that the cone is understood from the context. We then interpret conic inequalities such as \n\\mathbf A_\\mathrm{ineq}\\bm x \\succeq \\mathbf b_\\mathrm{ineq}\n in the sense that \n\\mathbf A_\\mathrm{ineq}\\bm x - \\mathbf b_\\mathrm{ineq} \\in \\mathcal{K}.\n\nIt is high time to explore some concrete cones (other than the positive orthant). We consider just two, but there are a few more, see the literature.\n\nSecond-order cone program (SOCP)\nThe most immediate cone in \\mathbb R^n is the second-order cone, also called the Lorentz cone or even the ice cream cone. We explain it in \\mathbb R^3 for the ease of visualization, but generalization to \\mathbb R^n is straightforward. The second-order cone in \\mathbb R^3 is defined as \n\\mathcal{K}_\\mathrm{SOC}^3 = \\left\\{ \\bm x \\in \\mathbb R^3 \\mid \\sqrt{x_1^2 + x_2^2} \\leq x_3 \\right\\}.\n\nand is visualized in Figure 2 below.\n\n\n\n\n\n\n\n\nFigure 2: A second-order cone in 3D\n\n\n\n\n\nWhich of the three axes plays the role of the axis of symmetry for the cone must be agreed beforhand. Singling this direction out, the SOC in \\mathbb R^n can also be formulated as \n\\mathcal{K}_\\mathrm{SOC}^n = \\left\\{ (\\bm x, t) \\in \\mathbb R^{n-1} \\times \\mathbb R \\mid \\|\\bm x\\|_2 \\leq t \\right\\}.\n\nA second-order conic program in standard form is then \n\\begin{aligned}\n\\operatorname*{minimize} &\\quad \\mathbf c^\\top \\bm x\\\\\n\\text{subject to} &\\quad \\mathbf A\\bm x = \\mathbf b,\\\\\n&\\quad \\bm x\\in \\mathcal{K}_\\mathrm{SOC}^n,\n\\end{aligned}\n\nwhich can be written explicitly as \n\\begin{aligned}\n\\operatorname*{minimize} &\\quad \\mathbf c^\\top \\bm x\\\\\n\\text{subject to} &\\quad \\mathbf A\\bm x = \\mathbf b,\\\\\n&\\quad x_1^2 + \\cdots + x_{n-1}^2 - x_n^2 \\leq 0.\n\\end{aligned}\n\nA second-order conic program can also come in non-standard form such as \n\\begin{aligned}\n\\operatorname*{minimize} &\\quad \\mathbf c^\\top \\bm x\\\\\n\\text{subject to} &\\quad \\mathbf A_\\mathrm{ineq}\\bm x \\succeq  \\mathbf b_\\mathrm{ineq}.\n\\end{aligned}\n\nAssuming the data is structured as \n\\begin{bmatrix}\n\\mathbf A\\\\\n\\mathbf c^\\top\n\\end{bmatrix}\n\\bm x \\succeq\n\\begin{bmatrix}\n\\mathbf b\\\\\nd\n\\end{bmatrix},\n the inequality can be rewritten as \n\\begin{bmatrix}\n\\mathbf A\\\\\n\\mathbf c^\\top\n\\end{bmatrix}\n\\bm x -\n\\begin{bmatrix}\n\\mathbf b\\\\\nd\n\\end{bmatrix} \\in \\mathcal{K}_\\mathrm{SOC}^n,\n which finally gives \n\\|\\mathbf A \\bm x - \\mathbf b\\|_2 \\leq \\mathbf c^\\top \\bm x + d.\n\nTo summarize, another form of a second-order cone program (SOCP) is\n\n\\begin{aligned}\n\\operatorname*{minimize} &\\quad \\mathbf c^\\top \\bm x\\\\\n\\text{subject to} &\\quad \\mathbf A_\\mathrm{eq}\\bm x = \\mathbf b_\\mathrm{eq},\\\\\n&\\quad \\|\\mathbf A \\bm x - \\mathbf b\\|_2 \\leq \\mathbf c^\\top \\bm x + d.\n\\end{aligned}\n\nWe can see that the SOCP contains both linear and quadratic constraints, hence it generalizes LP and QP, including convex QCQP. To see the latter, expand the square of \\|\\mathbf A \\bm x - \\mathbf b\\|_2 into (\\bm x^\\top \\mathbf A^\\top  - \\mathbf b^\\top)(\\mathbf A \\bm x - \\mathbf b) = \\bm x^\\top \\mathbf A^\\top \\mathbf A \\bm x + \\ldots\n\n\nSemidefinite program (SDP)\nAnother cone of great importance the control theory is the cone of positive semidefinite matrices. It is commonly denoted as \\mathcal S_+^n and is defined as \n\\mathcal S_+^n = \\left\\{ \\bm X = \\bm X^\\top \\in \\mathbb R^{n \\times n} \\mid \\bm z^\\top \\bm X \\bm z \\geq 0\\, \\forall \\bm z\\in \\mathbb R^n \\right\\},\n where \\mathbf X \\succeq 0 is a common way to express that \\mathbf X is positive semidefinite.\nUnlike the previous classes of optimization problems, this one is formulated with matrix variables instead of vector ones. But nothing prevents us from collecting the components of a symmetric matrix into a vector and proceed with vectors as usual, if needed:\n\n\\bm X = \\begin{bmatrix} x_1 & x_2 & x_3 \\\\ x_2 & x_4 & x_5\\\\ x_3 & x_5 & x_6 \\end{bmatrix},\n\\quad\n\\bm x = \\begin{bmatrix} x_1 \\\\ x_2 \\\\ \\vdots \\\\ x_6 \\end{bmatrix}.\n\nAn optimization problem with matrix variables constrained to be in the cone of semidefinite matrices (or their vector representations) is called a semidefinite program (SDP). As usual, we start with the standard form, in which the cost function is linear and the optimization is subject to an affine constraint and a conic constraint. In the following, in place of the inner products of two vectors \\mathbf c^\\top x we are going to use inner products of matrices defined as \n\\langle \\mathbf C, \\bm X\\rangle = \\operatorname{Tr} \\mathbf C \\bm X,\n where \\operatorname{Tr} is a trace of a matrix defined as the sum of the diagonal elements.\nThe SDP program in the standard form is then \n\\begin{aligned}\n\\operatorname{minimize}_{\\bm X} &\\quad \\operatorname{Tr} \\mathbf C \\bm X\\\\\n\\text{subject to} &\\quad \\operatorname{Tr} \\mathbf A_i \\bm X = \\mathbf b_i, \\quad i=1, \\ldots, m,\\\\\n&\\quad \\bm X \\in \\mathcal S_+^n,\n\\end{aligned}\n where the latter constraint is more often than not written as \\bm X \\succeq 0, understanding from the context that the cone of positive definite matrices is assumed.\n\n\nOther conic programs\nWe are not going to cover them here, but we only enumerate a few other cones useful in optimization: rotated second-order cone, exponential cone, power cone, … A concise overview is in (“MOSEK Modeling Cookbook” 2024)\n\n\n\nGeometric program (GP)\n\n\nNonlinear program (NLP)\nFor completeness we include here once again the general nonlinear programming problem:\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & f(\\bm x) \\\\\n\\text{subject to} \\quad & \\mathbf g(\\bm x) \\leq 0,\\\\\n& \\mathbf h(\\bm x) = 0.\n\\end{aligned}\n\nSmoothness of the problem can easily be determined based on the differentiability of the functions. Convexity can also be determined by inspecting the functions, but this is not necessarily easy. One way to check convexity of a function is to view it as a composition of simple functions and exploit the knowledge about convexity of these simple functions. See (Boyd and Vandenberghe 2004, sec. 3.2)",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Optimization problems"
+    ]
+  },
+  {
+    "objectID": "opt_problems.html#recommended-literature",
+    "href": "opt_problems.html#recommended-literature",
+    "title": "Optimization problems",
+    "section": "Recommended literature",
+    "text": "Recommended literature\nIf a single reference book on nonlinear optimization is to be recommended, be it (Nocedal and Wright 2006) that sits on your book shelf.\nIf one or two more can still fit, (Bertsekas 2016), (Luenberger and Ye 2021) are classical comprehensive references on nonlinear programming (the latter covers linear programming too).\nWhile all the three books are only available for purchase, there is a wealth of resources are freely available online such as the notes (Gros and Diehl 2022) accompanying a course on optimal control, which do a decent job of introduction to a nonlinear programming, and beautifully typeset modern textbooks (Kochenderfer and Wheeler 2019) and (Martins and Ning 2022), the former based on Julia language.\nWhen restricting to convex optimization, the bible of this field (Boyd and Vandenberghe 2004) is also freely available online. It is a must-have for everyone interested in optimization. Another textbook biased towards convex optimization is (Calafiore 2014), which is freely accessible through its web version. Yet another advanced and treatment of convex optimization is (Ben-Tal and Nemirovski 2023), which is also freely available online.\nMaybe a bit unexpected resources on theory are materials accompanying some optimization software. Partilarly recommendable is (“MOSEK Modeling Cookbook” 2024), it is very useful even if you do not indend to use their software.",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Optimization problems"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "B(E)3M35ORR – Optimal and Robust Control",
+    "section": "",
+    "text": "This website constitutes the lecture notes for the graduate course Optimal and Robust Control ([B3M35ORR((https://intranet.fel.cvut.cz/cz/education/bk/predmety/46/70/p4670206.html))], BE3M35ORR) taught within Cybernetics and Robotics graduate program at Faculty of Electrical Engineering, Czech Technical University in Prague, Czechia.\nOrganizational instructions, description of grading policy, assignments of homework problems and other course related material relevant for officially enrolled students are published on the course page within the FEL Moodle system.\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "cont_dir_multiple_shooting.html",
+    "href": "cont_dir_multiple_shooting.html",
+    "title": "Multiple shooting method for optimal control",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "9. Continuous-time optimal control - direct approach via numerical optimization",
+      "Multiple shooting method for optimal control"
+    ]
+  },
+  {
+    "objectID": "discr_indir.html",
+    "href": "discr_indir.html",
+    "title": "General nonlinear discrete-time optimal control",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "4. Discrete-time optimal control – indirect approach",
+      "General nonlinear discrete-time optimal control"
     ]
   },
   {
@@ -344,490 +799,14 @@
     ]
   },
   {
-    "objectID": "discr_indir.html",
-    "href": "discr_indir.html",
-    "title": "General nonlinear discrete-time optimal control",
+    "objectID": "discr_indir_LQR_fin_horizon.html",
+    "href": "discr_indir_LQR_fin_horizon.html",
+    "title": "Discrete-time LQR-optimal control on a finite horizon",
     "section": "",
     "text": "Back to top",
     "crumbs": [
       "4. Discrete-time optimal control – indirect approach",
-      "General nonlinear discrete-time optimal control"
-    ]
-  },
-  {
-    "objectID": "cont_dir_multiple_shooting.html",
-    "href": "cont_dir_multiple_shooting.html",
-    "title": "Multiple shooting method for optimal control",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "9. Continuous-time optimal control - direct approach via numerical optimization",
-      "Multiple shooting method for optimal control"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "B(E)3M35ORR – Optimal and Robust Control",
-    "section": "",
-    "text": "This website constitutes the lecture notes for the graduate course Optimal and Robust Control (B3M35ORR, BE3M35ORR) taught within Cybernetics and Robotics graduate program at Faculty of Electrical Engineering, Czech Technical University in Prague.\nOrganizational instructions, description of grading policy, assignments of homework problems and other course related material relevant for officially enrolled students are located elsewhere (the course page within the FEL Moodle)."
-  },
-  {
-    "objectID": "index.html#big-picture",
-    "href": "index.html#big-picture",
-    "title": "B(E)3M35ORR – Optimal and Robust Control",
-    "section": "Big picture",
-    "text": "Big picture"
-  },
-  {
-    "objectID": "opt_problems.html",
-    "href": "opt_problems.html",
-    "title": "Optimization problems",
-    "section": "",
-    "text": "We formulate a general optimization problem (also a mathematical program) as \n\\begin{aligned}\n\\operatorname*{minimize} \\quad & f(\\bm x) \\\\\n\\text{subject to} \\quad & \\bm x \\in \\mathcal{X},\n\\end{aligned}\n where f is a scalar function, \\bm x can be a scalar, a vector, a matrix or perhaps even a variable of yet another type, and \\mathcal{X} is a set of values that \\bm x can take, also called the feasible set.\n\n\n\n\n\n\nNote\n\n\n\nThe term “program” here has nothing to do with a computer program. Instead, it was used by the US military during the WWII to refer to plans or schedules in training and logistics.\n\n\nIf maximization of the objective function f() is desired, we can simply multiply the objective function by -1 and minimize the resulting function.\nTypically there are two types of constraints that can be imposed on the optimization variable \\bm x:\n\nexplicit characterization of the set such as \\bm x \\in \\mathbb{R}^n or \\bm x \\in \\mathbb{Z}^n, possibly even a direction enumeration such as \\bm x \\in \\{0,1\\}^n in the case of binary variables,\nimplicit characterization of the set using equations and inequalities such as g_i(\\bm x) \\leq 0 and h_i(\\bm x) = 0 for i = 1, \\ldots, m and j = 1, \\ldots, p.\n\nAn example of a more structured and yet sufficiently general optimization problems over several real and integer variables is \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^{n_x}, \\, \\bm y \\in \\mathbb{Z}^{n_y}} \\quad & f(\\bm x, \\bm y) \\\\\n\\text{subject to} \\quad & g_i(\\bm x, \\bm y) \\leq 0, \\quad i = 1, \\ldots, m, \\\\\n& h_j(\\bm x, \\bm y) = 0, \\quad j = 1, \\ldots, p.\n\\end{aligned}\n\nIndeed, for named sets such as \\mathbb R or \\mathbb Z, it is common to place the set constraints directly underneath the word “minimize”. But it is just one convention, and these constraints could be listed into the “subject to” section as well.\n\n\n\n\n\n\nInteger optimization not in this course\n\n\n\nIn this course we are only going to consider optimization problems with real-valued variables. This decision does not suggest that optimization with integer variables is less relevant for optimal control, quite the opposite! It is just that the theory and algorithms for integer or mixed integer optimization are based on different principles than those for real variables. And they can hardly fit into a single course. Good news for the interested students is that a graduate course named Combinatorial algorithms (B3B35KOA) covering integer optimization in detail is offered by the Cybernetics and Robotics study program at CTU FEE. Applications of integer optimization to optimal control are part of the course on Hybrid systems (B3B39HYS).\n\n\nThe form of an optimization problem that we are going to use in our course most often than not is \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & f(\\bm x) \\\\\n\\text{subject to} \\quad & g_i(\\bm x) \\leq 0, \\quad i = 1, \\ldots, m, \\\\\n& h_i(\\bm x) = 0, \\quad i = 1, \\ldots, p,\n\\end{aligned}\n which can also be written using vector-valued functions (reflected in the use of the bold face for their names) \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & f(\\bm x) \\\\\n\\text{subject to} \\quad & \\mathbf g(\\bm x) \\leq 0,\\\\\n& \\mathbf h(\\bm x) = 0.\n\\end{aligned}",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Optimization problems"
-    ]
-  },
-  {
-    "objectID": "opt_problems.html#optimization-problem-formulation",
-    "href": "opt_problems.html#optimization-problem-formulation",
-    "title": "Optimization problems",
-    "section": "",
-    "text": "We formulate a general optimization problem (also a mathematical program) as \n\\begin{aligned}\n\\operatorname*{minimize} \\quad & f(\\bm x) \\\\\n\\text{subject to} \\quad & \\bm x \\in \\mathcal{X},\n\\end{aligned}\n where f is a scalar function, \\bm x can be a scalar, a vector, a matrix or perhaps even a variable of yet another type, and \\mathcal{X} is a set of values that \\bm x can take, also called the feasible set.\n\n\n\n\n\n\nNote\n\n\n\nThe term “program” here has nothing to do with a computer program. Instead, it was used by the US military during the WWII to refer to plans or schedules in training and logistics.\n\n\nIf maximization of the objective function f() is desired, we can simply multiply the objective function by -1 and minimize the resulting function.\nTypically there are two types of constraints that can be imposed on the optimization variable \\bm x:\n\nexplicit characterization of the set such as \\bm x \\in \\mathbb{R}^n or \\bm x \\in \\mathbb{Z}^n, possibly even a direction enumeration such as \\bm x \\in \\{0,1\\}^n in the case of binary variables,\nimplicit characterization of the set using equations and inequalities such as g_i(\\bm x) \\leq 0 and h_i(\\bm x) = 0 for i = 1, \\ldots, m and j = 1, \\ldots, p.\n\nAn example of a more structured and yet sufficiently general optimization problems over several real and integer variables is \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^{n_x}, \\, \\bm y \\in \\mathbb{Z}^{n_y}} \\quad & f(\\bm x, \\bm y) \\\\\n\\text{subject to} \\quad & g_i(\\bm x, \\bm y) \\leq 0, \\quad i = 1, \\ldots, m, \\\\\n& h_j(\\bm x, \\bm y) = 0, \\quad j = 1, \\ldots, p.\n\\end{aligned}\n\nIndeed, for named sets such as \\mathbb R or \\mathbb Z, it is common to place the set constraints directly underneath the word “minimize”. But it is just one convention, and these constraints could be listed into the “subject to” section as well.\n\n\n\n\n\n\nInteger optimization not in this course\n\n\n\nIn this course we are only going to consider optimization problems with real-valued variables. This decision does not suggest that optimization with integer variables is less relevant for optimal control, quite the opposite! It is just that the theory and algorithms for integer or mixed integer optimization are based on different principles than those for real variables. And they can hardly fit into a single course. Good news for the interested students is that a graduate course named Combinatorial algorithms (B3B35KOA) covering integer optimization in detail is offered by the Cybernetics and Robotics study program at CTU FEE. Applications of integer optimization to optimal control are part of the course on Hybrid systems (B3B39HYS).\n\n\nThe form of an optimization problem that we are going to use in our course most often than not is \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & f(\\bm x) \\\\\n\\text{subject to} \\quad & g_i(\\bm x) \\leq 0, \\quad i = 1, \\ldots, m, \\\\\n& h_i(\\bm x) = 0, \\quad i = 1, \\ldots, p,\n\\end{aligned}\n which can also be written using vector-valued functions (reflected in the use of the bold face for their names) \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & f(\\bm x) \\\\\n\\text{subject to} \\quad & \\mathbf g(\\bm x) \\leq 0,\\\\\n& \\mathbf h(\\bm x) = 0.\n\\end{aligned}",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Optimization problems"
-    ]
-  },
-  {
-    "objectID": "opt_problems.html#properties-of-optimization-problems",
-    "href": "opt_problems.html#properties-of-optimization-problems",
-    "title": "Optimization problems",
-    "section": "Properties of optimization problems",
-    "text": "Properties of optimization problems\nIt is now the presence/absence and the properties of individual components in the optimization problem defined above that characterize classes of optimization problems. In particular, we can identify the following properties:\n\nUnconstrained vs constrained\n\nPractically relevant problems are almost always constrained. But still there are good reasons to study unconstrained problems too, as many theoretical results and algorithms for constrained problems are based on transformations to unconstrained problems.\n\nLinear vs nonlinear\n\nBy linear problems we mean problems where the objective function and all the functions defining the constraints are linear (or actually affine) functions of the optimization variable \\bm x. Such problems constitute the simplest class of optimization problems, are very well understood, and there are efficient algorithms for solving them. In contrast, nonlinear problems are typically more difficult to solve (but see the discussion of the role of convexity below).\n\nSmooth vs nonsmooth\n\nEfficient algorithms for optimization over real variables benefit heavily from knowledge of the derivatives of the objective and constraint functions. If the functions are differentiable (aka smooth), we say that the whole optimization problem is smooth. Nonsmooth problems are typically a more difficult to analyze and solve (but again, see the discussion of the role of convexity below).\n\nConvex vs nonconvex\n\nIf the objective function and the feasible set are convex (the latter holds when the functions defining the inequality constraints are convex and the functions defining the equality constrains are affine), the whole optimization problem is convex. Convex optimization problems are very well understood and there are efficient algorithms for solving them. In contrast, nonconvex problems are typically more difficult to solve. It turns out that convexity is a lot more important property than linearity and smoothness when it comes to solving optimization problems efficiently.",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Optimization problems"
-    ]
-  },
-  {
-    "objectID": "opt_problems.html#classes-of-optimization-problems",
-    "href": "opt_problems.html#classes-of-optimization-problems",
-    "title": "Optimization problems",
-    "section": "Classes of optimization problems",
-    "text": "Classes of optimization problems\nBased on the properties discussed above, we can identify the following distinct classes of optimization problems:\n\nLinear program (LP)\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & \\mathbf c^\\top \\bm x \\\\\n\\text{subject to} \\quad & \\mathbf A_\\mathrm{ineq}\\bm x \\leq \\mathbf b_\\mathrm{ineq},\\\\\n& \\mathbf A_\\mathrm{eq}\\bm x = \\mathbf b_\\mathrm{eq}.\n\\end{aligned}\n\nAn LP is obviously linear, hence it is also smooth and convex.\nSome theoretical results and numerical algorithms require a linear program in a specific form, called the standard form: \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & \\mathbf c^\\top \\bm x \\\\\n\\text{subject to} \\quad & \\mathbf A\\bm x = \\mathbf b,\\\\\n& \\bm x \\geq \\mathbf 0,\n\\end{aligned}\n where the inequality \\bm x \\geq \\mathbf 0 is understood componentwise, that is, x_i \\geq 0 for all i = 1, \\ldots, n.\n\n\nQuadratic program (QP)\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & \\bm x^\\top \\mathbf Q \\bm x +  \\mathbf c^\\top \\bm x \\\\\n\\text{subject to} \\quad & \\mathbf A_\\mathrm{ineq}\\bm x \\leq \\mathbf b_\\mathrm{ineq},\\\\\n& \\mathbf A_\\mathrm{eq}\\bm x = \\mathbf b_\\mathrm{eq}.\n\\end{aligned}\n\nEven though the QP is nonlinear, it is smooth and if the matrix \\mathbf Q is positive semidefinite, it is convex. Its analysis and numerical solution are not much more difficult than those of an LP problem.\n\nQuadratically constrained quadratic program (QCQP)\nIt is worth emphasizing that for the standard QP the constraints are still given by a system of linear equations and inequalities. Sometimes we can encounter problems in which not only the cost function but also the functions defining the constraints are quadratic as in \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & \\bm x^\\top \\mathbf Q \\bm x +  \\mathbf c^\\top \\bm x \\\\\n\\text{subject to} \\quad & \\bm x^\\top \\mathbf A_i\\bm x + \\mathbf b_i \\bm x + c_i \\leq \\mathbf 0, \\quad i=1, \\ldots, m.\n\\end{aligned}\n\nA QCQP problem is convex if and only if the the constraints define a convex feasible set, which is the case when all the matrices \\mathbf A_i are positive semidefinite.\n\n\n\nConic program (CP)\nFirst, what is a cone? It is a set such that if something is in the cone, then a multiple of it by a nonnegative number is still in the set. We are going to restrict ourselves to regular cones, which are are pointed, closed and convex. An example of such regular cone in a plane is in Figure 1 below.\n\n\n\n\n\n\nFigure 1: Regular (pointed, convex, closed) cone in a plane\n\n\n\nNow, what is the point in using cones in optimization? Reformulation of nonlinear optimization problems using cones constitutes a systematic way to identify what these (conic) optimization problems have in common with linear programs, for which powerful theory and efficient algorithms exist.\nNote that an LP in the standard form can be written as \n\\begin{aligned}\n\\operatorname*{minimize} &\\quad \\mathbf c^\\top \\bm x\\\\\n\\text{subject to} &\\quad \\mathbf A\\bm x = \\mathbf b,\\\\\n&\\quad \\bm x\\in \\mathbb{R}_+^n,\n\\end{aligned}\n where \\mathbb R_+^n is a positive orthant. Now, the positive orthant is a convex cone! We can then see the LP as an instance of a general conic optimization problem (conic program)\n\n\\begin{aligned}\n\\operatorname*{minimize} &\\quad \\mathbf c^\\top \\bm x\\\\\n\\text{subject to} &\\quad \\mathbf A\\bm x = \\mathbf b,\\\\\n&\\quad \\bm x\\in \\mathcal{K},\n\\end{aligned}\n where \\mathcal{K} is a cone in \\mathbb R^n.\n\n\n\n\n\n\nInequality as belonging to a cone\n\n\n\nA fundamental idea unrolled here: the inequality \\bm x\\geq 0 can be interpreted as \\bm x belonging to a componentwise nonegative cone, that is \\bm x \\in \\mathbb R_+^n. What if some other cone \\mathcal K is considered? What would be the interpretation of the inequality then?\n\n\nSometimes in order to emphasize that the inequality is induced by the cone \\mathcal K, we write it as \\geq_\\mathcal{K}. Another convention – the one we actually adopt here – is to use another symbol for the inequality \\succeq to distinguish it from the componentwise meaning, assuming that the cone is understood from the context. We then interpret conic inequalities such as \n\\mathbf A_\\mathrm{ineq}\\bm x \\succeq \\mathbf b_\\mathrm{ineq}\n in the sense that \n\\mathbf A_\\mathrm{ineq}\\bm x - \\mathbf b_\\mathrm{ineq} \\in \\mathcal{K}.\n\nIt is high time to explore some concrete cones (other than the positive orthant). We consider just two, but there are a few more, see the literature.\n\nSecond-order cone program (SOCP)\nThe most immediate cone in \\mathbb R^n is the second-order cone, also called the Lorentz cone or even the ice cream cone. We explain it in \\mathbb R^3 for the ease of visualization, but generalization to \\mathbb R^n is straightforward. The second-order cone in \\mathbb R^3 is defined as \n\\mathcal{K}_\\mathrm{SOC}^3 = \\left\\{ \\bm x \\in \\mathbb R^3 \\mid \\sqrt{x_1^2 + x_2^2} \\leq x_3 \\right\\}.\n\nand is visualized in Figure 2 below.\n\n\n\n\n\n\n\n\nFigure 2: A second-order cone in 3D\n\n\n\n\n\nWhich of the three axes plays the role of the axis of symmetry for the cone must be agreed beforhand. Singling this direction out, the SOC in \\mathbb R^n can also be formulated as \n\\mathcal{K}_\\mathrm{SOC}^n = \\left\\{ (\\bm x, t) \\in \\mathbb R^{n-1} \\times \\mathbb R \\mid \\|\\bm x\\|_2 \\leq t \\right\\}.\n\nA second-order conic program in standard form is then \n\\begin{aligned}\n\\operatorname*{minimize} &\\quad \\mathbf c^\\top \\bm x\\\\\n\\text{subject to} &\\quad \\mathbf A\\bm x = \\mathbf b,\\\\\n&\\quad \\bm x\\in \\mathcal{K}_\\mathrm{SOC}^n,\n\\end{aligned}\n\nwhich can be written explicitly as \n\\begin{aligned}\n\\operatorname*{minimize} &\\quad \\mathbf c^\\top \\bm x\\\\\n\\text{subject to} &\\quad \\mathbf A\\bm x = \\mathbf b,\\\\\n&\\quad x_1^2 + \\cdots + x_{n-1}^2 - x_n^2 \\leq 0.\n\\end{aligned}\n\nA second-order conic program can also come in non-standard form such as \n\\begin{aligned}\n\\operatorname*{minimize} &\\quad \\mathbf c^\\top \\bm x\\\\\n\\text{subject to} &\\quad \\mathbf A_\\mathrm{ineq}\\bm x \\succeq  \\mathbf b_\\mathrm{ineq}.\n\\end{aligned}\n\nAssuming the data is structured as \n\\begin{bmatrix}\n\\mathbf A\\\\\n\\mathbf c^\\top\n\\end{bmatrix}\n\\bm x \\succeq\n\\begin{bmatrix}\n\\mathbf b\\\\\nd\n\\end{bmatrix},\n the inequality can be rewritten as \n\\begin{bmatrix}\n\\mathbf A\\\\\n\\mathbf c^\\top\n\\end{bmatrix}\n\\bm x -\n\\begin{bmatrix}\n\\mathbf b\\\\\nd\n\\end{bmatrix} \\in \\mathcal{K}_\\mathrm{SOC}^n,\n which finally gives \n\\|\\mathbf A \\bm x - \\mathbf b\\|_2 \\leq \\mathbf c^\\top \\bm x + d.\n\nTo summarize, another form of a second-order cone program (SOCP) is\n\n\\begin{aligned}\n\\operatorname*{minimize} &\\quad \\mathbf c^\\top \\bm x\\\\\n\\text{subject to} &\\quad \\mathbf A_\\mathrm{eq}\\bm x = \\mathbf b_\\mathrm{eq},\\\\\n&\\quad \\|\\mathbf A \\bm x - \\mathbf b\\|_2 \\leq \\mathbf c^\\top \\bm x + d.\n\\end{aligned}\n\nWe can see that the SOCP contains both linear and quadratic constraints, hence it generalizes LP and QP, including convex QCQP. To see the latter, expand the square of \\|\\mathbf A \\bm x - \\mathbf b\\|_2 into (\\bm x^\\top \\mathbf A^\\top  - \\mathbf b^\\top)(\\mathbf A \\bm x - \\mathbf b) = \\bm x^\\top \\mathbf A^\\top \\mathbf A \\bm x + \\ldots\n\n\nSemidefinite program (SDP)\nAnother cone of great importance the control theory is the cone of positive semidefinite matrices. It is commonly denoted as \\mathcal S_+^n and is defined as \n\\mathcal S_+^n = \\left\\{ \\bm X = \\bm X^\\top \\in \\mathbb R^{n \\times n} \\mid \\bm z^\\top \\bm X \\bm z \\geq 0\\, \\forall \\bm z\\in \\mathbb R^n \\right\\},\n where \\mathbf X \\succeq 0 is a common way to express that \\mathbf X is positive semidefinite.\nUnlike the previous classes of optimization problems, this one is formulated with matrix variables instead of vector ones. But nothing prevents us from collecting the components of a symmetric matrix into a vector and proceed with vectors as usual, if needed:\n\n\\bm X = \\begin{bmatrix} x_1 & x_2 & x_3 \\\\ x_2 & x_4 & x_5\\\\ x_3 & x_5 & x_6 \\end{bmatrix},\n\\quad\n\\bm x = \\begin{bmatrix} x_1 \\\\ x_2 \\\\ \\vdots \\\\ x_6 \\end{bmatrix}.\n\nAn optimization problem with matrix variables constrained to be in the cone of semidefinite matrices (or their vector representations) is called a semidefinite program (SDP). As usual, we start with the standard form, in which the cost function is linear and the optimization is subject to an affine constraint and a conic constraint. In the following, in place of the inner products of two vectors \\mathbf c^\\top x we are going to use inner products of matrices defined as \n\\langle \\mathbf C, \\bm X\\rangle = \\operatorname{Tr} \\mathbf C \\bm X,\n where \\operatorname{Tr} is a trace of a matrix defined as the sum of the diagonal elements.\nThe SDP program in the standard form is then \n\\begin{aligned}\n\\operatorname{minimize}_{\\bm X} &\\quad \\operatorname{Tr} \\mathbf C \\bm X\\\\\n\\text{subject to} &\\quad \\operatorname{Tr} \\mathbf A_i \\bm X = \\mathbf b_i, \\quad i=1, \\ldots, m,\\\\\n&\\quad \\bm X \\in \\mathcal S_+^n,\n\\end{aligned}\n where the latter constraint is more often than not written as \\bm X \\succeq 0, understanding from the context that the cone of positive definite matrices is assumed.\n\n\nOther conic programs\nWe are not going to cover them here, but we only enumerate a few other cones useful in optimization: rotated second-order cone, exponential cone, power cone, … A concise overview is in (“MOSEK Modeling Cookbook” 2024)\n\n\n\nGeometric program (GP)\n\n\nNonlinear program (NLP)\nFor completeness we include here once again the general nonlinear programming problem:\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & f(\\bm x) \\\\\n\\text{subject to} \\quad & \\mathbf g(\\bm x) \\leq 0,\\\\\n& \\mathbf h(\\bm x) = 0.\n\\end{aligned}\n\nSmoothness of the problem can easily be determined based on the differentiability of the functions. Convexity can also be determined by inspecting the functions, but this is not necessarily easy. One way to check convexity of a function is to view it as a composition of simple functions and exploit the knowledge about convexity of these simple functions. See (Boyd and Vandenberghe 2004, sec. 3.2)",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Optimization problems"
-    ]
-  },
-  {
-    "objectID": "opt_problems.html#recommended-literature",
-    "href": "opt_problems.html#recommended-literature",
-    "title": "Optimization problems",
-    "section": "Recommended literature",
-    "text": "Recommended literature\nIf a single reference book on nonlinear optimization is to be recommended, be it (Nocedal and Wright 2006) that sits on your book shelf.\nIf one or two more can still fit, (Bertsekas 2016), (Luenberger and Ye 2021) are classical comprehensive references on nonlinear programming (the latter covers linear programming too).\nWhile all the three books are only available for purchase, there is a wealth of resources are freely available online such as the notes (Gros and Diehl 2022) accompanying a course on optimal control, which do a decent job of introduction to a nonlinear programming, and beautifully typeset modern textbooks (Kochenderfer and Wheeler 2019) and (Martins and Ning 2022), the former based on Julia language.\nWhen restricting to convex optimization, the bible of this field (Boyd and Vandenberghe 2004) is also freely available online. It is a must-have for everyone interested in optimization. Another textbook biased towards convex optimization is (Calafiore 2014), which is freely accessible through its web version. Yet another advanced and treatment of convex optimization is (Ben-Tal and Nemirovski 2023), which is also freely available online.\nMaybe a bit unexpected resources on theory are materials accompanying some optimization software. Partilarly recommendable is (“MOSEK Modeling Cookbook” 2024), it is very useful even if you do not indend to use their software.",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Optimization problems"
-    ]
-  },
-  {
-    "objectID": "stochastic_LQR.html",
-    "href": "stochastic_LQR.html",
-    "title": "Stochastic LQR control",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "10. Some extensions: LQG, LTR, H2",
-      "Stochastic LQR control"
-    ]
-  },
-  {
-    "objectID": "reduction_order_model.html",
-    "href": "reduction_order_model.html",
-    "title": "Model order reduction",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "14. Model and controller order reduction",
-      "Model order reduction"
-    ]
-  },
-  {
-    "objectID": "LTR.html",
-    "href": "LTR.html",
-    "title": "Loop transfer recovery (LTR)",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "10. Some extensions: LQG, LTR, H2",
-      "Loop transfer recovery (LTR)"
-    ]
-  },
-  {
-    "objectID": "opt_algo_derivatives.html",
-    "href": "opt_algo_derivatives.html",
-    "title": "Computing derivatives",
-    "section": "",
-    "text": "We have already argued that using derivatives within gives us a huge advantage in solving optimization problems.\nThere are three ways to compute derivatives:",
-    "crumbs": [
-      "2. Optimization – algorithms",
-      "Computing derivatives"
-    ]
-  },
-  {
-    "objectID": "opt_algo_derivatives.html#symbolic-methods",
-    "href": "opt_algo_derivatives.html#symbolic-methods",
-    "title": "Computing derivatives",
-    "section": "Symbolic methods",
-    "text": "Symbolic methods\nThese are essentially the methods that we have all learnt to apply using a pen and paper. A bunch of rules.",
-    "crumbs": [
-      "2. Optimization – algorithms",
-      "Computing derivatives"
-    ]
-  },
-  {
-    "objectID": "opt_algo_derivatives.html#numerical-finite-difference-fd-methods",
-    "href": "opt_algo_derivatives.html#numerical-finite-difference-fd-methods",
-    "title": "Computing derivatives",
-    "section": "Numerical finite-difference (FD) methods",
-    "text": "Numerical finite-difference (FD) methods",
-    "crumbs": [
-      "2. Optimization – algorithms",
-      "Computing derivatives"
-    ]
-  },
-  {
-    "objectID": "opt_algo_derivatives.html#algorithmic-also-automatic-differentiation-methods",
-    "href": "opt_algo_derivatives.html#algorithmic-also-automatic-differentiation-methods",
-    "title": "Computing derivatives",
-    "section": "Algorithmic (also Automatic) differentiation methods",
-    "text": "Algorithmic (also Automatic) differentiation methods",
-    "crumbs": [
-      "2. Optimization – algorithms",
-      "Computing derivatives"
-    ]
-  },
-  {
-    "objectID": "cont_indir_LQR_inf_horizon.html",
-    "href": "cont_indir_LQR_inf_horizon.html",
-    "title": "Indirect approach to LQR on an infinite horizon",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "7. Continuous-time optimal control - indirect approach via calculus of variations",
-      "Indirect approach to LQR on an infinite horizon"
-    ]
-  },
-  {
-    "objectID": "discr_dir_mpc_recursive_feasibility.html",
-    "href": "discr_dir_mpc_recursive_feasibility.html",
-    "title": "Recursive feasibility",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "6. More on MPC",
-      "Recursive feasibility"
-    ]
-  },
-  {
-    "objectID": "cont_indir_CARE.html",
-    "href": "cont_indir_CARE.html",
-    "title": "Continuous-time Riccati equation",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "7. Continuous-time optimal control - indirect approach via calculus of variations",
-      "Continuous-time Riccati equation"
-    ]
-  },
-  {
-    "objectID": "cont_indir_time_optimal.html",
-    "href": "cont_indir_time_optimal.html",
-    "title": "Time-optimal control",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "8. Continuous-time optimal control - indirect approach via Pontryagin's maximum principle",
-      "Time-optimal control"
-    ]
-  },
-  {
-    "objectID": "cont_dir_collocation.html",
-    "href": "cont_dir_collocation.html",
-    "title": "Collocation methods for optimal control",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "9. Continuous-time optimal control - direct approach via numerical optimization",
-      "Collocation methods for optimal control"
-    ]
-  },
-  {
-    "objectID": "opt_theory_unconstrained.html",
-    "href": "opt_theory_unconstrained.html",
-    "title": "Theory for unconstrained optimization",
-    "section": "",
-    "text": "…",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Theory for unconstrained optimization"
-    ]
-  },
-  {
-    "objectID": "opt_theory_unconstrained.html#local-vs-global-optimality",
-    "href": "opt_theory_unconstrained.html#local-vs-global-optimality",
-    "title": "Theory for unconstrained optimization",
-    "section": "",
-    "text": "…",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Theory for unconstrained optimization"
-    ]
-  },
-  {
-    "objectID": "opt_theory_unconstrained.html#conditions-of-optimality",
-    "href": "opt_theory_unconstrained.html#conditions-of-optimality",
-    "title": "Theory for unconstrained optimization",
-    "section": "Conditions of optimality",
-    "text": "Conditions of optimality\nHere we consider two types of conditions of optimality for unconstrained minimization problems: necessary and sufficient conditions. Necessary conditions must be satisfied at the minimum, but even when they are, the optimality is not guaranteed. On the other hand, the sufficient conditions need not be satisfied at the minimum, but if they are, the optimality is guaranteed. We show the necessary conditions of the first and second order, while the sufficient condition only of the second order.\n\nScalar optimization variable\n\nWe recall here the fundamental assumption made at the beginning of our introduction to optimization – we only consider optimization variables that are real-valued (first, just scalar x \\in \\mathbb R, later vectors \\bm x \\in \\mathbb R^n), and objective functions f() that are sufficiently smooth – all the derivatives exist. Then the conditions of optimality can be derived upon inspecting the Taylor series approximation of the cost function around the minimum.\n\nTaylor series approximation around the optimum\nDenote x^* as the (local) minimum of the function f(x). The Taylor series expansion of f(x) around x^* is\n\nf(x^*+\\alpha) = f(x^*)+\\left.\\frac{\\mathrm{d}f(x)}{\\mathrm{d} x}\\right|_{x=x^*}\\alpha + \\frac{1}{2}\\left.\\frac{\\mathrm{d^2}f(x)}{\\mathrm{d} x^2}\\right|_{x=x^*}\\alpha^2 + {\\color{blue}\\mathcal{O}(\\alpha^3)},\n where \\mathcal{O}() is called Big O and has the property that \n\\lim_{\\alpha\\rightarrow 0}\\frac{\\mathcal{O}(\\alpha^3)}{\\alpha^3} \\leq M&lt;\\infty.\n\nAlternatively, we can write the Taylor series expansion as \nf(x^*+\\alpha) = f(x^*)+\\left.\\frac{\\mathrm{d}f(x)}{\\mathrm{d} x}\\right|_{x=x^*}\\alpha + \\frac{1}{2}\\left.\\frac{\\mathrm{d^2}f(x)}{\\mathrm{d} x^2}\\right|_{x=x^*}\\alpha^2 + {\\color{red}o(\\alpha^2)},\n using the little o with the property that \n\\lim_{\\alpha\\rightarrow 0}\\frac{o(\\alpha^2)}{\\alpha^2} = 0.\n\nWhether \\mathcal{O}() or \\mathcal{o}() concepts are used, it is just a matter of personal preference. They both express that the higher-order terms in the expansion tend to be negligible compare to the first- and second-order term as \\alpha is getting smaller. \\mathcal O(\\alpha^3) goes to zero at least as fast as a cubic function, while o(\\alpha^2) goes to zero faster than a quadratic function.\nIt is indeed important to understand that this negligibility of the higher-order terms is only valid asymptotically – for a particular \\alpha it may easily happend that, say, the third-order term is still dominating.\n\n\nFirst-order necessary conditions of optimality\nFor \\alpha sufficiently small, the first-order Taylor series expansion is a good approximation of the function f(x) around the minimum. Since \\alpha enters this expansion linearly, the cost function can increase or decrease with \\alpha, depending on the sign of the first derivative. The only way to ensure that the function as a (local) minimu at x^* is to have the first derivative equal to zero, that is \\boxed{\n\\left.\\frac{\\mathrm{d}f(x)}{\\mathrm{d} x}\\right|_{x=x^*} = 0.}\n\n\n\nSecond-order necessary conditions of optimality\nOnce the first-order necessary condition of optimality is satisfied, the dominating term (as \\alpha is getting smalle) is the second-order term \\frac{1}{2}\\left.\\frac{\\mathrm{d^2}f(x)}{\\mathrm{d} x^2}\\right|_{x=x^*}\\alpha^2. Since \\alpha is squared, it is the sign of the second derivative that determines the contribution of the whole second-order term to the cost function value. For the minimum, the second derivative must be nonnegative, that is\n\n\\boxed{\\left.\\frac{\\mathrm{d^2}f(x)}{\\mathrm{d} x^2}\\right|_{x=x^*} \\geq 0.}\n\nFor completeness we state that the sign must be nonpositive for the maximum.\n\n\nSecond-order sufficient condition of optimality\nFollowing the same line of reasoning as above, the if the second derivative is positive, the miniumum is guaranteed, that is, the sufficient condition of optimality is \n\\boxed{\\left.\\frac{\\mathrm{d^2}f(x)}{\\mathrm{d} x^2}\\right|_{x=x^*} &gt; 0.}\n\nIf the second derivative fails to be positive and is just zero (thus still satisfying the necessary condition), does it mean that the point is not a minimum? No. We must examine higher order terms.\n\n\n\nVector optimization variable\n\n\nFirst-order necessary conditions of optimality\nOne way to handle the vector variables is to convert the vector problem into a scalar one by fixing a direction to an arbitrary vector \\bm d and then considering the scalar function of the form f(\\bm x^* + \\alpha \\bm d). For convenience we define a new function \ng(\\alpha) \\coloneqq f(\\bm x^* + \\alpha \\bm d)\n and from now on we can invoke the results for scalar functions. Namely, we expand the g() function around zero as \ng(\\alpha) = g(0) + \\frac{\\mathrm{d}g(\\alpha)}{\\mathrm{d}\\alpha}\\bigg|_{\\alpha=0}\\alpha + \\frac{1}{2}\\frac{\\mathrm{d}^2 g(\\alpha)}{\\mathrm{d}\\alpha^2}\\bigg|_{\\alpha=0}\\alpha^2 + \\mathcal{O}(\\alpha^3),\n and argue that the first-order necessary condition of optimality is \n\\frac{\\mathrm{d}g(\\alpha)}{\\mathrm{d}\\alpha}\\bigg|_{\\alpha=0} = 0.\n\nNow, invoking the chain rule, we go back from g() to f() \n\\frac{\\mathrm{d}g(\\alpha)}{\\mathrm{d}\\alpha}\\bigg|_{\\alpha=0} = \\frac{\\partial f(\\bm x)}{\\partial\\bm x}\\bigg|_{\\bm x=\\bm x^*} \\frac{\\partial(\\bm x^* + \\alpha \\bm d)}{\\partial\\alpha}\\bigg|_{\\alpha=0} = \\frac{\\partial f(\\bm x)}{\\partial\\bm x}\\bigg|_{\\bm x=\\bm x^*}\\,\\bm d = 0,\n where \\frac{\\partial f(\\bm x)}{\\partial\\bm x}\\bigg|_{\\bm x=\\bm x^*} is a row vector of partial derivatives of f() evaluated at \\bm x^*. Since the vector \\bm d is arbitrary, the necessary condition is that\n\n\\frac{\\partial f(\\bm x)}{\\partial\\bm x}\\bigg|_{\\bm x=\\bm x^*} = \\mathbf 0,  \n\nMore often than not we use the column vector to store partial derivatives. We call it the gradient of the function f() and denoted it as \n\\nabla f(\\bm x) \\coloneqq \\begin{bmatrix}\\frac{\\partial f(\\bm x)}{\\partial x_1} \\\\ \\frac{\\partial f(\\bm x)}{\\partial x_n} \\\\ \\vdots \\\\ \\frac{\\partial f(\\bm x)}{\\partial x_n}\\end{bmatrix}.  \n\nThe first-order necessary condition of optimality using gradients is then \n\\boxed{\\left.\\nabla f(\\bm x)\\right|_{x=x^*} = \\mathbf 0.  }\n\n\n\n\n\n\n\nGradient is a column vector\n\n\n\nIn some literature the gradient \\nabla f(\\bm x) is defined as a row vector. For the condition of optimality it does not matteer since all we require is that all partial derivatives vanish. But for other purposes in our text we regard the gradient as a vector living in the same vector space \\mathbb R^n as the optimization variable. The row vector is sometimes denoted as \\mathrm Df(\\bm x).\n\n\n\nComputing the gradient of a scalar function of a vector variable\nA convenient way is to compute the differential fist and then to identify the derivative in it. Recall that the differential is the first-order approximation to the increment of the function due to a change in the variable\n\n\\Delta f \\approx \\mathrm{d}f = \\nabla f(x)^\\top \\mathrm d \\bm x.\n\nFinding the differential of a function is conceptually easier than finding the derivative since it is a scalar quantity. When searching for the differential of a composed function, we follow the same rules as for the derivative (such as that the one for finding the differential of a product). Let’s illustrate it using an example.\n\nExample 1 For the function \nf(\\mathbf x) = \\frac{1}{2}\\bm{x}^\\top\\mathbf{Q}\\bm{x} + \\mathbf{r}^\\top\\bm{x},\n where \\mathbf Q is symetric, the differential is \n\\mathrm{d}f = \\frac{1}{2}\\mathrm d\\bm{x}^\\top\\mathbf{Q}\\bm{x} + \\frac{1}{2}\\bm{x}^\\top\\mathbf{Q}\\mathrm d\\bm{x} + \\mathbf{r}^\\top\\mathrm{d}\\bm{x},\n in which the first two terms can be combined thanks to the fact that they are scalars \n\\mathrm{d}f = \\left(\\bm{x}^\\top\\frac{\\mathbf{Q} + \\mathbf{Q}^\\top}{2} + \\mathbf{r}^\\top\\right)\\mathrm{d}\\bm{x},\n and finally, since we assumed that \\mathbf Q is a symmetric matrix, we get \n\\mathrm{d}f = \\left(\\mathbf{Q}\\bm{x} + \\mathbf{r}\\right)^\\top\\mathrm{d}\\bm{x},\n from which we can identify the gradient as \n\\nabla f(\\mathbf{x}) = \\mathbf{Q}\\mathbf{x} + \\mathbf{r}.\n\nThe first-order condition of optimality is then \n\\boxed{\\mathbf{Q}\\mathbf{x} = -\\mathbf{r}.}\n\nAlthough this was just an example, it is actually a very useful one. Keep this result in mind – necessary condition of optimality of a quadratic function comes in the form of a set of linear equations.\n\n\n\n\nSecond-order necessary conditions of optimality\nAs before, we fix the direction \\bm d and consider the function g(\\alpha) = f(\\bm x^* + \\alpha \\bm d). We expand the expression for the first derivative as \n\\frac{\\mathrm d g(\\alpha)}{\\mathrm d \\alpha} = \\sum_{i=1}^{n}\\frac{\\partial f(\\bm x)}{\\partial x_i}\\bigg|_{\\bm x = \\bm x^*} d_i,\n and differentiating this once again, we get the second derivative \n\\frac{\\mathrm d^2 g(\\alpha)}{\\mathrm d \\alpha^2} = \\sum_{i,j=1}^{n}\\frac{\\partial^2 f(\\bm x)}{\\partial x_ix_j}\\bigg|_{\\bm x = \\bm x^*}d_id_j\n\n\n\\begin{aligned}\n\\frac{\\mathrm d^2 g(\\alpha)}{\\mathrm d \\alpha^2}\\bigg|_{\\alpha=0} &= \\sum_{i,j=1}^{n}\\frac{\\text{d}^2}{\\text{d}x_ix_j}f(\\bm x)\\bigg|_{\\bm x = \\bm x^*}d_id_j\\\\\n&= \\mathbf d^\\text{T} \\underbrace{\\nabla^\\text{2}f(\\mathbf x)\\bigg|_{\\bm x = \\bm x^*}}_\\text{Hessian} \\mathbf d.\n\\end{aligned}\n where \\nabla^2 f(\\mathbf x) is the Hessian (the symmetrix matrix of the second-order mixed partial derivatives) \n\\nabla^2 f(x) = \\begin{bmatrix}\n                 \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_1^2} && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_1\\partial x_2} && \\ldots && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_1\\partial x_n}\\\\\n                 \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_2\\partial x_1} && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_2^2} && \\ldots && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_2\\partial x_n}\\\\\n                 \\vdots\\\\\n                 \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_n\\partial x_1} && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_n\\partial x_2} && \\ldots && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_n\\partial x_n}.\n                \\end{bmatrix}\n\nSince \\bm d is arbitrary, the second-order necessary condition of optimality is then \n\\boxed{\\nabla^\\text{2}f(\\mathbf x)\\bigg|_{\\bm x = \\bm x^*} \\succeq 0,}\n where, once again, the inequality \\succeq reads that the matrix is positive semidefinite.\n\n\nSecond-order sufficient condition of optimality\n\n\\boxed{\\nabla^2 f(\\mathbf x)\\bigg|_{\\bm x = \\bm x^*} \\succ 0,}\n where, once again, the inequality \\succ reads that the matrix is positive definite.\n\nExample 2 For the quadratic function f(\\mathbf x) = \\frac{1}{2}\\mathbf{x}^\\mathrm{T}\\mathbf{Q}\\mathbf{x} + \\mathbf{r}^\\mathrm{T}\\mathbf{x}, the Hessian is \n\\nabla^2 f(\\mathbf{x}) = \\mathbf{Q}\n and the second-order necessary condition of optimality is \n\\boxed{\\mathbf{Q} \\succeq 0.}\n\nSecond-order sufficient condition of optimality is then \n\\boxed{\\mathbf{Q} \\succ 0.}\n\nOnce again, this was more than just an example – quadratic functions are so important for us that it is worth remembering this result.",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Theory for unconstrained optimization"
-    ]
-  },
-  {
-    "objectID": "opt_theory_unconstrained.html#classification-of-stationary-points",
-    "href": "opt_theory_unconstrained.html#classification-of-stationary-points",
-    "title": "Theory for unconstrained optimization",
-    "section": "Classification of stationary points",
-    "text": "Classification of stationary points\nFor a stationary (also critical) \\bm x^*, that is, one that satisfies the first-order necessary condition \n\\nabla f(\\bm x^*) = 0,\n\nwe can classify it as\n\nMinimum: \\nabla^2 f(x^*)\\succ 0\nMaximum: \\nabla^2 f(x^*)\\prec 0\nSaddle point: \\nabla^2 f(x^*) indefinite\nSingular point (we cannot decide): \\nabla^2 f(x^*)=0\n\n\nExample 3 (Minimum of a quadratic function) We consider a quadratic function f(\\mathbf x) = \\frac{1}{2}\\mathbf{x}^\\mathrm{T}\\mathbf{Q}\\mathbf{x} + \\mathbf{r}^\\mathrm{T}\\mathbf{x} for a particular \\mathbf{Q} and \\mathbf{r}.\n\n\nCode\nQ = [1 1; 1 2]\nr = [0, 1]\n\nusing LinearAlgebra\nx_stationary = -Q\\r\neigvals(Q) \n\n\n2-element Vector{Float64}:\n 0.38196601125010515\n 2.618033988749895\n\n\nThe matrix is positive definite, so the stationary point is a minimum. In fact, the minimum. Surface and contour plots of the function are shown below.\n\nCode\nf(x) = 1/2*dot(x,Q*x)+dot(x,r)\nx1_data = x2_data = -4:0.1:4;  \nf_data = [f([x1,x2]) for x2=x2_data, x1=x1_data];\n\nusing Plots\ndisplay(surface(x1_data,x2_data,f_data))\ncontour(x1_data,x2_data,f_data)\ndisplay(plot!([x_stationary[1]], [x_stationary[2]], marker=:circle, label=\"Stationary point\"))\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n(a) Surface plot\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Contour plot\n\n\n\n\n\n\n\nFigure 1: Minimum of a quadratic function\n\n\n\n\n\nExample 4 (Saddle point of a quadratic function)  \n\n\nCode\nQ = [-1 1; 1 2]\nr = [0, 1]\n\nusing LinearAlgebra\nx_stationary = -Q\\r\neigvals(Q)\n\n\n2-element Vector{Float64}:\n -1.3027756377319946\n  2.302775637731995\n\n\nThe matrix is indefinite, so the stationary point is a saddle point. Surface and contour plots of the function are shown below.\n\nCode\nf(x) = 1/2*dot(x,Q*x)+dot(x,r)\n\nx1_data = x2_data = -4:0.1:4;  \nf_data = [f([x1,x2]) for x2=x2_data, x1=x1_data];\n\nusing Plots\ndisplay(surface(x1_data,x2_data,f_data))\ncontour(x1_data,x2_data,f_data)\ndisplay(plot!([x_stationary[1]], [x_stationary[2]], marker=:circle, label=\"Stationary point\"))\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n(a) Surface plot\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Contour plot\n\n\n\n\n\n\n\nFigure 2: Saddle point of a quadratic function\n\n\n\n\n\nExample 5 (Singular point of a quadratic function)  \n\n\nCode\nQ = [2 0; 0 0]\nr = [3, 0]\n\nusing LinearAlgebra\neigvals(Q)\n\n\n2-element Vector{Float64}:\n 0.0\n 2.0\n\n\nThe matrix Q is singular, which has two consequences:\n\nWe cannot compute the stationary point since Q is not invertible. In fact, there is a whole line (a subspace) of stationary points.\nThe matrix Q is positive semidefinite, which generally means that optimality cannot be concluded. But in this particular case of a quadratic function, there are no higher-order terms in the Taylor series expansion, so the stationary point is a minimum.\n\nSurface and contour plots of the function are shown below.\n\nCode\nf(x) = 1/2*dot(x,Q*x)+dot(x,r)\n\nx1_data = x2_data = -4:0.1:4;  \nf_data = [f([x1,x2]) for x2=x2_data, x1=x1_data];\n\nusing Plots\ndisplay(surface(x1_data,x2_data,f_data))\ndisplay(contour(x1_data,x2_data,f_data))\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n(a) Surface plot\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Contour plot\n\n\n\n\n\n\n\nFigure 3: Singular point of a quadratic function\n\n\n\n\n\nExample 6 (Singular point of a non-quadratic function) Consider the function f(\\bm x) = x_1^2 + x_2^4. Its gradient is \\nabla f(\\bm x) = \\begin{bmatrix}2x_1\\\\ 4x_2^3\\end{bmatrix} and it vanishes at \\bm x^* = \\begin{bmatrix}0\\\\ 0\\end{bmatrix}. The Hessian is \\nabla^2 f(\\bm x) = \\begin{bmatrix}2 & 0\\\\ 0 & 12x_2^2\\end{bmatrix}, which when evaluated at the stationary point is \\nabla^2 f(\\bm x)\\bigg|_{\\bm x=\\mathbf 0} = \\begin{bmatrix}2 & 0\\\\ 0 & 0\\end{bmatrix}, which is positive semidefinite. We cannot conclude if the function attains a minimum at \\bm x^*.\nWe need to examine higher-order terms in the Taylor series expansion. The third derivatives are \n\\frac{\\partial^3 f}{\\partial x_1^3} = 0, \\quad \\frac{\\partial^3 f}{\\partial x_1^2\\partial x_2} = 0, \\quad \\frac{\\partial^3 f}{\\partial x_1\\partial x_2^2} = 0, \\quad \\frac{\\partial^3 f}{\\partial x_2^3} = 24x_2,\n and when evaluated at zero, they all vanish.\nAll but one fourth derivatives also vanish. The one that does not is \n\\frac{\\partial^4 f}{\\partial x_2^4} = 24,\n which is positive, and since the associated derivative is of the even order, the power si also even, hence the function attains a minimum at \\bm x^* = \\begin{bmatrix}0\\\\ 0\\end{bmatrix}.\nThis can also be visually confirmed by the surface and contour plots of the function.\n\nCode\nf(x) = x[1]^2 + x[2]^4\n\nx1_data = x2_data = -4:0.1:4;  \nf_data = [f([x1,x2]) for x2=x2_data, x1=x1_data];\n\nusing Plots\ndisplay(surface(x1_data,x2_data,f_data))\ncontour(x1_data,x2_data,f_data)\ndisplay(plot!([x_stationary[1]], [x_stationary[2]], marker=:circle, label=\"Stationary point\"))\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n(a) Surface plot\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Contour plot\n\n\n\n\n\n\n\nFigure 4: Singular point of a non-quadratic function",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Theory for unconstrained optimization"
-    ]
-  },
-  {
-    "objectID": "uncertainty.html",
-    "href": "uncertainty.html",
-    "title": "Uncertainty modelling",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "11. Uncertainty modelling and analysis",
-      "Uncertainty modelling"
-    ]
-  },
-  {
-    "objectID": "dynamic_programming_LQR.html",
-    "href": "dynamic_programming_LQR.html",
-    "title": "LQR via dynamic programming",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "5. Discrete-time optimal control – dynamic programming",
-      "LQR via dynamic programming"
-    ]
-  },
-  {
-    "objectID": "opt_solvers.html",
-    "href": "opt_solvers.html",
-    "title": "Numerical solvers",
-    "section": "",
-    "text": "Gurobi Optimizer\nIBM ILOG CPLEX\nKnitro\nMOSEK\nIpopt\nSNOPT\nNLPQLP\nfmincon\nfminunc\nfminsearch\nfminbnd\nfminimax\nfmincon\nOptimization Toolbox for Matlab\nJuMP\nConvex.jl\nOptim.jl\nNLopt.jl\nBlackBoxOptim.jl\nBayesianOptimization.jl\nCMAES.jl\nDirectSearch.jl\nEvolutionary.jl\n\n\n\n\n Back to top",
-    "crumbs": [
-      "2. Optimization – algorithms",
-      "Numerical solvers"
-    ]
-  },
-  {
-    "objectID": "discr_indir_DARE.html",
-    "href": "discr_indir_DARE.html",
-    "title": "Discrete-time algebraic Riccati equation (DARE)",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "4. Discrete-time optimal control – indirect approach",
-      "Discrete-time algebraic Riccati equation (DARE)"
-    ]
-  },
-  {
-    "objectID": "discr_dir_mpc_solvers.html",
-    "href": "discr_dir_mpc_solvers.html",
-    "title": "Numerical solvers for MPC",
-    "section": "",
-    "text": "Essentially QP solvers with some extra features for MPC:\n\nwarmstarting requires fesibility of the previous solution. If only a fixed number of iterations is allowed (in favor of predictable timing), for some methods the iterations may temporarily lose feasibility.\n…\nqpOASES\nOSQP\nDAQP\nqpSWIFT\nProxQP\nPiQP\nECOS\nHPIPM\n\n\n\n\n Back to top",
-    "crumbs": [
-      "3. Discrete-time optimal control – direct approach",
-      "Numerical solvers for MPC"
-    ]
-  },
-  {
-    "objectID": "opt_algo_unconstrained.html",
-    "href": "opt_algo_unconstrained.html",
-    "title": "Algorithms for unconstrained optimization",
-    "section": "",
-    "text": "Our motivation for studying numerical algorithms for unconstrained optimization remains the same as when we studied the conditions of optimality for such unconstrained problems – such algorithms constitute building blocks for constrained optimization problems. Indeed, many algorithms for constrained problems are based on reformulating the constrained problem into an unconstrained one and then applying the algorithms studied in this section.\nIt may be useful to recapitulate our motivation for studying optimization algorithms in general – after all, there are dozens of commercial or free&open-source software tools for solving optimization problems. Why not just use them? There are two answers beyond the traditional “at a grad school we should understand what we are using”:\nThere is certainly no shortage of algorithms for unconstrained optimization. In this crash course we can cover only a few. But the few we cover here certainly form a solid theoretical basis and provide practically usable tools.\nOne possible way to classify the algorithms is based on whether they use derivatives of the objective function or not. In this course, we prefer the latter approach as it leads to more efficient algorithms. For the former methods, we can refer to the literature (the prominent example is Nelder-Mead method).",
-    "crumbs": [
-      "2. Optimization – algorithms",
-      "Algorithms for unconstrained optimization"
-    ]
-  },
-  {
-    "objectID": "opt_algo_unconstrained.html#derivative-based-methods",
-    "href": "opt_algo_unconstrained.html#derivative-based-methods",
-    "title": "Algorithms for unconstrained optimization",
-    "section": "Derivative-based methods",
-    "text": "Derivative-based methods\nIteratively:\n\nDescent methods\n\nFix the search direction d_k, and the find the step length \\alpha_k that minimizes f(x_k + \\alpha_k d_k). The search direction is updated at each iteration.\n\nTrust region methods\n\nFix the region in which a simpler (typically a quadratic) function approximates the original cost function reasonably accurately, then find the minimum of this simpler cost function.\n\n\n(for a circular region this amounts to setting the radius, which can be viewed as setting the step length \\alpha_k)\nsearch direction d_k that minimizes f(x_k + \\alpha_k d_k)\n\nDescent methods\n\nSteepest descent (aka gradient) method\nNewton’s method\nQuasi-Newton’s methods\n\n\nStep size (step length) determination (aka line search)\n\n\nSteepest descent method\n\n\nNewton’s method\n\n\nQuasi-Newton’s methods\n\n\n\nTrust region methods",
-    "crumbs": [
-      "2. Optimization – algorithms",
-      "Algorithms for unconstrained optimization"
-    ]
-  },
-  {
-    "objectID": "rocond_H_infinity_control.html",
-    "href": "rocond_H_infinity_control.html",
-    "title": "Hinfinity-optimal control",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "12. Robust control",
-      "Hinfinity-optimal control"
-    ]
-  },
-  {
-    "objectID": "cont_indir_LQR_fin_horizon.html",
-    "href": "cont_indir_LQR_fin_horizon.html",
-    "title": "Indirect approach to LQR on a finite horizon",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "7. Continuous-time optimal control - indirect approach via calculus of variations",
-      "Indirect approach to LQR on a finite horizon"
-    ]
-  },
-  {
-    "objectID": "opt_algo_constrained.html",
-    "href": "opt_algo_constrained.html",
-    "title": "Algorithms for constrained optimization",
-    "section": "",
-    "text": "n-m, n, m, n+m",
-    "crumbs": [
-      "2. Optimization – algorithms",
-      "Algorithms for constrained optimization"
-    ]
-  },
-  {
-    "objectID": "opt_algo_constrained.html#primal-methods",
-    "href": "opt_algo_constrained.html#primal-methods",
-    "title": "Algorithms for constrained optimization",
-    "section": "Primal methods",
-    "text": "Primal methods\n\nWith m equality constraints, they work in the space of dimension n-m.\nThree advantages\n\neach point generated by the iterative algoritm is feasible – if terminated early, such point is feaible.\nif they generate a converging sequence, it typically converges at least to a local constrained minimum.\nit does not rely on a special structure of the problem, it can be even nonconvex.\n\nbut it needs a feasible initial point.\nThey may fail for inequality constraints.\n\nThey are particularly useful for linear/affine constraints or simple nonlinear constraints (norm balls or ellipsoids).\n\nProjected gradient method\n\n\nActive set methods\n\n\nSequential quadratic programming (SQP)\nKKT conditions for a nonlinear program with equality constraints solved by Newton’s method.\nInterpretation: at each iteration, we solve a quadratic program (QP) with linear constraints.",
-    "crumbs": [
-      "2. Optimization – algorithms",
-      "Algorithms for constrained optimization"
-    ]
-  },
-  {
-    "objectID": "opt_algo_constrained.html#penalty-and-barrier-methods",
-    "href": "opt_algo_constrained.html#penalty-and-barrier-methods",
-    "title": "Algorithms for constrained optimization",
-    "section": "Penalty and barrier methods",
-    "text": "Penalty and barrier methods",
-    "crumbs": [
-      "2. Optimization – algorithms",
-      "Algorithms for constrained optimization"
-    ]
-  },
-  {
-    "objectID": "opt_algo_constrained.html#dual-methods",
-    "href": "opt_algo_constrained.html#dual-methods",
-    "title": "Algorithms for constrained optimization",
-    "section": "Dual methods",
-    "text": "Dual methods",
-    "crumbs": [
-      "2. Optimization – algorithms",
-      "Algorithms for constrained optimization"
-    ]
-  },
-  {
-    "objectID": "opt_algo_constrained.html#primal-dual-methods",
-    "href": "opt_algo_constrained.html#primal-dual-methods",
-    "title": "Algorithms for constrained optimization",
-    "section": "Primal-dual methods",
-    "text": "Primal-dual methods",
-    "crumbs": [
-      "2. Optimization – algorithms",
-      "Algorithms for constrained optimization"
-    ]
-  },
-  {
-    "objectID": "rocond_mu_synthesis.html",
-    "href": "rocond_mu_synthesis.html",
-    "title": "Mu synthesis",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "12. Robust control",
-      "Mu synthesis"
-    ]
-  },
-  {
-    "objectID": "discr_dir_control.html",
-    "href": "discr_dir_control.html",
-    "title": "Control on a finite horizon as an optimization",
-    "section": "",
-    "text": "We start by considering a nonlinear discrete-time system modelled by the state equation \n\\bm x_{k+1} = \\mathbf f_k(\\bm x_k,\\bm u_k),\n where\n\n\\bm x_k\\in \\mathbb R^n is the state at the discrete time k\\in \\mathbb Z,\n\\bm u_k\\in \\mathbb R^m is the control at the discrete time k,\n\\mathbf f_k: \\mathbb{R}^n \\times \\mathbb{R}^m \\times \\mathbb Z \\to \\mathbb{R}^n is a state transition function (in general not only nonlinear but also time-varying, with the convention that the dependence on k is expressed through the lower index).\n\nA general nonlinear discrete-time optimal control problem (OCP) is then formulated as\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm u_i,\\ldots, \\bm u_{N-1}, \\bm x_{i},\\ldots, \\bm x_N}&\\quad \\left(\\phi(\\bm x_N,N) + \\sum_{k=i}^{N-1} L_k(\\bm x_k,\\bm u_k) \\right)\\\\\n\\text{subject to}  &\\quad \\bm x_{k+1} = \\mathbf f_k(\\bm x_k,\\bm u_k),\\quad k=i, \\ldots, N-1,\\\\\n                    &\\quad \\bm u_k \\in \\mathcal U_k,\\quad k=i, \\ldots, N-1,\\\\\n                    &\\quad \\bm x_k \\in \\mathcal X_k,\\quad k=i, \\ldots, N,\n\\end{aligned}\n where\n\ni is the initial discreete time,\nN is the final discrete time,\n\\phi() is a terminal cost function that penalizes the state at the final time,\nL_k() is a running (also stage) cost function,\nand \\mathcal U_k and \\mathcal X_k are sets of feasible controls and states – these sets are typically expressed using equations and inequalities. Should they be constant, the notation is just \\mathcal U and \\mathcal X.\n\nOftentimes it is convenient to handle the constraints of the initial and final states separately:\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm u_i,\\ldots, \\bm u_{N-1}, \\bm x_{i},\\ldots, \\bm x_N}&\\quad \\left(\\phi(\\bm x_N,N) + \\sum_{k=i}^{N-1} L_k(\\bm x_k,\\bm u_k) \\right)\\\\\n\\text{subject to}  &\\quad \\bm x_{k+1} = \\mathbf f_k(\\bm x_k,\\bm u_k),\\quad k=i, \\ldots, N-1,\\\\\n                    &\\quad \\bm u_k \\in \\mathcal U_k,\\quad k=i, \\ldots, N-1,\\\\\n                    &\\quad \\bm x_k \\in \\mathcal X_k,\\quad k=i+1, \\ldots, N-1,\\\\\n                    &\\quad \\bm x_i \\in \\mathcal X_\\mathrm{init},\\\\\n                    &\\quad \\bm x_N \\in \\mathcal X_\\mathrm{final}.\n\\end{aligned}\n\nIn particular, at the initial time just one particular state is often considered. At the final time, the state might be required to be equal to some given value, it might be required to be in some set defined through equations or inequalities, or it might be left unconstrained. Finally, the constraints on the control and states typically (but not always) come in the form of lower and upper bounds. The optimal control problem then specializes to \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm u_i,\\ldots, \\bm u_{N-1}, \\bm x_{i},\\ldots, \\bm x_N}&\\quad \\left(\\phi(\\bm x_N,N) + \\sum_{k=i}^{N-1} L_k(\\bm x_k,\\bm u_k) \\right)\\\\\n\\text{subject to}  &\\quad \\bm x_{k+1} = \\mathbf f_k(\\bm x_k,\\bm u_k),\\quad k=i, \\ldots, N-1,\\\\\n                    &\\quad \\bm u_{\\min} \\leq \\bm u_k \\leq \\bm u_{\\max},\\\\\n                    &\\quad \\bm x_{\\min} \\leq \\bm x_k \\leq \\bm x_{\\max},\\\\\n                    &\\quad\\bm x_i = \\mathbf r_\\text{init},\\\\\n                    &\\quad \\left(\\bm x_N = \\mathbf r_\\text{final}, \\; \\text{or} \\; \\mathbf h_\\text{final}(\\bm x_N) =  \\mathbf 0, \\text{or} \\; \\mathbf g_\\text{final}(\\bm x_N) \\leq  \\mathbf 0\\right),                    \n\\end{aligned}\n where\n\n\\bm u_{\\min} and \\bm u_{\\max} are lower and upper bounds on the control, respectively,\n\\bm x_{\\min} and \\bm x_{\\max} are lower and upper bounds on the state, respectively,\n\\mathbf r_\\text{init} is a constant (fixed) initial state,\n\\mathbf r_\\text{final} is a constant (fixed) final state,\nand the functions \\mathbf g_\\text{final}() and \\mathbf h_\\text{final}() can be used to define the constraint set for the final state.\n\nThis optimal control problem is an instance of a general nonlinear programming (NLP) problem\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bar{\\bm x}\\in\\mathbb{R}^{n(N-i)},\\bar{\\bm u}\\in\\mathbb{R}^{m(N-i)}} &\\quad J(\\bar{\\bm x},\\bar{\\bm u})\\\\\n\\text{subject to} &\\quad \\mathbf h(\\bar{\\bm x},\\bar{\\bm u}) =0,\\\\\n&\\quad \\mathbf g(\\bar{\\bm x},\\bar{\\bm u}) \\leq \\mathbf 0,\n\\end{aligned}\n where \\bar{\\bm u} and \\bar{\\bm x} are vectors obtained by stacking control and state vectors for individual times\n\n\\begin{aligned}\n\\bar{\\bm u} &= \\operatorname*{vec}(\\bm u_i,\\ldots, \\bm u_{N-1}) = \\begin{bmatrix}\\bm u_i\\\\ \\bm u_{i+1}\\\\ \\vdots \\\\ \\bm u_{N-1} \\end{bmatrix}\\\\\n\\bar{\\bm x} &= \\operatorname*{vec}(\\bm x_{i+1},\\ldots, \\bm x_N) = \\begin{bmatrix}\\bm x_{i+1}\\\\ \\bm x_{i+2}\\\\ \\vdots \\\\ \\bm x_{N} \\end{bmatrix}\n\\end{aligned}\n\n\n\n\n\n\n\nNote\n\n\n\n\nIf the initial \\bm x_i is fixed, which it typically is, it does not have to be considered as an optimization variable. But there may be applications where it is desirable to optimize over \\bm x_i as well.\nThe last control that affects the state trajectory on the interval [i,N] is \\bm u_{N-1}.",
-    "crumbs": [
-      "3. Discrete-time optimal control – direct approach",
-      "Control on a finite horizon as an optimization"
-    ]
-  },
-  {
-    "objectID": "discr_dir_control.html#general-nonlinear-optimal-control-problem",
-    "href": "discr_dir_control.html#general-nonlinear-optimal-control-problem",
-    "title": "Control on a finite horizon as an optimization",
-    "section": "",
-    "text": "We start by considering a nonlinear discrete-time system modelled by the state equation \n\\bm x_{k+1} = \\mathbf f_k(\\bm x_k,\\bm u_k),\n where\n\n\\bm x_k\\in \\mathbb R^n is the state at the discrete time k\\in \\mathbb Z,\n\\bm u_k\\in \\mathbb R^m is the control at the discrete time k,\n\\mathbf f_k: \\mathbb{R}^n \\times \\mathbb{R}^m \\times \\mathbb Z \\to \\mathbb{R}^n is a state transition function (in general not only nonlinear but also time-varying, with the convention that the dependence on k is expressed through the lower index).\n\nA general nonlinear discrete-time optimal control problem (OCP) is then formulated as\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm u_i,\\ldots, \\bm u_{N-1}, \\bm x_{i},\\ldots, \\bm x_N}&\\quad \\left(\\phi(\\bm x_N,N) + \\sum_{k=i}^{N-1} L_k(\\bm x_k,\\bm u_k) \\right)\\\\\n\\text{subject to}  &\\quad \\bm x_{k+1} = \\mathbf f_k(\\bm x_k,\\bm u_k),\\quad k=i, \\ldots, N-1,\\\\\n                    &\\quad \\bm u_k \\in \\mathcal U_k,\\quad k=i, \\ldots, N-1,\\\\\n                    &\\quad \\bm x_k \\in \\mathcal X_k,\\quad k=i, \\ldots, N,\n\\end{aligned}\n where\n\ni is the initial discreete time,\nN is the final discrete time,\n\\phi() is a terminal cost function that penalizes the state at the final time,\nL_k() is a running (also stage) cost function,\nand \\mathcal U_k and \\mathcal X_k are sets of feasible controls and states – these sets are typically expressed using equations and inequalities. Should they be constant, the notation is just \\mathcal U and \\mathcal X.\n\nOftentimes it is convenient to handle the constraints of the initial and final states separately:\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm u_i,\\ldots, \\bm u_{N-1}, \\bm x_{i},\\ldots, \\bm x_N}&\\quad \\left(\\phi(\\bm x_N,N) + \\sum_{k=i}^{N-1} L_k(\\bm x_k,\\bm u_k) \\right)\\\\\n\\text{subject to}  &\\quad \\bm x_{k+1} = \\mathbf f_k(\\bm x_k,\\bm u_k),\\quad k=i, \\ldots, N-1,\\\\\n                    &\\quad \\bm u_k \\in \\mathcal U_k,\\quad k=i, \\ldots, N-1,\\\\\n                    &\\quad \\bm x_k \\in \\mathcal X_k,\\quad k=i+1, \\ldots, N-1,\\\\\n                    &\\quad \\bm x_i \\in \\mathcal X_\\mathrm{init},\\\\\n                    &\\quad \\bm x_N \\in \\mathcal X_\\mathrm{final}.\n\\end{aligned}\n\nIn particular, at the initial time just one particular state is often considered. At the final time, the state might be required to be equal to some given value, it might be required to be in some set defined through equations or inequalities, or it might be left unconstrained. Finally, the constraints on the control and states typically (but not always) come in the form of lower and upper bounds. The optimal control problem then specializes to \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm u_i,\\ldots, \\bm u_{N-1}, \\bm x_{i},\\ldots, \\bm x_N}&\\quad \\left(\\phi(\\bm x_N,N) + \\sum_{k=i}^{N-1} L_k(\\bm x_k,\\bm u_k) \\right)\\\\\n\\text{subject to}  &\\quad \\bm x_{k+1} = \\mathbf f_k(\\bm x_k,\\bm u_k),\\quad k=i, \\ldots, N-1,\\\\\n                    &\\quad \\bm u_{\\min} \\leq \\bm u_k \\leq \\bm u_{\\max},\\\\\n                    &\\quad \\bm x_{\\min} \\leq \\bm x_k \\leq \\bm x_{\\max},\\\\\n                    &\\quad\\bm x_i = \\mathbf r_\\text{init},\\\\\n                    &\\quad \\left(\\bm x_N = \\mathbf r_\\text{final}, \\; \\text{or} \\; \\mathbf h_\\text{final}(\\bm x_N) =  \\mathbf 0, \\text{or} \\; \\mathbf g_\\text{final}(\\bm x_N) \\leq  \\mathbf 0\\right),                    \n\\end{aligned}\n where\n\n\\bm u_{\\min} and \\bm u_{\\max} are lower and upper bounds on the control, respectively,\n\\bm x_{\\min} and \\bm x_{\\max} are lower and upper bounds on the state, respectively,\n\\mathbf r_\\text{init} is a constant (fixed) initial state,\n\\mathbf r_\\text{final} is a constant (fixed) final state,\nand the functions \\mathbf g_\\text{final}() and \\mathbf h_\\text{final}() can be used to define the constraint set for the final state.\n\nThis optimal control problem is an instance of a general nonlinear programming (NLP) problem\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bar{\\bm x}\\in\\mathbb{R}^{n(N-i)},\\bar{\\bm u}\\in\\mathbb{R}^{m(N-i)}} &\\quad J(\\bar{\\bm x},\\bar{\\bm u})\\\\\n\\text{subject to} &\\quad \\mathbf h(\\bar{\\bm x},\\bar{\\bm u}) =0,\\\\\n&\\quad \\mathbf g(\\bar{\\bm x},\\bar{\\bm u}) \\leq \\mathbf 0,\n\\end{aligned}\n where \\bar{\\bm u} and \\bar{\\bm x} are vectors obtained by stacking control and state vectors for individual times\n\n\\begin{aligned}\n\\bar{\\bm u} &= \\operatorname*{vec}(\\bm u_i,\\ldots, \\bm u_{N-1}) = \\begin{bmatrix}\\bm u_i\\\\ \\bm u_{i+1}\\\\ \\vdots \\\\ \\bm u_{N-1} \\end{bmatrix}\\\\\n\\bar{\\bm x} &= \\operatorname*{vec}(\\bm x_{i+1},\\ldots, \\bm x_N) = \\begin{bmatrix}\\bm x_{i+1}\\\\ \\bm x_{i+2}\\\\ \\vdots \\\\ \\bm x_{N} \\end{bmatrix}\n\\end{aligned}\n\n\n\n\n\n\n\nNote\n\n\n\n\nIf the initial \\bm x_i is fixed, which it typically is, it does not have to be considered as an optimization variable. But there may be applications where it is desirable to optimize over \\bm x_i as well.\nThe last control that affects the state trajectory on the interval [i,N] is \\bm u_{N-1}.",
-    "crumbs": [
-      "3. Discrete-time optimal control – direct approach",
-      "Control on a finite horizon as an optimization"
-    ]
-  },
-  {
-    "objectID": "discr_dir_control.html#linear-quadratic-regulation-lqr-on-a-finite-horizon",
-    "href": "discr_dir_control.html#linear-quadratic-regulation-lqr-on-a-finite-horizon",
-    "title": "Control on a finite horizon as an optimization",
-    "section": "Linear quadratic regulation (LQR) on a finite horizon",
-    "text": "Linear quadratic regulation (LQR) on a finite horizon\nWe start by considering a simple problem of regulation, wherein the goal is to bring the system either exactly or approximately to zero final state, that is, \\bm r_N=\\mathbf 0 and we want \\bm x_N=\\mathbf r_N or \\bm x_N\\approx\\mathbf r_N, respectively.\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\mathbf u_0,\\ldots, \\mathbf u_{N-1}, \\mathbf x_{0},\\ldots, \\mathbf x_N} &\\quad  \\frac{1}{2} \\bm x_N^\\top \\mathbf S \\bm x_N + \\frac{1}{2} \\sum_{k=0}^{N-1} \\left(\\bm x_k^\\top \\mathbf Q \\bm x_k + \\bm u_k^\\top \\mathbf R \\bm u_k \\right)\\\\\n\\text{subject to}   &\\quad \\bm x_{k+1} = \\mathbf A\\bm x_k + \\mathbf B\\bm u_k,\\quad k = 0, \\ldots, N-1, \\\\\n                    &\\quad \\bm x_0 = \\mathbf r_0,\\\\\n                    &\\quad \\bm x_N = \\mathbf 0\\;  (\\text{or}\\, \\bm x_N \\approx \\mathbf 0).\n\\end{aligned}\n\nReferring to the two options for the last constraint,\n\nif the condition \\bm x_N=\\mathbf 0 on the final state is strictly enforced, the terminal state cost (the term \\frac{1}{2} \\bm x_N^\\top \\mathbf S \\bm x_N in the cost function) is redundant and can be removed;\nif the final state condition can be relaxed to \\bm x_N\\approx\\mathbf 0, it is by increasing the weight \\mathbf S in the terminal cost function \\frac{1}{2} \\bm x_N^\\top \\mathbf S \\bm x_N that \\bm x_N can be made arbitrarily close to \\mathbf 0.\n\n\n\n\n\n\n\nTip\n\n\n\nIt is a standard dilemma in optimization, not only in optimal control, that if we want to satisfy some requirement, we can either strictly enforce it through constraints or we can seemingly relax it and set a cost to be paid for not satysfying it.\n\n\n\nSimultaneous (sparse) formulation\nBelow we rewrite the latter, that is, \\bm x_N\\approx\\mathbf 0, in the “unrolled” form, where we stack the state and control variables into “long” vectors \\bar{\\bm x} and \\bar{\\bm u}. Doing the same for the former is straightforward.\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bar{\\bm u},\\bar{\\bm x}} & \\frac{1}{2}\\left(\\begin{bmatrix} \\bm x_1^\\top & \\bm x_2^\\top & \\ldots & \\bm x_N^\\top \\end{bmatrix}\n\\underbrace{\\begin{bmatrix}\\mathbf Q & & & \\\\ & \\mathbf Q & &\\\\ & &\\ddots & \\\\ & & & \\mathbf S \\end{bmatrix}}_{\\overline{\\mathbf Q}}\n\\underbrace{\\begin{bmatrix} \\bm x_1 \\\\ \\bm x_2 \\\\ \\vdots \\\\ \\bm x_N \\end{bmatrix}}_{\\bar{\\bm x}}\\right.\\\\\n&\\qquad +\\left.\n\\begin{bmatrix} \\bm u_0^\\top & \\bm u_1^\\top & \\ldots & \\bm u_{N-1}^\\top \\end{bmatrix}\n\\underbrace{\\begin{bmatrix}\\mathbf R & & & \\\\ & \\mathbf R & &\\\\ & &\\ddots & \\\\ & & & \\mathbf R \\end{bmatrix}}_{\\overline{\\mathbf R}}\n\\underbrace{\\begin{bmatrix} \\bm u_0 \\\\ \\bm u_1 \\\\ \\vdots \\\\ \\bm u_{N-1} \\end{bmatrix}}_{\\bar{\\bm u}}\\right)\n+ \\underbrace{\\frac{1}{2}\\bm x_0^\\top \\mathbf Q \\bm x_0}_{\\mathrm{constant}}\n\\end{aligned}\n subject to \n\\begin{bmatrix} \\bm x_1 \\\\ \\bm x_2 \\\\ \\bm x_3\\\\ \\vdots \\\\ \\bm x_N \\end{bmatrix} = \\underbrace{\\begin{bmatrix}\\mathbf 0 & & & &\\\\\\mathbf A & \\mathbf 0 & & &\\\\ &\\mathbf A &\\mathbf 0 & & \\\\ & & &\\ddots & \\\\& & &\\mathbf A & \\mathbf 0 \\end{bmatrix}}_{\\overline{\\mathbf A}}\n\\begin{bmatrix} \\bm x_1 \\\\ \\bm x_2 \\\\ \\bm x_3\\\\ \\vdots \\\\ \\bm x_N \\end{bmatrix} + \\underbrace{\\begin{bmatrix}\\mathbf B & & & & \\\\ & \\mathbf B & & & \\\\& &\\mathbf B & \\\\ & & &\\ddots \\\\ & & & & \\mathbf B \\end{bmatrix}}_{\\overline{\\mathbf B}}\\begin{bmatrix} \\bm u_0 \\\\ \\bm u_1 \\\\ \\bm u_2\\\\\\vdots \\\\ \\bm u_{N-1} \\end{bmatrix} + \\underbrace{\\begin{bmatrix}\\mathbf A\\\\\\mathbf 0\\\\\\mathbf 0\\\\\\vdots\\\\\\mathbf 0\\end{bmatrix}}_{\\overline{\\mathbf A}_0}\\bm x_0.   \n\nNote that the last term in the cost function can be discarded because it is constant.\nThe terms with the \\bar{\\bm x} vector can be combined and we get\n\n\\begin{bmatrix} \\mathbf 0 \\\\ \\mathbf 0 \\\\ \\mathbf 0\\\\ \\vdots \\\\ \\mathbf 0 \\end{bmatrix} = \\underbrace{\\begin{bmatrix}-\\mathbf I & & & &\\\\\\mathbf A & -\\mathbf I & & &\\\\ &\\mathbf A &-\\mathbf I & & \\\\ & & &\\ddots & \\\\& & &\\mathbf A & -\\mathbf I \\end{bmatrix}}_{\\overline{\\mathbf A} - \\mathbf I}\n\\begin{bmatrix} \\mathbf x_1 \\\\ \\mathbf x_2 \\\\ \\mathbf x_3\\\\ \\vdots \\\\ \\mathbf x_N \\end{bmatrix} + \\underbrace{\\begin{bmatrix}\\mathbf B & & & & \\\\ & \\mathbf B & & & \\\\& &\\mathbf B & \\\\ & & &\\ddots \\\\ & & & & \\mathbf B \\end{bmatrix}}_{\\overline{\\mathbf B}}\\begin{bmatrix} \\mathbf u_0 \\\\ \\mathbf u_1 \\\\ \\mathbf u_2\\\\\\vdots \\\\ \\mathbf u_{N-1} \\end{bmatrix} + \\underbrace{\\begin{bmatrix}\\mathbf A\\\\\\mathbf 0\\\\\\mathbf 0\\\\\\vdots\\\\\\mathbf 0\\end{bmatrix}}_{\\overline{\\mathbf A}_0}\\bm x_0.\n\\tag{1}\nUpon stacking the two “long” vectors into \\bar{\\bm z} we reformulate the optimization problem as \n\\operatorname*{minimize}_{\\widetilde{\\mathbf z}\\in\\mathbb{R}^{2N}}\\quad \\frac{1}{2}\\underbrace{\\begin{bmatrix}\\bar{\\bm x}^\\top &\\bar{\\bm u}^\\top\\end{bmatrix}}_{\\bar{\\bm z}^\\top} \\underbrace{\\begin{bmatrix}\\overline{\\mathbf Q} & \\\\ & \\overline{\\mathbf R} \\end{bmatrix}}_{\\widetilde{\\mathbf Q}}\\underbrace{\\begin{bmatrix}\\bar{\\bm x}\\\\\\bar{\\bm u}\\end{bmatrix}}_{\\bar{\\bm z}}\n subject to \n\\mathbf 0 = \\underbrace{\\begin{bmatrix}(\\overline{\\mathbf A}-\\mathbf I) & \\overline{\\mathbf B}\\end{bmatrix}}_{\\widetilde{\\mathbf A}}\\underbrace{\\begin{bmatrix}\\bar{\\bm x}\\\\\\bar{\\bm u}\\end{bmatrix}}_{\\bar{\\bm z}} + \\underbrace{\\overline{\\mathbf A}_0 \\mathbf x_0}_{\\tilde{\\mathbf b}}.\n\nTo summarize, we have reformulated the optimal control problem as a linearly constrained quadratic program \n\\begin{aligned}\n\\underset{\\bar{\\bm z}\\in\\mathbb{R}^{2N}}{\\text{minimize}} &\\quad \\frac{1}{2}\\bar{\\bm z}^\\top \\widetilde{\\mathbf Q} \\bar{\\bm z}\\\\\n\\text{subject to} &\\quad \\widetilde{\\mathbf A} \\bar{\\bm z} + \\tilde{\\bm b} = \\mathbf 0.\n\\end{aligned}\n\n\n\nCode\nfunction direct_dlqr_simultaneous(A,B,x₀,Q,R,S,N)\n    Qbar = BlockArray(spzeros(N*n,N*n),repeat([n],N),repeat([n],N))\n    for i=1:(N-1)\n        Qbar[Block(i,i)] = Q\n    end\n    Qbar[Block(N,N)] = S\n    Rbar = BlockArray(spzeros(N*m,N*m),repeat([m],N),repeat([m],N))\n    for i=1:N\n        Rbar[Block(i,i)] = R\n    end\n    Qtilde = blockdiag(sparse(Qbar),sparse(Rbar))                               # The matrix defining the quadratic cost.\n    Bbar = BlockArray(spzeros(N*n,N*m),repeat([n],N),repeat([m],N))\n    for i=1:N\n        Bbar[Block(i,i)] = B\n    end\n    Abar = BlockArray(sparse(-1.0*I,n*N,n*N),repeat([n],N),repeat([n],N))\n    for i=2:N\n        Abar[Block(i,(i-1))] = A\n    end\n    Atilde = sparse([Abar Bbar])                                                # The matrix defining the linear (affine) equation.\n    A0bar = spzeros(n*N,n)\n    A0bar[1:n,1:n] = A\n    btilde = A0bar*sparse(x₀)                                                   # The constant offset for the linear (affine) equation.\n    K = [Qtilde Atilde'; Atilde spzeros(size(Atilde,1),size(Atilde,1))]         # Sparse KKT matrix.\n    F = qdldl(K)                                                                # KKT matrix LDL factorization.\n    k = [spzeros(size(Atilde,1)); -btilde]                                      # Right hand side of the KKT system\n    xtildeλ = solve(F,k)                                                        # Solving the KKT system using the factorization.\n    xopt = reshape(xtildeλ[1:(n*N)],(n,:))\n    uopt = reshape(xtildeλ[(n*N+1):(n+m)*N+1],(m,:))\n    return xopt,uopt\nend\n\nn = 2               # Number of state variables.\nm = 1               # Number of (control) input variables. \nA = rand(n,n)       # State matrix.\nB = rand(n,m)       # Input coupling matrix.\nx₀ = [1.0, 3.0]     # Initial state.\n\nN = 10              # Time horizon.\n\ns = [1.0, 2.0]      \nq = [1.0, 2.0]\nr = [1.0]\n\nS = diagm(0=&gt;s)     # Matrix defining the terminal state cost.\nQ = diagm(0=&gt;q)     # Matrix defining the running state dost.\nR = diagm(0=&gt;r)     # Matrix defining the cost of control.\n\nuopts,xopts = direct_dlqr_simultaneous(A,B,x₀,Q,R,S,N)\n\nusing Plots\np1 = plot(0:(N-1),uopts,marker=:diamond,label=\"u\",linetype=:steppost)\nxlabel!(\"k\")\nylabel!(\"u\")\n\np2 = plot(0:N,hcat(x0,xopts)',marker=:diamond,label=[\"x1\" \"x2\"],linetype=:steppost)\nxlabel!(\"k\")\nylabel!(\"x\")\n\nplot(p1,p2,layout=(2,1))\n\n\nThis constrained optimization problem can still be solved without invoking a numerical solver for solving quadratic programs (QP). We do it by introducing a vector \\boldsymbol\\lambda of Lagrange multipliers to form the Lagrange function \n\\mathcal{L}(\\bar{\\bm z}, \\boldsymbol \\lambda) = \\frac{1}{2}\\bar{\\bm z}^\\top \\widetilde{\\mathbf Q} \\bar{\\bm z} + \\boldsymbol\\lambda^\\top(\\widetilde{\\mathbf A} \\bar{\\bm z} + \\tilde{\\mathbf b}),\n for which the gradients with respect to \\bar{\\bm z} and \\boldsymbol\\lambda are \n\\begin{aligned}\n\\nabla_{\\tilde{\\bm{z}}} \\mathcal{L}(\\bar{\\bm z}, \\boldsymbol\\lambda) &= \\widetilde{\\mathbf Q}\\bar{\\bm z} + \\tilde{\\mathbf A}^\\top\\boldsymbol\\lambda,\\\\\n\\nabla_{\\boldsymbol{\\lambda}} \\mathcal{L}(\\tilde{\\bm x}, \\boldsymbol\\lambda) &=\\widetilde{\\mathbf A} \\bar{\\bm z} + \\tilde{\\mathbf b}.\n\\end{aligned}\n\nRequiring that the overall gradient vanishes leads to the following KKT set of linear equations \n\\begin{bmatrix}\n  \\widetilde{\\mathbf Q} & \\widetilde{\\mathbf A}^\\top\\\\ \\widetilde{\\mathbf A} & \\mathbf 0\n\\end{bmatrix}\n\\begin{bmatrix}\n\\bar{\\bm z}\\\\\\boldsymbol\\lambda\n\\end{bmatrix}\n=\n\\begin{bmatrix}\n\\mathbf 0\\\\ -\\tilde{\\mathbf b}\n\\end{bmatrix}.\n\nSolving this could be accomplished by using some general solver for linear systems or by using some more tailored solver for symmetric indefinite systems (based on LDL factorization, for example ldl in Matlab).\n\nAdding constraints on controls and states\nWhen solving a real optimal control problem, we may want to impose inequality constraints on \\bm u_k due to saturation of actuators. We may also want to add constraints on \\bm x_k as well, which may reflect some performance specifications. In both cases, the KKT system above would have to be augmented and we resort to some already finetuned numerical solver for quadratic programming (QP) instead.\n\n\n\nSequential (dense) formulation\nWe can express \\bar{\\bm x} as a function of \\bar{\\bm u} and \\bm x_0. This can be done in a straightforward way using (Equation 1), namely, \n\\bar{\\bm x} = (\\mathbf I-\\overline{\\mathbf A})^{-1}\\overline{\\mathbf B} \\bm u + (\\mathbf I-\\overline{\\mathbf A})^{-1} \\overline{\\mathbf A}_0 \\bm x_0.\n\nHowever, instead of solving the sets of equations, we can do this substitution in a more insightful way. Write down the state equation for several discrete times\n\n\\begin{aligned}\n\\bm x_1 &= \\mathbf A\\bm x_0 + \\mathbf B\\bm u_0\\\\\n\\bm x_2 &= \\mathbf A\\bm x_0 + \\mathbf B\\bm u_0\\\\\n     &= \\mathbf A(\\mathbf A\\bm x_0 + \\mathbf B\\bm u_0)+ \\mathbf B\\bm u_0\\\\\n     &= \\mathbf A^2\\bm x_0 + \\mathbf A\\mathbf B\\bm u_0 + \\mathbf B\\bm u_0\\\\\n     &\\vdots\\\\\n\\bm x_k &= \\mathbf A^k\\bm x_0 + \\mathbf A^{k-1}\\mathbf B\\bm u_0 +\\mathbf A^{k-2}\\mathbf B\\bm u_1 +\\ldots \\mathbf B\\bm u_{k-1}.\n\\end{aligned}\n\nRewriting into matrix-vector form (and extending the time k up to the final time N) \n\\begin{bmatrix}\n\\bm x_1\\\\\\bm x_2\\\\\\vdots\\\\\\bm x_N\n\\end{bmatrix}\n=\n\\underbrace{\n\\begin{bmatrix}\n  \\mathbf B & & & \\\\\n  \\mathbf A\\mathbf B & \\mathbf B & & \\\\\n  \\vdots & & \\ddots &\\\\\n  \\mathbf A^{N-1}\\mathbf B & \\mathbf A^{N-2}\\mathbf B & & \\mathbf B\n\\end{bmatrix}}_{\\widehat{\\mathbf C}}\n  \\begin{bmatrix}\n\\bm u_0\\\\\\bm u_1\\\\\\vdots\\\\\\bm u_{N-1}\n\\end{bmatrix}\n+\n\\underbrace{\n  \\begin{bmatrix}\n\\mathbf A\\\\\\mathbf A^2\\\\\\vdots\\\\\\mathbf A^N\n\\end{bmatrix}}_{\\widehat{\\mathbf A}}\\bm x_0\n\nFor convenience, let’s rewrite the compact relation between \\bar{\\bm x} and \\bar{\\bm u} and \\mathbf x_0 \n\\bar{\\bm x} = \\widehat{\\mathbf C} \\bar{\\bm u} + \\widehat{\\mathbf A} \\bm x_0.\n\\tag{2}\nWe can now substitute this into the original cost, which then becomes independent of \\mathbf x, which we reflect by using a new name \\tilde J \n\\begin{aligned}\n\\tilde J(\\bar{\\bm u};\\mathbf x_0) &= \\frac{1}{2}(\\widehat{\\mathbf C} \\bar{\\bm u} + \\widehat{\\mathbf A} \\mathbf x_0)^\\top\\overline{\\mathbf Q} (\\widehat{\\mathbf C} \\bar{\\bm u} + \\widehat{\\mathbf A} \\mathbf x_0) + \\frac{1}{2}\\bar{\\bm u}^\\top\\overline{\\mathbf R} \\bar{\\bm u} + \\frac{1}{2}\\mathbf x_0^\\top\\mathbf Q\\mathbf x_0\\\\\n&= \\frac{1}{2}\\bar{\\bm u}^\\top\\widehat{\\mathbf C}^\\top \\overline{\\mathbf Q} \\widehat{\\mathbf C} \\bar{\\bm u} + \\mathbf x_0^\\top\\widehat{\\mathbf A}^\\top \\overline{\\mathbf Q} \\widehat{\\mathbf C} \\bar{\\bm u} + \\frac{1}{2} \\mathbf x_0^\\top\\widehat{\\mathbf A}^\\top \\overline{\\mathbf Q} \\widehat{\\mathbf A} \\mathbf x_0 + \\frac{1}{2}\\bar{\\bm u}^\\top\\overline{\\mathbf R} \\bar{\\bm u} + \\frac{1}{2}\\mathbf x_0^\\top\\mathbf Q\\mathbf x_0\\\\\n&= \\frac{1}{2}\\bar{\\bm u}^\\top(\\widehat{\\mathbf C}^\\top \\overline{\\mathbf Q} \\widehat{\\mathbf C} + \\overline{\\mathbf R})\\bar{\\bm u} + \\mathbf x_0^\\top\\widehat{\\mathbf A}^\\top \\overline{\\mathbf Q} \\widehat{\\mathbf C} \\bar{\\bm u} + \\frac{1}{2} \\mathbf x_0^\\top(\\widehat{\\mathbf A}^\\top \\overline{\\mathbf Q} \\widehat{\\mathbf A} + \\mathbf Q)\\mathbf x_0.\n\\end{aligned}\n\nThe last term (the one independent of \\bar{\\bm u}) does not have an impact on the optimal \\bar{\\bm u} and therefore it can be discarded, but such minor modification perhaps does no justify a new name for the cost function and we write it as \n\\tilde J(\\bar{\\bm u};\\mathbf x_0) = \\frac{1}{2}\\bar{\\bm u}^\\top\\underbrace{(\\widehat{\\mathbf C}^\\top \\overline{\\mathbf Q} \\widehat{\\mathbf C} + \\overline{\\mathbf R})}_{\\mathbf H}\\bar{\\bm u} +  \\mathbf x_0^\\top\\underbrace{\\widehat{\\mathbf A}^\\top \\overline{\\mathbf Q} \\widehat{\\mathbf C}}_{\\mathbf F^\\top} \\bar{\\bm u}.\n\nThis cost is a function of \\bar{\\bm u}, the initial state \\mathbf x_0 is regarded as a fixed parameter. Its gradient is \n\\nabla_{\\bar{\\bm u}} \\tilde J = \\mathbf H\\bar{\\bm u}+\\mathbf F\\mathbf x_0.\n\nSetting it to zero leads to the following linear system of equations \n\\mathbf H\\bar{\\bm u}=-\\mathbf F\\mathbf x_0\n that needs to be solved for \\bar{\\bm u}. Formally, we write the solution as \n\\bar{\\bm u} = -\\mathbf H^{-1} \\mathbf F \\mathbf x_0.\n\n\n\n\n\n\n\nNote\n\n\n\nSolving linear equations by direct computation of the matrix inverse is not a recommended practice. Use dedicated solvers of linear equations instead. For example, in Matlab use the backslash operator, which invokes the most suitable solver.\n\n\n\nAdding the constraints on controls\nAdding constraints on \\bar{\\bm u} is straightforward. It is just that instead of a linear system we will have a linear system with additional inequality constraints. Let’s get one.\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bar{\\bm u}} & \\quad \\frac{1}{2}\\bar{\\bm u}^T \\mathbf H \\bar{\\bm u} + \\bm x_0^T\\mathbf F^T \\bar{\\bm u}\\\\\n\\text{subject to} &\\quad \\bar{\\bm u} \\leq \\bar{\\mathbf u}_\\mathrm{max}\\\\\n               &\\quad \\bar{\\bm u} \\geq \\bar{\\mathbf u}_\\mathrm{min},\n\\end{aligned}\n which we can rewrite more explicitly (in the matrix-vector format) as \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bar{\\bm u}} & \\quad \\frac{1}{2}\\bar{\\bm u}^T \\mathbf H \\bar{\\bm u} + \\bm x_0^T\\mathbf F^T \\bar{\\bm u}\\\\\n\\text{subject to} & \\begin{bmatrix}\n                  \\mathbf{I}  &    &         &    \\\\\n                    & \\mathbf{I}  &         &    \\\\\n                    &    & \\ddots  &    \\\\\n                    &    &         &  \\mathbf{I} \\\\\n                    -\\mathbf{I}   &   &     &    \\\\\n                    & -\\mathbf{I} &         &    \\\\\n                    &    & \\ddots  &    \\\\\n                    &    &         &  -\\mathbf{I}\n                 \\end{bmatrix}\n                 \\begin{bmatrix}\n                  \\mathbf u_0 \\\\ \\mathbf u_1 \\\\ \\vdots \\\\ \\mathbf u_{N-1}\n                 \\end{bmatrix}\n                 \\leq\n                 \\begin{bmatrix}\n                  \\mathbf u_\\mathbf{max} \\\\ \\mathbf u_\\mathrm{max} \\\\ \\vdots \\\\ \\mathbf u_\\mathrm{max}\\\\ -\\mathbf u_\\mathrm{min} \\\\ -\\mathbf u_\\mathrm{min} \\\\ \\vdots \\\\ -\\mathbf u_\\mathrm{min}\n                 \\end{bmatrix}.\n\\end{aligned}\n\n\n\nAdding the constraints on states\nWe might feel a little bit uneasy about loosing an immediate access to \\bar{\\bm x}. But the game is not lost. We just need to express \\bar{\\bm x} as a function of \\bar{\\bm u} and \\bm x_0 and impose the constraint on the result. But such expression is already available, see (Equation 2). Therefore, we can formulate the constraint, say, an upper bound on \\bm x as \n\\bm x_k \\leq \\mathbf x_\\mathrm{max}\n as \n\\bar{\\mathbf x}_\\mathrm{min} \\leq \\widehat{\\mathbf C} \\bar{\\bm u} + \\widehat{\\mathbf A} \\bm x_0 \\leq \\bar{\\mathbf x}_\\mathrm{max},\n where the the bars in \\bar{\\mathbf x}_\\mathrm{min} and \\bar{\\mathbf x}_\\mathrm{max} obviously indicates that these vectors were obtained by stacking the corresponding vectors for all times k=1,\\ldots,N.",
-    "crumbs": [
-      "3. Discrete-time optimal control – direct approach",
-      "Control on a finite horizon as an optimization"
-    ]
-  },
-  {
-    "objectID": "dynamic_programming.html",
-    "href": "dynamic_programming.html",
-    "title": "Optimal control via dynamic programming",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "5. Discrete-time optimal control – dynamic programming",
-      "Optimal control via dynamic programming"
-    ]
-  },
-  {
-    "objectID": "cont_indir_Pontryagin.html",
-    "href": "cont_indir_Pontryagin.html",
-    "title": "Pontryagin’s maximum principle",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "8. Continuous-time optimal control - indirect approach via Pontryagin's maximum principle",
-      "Pontryagin's maximum principle"
+      "Discrete-time LQR-optimal control on a finite horizon"
     ]
   },
   {
