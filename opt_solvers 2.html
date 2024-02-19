@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Collocation methods for optimal control</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – Numerical solvers</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./stochastic_LQR.html" rel="next">
-<link href="./cont_dir_multiple_shooting.html" rel="prev">
+<link href="./discr_dir_control.html" rel="next">
+<link href="./opt_algo_constrained.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_dir_shooting.html">9. Continuous-time optimal control - direct approach via numerical optimization</a></li><li class="breadcrumb-item"><a href="./cont_dir_collocation.html">Collocation methods for optimal control</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_algo_derivatives.html">2. Optimization – algorithms</a></li><li class="breadcrumb-item"><a href="./opt_solvers.html">Numerical solvers</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -177,7 +177,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_solvers.html" class="sidebar-item-text sidebar-link">
+  <a href="./opt_solvers.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Numerical solvers</span></a>
   </div>
 </li>
@@ -398,7 +398,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_dir_collocation.html" class="sidebar-item-text sidebar-link active">
+  <a href="./cont_dir_collocation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Collocation methods for optimal control</span></a>
   </div>
 </li>
@@ -548,9 +548,9 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_dir_shooting.html">9. Continuous-time optimal control - direct approach via numerical optimization</a></li><li class="breadcrumb-item"><a href="./cont_dir_collocation.html">Collocation methods for optimal control</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_algo_derivatives.html">2. Optimization – algorithms</a></li><li class="breadcrumb-item"><a href="./opt_solvers.html">Numerical solvers</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Collocation methods for optimal control</h1>
+<h1 class="title">Numerical solvers</h1>
 </div>
 
 
@@ -567,6 +567,31 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<ul>
+<li><p>Gurobi Optimizer</p></li>
+<li><p>IBM ILOG CPLEX</p></li>
+<li><p>Knitro</p></li>
+<li><p>MOSEK</p></li>
+<li><p>Ipopt</p></li>
+<li><p>SNOPT</p></li>
+<li><p>NLPQLP</p></li>
+<li><p>fmincon</p></li>
+<li><p>fminunc</p></li>
+<li><p>fminsearch</p></li>
+<li><p>fminbnd</p></li>
+<li><p>fminimax</p></li>
+<li><p>fmincon</p></li>
+<li><p>Optimization Toolbox for Matlab</p></li>
+<li><p>JuMP</p></li>
+<li><p>Convex.jl</p></li>
+<li><p>Optim.jl</p></li>
+<li><p>NLopt.jl</p></li>
+<li><p>BlackBoxOptim.jl</p></li>
+<li><p>BayesianOptimization.jl</p></li>
+<li><p>CMAES.jl</p></li>
+<li><p>DirectSearch.jl</p></li>
+<li><p>Evolutionary.jl</p></li>
+</ul>
 
 
 
@@ -960,13 +985,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cont_dir_multiple_shooting.html" class="pagination-link" aria-label="Multiple shooting method for optimal control">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Multiple shooting method for optimal control</span>
+      <a href="./opt_algo_constrained.html" class="pagination-link" aria-label="Algorithms for constrained optimization">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Algorithms for constrained optimization</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./stochastic_LQR.html" class="pagination-link" aria-label="Stochastic LQR control">
-        <span class="nav-page-text">Stochastic LQR control</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./discr_dir_control.html" class="pagination-link" aria-label="Control on a finite horizon as an optimization">
+        <span class="nav-page-text">Control on a finite horizon as an optimization</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -978,7 +1003,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/edit/main/cont_dir_collocation.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+</div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
