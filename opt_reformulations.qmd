@@ -1,0 +1,94 @@
+---
+title: "Problem reformulations"
+bibliography: ref_optimization.bib
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+execute:
+    enabled: false
+jupyter: julia-1.10
+---
+
+## Maximization into minimization
+
+Given a function $f(\bm x)$, we can maximize it by minimizing $-f(\bm x)$.
+
+## Equality into inequality constraints
+
+As a matter of fact, we could declare as the most general format of an NLP problem the one with only inequality constraints. This is because we can always transform an equality constraint into two inequality constraints. Given an equality constraint $h(\bm x) = 0$, we can write it as $h(\bm x) \leq 0$ and $-h(\bm x) \leq 0$, that is, 
+
+$$
+\underbrace{\begin{bmatrix}
+h(\bm x) \\
+-h(\bm x)
+\end{bmatrix}}_{\mathbf g(\bm x)} \leq \mathbf 0.
+$$
+
+On the other hand, it may be useful to keep the equality constraints explicit in the problem formulation for the benefit of theoretical analysis, numerical methods and convenience of the user/modeller.
+
+## Inequality into "sort-of" equality constraints
+
+Consider the inequality constraint $g(\bm x) \leq 0$. By introducing a *slack variable* $s$ and imposing the nonnegativity condition, we can turn the inequality into the equality $g(\bm x) + s = 0$. Well, we have not completely discarded an inequality because now we have $s \geq 0$. But this new problem may be better suited for some theoretical analysis or numerical methods. 
+
+It is also possible to express the nonnegativity constraint implicitly by considering an unrestricted variable $s$ and using it within the inequality through its square $s^2$:
+
+$$
+g(\bm x) + s^2 = 0.
+$$ 
+
+## Linear cost function always possible
+
+Given a cost function $f(\bm x)$ to be minimized, we can always upper-bound it by a new variable $\gamma$ accompanied by a new constraint $f(\bm x) \leq \gamma$ and then minimize just $\gamma$
+$$
+\begin{aligned}
+\operatorname*{minimize}_{\bm{x}\in\mathbb R^n, \gamma\in\mathbb R} & \quad \gamma \\
+\text{subject to} & \quad f(\bm x) \leq \gamma.
+\end{aligned}
+$$
+
+## Absolute value
+
+Consider an optimization problem in which the cost function contains the absolute value of a variable
+$$
+\begin{aligned}
+\operatorname*{minimize} &\quad \sum_i c_i|x_i|\\
+\text{subject to} &\quad \mathbf A \bm x = \mathbf b,\\
+&\quad \bm x \geq 0.
+\end{aligned}
+$$
+
+We also impose the restriction that all the coefficients $c_i$ are nonnegative. The cost function is then a sum of piecewise linear convex function, which can be shown to be convex. 
+
+The trouble with the absolute value function is that it is not linear, it is not even smooth. And yet, as we will see below, this optimization with the absolute value can be reformulated as a linear program.
+
+One possible reformulation introduces two new nonnegative (vector) variables $\bm x^+\geq 0$ and $\bm x^-\geq 0$ and with which the original variables can be expressed as $|x_i| = x_i^+ - x_i^-, \; i=1, \ldots, n$. The cost function can then be written as $\sum c_i|x_i| = \sum_i c_i (x_i^+ + x_i^-)$. 
+
+This may look surprising (and incorrect) at first, but we argue that at an optimum, $x_i^+$ or $x_i^-$ must be zero. Otherwise we could subtract (in case $c_i>0$) or add (in case $c_i>0$) the same amount from/to both, which would not change the satisfaction of the constraints (this modification cancels in $x_i = x_i^+ - x_i^-$), and the cost would be further reduced.
+
+The LP in the standard form then changes to
+
+$$
+\begin{aligned}
+\operatorname*{minimize}_{\bm x^+\in \mathbb R^n, \bm x^-\in \mathbb R^n} &\quad \mathbf c^\top (\bm x^+ + \bm x^-)\\
+\text{subject to} &\quad \mathbf A \bm x^+ - \mathbf A \bm x^- = \mathbf b,\\
+&\quad \bm x^+ \geq \mathbf 0,\\
+&\quad \bm x^- \geq \mathbf 0.
+\end{aligned}
+$$
+
+Another possibility is to exploit the reformulation of $z_i = |x_i|$ as $x_i\leq z$ and $-x_i\leq z$. The original problem then transforms into 
+
+$$
+\begin{aligned}
+\operatorname*{minimize}_{\bm z\in \mathbb R^n, \bm x\in \mathbb R^n} &\quad \mathbf c^\top \bm z\\
+\text{subject to} &\quad \mathbf A \bm x = \mathbf b,\\
+&\qquad \bm x \leq \bm z,\\
+&\quad -\bm x \leq \bm z.
+\end{aligned}
+$$
+
+
+## Piecewise linear
+
+## Quadratic

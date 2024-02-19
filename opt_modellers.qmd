@@ -1,0 +1,226 @@
+---
+title: "Optimization modelling languages"
+bibliography: ref_optimization.bib
+format:
+    html:
+        html-math-method: katex
+        code-fold: show
+        code-summary: "Show the code"
+execute:
+    enabled: false
+jupyter: julia-1.10
+---
+
+## Why optimization modelling languages?
+
+Realistically complex optimization problems cannot be solved with just a pen and a paper – computer programs (often called *optimization solvers*) are needed to solve them. And now comes the challenge: as various solvers for even the same class of problems differ in the algorithms they implement, so do their interfaces – every solver expects the inputs (the data defining the optimization problem) in a specific format. This makes it difficult to switch between solvers, as the problem data has to be reformatted every time. 
+
+::: {#exm-data-formatting}
+## Data formatting for different solvers
+Consider the following optimization problem:
+$$
+\begin{aligned}
+  \operatorname*{minimize}_{\bm x \in \mathbb R^2} & \quad \frac{1}{2} \bm x^\top \begin{bmatrix}4 & 1\\ 1 & 2 \end{bmatrix} \bm x + \begin{bmatrix}1 \\ 1\end{bmatrix}^\top \bm x \\
+  \text{subject to} & \quad \begin{bmatrix}1 \\ 0 \\ 0\end{bmatrix} \leq \begin{bmatrix} 1 & 1\\ 1 & 0\\ 0 & 1\end{bmatrix} \bm x \leq  \begin{bmatrix}1 \\ 0.7 \\ 0.7\end{bmatrix}
+\end{aligned}
+$$
+
+There are dozens of solvers that can be used to solve this problem. Here we demonstrate a usage of these two: [OSQP](https://osqp.org) and [COSMO.jl](https://oxfordcontrol.github.io/COSMO.jl/stable/). And we are going to call the solvers in Julia (using the the wrappers [OSQP.jl](https://github.com/osqp/OSQP.jl) for the former). First, we start with OSQP (in fact, this is their example):
+
+```{julia}
+using OSQP
+using SparseArrays
+
+# Define the problem data and build the problem description
+P = sparse([4.0 1.0; 1.0 2.0])
+q = [1.0; 1.0]
+A = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])
+l = [1.0; 0.0; 0.0]
+u = [1.0; 0.7; 0.7]
+
+problem_OSQP = OSQP.Model()
+OSQP.setup!(problem_OSQP; P=P, q=q, A=A, l=l, u=u, alpha=1, verbose=false)
+
+# Solve the optimization problem and show the results
+results_OSQP = OSQP.solve!(problem_OSQP)
+results_OSQP.x
+```
+
+Now we do the same with COSMO. First, we must take into account that COSMO cannot accept two-sided inequalities, so we have to reformulate the problem so that the constraints are only in the form of $\mathbf A\bm x + b \geq \bm 0$:
+$$
+\begin{aligned}
+  \operatorname*{minimize}_{\bm x \in \mathbb R^2} & \quad \frac{1}{2} \bm x^\top \begin{bmatrix}4 & 1\\ 1 & 2 \end{bmatrix} \bm x + \begin{bmatrix}1 \\ 1\end{bmatrix}^\top \bm x \\
+  \text{subject to} & \quad \begin{bmatrix} -1 & -1\\ -1 & 0\\ 0 & -1\\ 1 & 1\\ 1 & 0\\ 0 & 1\end{bmatrix}\bm x + \begin{bmatrix}1 \\ 0.7 \\ 0.7 \\ -1 \\ 0 \\ 0\end{bmatrix} \geq  \mathbf 0.
+\end{aligned}
+$$
+
+```{julia}
+using COSMO
+using SparseArrays
+
+# Define the problem data and build the problem description
+P = sparse([4.0 1.0; 1.0 2.0])
+q = [1.0; 1.0]
+A = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])
+l = [1.0; 0.0; 0.0]
+u = [1.0; 0.7; 0.7]
+
+Aa = [-A; A]
+ba = [u; -l]
+
+problem_COSMO = COSMO.Model()
+constraint = COSMO.Constraint(Aa, ba, COSMO.Nonnegatives)
+settings = COSMO.Settings(verbose=false)
+assemble!(problem_COSMO, P, q, constraint, settings = settings)
+
+# Solve the optimization problem and show the results
+results_COSMO = COSMO.optimize!(problem_COSMO)
+results_COSMO.x
+```
+
+Although the two solvers are solving the same problem, the data has to be formatted differently for each of them (and the difference in syntax is not negligible either).
+
+What if we could formulate the same problem without considering the pecualiarities of each solver? It turns out that it is possible. In Julia we can use [JuMP.jl](https://jump.dev/JuMP.jl/stable/):
+
+```{julia}
+using JuMP
+using SparseArrays
+using OSQP, COSMO
+
+# Define the problem data and build the problem description
+P = sparse([4.0 1.0; 1.0 2.0])
+q = [1.0; 1.0]
+A = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])
+l = [1.0; 0.0; 0.0]
+u = [1.0; 0.7; 0.7]
+
+model_JuMP = Model()
+@variable(model_JuMP, x[1:2])
+@objective(model_JuMP, Min, 0.5*x'*P*x + q'*x)
+@constraint(model_JuMP, A*x .<= u)
+@constraint(model_JuMP, A*x .>= l)
+
+# Solve the optimization problem using OSQP and show the results
+set_silent(model_JuMP)
+set_optimizer(model_JuMP, OSQP.Optimizer)
+optimize!(model_JuMP)
+termination_status(model_JuMP)
+x_OSQP = value.(x)
+
+# Now solve the problem using COSMO and show the results
+set_optimizer(model_JuMP, COSMO.Optimizer)
+optimize!(model_JuMP)
+termination_status(model_JuMP)
+x_COSMO = value.(x)
+```
+:::
+
+Notice how the optimization problem is defined just once in the last code and then different solvers can be chosen to solve it. The code represents an instance of a so-called *optimization modelling language (OML)*, or actually its major class called *algebraic modelling language (AML)*. 
+
+The key motivation for using an OML/AML is to separate the process of formulating the problem from the process of solving it (using a particular solver). Furthermore, such solver-independent problem description (called optimization model) better mimics the way we formulate these problems using a pen and a paper, making it (perhaps) a bit more convenient to write our own and read someone else's models. 
+
+## Why not optimization modelling languages?
+
+As a matter of fact, some optimization experts even keep avoiding OML/AML altogether. For example, if a company pays for a (not really cheap) license of [Gurobi Optimizer](https://www.gurobi.com/solutions/gurobi-optimizer/) – a powerful optimization library for (MI)LP/QP/QCQP –, it may be the case that for a particular very large-scale optimization problem their optimization specialist will have hard time to find a third-party solver of comparable performance. If then [its Python API](https://www.gurobi.com/documentation/current/refman/py_python_api_overview.html) makes definition of optimization problems convenient too (see the code below), maybe there is little regret that such problem definitions cannot be reused with a third-party solver. The more so that since it is tailored to Gurobi solver, it will offer control over the finest details. 
+
+```{julia}
+import gurobipy as gp
+import numpy as np
+
+# Define the data for the model
+P = np.array([[4.0, 1.0], [1.0, 2.0]])
+q = np.array([1.0, 1.0])
+A = np.array([[1.0, 1.0], [1.0, 0.0], [0.0, 1.0]])
+l = np.array([1.0, 0.0, 0.0])
+u = np.array([1.0, 0.7, 0.7])
+
+# Create a new model
+m = gp.Model("qp")
+
+# Create a vector variable
+x = m.addMVar((2,))
+
+# Set the objective
+obj = 1/2*(x@P@x + q@x)
+m.setObjective(obj)
+
+# Add the constraints
+m.addConstr(A@x >= l, "c1")
+m.addConstr(A@x <= u, "c2")
+
+# Run the solver
+m.optimize()
+
+# Print the results
+for v in m.getVars():
+    print(f"{v.VarName} {v.X:g}")
+
+print(f"Obj: {m.ObjVal:g}")
+```
+
+Similar and yet different is the story of the [IBM ILOG CPLEX](https://www.ibm.com/products/ilog-cplex-optimization-studio/cplex-optimizer), another top-notch solvers addressing the same problems as Gurobi. They do have their own modeling language called [Optimization Modelling Language (OPL)](https://www.ibm.com/docs/en/icos/22.1.1?topic=opl-optimization-programming-language), but it is also only interfacing with their solver(s). We can only guess that their motivation for developing their own optimization modelling language was that at the time of its developments (in 1990s) Python was still in pre-2.0 stage and formulating optimization problems in programming languages like C/C++ or Fortran was nowhere close to being convenient. Gurobi, in turn, started in 2008, when Python was already a popular language. 
+
+## Language-independent optimization modelling languages
+
+Optimization/algebraic modelling languages were originally developed outside programming languages, essentially as standalone tools. Examples are [AMPL](https://ampl.com/learn/ampl-book/), [GAMS](https://www.gams.com/latest/docs/UG_MAIN.html#UG_Language_Environment), and, say, [GLPK/GMPL (MathProg)](https://en.wikibooks.org/wiki/GLPK/GMPL_(MathProg)). We listed these main names here since they can be bumped across (they are still actively developed), but we are not going to discuss them in our course any further. The reason is that there are now alternatives that are implemented as packages/toolboxes in programming languages such as Julia, Matlab, and Python, which offer a more fluent workflow – a user can use the same programming language to acquire the data, preprocess them, formulate the optimization problem, configure and call a solver, and finally do some postprocessing including a visualization and whatever reporting, all without leaving the language of their choice. 
+
+## Optimization modelling in Julia
+
+My obvious (personal) bias towards Julia programming language is partly due to the terrific support for optimization modelling in Julia:
+
+- [JuMP.jl](https://jump.dev) not only constitutes one of the flagship packages of the Julia ecosystem but it is on par with the state of the art optimization modelling languages. Furthermore, being a free and open source software, it enjoys a vibrant community of developers and users. They even meet annually at JuMP-dev conference ([in 2023 in Boston, MA](https://jump.dev/meetings/jumpdev2023/)).
+
+- [Convex.jl](https://jump.dev/Convex.jl) is an implementation of the concept of *disciplined convex programming* (DCP) in Julia (below we also list its implementations in Matlab and Python). Even though it is now registered as a part of the JuMP.jl project, it is still a separate concept. Interesting, convenient, but it seems to be in a maintanence mode now.
+
+```{julia}
+using Convex, SCS
+
+# Define the problem data and build the problem description
+P = [4.0 1.0; 1.0 2.0]
+q = [1.0, 1.0]
+A = [1.0 1.0; 1.0 0.0; 0.0 1.0]
+l = [1.0, 0.0, 0.0]
+u = [1.0, 0.7, 0.7]
+
+# Create a vector variable of size n
+x = Variable(2)
+
+# Define the objective 
+objective = 1/2*quadform(x,P) + dot(q,x)
+
+# Define the constraints
+constraints = [l <= A*x, A*x <= u]
+
+# Define the overal description of the optimization problem
+problem = minimize(objective, constraints)
+
+# Solve the problem
+solve!(problem, SCS.Optimizer; silent_solver = true)
+
+# Check the status of the problem
+problem.status # :Optimal, :Infeasible, :Unbounded etc.
+
+# Get the optimum value
+problem.optval
+
+# Get the optimal x
+x.value
+```
+
+## Optimization modelling in Matlab
+
+Popularity of Matlab as a language and an ecosystem for control-related computations is undeniable. Although their Optimization Toolbox for Matlab does not provide anything like optimization/algebraic modelling language, there are some third-party toolboxes:
+
+- [Yalmip](https://yalmip.github.io) started as *Yet Another LMI Parser* quite some time ago (which reveals its control theoretic roots), but these days it serves as fairly complete algebraic modelling language (within Matlab), interfacing to perhaps any optimization solver, both commercial and free&open-source. Is is still actively developed and maintained and it abounds with tutorials and examples.
+
+- [CVX](http://cvxr.com/cvx/) is a Matlab counterpart of Convex.jl (or the other way around, if you like, since it has been here longer). The name stipulates that it only allows convex optimization probles (unlike Yalmip). It is super convenient. Unfortunately, the development seems to have stalled – the last update is from 2020.
+
+## Optimization modelling in Python
+
+Python is a very popular language for scientific computing. It can be argued whether or not it is actually suitable for development of numerical algoritms, but for building optimization models it does its job fairly well (and the numerical solvers it calls can be developed in different language). Several packages implementing OML/AML are available:
+
+- [cvxpy](https://www.cvxpy.org) is yet another instantiation of disciplined convex programming that we alredy mention when introducing Convex.jl and CVX. And it turns out that this one exhibits the greatest momentum. The team of developers seems to be have exceeded a critical mass, hence the tools seems like a safe bet already.
+
+- [Pyomo](http://www.pyomo.org)
+
+- [APMonitor](https://github.com/APMonitor/) and [GEKKO](https://gekko.readthedocs.io/en/latest/) are relatively young and small projects, primarily motivated by applications of machine learning and optimization in chemical process engineering. 

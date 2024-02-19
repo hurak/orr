@@ -1,0 +1,1411 @@
+@article{alessioDecentralizedModelPredictive2011,
+  title = {Decentralized Model Predictive Control of Dynamically Coupled Linear Systems},
+  author = {Alessio, Alessandro and Barcelli, Davide and Bemporad, Alberto},
+  year = {2011},
+  month = jun,
+  journal = {Journal of Process Control},
+  series = {Special {{Issue}} on {{Hierarchical}} and {{Distributed Model Predictive Control}}},
+  volume = {21},
+  number = {5},
+  pages = {705--714},
+  issn = {0959-1524},
+  doi = {10.1016/j.jprocont.2010.11.003},
+  url = {https://www.sciencedirect.com/science/article/pii/S0959152410002210},
+  urldate = {2022-06-28},
+  abstract = {This paper proposes a decentralized model predictive control (DMPC) scheme for large-scale dynamical processes subject to input constraints. The global model of the process is approximated as the decomposition of several (possibly overlapping) smaller models used for local predictions. The degree of decoupling among submodels represents a tuning knob of the approach: the less coupled are the submodels, the lighter the computational burden and the load for transmission of shared information; but the smaller is the degree of cooperativeness of the decentralized controllers and the overall performance of the control system. Sufficient criteria for analyzing asymptotic closed-loop stability are provided for input constrained open-loop asymptotically stable systems and for unconstrained open-loop unstable systems, under possible intermittent lack of communication of measurement data between controllers. The DMPC approach is also extended to asymptotic tracking of output set-points and rejection of constant measured disturbances. The effectiveness of the approach is shown on a relatively large-scale simulation example on decentralized temperature control based on wireless sensor feedback.},
+  langid = {english}
+}
+
+@incollection{alessioSurveyExplicitModel2009,
+  title = {A {{Survey}} on {{Explicit Model Predictive Control}}},
+  booktitle = {Nonlinear {{Model Predictive Control}}: {{Towards New Challenging Applications}}},
+  author = {Alessio, Alessandro and Bemporad, Alberto},
+  editor = {Magni, Lalo and Raimondo, Davide Martino and Allg{\"o}wer, Frank},
+  year = {2009},
+  series = {Lecture {{Notes}} in {{Control}} and {{Information Sciences}}},
+  pages = {345--369},
+  publisher = {{Springer}},
+  address = {{Berlin, Heidelberg}},
+  doi = {10.1007/978-3-642-01094-1_29},
+  url = {https://doi.org/10.1007/978-3-642-01094-1_29},
+  urldate = {2023-12-14},
+  abstract = {Explicit model predictive control (MPC) addresses the problem of removing one of the main drawbacks of MPC, namely the need to solve a mathematical program on line to compute the control action. This computation prevents the application of MPC in several contexts, either because the computer technology needed to solve the optimization problem within the sampling time is too expensive or simply infeasible, or because the computer code implementing the numerical solver causes software certification concerns,especially in safety critical applications.},
+  isbn = {978-3-642-01094-1},
+  langid = {english}
+}
+
+@article{alvaradoComparativeAnalysisDistributed2011,
+  title = {A Comparative Analysis of Distributed {{MPC}} Techniques Applied to the {{HD-MPC}} Four-Tank Benchmark},
+  author = {Alvarado, I. and Limon, D. and {Mu{\~n}oz de la Pe{\~n}a}, D. and Maestre, J. M. and Ridao, M. A. and Scheu, H. and Marquardt, W. and Negenborn, R. R. and De Schutter, B. and Valencia, F. and Espinosa, J.},
+  year = {2011},
+  month = jun,
+  journal = {Journal of Process Control},
+  series = {Special {{Issue}} on {{Hierarchical}} and {{Distributed Model Predictive Control}}},
+  volume = {21},
+  number = {5},
+  pages = {800--815},
+  issn = {0959-1524},
+  doi = {10.1016/j.jprocont.2011.03.003},
+  url = {https://www.sciencedirect.com/science/article/pii/S0959152411000485},
+  urldate = {2022-06-28},
+  abstract = {Recently, there has been a renewed interest in the development of distributed model predictive control (MPC) techniques capable of inheriting the properties of centralized predictive controllers, such as constraint satisfaction, optimal control, closed-loop stability, etc. The objective of this paper is to design and implement in a four-tank process several distributed control algorithms that are under investigation in the research groups of the authors within the European project HD-MPC. The tested controllers are centralized and decentralized model predictive controllers schemes for tracking and several distributed MPC schemes based on (i) cooperative game theory, (ii) sensivity-based coordination mechanisms, (iii) bargaining game theory, and (iv) serial decomposition of the centralized problem. In order to analyze the controllers, a control test is proposed and a number of performance indices are defined. The experimental results of the benchmark provide an overview of the performance and the properties of several state-of-the-art distributed predictive controllers.},
+  langid = {english}
+}
+
+@article{amosDifferentiableMPCEndtoend2019,
+  title = {Differentiable {{MPC}} for {{End-to-end Planning}} and {{Control}}},
+  author = {Amos, Brandon and Rodriguez, Ivan Dario Jimenez and Sacks, Jacob and Boots, Byron and Kolter, J. Zico},
+  year = {2019},
+  month = oct,
+  journal = {arXiv:1810.13400 [cs, math, stat]},
+  eprint = {1810.13400},
+  primaryclass = {cs, math, stat},
+  url = {http://arxiv.org/abs/1810.13400},
+  urldate = {2021-09-16},
+  abstract = {We present foundations for using Model Predictive Control (MPC) as a differentiable policy class for reinforcement learning in continuous state and action spaces. This provides one way of leveraging and combining the advantages of model-free and model-based approaches. Specifically, we differentiate through MPC by using the KKT conditions of the convex approximation at a fixed point of the controller. Using this strategy, we are able to learn the cost and dynamics of a controller via end-to-end learning. Our experiments focus on imitation learning in the pendulum and cartpole domains, where we learn the cost and dynamics terms of an MPC policy class. We show that our MPC policies are significantly more data-efficient than a generic neural network and that our method is superior to traditional system identification in a setting where the expert is unrealizable.},
+  archiveprefix = {arxiv}
+}
+
+@article{arnstromDualActiveSetSolver2022,
+  title = {A {{Dual Active-Set Solver}} for {{Embedded Quadratic Programming Using Recursive LDL}}{{{\textsuperscript{T}}}}{\textsuperscript{\$}} {{Updates}}},
+  author = {Arnstr{\"o}m, Daniel and Bemporad, Alberto and Axehill, Daniel},
+  year = {2022},
+  month = aug,
+  journal = {IEEE Transactions on Automatic Control},
+  volume = {67},
+  number = {8},
+  pages = {4362--4369},
+  issn = {1558-2523},
+  doi = {10.1109/TAC.2022.3176430},
+  abstract = {In this technical article, we present a dual active-set solver for quadratic programming that has properties suitable for use in embedded model predictive control applications. In particular, the solver is efficient, can easily be warm started, and is simple to code. Moreover, the exact worst-case computational complexity of the solver can be determined offline and, by using outer proximal-point iterations, ill-conditioned problems can be handled in a robust manner.}
+}
+
+@article{arnstromLinearProgrammingMethod2022,
+  title = {A {{Linear Programming Method Based}} on {{Proximal-Point Iterations With Applications}} to {{Multi-Parametric Programming}}},
+  author = {Arnstr{\"o}m, Daniel and Bemporad, Alberto and Axehill, Daniel},
+  year = {2022},
+  journal = {IEEE Control Systems Letters},
+  volume = {6},
+  pages = {2066--2071},
+  issn = {2475-1456},
+  doi = {10.1109/LCSYS.2021.3138218},
+  abstract = {We propose a linear programming method that is based on active-set changes and proximal-point iterations. The method solves a sequence of least-distance problems using a warm-started quadratic programming solver that can reuse internal matrix factorizations from the previously solved least-distance problem. We show that the proposed method terminates in a finite number of iterations and that it outperforms state-of-the-art LP solvers in scenarios where an extensive number of small/medium scale LPs need to be solved rapidly, occurring in, for example, multi-parametric programming algorithms. In particular, we show how the proposed method can accelerate operations such as redundancy removal, computation of Chebyshev centers and solving linear feasibility problems.}
+}
+
+@article{astudilloPositionOrientationTunnelFollowing2022,
+  title = {Position and {{Orientation Tunnel-Following NMPC}} of {{Robot Manipulators Based}} on {{Symbolic Linearization}} in {{Sequential Convex Quadratic Programming}}},
+  author = {Astudillo, Alejandro and Gillis, Joris and Diehl, Moritz and Decr{\'e}, Wilm and Pipeleers, Goele and Swevers, Jan},
+  year = {2022},
+  month = apr,
+  journal = {IEEE Robotics and Automation Letters},
+  volume = {7},
+  number = {2},
+  pages = {2867--2874},
+  issn = {2377-3766},
+  doi = {10.1109/LRA.2022.3142396},
+  abstract = {The tunnel-following nonlinear model predictive control (NMPC) scheme allows to exploit acceptable deviations around a path reference. This is done by using convex-over-nonlinear functions as objective and constraints in the underlying optimal control problem (OCP). The convex-over-nonlinear structure is exploited by algorithms such as the generalized Gauss-Newton (GGN) method or the sequential convex quadratic programming (SCQP) method to reduce the computational complexity of the OCP solution. However, the modeling effort and engineering time required to implement these methods is high. We address the problem of reducing the modeling effort in the implementation of SCQP, focusing on a standard sequential quadratic programming (SQP) implementation where symbolic linearization is applied to the nonlinear part of the convex-over-nonlinear functions in the objective and constraints. The novelty of this letter is twofold. It introduces a novel operator that applies symbolic linearization in a transparent and easy way to solve nonconvex OCPs with the SCQP method, and introduces a meaningful representation of an orientation-tunnel for robotic applications by means of a convex-over-nonlinear constraint, which preserves the convexity exploitation by the SCQP method. The proposed technique is demonstrated in a tunnel-following task for a 7-degrees-of-freedom manipulator.}
+}
+
+@article{axehillAlternativeUseRiccati2012,
+  title = {An Alternative Use of the {{Riccati}} Recursion for Efficient Optimization},
+  author = {Axehill, Daniel and Morari, Manfred},
+  year = {2012},
+  month = jan,
+  journal = {Systems \& Control Letters},
+  volume = {61},
+  number = {1},
+  pages = {37--40},
+  issn = {0167-6911},
+  doi = {10.1016/j.sysconle.2011.09.018},
+  url = {https://www.sciencedirect.com/science/article/pii/S0167691111002179},
+  urldate = {2022-05-01},
+  abstract = {In optimization routines used for on-line Model Predictive Control (MPC), linear systems of equations are solved in each iteration. This is true both for Active Set (AS) solvers as well as for Interior Point (IP) solvers, and for linear MPC as well as for nonlinear MPC and hybrid MPC. The main computational effort is spent while solving these linear systems of equations, and hence, it is of great interest to solve them efficiently. In high performance solvers for MPC, this is performed using Riccati recursions or generic sparsity exploiting algorithms. To be able to get this performance gain, the problem has to be formulated in a sparse way which introduces more variables. The alternative is to use a smaller formulation where the objective function Hessian is dense. In this work, it is shown that it is possible to exploit the structure also when using the dense formulation. More specifically, it is shown that it is possible to efficiently compute a standard Cholesky factorization for the dense formulation. This results in a computational complexity that grows quadratically in the prediction horizon length instead of cubically as for the generic Cholesky factorization.},
+  langid = {english}
+}
+
+@article{axehillControllingLevelSparsity2015,
+  title = {Controlling the Level of Sparsity in {{MPC}}},
+  author = {Axehill, Daniel},
+  year = {2015},
+  month = feb,
+  journal = {Systems \& Control Letters},
+  volume = {76},
+  pages = {1--7},
+  issn = {0167-6911},
+  doi = {10.1016/j.sysconle.2014.12.002},
+  url = {https://www.sciencedirect.com/science/article/pii/S0167691114002680},
+  urldate = {2022-05-01},
+  abstract = {In optimization algorithms used for on-line Model Predictive Control (MPC), linear systems of equations are often solved in each iteration. This is true both for Active Set methods as well as for Interior Point methods, and for linear MPC as well as for nonlinear MPC and hybrid MPC. The main computational effort is spent while solving these linear systems of equations, and hence, it is of greatest interest to solve them efficiently. Classically, the optimization problem has been formulated in either of two ways. One leading to a sparse linear system of equations involving relatively many variables to compute in each iteration and another one leading to a dense linear system of equations involving relatively few variables. In this work, it is shown that it is possible not only to consider these two distinct choices of formulations. Instead it is shown that it is possible to create an entire family of formulations with different levels of sparsity and number of variables, and that this extra degree of freedom can be exploited to obtain even better performance with the software and hardware at hand. This result also provides a better answer to a recurring question in MPC; should the sparse or dense formulation be used.},
+  langid = {english}
+}
+
+@article{bemporadModelPredictiveControl2002,
+  title = {Model Predictive Control Based on Linear Programming - the Explicit Solution},
+  author = {Bemporad, A. and Borrelli, F. and Morari, M.},
+  year = {2002},
+  month = dec,
+  journal = {IEEE Transactions on Automatic Control},
+  volume = {47},
+  number = {12},
+  pages = {1974--1985},
+  issn = {0018-9286},
+  doi = {10.1109/TAC.2002.805688}
+}
+
+@misc{bemporadModelPredictiveControl2019,
+  type = {Course},
+  title = {Model {{Predictive Control Course}}},
+  author = {Bemporad, Albrerto},
+  year = {Februrary 1, 2019},
+  url = {http://cse.lab.imtlucca.it/~bemporad/mpc_course.html},
+  urldate = {2019-02-25}
+}
+
+@misc{bemporadModelPredictiveControl2021,
+  type = {Lecture Slides},
+  title = {Model {{Predictive Control}}: {{Quadratic}} Programming and Explicit {{MPC}}},
+  author = {Bemporad, Alberto},
+  year = {2021},
+  month = may,
+  url = {http://cse.lab.imtlucca.it/~bemporad/teaching/mpc/imt/3-qp_explicit.pdf}
+}
+
+@misc{bemporadModelPredictiveControl2021a,
+  type = {Lecture Slides},
+  title = {Model Predictive Control},
+  author = {Bemporad, Alberto},
+  year = {2021},
+  month = may,
+  url = {http://cse.lab.imtlucca.it/~bemporad/teaching/mpc/imt/1-linear_mpc.pdf}
+}
+
+@misc{bemporadModelPredictiveControl2022,
+  title = {Model {{Predictive Control Toolbox User}}'s {{Guide}}},
+  author = {Bemporad, Alberto and Ricker, N. Lawrence and Morari, Manfred},
+  year = {2022},
+  url = {https://www.mathworks.com/help/pdf_doc/mpc/mpc_ug.pdf},
+  howpublished = {The Mathworks, Inc.}
+}
+
+@misc{bemporadModelPredictiveControl2022a,
+  title = {Model {{Predictive Control Toolbox Getting Started Guide}}},
+  author = {Bemporad, Alberto and Ricker, N. Lawrence and Morari, Manfred},
+  year = {2022},
+  url = {https://www.mathworks.com/help/pdf_doc/mpc/mpc_gs.pdf},
+  howpublished = {The Mathworks, Inc.}
+}
+
+@article{bemporadNumericallyStableSolver2018,
+  title = {A {{Numerically Stable Solver}} for {{Positive Semidefinite Quadratic Programs Based}} on {{Nonnegative Least Squares}}},
+  author = {Bemporad, A.},
+  year = {2018},
+  month = feb,
+  journal = {IEEE Transactions on Automatic Control},
+  volume = {63},
+  number = {2},
+  pages = {525--531},
+  issn = {1558-2523},
+  doi = {10.1109/TAC.2017.2735938},
+  abstract = {This paper proposes a new algorithm for solving convex quadratic programs (QP) subject to linear inequality and equality constraints. The method extends an approach recently proposed by the author for solving strictly convex QP's using nonnegative least squares, by making it numerically more robust and able to handle also the nonstrictly convex case, equality constraints, and warm starting from an initial guess. Robustness is achieved by introducing an outer proximal-point iteration scheme that regularizes the problem without altering the solution, and by adaptively weighting the least squares problems encountered while solving the problem. The performance of the resulting QP solver in terms of speed and robustness in the single precision arithmetic is assessed against other optimization algorithms tailored to embedded model predictive control applications.}
+}
+
+@article{bemporadQuadraticProgrammingAlgorithm2016,
+  title = {A {{Quadratic Programming Algorithm Based}} on {{Nonnegative Least Squares With Applications}} to {{Embedded Model Predictive Control}}},
+  author = {Bemporad, A.},
+  year = {2016},
+  month = apr,
+  journal = {IEEE Transactions on Automatic Control},
+  volume = {61},
+  number = {4},
+  pages = {1111--1116},
+  issn = {1558-2523},
+  doi = {10.1109/TAC.2015.2459211},
+  abstract = {This technical note proposes an active set method based on nonnegative least squares (NNLS) to solve strictly convex quadratic programming (QP) problems, such as those that arise in Model Predictive Control (MPC). The main idea is to rephrase the QP problem as a Least Distance Problem (LDP) that is solved via a NNLS reformulation. While the method is rather general for solving strictly convex QP's subject to linear inequality constraints, it is particularly useful for embedded MPC because (i) is very fast, compared to other existing state-of-the-art QP algorithms, (ii) is very simple to code, requiring only basic arithmetic operations for computing LDLT decompositions recursively to solve linear systems of equations, (iii) contrary to iterative methods, provides the solution or recognizes infeasibility in a finite number of steps.}
+}
+
+@misc{borrelliModelPredictiveControl2014,
+  type = {Lecture},
+  title = {Model {{Predictive Control Algorithm}}, {{Feasibility}} and {{Stability}}},
+  author = {Borrelli, F. and Morari, M. and Jones, C.},
+  year = {2014},
+  month = oct,
+  url = {http://www.mpc.berkeley.edu/mpc-course-material/MPC_handsout.pdf?attredirects=0&d=1}
+}
+
+@misc{borrelliModelPredictiveControl2014a,
+  type = {Lecture},
+  title = {Model {{Predictive Control}}:  {{Reachability}} and {{Invariance}}},
+  author = {Borrelli, F. and Morari, M. and Jones, J.},
+  year = {2014},
+  month = sep,
+  url = {http://www.mpc.berkeley.edu/mpc-course-material/Controllability-Reachability-Invariance_handsout.pdf?attredirects=0&d=1}
+}
+
+@misc{borrelliMPCCourseMaterial,
+  title = {{{MPC Course Material}} - {{MPC Lab}} @ {{UC-Berkeley}}},
+  author = {Borrelli, Francesco},
+  url = {http://www.mpc.berkeley.edu/mpc-course-material},
+  urldate = {2019-02-25},
+  abstract = {Model Based Predictive and Distributed Control Lab - UC Berkeley Head: Francesco Borrelli}
+}
+
+@misc{borrelliMPCTrackingSoft2014,
+  type = {Lecture},
+  title = {{{MPC}}: {{Tracking}}, {{Soft Constraints}}, {{Move-Blocking}}},
+  author = {Borrelli, F. and Morari, M. and Jones, C.},
+  year = {2014},
+  month = oct,
+  url = {http://www.mpc.berkeley.edu/mpc-course-material/MPC_Practical_handsout.pdf?attredirects=0&d=1}
+}
+
+@book{borrelliPredictiveControlLinear2017,
+  title = {Predictive {{Control}} for {{Linear}} and {{Hybrid Systems}}},
+  author = {Borrelli, Francesco and Bemporad, Alberto and Morari, Manfred},
+  year = {2017},
+  month = jul,
+  publisher = {{Cambridge University Press}},
+  address = {{Cambridge, New York}},
+  url = {http://cse.lab.imtlucca.it/~bemporad/publications/papers/BBMbook.pdf},
+  abstract = {Model Predictive Control (MPC), the dominant advanced control approach in industry over the past twenty-five years, is presented comprehensively in this unique book. With a simple, unified approach, and with attention to real-time implementation, it covers predictive control theory including the stability, feasibility, and robustness of MPC controllers. The theory of explicit MPC, where the nonlinear optimal feedback controller can be calculated efficiently, is presented in the context of linear systems with linear constraints, switched linear systems, and, more generally, linear hybrid systems. Drawing upon years of practical experience and using numerous examples and illustrative applications, the authors discuss the techniques required to design predictive control laws, including algorithms for polyhedral manipulations, mathematical and multiparametric programming and how to validate the theoretical properties and to implement predictive control policies. The most important algorithms feature in an accompanying free online MATLAB toolbox, which allows easy access to sample solutions. Predictive Control for Linear and Hybrid Systems is an ideal reference for graduate, postgraduate and advanced control practitioners interested in theory and/or implementation aspects of predictive control.},
+  isbn = {978-1-107-01688-0},
+  langid = {english}
+}
+
+@misc{boydModelPredictiveControl,
+  type = {Lecture Slides},
+  title = {Model {{Predictive Control}} ({{EE364b}} - {{Convex Optimization II}}.)},
+  author = {Boyd, Stephen},
+  address = {{Stanford University}},
+  url = {https://stanford.edu/class/ee364b/lectures/mpc_slides.pdf},
+  urldate = {2019-02-25}
+}
+
+@article{cagienardMoveBlockingStrategies2007,
+  title = {Move Blocking Strategies in Receding Horizon Control},
+  author = {Cagienard, R. and Grieder, P. and Kerrigan, E. C. and Morari, M.},
+  year = {2007},
+  month = jul,
+  journal = {Journal of Process Control},
+  volume = {17},
+  number = {6},
+  pages = {563--570},
+  issn = {0959-1524},
+  doi = {10.1016/j.jprocont.2007.01.001},
+  url = {https://www.sciencedirect.com/science/article/pii/S0959152407000030},
+  urldate = {2021-02-07},
+  abstract = {In order to deal with the computational burden of optimal control, it is common practice to reduce the degrees of freedom by fixing the input or its derivatives to be constant over several time-steps. This policy is referred to as `move blocking'. This paper will address two issues. First, a survey of various move blocking strategies is presented and the shortcomings of these blocking policies, such as the lack of stability and constraint satisfaction guarantees, will be illustrated. Second, a novel move blocking scheme, `Moving Window Blocking' (MWB), will be presented. In MWB, the blocking strategy is time-dependent such that the scheme yields stability and feasibility guarantees for the closed-loop system. Finally, the results of a large case study that illustrate the advantages and drawbacks of the various control strategies discussed in this paper and the implementation of the MWB scheme on a mechanical system are presented.},
+  langid = {english}
+}
+
+@book{camachoModelPredictiveControl2007,
+  title = {Model {{Predictive Control}}},
+  author = {Camacho, Eduardo F. and Alba, Carlos Bordons},
+  year = {2007},
+  series = {Advanced {{Textbooks}} in {{Control}} and {{Signal Processing}}},
+  edition = {2},
+  publisher = {{Springer-Verlag}},
+  address = {{London}},
+  url = {https://www.springer.com/gp/book/9781852336943},
+  urldate = {2019-02-25},
+  abstract = {From power plants to sugar refining, model predictive control (MPC) schemes have established themselves as the preferred control strategies for a wide variety of processes. The second edition of Model Predictive Control provides a thorough introduction to theoretical and practical aspects of the most commonly used MPC strategies. It bridges the gap between the powerful but often abstract techniques of control researchers and the more empirical approach of practitioners. Model Predictive Control demonstrates that a powerful technique does not always require complex control algorithms. The text features material on the following subjects: general MPC elements and algorithms;commercial MPC schemes;generalized predictive controlmultivariable, robust, constrained nonlinear and hybrid MPC;fast methods for MPC implementation;applications. All of the material is thoroughly updated for the second edition with the chapters on nonlinear MPC, MPC and hybrid systems and MPC implementation being entirely new. Many new exercises and examples have also have also been added throughout and MATLAB{\textregistered} programs to aid in their solution can be downloaded from extras.springer.com. The text is an excellent aid for graduate and advanced undergraduate students and will also be of use to researchers and industrial practitioners wishing to keep abreast of a fast-moving field.},
+  isbn = {978-1-85233-694-3},
+  langid = {english}
+}
+
+@article{camponogaraDistributedModelPredictive2002a,
+  title = {Distributed Model Predictive Control},
+  author = {Camponogara, E. and Jia, D. and Krogh, B.H. and Talukdar, S.},
+  year = {2002},
+  journal = {IEEE Control Systems Magazine},
+  volume = {22},
+  number = {1},
+  pages = {44--52},
+  issn = {1941-000X},
+  doi = {10.1109/37.980246},
+  abstract = {The article presents results for distributed model predictive control (MPC), focusing on i) the coordination of the optimization computations using iterative exchange of information and ii) the stability of the closed-loop system when information is exchanged only after each iteration. Current research is focusing on general methods for decomposing large-scale problems for distributed MPC and methods for guaranteeing stability when multiple agents are controlling systems subject to abrupt changes.}
+}
+
+@article{danielsonAlternatingDirectionMethod2020,
+  title = {An Alternating Direction Method of Multipliers Algorithm for Symmetric Model Predictive Control},
+  author = {Danielson, Claus},
+  year = {2020},
+  month = sep,
+  journal = {Optimal Control Applications and Methods},
+  pages = {oca.2672},
+  issn = {0143-2087, 1099-1514},
+  doi = {10.1002/oca.2672},
+  url = {https://onlinelibrary.wiley.com/doi/10.1002/oca.2672},
+  urldate = {2020-12-22},
+  langid = {english}
+}
+
+@article{deschutterIntroductionSpecialIssue2011,
+  title = {Introduction to the Special Issue on Hierarchical and Distributed Model Predictive Control},
+  author = {De Schutter, B. and Scattolini, R.},
+  year = {2011},
+  month = jun,
+  journal = {Journal of Process Control},
+  series = {Special {{Issue}} on {{Hierarchical}} and {{Distributed Model Predictive Control}}},
+  volume = {21},
+  number = {5},
+  pages = {683--684},
+  issn = {0959-1524},
+  doi = {10.1016/j.jprocont.2011.03.007},
+  url = {https://www.sciencedirect.com/science/article/pii/S0959152411000527},
+  urldate = {2022-06-28},
+  abstract = {This paper considers the distributed model predictive control (MPC) of nonlinear large-scale systems with dynamically decoupled subsystems. According to the coupled state in the overall cost function of centralized MPC, the neighbors are confirmed and fixed for each subsystem, and the overall objective function is disassembled into each local optimization. In order to guarantee the closed-loop stability of distributed MPC algorithm, the overall compatibility constraint for centralized MPC algorithm is decomposed into each local controller. The communication between each subsystem and its neighbors is relatively low, only the current states before optimization and the optimized input variables after optimization are being transferred. For each local controller, the quasi-infinite horizon MPC algorithm is adopted, and the global closed-loop system is proven to be exponentially stable. This paper presents a novel decentralised model predictive control for a plant consisting of interconnected systems. A constructive technique for online stabilisation that is applicable to the model predictive controllers (MPC) is developed. The plant-wise stability is achievable by the newly introduced asymptotically positive realness constraint (APRC) for MPC. Simulations are provided to demonstrate the efficiency of the presented APRC.},
+  langid = {english}
+}
+
+@book{ellisEconomicModelPredictive2017,
+  title = {Economic {{Model Predictive Control}}: {{Theory}}, {{Formulations}} and {{Chemical Process Applications}}},
+  shorttitle = {Economic {{Model Predictive Control}}},
+  author = {Ellis, Matthew and Liu, Jinfeng and Christofides, Panagiotis D.},
+  year = {2017},
+  series = {Advances in {{Industrial Control}}},
+  publisher = {{Springer}},
+  address = {{Cham}},
+  url = {https://doi.org/10.1007/978-3-319-41108-8},
+  abstract = {This book presents general methods for the design of economic model predictive control (EMPC) systems for broad classes of nonlinear systems that address key theoretical and practical considerations including recursive feasibility, closed-loop stability, closed-loop performance, and computational efficiency.  Specifically, the book proposes: Lyapunov-based EMPC methods for nonlinear systems;  two-tier EMPC architectures that are highly computationally efficient; and  EMPC schemes handling explicitly uncertainty, time-varying cost functions, time-delays and multiple-time-scale dynamics. The proposed methods employ a variety of tools ranging from nonlinear systems analysis, through Lyapunov-based control techniques to nonlinear dynamic optimization. The applicability and performance of the proposed methods are demonstrated through a number of chemical process examples. The book presents state-of-the-art methods for the design of economic model predictive control systems for chemical processes.In addition to being mathematically rigorous, these methods accommodate key practical issues, for example, direct optimization of process economics, time-varying economic cost functions and computational efficiency. Numerous comments and remarks providing fundamental understanding of the merging of process economics and feedback control into a single framework are included. A control engineer can easily tailor the many detailed examples of industrial relevance given within the text to a specific application. The authors present a rich collection of new research topics and references to significant recent work making Economic Model Predictive Control an important source of information and inspiration for academics and graduate students researching the area and for process engineers interested in applying its ideas.},
+  isbn = {978-3-319-41107-1}
+}
+
+@article{ellisTutorialReviewEconomic2014,
+  title = {A Tutorial Review of Economic Model Predictive Control Methods},
+  author = {Ellis, Matthew and Durand, Helen and Christofides, Panagiotis D.},
+  year = {2014},
+  month = aug,
+  journal = {Journal of Process Control},
+  series = {Economic Nonlinear Model Predictive Control},
+  volume = {24},
+  number = {8},
+  pages = {1156--1178},
+  issn = {0959-1524},
+  doi = {10.1016/j.jprocont.2014.03.010},
+  url = {http://www.sciencedirect.com/science/article/pii/S0959152414000900},
+  urldate = {2020-05-13},
+  abstract = {An overview of the recent results on economic model predictive control (EMPC) is presented and discussed addressing both closed-loop stability and performance for nonlinear systems. A chemical process example is used to provide a demonstration of a few of the various approaches. The paper concludes with a brief discussion of the current status of EMPC and future research directions to promote and stimulate further research potential in this area.},
+  langid = {english}
+}
+
+@article{esmaeelnezhadShrinkingHorizonModel2022,
+  title = {A {{Shrinking Horizon Model Predictive Controller}} for {{Daily Scheduling}} of {{Home Energy Management Systems}}},
+  author = {Esmaeel Nezhad, Ali and Rahimnejad, Abolfazl and Nardelli, Pedro H. J. and Gadsden, Stephen Andrew and Sahoo, Subham and Ghanavati, Farideh},
+  year = {2022},
+  journal = {IEEE Access},
+  volume = {10},
+  pages = {29716--29730},
+  issn = {2169-3536},
+  doi = {10.1109/ACCESS.2022.3158346},
+  abstract = {In this paper, the model predictive control (MPC) strategy is utilized in smart homes to handle the optimal operation of controllable electrical loads of residential end-users. In the proposed model, active consumers reduce their daily electricity bills by installing photovoltaic (PV) panels and battery electrical energy storage (BEES) units. The optimal control strategy will be determined by the home energy management system (HEMS), benefiting from the meteorological and electricity market data stream during the operation horizon. In this case, the optimal scheduling of home appliances is managed using the shrinking horizon MPC (SH-MPC) and the main objective is to minimize the electricity cost. To this end, the HEMS is augmented by the SH-MPC, while maintaining the desired operation time slots of controllable loads for each day. The HEMS is cast as a standard mixed-integer linear programming (MILP) model that is incorporated into the SH-MPC framework. The functionality of the proposed method is investigated under different scenarios applied to a benchmark system while both time-of-use (TOU) and real-time pricing (RTP) mechanisms have been adopted in this study. The problem is solved using six case studies. In this regard, the impact of the TOU tariff was assessed in Scenarios 1{\textendash}3 while Scenarios 4{\textendash}6 evaluate the problem with the RTP mechanism. By adopting the TOU tariff and without any load shifting program, the cost is {$<$}inline-formula{$>$} {$<$}tex-math notation="LaTeX"{$>\$\$$} \$ {$<$}/tex-math{$><$}/inline-formula{$>$}1.2274 while by using the load shifting program without the PV and BEES system, the cost would reduce to {$<$}inline-formula{$>$} {$<$}tex-math notation="LaTeX"{$>\$\$$} \$ {$<$}/tex-math{$><$}/inline-formula{$>$}0.8709. Furthermore, by using the SH-MPC model, PV system and the BEES system, the cost would reduce to {$<$}inline-formula{$>$} {$<$}tex-math notation="LaTeX"{$>\$\$$} \$ {$<$}/tex-math{$><$}/inline-formula{$>$}-0.282713 with the TOU tariff. This issue shows that the prosumer would be able to make a profit. By adopting the RTP tariff and without any load shifting program, the cost would be {$<$}inline-formula{$>$} {$<$}tex-math notation="LaTeX"{$>\$\$$} \$ {$<$}/tex-math{$><$}/inline-formula{$>$}1.22093 without any PV and BEES systems. By using the SH-MPC model, the cost would reduce to {$<$}inline-formula{$>$} {$<$}tex-math notation="LaTeX"{$>\$\$$} \$ {$<$}/tex-math{$><$}/inline-formula{$>$}1.08383. Besides, by adopting the SH-MPC, and the PV and BEES systems, the cost would reduce to {$<$}inline-formula{$>$} {$<$}tex-math notation="LaTeX"{$>\$\$$} \$ {$<$}/tex-math{$><$}/inline-formula{$>$}0.05251 with the RTP tariff, showing the significant role of load shifting programs, local power generation, and storage systems.}
+}
+
+@article{falugiGettingRobustnessUnstructured2014,
+  title = {Getting {{Robustness Against Unstructured Uncertainty}}: {{A Tube-Based MPC Approach}}},
+  shorttitle = {Getting {{Robustness Against Unstructured Uncertainty}}},
+  author = {Falugi, Paola and Mayne, David Q.},
+  year = {2014},
+  month = may,
+  journal = {IEEE Transactions on Automatic Control},
+  volume = {59},
+  number = {5},
+  pages = {1290--1295},
+  issn = {1558-2523},
+  doi = {10.1109/TAC.2013.2287727},
+  abstract = {This note extends tube-based model predictive control to the control of nonlinear systems with unmodeled dynamics. The problem of obtaining robustness against unstructured uncertainty is converted into the easier problem of achieving robustness against an additional bounded disturbance while satisfying an additional output constraint. The output constraint depends on the maximum l{$\infty$} gain of the unstructured dynamics.}
+}
+
+@article{farahaniShrinkingHorizonModel2019,
+  title = {Shrinking {{Horizon Model Predictive Control With Signal Temporal Logic Constraints Under Stochastic Disturbances}}},
+  author = {Farahani, Samira S. and Majumdar, Rupak and Prabhu, Vinayak S. and Soudjani, Sadegh},
+  year = {2019},
+  month = aug,
+  journal = {IEEE Transactions on Automatic Control},
+  volume = {64},
+  number = {8},
+  pages = {3324--3331},
+  issn = {1558-2523},
+  doi = {10.1109/TAC.2018.2880651},
+  abstract = {We present shrinking horizon model predictive control for discrete-time linear systems under stochastic disturbances with constraints encoded as signal temporal logic (STL) specification. The control objective is to satisfy a given STL specification with high probability against stochastic uncertainties while maximizing the robust satisfaction of an STL specification with minimum control effort. We formulate a general solution, which does not require precise knowledge of probability distributions of (possibly dependent) stochastic disturbances; only the bounded support of the density functions and moment intervals are used. For the specific case of disturbances that are normally distributed, we optimize the controllers by utilizing knowledge of the probability distribution of the disturbance. We show that in both cases, the control law can be obtained by solving optimization problems with linear constraints at each step. We experimentally demonstrate effectiveness of this approach by synthesizing a controller for a heating, ventilation, and air conditioning system.}
+}
+
+@article{farooqiEfficientTrainOperation2018,
+  title = {Efficient {{Train Operation}} via {{Shrinking Horizon Parametrized Predictive Control}}},
+  author = {Farooqi, Hafsa and Fagiano, Lorenzo and Colaneri, Patrizio},
+  year = {2018},
+  month = jan,
+  journal = {IFAC-PapersOnLine},
+  series = {6th {{IFAC Conference}} on {{Nonlinear Model Predictive Control NMPC}} 2018},
+  volume = {51},
+  number = {20},
+  pages = {203--208},
+  issn = {2405-8963},
+  doi = {10.1016/j.ifacol.2018.11.014},
+  url = {https://www.sciencedirect.com/science/article/pii/S2405896318326685},
+  urldate = {2022-06-30},
+  abstract = {The problem of driver assistance for the energy-efficient operation of trains is considered. The goal is to control the traction/braking forces applied to the train, while satisfying speed limits and reaching the next station at the prescribed arrival time. Moreover, the control input has to belong to a discrete set of values and/or operating modes, which a human driver has to implement. A nonlinear model predictive control (MPC) approach is proposed, featuring a shrinking horizon and an input-parametrization strategy to retain a continuous optimization problem. Theoretical convergence guarantees are derived, and the approach is tested in realistic simulations.},
+  langid = {english}
+}
+
+@misc{farooqiShrinkingHorizonMoveblocking2018,
+  title = {On Shrinking Horizon Move-Blocking Predictive Control},
+  author = {Farooqi, Hafsa and Fagiano, Lorenzo and Colaneri, Patrizio},
+  year = {2018},
+  month = mar,
+  number = {arXiv:1803.09676},
+  eprint = {1803.09676},
+  primaryclass = {cs, math},
+  publisher = {{arXiv}},
+  url = {http://arxiv.org/abs/1803.09676},
+  urldate = {2022-06-30},
+  abstract = {This manuscript contains technical details of recent results developed by the authors on shrinking horizon predictive control with a move-blocking strategy.},
+  archiveprefix = {arxiv},
+  langid = {english}
+}
+
+@article{farooqiShrinkingHorizonParametrized2020,
+  title = {Shrinking Horizon Parametrized Predictive Control with Application to Energy-Efficient Train Operation},
+  author = {Farooqi, Hafsa and Fagiano, Lorenzo and Colaneri, Patrizio and Barlini, Davide},
+  year = {2020},
+  month = feb,
+  journal = {Automatica},
+  volume = {112},
+  pages = {108635},
+  issn = {0005-1098},
+  doi = {10.1016/j.automatica.2019.108635},
+  url = {https://www.sciencedirect.com/science/article/pii/S0005109819304960},
+  urldate = {2022-06-30},
+  abstract = {A nonlinear model predictive control approach is studied, for problems where a fixed terminal instant and corresponding terminal set to be reached are imposed. The new technique features a shrinking horizon, rather than the most common receding one, and an input parametrization strategy to reduce computational burden. The property of transferability of the parametrization strategy is introduced. Under this property, theoretical convergence guarantees in nominal conditions are obtained by construction. Two relaxed techniques are then proposed to retain recursive feasibility in presence of bounded additive input disturbance. A bound on the constraint violation achieved by these relaxed techniques as a function of the uncertainty bound is derived, too. The developed strategy is applied to the problem of energy-efficient operation of trains, in either a fully autonomous mode (with continuous input values) or a driver assistance mode (with discrete input values, resulting in a nonlinear integer program if no parametrization is used). Realistic simulation results in this context illustrate the effectiveness of the approach.},
+  langid = {english}
+}
+
+@article{faulwasserEconomicNonlinearModel2018,
+  title = {Economic {{Nonlinear Model Predictive Control}}},
+  author = {Faulwasser, Timm and Gr{\"u}ne, Lars and M{\"u}ller, Matthias A.},
+  year = {2018},
+  month = jan,
+  journal = {Foundations and Trends{\textregistered} in Systems and Control},
+  volume = {5},
+  number = {1},
+  pages = {1--98},
+  publisher = {{Now Publishers, Inc.}},
+  issn = {2325-6818, 2325-6826},
+  doi = {10.1561/2600000014},
+  url = {https://www.nowpublishers.com/article/Details/SYS-014},
+  urldate = {2024-01-12},
+  abstract = {Economic Nonlinear Model Predictive Control},
+  langid = {english}
+}
+
+@article{ferreauEmbeddedOptimizationMethods2017,
+  title = {Embedded {{Optimization Methods}} for {{Industrial Automatic Control}}},
+  author = {Ferreau, H. J. and Alm{\'e}r, S. and Verschueren, R. and Diehl, M. and Frick, D. and Domahidi, A. and Jerez, J. L. and Stathopoulos, G. and Jones, C.},
+  year = {2017},
+  month = jul,
+  journal = {IFAC-PapersOnLine},
+  series = {20th {{IFAC World Congress}}},
+  volume = {50},
+  number = {1},
+  pages = {13194--13209},
+  issn = {2405-8963},
+  doi = {10.1016/j.ifacol.2017.08.1946},
+  url = {http://www.sciencedirect.com/science/article/pii/S2405896317325764},
+  urldate = {2020-12-23},
+  abstract = {Starting in the late 1970s, optimization-based control has built up an impressive track record of successful industrial applications, in particular in the petrochemical and process industries. More recently, optimization methods for automatic control are more and more deployed on so-called embedded hardware to cater for application-specific needs such as guaranteed communication latency, low energy consumption or cost effectiveness. This development greatly broadens the scope of applications to which optimization methods can be applied to sectors such as robotics, automotive, aerospace or power electronics. However, it also poses additional challenges regarding both the algorithmic concepts and their actual implementations for a given computing hardware. This survey paper discusses key challenges for using embedded optimization methods and summarizes their main use cases in current industrial practice. Motivated by this discussion, a number of dedicated embedded optimization algorithms and their actual implementations are reviewed. The presentation is organized according to the mathematical structure of the embedded optimization problem, ranging from convex quadratic programming over more general convex and nonconvex problems to formulations comprising discrete optimization variables.},
+  langid = {english}
+}
+
+@article{ferreauQpOASESParametricActiveset2014,
+  title = {{{qpOASES}}: A Parametric Active-Set Algorithm for~Quadratic Programming},
+  shorttitle = {{{qpOASES}}},
+  author = {Ferreau, Hans Joachim and Kirches, Christian and Potschka, Andreas and Bock, Hans Georg and Diehl, Moritz},
+  year = {2014},
+  month = dec,
+  journal = {Mathematical Programming Computation},
+  volume = {6},
+  number = {4},
+  pages = {327--363},
+  issn = {1867-2957},
+  doi = {10.1007/s12532-014-0071-1},
+  url = {https://doi.org/10.1007/s12532-014-0071-1},
+  urldate = {2022-05-01},
+  abstract = {Many practical applications lead to optimization problems that can either be stated as quadratic programming (QP) problems or require the solution of QP problems on a lower algorithmic level. One relatively recent approach to solve QP problems are parametric active-set methods that are based on tracing the solution along a linear homotopy between a QP problem with known solution and the QP problem to be solved. This approach seems to make them particularly suited for applications where a-priori information can be used to speed-up the QP solution or where high solution accuracy is required. In this paper we describe the open-source C++ software package qpOASES, which implements a parametric active-set method in a reliable and efficient way. Numerical tests show that qpOASES can outperform other popular academic and commercial QP solvers on small- to medium-scale convex test examples of the Maros-M{\'e}sz{\'a}ros QP collection. Moreover, various interfaces to third-party software packages make it easy to use, even on embedded computer hardware. Finally, we describe how qpOASES can be used to compute critical points of nonconvex QP problems.},
+  langid = {english}
+}
+
+@phdthesis{frisonAlgorithmsMethodsHighPerformance2016,
+  title = {Algorithms and {{Methods}} for {{High-Performance Model Predictive Control}}},
+  author = {Frison, Gianluca},
+  year = {2016},
+  url = {https://orbit.dtu.dk/en/publications/algorithms-and-methods-for-high-performance-model-predictive-cont},
+  abstract = {The goal of this thesis is to investigate algorithms and methods to reduce the solution time of solvers for Model Predictive Control (MPC). The thesis is accompanied with an open-source toolbox for High-Performance implementation of solvers for MPC (HPMPC), that contains the source code of all routines employed in the numerical tests. The main focus of this thesis is on linear MPC problems. In this thesis, both the algorithms and their implementation are equally important. About the implementation, a novel implementation strategy for the dense linear algebra routines in embedded optimization is proposed, aiming at improving the computational performance in case of small matrices. About the algorithms, they are built on top of the proposed linear algebra, and they are tailored to exploit the high-level structure of the MPC problems, with special care on reducing the computational complexity.},
+  school = {Technical University of Denmark}
+}
+
+@phdthesis{gallieriLassoMPCPredictiveControl2014,
+  title = {Lasso-{{MPC}} {\textendash} {{Predictive Control}} with L1-{{Regularised Least Squares}}},
+  author = {Gallieri, Marco},
+  year = {2014},
+  month = jan,
+  url = {https://github.com/mgallieriac/LASSO-MPC/tree/master/Thesis},
+  school = {University of Cambridge}
+}
+
+@book{gallieriLassoMPCPredictiveControl2016,
+  title = {Lasso-{{MPC}} {\textendash} {{Predictive Control}} with L1-{{Regularised Least Squares}}},
+  author = {Gallieri, Marco},
+  year = {2016},
+  month = mar,
+  publisher = {{Springer}},
+  abstract = {This thesis proposes a novel Model Predictive Control (MPC) strategy, which modifies the usual MPC cost function in order to achieve a desirable sparse actuation. It features an l1-regularised least squares loss function, in which the control error variance competes with the sum of input channels magnitude (or slew rate) over the whole horizon length. While standard control techniques lead to continuous movements of all actuators, this approach enables a selected subset of actuators to be used, the others being brought into play in exceptional circumstances. The same approach can also be used to obtain asynchronous actuator interventions, so that control actions are only taken in response to large disturbances. This thesis presents a straightforward and systematic approach to achieving these practical properties, which are ignored by mainstream control theory.},
+  googlebooks = {ClneCwAAQBAJ},
+  isbn = {978-3-319-27963-3},
+  langid = {english}
+}
+
+@article{geyerModelPredictiveDirect2009,
+  title = {Model {{Predictive Direct Torque Control}}{\textemdash}{{Part I}}: {{Concept}}, {{Algorithm}}, and {{Analysis}}},
+  shorttitle = {Model {{Predictive Direct Torque Control}}{\textemdash}{{Part I}}},
+  author = {Geyer, T. and Papafotiou, G. and Morari, M.},
+  year = {2009},
+  month = jun,
+  journal = {IEEE Transactions on Industrial Electronics},
+  volume = {56},
+  number = {6},
+  pages = {1894--1905},
+  issn = {0278-0046},
+  doi = {10.1109/TIE.2008.2007030},
+  abstract = {This paper focuses on direct torque control (DTC) for three-phase AC electric drives. A novel model predictive control scheme is proposed that keeps the motor torque, the stator flux, and (if present) the inverter's neutral point potential within given hysteresis bounds while minimizing the switching frequency of the inverter. Based on an internal model of the drive, the controller predictsseveralfuture switch transitions, extrapolates the output trajectories, and chooses the sequence of inverter switch positions (voltage vectors) that minimizes the switching frequency. The advantages of the proposed controller are twofold. First, as underlined by the experimental results in the second part of this paper, it yields a superior performance with respect to the industrial state of the art. Specifically, the switching frequency is reduced by up to 50\% while the torque and flux are kept more accurately within their bounds. Moreover, the fast dynamic torque response is inherited from standard DTC. Second, the scheme is applicable to a large class of (three-phase) AC electric machines driven by inverters.}
+}
+
+@inproceedings{geyerModelPredictiveDirect2010,
+  title = {Model {{Predictive Direct Torque Control}} of Permanent Magnet Synchronous Motors},
+  booktitle = {2010 {{IEEE Energy Conversion Congress}} and {{Exposition}}},
+  author = {Geyer, T. and Beccuti, G. A. and Papafotiou, G. and Morari, M.},
+  year = {2010},
+  month = sep,
+  pages = {199--206},
+  doi = {10.1109/ECCE.2010.5618044},
+  abstract = {Model Predictive Direct Torque Control (MPDTC) is a recent computational control methodology that combines the merits of Model Predictive Control (MPC) with the ones of Direct Torque Control (DTC). Specifically, with respect to standard DTC, the converter's switching frequency and/or losses are considerably reduced, while at the same time the Total Harmonic Distortion (THD) levels of the phase currents and the torque are improved. Moreover, DTC's favorable dynamic and robustness properties are preserved. This paper presents an MPDTC scheme for a permanent magnet synchronous motor that achieves long prediction horizons in the range of up to 150 time-steps through the use of extrapolation and bounds. A discrete-time internal controller model of the drive system is derived from the physical equations. Simulation results for a three-level voltage source inverter indicate that such an MPDTC scheme, compared to an industry standard controller, is capable of reducing the switching losses and the switching frequency by up to 50\%, and the torque THD by 25\%, while leaving the current THD unchanged.}
+}
+
+@article{geyerModelPredictiveDirect2013,
+  title = {Model {{Predictive Direct Torque Control}}: {{Derivation}} and {{Analysis}} of the {{State-Feedback Control Law}}},
+  shorttitle = {Model {{Predictive Direct Torque Control}}},
+  author = {Geyer, T.},
+  year = {2013},
+  month = sep,
+  journal = {IEEE Transactions on Industry Applications},
+  volume = {49},
+  number = {5},
+  pages = {2146--2157},
+  issn = {0093-9994},
+  doi = {10.1109/TIA.2013.2262255},
+  abstract = {This paper derives and visualizes the explicit state-feedback control law of model predictive controllers for electrical drives, using model predictive direct torque control as an illustrative example. The control law is given over the whole state space and computed in an offline procedure. The availability of the control law allows one to analyze the controller and to visualize and better understand its behavior and decision making process. Based on this concept, numerous other important tasks can be accomplished, such as stability analysis, feasibility analysis, the reduction of the computational effort, the derivation of switching heuristics, and the further improvement of the closed-loop performance.}
+}
+
+@inproceedings{geyerOptimalControlSwitchMode2004,
+  title = {On the {{Optimal Control}} of {{Switch-Mode DC-DC Converters}}},
+  booktitle = {Hybrid {{Systems}}: {{Computation}} and {{Control}}},
+  author = {Geyer, Tobias and Papafotiou, Georgios and Morari, Manfred},
+  editor = {Alur, Rajeev and Pappas, George J.},
+  year = {2004},
+  series = {Lecture {{Notes}} in {{Computer Science}}},
+  pages = {342--356},
+  publisher = {{Springer}},
+  address = {{Berlin, Heidelberg}},
+  doi = {10.1007/978-3-540-24743-2_23},
+  url = {https://doi.org/10.1007/978-3-540-24743-2_23},
+  abstract = {This paper presents a new solution approach to the optimal control problem of fixed frequency switch-mode DC-DC converters using hybrid systems methodologies. In particular, the notion of the N-step model is introduced to capture the hybrid nature of these systems, and an optimal control problem is formulated and solved online, which allows one to easily incorporate in the controller design safety constraints such as current limiting. Simulation results are provided that demonstrate the prospect of this approach.},
+  isbn = {978-3-540-24743-2},
+  langid = {english}
+}
+
+@article{gondhalekarControlledInvariantFeasibility2009,
+  title = {Controlled Invariant Feasibility {\textemdash} {{A}} General Approach to Enforcing Strong Feasibility in {{MPC}} Applied to Move-Blocking},
+  author = {Gondhalekar, Ravi and Imura, Jun-ichi and Kashima, Kenji},
+  year = {2009},
+  month = dec,
+  journal = {Automatica},
+  volume = {45},
+  number = {12},
+  pages = {2869--2875},
+  issn = {0005-1098},
+  doi = {10.1016/j.automatica.2009.09.020},
+  url = {https://www.sciencedirect.com/science/article/pii/S0005109809004300},
+  urldate = {2021-08-05},
+  abstract = {Strong feasibility of MPC problems is usually enforced by constraining the state at the final prediction step to a controlled invariant set. However, such terminal constraints fail to enforce strong feasibility in a rich class of MPC problems, for example when employing move-blocking. In this paper a generalized, least restrictive approach for enforcing strong feasibility of MPC problems is proposed and applied to move-blocking MPC. The approach hinges on the novel concept of controlled invariant feasibility. Instead of a terminal constraint, the state of an earlier prediction step is constrained to a controlled invariant feasible set. Controlled invariant feasibility is a generalization of controlled invariance. The convergence of well-known approaches for determining maximum controlled invariant sets, and j-step admissible sets, is formally proved. Thus an algorithm for rigorously approximating maximum controlled invariant feasible sets is developed for situations where the exact maximum cannot be determined.},
+  langid = {english}
+}
+
+@book{goodwinConstrainedControlEstimation2005,
+  title = {Constrained {{Control}} and {{Estimation}}: {{An Optimisation Approach}}},
+  shorttitle = {Constrained {{Control}} and {{Estimation}}},
+  author = {Goodwin, Graham C. and Seron, Mar{\'i}a M. and de Don{\'a}, Jos{\'e} A.},
+  year = {2005},
+  series = {Communications and {{Control Engineering}}},
+  publisher = {{Springer-Verlag}},
+  address = {{London}},
+  url = {https://www.springer.com/gp/book/9781852335489},
+  urldate = {2019-02-25},
+  abstract = {This book provides a comprehensive treatment of the principles underlying optimal constrained control and estimation. The contents progress from optimisation theory, fixed horizon discrete optimal control, receding horizon implementations and stability conditions, explicit solutions and numerical algorithms, moving horizon estimation, and connections between constrained estimation and control. Several case studies and further developments illustrate and expand the core principles. Specific topics covered include: {\textbullet} An overview of optimisation theory. {\textbullet} Links to optimal control theory, including the discrete minimum principle. {\textbullet} Linear and nonlinear receding horizon constrained control including stability. {\textbullet} Constrained control solutions having a finite parameterisation for specific classes of problems. {\textbullet} Numerical procedures for solving constrained optimisation problems. {\textbullet} Output feedback optimal constrained control. {\textbullet} Constrained state estimation. {\textbullet} Duality between constrained estimation and control. {\textbullet} Applications to finite alphabet control and estimation problems, cross-directional control, rudder-roll stabilisation of ships, and control over communication networks. The book gives a self-contained treatment of the subject assuming that the reader has basic background in systems theory, including linear control, stability and state space methods. It is suitable for use in senior level courses and as material for reference and self-study. A companion website is continually updated by the authors.},
+  isbn = {978-1-85233-548-9},
+  langid = {english}
+}
+
+@article{greerShrinkingHorizonModel2020,
+  title = {Shrinking {{Horizon Model Predictive Control Method}} for {{Helicopter}}{\textendash}{{Ship Touchdown}}},
+  author = {Greer, William B. and Sultan, Cornel},
+  year = {2020},
+  journal = {Journal of Guidance, Control, and Dynamics},
+  volume = {43},
+  number = {5},
+  pages = {884--900},
+  publisher = {{American Institute of Aeronautics and Astronautics}},
+  issn = {0731-5090},
+  doi = {10.2514/1.G004374},
+  url = {https://doi.org/10.2514/1.G004374},
+  urldate = {2022-06-30},
+  abstract = {A model predictive control (MPC) framework with a fixed maneuver horizon and shrinking prediction and control horizons is presented that, at each time step, minimizes the most accurate prediction of a complete cost for a discrete linear system, subject to constraints. Methods of weight selection to ensure strong convexity of the cost, which makes the quadratic programming problem associated with MPC numerically more tractable, are discussed. A continuous-time flexible-blade helicopter dynamic model is discretized, and the resulting model is used to demonstrate this control design method in ship landing and touchdown maneuvers. Inequality constraints, ship-induced turbulence, and parametric uncertainty are gradually included in the design and analysis. Several case studies are used to illustrate the effectiveness of this control method in landings on ships that experience quiescent and nonquiescent motions.}
+}
+
+@article{grosLinearNonlinearMPC2020,
+  title = {From Linear to Nonlinear {{MPC}}: Bridging the Gap via the Real-Time Iteration},
+  shorttitle = {From Linear to Nonlinear {{MPC}}},
+  author = {Gros, S{\'e}bastien and Zanon, Mario and Quirynen, Rien and Bemporad, Alberto and Diehl, Moritz},
+  year = {2020},
+  month = jan,
+  journal = {International Journal of Control},
+  volume = {93},
+  number = {1},
+  pages = {62--80},
+  publisher = {{Taylor \& Francis}},
+  issn = {0020-7179},
+  doi = {10.1080/00207179.2016.1222553},
+  url = {https://doi.org/10.1080/00207179.2016.1222553},
+  urldate = {2020-07-01},
+  abstract = {Linear model predictive control (MPC) can be currently deployed at outstanding speeds, thanks to recent progress in algorithms for solving online the underlying structured quadratic programs. In contrast, nonlinear MPC (NMPC) requires the deployment of more elaborate algorithms, which require longer computation times than linear MPC. Nonetheless, computational speeds for NMPC comparable to those of MPC are now regularly reported, provided that the adequate algorithms are used. In this paper, we aim at clarifying the similarities and differences between linear MPC and NMPC. In particular, we focus our analysis on NMPC based on the real-time iteration (RTI) scheme, as this technique has been successfully tested and, in some applications, requires computational times that are only marginally larger than linear MPC. The goal of the paper is to promote the understanding of RTI-based NMPC within the linear MPC community.}
+}
+
+@book{gruneNonlinearModelPredictive2017,
+  title = {Nonlinear {{Model Predictive Control}}: {{Theory}} and {{Algorithms}}},
+  shorttitle = {Nonlinear {{Model Predictive Control}}},
+  author = {Gr{\"u}ne, Lars and Pannek, J{\"u}rgen},
+  year = {2017},
+  series = {Communications and {{Control Engineering}}},
+  edition = {2},
+  publisher = {{Springer}},
+  address = {{Cham}},
+  url = {https://doi.org/10.1007/978-3-319-46024-6},
+  abstract = {This book offers readers a thorough and rigorous introduction to nonlinear model predictive control (NMPC) for discrete-time and sampled-data systems. NMPC schemes with and without stabilizing terminal constraints are detailed, and intuitive examples illustrate the performance of different NMPC variants. NMPC is interpreted as an approximation of infinite-horizon optimal control so that important properties like closed-loop stability, inverse optimality and suboptimality can be derived in a uniform manner. These results are complemented by discussions of feasibility and robustness.  An introduction to nonlinear optimal control algorithms yields essential insights into how the nonlinear optimization routine{\textemdash}the core of any nonlinear model predictive controller{\textemdash}works. Accompanying software in MATLAB{\textregistered} and C++ (downloadable from extras.springer.com/), together with an explanatory appendix in the book itself, enables readers to perform computer experiments exploring the possibilities and limitations of NMPC. The second edition has been substantially rewritten, edited and updated to reflect the significant advances that have been made since the publication of its predecessor, including: {\textbullet} a new chapter on economic NMPC relaxing the assumption that the running cost penalizes the distance to a pre-defined equilibrium; {\textbullet} a new chapter on distributed NMPC discussing methods which facilitate the control of large-scale systems by splitting up the optimization into smaller subproblems; {\textbullet} an extended discussion of stability and performance using approximate updates rather than full optimization; {\textbullet} replacement of the pivotal sufficient condition for stability without stabilizing terminal conditions with a weaker alternative and inclusion of an alternative and much simpler proof in the analysis; and {\textbullet} further variations and extensions in response to suggestions from readers of the first edition. Though primarily aimed at academic researchers and practitioners working in control and optimization, the text is self-contained, featuring background material on infinite-horizon optimal control and Lyapunov stability theory that also makes it accessible for graduate students in control engineering and applied mathematics.},
+  isbn = {978-3-319-46023-9}
+}
+
+@article{hartleyTerminalSpacecraftRendezvous2013,
+  title = {Terminal Spacecraft Rendezvous and Capture with {{LASSO}} Model Predictive Control},
+  author = {Hartley, Edward N. and Gallieri, Marco and Maciejowski, Jan M.},
+  year = {2013},
+  month = nov,
+  journal = {International Journal of Control},
+  volume = {86},
+  number = {11},
+  pages = {2104--2113},
+  publisher = {{Taylor \& Francis}},
+  issn = {0020-7179},
+  doi = {10.1080/00207179.2013.789608},
+  url = {https://doi.org/10.1080/00207179.2013.789608},
+  urldate = {2021-11-12},
+  abstract = {The recently investigated {$\ell$}asso model predictive control (MPC) is applied to the terminal phase of a spacecraft rendezvous and capture mission. The interaction between the cost function and the treatment of minimum impulse bit is also investigated. The propellant consumption with {$\ell$}asso MPC for the considered scenario is noticeably less than with a conventional quadratic cost and control actions are sparser in time. Propellant consumption and sparsity are competitive with those achieved using a zone-based {$\ell$}1 cost function, whilst requiring fewer decision variables in the optimisation problem than the latter. The {$\ell$}asso MPC is demonstrated to meet tighter specifications on control precision and also avoids the risk of undesirable behaviours often associated with pure {$\ell$}1 stage costs.}
+}
+
+@article{hewingLearningBasedModelPredictive2020,
+  title = {Learning-{{Based Model Predictive Control}}: {{Toward Safe Learning}} in {{Control}}},
+  author = {Hewing, Lukas and Wabersich, Kim P. and Menner, Marcel and Zeilinger, Melanie N.},
+  year = {2020},
+  month = may,
+  journal = {Annual Review of Control, Robotics, and Autonomous Systems},
+  volume = {3},
+  pages = {269--296},
+  doi = {10.1146/annurev-control-090419-075625},
+  url = {https://doi.org/10.1146/annurev-control-090419-075625},
+  abstract = {Recent successes in the field of machine learning, as well as the availability of increased sensing and computational capabilities in modern control systems, have led to a growing interest in learning and data-driven control techniques. Model predictive control (MPC), as the prime methodology for constrained control, offers a significant opportunity to exploit the abundance of data in a reliable manner, particularly while taking safety constraints into account. This review aims at summarizing and categorizing previous research on learning-based MPC, i.e., the integration or combination of MPC with learning methods, for which we consider three main categories. Most of the research addresses learning for automatic improvement of the prediction model from recorded data. There is, however, also an increasing interest in techniques to infer the parameterization of the MPC controller, i.e., the cost and constraints, that lead to the best closed-loop performance. Finally, we discuss concepts that leverage MPC to augment learning-based controllers with constraint satisfaction properties.}
+}
+
+@article{hovdPiecewiseQuadraticLyapunov2010,
+  title = {Piecewise Quadratic {{Lyapunov}} Functions for Stability Verification of Approximate Explicit {{MPC}}},
+  author = {Hovd, Morten and Olaru, Sorin},
+  year = {2010},
+  journal = {Modeling, Identification and Control: A Norwegian Research Bulletin},
+  volume = {31},
+  number = {2},
+  pages = {45--53},
+  issn = {0332-7353, 1890-1328},
+  doi = {10.4173/mic.2010.2.1},
+  url = {http://www.mic-journal.no/ABS/MIC-2010-2-1.asp},
+  urldate = {2023-12-12},
+  abstract = {Explicit MPC of constrained linear systems is known to result in a piecewise affine controller and therefore also piecewise affine closed loop dynamics. The complexity of such analytic formulations of the control law can grow exponentially with the prediction horizon. The suboptimal solutions offer a trade-off in terms of complexity and several approaches can be found in the literature for the construction of approximate MPC laws. In the present paper a piecewise quadratic (PWQ) Lyapunov function is used for the stability verification of an of approximate explicit Model Predictive Control (MPC). A novel relaxation method is proposed for the LMI criteria on the Lyapunov function design. This relaxation is applicable to the design of PWQ Lyapunov functions for discrete-time piecewise affine systems in general.},
+  langid = {english}
+}
+
+@inproceedings{hrovatDevelopmentModelPredictive2012,
+  title = {The Development of {{Model Predictive Control}} in Automotive Industry: {{A}} Survey},
+  shorttitle = {The Development of {{Model Predictive Control}} in Automotive Industry},
+  booktitle = {2012 {{IEEE International Conference}} on {{Control Applications}}},
+  author = {Hrovat, D. and Di Cairano, S. and Tseng, H.E. and Kolmanovsky, I.V.},
+  year = {2012},
+  pages = {295--302},
+  issn = {1085-1992},
+  doi = {10.1109/CCA.2012.6402735},
+  abstract = {Model Predictive Control (MPC) is an established control technique in chemical process control, due to its capability of optimally controlling multivariable systems with constraints on plant and actuators. In recent years, the advances in MPC algorithms and design processes, the increased computational power of electronic control units, and the need for improved performance, safety and reduced emissions, have drawn considerable interest in MPC from the automotive industry. In this paper we survey the investigations of MPC in the automotive industry with particular focus on the developments at Ford Motor Company. First, we describe the basic MPC techniques used in the automotive industry, and the early exploratory investigations. Then we present three applications that have been recently prototyped in fully functional production-like vehicles, highlighting the features that make MPC a good candidate strategy for each case. We finally present our perspectives on the next challenges and future applications of MPC in the automotive industry.}
+}
+
+@article{christofidesDistributedModelPredictive2013,
+  title = {Distributed Model Predictive Control: {{A}} Tutorial Review and Future Research Directions},
+  shorttitle = {Distributed Model Predictive Control},
+  author = {Christofides, Panagiotis D. and Scattolini, Riccardo and {Mu{\~n}oz de la Pe{\~n}a}, David and Liu, Jinfeng},
+  year = {2013},
+  month = apr,
+  journal = {Computers \& Chemical Engineering},
+  series = {{{CPC VIII}}},
+  volume = {51},
+  pages = {21--41},
+  issn = {0098-1354},
+  doi = {10.1016/j.compchemeng.2012.05.011},
+  url = {https://www.sciencedirect.com/science/article/pii/S0098135412001573},
+  urldate = {2022-06-28},
+  abstract = {In this paper, we provide a tutorial review of recent results in the design of distributed model predictive control systems. Our goal is to not only conceptually review the results in this area but also to provide enough algorithmic details so that the advantages and disadvantages of the various approaches can become quite clear. In this sense, our hope is that this paper would complement a series of recent review papers and catalyze future research in this rapidly evolving area. We conclude discussing our viewpoint on future research directions in this area.},
+  langid = {english}
+}
+
+@article{jerezEmbeddedOnlineOptimization2014,
+  title = {Embedded {{Online Optimization}} for {{Model Predictive Control}} at {{Megahertz Rates}}},
+  author = {Jerez, J. L. and Goulart, P. J. and Richter, S. and Constantinides, G. A. and Kerrigan, E. C. and Morari, M.},
+  year = {2014},
+  month = dec,
+  journal = {IEEE Transactions on Automatic Control},
+  volume = {59},
+  number = {12},
+  pages = {3238--3251},
+  issn = {0018-9286},
+  doi = {10.1109/TAC.2014.2351991},
+  abstract = {Faster, cheaper, and more power efficient optimization solvers than those currently possible using general-purpose techniques are required for extending the use of model predictive control (MPC) to resource-constrained embedded platforms. We propose several custom computational architectures for different first-order optimization methods that can handle linear-quadratic MPC problems with input, input-rate, and soft state constraints. We provide analysis ensuring the reliable operation of the resulting controller under reduced precision fixed-point arithmetic. Implementation of the proposed architectures in FPGAs shows that satisfactory control performance at a sample rate beyond 1 MHz is achievable even on low-end devices, opening up new possibilities for the application of MPC on embedded systems.}
+}
+
+@article{jonesFastPredictiveControl2012,
+  title = {Fast {{Predictive Control}}: {{Real-time Computation}} and {{Certification}}},
+  shorttitle = {Fast {{Predictive Control}}},
+  author = {Jones, Colin N. and Domahidi, Alexander and Morari, Manfred and Richter, Stefan and Ullmann, Fabian and Zeilinger, Melanie},
+  year = {2012},
+  month = jan,
+  journal = {IFAC Proceedings Volumes},
+  series = {4th {{IFAC Conference}} on {{Nonlinear Model Predictive Control}}},
+  volume = {45},
+  number = {17},
+  pages = {94--98},
+  issn = {1474-6670},
+  doi = {10.3182/20120823-5-NL-3013.00075},
+  url = {http://www.sciencedirect.com/science/article/pii/S1474667016314331},
+  urldate = {2019-03-05},
+  abstract = {Pushing predictive controllers, which require the solution of an optimization problem at each sampling interval, into the millisecond range opens up both new possibilities, as well as new challenges for control. Computational limits placed on standard convex solvers invalidate basic assumptions made when proving the stability, or invariance of constrained control laws and as a result cannot be used in fast, real-time implementations with confidence. This extended abstract will present two optimization methods that can be certified to stabilize a system and enforce constraints, even for extremely short computational times or in the presence of time jitter. We'll report on two fast `code-generation' toolboxes: FiOrdOs, for first-order, and FORCES, for second order methods and demonstrate their capabilities through application examples.}
+}
+
+@misc{jonesTheoryModelPredictive2011,
+  type = {Lecture},
+  title = {Theory in {{Model Predictive Control}}: {{Constraint Satisfaction}} and {{Stability}}},
+  author = {Jones, Colin and Zeilinger, Melanie},
+  year = {2011},
+  month = jun,
+  address = {{Hotel Titris, Tatransk{\'a} Lomnica, Slovakia}},
+  url = {https://www.uiam.sk/pc11/data/workshops/mpc/MPC_PC11_Lecture1.pdf},
+  langid = {english}
+}
+
+@article{karamanakosGuidelinesDesignFinite2020,
+  title = {Guidelines for the {{Design}} of {{Finite Control Set Model Predictive Controllers}}},
+  author = {Karamanakos, Petros and Geyer, Tobias},
+  year = {2020},
+  month = jul,
+  journal = {IEEE Transactions on Power Electronics},
+  volume = {35},
+  number = {7},
+  pages = {7434--7450},
+  issn = {1941-0107},
+  doi = {10.1109/TPEL.2019.2954357},
+  abstract = {Direct model predictive control (MPC) with reference tracking, also referred to as finite control set MPC (FCS-MPC), has gained significant attention in recent years, mainly from the academic community. Thanks to its applicability to a wide range of power electronic systems, it is considered a promising control method for such systems. However, to simplify the design, researchers frequently make choices that-often unknowingly-reduce the system performance. In this article, we discuss and analyze the factors that affect the closed-loop performance of FCS-MPC. Based on these findings, design guidelines are provided that help to maximize the system performance. To highlight the performance benefits, two case studies will be considered: the first one consists of a two-level converter and an induction machine, whereas the second one adds an LC filter between the converter and the machine.}
+}
+
+@book{kouvaritakisModelPredictiveControl2016,
+  title = {Model {{Predictive Control}}: {{Classical}}, {{Robust}} and {{Stochastic}}},
+  shorttitle = {Model {{Predictive Control}}},
+  author = {Kouvaritakis, Basil and Cannon, Mark},
+  year = {2016},
+  series = {Advanced {{Textbooks}} in {{Control}} and {{Signal Processing}}},
+  publisher = {{Springer International Publishing}},
+  doi = {10.1007/978-3-319-24853-0},
+  url = {https://www.springer.com/gp/book/9783319248516},
+  urldate = {2020-12-12},
+  abstract = {For the first time, a textbook that brings together classical predictive control with treatment of up-to-date robust and stochastic techniques. Model Predictive Control describes the development of tractable algorithms for uncertain, stochastic, constrained systems. The starting point is classical predictive control and the appropriate formulation of performance objectives and constraints to provide guarantees of closed-loop stability and performance. Moving on to robust predictive control, the text explains how similar guarantees may be obtained for cases in which the model describing the system dynamics is subject to additive disturbances and parametric uncertainties. Open- and closed-loop optimization are considered and the state of the art in computationally tractable methods based on uncertainty tubes presented for systems with additive model uncertainty. Finally, the tube framework is also applied to model predictive control problems involving hard or probabilistic constraints for the cases of multiplicative and stochastic model uncertainty. The book provides: extensive use of illustrative examples; sample problems; and discussion of novel control applications such as resource allocation for sustainable development and turbine-blade control for maximized power capture with simultaneously reduced risk of turbulence-induced damage. Graduate students pursuing courses in model predictive control or more generally in advanced or process control and senior undergraduates in need of a specialized treatment will find Model Predictive Control an invaluable guide to the state of the art in this important subject. For the instructor it provides an authoritative resource for the construction of courses.},
+  isbn = {978-3-319-24851-6},
+  langid = {english}
+}
+
+@article{lofbergOopsCannotIt2012,
+  title = {Oops! {{I}} Cannot Do It Again: {{Testing}} for Recursive Feasibility in {{MPC}}},
+  shorttitle = {Oops! {{I}} Cannot Do It Again},
+  author = {L{\"o}fberg, Johan},
+  year = {2012},
+  month = mar,
+  journal = {Automatica},
+  volume = {48},
+  number = {3},
+  pages = {550--555},
+  issn = {0005-1098},
+  doi = {10.1016/j.automatica.2011.12.003},
+  url = {https://www.sciencedirect.com/science/article/pii/S0005109811005723},
+  urldate = {2021-04-08},
+  abstract = {One of the most fundamental problems in model predictive control (MPC) is the lack of guaranteed stability and feasibility. It is shown how Farkas' Lemma in combination with bilevel programming and disjoint bilinear programming can be used to search for problematic initial states which lack recursive feasibility, thus invalidating a particular MPC controller. Alternatively, the method can be used to derive a certificate that the problem is recursively feasible. The results are initially derived for nominal linear MPC, and thereafter extended to the additive disturbance case.},
+  langid = {english}
+}
+
+@book{maciejowskiPredictiveControlConstraints2000,
+  title = {Predictive {{Control}} with {{Constraints}}},
+  author = {Maciejowski, Jan},
+  year = {2000},
+  month = sep,
+  edition = {1 edition},
+  publisher = {{Prentice Hall}},
+  address = {{Harlow, England ; New York}},
+  abstract = {Model predictive control is an indispensable part of industrial control engineering and is increasingly the "method of choice" for advanced control applications. Jan Maciejowski's book provides a systematic and comprehensive course on predictive control suitable for final year students and professional engineers. The first book to cover constrained predictive control, the text reflects the true use of the topic in industry.},
+  isbn = {978-0-201-39823-6},
+  langid = {english}
+}
+
+@book{maestreDistributedModelPredictive2014,
+  title = {Distributed {{Model Predictive Control Made Easy}}},
+  editor = {Maestre, Jos{\'e} M. and Negenborn, Rudy R.},
+  year = {2014},
+  series = {Intelligent {{Systems}}, {{Control}} and {{Automation}}: {{Science}} and {{Engineering}}},
+  publisher = {{Springer}},
+  address = {{Dordrecht}},
+  url = {https://doi.org/10.1007/978-94-007-7006-5},
+  urldate = {2022-06-28},
+  isbn = {978-94-007-7005-8},
+  langid = {english}
+}
+
+@book{magniNonlinearModelPredictive2009,
+  title = {Nonlinear {{Model Predictive Control}}: {{Towards New Challenging Applications}}},
+  shorttitle = {Nonlinear {{Model Predictive Control}}},
+  author = {Magni, Lalo and Raimondo, Davide Martino and Allg{\"o}wer, Frank},
+  year = {25 kv{\v e}tna 2009},
+  series = {Lecture {{Notes}} in {{Control}} and {{Information Sciences}}},
+  publisher = {{Springer}},
+  address = {{Berlin, Heidelberg}},
+  abstract = {This book brings together the contributions of a diverse group of internationally recognized researchers and industrial practitioners, to critically assess the current status of the NMPC field. Future directions and needs are also assessed.},
+  isbn = {978-3-642-01093-4}
+}
+
+@inproceedings{mariethozModelPredictiveControl2008,
+  title = {Model {{Predictive Control}} of Buck {{DC-DC}} Converter with Nonlinear Inductor},
+  booktitle = {2008 11th {{Workshop}} on {{Control}} and {{Modeling}} for {{Power Electronics}}},
+  author = {Mariethoz, S. and Herceg, M. and Kvasnica, M.},
+  year = {2008},
+  month = aug,
+  pages = {1--8},
+  doi = {10.1109/COMPEL.2008.4634700},
+  abstract = {A model predictive control (MPC) approach that deals with the nonlinear behavior of the inductor in the buck DC-DC converter is presented. Based on a discrete approximation of a coil dynamics, a piecewise affine model that better represents the B-H characteristics is derived. For the fast execution of the MPC algorithm, a concept of explicit solutions to MPC is adopted. Two different implementation schemes adapted to very fast sampling rates are outlined, one based on a binary search tree, the other on a polynomial approximation. Provided experimental results show that the proposed MPC scheme better limits the current and importantly, avoids the saturation of the magnetic core.}
+}
+
+@inproceedings{martinezModelPredictiveDirect2010,
+  title = {Model Predictive Direct Current Control},
+  booktitle = {2010 {{IEEE International Conference}} on {{Industrial Technology}}},
+  author = {Martinez, J. C. R. and Kennel, R. M. and Geyer, T.},
+  year = {2010},
+  month = mar,
+  pages = {1808--1813},
+  doi = {10.1109/ICIT.2010.5472514},
+  abstract = {This paper presents a model predictive current controller and its application to ac electrical drives. In a stationary reference frame, the proposed control scheme keeps the {$\alpha$} and {$\beta$} currents within given hysteresis bounds while minimizing the switching frequency of the inverter. Based on a internal model of the drive, the controller predicts the drive's future behavior for each switching sequence, extrapolates the output trajectories and selects the inverter switch position (voltage vector) that minimizes the switching frequency and keeps the predicted current trajectories within the hysteresis bounds. The scheme is applicable to a large class of (three-phase) ac electrical machines driven by inverters and it is also effective under all operating conditions, including transients and zero stator frequency operation. Specifically, the very fast transient response time of the classic hysteresis control scheme is inherited.}
+}
+
+@article{matousDistributedMPCFormation2022,
+  title = {Distributed {{MPC}} for {{Formation Path-Following}} of {{Multi-Vehicle Systems}}},
+  author = {Matou{\v s}, Josef and Varagnolo, Damiano and Pettersen, Kristin Y. and Paliotta, Claudio},
+  year = {2022},
+  month = jan,
+  journal = {IFAC-PapersOnLine},
+  series = {9th {{IFAC Conference}} on {{Networked Systems NECSYS}} 2022},
+  volume = {55},
+  number = {13},
+  pages = {85--90},
+  issn = {2405-8963},
+  doi = {10.1016/j.ifacol.2022.07.240},
+  url = {https://www.sciencedirect.com/science/article/pii/S2405896322006309},
+  urldate = {2022-12-27},
+  abstract = {The paper considers the problem of formation path-following of multiple vehicles and proposes a solution based on combining distributed model predictive control with parametrizations of the trajectories of the vehicles using polynomial splines. Introducing such parametrization leads indeed to two potential benefits: a) reducing the number of optimization variables, and b) enabling enforcing constraints on the vehicles in a computationally efficient way. Moreover, the proposed solution formulates the formation path-following problem as a distributed optimization problem that may then be solved using the alternating direction method of multipliers (ADMM). The paper then analyzes the effectiveness of the proposed method via numerical simulations with surface vehicles and differential drive robots.},
+  langid = {english}
+}
+
+@article{mattingleyCVXGENCodeGenerator2012,
+  title = {{{CVXGEN}}: A Code Generator for Embedded Convex Optimization},
+  shorttitle = {{{CVXGEN}}},
+  author = {Mattingley, Jacob and Boyd, Stephen},
+  year = {2012},
+  month = mar,
+  journal = {Optimization and Engineering},
+  volume = {13},
+  number = {1},
+  pages = {1--27},
+  issn = {1573-2924},
+  doi = {10.1007/s11081-011-9176-9},
+  url = {https://doi.org/10.1007/s11081-011-9176-9},
+  urldate = {2021-06-20},
+  abstract = {CVXGEN is a software tool that takes a high level description of a convex optimization problem family, and automatically generates custom C code that compiles into a reliable, high speed solver for the problem family. The current implementation targets problem families that can be transformed, using disciplined convex programming techniques, to convex quadratic programs of modest size. CVXGEN generates simple, flat, library-free code suitable for embedding in real-time applications. The generated code is almost branch free, and so has highly predictable run-time behavior. The combination of regularization (both static and dynamic) and iterative refinement in the search direction computation yields reliable performance, even with poor quality data. In this paper we describe how CVXGEN is implemented, and give some results on the speed and reliability of the automatically generated solvers.},
+  langid = {english}
+}
+
+@article{mattingleyRecedingHorizonControl2011,
+  title = {Receding {{Horizon Control}}},
+  author = {Mattingley, Jacob and Wang, Yang and Boyd, Stephen},
+  year = {2011},
+  month = jun,
+  journal = {IEEE Control Systems Magazine},
+  volume = {31},
+  number = {3},
+  pages = {52--65},
+  issn = {1941-000X},
+  doi = {10.1109/MCS.2011.940571},
+  abstract = {In this article we have shown that receding horizon control offers a straightforward method for designing feedback controllers that deliver good performance while respecting complex constraints. A designer specifies the RHC controller by specifying the objective, constraints, prediction method, and horizon, each of which has a natural choice suggested directly by the application. In more traditional approaches, such as PID control, a designer tunes the controller coefficients, often using trial and error, to handle the objectives and constraints indirectly. In contrast, RHC con trollers can often obtain good performance with little tuning. In addition to the straightforward design process, we have seen that RHC controllers can be implemented in real time at kilohertz sampling rates. These speeds are useful for both real-time implementation of the controller as well as rapid Monte Carlo simulation for design and testing purposes. Thus, receding horizon control can no longer be considered a slow, computationally intensive policy. Indeed, RHC can be applied to a wide range of control problems, including applications involving fast dynamics.}
+}
+
+@article{mayneConstrainedModelPredictive2000,
+  title = {Constrained Model Predictive Control: {{Stability}} and Optimality},
+  shorttitle = {Constrained Model Predictive Control},
+  author = {Mayne, D. Q. and Rawlings, J. B. and Rao, C. V. and Scokaert, P. O. M.},
+  year = {2000},
+  month = jun,
+  journal = {Automatica},
+  volume = {36},
+  number = {6},
+  pages = {789--814},
+  issn = {0005-1098},
+  doi = {10.1016/S0005-1098(99)00214-9},
+  url = {https://www.sciencedirect.com/science/article/pii/S0005109899002149},
+  urldate = {2021-03-17},
+  abstract = {Model predictive control is a form of control in which the current control action is obtained by solving, at each sampling instant, a finite horizon open-loop optimal control problem, using the current state of the plant as the initial state; the optimization yields an optimal control sequence and the first control in this sequence is applied to the plant. An important advantage of this type of control is its ability to cope with hard constraints on controls and states. It has, therefore, been widely applied in petro-chemical and related industries where satisfaction of constraints is particularly important because efficiency demands operating points on or close to the boundary of the set of admissible states and controls. In this review, we focus on model predictive control of constrained systems, both linear and nonlinear and discuss only briefly model predictive control of unconstrained nonlinear and/or time-varying systems. We concentrate our attention on research dealing with stability and optimality; in these areas the subject has developed, in our opinion, to a stage where it has achieved sufficient maturity to warrant the active interest of researchers in nonlinear control. We distill from an extensive literature essential principles that ensure stability and use these to present a concise characterization of most of the model predictive controllers that have been proposed in the literature. In some cases the finite horizon optimal control problem solved on-line is exactly equivalent to the same problem with an infinite horizon; in other cases it is equivalent to a modified infinite horizon optimal control problem. In both situations, known advantages of infinite horizon optimal control accrue.},
+  langid = {english}
+}
+
+@article{mayneModelPredictiveControl2014,
+  title = {Model Predictive Control: {{Recent}} Developments and Future Promise},
+  shorttitle = {Model Predictive Control},
+  author = {Mayne, David Q.},
+  year = {2014},
+  month = dec,
+  journal = {Automatica},
+  volume = {50},
+  number = {12},
+  pages = {2967--2986},
+  issn = {0005-1098},
+  doi = {10.1016/j.automatica.2014.10.128},
+  url = {http://www.sciencedirect.com/science/article/pii/S0005109814005160},
+  urldate = {2015-11-03},
+  abstract = {This paper recalls a few past achievements in Model Predictive Control, gives an overview of some current developments and suggests a few avenues for future research.}
+}
+
+@article{morariModelPredictiveControl1999,
+  title = {Model Predictive Control: Past, Present and Future},
+  shorttitle = {Model Predictive Control},
+  author = {Morari, Manfred and H. Lee, Jay},
+  year = {1999},
+  month = may,
+  journal = {Computers \& Chemical Engineering},
+  volume = {23},
+  number = {4{\textendash}5},
+  pages = {667--682},
+  issn = {0098-1354},
+  doi = {10.1016/S0098-1354(98)00301-9},
+  url = {http://www.sciencedirect.com/science/article/pii/S0098135498003019},
+  urldate = {2017-05-05},
+  abstract = {More than 15 years after model predictive control (MPC) appeared in industry as an effective means to deal with multivariable constrained control problems, a theoretical basis for this technique has started to emerge. The issues of feasibility of the on-line optimization, stability and performance are largely understood for systems described by linear models. Much progress has been made on these issues for non-linear systems but for practical applications many questions remain, including the reliability and efficiency of the on-line computation scheme. To deal with model uncertainty `rigorously' an involved dynamic programming problem must be solved. The approximation techniques proposed for this purpose are largely at a conceptual stage. Among the broader research needs the following areas are identified: multivariable system identification, performance monitoring and diagnostics, non-linear state estimation, and batch system control. Many practical problems like control objective prioritization and symptom-aided diagnosis can be integrated systematically and effectively into the MPC framework by expanding the problem formulation to include integer variables yielding a mixed-integer quadratic or linear program. Efficient techniques for solving these problems are becoming available.},
+  annotation = {01838}
+}
+
+@article{negenbornDistributedModelPredictive2014,
+  title = {Distributed {{Model Predictive Control}}: {{An Overview}} and {{Roadmap}} of {{Future Research Opportunities}}},
+  shorttitle = {Distributed {{Model Predictive Control}}},
+  author = {Negenborn, R.R. and Maestre, J.M.},
+  year = {2014},
+  month = aug,
+  journal = {IEEE Control Systems Magazine},
+  volume = {34},
+  number = {4},
+  pages = {87--97},
+  issn = {1941-000X},
+  doi = {10.1109/MCS.2014.2320397},
+  abstract = {Model-predictive control (MPC) is an optimization-based control technique that uses 1) a mathematical model of a system to predict the system's behavior over a given horizon, 2) an objective function that represents what system behavior is desirable, 3) a mathematical formalization of operational constraints that have to be satisfied, 4) measurements of the state of the system at each time step, and 5) any information regarding upcoming disturbances that may be available. This article surveyed and categorized 35 distributed MPC approaches. Subsequently, several of the insights gained from the survey were presented. This study provides a picture of what features have received more or less attention over the last years, bringing about potential research niches for new approaches.}
+}
+
+@article{nouwensConstraintadaptiveMPCLinear2023,
+  title = {Constraint-Adaptive {{MPC}} for Linear Systems: {{A}} System-Theoretic Framework for Speeding up {{MPC}} through Online Constraint Removal},
+  shorttitle = {Constraint-Adaptive {{MPC}} for Linear Systems},
+  author = {Nouwens, Sven Adrianus Nicolaas and Paulides, Margarethus Marius and Heemels, Maurice},
+  year = {2023},
+  month = nov,
+  journal = {Automatica},
+  volume = {157},
+  pages = {111243},
+  issn = {0005-1098},
+  doi = {10.1016/j.automatica.2023.111243},
+  url = {https://www.sciencedirect.com/science/article/pii/S0005109823004041},
+  urldate = {2023-08-23},
+  abstract = {Reducing the computation time of model predictive control (MPC) is important, especially for systems constrained by many state constraints. In this paper, we propose a new online constraint removal framework for linear systems, for which we coin the term constraint-adaptive MPC (ca-MPC). In so-called exact ca-MPC, we adapt the imposed constraints by removing, at each time-step, a subset of the state constraints in order to reduce the computational complexity of the receding-horizon optimal control problem, while ensuring that the closed-loop behavior is identical to that of the original MPC law. We also propose an approximate ca-MPC scheme in which a further reduction of computation time can be accomplished by a tradeoff with closed-loop performance, while still preserving recursive feasibility, stability, and constraint satisfaction properties. The online constraint removal exploits fast backward and forward reachability computations combined with optimality properties.}
+}
+
+@article{oberdieckExplicitHybridModelpredictive2015,
+  title = {Explicit Hybrid Model-Predictive Control: {{The}} Exact Solution},
+  shorttitle = {Explicit Hybrid Model-Predictive Control},
+  author = {Oberdieck, Richard and Pistikopoulos, Efstratios N.},
+  year = {2015},
+  month = aug,
+  journal = {Automatica},
+  volume = {58},
+  pages = {152--159},
+  issn = {0005-1098},
+  doi = {10.1016/j.automatica.2015.05.021},
+  url = {https://www.sciencedirect.com/science/article/pii/S0005109815002277},
+  urldate = {2022-09-05},
+  abstract = {This article presents an algorithm for the exact solution of explicit hybrid model-predictive control problems of time-invariant, discrete-time mixed logical dynamical systems. Using multiparametric programming, this control problem is formulated as a multiparametric mixed-integer quadratic programming problem where the initial states of the system are treated as parameters. In conjunction with decomposition type or branch-and-bound type approaches, the proposed solution strategy first creates affine relaxations of nonconvex critical regions that result from the comparison of two quadratic objective functions. These relaxations are then used to generate an affine outer approximation for the critical regions. Upon termination, the bounded space of the initial states is partitioned into possibly nonconvex critical regions and corresponding optimal control laws.},
+  langid = {english}
+}
+
+@article{patrinosAcceleratedDualGradientProjection2014,
+  title = {An {{Accelerated Dual Gradient-Projection Algorithm}} for {{Embedded Linear Model Predictive Control}}},
+  author = {Patrinos, P. and Bemporad, A.},
+  year = {2014},
+  month = jan,
+  journal = {IEEE Transactions on Automatic Control},
+  volume = {59},
+  number = {1},
+  pages = {18--33},
+  issn = {1558-2523},
+  doi = {10.1109/TAC.2013.2275667},
+  abstract = {This paper proposes a dual fast gradient-projection method for solving quadratic programming problems that arise in model predictive control of linear systems subject to general polyhedral constraints on inputs and states. The proposed algorithm is well suited for embedded control applications in that: 1) it is extremely simple and easy to code; 2) the number of iterations to reach a given accuracy in terms of optimality and feasibility of the primal solution can be tightly estimated; and 3) the computational cost per iteration increases only linearly with the prediction horizon.}
+}
+
+@book{rakovicHandbookModelPredictive2019,
+  title = {Handbook of {{Model Predictive Control}}},
+  editor = {Rakovi{\'c}, Sa{\v s}a V. and Levine, William S.},
+  year = {2019},
+  series = {Control {{Engineering}}},
+  publisher = {{Birkh{\"a}user Basel}},
+  url = {https://www.springer.com/us/book/9783319774886},
+  urldate = {2019-03-06},
+  abstract = {Recent developments in model-predictive control promise remarkable opportunities for designing multi-input, multi-output control systems and improving the control of single-input, single-output systems. This volume provides a definitive survey of the latest model-predictive control methods available to engineers and scientists today. The initial set of chapters present various methods for managing uncertainty in systems, including stochastic model-predictive control. With the advent of affordable and fast computation, control engineers now need to think about using ``computationally intensive controls,'' so the second part of this book addresses the solution of optimization problems in ``real'' time for model-predictive control. The theory and applications of control theory often influence each other, so the last section of Handbook of Model Predictive Control rounds out the book with representative applications to automobiles, healthcare, robotics, and finance. The chapters in this volume will be useful to working engineers, scientists, and mathematicians, as well as students and faculty interested in the progression of control theory. Future developments in MPC will no doubt build from concepts demonstrated in this book and anyone with an interest in MPC will find fruitful information and suggestions for additional reading.},
+  isbn = {978-3-319-77488-6},
+  langid = {english}
+}
+
+@inproceedings{rawlingsFundamentalsEconomicModel2012,
+  title = {Fundamentals of Economic Model Predictive Control},
+  booktitle = {2012 {{IEEE}} 51st {{IEEE Conference}} on {{Decision}} and {{Control}} ({{CDC}})},
+  author = {Rawlings, James B. and Angeli, David and Bates, Cuyler N.},
+  year = {2012},
+  month = dec,
+  pages = {3851--3861},
+  issn = {0743-1546},
+  doi = {10.1109/CDC.2012.6425822},
+  abstract = {The goal of most current advanced control systems is to guide a process to a target setpoint rapidly and reliably. Model predictive control has become a popular technology in many applications because it can handle large, multivariable systems subject to hard constraints on states and inputs. The optimal steady-state setpoint is usually provided by some other information management system that determines, among all steady states, which is the most profitable. For an increasing number of applications, however, this hierarchical separation of information and purpose is no longer optimal or desirable. A recently proposed alternative to the hierarchical decomposition is to take the economic objective directly as the objective function of the control system. In this approach, known as economic MPC, the controller optimizes directly in real time the economic performance of the process, rather than tracking to a setpoint. The purpose of this tutorial is to explain how to design these kinds of control systems and what kinds of closed-loop properties one can achieve with them. We cover the following issues: asymptotic average performance; closed-loop stability and convergence, strong duality and dissipativity; designing terminal costs, terminal regions, and terminal periodic constraints. Several examples are included to illustrate these results.}
+}
+
+@book{rawlingsModelPredictiveControl2017,
+  title = {Model {{Predictive Control}}: {{Theory}}, {{Computation}}, and {{Design}}},
+  shorttitle = {Model {{Predictive Control}}},
+  author = {Rawlings, James B. and Mayne, David Q. and Diehl, Moritz M.},
+  year = {2017},
+  month = oct,
+  edition = {2},
+  publisher = {{Nob Hill Publishing, LLC}},
+  address = {{Madison, Wisconsin}},
+  url = {http://www.nobhillpublishing.com/mpc-paperback/index-mpc.html},
+  abstract = {Recent 2nd edition of a leading text. New chapter on numerical optimal control by Moritz M. Diehl. This text provides a comprehensive and foundational treatment of the theory and design of model predictive control. It will enable researchers to learn and teach the fundamentals of MPC without continuously searching the diverse control research literature for omitted arguments and requisite background material. More than 230 end-of-chapter exercises support the teaching and learning of MPC.},
+  isbn = {978-0-9759377-3-0}
+}
+
+@phdthesis{richterComputationalComplexityCertification2012,
+  title = {Computational Complexity Certification of Gradient Methods for Real-Time Model Predictive Control},
+  author = {Richter, Stefan},
+  year = {2012},
+  address = {{Zurich, Switzerland}},
+  url = {https://www.research-collection.ethz.ch/bitstream/handle/20.500.11850/60443/eth-6362-02.pdf},
+  school = {ETH}
+}
+
+@inproceedings{richterRealtimeInputconstrainedMPC2009,
+  title = {Real-Time Input-Constrained {{MPC}} Using Fast Gradient Methods},
+  booktitle = {Proceedings of the 48h {{IEEE Conference}} on {{Decision}} and {{Control}} ({{CDC}}) Held Jointly with 2009 28th {{Chinese Control Conference}}},
+  author = {Richter, S. and Jones, C. N. and Morari, M.},
+  year = {2009},
+  month = dec,
+  pages = {7387--7393},
+  doi = {10.1109/CDC.2009.5400619},
+  abstract = {Linear quadratic model predictive control (MPC) with input constraints leads to an optimization problem that has to be solved at every instant in time. Although there exists computational complexity analysis for current online optimization methods dedicated to MPC, the worst case complexity bound is either hard to compute or far off from the practically observed bound. In this paper we introduce fast gradient methods that allow one to compute a priori the worst case bound required to find a solution with pre-specified accuracy. Both warm- and cold-starting techniques are analyzed and an illustrative example confirms that small, practical bounds can be obtained that together with the algorithmic and numerical simplicity of fast gradient methods allow online optimization at high rates.}
+}
+
+@article{rodriguezStateArtFinite2013,
+  title = {State of the {{Art}} of {{Finite Control Set Model Predictive Control}} in {{Power Electronics}}},
+  author = {Rodriguez, Jose and Kazmierkowski, Marian P. and Espinoza, Jose R. and Zanchetta, Pericle and {Abu-Rub}, Haitham and Young, Hector A. and Rojas, Christian A.},
+  year = {2013},
+  month = may,
+  journal = {IEEE Transactions on Industrial Informatics},
+  volume = {9},
+  number = {2},
+  pages = {1003--1016},
+  issn = {1941-0050},
+  doi = {10.1109/TII.2012.2221469},
+  abstract = {This paper addresses to some of the latest contributions on the application of Finite Control Set Model Predictive Control (FCS-MPC) in Power Electronics. In FCS-MPC , the switching states are directly applied to the power converter, without the need of an additional modulation stage. The paper shows how the use of FCS-MPC provides a simple and efficient computational realization for different control objectives in Power Electronics. Some applications of this technology in drives, active filters, power conditioning, distributed generation and renewable energy are covered. Finally, attention is paid to the discussion of new trends in this technology and to the identification of open questions and future research topics.}
+}
+
+@article{santinProportioningSecondorderInformation2017,
+  title = {Proportioning with Second-Order Information for Model Predictive Control},
+  author = {{\v S}antin, Ond{\v r}ej and Jaro{\v s}ov{\'a}, Marta and Havlena, Vladim{\'i}r and Dost{\'a}l, Zden{\v e}k},
+  year = {2017},
+  month = may,
+  journal = {Optimization Methods and Software},
+  volume = {32},
+  number = {3},
+  pages = {436--454},
+  publisher = {{Taylor \& Francis}},
+  issn = {1055-6788},
+  doi = {10.1080/10556788.2016.1213840},
+  url = {https://doi.org/10.1080/10556788.2016.1213840},
+  urldate = {2022-01-29},
+  abstract = {We propose an algorithm for the effective solution of quadratic programming (QP) problems arising from model predictive control (MPC). MPC is a modern multivariable control method which gives the solution for a QP problem at each sample instant. Our algorithm combines the active-set strategy with the proportioning test to decide when to leave the actual active set. For the minimization in the face, we use a direct solver implemented by the Cholesky factors updates. The performance of the algorithm is illustrated by numerical experiments, and the results are compared with the state-of-the-art solvers on benchmarks from MPC.}
+}
+
+@article{savioloActiveLearningDiscreteTime2024,
+  title = {Active {{Learning}} of {{Discrete-Time Dynamics}} for {{Uncertainty-Aware Model Predictive Control}}},
+  author = {Saviolo, Alessandro and Frey, Jonathan and Rathod, Abhishek and Diehl, Moritz and Loianno, Giuseppe},
+  year = {2024},
+  journal = {IEEE Transactions on Robotics},
+  volume = {40},
+  pages = {1273--1291},
+  issn = {1941-0468},
+  doi = {10.1109/TRO.2023.3339543},
+  url = {https://ieeexplore.ieee.org/document/10342784},
+  urldate = {2024-01-30},
+  abstract = {Model-based control requires an accurate model of the system dynamics for precisely and safely controlling the robot in complex and dynamic environments. Moreover, in presence of variations in the operating conditions, the model should be continuously refined to compensate for dynamics changes. In this article, we present a self-supervised learning approach that actively models the dynamics of nonlinear robotic systems. We combine offline learning from past experience and online learning from current robot interaction with the unknown environment. These two ingredients enable a highly sample-efficient and adaptive learning process, capable of accurately inferring model dynamics in real-time even in operating regimes that greatly differ from the training distribution. Moreover, we design an uncertainty-aware model predictive controller that is heuristically conditioned to the aleatoric (data) uncertainty of the learned dynamics. This controller actively chooses the optimal control actions that i) optimize the control performance, and ii) improve the efficiency of online learning sample collection. We demonstrate the effectiveness of our method through a series of challenging real-world experiments using a quadrotor system. Our approach showcases high resilience and generalization capabilities by consistently adapting to unseen flight conditions, while it significantly outperforms classical and adaptive control baselines.11Video: https://youtu.be/QmEhSTcWob4}
+}
+
+@article{scattoliniArchitecturesDistributedHierarchical2009,
+  title = {Architectures for Distributed and Hierarchical {{Model Predictive Control}} {\textendash} {{A}} Review},
+  author = {Scattolini, Riccardo},
+  year = {2009},
+  month = may,
+  journal = {Journal of Process Control},
+  volume = {19},
+  number = {5},
+  pages = {723--731},
+  issn = {0959-1524},
+  doi = {10.1016/j.jprocont.2009.02.003},
+  url = {https://www.sciencedirect.com/science/article/pii/S0959152409000353},
+  urldate = {2022-06-28},
+  abstract = {The aim of this paper is to review and to propose a classification of a number of decentralized, distributed and hierarchical control architectures for large scale systems. Attention is focused on the design approaches based on Model Predictive Control. For the considered architectures, the underlying rationale, the fields of application, the merits and limitations are discussed, the main references to the literature are reported and some future developments are suggested. Finally, a number of open problems is listed.},
+  langid = {english}
+}
+
+@article{shekharCorrigendumRobustVariable2013,
+  title = {Corrigendum to ``{{Robust}} Variable Horizon {{MPC}} with Move Blocking'' [{{Systems Control Lett}}. 61 (4) (2012) 587{\textendash}594]},
+  author = {Shekhar, Rohan C. and Maciejowski, Jan M.},
+  year = {2013},
+  month = may,
+  journal = {Systems \& Control Letters},
+  volume = {62},
+  number = {5},
+  pages = {451--452},
+  issn = {0167-6911},
+  doi = {10.1016/j.sysconle.2013.01.009},
+  url = {https://www.sciencedirect.com/science/article/pii/S0167691113000285},
+  urldate = {2021-02-07},
+  abstract = {This technical note corrects errors contained in the paper ``Robust Variable Horizon MPC with Move Blocking'' (Shekhar and Maciejowski (2012)~[1]). Primarily, the constraint tightening scheme as presented needs to be slightly altered to ensure that the guarantee of robust recursive feasibility is maintained. Some additional minor corrections are also listed.},
+  langid = {english}
+}
+
+@article{shekharRobustVariableHorizon2012,
+  title = {Robust Variable Horizon {{MPC}} with Move Blocking},
+  author = {Shekhar, Rohan C. and Maciejowski, Jan M.},
+  year = {2012},
+  month = apr,
+  journal = {Systems \& Control Letters},
+  volume = {61},
+  number = {4},
+  pages = {587--594},
+  issn = {0167-6911},
+  doi = {10.1016/j.sysconle.2012.02.004},
+  url = {https://www.sciencedirect.com/science/article/pii/S016769111200031X},
+  urldate = {2021-02-07},
+  abstract = {This paper introduces a new formulation of variable horizon model predictive control (VH-MPC) that utilises move blocking for reducing computational complexity. Various results pertaining to move blocking are derived, following which, a generalised blocked VH-MPC controller is formulated for linear discrete-time systems. Robustness to bounded disturbances is ensured through the use of tightened constraints. The resulting time-varying control scheme is shown to guarantee robust recursive feasibility and finite-time completion. An example is then presented for a particular choice of blocking regime, as would be applicable to vehicle man{\oe}uvring problems. Simulations demonstrate the efficacy of the formulation.},
+  langid = {english}
+}
+
+@article{sieberSystemLevelApproach2022,
+  title = {A {{System Level Approach}} to {{Tube-Based Model Predictive Control}}},
+  author = {Sieber, Jerome and Bennani, Samir and Zeilinger, Melanie N.},
+  year = {2022},
+  journal = {IEEE Control Systems Letters},
+  volume = {6},
+  pages = {776--781},
+  issn = {2475-1456},
+  doi = {10.1109/LCSYS.2021.3086190},
+  abstract = {Robust tube-based model predictive control (MPC) methods address constraint satisfaction by leveraging an a priori determined tube controller in the prediction to tighten the constraints. This letter presents a system level tube-MPC (SLTMPC) method derived from the system level parameterization (SLP), which allows optimization over the tube controller online when solving the MPC problem, which can significantly reduce conservativeness. We derive the SLTMPC method by establishing an equivalence relation between a class of robust MPC methods and the SLP. Finally, we show that the SLTMPC formulation naturally arises from an extended SLP formulation and show its merits in a numerical example.}
+}
+
+@techreport{singhTubeBasedMPCContraction2016,
+  title = {Tube-{{Based MPC}}: A {{Contraction Theory Approach}}},
+  author = {Singh, Sumeet and Pavone, Marco and Slotine, Jean-Jacques E},
+  year = {2016},
+  institution = {{Stanford University}},
+  abstract = {The objective of this paper is to devise a systematic approach to apply the tube MPC framework to non-linear continuous-time systems. In tube MPC, an ancillary feedback controller is designed to keep the actual state within an invariant ``tube'' around a nominal trajectory computed neglecting disturbances. Our approach is to leverage recent results in contraction theory together with tools from convex optimization to devise ancillary feedback controllers that (a) enjoy quantifiable bounds for the state tube, (b) provide exponential convergence, and (c) fully exploit the nonlinearity of a system, thereby minimizing conservatism. We present a number of methods to design contraction-based ancillary feedback controllers, along with numerical results corroborating our analytical insights.},
+  langid = {english}
+}
+
+@article{skafShrinkinghorizonDynamicProgramming2010,
+  title = {Shrinking-Horizon Dynamic Programming},
+  author = {Skaf, Jo{\"e}lle and Boyd, Stephen and Zeevi, Assaf},
+  year = {2010},
+  journal = {International Journal of Robust and Nonlinear Control},
+  volume = {20},
+  number = {17},
+  pages = {1993--2002},
+  issn = {1099-1239},
+  doi = {10.1002/rnc.1566},
+  url = {https://onlinelibrary.wiley.com/doi/abs/10.1002/rnc.1566},
+  urldate = {2022-06-30},
+  abstract = {We describe a heuristic control policy for a general finite-horizon stochastic control problem, which can be used when the current process disturbance is not conditionally independent of the previous disturbances, given the current state. At each time step, we approximate the distribution of future disturbances (conditioned on what has been observed) by a product distribution with the same marginals. We then carry out dynamic programming (DP), using this modified future disturbance distribution, to find an optimal policy, and in particular, the optimal current action. We then execute only the optimal current action. At the next step, we update the conditional distribution, and repeat the process, this time with a horizon reduced by one step. (This explains the name `shrinking-horizon dynamic programming'). We explain how the method can be thought of as an extension of model predictive control, and illustrate our method on two variations on a revenue management problem. Copyright {\textcopyright} 2010 John Wiley \& Sons, Ltd.},
+  langid = {english}
+}
+
+@article{valmorbidaQuadraticProgrammingRamp2023,
+  title = {Quadratic Programming with Ramp Functions and Fast Online {{QP-MPC}} Solutions},
+  author = {Valmorbida, Giorgio and Hovd, Morten},
+  year = {2023},
+  month = jul,
+  journal = {Automatica},
+  volume = {153},
+  pages = {111011},
+  issn = {0005-1098},
+  doi = {10.1016/j.automatica.2023.111011},
+  url = {https://www.sciencedirect.com/science/article/pii/S0005109823001656},
+  urldate = {2023-04-26},
+  abstract = {A novel method is proposed for solving quadratic programming problems arising in model predictive control. The method is based on an implicit representation of the Karush{\textendash}Kuhn{\textendash}Tucker conditions using ramp functions. The method is shown to be highly efficient on both small and fairly large Quadratic Program problems, can be implemented using simple computer code, and has modest memory requirements.},
+  langid = {english}
+}
+
+@incollection{venkatDistributedModelPredictive2007,
+  title = {Distributed {{Model Predictive Control}} of {{Large-Scale Systems}}},
+  booktitle = {Assessment and {{Future Directions}} of {{Nonlinear Model Predictive Control}}},
+  author = {Venkat, Aswin N. and Rawlings, James B. and Wright, Stephen J.},
+  editor = {Findeisen, Rolf and Allg{\"o}wer, Frank and Biegler, Lorenz T.},
+  year = {2007},
+  series = {Lecture {{Notes}} in {{Control}} and {{Information Sciences}}},
+  pages = {591--605},
+  publisher = {{Springer}},
+  address = {{Berlin, Heidelberg}},
+  doi = {10.1007/978-3-540-72699-9_50},
+  url = {https://doi.org/10.1007/978-3-540-72699-9_50},
+  urldate = {2022-06-28},
+  abstract = {Completely centralized control of large, networked systems is impractical. Completely decentralized control of such systems, on the other hand, frequently results in unacceptable control performance. In this article, a distributed MPC framework with guaranteed feasibility and nominal stability properties is described. All iterates generated by the proposed distributed MPC algorithm are feasible and the distributed controller, defined by terminating the algorithm at any intermediate iterate, stabilizes the closed-loop system. The above two features allow the practitioner to terminate the distributed MPC algorithm at the end of the sampling interval, even if convergence is not attained. Further, the distributed MPC framework achieves optimal systemwide performance (centralized control) at convergence. Feasibility, stability and optimality properties for the described distributed MPC framework are established. Several examples are presented to demonstrate the efficacy of the proposed approach.},
+  isbn = {978-3-540-72699-9},
+  langid = {english}
+}
+
+@article{vicenteSwitchingTubeBasedMPC2019,
+  title = {Switching {{Tube-Based MPC}}: {{Characterization}} of {{Minimum Dwell-Time}} for {{Feasible}} and {{Robustly Stable Switching}}},
+  shorttitle = {Switching {{Tube-Based MPC}}},
+  author = {Vicente, Bernardo Andr{\'e}s Hern{\'a}ndez and Trodden, Paul Anthony},
+  year = {2019},
+  month = oct,
+  journal = {IEEE Transactions on Automatic Control},
+  volume = {64},
+  number = {10},
+  pages = {4345--4352},
+  issn = {1558-2523},
+  doi = {10.1109/TAC.2019.2897551},
+  abstract = {We study the problem of characterizing mode dependent dwell-times that guarantee safe and stable operation of disturbed switching linear systems in a model predictive control (MPC) framework. We assume the switching instances are not known a priori, but instantly at the moment of switching. We first characterize dwell-times that ensure feasible and stable switching between independently designed robust MPC controllers by means of the well established exponential stability result available in the MPC literature. Then, we employ the concept of multiset invariance to improve on our previous results, and obtain an exponential stability guarantee for the switching closed-loop dynamics. The theoretical findings are illustrated via a numerical example.}
+}
+
+@article{vichikSolvingLinearQuadratic2014,
+  title = {Solving Linear and Quadratic Programs with an Analog Circuit},
+  author = {Vichik, Sergey and Borrelli, Francesco},
+  year = {2014},
+  month = nov,
+  journal = {Computers \& Chemical Engineering},
+  series = {Manfred {{Morari Special Issue}}},
+  volume = {70},
+  pages = {160--171},
+  issn = {0098-1354},
+  doi = {10.1016/j.compchemeng.2014.01.011},
+  url = {http://www.sciencedirect.com/science/article/pii/S0098135414000131},
+  urldate = {2019-02-25},
+  abstract = {We present the design of an analog circuit which solves linear programming (LP) or quadratic programming (QP) problem. In particular, the steady-state circuit voltages are the components of the LP (QP) optimal solution. The paper shows how to construct the circuit and provides a proof of equivalence between the circuit and the LP (QP) problem. The proposed method is used to implement an LP-based Model Predictive Controller by using an analog circuit. Simulative and experimental results show the effectiveness of the proposed approach.}
+}
+
+@article{wangFastModelPredictive2010,
+  title = {Fast {{Model Predictive Control Using Online Optimization}}},
+  author = {Wang, Y. and Boyd, S.},
+  year = {2010},
+  month = mar,
+  journal = {IEEE Transactions on Control Systems Technology},
+  volume = {18},
+  number = {2},
+  pages = {267--278},
+  issn = {1063-6536},
+  doi = {10.1109/TCST.2009.2017934},
+  abstract = {A widely recognized shortcoming of model predictive control (MPC) is that it can usually only be used in applications with slow dynamics, where the sample time is measured in seconds or minutes. A well-known technique for implementing fast MPC is to compute the entire control law offline, in which case the online controller can be implemented as a lookup table. This method works well for systems with small state and input dimensions (say, no more than five), few constraints, and short time horizons. In this paper, we describe a collection of methods for improving the speed of MPC, using online optimization. These custom methods, which exploit the particular structure of the MPC problem, can compute the control action on the order of 100 times faster than a method that uses a generic optimizer. As an example, our method computes the control actions for a problem with 12 states, 3 controls, and horizon of 30 time steps (which entails solving a quadratic program with 450 variables and 1284 constraints) in around 5 ms, allowing MPC to be carried out at 200 Hz.}
+}
+
+@article{williamsInformationTheoreticModelPredictive2018,
+  title = {Information-{{Theoretic Model Predictive Control}}: {{Theory}} and {{Applications}} to {{Autonomous Driving}}},
+  shorttitle = {Information-{{Theoretic Model Predictive Control}}},
+  author = {Williams, Grady and Drews, Paul and Goldfain, Brian and Rehg, James M. and Theodorou, Evangelos A.},
+  year = {2018},
+  month = dec,
+  journal = {IEEE Transactions on Robotics},
+  volume = {34},
+  number = {6},
+  pages = {1603--1622},
+  issn = {1941-0468},
+  doi = {10.1109/TRO.2018.2865891},
+  url = {https://ieeexplore.ieee.org/document/8558663},
+  urldate = {2024-01-30},
+  abstract = {We present an information-theoretic approach to stochastic optimal control problems that can be used to derive general sampling-based optimization schemes. This new mathematical method is used to develop a sampling-based model predictive control algorithm. We apply this information-theoretic model predictive control scheme to the task of aggressive autonomous driving around a dirt test track, and compare its performance with a model predictive control version of the cross-entropy method.}
+}
+
+@inproceedings{williamsInformationTheoreticMPC2017,
+  title = {Information Theoretic {{MPC}} for Model-Based Reinforcement Learning},
+  booktitle = {2017 {{IEEE International Conference}} on {{Robotics}} and {{Automation}} ({{ICRA}})},
+  author = {Williams, Grady and Wagener, Nolan and Goldfain, Brian and Drews, Paul and Rehg, James M. and Boots, Byron and Theodorou, Evangelos A.},
+  year = {2017},
+  month = may,
+  pages = {1714--1721},
+  doi = {10.1109/ICRA.2017.7989202},
+  url = {https://ieeexplore.ieee.org/abstract/document/7989202},
+  urldate = {2024-01-30},
+  abstract = {We introduce an information theoretic model predictive control (MPC) algorithm capable of handling complex cost criteria and general nonlinear dynamics. The generality of the approach makes it possible to use multi-layer neural networks as dynamics models, which we incorporate into our MPC algorithm in order to solve model-based reinforcement learning tasks. We test the algorithm in simulation on a cart-pole swing up and quadrotor navigation task, as well as on actual hardware in an aggressive driving task. Empirical results demonstrate that the algorithm is capable of achieving a high level of performance and does so only utilizing data collected from the system.}
+}
+
+@article{williamsModelPredictivePath2017,
+  title = {Model {{Predictive Path Integral Control}}: {{From Theory}} to {{Parallel Computation}}},
+  shorttitle = {Model {{Predictive Path Integral Control}}},
+  author = {Williams, Grady and Aldrich, Andrew and Theodorou, Evangelos A.},
+  year = {2017},
+  journal = {Journal of Guidance, Control, and Dynamics},
+  volume = {40},
+  number = {2},
+  pages = {344--357},
+  publisher = {{American Institute of Aeronautics and Astronautics}},
+  issn = {0731-5090},
+  doi = {10.2514/1.G001921},
+  url = {https://doi.org/10.2514/1.G001921},
+  urldate = {2024-01-30},
+  abstract = {In this paper, a model predictive path integral control algorithm based on a generalized importance sampling scheme is developed and parallel optimization via sampling is performed using a graphics processing unit. The proposed generalized importance sampling scheme allows for changes in the drift and diffusion terms of stochastic diffusion processes and plays a significant role in the performance of the model predictive control algorithm. The proposed algorithm is compared in simulation with a model predictive control version of differential dynamic programming on nonlinear systems. Finally, the proposed algorithm is applied on multiple vehicles for the task of navigating through a cluttered environment. The current simulations illustrate the efficiency and robustness of the proposed approach and demonstrate the advantages of computational frameworks that incorporate concepts from statistical physics, control theory, and parallelization against more traditional approaches of optimal control theory.}
+}

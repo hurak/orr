@@ -1,0 +1,24 @@
+---
+title: "Numerical solvers for MPC"
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+execute:
+    enabled: false
+jupyter: julia-1.10
+---
+
+Essentially QP solvers with some extra features for MPC:
+
+- warmstarting requires fesibility of the previous solution. If only a fixed number of iterations is allowed (in favor of predictable timing), for some methods the iterations may temporarily lose feasibility.
+- ...
+
+- [qpOASES](https://github.com/coin-or/qpOASES)
+- [OSQP](https://osqp.org)
+- [DAQP](https://github.com/darnstrom/daqp)
+- [qpSWIFT](https://github.com/qpSWIFT/qpSWIFT)
+- [ProxQP](https://github.com/Simple-Robotics/proxsuite)
+- [PiQP](https://github.com/PREDICT-EPFL/piqp)
+- [ECOS](https://github.com/embotech/ecos)
+- [HPIPM](https://github.com/giaf/hpipm)

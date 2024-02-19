@@ -1,0 +1,56 @@
+---
+title: "Algorithms for unconstrained optimization"
+bibliography: ref_optimization.bib
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+execute:
+    enabled: false
+jupyter: julia-1.10
+---
+
+Our motivation for studying numerical algorithms for unconstrained optimization remains the same as when we studied the conditions of optimality for such unconstrained problems – such algorithms constitute building blocks for constrained optimization problems. Indeed, many algorithms for constrained problems are based on reformulating the constrained problem into an unconstrained one and then applying the algorithms studied in this section.
+
+It may be useful to recapitulate our motivation for studying optimization algorithms in general – after all, there are dozens of commercial or free&open-source software tools for solving optimization problems. Why not just use them? There are two answers beyond the traditional "at a grad school we should understand what we are using":
+
+- There is no single solver that works best for all problem. Therefore we must be aware of the principles, strenghts and weaknesses of the algorithms to choose the right tool for our problem. 
+- This is a control engineering course and numerical optimization is becoming an integral part of control systems. While developing a control system, we may find ourselvers in need of developing our own implementation of an optimization algorithm or adjusting an existing one. This requires deeper understanding of algorithms than just casual usage of high-level functions in Matlab or Python.
+
+There is certainly no shortage of algorithms for unconstrained optimization. In this crash course we can cover only a few. But the few we cover here certainly form a solid theoretical basis and provide practically usable tools.
+
+One possible way to classify the algorithms is based on **whether they use derivatives** of the objective function or not. In this course, we prefer the latter approach as it leads to more efficient algorithms. For the former methods, we can refer to the literature (the prominent example is Nelder-Mead method).
+
+## Derivative-based methods
+
+Iteratively:
+
+Descent methods
+: Fix the search direction $d_k$, and the find the step length $\alpha_k$ that minimizes $f(x_k + \alpha_k d_k)$. The search direction is updated at each iteration. 
+
+Trust region methods
+: Fix the region in which a simpler (typically a quadratic) function approximates the original cost function reasonably accurately, then find the minimum of this simpler cost function.
+
+(for a circular region this amounts to setting the radius, which can be viewed as setting the step length $\alpha_k$)
+
+search direction $d_k$ that minimizes $f(x_k + \alpha_k d_k)$
+
+### Descent methods
+
+- Steepest descent (aka gradient) method 
+- Newton's method
+- Quasi-Newton's methods
+
+#### Step size (step length) determination (aka line search)
+
+#### Steepest descent method
+
+#### Newton's method
+
+#### Quasi-Newton's methods
+
+### Trust region methods
+
+
+
+

@@ -1,0 +1,152 @@
+---
+title: Theory for constrained optimization
+bibliography: 
+    - ref_optimization.bib
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+execute:
+    enabled: false
+jupyter: julia-1.10
+---
+
+## Equality constraints
+
+### Lagrange multipliers and Lagrangian function
+
+We consider the following optimization problem with equality constraints
+$$
+\begin{aligned}
+ \operatorname*{minimize}_{\bm x\in\mathbb{R}^n} &\quad f(\bm x)\\
+ \text{subject to} &\quad \mathbf h(\bm x) = \mathbf 0,
+\end{aligned}
+$$
+where $\mathbf h(\bm x) \in \mathbb R^m$ defines a set of $m$ equations 
+$$
+\begin{aligned}
+h_1(\bm x) &= 0\\ 
+h_2(\bm x) &= 0\\
+\vdots\\
+h_m(\bm x) &= 0.
+\end{aligned}
+$$
+
+Augmenting the original cost function $f$ with the constraint functions $h_i$ scaled by Lagrange variables $\lambda_i$ gives the Lagrangian function
+$$
+ \mathcal{L}(\bm x,\boldsymbol\lambda) \coloneqq f(\bm x) + \sum_{i=1}^m \lambda_i h_i(\bm x) = f(\bm x) + \boldsymbol \lambda^\top \mathbf h(\bm x).
+$$
+
+### First-order necessary condition of optimality
+
+The first-order necessary condition of optimality is
+$$
+ \nabla \mathcal{L}(\bm x,\boldsymbol\lambda) = \mathbf 0,
+$$
+which amounts to two (generally vector) equations
+$$
+\boxed{
+\begin{aligned}
+ \nabla f(\bm x) + \sum_{i=1}^m \lambda_i \nabla h_i(\bm x) &= \mathbf 0\\
+ \mathbf{h}(\bm x) &= \mathbf 0.
+\end{aligned}}
+$$
+
+Defining a matrix $\nabla \mathbf h(\bm x) \in \mathbb R^{n\times m}$ as horizontally stacked gradients of the constraint functions
+$$
+ \nabla \mathbf h(\bm x) \coloneqq \begin{bmatrix}
+                                 \nabla h_1(\bm x) && \nabla h_2(\bm x) && \ldots && \nabla h_m(\bm x)
+                            \end{bmatrix},
+$$
+in fact, a transpose of the Jacobian matrix, the necessary condition can be rewritten in a vector form as
+$$\boxed
+{\begin{aligned}
+\nabla f(\bm x) + \nabla \mathbf h(\bm x)\boldsymbol \lambda &= \mathbf 0\\
+ \mathbf{h}(\bm x) &= \mathbf 0.
+\end{aligned}}
+$$
+
+Beware of the nonregularity issue! The \textit{Jacobian} $(\nabla \mathbf h(\bm x))^\mathrm T$ is regular at a given $\bm x$ (the $\bm x$ is a regular point) if it has a full column rank. Rank-deficiency reveals a defect in formulation. 
+
+:::{#exm-equality_constrained_qp} 
+## Equality-constrained quadratic program
+
+$$
+\begin{aligned}
+ \operatorname*{minimize}_{\bm x \in \mathbb{R}^n} &\quad \frac{1}{2}\bm{x}^\top\mathbf{Q}\bm{x} + \mathbf{r}^\top\bm{x}\\
+ \text{subject to} &\quad \mathbf A \bm x + \mathbf b = \mathbf 0. 
+\end{aligned}
+$$
+
+The first-order necessary condition of optimality is
+
+$$
+\begin{bmatrix}
+  \mathbf Q & \mathbf A^\top\\\mathbf A & \mathbf 0
+ \end{bmatrix}
+ \begin{bmatrix}
+  \bm x \\ \boldsymbol \lambda
+ \end{bmatrix}
+=
+ \begin{bmatrix}
+  -\mathbf r\\\mathbf b
+ \end{bmatrix}.
+$$
+:::
+
+### Second-order sufficient conditions
+
+Using the unconstrained Hessian $\nabla^2_{\mathbf{x}\bm{x}} \mathcal{L}(\bm x,\boldsymbol \lambda)$ is too conservative. Instead, use projected Hessian
+
+$$
+ \mathbf{Z}^\mathrm{T}\;\nabla^2_{\bm{x}\bm{x}} \mathcal{L}(\bm x,\boldsymbol \lambda)\;\mathbf Z > 0,
+$$
+where $\mathbf Z$ is an (orthonormal) basis of the nullspace of the Jacobian $(\nabla \mathbf h(\bm x))^\top$.
+
+
+## Inequality constraints
+$$
+\begin{aligned}
+\operatorname*{minimize}_{\bm x\in\mathbb{R}^n} &\quad f(\bm x)\\
+\text{subject to} &\quad \mathbf g(\bm x) \leq \mathbf 0,
+\end{aligned}
+$$
+where $\mathbf g(\bm x) \in \mathbb R^p$ defines a set of $p$ inequalities.
+
+### First-order necessary condition of optimality
+
+Karush-Kuhn-Tucker (KKT) conditions of optimality are then composed of these four (sets of) conditions
+$$
+\begin{aligned}
+ \nabla f(\bm x) + \sum_{i=1}^p \mu_i \nabla g_i(\bm x) &= \mathbf 0,\\
+ \mathbf{g}(\bm{x}) &\leq \mathbf 0,\\
+ \mu_i g_i(\bm x) &= 0,\quad i = 1,2,\ldots, m\\
+ \mu_i &\geq 0,\quad   i = 1,2,\ldots, m.
+\end{aligned}
+$$
+
+## Equality and inequality constraints
+$$ 
+\begin{aligned}
+\operatorname*{minimize}_{\bm x\in\mathbb{R}^n} &\quad f(\bm x)\\
+ \text{subject to} &\quad \mathbf h(\bm x) = \mathbf 0,\\
+                    &\quad \mathbf g(\bm x) \leq \mathbf 0.
+\end{aligned}
+$$
+
+### First-order necessary condition of optimality
+
+The KKT conditions
+
+$$
+\begin{aligned}
+ \nabla f(\bm x) + \sum_{i=1}^m \lambda_i \nabla h_i(\bm x) + \sum_{i=1}^p \mu_i \nabla g_i(\bm x) &= \mathbf 0\\
+ \mathbf{h}(\mathbf{x}) &= \mathbf 0\\
+ \mathbf{g}(\mathbf{x}) &\leq \mathbf 0\\
+ \mu_i g_i(\bm x) &= 0,\quad i = 1,\ldots, m\\
+ \mu_i &\geq 0,\quad   i = 1,\ldots, m.
+\end{aligned}
+$$
+
+## Duality
+

@@ -1,0 +1,48 @@
+---
+title: "Model predictive control (MPC)"
+bibliography: 
+    - "ref_mpc.bib"
+    - "ref_numerical_optimal_control.bib"
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+execute:
+    enabled: false
+jupyter: julia-1.10
+---
+
+## Deficiencies of precomputed (open-loop) optimal control
+
+In the previous section we learnt how to compute an optimal control sequence on a finite time horizon using numerical methods for solving nonlinear programs (NLP), and quadratic programs (QP) in particular. There are two major deficiencies of such approach:
+
+- The control sequence was computed under the assumption that the mathematical model is perfectly accurate. As soon as the reality deviates from the model, either because of some unmodelled dynamics or because of the presence of (external) disturbances, the performance of the system will deteriorate. We need a way to turn the presented open-loop (also feedforward) control scheme into a feedback one.
+
+- The control sequence was computed for a finite time horizon. It is commonly required to consider an infinite time horizon, which is not possible with the presented approach based on solving finite-dimensional mathematical programs.
+
+There are several ways to address these issues. Here we introduced one of them. It is knowns are Model Predictive Control (MPC), or also Receding Horizon Control (RHC). Some more are presented in the next two sections (one based on indirect approach, another one based on dynamic programming).
+
+## Model predictive control (MPC) as a way to turn open-loop control into feedback control
+
+The idea is to compute an optimal control sequence on a finite time horizon using the material presented in the previous section, apply only the first control action to the system, and then repeat the procedure upon shifting the time horizon by one time step. 
+
+Although this name "model predictive control" is commonly used in the control community, the other – perhaps a bit less popular – name "receding horizon control" is equally descriptive, if not even a bit more. 
+
+::: {.callout-note}
+It may take a few moments to digest the idea, but it is actually quite natural. As a matter of fact, this is the way most of us control our lifes every day. We plan our actions on a finite time horizon, and while building this plan we use our understanding (model) of the world. We then perform the first action from our plan, observe the impact of our action and possibly a change in the environment, and update our plan accordingly on a new (shifted) time horizon. We repeat this procedure over and over again. It is crucial that the prediction horizon must be long enough so that the full impact of our actions can be observed.  
+:::
+
+## Linear vs nonlinear MPC
+x
+
+## Prediction horizon vs control
+x
+
+## Hard constraints vs soft constraints
+x
+
+
+
+## Literature
+
+[@rawlingsModelPredictiveControl2017], [@borrelliPredictiveControlLinear2017], [@grosNumericalOptimalControl2022] [@bemporadModelPredictiveControl2021a]

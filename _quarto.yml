@@ -1,0 +1,94 @@
+project:
+  type: website
+
+website:
+  title: "B(E)3M35ORR – Optimal and Robust Control"
+  page-footer: "Copyright 2024, Zdeněk Hurák"
+  page-navigation: true
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - section: "1. Optimization – theory"
+        contents:
+          - opt_problems.qmd
+          - opt_reformulations.qmd
+          - opt_theory_unconstrained.qmd
+          - opt_theory_constrained.qmd
+          - opt_modellers.qmd
+      - section: "2. Optimization – algorithms"
+        contents:
+          - opt_algo_derivatives.qmd
+          - opt_algo_unconstrained.qmd
+          - opt_algo_constrained.qmd
+          - opt_solvers.qmd
+      - section: "3. Discrete-time optimal control – direct approach"
+        contents:
+          - discr_dir_control.qmd
+          - discr_dir_mpc.qmd
+          - discr_dir_mpc_solvers.qmd
+      - section: "4. Discrete-time optimal control – indirect approach"
+        contents:
+          - discr_indir.qmd
+          - discr_indir_LQR_fin_horizon.qmd
+          - discr_indir_LQR_inf_horizon.qmd
+          - discr_indir_DARE.qmd
+      - section: "5. Discrete-time optimal control – dynamic programming"
+        contents:
+          - dynamic_programming.qmd
+          - dynamic_programming_LQR.qmd
+      - section: "6. More on MPC"
+        contents:
+          - discr_dir_mpc_stability.qmd
+          - discr_dir_mpc_recursive_feasibility.qmd
+          - discr_dir_mpc_explicit.qmd
+          - discr_dir_mpc_economic.qmd
+      - section: "7. Continuous-time optimal control - indirect approach via calculus of variations"
+        contents:
+          - cont_indir_calculus_of_variations.qmd
+          - cont_indir_via_calculus_of_variations.qmd
+          - cont_indir_LQR_fin_horizon.qmd
+          - cont_indir_LQR_inf_horizon.qmd
+          - cont_indir_CARE.qmd
+      - section: "8. Continuous-time optimal control - indirect approach via Pontryagin's maximum principle"
+        contents:
+          - cont_indir_Pontryagin.qmd
+          - cont_indir_constrained.qmd
+          - cont_indir_time_optimal.qmd
+      - section: "9. Continuous-time optimal control - direct approach via numerical optimization"
+        contents:
+          - cont_dir_shooting.qmd
+          - cont_dir_multiple_shooting.qmd
+          - cont_dir_collocation.qmd
+      - section: "10. Some extensions: LQG, LTR, H2"
+        contents:
+          - stochastic_LQR.qmd
+          - LQG.qmd
+          - LTR.qmd
+          - H2.qmd
+      - section: "11. Uncertainty modelling and analysis"
+        contents:
+          - uncertainty.qmd
+          - robustness.qmd
+      - section: "12. Robust control"
+        contents:
+          - rocond_mixed_sensitivity.qmd
+          - rocond_H_infinity_control.qmd
+          - rocond_mu_synthesis.qmd    
+      - section: "13. Limits of performance"
+        contents:
+          - limits_of_performance_SISO.qmd
+          - limits_of_performance_MIMO.qmd    
+      - section: "14. Model and controller order reduction"
+        contents:
+          - reduction_order_model.qmd
+          - reduction_order_controller.qmd
+  repo-url: https://github.com/hurak/orr
+  repo-actions: [issue]       
+  back-to-top-navigation: true
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true

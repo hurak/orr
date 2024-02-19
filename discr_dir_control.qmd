@@ -1,0 +1,388 @@
+---
+title: "Control on a finite horizon as an optimization"
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+execute:
+    enabled: false
+jupyter: julia-1.10
+---
+
+## General nonlinear optimal control problem
+
+We start by considering a nonlinear discrete-time system modelled by the state equation
+$$
+\bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k), 
+$$
+where 
+
+- $\bm x_k\in \mathbb R^n$ is the state at the discrete time $k\in \mathbb Z$, 
+- $\bm u_k\in \mathbb R^m$ is the control at the discrete time $k$, 
+- $\mathbf f_k: \mathbb{R}^n \times \mathbb{R}^m \times \mathbb Z \to \mathbb{R}^n$ is a state transition function (in general not only nonlinear but also time-varying, with the convention that the dependence on $k$ is expressed through the lower index).
+
+A general nonlinear discrete-time optimal control problem (OCP) is then formulated as
+
+$$
+\begin{aligned}
+ \operatorname*{minimize}_{\bm u_i,\ldots, \bm u_{N-1}, \bm x_{i},\ldots, \bm x_N}&\quad \left(\phi(\bm x_N,N) + \sum_{k=i}^{N-1} L_k(\bm x_k,\bm u_k) \right)\\
+ \text{subject to}  &\quad \bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k),\quad k=i, \ldots, N-1,\\
+                    &\quad \bm u_k \in \mathcal U_k,\quad k=i, \ldots, N-1,\\ 
+                    &\quad \bm x_k \in \mathcal X_k,\quad k=i, \ldots, N,
+\end{aligned}
+$$
+where 
+
+- $i$ is the initial discreete time, 
+- $N$ is the final discrete time, 
+- $\phi()$ is a terminal cost function that penalizes the state at the final time, 
+- $L_k()$ is a running (also stage) cost function, 
+- and $\mathcal U_k$ and $\mathcal X_k$ are sets of feasible controls and states – these sets are typically expressed using equations and inequalities. Should they be constant, the notation is just $\mathcal U$ and $\mathcal X$. 
+
+Oftentimes it is convenient to handle the constraints of the initial and final states separately: 
+
+$$
+\begin{aligned}
+ \operatorname*{minimize}_{\bm u_i,\ldots, \bm u_{N-1}, \bm x_{i},\ldots, \bm x_N}&\quad \left(\phi(\bm x_N,N) + \sum_{k=i}^{N-1} L_k(\bm x_k,\bm u_k) \right)\\
+ \text{subject to}  &\quad \bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k),\quad k=i, \ldots, N-1,\\
+                    &\quad \bm u_k \in \mathcal U_k,\quad k=i, \ldots, N-1,\\ 
+                    &\quad \bm x_k \in \mathcal X_k,\quad k=i+1, \ldots, N-1,\\
+                    &\quad \bm x_i \in \mathcal X_\mathrm{init},\\
+                    &\quad \bm x_N \in \mathcal X_\mathrm{final}.
+\end{aligned}
+$$
+
+In particular, at the initial time just one particular state is often considered. At the final time, the state might be required to be equal to some given value, it might be required to be in some set defined through equations or inequalities, or it might be left unconstrained. Finally, the constraints on the control and states typically (but not always) come in the form of lower and upper bounds. The optimal control problem then specializes to
+$$
+\begin{aligned}
+ \operatorname*{minimize}_{\bm u_i,\ldots, \bm u_{N-1}, \bm x_{i},\ldots, \bm x_N}&\quad \left(\phi(\bm x_N,N) + \sum_{k=i}^{N-1} L_k(\bm x_k,\bm u_k) \right)\\
+ \text{subject to}  &\quad \bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k),\quad k=i, \ldots, N-1,\\
+                    &\quad \bm u_{\min} \leq \bm u_k \leq \bm u_{\max},\\ 
+                    &\quad \bm x_{\min} \leq \bm x_k \leq \bm x_{\max},\\
+                    &\quad\bm x_i = \mathbf r_\text{init},\\
+                    &\quad \left(\bm x_N = \mathbf r_\text{final}, \; \text{or} \; \mathbf h_\text{final}(\bm x_N) =  \mathbf 0, \text{or} \; \mathbf g_\text{final}(\bm x_N) \leq  \mathbf 0\right),                    
+\end{aligned}
+$$
+where 
+
+- $\bm u_{\min}$ and $\bm u_{\max}$ are lower and upper bounds on the control, respectively, 
+- $\bm x_{\min}$ and $\bm x_{\max}$ are lower and upper bounds on the state, respectively, 
+- $\mathbf r_\text{init}$ is a constant (fixed) initial state,
+- $\mathbf r_\text{final}$ is a constant (fixed) final state, 
+- and the functions $\mathbf g_\text{final}()$ and $\mathbf h_\text{final}()$ can be used to define the constraint set for the final state.
+
+
+This optimal control problem is an instance of a general nonlinear programming (NLP) problem 
+
+$$
+\begin{aligned}
+ \operatorname*{minimize}_{\bar{\bm x}\in\mathbb{R}^{n(N-i)},\bar{\bm u}\in\mathbb{R}^{m(N-i)}} &\quad J(\bar{\bm x},\bar{\bm u})\\
+ \text{subject to} &\quad \mathbf h(\bar{\bm x},\bar{\bm u}) =0,\\
+ &\quad \mathbf g(\bar{\bm x},\bar{\bm u}) \leq \mathbf 0,
+ \end{aligned}
+ $$
+ where $\bar{\bm u}$ and $\bar{\bm x}$  are vectors obtained by stacking control and state vectors for individual times 
+ 
+$$
+\begin{aligned}
+\bar{\bm u} &= \operatorname*{vec}(\bm u_i,\ldots, \bm u_{N-1}) = \begin{bmatrix}\bm u_i\\ \bm u_{i+1}\\ \vdots \\ \bm u_{N-1} \end{bmatrix}\\
+\bar{\bm x} &= \operatorname*{vec}(\bm x_{i+1},\ldots, \bm x_N) = \begin{bmatrix}\bm x_{i+1}\\ \bm x_{i+2}\\ \vdots \\ \bm x_{N} \end{bmatrix}
+\end{aligned}
+$$
+ 
+::: {.callout-note} 
+- If the initial $\bm x_i$ is fixed, which it typically is, it does not have to be considered as an optimization variable. But there may be applications where it is desirable to optimize over $\bm x_i$ as well.
+- The last control that affects the state trajectory on the interval $[i,N]$ is $\bm u_{N-1}$.
+:::
+
+## Linear quadratic regulation (LQR) on a finite horizon
+
+We start by considering a simple problem of *regulation*, wherein the goal is to bring the system either exactly or approximately to zero final state, that is, $\bm r_N=\mathbf 0$ and we want $\bm x_N=\mathbf r_N$ or $\bm x_N\approx\mathbf r_N$, respectively. 
+
+$$
+\begin{aligned}
+ \operatorname*{minimize}_{\mathbf u_0,\ldots, \mathbf u_{N-1}, \mathbf x_{0},\ldots, \mathbf x_N} &\quad  \frac{1}{2} \bm x_N^\top \mathbf S \bm x_N + \frac{1}{2} \sum_{k=0}^{N-1} \left(\bm x_k^\top \mathbf Q \bm x_k + \bm u_k^\top \mathbf R \bm u_k \right)\\ 
+\text{subject to}   &\quad \bm x_{k+1} = \mathbf A\bm x_k + \mathbf B\bm u_k,\quad k = 0, \ldots, N-1, \\
+                    &\quad \bm x_0 = \mathbf r_0,\\
+                    &\quad \bm x_N = \mathbf 0\;  (\text{or}\, \bm x_N \approx \mathbf 0).
+ \end{aligned}
+ $$
+
+Referring to the two options for the last constraint,  
+
+- if the condition $\bm x_N=\mathbf 0$ on the final state is strictly enforced, the terminal state cost (the term $\frac{1}{2} \bm x_N^\top \mathbf S \bm x_N$ in the cost function) is redundant and can be removed; 
+- if the final state condition can be relaxed to $\bm x_N\approx\mathbf 0$, it is by increasing the weight $\mathbf S$ in the terminal cost function $\frac{1}{2} \bm x_N^\top \mathbf S \bm x_N$ that $\bm x_N$ can be made arbitrarily close to $\mathbf 0$. 
+
+::: {.callout-tip}
+It is a standard dilemma in optimization, not only in optimal control, that if we want to satisfy some requirement, we can either strictly enforce it through constraints or we can seemingly relax it and set a cost to be paid for not satysfying it.
+:::
+
+### Simultaneous (sparse) formulation
+
+Below we rewrite the latter, that is, $\bm x_N\approx\mathbf 0$, in the "unrolled" form, where we stack the state and control variables into "long" vectors $\bar{\bm x}$ and $\bar{\bm u}$. Doing the same for the former is straightforward.
+
+$$ 
+\begin{aligned}
+ \operatorname*{minimize}_{\bar{\bm u},\bar{\bm x}} & \frac{1}{2}\left(\begin{bmatrix} \bm x_1^\top & \bm x_2^\top & \ldots & \bm x_N^\top \end{bmatrix}
+ \underbrace{\begin{bmatrix}\mathbf Q & & & \\ & \mathbf Q & &\\ & &\ddots & \\ & & & \mathbf S \end{bmatrix}}_{\overline{\mathbf Q}}
+ \underbrace{\begin{bmatrix} \bm x_1 \\ \bm x_2 \\ \vdots \\ \bm x_N \end{bmatrix}}_{\bar{\bm x}}\right.\\
+&\qquad +\left.
+ \begin{bmatrix} \bm u_0^\top & \bm u_1^\top & \ldots & \bm u_{N-1}^\top \end{bmatrix}
+ \underbrace{\begin{bmatrix}\mathbf R & & & \\ & \mathbf R & &\\ & &\ddots & \\ & & & \mathbf R \end{bmatrix}}_{\overline{\mathbf R}}
+ \underbrace{\begin{bmatrix} \bm u_0 \\ \bm u_1 \\ \vdots \\ \bm u_{N-1} \end{bmatrix}}_{\bar{\bm u}}\right)
+ + \underbrace{\frac{1}{2}\bm x_0^\top \mathbf Q \bm x_0}_{\mathrm{constant}}
+\end{aligned}
+$$
+subject to
+$$
+\begin{bmatrix} \bm x_1 \\ \bm x_2 \\ \bm x_3\\ \vdots \\ \bm x_N \end{bmatrix} = \underbrace{\begin{bmatrix}\mathbf 0 & & & &\\\mathbf A & \mathbf 0 & & &\\ &\mathbf A &\mathbf 0 & & \\ & & &\ddots & \\& & &\mathbf A & \mathbf 0 \end{bmatrix}}_{\overline{\mathbf A}} 
+ \begin{bmatrix} \bm x_1 \\ \bm x_2 \\ \bm x_3\\ \vdots \\ \bm x_N \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf B & & & & \\ & \mathbf B & & & \\& &\mathbf B & \\ & & &\ddots \\ & & & & \mathbf B \end{bmatrix}}_{\overline{\mathbf B}}\begin{bmatrix} \bm u_0 \\ \bm u_1 \\ \bm u_2\\\vdots \\ \bm u_{N-1} \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf A\\\mathbf 0\\\mathbf 0\\\vdots\\\mathbf 0\end{bmatrix}}_{\overline{\mathbf A}_0}\bm x_0.   
+$$
+
+Note that the last term in the cost function can be discarded because it is constant.
+
+The terms with the $\bar{\bm x}$ vector can be combined and we get
+
+$$
+\begin{bmatrix} \mathbf 0 \\ \mathbf 0 \\ \mathbf 0\\ \vdots \\ \mathbf 0 \end{bmatrix} = \underbrace{\begin{bmatrix}-\mathbf I & & & &\\\mathbf A & -\mathbf I & & &\\ &\mathbf A &-\mathbf I & & \\ & & &\ddots & \\& & &\mathbf A & -\mathbf I \end{bmatrix}}_{\overline{\mathbf A} - \mathbf I} 
+\begin{bmatrix} \mathbf x_1 \\ \mathbf x_2 \\ \mathbf x_3\\ \vdots \\ \mathbf x_N \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf B & & & & \\ & \mathbf B & & & \\& &\mathbf B & \\ & & &\ddots \\ & & & & \mathbf B \end{bmatrix}}_{\overline{\mathbf B}}\begin{bmatrix} \mathbf u_0 \\ \mathbf u_1 \\ \mathbf u_2\\\vdots \\ \mathbf u_{N-1} \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf A\\\mathbf 0\\\mathbf 0\\\vdots\\\mathbf 0\end{bmatrix}}_{\overline{\mathbf A}_0}\bm x_0.
+$$ {#eq-linear_system_linear_constraints_matrix_format} 
+
+Upon stacking the two "long" vectors into $\bar{\bm z}$ we reformulate the optimization problem as 
+$$
+\operatorname*{minimize}_{\widetilde{\mathbf z}\in\mathbb{R}^{2N}}\quad \frac{1}{2}\underbrace{\begin{bmatrix}\bar{\bm x}^\top &\bar{\bm u}^\top\end{bmatrix}}_{\bar{\bm z}^\top} \underbrace{\begin{bmatrix}\overline{\mathbf Q} & \\ & \overline{\mathbf R} \end{bmatrix}}_{\widetilde{\mathbf Q}}\underbrace{\begin{bmatrix}\bar{\bm x}\\\bar{\bm u}\end{bmatrix}}_{\bar{\bm z}} 
+$$
+subject to
+$$
+\mathbf 0 = \underbrace{\begin{bmatrix}(\overline{\mathbf A}-\mathbf I) & \overline{\mathbf B}\end{bmatrix}}_{\widetilde{\mathbf A}}\underbrace{\begin{bmatrix}\bar{\bm x}\\\bar{\bm u}\end{bmatrix}}_{\bar{\bm z}} + \underbrace{\overline{\mathbf A}_0 \mathbf x_0}_{\tilde{\mathbf b}}.
+$$
+
+To summarize, we have reformulated the optimal control problem as a linearly constrained quadratic program 
+$$
+\begin{aligned}
+ \underset{\bar{\bm z}\in\mathbb{R}^{2N}}{\text{minimize}} &\quad \frac{1}{2}\bar{\bm z}^\top \widetilde{\mathbf Q} \bar{\bm z}\\
+ \text{subject to} &\quad \widetilde{\mathbf A} \bar{\bm z} + \tilde{\bm b} = \mathbf 0.
+\end{aligned}
+$$
+
+```{julia}
+function direct_dlqr_simultaneous(A,B,x₀,Q,R,S,N)
+    Qbar = BlockArray(spzeros(N*n,N*n),repeat([n],N),repeat([n],N))
+    for i=1:(N-1)
+        Qbar[Block(i,i)] = Q
+    end
+    Qbar[Block(N,N)] = S
+    Rbar = BlockArray(spzeros(N*m,N*m),repeat([m],N),repeat([m],N))
+    for i=1:N
+        Rbar[Block(i,i)] = R
+    end
+    Qtilde = blockdiag(sparse(Qbar),sparse(Rbar))                               # The matrix defining the quadratic cost.
+    Bbar = BlockArray(spzeros(N*n,N*m),repeat([n],N),repeat([m],N))
+    for i=1:N
+        Bbar[Block(i,i)] = B
+    end
+    Abar = BlockArray(sparse(-1.0*I,n*N,n*N),repeat([n],N),repeat([n],N))
+    for i=2:N
+        Abar[Block(i,(i-1))] = A
+    end
+    Atilde = sparse([Abar Bbar])                                                # The matrix defining the linear (affine) equation.
+    A0bar = spzeros(n*N,n)
+    A0bar[1:n,1:n] = A
+    btilde = A0bar*sparse(x₀)                                                   # The constant offset for the linear (affine) equation.
+    K = [Qtilde Atilde'; Atilde spzeros(size(Atilde,1),size(Atilde,1))]         # Sparse KKT matrix.
+    F = qdldl(K)                                                                # KKT matrix LDL factorization.
+    k = [spzeros(size(Atilde,1)); -btilde]                                      # Right hand side of the KKT system
+    xtildeλ = solve(F,k)                                                        # Solving the KKT system using the factorization.
+    xopt = reshape(xtildeλ[1:(n*N)],(n,:))
+    uopt = reshape(xtildeλ[(n*N+1):(n+m)*N+1],(m,:))
+    return xopt,uopt
+end
+
+n = 2               # Number of state variables.
+m = 1               # Number of (control) input variables. 
+A = rand(n,n)       # State matrix.
+B = rand(n,m)       # Input coupling matrix.
+x₀ = [1.0, 3.0]     # Initial state.
+
+N = 10              # Time horizon.
+
+s = [1.0, 2.0]      
+q = [1.0, 2.0]
+r = [1.0]
+
+S = diagm(0=>s)     # Matrix defining the terminal state cost.
+Q = diagm(0=>q)     # Matrix defining the running state dost.
+R = diagm(0=>r)     # Matrix defining the cost of control.
+
+uopts,xopts = direct_dlqr_simultaneous(A,B,x₀,Q,R,S,N)
+
+using Plots
+p1 = plot(0:(N-1),uopts,marker=:diamond,label="u",linetype=:steppost)
+xlabel!("k")
+ylabel!("u")
+
+p2 = plot(0:N,hcat(x0,xopts)',marker=:diamond,label=["x1" "x2"],linetype=:steppost)
+xlabel!("k")
+ylabel!("x")
+
+plot(p1,p2,layout=(2,1))
+```
+
+This constrained optimization problem can still be solved without invoking a numerical solver for solving quadratic programs (QP). We do it by introducing a vector $\boldsymbol\lambda$ of Lagrange multipliers to form the Lagrange function
+$$
+ \mathcal{L}(\bar{\bm z}, \boldsymbol \lambda) = \frac{1}{2}\bar{\bm z}^\top \widetilde{\mathbf Q} \bar{\bm z} + \boldsymbol\lambda^\top(\widetilde{\mathbf A} \bar{\bm z} + \tilde{\mathbf b}),
+$$
+for which the gradients with respect to $\bar{\bm z}$ and $\boldsymbol\lambda$ are
+$$
+\begin{aligned}
+ \nabla_{\tilde{\bm{z}}} \mathcal{L}(\bar{\bm z}, \boldsymbol\lambda) &= \widetilde{\mathbf Q}\bar{\bm z} + \tilde{\mathbf A}^\top\boldsymbol\lambda,\\
+ \nabla_{\boldsymbol{\lambda}} \mathcal{L}(\tilde{\bm x}, \boldsymbol\lambda) &=\widetilde{\mathbf A} \bar{\bm z} + \tilde{\mathbf b}.
+\end{aligned}
+$$
+
+Requiring that the overall gradient vanishes leads to the following KKT set of linear equations
+$$
+ \begin{bmatrix}
+  \widetilde{\mathbf Q} & \widetilde{\mathbf A}^\top\\ \widetilde{\mathbf A} & \mathbf 0
+ \end{bmatrix}
+\begin{bmatrix}
+ \bar{\bm z}\\\boldsymbol\lambda
+\end{bmatrix}
+=
+\begin{bmatrix}
+ \mathbf 0\\ -\tilde{\mathbf b}
+\end{bmatrix}.
+$$
+
+Solving this could be accomplished by using some general solver for linear systems or by using some more tailored solver for symmetric indefinite systems (based on [LDL factorization](https://en.wikipedia.org/wiki/Cholesky_decomposition#LDL_decomposition), for example [ldl](https://www.mathworks.com/help/matlab/ref/ldl.html) in Matlab). 
+
+#### Adding constraints on controls and states
+When solving a real optimal control problem, we may want to impose inequality constraints on $\bm u_k$ due to saturation of actuators.
+We may also want to add constraints on $\bm x_k$ as well, which may reflect some performance specifications. In both cases, the KKT system above would have to be augmented and we resort to some already finetuned numerical solver for quadratic programming (QP) instead.  
+
+### Sequential (dense) formulation
+
+We can express $\bar{\bm x}$ as a function of $\bar{\bm u}$ and $\bm x_0$. This can be done in a straightforward way using (@eq-linear_system_linear_constraints_matrix_format), namely, 
+$$
+\bar{\bm x} = (\mathbf I-\overline{\mathbf A})^{-1}\overline{\mathbf B} \bm u + (\mathbf I-\overline{\mathbf A})^{-1} \overline{\mathbf A}_0 \bm x_0.
+$$
+
+However, instead of solving the sets of equations, we can do this substitution in a more insightful way. Write down the state equation for several discrete times
+
+$$
+\begin{aligned}
+ \bm x_1 &= \mathbf A\bm x_0 + \mathbf B\bm u_0\\
+ \bm x_2 &= \mathbf A\bm x_0 + \mathbf B\bm u_0\\
+     &= \mathbf A(\mathbf A\bm x_0 + \mathbf B\bm u_0)+ \mathbf B\bm u_0\\
+     &= \mathbf A^2\bm x_0 + \mathbf A\mathbf B\bm u_0 + \mathbf B\bm u_0\\
+     &\vdots\\
+ \bm x_k &= \mathbf A^k\bm x_0 + \mathbf A^{k-1}\mathbf B\bm u_0 +\mathbf A^{k-2}\mathbf B\bm u_1 +\ldots \mathbf B\bm u_{k-1}.
+\end{aligned}
+$$
+
+Rewriting into matrix-vector form (and extending the time $k$ up to the final time $N$)
+$$
+ \begin{bmatrix}
+ \bm x_1\\\bm x_2\\\vdots\\\bm x_N
+ \end{bmatrix}
+ =
+ \underbrace{
+ \begin{bmatrix}
+  \mathbf B & & & \\
+  \mathbf A\mathbf B & \mathbf B & & \\
+  \vdots & & \ddots &\\
+  \mathbf A^{N-1}\mathbf B & \mathbf A^{N-2}\mathbf B & & \mathbf B 
+ \end{bmatrix}}_{\widehat{\mathbf C}}
+  \begin{bmatrix}
+ \bm u_0\\\bm u_1\\\vdots\\\bm u_{N-1}
+ \end{bmatrix}
+ +
+ \underbrace{
+  \begin{bmatrix}
+ \mathbf A\\\mathbf A^2\\\vdots\\\mathbf A^N
+ \end{bmatrix}}_{\widehat{\mathbf A}}\bm x_0
+$$
+
+For convenience, let's rewrite the compact relation between $\bar{\bm x}$ and $\bar{\bm u}$ and $\mathbf x_0$
+$$
+ \bar{\bm x} = \widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \bm x_0.
+$$ {#eq-x_as_function_of_u_and_x0}
+
+We can now substitute this into the original cost, which then becomes independent of $\mathbf x$, which we reflect by using a new name $\tilde J$
+$$
+\begin{aligned}
+ \tilde J(\bar{\bm u};\mathbf x_0) &= \frac{1}{2}(\widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \mathbf x_0)^\top\overline{\mathbf Q} (\widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \mathbf x_0) + \frac{1}{2}\bar{\bm u}^\top\overline{\mathbf R} \bar{\bm u} + \frac{1}{2}\mathbf x_0^\top\mathbf Q\mathbf x_0\\
+ &= \frac{1}{2}\bar{\bm u}^\top\widehat{\mathbf C}^\top \overline{\mathbf Q} \widehat{\mathbf C} \bar{\bm u} + \mathbf x_0^\top\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf C} \bar{\bm u} + \frac{1}{2} \mathbf x_0^\top\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf A} \mathbf x_0 + \frac{1}{2}\bar{\bm u}^\top\overline{\mathbf R} \bar{\bm u} + \frac{1}{2}\mathbf x_0^\top\mathbf Q\mathbf x_0\\
+ &= \frac{1}{2}\bar{\bm u}^\top(\widehat{\mathbf C}^\top \overline{\mathbf Q} \widehat{\mathbf C} + \overline{\mathbf R})\bar{\bm u} + \mathbf x_0^\top\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf C} \bar{\bm u} + \frac{1}{2} \mathbf x_0^\top(\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf A} + \mathbf Q)\mathbf x_0. 
+\end{aligned}
+$$
+
+The last term (the one independent of $\bar{\bm u}$) does not have an impact on the optimal $\bar{\bm u}$ and therefore it can be discarded, but such minor modification perhaps does no justify a new name for the cost function and we write it as
+$$
+ \tilde J(\bar{\bm u};\mathbf x_0) = \frac{1}{2}\bar{\bm u}^\top\underbrace{(\widehat{\mathbf C}^\top \overline{\mathbf Q} \widehat{\mathbf C} + \overline{\mathbf R})}_{\mathbf H}\bar{\bm u} +  \mathbf x_0^\top\underbrace{\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf C}}_{\mathbf F^\top} \bar{\bm u}.
+$$
+
+This cost is a function of $\bar{\bm u}$, the initial state $\mathbf x_0$ is regarded as a fixed parameter. Its gradient is
+$$
+ \nabla_{\bar{\bm u}} \tilde J = \mathbf H\bar{\bm u}+\mathbf F\mathbf x_0.
+$$
+
+Setting it to zero leads to the following linear system of equations
+$$
+ \mathbf H\bar{\bm u}=-\mathbf F\mathbf x_0
+$$
+that needs to be solved for $\bar{\bm u}$. Formally, we write the solution as
+$$
+ \bar{\bm u} = -\mathbf H^{-1} \mathbf F \mathbf x_0.
+$$
+
+::: {.callout-note}
+Solving linear equations by direct computation of the matrix inverse is not a recommended practice. Use dedicated solvers of linear equations instead. For example, in Matlab use the backslash operator, which invokes the most suitable solver.
+:::
+
+#### Adding the constraints on controls
+
+Adding constraints on $\bar{\bm u}$ is straightforward. It is just that instead of a linear system we will have a linear system with additional inequality constraints. Let's get one.
+
+$$
+\begin{aligned}
+ \operatorname*{minimize}_{\bar{\bm u}} & \quad \frac{1}{2}\bar{\bm u}^T \mathbf H \bar{\bm u} + \bm x_0^T\mathbf F^T \bar{\bm u}\\
+ \text{subject to} &\quad \bar{\bm u} \leq \bar{\mathbf u}_\mathrm{max}\\
+               &\quad \bar{\bm u} \geq \bar{\mathbf u}_\mathrm{min}, 
+\end{aligned}
+$$
+which we can rewrite more explicitly (in the matrix-vector format) as
+$$
+\begin{aligned}
+ \operatorname*{minimize}_{\bar{\bm u}} & \quad \frac{1}{2}\bar{\bm u}^T \mathbf H \bar{\bm u} + \bm x_0^T\mathbf F^T \bar{\bm u}\\
+ \text{subject to} & \begin{bmatrix}
+                  \mathbf{I}  &    &         &    \\
+                    & \mathbf{I}  &         &    \\
+                    &    & \ddots  &    \\
+                    &    &         &  \mathbf{I} \\
+                    -\mathbf{I}   &   &     &    \\
+                    & -\mathbf{I} &         &    \\
+                    &    & \ddots  &    \\
+                    &    &         &  -\mathbf{I}
+                 \end{bmatrix}
+                 \begin{bmatrix}
+                  \mathbf u_0 \\ \mathbf u_1 \\ \vdots \\ \mathbf u_{N-1}
+                 \end{bmatrix}
+                 \leq
+                 \begin{bmatrix}
+                  \mathbf u_\mathbf{max} \\ \mathbf u_\mathrm{max} \\ \vdots \\ \mathbf u_\mathrm{max}\\ -\mathbf u_\mathrm{min} \\ -\mathbf u_\mathrm{min} \\ \vdots \\ -\mathbf u_\mathrm{min}
+                 \end{bmatrix}.
+ \end{aligned}
+$$ 
+
+#### Adding the constraints on states
+
+We might feel a little bit uneasy about loosing an immediate access to $\bar{\bm x}$. But the game is not lost. We just need to express $\bar{\bm x}$ as a function of $\bar{\bm u}$ and $\bm x_0$ and impose the constraint on the result. But such expression is already available, see (@eq-x_as_function_of_u_and_x0). Therefore, we can formulate the constraint, say, an upper bound on $\bm x$ as 
+$$
+ \bm x_k \leq \mathbf x_\mathrm{max}
+$$
+as
+$$
+ \bar{\mathbf x}_\mathrm{min} \leq \widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \bm x_0 \leq \bar{\mathbf x}_\mathrm{max}, 
+$$
+where the the bars in $\bar{\mathbf x}_\mathrm{min}$ and $\bar{\mathbf x}_\mathrm{max}$ obviously indicates that these vectors were obtained by stacking the corresponding vectors for all times $k=1,\ldots,N$.
