@@ -11,9 +11,29 @@ execute:
 jupyter: julia-1.10
 ---
 
+Here we are going to analyze the optimization problem with no constraints
+$$
+\operatorname*{minimize}_{\bm x \in \mathbb{R}^n} \quad  f(\bm x).
+$$
+
+Why are we considering such an unrealistic problem? After all, every engineering problem is subject to some constraints.
+
+Besides the standard teacher's answer that we should always start with easier problems, there is another answer: it is common for analysis and algorithms for constrained optimization problems to reformulate them as unconstrained ones and then apply tools for unconstrained problems.
+
 ## Local vs global optimality
 
-...
+First, let's define carefully what we mean by *a minimum* in the unconstrained problem. 
+
+::: {.callout-caution}
+For those whose mother tongue does not use articles such as **the** and **a/an** in English, it is worth emphasizing that there is a difference between "the minimum" and "a minimum". In the former we assume that there is just one minimum, in the latter we make no such assumption.  
+:::
+
+Consider a (scalar) function of a scalar variable for simplicity
+
+![](figures/scalar_function_extrema.png){width="50%"}
+
+We say, that the function has a local minimum at $x^\star$ if $f(x)\geq f(x^\star)$ in an $\varepsilon$ neighbourhood. All the red dots in the above figure are local minima. Similarly, of course, the function has a local maximum at $x^\star$ if $f(x)\leq f(x^\star)$ in an $\varepsilon$ neighbourhood. Such local maxima are the green dots in the figure. The smallest and the largest of these are global minima and maxima, respectively.
+
 
 ## Conditions of optimality
 
@@ -21,16 +41,18 @@ Here we consider two types of conditions of optimality for unconstrained minimiz
 
 ### Scalar optimization variable
 
+You may want to have a look at the video, but below we continue with the text that summarizes the video.
+
 {{< video https://www.youtube.com/embed/z64cXTZKw4I?si=KBHtbW3bd51jEipK >}}
 
 We recall here the fundamental assumption made at the beginning of our introduction to optimization – we only consider optimization variables that are real-valued (first, just scalar $x \in \mathbb R$, later vectors $\bm x \in \mathbb R^n$), and objective functions $f()$ that are sufficiently smooth – all the derivatives exist. Then the conditions of optimality can be derived upon inspecting the Taylor series approximation of the cost function around the minimum.
 
 #### Taylor series approximation around the optimum
 
-Denote $x^*$ as the (local) minimum of the function $f(x)$. The Taylor series expansion of $f(x)$ around $x^*$ is 
+Denote $x^\star$ as the (local) minimum of the function $f(x)$. The Taylor series expansion of $f(x)$ around $x^\star$ is 
 
 $$
-f(x^*+\alpha) = f(x^*)+\left.\frac{\mathrm{d}f(x)}{\mathrm{d} x}\right|_{x=x^*}\alpha + \frac{1}{2}\left.\frac{\mathrm{d^2}f(x)}{\mathrm{d} x^2}\right|_{x=x^*}\alpha^2 + {\color{blue}\mathcal{O}(\alpha^3)},
+f(x^\star+\alpha) = f(x^\star)+\left.\frac{\mathrm{d}f(x)}{\mathrm{d} x}\right|_{x=x^\star}\alpha + \frac{1}{2}\left.\frac{\mathrm{d^2}f(x)}{\mathrm{d} x^2}\right|_{x=x^\star}\alpha^2 + {\color{blue}\mathcal{O}(\alpha^3)},
 $$
 where $\mathcal{O}()$ is called *Big O* and has the property that 
 $$
@@ -39,7 +61,7 @@ $$
 
 Alternatively, we can write the Taylor series expansion as
 $$
-f(x^*+\alpha) = f(x^*)+\left.\frac{\mathrm{d}f(x)}{\mathrm{d} x}\right|_{x=x^*}\alpha + \frac{1}{2}\left.\frac{\mathrm{d^2}f(x)}{\mathrm{d} x^2}\right|_{x=x^*}\alpha^2 + {\color{red}o(\alpha^2)},
+f(x^\star+\alpha) = f(x^\star)+\left.\frac{\mathrm{d}f(x)}{\mathrm{d} x}\right|_{x=x^\star}\alpha + \frac{1}{2}\left.\frac{\mathrm{d^2}f(x)}{\mathrm{d} x^2}\right|_{x=x^\star}\alpha^2 + {\color{red}o(\alpha^2)},
 $$
 using the *little o* with the property that
 $$
@@ -52,17 +74,17 @@ It is indeed important to understand that this negligibility of the higher-order
 
 #### First-order necessary conditions of optimality
 
-For $\alpha$ sufficiently small, the first-order Taylor series expansion is a good approximation of the function $f(x)$ around the minimum. Since $\alpha$ enters this expansion linearly, the cost function can increase or decrease with $\alpha$, depending on the sign of the first derivative. The only way to ensure that the function as a (local) minimu at $x^*$ is to have the first derivative equal to zero, that is
+For $\alpha$ sufficiently small, the first-order Taylor series expansion is a good approximation of the function $f(x)$ around the minimum. Since $\alpha$ enters this expansion linearly, the cost function can increase or decrease with $\alpha$, depending on the sign of the first derivative. The only way to ensure that the function as a (local) minimu at $x^\star$ is to have the first derivative equal to zero, that is
 $$\boxed{
- \left.\frac{\mathrm{d}f(x)}{\mathrm{d} x}\right|_{x=x^*} = 0.}
+ \left.\frac{\mathrm{d}f(x)}{\mathrm{d} x}\right|_{x=x^\star} = 0.}
 $$
 
 #### Second-order necessary conditions of optimality
 
-Once the first-order necessary condition of optimality is satisfied, the dominating term (as $\alpha$ is getting smalle) is the second-order term $\frac{1}{2}\left.\frac{\mathrm{d^2}f(x)}{\mathrm{d} x^2}\right|_{x=x^*}\alpha^2$. Since $\alpha$ is squared, it is the sign of the second derivative that determines the contribution of the whole second-order term to the cost function value. For the minimum, the second derivative must be nonnegative, that is
+Once the first-order necessary condition of optimality is satisfied, the dominating term (as $\alpha$ is getting smalle) is the second-order term $\frac{1}{2}\left.\frac{\mathrm{d^2}f(x)}{\mathrm{d} x^2}\right|_{x=x^\star}\alpha^2$. Since $\alpha$ is squared, it is the sign of the second derivative that determines the contribution of the whole second-order term to the cost function value. For the minimum, the second derivative must be nonnegative, that is
 
 $$
- \boxed{\left.\frac{\mathrm{d^2}f(x)}{\mathrm{d} x^2}\right|_{x=x^*} \geq 0.}
+ \boxed{\left.\frac{\mathrm{d^2}f(x)}{\mathrm{d} x^2}\right|_{x=x^\star} \geq 0.}
 $$
 
 For completeness we state that the sign must be nonpositive for the maximum.
@@ -71,7 +93,7 @@ For completeness we state that the sign must be nonpositive for the maximum.
 
 Following the same line of reasoning as above, the if the second derivative is positive, the miniumum is guaranteed, that is, the sufficient condition of optimality is
 $$
- \boxed{\left.\frac{\mathrm{d^2}f(x)}{\mathrm{d} x^2}\right|_{x=x^*} > 0.}
+ \boxed{\left.\frac{\mathrm{d^2}f(x)}{\mathrm{d} x^2}\right|_{x=x^\star} > 0.}
 $$
 
 If the second derivative fails to be positive and is just zero (thus still satisfying the necessary condition), does it mean that the point is not a minimum? No. We must examine higher order terms.
@@ -79,13 +101,15 @@ If the second derivative fails to be positive and is just zero (thus still satis
 
 ### Vector optimization variable
 
+Once again, should you prefer watching a video, here it is, but below we continue with the text that covers the content of the video.
+
 {{< video https://www.youtube.com/embed/pxcsXQuaXQ8?si=VC4K80qxFmN5v0gc >}}
 
 #### First-order necessary conditions of optimality
 
-One way to handle the vector variables is to convert the vector problem into a scalar one by fixing a direction to an arbitrary vector $\bm d$ and then considering the scalar function of the form $f(\bm x^* + \alpha \bm d)$. For convenience we define a new function
+One way to handle the vector variables is to convert the vector problem into a scalar one by fixing a direction to an arbitrary vector $\bm d$ and then considering the scalar function of the form $f(\bm x^\star + \alpha \bm d)$. For convenience we define a new function
 $$
-g(\alpha) \coloneqq f(\bm x^* + \alpha \bm d)
+g(\alpha) \coloneqq f(\bm x^\star + \alpha \bm d)
 $$
 and from now on we can invoke the results for scalar functions. Namely, we expand the $g()$ function around zero as
 $$
@@ -98,12 +122,12 @@ $$
 
 Now, invoking the chain rule, we go back from $g()$ to $f()$
 $$
-\frac{\mathrm{d}g(\alpha)}{\mathrm{d}\alpha}\bigg|_{\alpha=0} = \frac{\partial f(\bm x)}{\partial\bm x}\bigg|_{\bm x=\bm x^*} \frac{\partial(\bm x^* + \alpha \bm d)}{\partial\alpha}\bigg|_{\alpha=0} = \frac{\partial f(\bm x)}{\partial\bm x}\bigg|_{\bm x=\bm x^*}\,\bm d = 0,
+\frac{\mathrm{d}g(\alpha)}{\mathrm{d}\alpha}\bigg|_{\alpha=0} = \frac{\partial f(\bm x)}{\partial\bm x}\bigg|_{\bm x=\bm x^\star} \frac{\partial(\bm x^\star + \alpha \bm d)}{\partial\alpha}\bigg|_{\alpha=0} = \frac{\partial f(\bm x)}{\partial\bm x}\bigg|_{\bm x=\bm x^\star}\,\bm d = 0,
 $$
-where $\frac{\partial f(\bm x)}{\partial\bm x}\bigg|_{\bm x=\bm x^*}$ is a row vector of partial derivatives of $f()$ evaluated at $\bm x^*$. Since the vector $\bm d$ is arbitrary, the necessary condition is that 
+where $\frac{\partial f(\bm x)}{\partial\bm x}\bigg|_{\bm x=\bm x^\star}$ is a row vector of partial derivatives of $f()$ evaluated at $\bm x^\star$. Since the vector $\bm d$ is arbitrary, the necessary condition is that 
 
 $$
- \frac{\partial f(\bm x)}{\partial\bm x}\bigg|_{\bm x=\bm x^*} = \mathbf 0,  
+ \frac{\partial f(\bm x)}{\partial\bm x}\bigg|_{\bm x=\bm x^\star} = \mathbf 0,  
 $$
 
 More often than not we use the column vector to store partial derivatives. We call it the gradient of the function $f()$ and denoted it as 
@@ -113,7 +137,7 @@ $$
 
 The first-order necessary condition of optimality using gradients is then 
 $$
- \boxed{\left.\nabla f(\bm x)\right|_{x=x^*} = \mathbf 0.  }
+ \boxed{\left.\nabla f(\bm x)\right|_{x=x^\star} = \mathbf 0.  }
 $$
 
 
@@ -164,19 +188,19 @@ Although this was just an example, it is actually a very useful one. Keep this r
 
 #### Second-order necessary conditions of optimality
 
-As before, we fix the direction $\bm d$ and consider the function $g(\alpha) = f(\bm x^* + \alpha \bm d)$. We expand the expression for the first derivative as 
+As before, we fix the direction $\bm d$ and consider the function $g(\alpha) = f(\bm x^\star + \alpha \bm d)$. We expand the expression for the first derivative as 
 $$
-\frac{\mathrm d g(\alpha)}{\mathrm d \alpha} = \sum_{i=1}^{n}\frac{\partial f(\bm x)}{\partial x_i}\bigg|_{\bm x = \bm x^*} d_i,
+\frac{\mathrm d g(\alpha)}{\mathrm d \alpha} = \sum_{i=1}^{n}\frac{\partial f(\bm x)}{\partial x_i}\bigg|_{\bm x = \bm x^\star} d_i,
 $$
 and differentiating this once again, we get the second derivative
 $$
-\frac{\mathrm d^2 g(\alpha)}{\mathrm d \alpha^2} = \sum_{i,j=1}^{n}\frac{\partial^2 f(\bm x)}{\partial x_ix_j}\bigg|_{\bm x = \bm x^*}d_id_j
+\frac{\mathrm d^2 g(\alpha)}{\mathrm d \alpha^2} = \sum_{i,j=1}^{n}\frac{\partial^2 f(\bm x)}{\partial x_ix_j}\bigg|_{\bm x = \bm x^\star}d_id_j
 $$
 
 $$
 \begin{aligned}
-\frac{\mathrm d^2 g(\alpha)}{\mathrm d \alpha^2}\bigg|_{\alpha=0} &= \sum_{i,j=1}^{n}\frac{\text{d}^2}{\text{d}x_ix_j}f(\bm x)\bigg|_{\bm x = \bm x^*}d_id_j\\
-&= \mathbf d^\text{T} \underbrace{\nabla^\text{2}f(\mathbf x)\bigg|_{\bm x = \bm x^*}}_\text{Hessian} \mathbf d.
+\frac{\mathrm d^2 g(\alpha)}{\mathrm d \alpha^2}\bigg|_{\alpha=0} &= \sum_{i,j=1}^{n}\frac{\text{d}^2}{\text{d}x_ix_j}f(\bm x)\bigg|_{\bm x = \bm x^\star}d_id_j\\
+&= \mathbf d^\text{T} \underbrace{\nabla^\text{2}f(\mathbf x)\bigg|_{\bm x = \bm x^\star}}_\text{Hessian} \mathbf d.
 \end{aligned}
 $$
 where $\nabla^2 f(\mathbf x)$ is the Hessian (the symmetrix matrix of the second-order mixed partial derivatives)
@@ -191,13 +215,13 @@ $$
 
 Since $\bm d$ is arbitrary, the second-order necessary condition of optimality is then
 $$
-\boxed{\nabla^\text{2}f(\mathbf x)\bigg|_{\bm x = \bm x^*} \succeq 0,}
+\boxed{\nabla^\text{2}f(\mathbf x)\bigg|_{\bm x = \bm x^\star} \succeq 0,}
 $$
 where, once again, the inequality $\succeq$ reads that the matrix is *positive semidefinite*.
 
 #### Second-order sufficient condition of optimality
 $$
- \boxed{\nabla^2 f(\mathbf x)\bigg|_{\bm x = \bm x^*} \succ 0,}
+ \boxed{\nabla^2 f(\mathbf x)\bigg|_{\bm x = \bm x^\star} \succ 0,}
 $$
 where, once again, the inequality $\succ$ reads that the matrix is *positive definite*.
 
@@ -221,17 +245,17 @@ Once again, this was more than just an example – quadratic functions are so im
 
 ## Classification of stationary points
 
-For a stationary (also critical) $\bm x^*$, that is, one that satisfies the first-order necessary condition 
+For a stationary (also critical) $\bm x^\star$, that is, one that satisfies the first-order necessary condition 
 $$
-\nabla f(\bm x^*) = 0,
+\nabla f(\bm x^\star) = 0,
 $$
 
 we can classify it as 
 
-- Minimum: $\nabla^2 f(x^*)\succ 0$
-- Maximum: $\nabla^2 f(x^*)\prec 0$
-- Saddle point: $\nabla^2 f(x^*)$ indefinite
-- Singular point (we cannot decide): $\nabla^2 f(x^*)=0$
+- Minimum: $\nabla^2 f(x^\star)\succ 0$
+- Maximum: $\nabla^2 f(x^\star)\prec 0$
+- Saddle point: $\nabla^2 f(x^\star)$ indefinite
+- Singular point (we cannot decide): $\nabla^2 f(x^\star)=0$
 
 ::: {#exm-classification-of-stationary-points-minimum}
 ## Minimum of a quadratic function
@@ -337,7 +361,7 @@ display(contour(x1_data,x2_data,f_data))
 
 ::: {#exm-classification-of-stationary-points-singular-point-2}
 ## Singular point of a non-quadratic function
-Consider the function $f(\bm x) = x_1^2 + x_2^4$. Its gradient is $\nabla f(\bm x) = \begin{bmatrix}2x_1\\ 4x_2^3\end{bmatrix}$ and it vanishes at $\bm x^* = \begin{bmatrix}0\\ 0\end{bmatrix}$. The Hessian is $\nabla^2 f(\bm x) = \begin{bmatrix}2 & 0\\ 0 & 12x_2^2\end{bmatrix}$, which when evaluated at the stationary point is $\nabla^2 f(\bm x)\bigg|_{\bm x=\mathbf 0} = \begin{bmatrix}2 & 0\\ 0 & 0\end{bmatrix}$, which is positive semidefinite. We cannot conclude if the function attains a minimum at $\bm x^*$. 
+Consider the function $f(\bm x) = x_1^2 + x_2^4$. Its gradient is $\nabla f(\bm x) = \begin{bmatrix}2x_1\\ 4x_2^3\end{bmatrix}$ and it vanishes at $\bm x^\star = \begin{bmatrix}0\\ 0\end{bmatrix}$. The Hessian is $\nabla^2 f(\bm x) = \begin{bmatrix}2 & 0\\ 0 & 12x_2^2\end{bmatrix}$, which when evaluated at the stationary point is $\nabla^2 f(\bm x)\bigg|_{\bm x=\mathbf 0} = \begin{bmatrix}2 & 0\\ 0 & 0\end{bmatrix}$, which is positive semidefinite. We cannot conclude if the function attains a minimum at $\bm x^\star$. 
 
 We need to examine higher-order terms in the Taylor series expansion. The third derivatives are 
 $$
@@ -349,7 +373,7 @@ All but one fourth derivatives also vanish. The one that does not is
 $$
 \frac{\partial^4 f}{\partial x_2^4} = 24,
 $$
-which is positive, and since the associated derivative is of the even order, the power si also even, hence the function attains a minimum at $\bm x^* = \begin{bmatrix}0\\ 0\end{bmatrix}$.
+which is positive, and since the associated derivative is of the even order, the power si also even, hence the function attains a minimum at $\bm x^\star = \begin{bmatrix}0\\ 0\end{bmatrix}$.
 
 This can also be visually confirmed by the surface and contour plots of the function.
 
