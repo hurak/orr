@@ -53,8 +53,7 @@ Consider an optimization problem in which the cost function contains the absolut
 $$
 \begin{aligned}
 \operatorname*{minimize} &\quad \sum_i c_i|x_i|\\
-\text{subject to} &\quad \mathbf A \bm x = \mathbf b,\\
-&\quad \bm x \geq 0.
+\text{subject to} &\quad \mathbf A \bm x \geq \mathbf b.
 \end{aligned}
 $$
 
@@ -64,14 +63,14 @@ The trouble with the absolute value function is that it is not linear, it is not
 
 One possible reformulation introduces two new nonnegative (vector) variables $\bm x^+\geq 0$ and $\bm x^-\geq 0$ and with which the original variables can be expressed as $x_i = x_i^+ - x_i^-, \; i=1, \ldots, n$. The cost function can then be written as $\sum c_i|x_i| = \sum_i c_i (x_i^+ + x_i^-)$. 
 
-This may look surprising (and incorrect) at first, but we argue that at an optimum, $x_i^+$ or $x_i^-$ must be zero. Otherwise we could subtract (in case $c_i>0$) or add (in case $c_i>0$) the same amount from/to both, which would not change the satisfaction of the constraints (this modification cancels in $x_i = x_i^+ - x_i^-$), and the cost would be further reduced.
+This may look surprising (and incorrect) at first, but we argue that at an optimum, $x_i^+$ or $x_i^-$ must be zero. Otherwise we could subtract (in case $c_i>0$) the same amount from/to both, which would not change the satisfaction of the constraints (this modification cancels in $x_i = x_i^+ - x_i^-$), and the cost would be further reduced.
 
 The LP in the standard form then changes to
 
 $$
 \begin{aligned}
 \operatorname*{minimize}_{\bm x^+\in \mathbb R^n, \bm x^-\in \mathbb R^n} &\quad \mathbf c^\top (\bm x^+ + \bm x^-)\\
-\text{subject to} &\quad \mathbf A \bm x^+ - \mathbf A \bm x^- = \mathbf b,\\
+\text{subject to} &\quad \mathbf A \bm x^+ - \mathbf A \bm x^- \geq \mathbf b,\\
 &\quad \bm x^+ \geq \mathbf 0,\\
 &\quad \bm x^- \geq \mathbf 0.
 \end{aligned}
@@ -82,7 +81,7 @@ Another possibility is to exploit the reformulation of $z_i = |x_i|$ as $x_i\leq
 $$
 \begin{aligned}
 \operatorname*{minimize}_{\bm z\in \mathbb R^n, \bm x\in \mathbb R^n} &\quad \mathbf c^\top \bm z\\
-\text{subject to} &\quad \mathbf A \bm x = \mathbf b,\\
+\text{subject to} &\quad \mathbf A \bm x \geq \mathbf b,\\
 &\qquad \bm x \leq \bm z,\\
 &\quad -\bm x \leq \bm z.
 \end{aligned}
