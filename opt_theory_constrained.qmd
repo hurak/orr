@@ -156,4 +156,39 @@ $$
 
 ## Duality
 
-Duality theory in offers another view of the original optimization problem by bringing in another but related one. 
+Duality theory offers another view of the original optimization problem by bringing in another but related one. 
+
+Corresponding to the general optimization problem 
+$$
+  \begin{aligned}
+  \operatorname*{minimize}\;&f(\bm x)\\
+  \text{subject to}\; & \mathbf g(\bm x)\leq \mathbf 0\\
+  & \mathbf h(\bm x) = \mathbf 0,
+  \end{aligned}
+$$ 
+
+we form the *Lagrangian* function
+$$\mathcal L(\bm x,\bm \lambda,\bm \mu) = f(\bm x) + \bm \lambda^\top \mathbf h(\bm x) + \bm \mu^\top \mathbf g(\bm x)$$ 
+
+For any (fixed) values of $(\bm \lambda,\bm \mu)$ such that $\bm \mu\geq 0$, we define the *Lagrange dual function* through the following unconstrained optimization problem 
+$$
+q(\bm\lambda,\bm\mu) = \inf_{\bm x}\mathcal L(\bm x,\bm \lambda,\bm \mu).
+$$ 
+
+Obviously, it is alway possible to pick a feasible solution $\bm x$, in which case the value of the Lagrangian and the original function coincide, and so the result of this minimization is no worse (larger) than the minimum for the original optimization problem. It can thus serve as a lower bound
+$$q(\bm \lambda,\bm \mu) \leq f(\bm x^\star).$$ 
+
+This result is called *weak duality*. A natural idea is to find the values of $\bm \lambda$ and $\bm \mu$ such that this lower bound is tightest, that is,
+$$
+\begin{aligned}
+  \operatorname*{maximize}_{\bm\lambda, \bm\mu}\; & q(\bm\lambda,\bm\mu)\\
+  \text{subject to}\;& \bm\mu \geq \mathbf 0.
+\end{aligned}
+$$ 
+
+Under some circumstances the result can be tight, which leads to *strong duality*, which means that the minimum of the original (primal) problem and the maximum of the dual problem coincide. 
+$$
+q(\bm \lambda^\star,\bm \mu^\star) = f(\bm x^\star).
+$$ 
+
+This related dual optimization problem can have some advantages for development of both theory and algorithms. 
