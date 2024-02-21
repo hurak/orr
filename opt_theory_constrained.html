@@ -751,7 +751,29 @@ h_m(\bm x) &amp;= 0.
 </section>
 <section id="duality" class="level2">
 <h2 class="anchored" data-anchor-id="duality">Duality</h2>
-<p>Duality theory in offers another view of the original optimization problem by bringing in another but related one.</p>
+<p>Duality theory offers another view of the original optimization problem by bringing in another but related one.</p>
+<p>Corresponding to the general optimization problem <span class="math display">
+  \begin{aligned}
+  \operatorname*{minimize}\;&amp;f(\bm x)\\
+  \text{subject to}\; &amp; \mathbf g(\bm x)\leq \mathbf 0\\
+  &amp; \mathbf h(\bm x) = \mathbf 0,
+  \end{aligned}
+</span></p>
+<p>we form the <em>Lagrangian</em> function <span class="math display">\mathcal L(\bm x,\bm \lambda,\bm \mu) = f(\bm x) + \bm \lambda^\top \mathbf h(\bm x) + \bm \mu^\top \mathbf g(\bm x)</span></p>
+<p>For any (fixed) values of <span class="math inline">(\bm \lambda,\bm \mu)</span> such that <span class="math inline">\bm \mu\geq 0</span>, we define the <em>Lagrange dual function</em> through the following unconstrained optimization problem <span class="math display">
+q(\bm\lambda,\bm\mu) = \inf_{\bm x}\mathcal L(\bm x,\bm \lambda,\bm \mu).
+</span></p>
+<p>Obviously, it is alway possible to pick a feasible solution <span class="math inline">\bm x</span>, in which case the value of the Lagrangian and the original function coincide, and so the result of this minimization is no worse (larger) than the minimum for the original optimization problem. It can thus serve as a lower bound <span class="math display">q(\bm \lambda,\bm \mu) \leq f(\bm x^\star).</span></p>
+<p>This result is called <em>weak duality</em>. A natural idea is to find the values of <span class="math inline">\bm \lambda</span> and <span class="math inline">\bm \mu</span> such that this lower bound is tightest, that is, <span class="math display">
+\begin{aligned}
+  \operatorname*{maximize}_{\bm\lambda, \bm\mu}\; &amp; q(\bm\lambda,\bm\mu)\\
+  \text{subject to}\;&amp; \bm\mu \geq \mathbf 0.
+\end{aligned}
+</span></p>
+<p>Under some circumstances the result can be tight, which leads to <em>strong duality</em>, which means that the minimum of the original (primal) problem and the maximum of the dual problem coincide. <span class="math display">
+q(\bm \lambda^\star,\bm \mu^\star) = f(\bm x^\star).
+</span></p>
+<p>This related dual optimization problem can have some advantages for development of both theory and algorithms.</p>
 
 
 </section>
