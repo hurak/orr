@@ -170,7 +170,7 @@ My obvious (personal) bias towards Julia programming language is partly due to t
 
 - [JuMP.jl](https://jump.dev) not only constitutes one of the flagship packages of the Julia ecosystem but it is on par with the state of the art optimization modelling languages. Furthermore, being a free and open source software, it enjoys a vibrant community of developers and users. They even meet annually at JuMP-dev conference ([in 2023 in Boston, MA](https://jump.dev/meetings/jumpdev2023/)).
 
-- [Convex.jl](https://jump.dev/Convex.jl) is an implementation of the concept of *disciplined convex programming* (DCP) in Julia (below we also list its implementations in Matlab and Python). Even though it is now registered as a part of the JuMP.jl project, it is still a separate concept. Interesting, convenient, but it seems to be in a maintanence mode now.
+- [Convex.jl](https://jump.dev/Convex.jl) is an implementation of the concept of [Disciplined Convex Programming (DCP)](https://fenchel.stanford.edu/home) in Julia (below we also list its implementations in Matlab and Python). Even though it is now registered as a part of the JuMP.jl project, it is still a separate concept. Interesting, convenient, but it seems to be in a maintanence mode now.
 
 ```{julia}
 using Convex, SCS
@@ -209,18 +209,20 @@ x.value
 
 ## Optimization modelling in Matlab
 
-Popularity of Matlab as a language and an ecosystem for control-related computations is undeniable. Although their Optimization Toolbox for Matlab does not provide anything like optimization/algebraic modelling language, there are some third-party toolboxes:
+Popularity of Matlab as a language and an ecosystem for control-related computations is undeniable. Therefore, let's have a look at what is available for modelling optimization problems in Matlab:
 
-- [Yalmip](https://yalmip.github.io) started as *Yet Another LMI Parser* quite some time ago (which reveals its control theoretic roots), but these days it serves as fairly complete algebraic modelling language (within Matlab), interfacing to perhaps any optimization solver, both commercial and free&open-source. Is is still actively developed and maintained and it abounds with tutorials and examples.
+- [Optimization Toolbox for Matlab](https://www.mathworks.com/help/optim/index.html?s_tid=CRUX_lftnav) is one of the commercial toolboxes produced by Matlab and Simulink creators. Since the R2017b release the toolbox supports [Problem-based optimization workflow](https://www.mathworks.com/help/optim/ug/problem-based-workflow.html), which can be regarded as a kind of an optimization/algebraic modelling language, albeit restricted to their own solvers.
 
-- [CVX](http://cvxr.com/cvx/) is a Matlab counterpart of Convex.jl (or the other way around, if you like, since it has been here longer). The name stipulates that it only allows convex optimization probles (unlike Yalmip). It is super convenient. Unfortunately, the development seems to have stalled – the last update is from 2020.
+- [Yalmip](https://yalmip.github.io) started as *Yet Another LMI Parser* quite some time ago (which reveals its control theoretic roots), but these days it serves as fairly complete algebraic modelling language (within Matlab), interfacing to perhaps any optimization solver, both commercial and free&open-source. It is free and open-source. Is is still actively developed and maintained and it abounds with tutorials and examples.
+
+- [CVX](http://cvxr.com/cvx/) is a Matlab counterpart of Convex.jl (or the other way around, if you like, since it has been here longer). The name stipulates that it only allows convex optimization probles (unlike Yalmip) – it follows the [Disciplined Convex Programming (DCP)](https://fenchel.stanford.edu/home) paradigm. Unfortunately, the development seems to have stalled – the last update is from 2020.
 
 ## Optimization modelling in Python
 
-Python is a very popular language for scientific computing. It can be argued whether or not it is actually suitable for development of numerical algoritms, but for building optimization models it does its job fairly well (and the numerical solvers it calls can be developed in different language). Several packages implementing OML/AML are available:
+Python is a very popular language for scientific computing. Although it is arguable if it is actually suitable for implementation of numerical algoritms, when it comes to building optimization models, it does its job fairly well (and the numerical solvers it calls can be developed in different language). Several packages implementing OML/AML are available:
 
-- [cvxpy](https://www.cvxpy.org) is yet another instantiation of disciplined convex programming that we alredy mention when introducing Convex.jl and CVX. And it turns out that this one exhibits the greatest momentum. The team of developers seems to be have exceeded a critical mass, hence the tools seems like a safe bet already.
+- [cvxpy](https://www.cvxpy.org) is yet another instantiation of [Disciplined Convex Programming](https://fenchel.stanford.edu/home) that we alredy mention when introducing Convex.jl and CVX. And it turns out that this one exhibits the greatest momentum. The team of developers seems to be have exceeded a critical mass, hence the tools seems like a safe bet already.
 
-- [Pyomo](http://www.pyomo.org)
+- [Pyomo](http://www.pyomo.org) is a popular open-source optimization modelling language within Python.
 
-- [APMonitor](https://github.com/APMonitor/) and [GEKKO](https://gekko.readthedocs.io/en/latest/) are relatively young and small projects, primarily motivated by applications of machine learning and optimization in chemical process engineering. 
+- [APMonitor](https://github.com/APMonitor/) and [GEKKO](https://gekko.readthedocs.io/en/latest/) are relatively young projects, primarily motivated by applications of machine learning and optimization in chemical process engineering. 

@@ -4,7 +4,8 @@ bibliography: ref_optimization.bib
 format:
     html:
         html-math-method: katex
-        code-fold: true
+        code-fold: show
+        code-summary: "Show the code"
 execute:
     enabled: false
 jupyter: julia-1.10
@@ -14,42 +15,153 @@ Our motivation for studying numerical algorithms for unconstrained optimization 
 
 It may be useful to recapitulate our motivation for studying optimization algorithms in general – after all, there are dozens of commercial or free&open-source software tools for solving optimization problems. Why not just use them? There are two answers beyond the traditional "at a grad school we should understand what we are using":
 
-- There is no single solver that works best for all problem. Therefore we must be aware of the principles, strenghts and weaknesses of the algorithms to choose the right tool for our problem. 
-- This is a control engineering course and numerical optimization is becoming an integral part of control systems. While developing a control system, we may find ourselvers in need of developing our own implementation of an optimization algorithm or adjusting an existing one. This requires deeper understanding of algorithms than just casual usage of high-level functions in Matlab or Python.
+- There is no single solver that works best for all problems. Therefore we must be aware of the principles, strenghts and weaknesses of the algorithms in order to choose the right one for our problem. 
+- This is a control engineering course and numerical optimization is becoming an integral part of control systems. While developing a control system, we may find ourselves in need of developing our own implementation of an optimization algorithm or adjusting an existing one. This requires deeper understanding of algorithms than just casual usage of high-level functions in Matlab or Python.
 
 There is certainly no shortage of algorithms for unconstrained optimization. In this crash course we can cover only a few. But the few we cover here certainly form a solid theoretical basis and provide practically usable tools.
 
-One possible way to classify the algorithms is based on **whether they use derivatives** of the objective function or not. In this course, we prefer the latter approach as it leads to more efficient algorithms. For the former methods, we can refer to the literature (the prominent example is Nelder-Mead method).
+One possible way to classify the algorithms is based on **whether they use derivatives** of the objective functions **or not**. In this course, we only consider the former approaches as they leads to more efficient algorithms. For the latter methods, we can refer to the literature (the prominent example is Nelder-Mead method).
 
-## Derivative-based methods
-
-Iteratively:
+All the relevant methods are **iterative**. Based on what happens within each iteration, we can classify them into two categories:
 
 Descent methods
-: Fix the search direction $d_k$, and the find the step length $\alpha_k$ that minimizes $f(x_k + \alpha_k d_k)$. The search direction is updated at each iteration. 
+: In each iteration, fix the search direction $d_k$ first, and then determine how far to go along that direction, that is, find the step length $\alpha_k$ that minimizes (exactly or approximately) $f(x_k + \alpha_k d_k)$. In the next iteration the search direction is updated. 
 
 Trust region methods
-: Fix the region in which a simpler (typically a quadratic) function approximates the original cost function reasonably accurately, then find the minimum of this simpler cost function.
+: In each iteration, fix the region (typically a ball) around the current solution, in which a simpler (typically a quadratic) function approximates the original cost function reasonably accurately, and then find the minimum of this simpler cost function.
 
-(for a circular region this amounts to setting the radius, which can be viewed as setting the step length $\alpha_k$)
+## Descent methods
 
-search direction $d_k$ that minimizes $f(x_k + \alpha_k d_k)$
+The obvious quality that the search direction needs to satisfy, is that the cost function decreses along it, at least locally (for a small step length). 
 
-### Descent methods
+::: {#def-descent-direction}
+## Descent direction
+At the current iterate $\bm x_k$, the direction $\bm d_k$ is called a *descent direction* if
+$$
+\nabla f(\bm x_k)^\top \bm d_k < 0,
+$$
+that is, the *directional derivative* is negative along the direction $\bm d_k$.
+:::
 
-- Steepest descent (aka gradient) method 
-- Newton's method
-- Quasi-Newton's methods
+But beware that it is only guaranteed that the cost function is reduced if the length of the step is sufficently small. For longer steps the higher-order terms in the Taylor's series approximation of the cost function can dominate.
 
-#### Step size (step length) determination (aka line search)
+But which descent direction to choose? How to find it?
 
-#### Steepest descent method
+### Steepest descent (aka gradient descent) method 
 
-#### Newton's method
+A natural candidate for a descent direction is the negative of the gradient
+$$
+ \bm d_k = -\nabla f(\bm x_k).
+$$
 
-#### Quasi-Newton's methods
+In fact, among all descent directions, this is the one for which the descent is steepest (the gradient determines the direction of steepest ascent), though we will see later that this does not mean that the convergence of the method is the fastest. 
 
-### Trust region methods
+In each iteration of the gradient method, this is the how the solution is updated
+
+$$
+\boxed{
+\bm x_{k+1} = \bm x_{k} - \alpha_k \nabla f(\bm x_{k}).}
+$$
+
+But where to find the step length $\alpha_k$? 
+
+:::{.callout-note}
+We address the problem of line search immediately below, right after we just introduced the gradient descent method, but the methods for line search are relevant for all descent directions, not just the steepest one.
+:::
+
+### Step length determination (aka line search)
+
+Note that once the search direction has been fixed (whether we used the negative of the gradient or any other descent direction), the problem of finding the step length $\alpha_k$ is just a scalar optimization problem. It turns out, however, that besides finding the true minimum along the search directions, it is often sufficient to find the minimum only approximately, or not aiming at minimization at all and work with a fixed step length instead.
+
+#### Fixed length of the step
+
+Here we give a guidance on the choice of the lenght of the step. But we need to introduce a useful concept first. 
+
+::: {#def-Lsmoothness}
+## L-smoothness
+For a continuously differentiable function $f$, the gradient $\nabla f$ is said to be *L-smooth* if there exists a constant $L>0$ such that
+$$
+\|\nabla f(x) - \nabla f(y)\| \leq L \|x-y\|.
+$$
+:::
+
+Not that if the second derivatives exist, $L$ is an upper bound on the norm of the Hessian
+$$
+ \|\nabla^2 f\|\leq L.
+$$
+
+For quadratic functions, $L$ is the largest eigenvalue of the Hessian 
+$$
+L = \max_i \lambda_i (\mathbf Q).
+$$
+
+The usefulness of the concept of L-smoothness is that it provides a quadratic function that serves as an upper bound for the original function. This is formulated as the following lemma.
+
+:::{#lem-descent-lemma}
+## Descent lemma
+Consider an $L$-smooth function $f$. Then for any $\mathbf x_k$ and $\mathbf x_{k+1}$, the following inequality holds
+$$
+f(\mathbf x_{k+1}) \leq  f(\mathbf x_{k}) + \nabla f(\mathbf x_k)^\top (\mathbf x_{k-1}-\mathbf x_{k}) + \frac{L}{2}\|\mathbf x_{k-1}-\mathbf x_{k}\|^2
+$$
+:::
+
+What implication does the result have on the determination of the step length?  
+
+$$
+\alpha = \frac{2}{L}
+$$ 
+
+#### Exact line search
+
+A number of methos exist: bisection, golden section, Newton, \ldots As finding true minium in each iteration is often too computationally costly and hardly needed, we do not have them here. The only exception the Newton's method, which for vector variables constitutes another descent method on its own and we cover it later.
+
+:::{#exm-exact-line-search-quadratic} 
+Here we develop a solution for an exact minimization of a quadratic functions $f(\bm x) = \frac{1}{2} \bm x^\top\mathbf Q \bm x + \mathbf c^\top \bm x$ along a given direction. We show that it leads to a closed-form formula. Although not particularly useful in practice, it is a good exercise in understanding the problem of line search. Furthermore, we will use it later to demonstrate the behaviour of the steepest descent method.    The problem is to $\operatorname*{minimize}_{\alpha_k} f(\bm x_k + \alpha_k \bm d_k)$. We express the cost as a function of the current iterate, the direction, and step length.
+$$
+\begin{aligned}
+ f(\bm x_k + \alpha_k \bm d_k) &= \frac{1}{2}(\bm x_k + \alpha_k\bm d_k)^\top\mathbf Q (\bm x_k + \alpha_k\bm d_k) +\mathbf c^\top(\bm x_k + \alpha_k\bm d_k)\\
+ &= \frac{1}{2} \bm x_k^\top\mathbf Q \bm x_k + \bm d_k^\top\mathbf Q\bm x_k \alpha_k + \frac{1}{2} \bm d_k^\top\mathbf Q\bm d_k \alpha_k^2+ \mathbf c^\top(\bm x_k + \alpha_k\bm d_k).
+\end{aligned}
+$$
+
+Differentiating the function with respect to the length of the step, we get
+$$
+\frac{\mathrm{d}f(\bm x_k + \alpha_k\bm d_k)}{\mathrm{d}\alpha_k} = \bm d_k^\top \underbrace{(\mathbf Q\bm x_k + \mathbf c)}_{\nabla f(\bm x_k)} + \bm d_k^\top\mathbf Q\bm d_k \alpha_k.
+$$
+
+And now setting the derivative to zero, we find the optimal step length
+$$
+\boxed{
+\alpha_k = -\frac{\bm d_k^\top \nabla f(\bm x_k)}{\bm d_k^\top\mathbf Q\bm d_k} = -\frac{\bm d_k^\top (\mathbf Q\bm x_k + \mathbf c)}{\bm d_k^\top\mathbf Q\bm d_k}.}
+$$
+:::
+
+
+#### Approximate line search – backtracking
+
+There are several methods for approximate line search. Here we describe the popular backtracking algorithm, which is based on the Armijo / Wolfe conditions. 
+
+The algorithm is parameterized by three parameter: $\alpha_0>0$, $\beta\in(0,1)$, $\gamma\in(0,1)$:
+
+```{julia}
+function backtracking_line_search(f, ∇fₖ, xₖ, dₖ; α₀=1.0, β=0.5, γ=0.1)
+    α = α₀
+    while f(xₖ)-f(xₖ+α*dₖ) < -γ*α*dot(dₖ,∇fₖ)
+        α *= β
+    end
+    return α
+end
+```
+
+### Newton's method
+
+### Quasi-Newton's methods
+
+### Conjugate gradient method
+
+
+
+## Trust region methods
 
 
 

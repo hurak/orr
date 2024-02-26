@@ -275,9 +275,9 @@ We can see that the SOCP contains both linear and quadratic constraints, hence i
 
 Another cone of great importance the control theory is the cone of positive semidefinite matrices. It is commonly denoted as $\mathcal S_+^n$ and is defined as
 $$
-\mathcal S_+^n = \left\{ \bm X = \bm X^\top \in \mathbb R^{n \times n} \mid \bm z^\top \bm X \bm z \geq 0\, \forall \bm z\in \mathbb R^n \right\},
+\mathcal S_+^n = \left\{ \bm X \in \mathbb R^{n \times n} \mid \bm X = \bm X^\top, \, \bm z^\top \bm X \bm z \geq 0\; \forall \bm z\in \mathbb R^n \right\},
 $$
-where $\mathbf X \succeq 0$ is a common way to express that $\mathbf X$ is positive semidefinite. 
+and with this cone the inequality $\mathbf X \succeq 0$ is a common way to express that $\mathbf X$ is positive semidefinite. 
 
 Unlike the previous classes of optimization problems, this one is formulated with matrix variables instead of vector ones. But nothing prevents us from collecting the components of a symmetric matrix into a vector and proceed with vectors as usual, if needed:
 
