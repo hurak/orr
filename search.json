@@ -22,80 +22,25 @@
     ]
   },
   {
-    "objectID": "discr_dir_mpc_explicit.html",
-    "href": "discr_dir_mpc_explicit.html",
-    "title": "Explicit MPC",
+    "objectID": "opt_theory_references.html",
+    "href": "opt_theory_references.html",
+    "title": "References for optimization theory",
     "section": "",
-    "text": "(A. Bemporad, Borrelli, and Morari 2002), (Alberto Bemporad 2021), (Alessio and Bemporad 2009), (Borrelli, Bemporad, and Morari 2017)",
+    "text": "If a single reference book on nonlinear optimization is to be recommended, be it (Nocedal and Wright 2006) that sits on your book shelf.\nIf one or two more can still fit, (Bertsekas 2016), (Luenberger and Ye 2021) are classical comprehensive references on nonlinear programming (the latter covers linear programming too).\nWhile all the three books are only available for purchase, there is a wealth of resources are freely available online such as the notes (Gros and Diehl 2022) accompanying a course on optimal control, which do a decent job of introduction to a nonlinear programming, and beautifully typeset modern textbooks (Kochenderfer and Wheeler 2019) and (Martins and Ning 2022), the former based on Julia language.\nWhen restricting to convex optimization, the bible of this field (Boyd and Vandenberghe 2004) is also freely available online. It is a must-have for everyone interested in optimization. Another textbook biased towards convex optimization is (Calafiore 2014), which is freely accessible through its web version. Yet another advanced and treatment of convex optimization is (Ben-Tal and Nemirovski 2023), which is also freely available online.\nMaybe a bit unexpected resources on theory are materials accompanying some optimization software. Partilarly recommendable is (“MOSEK Modeling Cookbook” 2024), it is very useful even if you do not indend to use their software.\n\n\n\n\n Back to topReferences\n\nBen-Tal, Aharon, and Arkadi Nemirovski. 2023. “Lectures on Modern Convex Optimization - 2020/2021/2022/2023 Analysis, Algorithms, Engineering Applications.” Lecture Notes. Technion & Georgia Institute of Technology. https://www2.isye.gatech.edu/~nemirovs/LMCOLN2023Spring.pdf.\n\n\nBertsekas, Dimitri. 2016. Nonlinear Programming. 3rd ed. Belmont, Mass: Athena Scientific. http://www.athenasc.com/nonlinbook.html.\n\n\nBoyd, Stephen, and Lieven Vandenberghe. 2004. Convex Optimization. Seventh printing with corrections 2009. Cambridge, UK: Cambridge University Press. https://web.stanford.edu/~boyd/cvxbook/.\n\n\nCalafiore, Giuseppe C. 2014. Optimization Models. Cambridge, UK: Cambridge University Press. https://people.eecs.berkeley.edu/~elghaoui/optmodbook.html.\n\n\nGros, Sebastien, and Moritz Diehl. 2022. “Numerical Optimal Control (Draft).” Systems Control and Optimization Laboratory IMTEK, Faculty of Engineering, University of Freiburg. https://www.syscop.de/files/2020ss/NOC/book-NOCSE.pdf.\n\n\nKochenderfer, Mykel J., and Tim A. Wheeler. 2019. Algorithms for Optimization. The MIT Press. https://algorithmsbook.com/optimization/.\n\n\nLuenberger, David G., and Yinyu Ye. 2021. Linear and Nonlinear Programming. 5th ed. Vol. 228. International Series in Operations Research & Management Science. Cham, Switzerland: Springer. https://doi.org/10.1007/978-3-030-85450-8.\n\n\nMartins, Joaquim R. R. A., and Andrew Ning. 2022. Engineering Design Optimization. Cambridge ; New York, NY: Cambridge University Press. https://mdobook.github.io/.\n\n\n“MOSEK Modeling Cookbook.” 2024. Mosek ApS. https://docs.mosek.com/MOSEKModelingCookbook-a4paper.pdf.\n\n\nNocedal, Jorge, and Stephen Wright. 2006. Numerical Optimization. 2nd ed. Springer Series in Operations Research and Financial Engineering. New York: Springer. https://doi.org/10.1007/978-0-387-40065-5.",
+    "crumbs": [
+      "1. Optimization – theory",
+      "References for optimization theory"
+    ]
+  },
+  {
+    "objectID": "discr_dir_mpc_stability.html",
+    "href": "discr_dir_mpc_stability.html",
+    "title": "Stability of MPC",
+    "section": "",
+    "text": "Back to top",
     "crumbs": [
       "6. More on MPC",
-      "Explicit MPC"
-    ]
-  },
-  {
-    "objectID": "discr_dir_mpc_explicit.html#literature",
-    "href": "discr_dir_mpc_explicit.html#literature",
-    "title": "Explicit MPC",
-    "section": "",
-    "text": "(A. Bemporad, Borrelli, and Morari 2002), (Alberto Bemporad 2021), (Alessio and Bemporad 2009), (Borrelli, Bemporad, and Morari 2017)",
-    "crumbs": [
-      "6. More on MPC",
-      "Explicit MPC"
-    ]
-  },
-  {
-    "objectID": "opt_theory_constrained.html",
-    "href": "opt_theory_constrained.html",
-    "title": "Theory for constrained optimization",
-    "section": "",
-    "text": "We consider the following optimization problem with equality constraints \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x\\in\\mathbb{R}^n} &\\quad f(\\bm x)\\\\\n\\text{subject to} &\\quad \\mathbf h(\\bm x) = \\mathbf 0,\n\\end{aligned}\n where \\mathbf h(\\bm x) \\in \\mathbb R^m defines a set of m equations \n\\begin{aligned}\nh_1(\\bm x) &= 0\\\\\nh_2(\\bm x) &= 0\\\\\n\\vdots\\\\\nh_m(\\bm x) &= 0.\n\\end{aligned}\n\nAugmenting the original cost function f with the constraint functions h_i scaled by Lagrange variables \\lambda_i gives the Lagrangian function \n\\mathcal{L}(\\bm x,\\boldsymbol\\lambda) \\coloneqq f(\\bm x) + \\sum_{i=1}^m \\lambda_i h_i(\\bm x) = f(\\bm x) + \\boldsymbol \\lambda^\\top \\mathbf h(\\bm x).\n\n\n\n\n\nThe first-order necessary condition of optimality is \n\\nabla \\mathcal{L}(\\bm x,\\boldsymbol\\lambda) = \\mathbf 0,\n which amounts to two (generally vector) equations \n\\boxed{\n\\begin{aligned}\n\\nabla f(\\bm x) + \\sum_{i=1}^m \\lambda_i \\nabla h_i(\\bm x) &= \\mathbf 0\\\\\n\\mathbf{h}(\\bm x) &= \\mathbf 0.\n\\end{aligned}}\n\nDefining a matrix \\nabla \\mathbf h(\\bm x) \\in \\mathbb R^{n\\times m} as horizontally stacked gradients of the constraint functions \n\\nabla \\mathbf h(\\bm x) \\coloneqq \\begin{bmatrix}\n                                 \\nabla h_1(\\bm x) && \\nabla h_2(\\bm x) && \\ldots && \\nabla h_m(\\bm x)\n                            \\end{bmatrix},\n in fact, a transpose of the Jacobian matrix, the necessary condition can be rewritten in a vector form as \\boxed\n{\\begin{aligned}\n\\nabla f(\\bm x) + \\nabla \\mathbf h(\\bm x)\\boldsymbol \\lambda &= \\mathbf 0\\\\\n\\mathbf{h}(\\bm x) &= \\mathbf 0.\n\\end{aligned}}\n\nBeware of the nonregularity issue! The (\\nabla \\mathbf h(\\bm x))^\\mathrm T is regular at a given \\bm x (the \\bm x is a regular point) if it has a full column rank. Rank-deficiency reveals a defect in formulation.\n\nExample 1 (Equality-constrained quadratic program) \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} &\\quad \\frac{1}{2}\\bm{x}^\\top\\mathbf{Q}\\bm{x} + \\mathbf{r}^\\top\\bm{x}\\\\\n\\text{subject to} &\\quad \\mathbf A \\bm x + \\mathbf b = \\mathbf 0.\n\\end{aligned}\n\nThe first-order necessary condition of optimality is\n\n\\begin{bmatrix}\n  \\mathbf Q & \\mathbf A^\\top\\\\\\mathbf A & \\mathbf 0\n\\end{bmatrix}\n\\begin{bmatrix}\n  \\bm x \\\\ \\boldsymbol \\lambda\n\\end{bmatrix}\n=\n\\begin{bmatrix}\n  -\\mathbf r\\\\\\mathbf b\n\\end{bmatrix}.\n\n\n\n\n\n\nUsing the unconstrained Hessian \\nabla^2_{\\mathbf{x}\\bm{x}} \\mathcal{L}(\\bm x,\\boldsymbol \\lambda) is too conservative. Instead, use projected Hessian\n\n\\mathbf{Z}^\\mathrm{T}\\;\\nabla^2_{\\bm{x}\\bm{x}} \\mathcal{L}(\\bm x,\\boldsymbol \\lambda)\\;\\mathbf Z &gt; 0,\n where \\mathbf Z is an (orthonormal) basis of the nullspace of the Jacobian (\\nabla \\mathbf h(\\bm x))^\\top.",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Theory for constrained optimization"
-    ]
-  },
-  {
-    "objectID": "opt_theory_constrained.html#equality-constraints",
-    "href": "opt_theory_constrained.html#equality-constraints",
-    "title": "Theory for constrained optimization",
-    "section": "",
-    "text": "We consider the following optimization problem with equality constraints \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x\\in\\mathbb{R}^n} &\\quad f(\\bm x)\\\\\n\\text{subject to} &\\quad \\mathbf h(\\bm x) = \\mathbf 0,\n\\end{aligned}\n where \\mathbf h(\\bm x) \\in \\mathbb R^m defines a set of m equations \n\\begin{aligned}\nh_1(\\bm x) &= 0\\\\\nh_2(\\bm x) &= 0\\\\\n\\vdots\\\\\nh_m(\\bm x) &= 0.\n\\end{aligned}\n\nAugmenting the original cost function f with the constraint functions h_i scaled by Lagrange variables \\lambda_i gives the Lagrangian function \n\\mathcal{L}(\\bm x,\\boldsymbol\\lambda) \\coloneqq f(\\bm x) + \\sum_{i=1}^m \\lambda_i h_i(\\bm x) = f(\\bm x) + \\boldsymbol \\lambda^\\top \\mathbf h(\\bm x).\n\n\n\n\n\nThe first-order necessary condition of optimality is \n\\nabla \\mathcal{L}(\\bm x,\\boldsymbol\\lambda) = \\mathbf 0,\n which amounts to two (generally vector) equations \n\\boxed{\n\\begin{aligned}\n\\nabla f(\\bm x) + \\sum_{i=1}^m \\lambda_i \\nabla h_i(\\bm x) &= \\mathbf 0\\\\\n\\mathbf{h}(\\bm x) &= \\mathbf 0.\n\\end{aligned}}\n\nDefining a matrix \\nabla \\mathbf h(\\bm x) \\in \\mathbb R^{n\\times m} as horizontally stacked gradients of the constraint functions \n\\nabla \\mathbf h(\\bm x) \\coloneqq \\begin{bmatrix}\n                                 \\nabla h_1(\\bm x) && \\nabla h_2(\\bm x) && \\ldots && \\nabla h_m(\\bm x)\n                            \\end{bmatrix},\n in fact, a transpose of the Jacobian matrix, the necessary condition can be rewritten in a vector form as \\boxed\n{\\begin{aligned}\n\\nabla f(\\bm x) + \\nabla \\mathbf h(\\bm x)\\boldsymbol \\lambda &= \\mathbf 0\\\\\n\\mathbf{h}(\\bm x) &= \\mathbf 0.\n\\end{aligned}}\n\nBeware of the nonregularity issue! The (\\nabla \\mathbf h(\\bm x))^\\mathrm T is regular at a given \\bm x (the \\bm x is a regular point) if it has a full column rank. Rank-deficiency reveals a defect in formulation.\n\nExample 1 (Equality-constrained quadratic program) \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} &\\quad \\frac{1}{2}\\bm{x}^\\top\\mathbf{Q}\\bm{x} + \\mathbf{r}^\\top\\bm{x}\\\\\n\\text{subject to} &\\quad \\mathbf A \\bm x + \\mathbf b = \\mathbf 0.\n\\end{aligned}\n\nThe first-order necessary condition of optimality is\n\n\\begin{bmatrix}\n  \\mathbf Q & \\mathbf A^\\top\\\\\\mathbf A & \\mathbf 0\n\\end{bmatrix}\n\\begin{bmatrix}\n  \\bm x \\\\ \\boldsymbol \\lambda\n\\end{bmatrix}\n=\n\\begin{bmatrix}\n  -\\mathbf r\\\\\\mathbf b\n\\end{bmatrix}.\n\n\n\n\n\n\nUsing the unconstrained Hessian \\nabla^2_{\\mathbf{x}\\bm{x}} \\mathcal{L}(\\bm x,\\boldsymbol \\lambda) is too conservative. Instead, use projected Hessian\n\n\\mathbf{Z}^\\mathrm{T}\\;\\nabla^2_{\\bm{x}\\bm{x}} \\mathcal{L}(\\bm x,\\boldsymbol \\lambda)\\;\\mathbf Z &gt; 0,\n where \\mathbf Z is an (orthonormal) basis of the nullspace of the Jacobian (\\nabla \\mathbf h(\\bm x))^\\top.",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Theory for constrained optimization"
-    ]
-  },
-  {
-    "objectID": "opt_theory_constrained.html#inequality-constraints",
-    "href": "opt_theory_constrained.html#inequality-constraints",
-    "title": "Theory for constrained optimization",
-    "section": "Inequality constraints",
-    "text": "Inequality constraints\n\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x\\in\\mathbb{R}^n} &\\quad f(\\bm x)\\\\\n\\text{subject to} &\\quad \\mathbf g(\\bm x) \\leq \\mathbf 0,\n\\end{aligned}\n where \\mathbf g(\\bm x) \\in \\mathbb R^p defines a set of p inequalities.\n\nFirst-order necessary condition of optimality\nKarush-Kuhn-Tucker (KKT) conditions of optimality are then composed of these four (sets of) conditions \n\\begin{aligned}\n\\nabla f(\\bm x) + \\sum_{i=1}^p \\mu_i \\nabla g_i(\\bm x) &= \\mathbf 0,\\\\\n\\mathbf{g}(\\bm{x}) &\\leq \\mathbf 0,\\\\\n\\mu_i g_i(\\bm x) &= 0,\\quad i = 1,2,\\ldots, m\\\\\n\\mu_i &\\geq 0,\\quad   i = 1,2,\\ldots, m.\n\\end{aligned}",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Theory for constrained optimization"
-    ]
-  },
-  {
-    "objectID": "opt_theory_constrained.html#equality-and-inequality-constraints",
-    "href": "opt_theory_constrained.html#equality-and-inequality-constraints",
-    "title": "Theory for constrained optimization",
-    "section": "Equality and inequality constraints",
-    "text": "Equality and inequality constraints\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x\\in\\mathbb{R}^n} &\\quad f(\\bm x)\\\\\n\\text{subject to} &\\quad \\mathbf h(\\bm x) = \\mathbf 0,\\\\\n                    &\\quad \\mathbf g(\\bm x) \\leq \\mathbf 0.\n\\end{aligned}\n\n\nFirst-order necessary condition of optimality\nThe KKT conditions\n\n\\begin{aligned}\n\\nabla f(\\bm x) + \\sum_{i=1}^m \\lambda_i \\nabla h_i(\\bm x) + \\sum_{i=1}^p \\mu_i \\nabla g_i(\\bm x) &= \\mathbf 0\\\\\n\\mathbf{h}(\\mathbf{x}) &= \\mathbf 0\\\\\n\\mathbf{g}(\\mathbf{x}) &\\leq \\mathbf 0\\\\\n\\mu_i g_i(\\bm x) &= 0,\\quad i = 1,\\ldots, m\\\\\n\\mu_i &\\geq 0,\\quad   i = 1,\\ldots, m.\n\\end{aligned}",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Theory for constrained optimization"
-    ]
-  },
-  {
-    "objectID": "opt_theory_constrained.html#duality",
-    "href": "opt_theory_constrained.html#duality",
-    "title": "Theory for constrained optimization",
-    "section": "Duality",
-    "text": "Duality\nDuality theory offers another view of the original optimization problem by bringing in another but related one.\nCorresponding to the general optimization problem \n  \\begin{aligned}\n  \\operatorname*{minimize}\\;&f(\\bm x)\\\\\n  \\text{subject to}\\; & \\mathbf g(\\bm x)\\leq \\mathbf 0\\\\\n  & \\mathbf h(\\bm x) = \\mathbf 0,\n  \\end{aligned}\n\nwe form the Lagrangian function \\mathcal L(\\bm x,\\bm \\lambda,\\bm \\mu) = f(\\bm x) + \\bm \\lambda^\\top \\mathbf h(\\bm x) + \\bm \\mu^\\top \\mathbf g(\\bm x)\nFor any (fixed) values of (\\bm \\lambda,\\bm \\mu) such that \\bm \\mu\\geq 0, we define the Lagrange dual function through the following unconstrained optimization problem \nq(\\bm\\lambda,\\bm\\mu) = \\inf_{\\bm x}\\mathcal L(\\bm x,\\bm \\lambda,\\bm \\mu).\n\nObviously, it is alway possible to pick a feasible solution \\bm x, in which case the value of the Lagrangian and the original function coincide, and so the result of this minimization is no worse (larger) than the minimum for the original optimization problem. It can thus serve as a lower bound q(\\bm \\lambda,\\bm \\mu) \\leq f(\\bm x^\\star).\nThis result is called weak duality. A natural idea is to find the values of \\bm \\lambda and \\bm \\mu such that this lower bound is tightest, that is, \n\\begin{aligned}\n  \\operatorname*{maximize}_{\\bm\\lambda, \\bm\\mu}\\; & q(\\bm\\lambda,\\bm\\mu)\\\\\n  \\text{subject to}\\;& \\bm\\mu \\geq \\mathbf 0.\n\\end{aligned}\n\nUnder some circumstances the result can be tight, which leads to strong duality, which means that the minimum of the original (primal) problem and the maximum of the dual problem coincide. \nq(\\bm \\lambda^\\star,\\bm \\mu^\\star) = f(\\bm x^\\star).\n\nThis related dual optimization problem can have some advantages for development of both theory and algorithms.",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Theory for constrained optimization"
+      "Stability of MPC"
     ]
   },
   {
@@ -143,113 +88,58 @@
     ]
   },
   {
-    "objectID": "discr_dir_mpc.html",
-    "href": "discr_dir_mpc.html",
-    "title": "Model predictive control (MPC)",
+    "objectID": "cont_indir_calculus_of_variations.html",
+    "href": "cont_indir_calculus_of_variations.html",
+    "title": "Calculus of variations and optimal control",
     "section": "",
-    "text": "In the previous section we learnt how to compute an optimal control sequence on a finite time horizon using numerical methods for solving nonlinear programs (NLP), and quadratic programs (QP) in particular. There are two major deficiencies of such approach:\n\nThe control sequence was computed under the assumption that the mathematical model is perfectly accurate. As soon as the reality deviates from the model, either because of some unmodelled dynamics or because of the presence of (external) disturbances, the performance of the system will deteriorate. We need a way to turn the presented open-loop (also feedforward) control scheme into a feedback one.\nThe control sequence was computed for a finite time horizon. It is commonly required to consider an infinite time horizon, which is not possible with the presented approach based on solving finite-dimensional mathematical programs.\n\nThere are several ways to address these issues. Here we introduced one of them. It is knowns are Model Predictive Control (MPC), or also Receding Horizon Control (RHC). Some more are presented in the next two sections (one based on indirect approach, another one based on dynamic programming).",
+    "text": "(Kirk 2004), (Lewis, Vrabie, and Syrmo 2012), (Liberzon 2011), (Sussmann and Willems 1997)",
     "crumbs": [
-      "3. Discrete-time optimal control – direct approach",
-      "Model predictive control (MPC)"
+      "7. Continuous-time optimal control - indirect approach via calculus of variations",
+      "Calculus of variations and optimal control"
     ]
   },
   {
-    "objectID": "discr_dir_mpc.html#deficiencies-of-precomputed-open-loop-optimal-control",
-    "href": "discr_dir_mpc.html#deficiencies-of-precomputed-open-loop-optimal-control",
-    "title": "Model predictive control (MPC)",
+    "objectID": "cont_indir_calculus_of_variations.html#literature",
+    "href": "cont_indir_calculus_of_variations.html#literature",
+    "title": "Calculus of variations and optimal control",
     "section": "",
-    "text": "In the previous section we learnt how to compute an optimal control sequence on a finite time horizon using numerical methods for solving nonlinear programs (NLP), and quadratic programs (QP) in particular. There are two major deficiencies of such approach:\n\nThe control sequence was computed under the assumption that the mathematical model is perfectly accurate. As soon as the reality deviates from the model, either because of some unmodelled dynamics or because of the presence of (external) disturbances, the performance of the system will deteriorate. We need a way to turn the presented open-loop (also feedforward) control scheme into a feedback one.\nThe control sequence was computed for a finite time horizon. It is commonly required to consider an infinite time horizon, which is not possible with the presented approach based on solving finite-dimensional mathematical programs.\n\nThere are several ways to address these issues. Here we introduced one of them. It is knowns are Model Predictive Control (MPC), or also Receding Horizon Control (RHC). Some more are presented in the next two sections (one based on indirect approach, another one based on dynamic programming).",
+    "text": "(Kirk 2004), (Lewis, Vrabie, and Syrmo 2012), (Liberzon 2011), (Sussmann and Willems 1997)",
     "crumbs": [
-      "3. Discrete-time optimal control – direct approach",
-      "Model predictive control (MPC)"
+      "7. Continuous-time optimal control - indirect approach via calculus of variations",
+      "Calculus of variations and optimal control"
     ]
   },
   {
-    "objectID": "discr_dir_mpc.html#model-predictive-control-mpc-as-a-way-to-turn-open-loop-control-into-feedback-control",
-    "href": "discr_dir_mpc.html#model-predictive-control-mpc-as-a-way-to-turn-open-loop-control-into-feedback-control",
-    "title": "Model predictive control (MPC)",
-    "section": "Model predictive control (MPC) as a way to turn open-loop control into feedback control",
-    "text": "Model predictive control (MPC) as a way to turn open-loop control into feedback control\nThe idea is to compute an optimal control sequence on a finite time horizon using the material presented in the previous section, apply only the first control action to the system, and then repeat the procedure upon shifting the time horizon by one time step.\nAlthough this name “model predictive control” is commonly used in the control community, the other – perhaps a bit less popular – name “receding horizon control” is equally descriptive, if not even a bit more.\n\n\n\n\n\n\nNote\n\n\n\nIt may take a few moments to digest the idea, but it is actually quite natural. As a matter of fact, this is the way most of us control our lifes every day. We plan our actions on a finite time horizon, and while building this plan we use our understanding (model) of the world. We then perform the first action from our plan, observe the impact of our action and possibly a change in the environment, and update our plan accordingly on a new (shifted) time horizon. We repeat this procedure over and over again. It is crucial that the prediction horizon must be long enough so that the full impact of our actions can be observed.",
-    "crumbs": [
-      "3. Discrete-time optimal control – direct approach",
-      "Model predictive control (MPC)"
-    ]
-  },
-  {
-    "objectID": "discr_dir_mpc.html#linear-vs-nonlinear-mpc",
-    "href": "discr_dir_mpc.html#linear-vs-nonlinear-mpc",
-    "title": "Model predictive control (MPC)",
-    "section": "Linear vs nonlinear MPC",
-    "text": "Linear vs nonlinear MPC\nx",
-    "crumbs": [
-      "3. Discrete-time optimal control – direct approach",
-      "Model predictive control (MPC)"
-    ]
-  },
-  {
-    "objectID": "discr_dir_mpc.html#prediction-horizon-vs-control",
-    "href": "discr_dir_mpc.html#prediction-horizon-vs-control",
-    "title": "Model predictive control (MPC)",
-    "section": "Prediction horizon vs control",
-    "text": "Prediction horizon vs control\nx",
-    "crumbs": [
-      "3. Discrete-time optimal control – direct approach",
-      "Model predictive control (MPC)"
-    ]
-  },
-  {
-    "objectID": "discr_dir_mpc.html#hard-constraints-vs-soft-constraints",
-    "href": "discr_dir_mpc.html#hard-constraints-vs-soft-constraints",
-    "title": "Model predictive control (MPC)",
-    "section": "Hard constraints vs soft constraints",
-    "text": "Hard constraints vs soft constraints\nx",
-    "crumbs": [
-      "3. Discrete-time optimal control – direct approach",
-      "Model predictive control (MPC)"
-    ]
-  },
-  {
-    "objectID": "discr_dir_mpc.html#literature",
-    "href": "discr_dir_mpc.html#literature",
-    "title": "Model predictive control (MPC)",
-    "section": "Literature",
-    "text": "Literature\n(Rawlings, Mayne, and Diehl 2017), (Borrelli, Bemporad, and Morari 2017), (Gros and Diehl 2022) (Bemporad 2021)",
-    "crumbs": [
-      "3. Discrete-time optimal control – direct approach",
-      "Model predictive control (MPC)"
-    ]
-  },
-  {
-    "objectID": "cont_indir_constrained.html",
-    "href": "cont_indir_constrained.html",
-    "title": "Constrained optimal control",
+    "objectID": "discr_indir_LQR_inf_horizon.html",
+    "href": "discr_indir_LQR_inf_horizon.html",
+    "title": "Discrete-time LQR-optimal control on an infinite horizon",
     "section": "",
     "text": "Back to top",
     "crumbs": [
-      "8. Continuous-time optimal control - indirect approach via Pontryagin's maximum principle",
-      "Constrained optimal control"
+      "4. Discrete-time optimal control – indirect approach",
+      "Discrete-time LQR-optimal control on an infinite horizon"
     ]
   },
   {
-    "objectID": "cont_indir_Pontryagin.html",
-    "href": "cont_indir_Pontryagin.html",
-    "title": "Pontryagin’s maximum principle",
+    "objectID": "limits_of_performance_MIMO.html",
+    "href": "limits_of_performance_MIMO.html",
+    "title": "Limits for MIMO systems",
     "section": "",
     "text": "Back to top",
     "crumbs": [
-      "8. Continuous-time optimal control - indirect approach via Pontryagin's maximum principle",
-      "Pontryagin's maximum principle"
+      "13. Limits of performance",
+      "Limits for MIMO systems"
     ]
   },
   {
-    "objectID": "dynamic_programming.html",
-    "href": "dynamic_programming.html",
-    "title": "Optimal control via dynamic programming",
+    "objectID": "discr_indir_LQR_fin_horizon.html",
+    "href": "discr_indir_LQR_fin_horizon.html",
+    "title": "Discrete-time LQR-optimal control on a finite horizon",
     "section": "",
     "text": "Back to top",
     "crumbs": [
-      "5. Discrete-time optimal control – dynamic programming",
-      "Optimal control via dynamic programming"
+      "4. Discrete-time optimal control – indirect approach",
+      "Discrete-time LQR-optimal control on a finite horizon"
     ]
   },
   {
@@ -363,201 +253,36 @@
     ]
   },
   {
-    "objectID": "rocond_H_infinity_control.html",
-    "href": "rocond_H_infinity_control.html",
-    "title": "Hinfinity-optimal control",
+    "objectID": "stochastic_LQR.html",
+    "href": "stochastic_LQR.html",
+    "title": "Stochastic LQR control",
     "section": "",
     "text": "Back to top",
     "crumbs": [
-      "12. Robust control",
-      "Hinfinity-optimal control"
+      "10. Some extensions: LQG, LTR, H2",
+      "Stochastic LQR control"
     ]
   },
   {
-    "objectID": "opt_algo_unconstrained.html",
-    "href": "opt_algo_unconstrained.html",
-    "title": "Algorithms for unconstrained optimization",
-    "section": "",
-    "text": "Our motivation for studying numerical algorithms for unconstrained optimization remains the same as when we studied the conditions of optimality for such unconstrained problems – such algorithms constitute building blocks for constrained optimization problems. Indeed, many algorithms for constrained problems are based on reformulating the constrained problem into an unconstrained one and then applying the algorithms studied in this section.\nIt may be useful to recapitulate our motivation for studying optimization algorithms in general – after all, there are dozens of commercial or free&open-source software tools for solving optimization problems. Why not just use them? There are two answers beyond the traditional “at a grad school we should understand what we are using”:\nThere is certainly no shortage of algorithms for unconstrained optimization. In this crash course we can cover only a few. But the few we cover here certainly form a solid theoretical basis and provide practically usable tools.\nOne possible way to classify the algorithms is based on whether they use derivatives of the objective functions or not. In this course, we only consider the former approaches as they leads to more efficient algorithms. For the latter methods, we can refer to the literature (the prominent example is Nelder-Mead method).\nAll the relevant methods are iterative. Based on what happens within each iteration, we can classify them into two categories:",
-    "crumbs": [
-      "2. Optimization – algorithms",
-      "Algorithms for unconstrained optimization"
-    ]
-  },
-  {
-    "objectID": "opt_algo_unconstrained.html#descent-methods",
-    "href": "opt_algo_unconstrained.html#descent-methods",
-    "title": "Algorithms for unconstrained optimization",
-    "section": "Descent methods",
-    "text": "Descent methods\nThe obvious quality that the search direction needs to satisfy, is that the cost function decreses along it, at least locally (for a small step length).\n\nDefinition 1 (Descent direction) At the current iterate \\bm x_k, the direction \\bm d_k is called a descent direction if \n\\nabla f(\\bm x_k)^\\top \\bm d_k &lt; 0,\n that is, the directional derivative is negative along the direction \\bm d_k.\n\nBut beware that it is only guaranteed that the cost function is reduced if the length of the step is sufficently small. For longer steps the higher-order terms in the Taylor’s series approximation of the cost function can dominate.\nBut which descent direction to choose? How to find it?\n\nSteepest descent (aka gradient descent) method\nA natural candidate for a descent direction is the negative of the gradient \n\\bm d_k = -\\nabla f(\\bm x_k).\n\nIn fact, among all descent directions, this is the one for which the descent is steepest (the gradient determines the direction of steepest ascent), though we will see later that this does not mean that the convergence of the method is the fastest.\nIn each iteration of the gradient method, this is the how the solution is updated\n\n\\boxed{\n\\bm x_{k+1} = \\bm x_{k} - \\alpha_k \\nabla f(\\bm x_{k}).}\n\nBut where to find the step length \\alpha_k?\n\n\n\n\n\n\nNote\n\n\n\nWe address the problem of line search immediately below, right after we just introduced the gradient descent method, but the methods for line search are relevant for all descent directions, not just the steepest one.\n\n\n\n\nStep length determination (aka line search)\nNote that once the search direction has been fixed (whether we used the negative of the gradient or any other descent direction), the problem of finding the step length \\alpha_k is just a scalar optimization problem. It turns out, however, that besides finding the true minimum along the search directions, it is often sufficient to find the minimum only approximately, or not aiming at minimization at all and work with a fixed step length instead.\n\nFixed length of the step\nHere we give a guidance on the choice of the lenght of the step. But we need to introduce a useful concept first.\n\nDefinition 2 (L-smoothness) For a continuously differentiable function f, the gradient \\nabla f is said to be L-smooth if there exists a constant L&gt;0 such that \n\\|\\nabla f(x) - \\nabla f(y)\\| \\leq L \\|x-y\\|.\n\n\nNot that if the second derivatives exist, L is an upper bound on the norm of the Hessian \n\\|\\nabla^2 f\\|\\leq L.\n\nFor quadratic functions, L is the largest eigenvalue of the Hessian \nL = \\max_i \\lambda_i (\\mathbf Q).\n\nThe usefulness of the concept of L-smoothness is that it provides a quadratic function that serves as an upper bound for the original function. This is formulated as the following lemma.\n\nLemma 1 (Descent lemma) Consider an L-smooth function f. Then for any \\mathbf x_k and \\mathbf x_{k+1}, the following inequality holds \nf(\\mathbf x_{k+1}) \\leq  f(\\mathbf x_{k}) + \\nabla f(\\mathbf x_k)^\\top (\\mathbf x_{k-1}-\\mathbf x_{k}) + \\frac{L}{2}\\|\\mathbf x_{k-1}-\\mathbf x_{k}\\|^2\n\n\nWhat implication does the result have on the determination of the step length?\n\n\\alpha = \\frac{2}{L}\n\n\n\nExact line search\nA number of methos exist: bisection, golden section, Newton, As finding true minium in each iteration is often too computationally costly and hardly needed, we do not have them here. The only exception the Newton’s method, which for vector variables constitutes another descent method on its own and we cover it later.\n\nExample 1 Here we develop a solution for an exact minimization of a quadratic functions f(\\bm x) = \\frac{1}{2} \\bm x^\\top\\mathbf Q \\bm x + \\mathbf c^\\top \\bm x along a given direction. We show that it leads to a closed-form formula. Although not particularly useful in practice, it is a good exercise in understanding the problem of line search. Furthermore, we will use it later to demonstrate the behaviour of the steepest descent method. The problem is to \\operatorname*{minimize}_{\\alpha_k} f(\\bm x_k + \\alpha_k \\bm d_k). We express the cost as a function of the current iterate, the direction, and step length. \n\\begin{aligned}\nf(\\bm x_k + \\alpha_k \\bm d_k) &= \\frac{1}{2}(\\bm x_k + \\alpha_k\\bm d_k)^\\top\\mathbf Q (\\bm x_k + \\alpha_k\\bm d_k) +\\mathbf c^\\top(\\bm x_k + \\alpha_k\\bm d_k)\\\\\n&= \\frac{1}{2} \\bm x_k^\\top\\mathbf Q \\bm x_k + \\bm d_k^\\top\\mathbf Q\\bm x_k \\alpha_k + \\frac{1}{2} \\bm d_k^\\top\\mathbf Q\\bm d_k \\alpha_k^2+ \\mathbf c^\\top(\\bm x_k + \\alpha_k\\bm d_k).\n\\end{aligned}\n\nDifferentiating the function with respect to the length of the step, we get \n\\frac{\\mathrm{d}f(\\bm x_k + \\alpha_k\\bm d_k)}{\\mathrm{d}\\alpha_k} = \\bm d_k^\\top \\underbrace{(\\mathbf Q\\bm x_k + \\mathbf c)}_{\\nabla f(\\bm x_k)} + \\bm d_k^\\top\\mathbf Q\\bm d_k \\alpha_k.\n\nAnd now setting the derivative to zero, we find the optimal step length \n\\boxed{\n\\alpha_k = -\\frac{\\bm d_k^\\top \\nabla f(\\bm x_k)}{\\bm d_k^\\top\\mathbf Q\\bm d_k} = -\\frac{\\bm d_k^\\top (\\mathbf Q\\bm x_k + \\mathbf c)}{\\bm d_k^\\top\\mathbf Q\\bm d_k}.}\n\n\n\n\nApproximate line search – backtracking\nThere are several methods for approximate line search. Here we describe the popular backtracking algorithm, which is based on the Armijo / Wolfe conditions.\nThe algorithm is parameterized by three parameter: \\alpha_0&gt;0, \\beta\\in(0,1), \\gamma\\in(0,1):\n\n\nShow the code\nfunction backtracking_line_search(f, ∇fₖ, xₖ, dₖ; α₀=1.0, β=0.5, γ=0.1)\n    α = α₀\n    while f(xₖ)-f(xₖ+α*dₖ) &lt; -γ*α*dot(dₖ,∇fₖ)\n        α *= β\n    end\n    return α\nend\n\n\n\n\n\nNewton’s method\n\n\nQuasi-Newton’s methods\n\n\nConjugate gradient method",
-    "crumbs": [
-      "2. Optimization – algorithms",
-      "Algorithms for unconstrained optimization"
-    ]
-  },
-  {
-    "objectID": "opt_algo_unconstrained.html#trust-region-methods",
-    "href": "opt_algo_unconstrained.html#trust-region-methods",
-    "title": "Algorithms for unconstrained optimization",
-    "section": "Trust region methods",
-    "text": "Trust region methods",
-    "crumbs": [
-      "2. Optimization – algorithms",
-      "Algorithms for unconstrained optimization"
-    ]
-  },
-  {
-    "objectID": "discr_dir_mpc_solvers.html",
-    "href": "discr_dir_mpc_solvers.html",
-    "title": "Numerical solvers for MPC",
-    "section": "",
-    "text": "Essentially QP solvers with some extra features for MPC:\n\nwarmstarting requires fesibility of the previous solution. If only a fixed number of iterations is allowed (in favor of predictable timing), for some methods the iterations may temporarily lose feasibility.\n…\nqpOASES\nOSQP\nDAQP\nqpSWIFT\nProxQP\nPiQP\nECOS\nHPIPM\n\n\n\n\n Back to top",
-    "crumbs": [
-      "3. Discrete-time optimal control – direct approach",
-      "Numerical solvers for MPC"
-    ]
-  },
-  {
-    "objectID": "discr_indir_DARE.html",
-    "href": "discr_indir_DARE.html",
-    "title": "Discrete-time algebraic Riccati equation (DARE)",
+    "objectID": "reduction_order_model.html",
+    "href": "reduction_order_model.html",
+    "title": "Model order reduction",
     "section": "",
     "text": "Back to top",
     "crumbs": [
-      "4. Discrete-time optimal control – indirect approach",
-      "Discrete-time algebraic Riccati equation (DARE)"
+      "14. Model and controller order reduction",
+      "Model order reduction"
     ]
   },
   {
-    "objectID": "opt_solvers.html",
-    "href": "opt_solvers.html",
-    "title": "Numerical solvers",
-    "section": "",
-    "text": "Gurobi Optimizer\nIBM ILOG CPLEX\nKnitro\nMOSEK\nIpopt\nSNOPT\nNLPQLP\nfmincon\nfminunc\nfminsearch\nfminbnd\nfminimax\nfmincon\nOptimization Toolbox for Matlab\nJuMP\nConvex.jl\nOptim.jl\nNLopt.jl\nBlackBoxOptim.jl\nBayesianOptimization.jl\nCMAES.jl\nDirectSearch.jl\nEvolutionary.jl\n\n\n\n\n Back to top",
-    "crumbs": [
-      "2. Optimization – algorithms",
-      "Numerical solvers"
-    ]
-  },
-  {
-    "objectID": "dynamic_programming_LQR.html",
-    "href": "dynamic_programming_LQR.html",
-    "title": "LQR via dynamic programming",
+    "objectID": "LTR.html",
+    "href": "LTR.html",
+    "title": "Loop transfer recovery (LTR)",
     "section": "",
     "text": "Back to top",
     "crumbs": [
-      "5. Discrete-time optimal control – dynamic programming",
-      "LQR via dynamic programming"
-    ]
-  },
-  {
-    "objectID": "uncertainty.html",
-    "href": "uncertainty.html",
-    "title": "Uncertainty modelling",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "11. Uncertainty modelling and analysis",
-      "Uncertainty modelling"
-    ]
-  },
-  {
-    "objectID": "opt_theory_unconstrained.html",
-    "href": "opt_theory_unconstrained.html",
-    "title": "Theory for unconstrained optimization",
-    "section": "",
-    "text": "Here we are going to analyze the optimization problem with no constraints \n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad  f(\\bm x).\nWhy are we considering such an unrealistic problem? After all, every engineering problem is subject to some constraints.\nBesides the standard teacher’s answer that we should always start with easier problems, there is another answer: it is common for analysis and algorithms for constrained optimization problems to reformulate them as unconstrained ones and then apply tools for unconstrained problems.",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Theory for unconstrained optimization"
-    ]
-  },
-  {
-    "objectID": "opt_theory_unconstrained.html#local-vs-global-optimality",
-    "href": "opt_theory_unconstrained.html#local-vs-global-optimality",
-    "title": "Theory for unconstrained optimization",
-    "section": "Local vs global optimality",
-    "text": "Local vs global optimality\nFirst, let’s define carefully what we mean by a minimum in the unconstrained problem.\n\n\n\n\n\n\nCaution\n\n\n\nFor those whose mother tongue does not use articles such as the and a/an in English, it is worth emphasizing that there is a difference between “the minimum” and “a minimum”. In the former we assume that there is just one minimum, in the latter we make no such assumption.\n\n\nConsider a (scalar) function of a scalar variable for simplicity\n\nWe say, that the function has a local minimum at x^\\star if f(x)\\geq f(x^\\star) in an \\varepsilon neighbourhood. All the red dots in the above figure are local minima. Similarly, of course, the function has a local maximum at x^\\star if f(x)\\leq f(x^\\star) in an \\varepsilon neighbourhood. Such local maxima are the green dots in the figure. The smallest and the largest of these are global minima and maxima, respectively.",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Theory for unconstrained optimization"
-    ]
-  },
-  {
-    "objectID": "opt_theory_unconstrained.html#conditions-of-optimality",
-    "href": "opt_theory_unconstrained.html#conditions-of-optimality",
-    "title": "Theory for unconstrained optimization",
-    "section": "Conditions of optimality",
-    "text": "Conditions of optimality\nHere we consider two types of conditions of optimality for unconstrained minimization problems: necessary and sufficient conditions. Necessary conditions must be satisfied at the minimum, but even when they are, the optimality is not guaranteed. On the other hand, the sufficient conditions need not be satisfied at the minimum, but if they are, the optimality is guaranteed. We show the necessary conditions of the first and second order, while the sufficient condition only of the second order.\n\nScalar optimization variable\nYou may want to have a look at the video, but below we continue with the text that summarizes the video.\n\nWe recall here the fundamental assumption made at the beginning of our introduction to optimization – we only consider optimization variables that are real-valued (first, just scalar x \\in \\mathbb R, later vectors \\bm x \\in \\mathbb R^n), and objective functions f() that are sufficiently smooth – all the derivatives exist. Then the conditions of optimality can be derived upon inspecting the Taylor series approximation of the cost function around the minimum.\n\nTaylor series approximation around the optimum\nDenote x^\\star as the (local) minimum of the function f(x). The Taylor series expansion of f(x) around x^\\star is\n\nf(x^\\star+\\alpha) = f(x^\\star)+\\left.\\frac{\\mathrm{d}f(x)}{\\mathrm{d} x}\\right|_{x=x^\\star}\\alpha + \\frac{1}{2}\\left.\\frac{\\mathrm{d^2}f(x)}{\\mathrm{d} x^2}\\right|_{x=x^\\star}\\alpha^2 + {\\color{blue}\\mathcal{O}(\\alpha^3)},\n where \\mathcal{O}() is called Big O and has the property that \n\\lim_{\\alpha\\rightarrow 0}\\frac{\\mathcal{O}(\\alpha^3)}{\\alpha^3} \\leq M&lt;\\infty.\n\nAlternatively, we can write the Taylor series expansion as \nf(x^\\star+\\alpha) = f(x^\\star)+\\left.\\frac{\\mathrm{d}f(x)}{\\mathrm{d} x}\\right|_{x=x^\\star}\\alpha + \\frac{1}{2}\\left.\\frac{\\mathrm{d^2}f(x)}{\\mathrm{d} x^2}\\right|_{x=x^\\star}\\alpha^2 + {\\color{red}o(\\alpha^2)},\n using the little o with the property that \n\\lim_{\\alpha\\rightarrow 0}\\frac{o(\\alpha^2)}{\\alpha^2} = 0.\n\nWhether \\mathcal{O}() or \\mathcal{o}() concepts are used, it is just a matter of personal preference. They both express that the higher-order terms in the expansion tend to be negligible compare to the first- and second-order term as \\alpha is getting smaller. \\mathcal O(\\alpha^3) goes to zero at least as fast as a cubic function, while o(\\alpha^2) goes to zero faster than a quadratic function.\nIt is indeed important to understand that this negligibility of the higher-order terms is only valid asymptotically – for a particular \\alpha it may easily happend that, say, the third-order term is still dominating.\n\n\nFirst-order necessary conditions of optimality\nFor \\alpha sufficiently small, the first-order Taylor series expansion is a good approximation of the function f(x) around the minimum. Since \\alpha enters this expansion linearly, the cost function can increase or decrease with \\alpha, depending on the sign of the first derivative. The only way to ensure that the function as a (local) minimu at x^\\star is to have the first derivative equal to zero, that is \\boxed{\n\\left.\\frac{\\mathrm{d}f(x)}{\\mathrm{d} x}\\right|_{x=x^\\star} = 0.}\n\n\n\nSecond-order necessary conditions of optimality\nOnce the first-order necessary condition of optimality is satisfied, the dominating term (as \\alpha is getting smalle) is the second-order term \\frac{1}{2}\\left.\\frac{\\mathrm{d^2}f(x)}{\\mathrm{d} x^2}\\right|_{x=x^\\star}\\alpha^2. Since \\alpha is squared, it is the sign of the second derivative that determines the contribution of the whole second-order term to the cost function value. For the minimum, the second derivative must be nonnegative, that is\n\n\\boxed{\\left.\\frac{\\mathrm{d^2}f(x)}{\\mathrm{d} x^2}\\right|_{x=x^\\star} \\geq 0.}\n\nFor completeness we state that the sign must be nonpositive for the maximum.\n\n\nSecond-order sufficient condition of optimality\nFollowing the same line of reasoning as above, the if the second derivative is positive, the miniumum is guaranteed, that is, the sufficient condition of optimality is \n\\boxed{\\left.\\frac{\\mathrm{d^2}f(x)}{\\mathrm{d} x^2}\\right|_{x=x^\\star} &gt; 0.}\n\nIf the second derivative fails to be positive and is just zero (thus still satisfying the necessary condition), does it mean that the point is not a minimum? No. We must examine higher order terms.\n\n\n\nVector optimization variable\nOnce again, should you prefer watching a video, here it is, but below we continue with the text that covers the content of the video.\n\n\nFirst-order necessary conditions of optimality\nOne way to handle the vector variables is to convert the vector problem into a scalar one by fixing a direction to an arbitrary vector \\bm d and then considering the scalar function of the form f(\\bm x^\\star + \\alpha \\bm d). For convenience we define a new function \ng(\\alpha) \\coloneqq f(\\bm x^\\star + \\alpha \\bm d)\n and from now on we can invoke the results for scalar functions. Namely, we expand the g() function around zero as \ng(\\alpha) = g(0) + \\frac{\\mathrm{d}g(\\alpha)}{\\mathrm{d}\\alpha}\\bigg|_{\\alpha=0}\\alpha + \\frac{1}{2}\\frac{\\mathrm{d}^2 g(\\alpha)}{\\mathrm{d}\\alpha^2}\\bigg|_{\\alpha=0}\\alpha^2 + \\mathcal{O}(\\alpha^3),\n and argue that the first-order necessary condition of optimality is \n\\frac{\\mathrm{d}g(\\alpha)}{\\mathrm{d}\\alpha}\\bigg|_{\\alpha=0} = 0.\n\nNow, invoking the chain rule, we go back from g() to f() \n\\frac{\\mathrm{d}g(\\alpha)}{\\mathrm{d}\\alpha}\\bigg|_{\\alpha=0} = \\frac{\\partial f(\\bm x)}{\\partial\\bm x}\\bigg|_{\\bm x=\\bm x^\\star} \\frac{\\partial(\\bm x^\\star + \\alpha \\bm d)}{\\partial\\alpha}\\bigg|_{\\alpha=0} = \\frac{\\partial f(\\bm x)}{\\partial\\bm x}\\bigg|_{\\bm x=\\bm x^\\star}\\,\\bm d = 0,\n where \\frac{\\partial f(\\bm x)}{\\partial\\bm x}\\bigg|_{\\bm x=\\bm x^\\star} is a row vector of partial derivatives of f() evaluated at \\bm x^\\star. Since the vector \\bm d is arbitrary, the necessary condition is that\n\n\\frac{\\partial f(\\bm x)}{\\partial\\bm x}\\bigg|_{\\bm x=\\bm x^\\star} = \\mathbf 0,  \n\nMore often than not we use the column vector to store partial derivatives. We call it the gradient of the function f() and denoted it as \n\\nabla f(\\bm x) \\coloneqq \\begin{bmatrix}\\frac{\\partial f(\\bm x)}{\\partial x_1} \\\\ \\frac{\\partial f(\\bm x)}{\\partial x_n} \\\\ \\vdots \\\\ \\frac{\\partial f(\\bm x)}{\\partial x_n}\\end{bmatrix}.  \n\nThe first-order necessary condition of optimality using gradients is then \n\\boxed{\\left.\\nabla f(\\bm x)\\right|_{x=x^\\star} = \\mathbf 0.  }\n\n\n\n\n\n\n\nGradient is a column vector\n\n\n\nIn some literature the gradient \\nabla f(\\bm x) is defined as a row vector. For the condition of optimality it does not matteer since all we require is that all partial derivatives vanish. But for other purposes in our text we regard the gradient as a vector living in the same vector space \\mathbb R^n as the optimization variable. The row vector is sometimes denoted as \\mathrm Df(\\bm x).\n\n\n\nComputing the gradient of a scalar function of a vector variable\nA convenient way is to compute the differential fist and then to identify the derivative in it. Recall that the differential is the first-order approximation to the increment of the function due to a change in the variable\n\n\\Delta f \\approx \\mathrm{d}f = \\nabla f(x)^\\top \\mathrm d \\bm x.\n\nFinding the differential of a function is conceptually easier than finding the derivative since it is a scalar quantity. When searching for the differential of a composed function, we follow the same rules as for the derivative (such as that the one for finding the differential of a product). Let’s illustrate it using an example.\n\nExample 1 For the function \nf(\\mathbf x) = \\frac{1}{2}\\bm{x}^\\top\\mathbf{Q}\\bm{x} + \\mathbf{r}^\\top\\bm{x},\n where \\mathbf Q is symetric, the differential is \n\\mathrm{d}f = \\frac{1}{2}\\mathrm d\\bm{x}^\\top\\mathbf{Q}\\bm{x} + \\frac{1}{2}\\bm{x}^\\top\\mathbf{Q}\\mathrm d\\bm{x} + \\mathbf{r}^\\top\\mathrm{d}\\bm{x},\n in which the first two terms can be combined thanks to the fact that they are scalars \n\\mathrm{d}f = \\left(\\bm{x}^\\top\\frac{\\mathbf{Q} + \\mathbf{Q}^\\top}{2} + \\mathbf{r}^\\top\\right)\\mathrm{d}\\bm{x},\n and finally, since we assumed that \\mathbf Q is a symmetric matrix, we get \n\\mathrm{d}f = \\left(\\mathbf{Q}\\bm{x} + \\mathbf{r}\\right)^\\top\\mathrm{d}\\bm{x},\n from which we can identify the gradient as \n\\nabla f(\\mathbf{x}) = \\mathbf{Q}\\mathbf{x} + \\mathbf{r}.\n\nThe first-order condition of optimality is then \n\\boxed{\\mathbf{Q}\\mathbf{x} = -\\mathbf{r}.}\n\nAlthough this was just an example, it is actually a very useful one. Keep this result in mind – necessary condition of optimality of a quadratic function comes in the form of a set of linear equations.\n\n\n\n\nSecond-order necessary conditions of optimality\nAs before, we fix the direction \\bm d and consider the function g(\\alpha) = f(\\bm x^\\star + \\alpha \\bm d). We expand the expression for the first derivative as \n\\frac{\\mathrm d g(\\alpha)}{\\mathrm d \\alpha} = \\sum_{i=1}^{n}\\frac{\\partial f(\\bm x)}{\\partial x_i}\\bigg|_{\\bm x = \\bm x^\\star} d_i,\n and differentiating this once again, we get the second derivative \n\\frac{\\mathrm d^2 g(\\alpha)}{\\mathrm d \\alpha^2} = \\sum_{i,j=1}^{n}\\frac{\\partial^2 f(\\bm x)}{\\partial x_ix_j}\\bigg|_{\\bm x = \\bm x^\\star}d_id_j\n\n\n\\begin{aligned}\n\\frac{\\mathrm d^2 g(\\alpha)}{\\mathrm d \\alpha^2}\\bigg|_{\\alpha=0} &= \\sum_{i,j=1}^{n}\\frac{\\text{d}^2}{\\text{d}x_ix_j}f(\\bm x)\\bigg|_{\\bm x = \\bm x^\\star}d_id_j\\\\\n&= \\mathbf d^\\text{T} \\underbrace{\\nabla^\\text{2}f(\\mathbf x)\\bigg|_{\\bm x = \\bm x^\\star}}_\\text{Hessian} \\mathbf d.\n\\end{aligned}\n where \\nabla^2 f(\\mathbf x) is the Hessian (the symmetrix matrix of the second-order mixed partial derivatives) \n\\nabla^2 f(x) = \\begin{bmatrix}\n                 \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_1^2} && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_1\\partial x_2} && \\ldots && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_1\\partial x_n}\\\\\n                 \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_2\\partial x_1} && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_2^2} && \\ldots && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_2\\partial x_n}\\\\\n                 \\vdots\\\\\n                 \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_n\\partial x_1} && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_n\\partial x_2} && \\ldots && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_n\\partial x_n}.\n                \\end{bmatrix}\n\nSince \\bm d is arbitrary, the second-order necessary condition of optimality is then \n\\boxed{\\nabla^\\text{2}f(\\mathbf x)\\bigg|_{\\bm x = \\bm x^\\star} \\succeq 0,}\n where, once again, the inequality \\succeq reads that the matrix is positive semidefinite.\n\n\nSecond-order sufficient condition of optimality\n\n\\boxed{\\nabla^2 f(\\mathbf x)\\bigg|_{\\bm x = \\bm x^\\star} \\succ 0,}\n where, once again, the inequality \\succ reads that the matrix is positive definite.\n\nExample 2 For the quadratic function f(\\mathbf x) = \\frac{1}{2}\\mathbf{x}^\\mathrm{T}\\mathbf{Q}\\mathbf{x} + \\mathbf{r}^\\mathrm{T}\\mathbf{x}, the Hessian is \n\\nabla^2 f(\\mathbf{x}) = \\mathbf{Q}\n and the second-order necessary condition of optimality is \n\\boxed{\\mathbf{Q} \\succeq 0.}\n\nSecond-order sufficient condition of optimality is then \n\\boxed{\\mathbf{Q} \\succ 0.}\n\nOnce again, this was more than just an example – quadratic functions are so important for us that it is worth remembering this result.",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Theory for unconstrained optimization"
-    ]
-  },
-  {
-    "objectID": "opt_theory_unconstrained.html#classification-of-stationary-points",
-    "href": "opt_theory_unconstrained.html#classification-of-stationary-points",
-    "title": "Theory for unconstrained optimization",
-    "section": "Classification of stationary points",
-    "text": "Classification of stationary points\nFor a stationary (also critical) \\bm x^\\star, that is, one that satisfies the first-order necessary condition \n\\nabla f(\\bm x^\\star) = 0,\n\nwe can classify it as\n\nMinimum: \\nabla^2 f(x^\\star)\\succ 0\nMaximum: \\nabla^2 f(x^\\star)\\prec 0\nSaddle point: \\nabla^2 f(x^\\star) indefinite\nSingular point (we cannot decide): \\nabla^2 f(x^\\star)=0\n\n\nExample 3 (Minimum of a quadratic function) We consider a quadratic function f(\\mathbf x) = \\frac{1}{2}\\mathbf{x}^\\mathrm{T}\\mathbf{Q}\\mathbf{x} + \\mathbf{r}^\\mathrm{T}\\mathbf{x} for a particular \\mathbf{Q} and \\mathbf{r}.\n\n\nCode\nQ = [1 1; 1 2]\nr = [0, 1]\n\nusing LinearAlgebra\nx_stationary = -Q\\r\neigvals(Q) \n\n\n2-element Vector{Float64}:\n 0.38196601125010515\n 2.618033988749895\n\n\nThe matrix is positive definite, so the stationary point is a minimum. In fact, the minimum. Surface and contour plots of the function are shown below.\n\nCode\nf(x) = 1/2*dot(x,Q*x)+dot(x,r)\nx1_data = x2_data = -4:0.1:4;  \nf_data = [f([x1,x2]) for x2=x2_data, x1=x1_data];\n\nusing Plots\ndisplay(surface(x1_data,x2_data,f_data))\ncontour(x1_data,x2_data,f_data)\ndisplay(plot!([x_stationary[1]], [x_stationary[2]], marker=:circle, label=\"Stationary point\"))\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n(a) Surface plot\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Contour plot\n\n\n\n\n\n\n\nFigure 1: Minimum of a quadratic function\n\n\n\n\n\nExample 4 (Saddle point of a quadratic function)  \n\n\nCode\nQ = [-1 1; 1 2]\nr = [0, 1]\n\nusing LinearAlgebra\nx_stationary = -Q\\r\neigvals(Q)\n\n\n2-element Vector{Float64}:\n -1.3027756377319946\n  2.302775637731995\n\n\nThe matrix is indefinite, so the stationary point is a saddle point. Surface and contour plots of the function are shown below.\n\nCode\nf(x) = 1/2*dot(x,Q*x)+dot(x,r)\n\nx1_data = x2_data = -4:0.1:4;  \nf_data = [f([x1,x2]) for x2=x2_data, x1=x1_data];\n\nusing Plots\ndisplay(surface(x1_data,x2_data,f_data))\ncontour(x1_data,x2_data,f_data)\ndisplay(plot!([x_stationary[1]], [x_stationary[2]], marker=:circle, label=\"Stationary point\"))\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n(a) Surface plot\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Contour plot\n\n\n\n\n\n\n\nFigure 2: Saddle point of a quadratic function\n\n\n\n\n\nExample 5 (Singular point of a quadratic function)  \n\n\nCode\nQ = [2 0; 0 0]\nr = [3, 0]\n\nusing LinearAlgebra\neigvals(Q)\n\n\n2-element Vector{Float64}:\n 0.0\n 2.0\n\n\nThe matrix Q is singular, which has two consequences:\n\nWe cannot compute the stationary point since Q is not invertible. In fact, there is a whole line (a subspace) of stationary points.\nThe matrix Q is positive semidefinite, which generally means that optimality cannot be concluded. But in this particular case of a quadratic function, there are no higher-order terms in the Taylor series expansion, so the stationary point is a minimum.\n\nSurface and contour plots of the function are shown below.\n\nCode\nf(x) = 1/2*dot(x,Q*x)+dot(x,r)\n\nx1_data = x2_data = -4:0.1:4;  \nf_data = [f([x1,x2]) for x2=x2_data, x1=x1_data];\n\nusing Plots\ndisplay(surface(x1_data,x2_data,f_data))\ndisplay(contour(x1_data,x2_data,f_data))\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n(a) Surface plot\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Contour plot\n\n\n\n\n\n\n\nFigure 3: Singular point of a quadratic function\n\n\n\n\n\nExample 6 (Singular point of a non-quadratic function) Consider the function f(\\bm x) = x_1^2 + x_2^4. Its gradient is \\nabla f(\\bm x) = \\begin{bmatrix}2x_1\\\\ 4x_2^3\\end{bmatrix} and it vanishes at \\bm x^\\star = \\begin{bmatrix}0\\\\ 0\\end{bmatrix}. The Hessian is \\nabla^2 f(\\bm x) = \\begin{bmatrix}2 & 0\\\\ 0 & 12x_2^2\\end{bmatrix}, which when evaluated at the stationary point is \\nabla^2 f(\\bm x)\\bigg|_{\\bm x=\\mathbf 0} = \\begin{bmatrix}2 & 0\\\\ 0 & 0\\end{bmatrix}, which is positive semidefinite. We cannot conclude if the function attains a minimum at \\bm x^\\star.\nWe need to examine higher-order terms in the Taylor series expansion. The third derivatives are \n\\frac{\\partial^3 f}{\\partial x_1^3} = 0, \\quad \\frac{\\partial^3 f}{\\partial x_1^2\\partial x_2} = 0, \\quad \\frac{\\partial^3 f}{\\partial x_1\\partial x_2^2} = 0, \\quad \\frac{\\partial^3 f}{\\partial x_2^3} = 24x_2,\n and when evaluated at zero, they all vanish.\nAll but one fourth derivatives also vanish. The one that does not is \n\\frac{\\partial^4 f}{\\partial x_2^4} = 24,\n which is positive, and since the associated derivative is of the even order, the power si also even, hence the function attains a minimum at \\bm x^\\star = \\begin{bmatrix}0\\\\ 0\\end{bmatrix}.\nThis can also be visually confirmed by the surface and contour plots of the function.\n\nCode\nf(x) = x[1]^2 + x[2]^4\n\nx1_data = x2_data = -4:0.1:4;  \nf_data = [f([x1,x2]) for x2=x2_data, x1=x1_data];\n\nusing Plots\ndisplay(surface(x1_data,x2_data,f_data))\ncontour(x1_data,x2_data,f_data)\ndisplay(plot!([x_stationary[1]], [x_stationary[2]], marker=:circle, label=\"Stationary point\"))\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n(a) Surface plot\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Contour plot\n\n\n\n\n\n\n\nFigure 4: Singular point of a non-quadratic function",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Theory for unconstrained optimization"
-    ]
-  },
-  {
-    "objectID": "cont_dir_collocation.html",
-    "href": "cont_dir_collocation.html",
-    "title": "Collocation methods for optimal control",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "9. Continuous-time optimal control - direct approach via numerical optimization",
-      "Collocation methods for optimal control"
-    ]
-  },
-  {
-    "objectID": "cont_indir_time_optimal.html",
-    "href": "cont_indir_time_optimal.html",
-    "title": "Time-optimal control",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "8. Continuous-time optimal control - indirect approach via Pontryagin's maximum principle",
-      "Time-optimal control"
-    ]
-  },
-  {
-    "objectID": "cont_indir_CARE.html",
-    "href": "cont_indir_CARE.html",
-    "title": "Continuous-time Riccati equation",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "7. Continuous-time optimal control - indirect approach via calculus of variations",
-      "Continuous-time Riccati equation"
-    ]
-  },
-  {
-    "objectID": "discr_dir_mpc_recursive_feasibility.html",
-    "href": "discr_dir_mpc_recursive_feasibility.html",
-    "title": "Recursive feasibility",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "6. More on MPC",
-      "Recursive feasibility"
-    ]
-  },
-  {
-    "objectID": "cont_indir_LQR_inf_horizon.html",
-    "href": "cont_indir_LQR_inf_horizon.html",
-    "title": "Indirect approach to LQR on an infinite horizon",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "7. Continuous-time optimal control - indirect approach via calculus of variations",
-      "Indirect approach to LQR on an infinite horizon"
+      "10. Some extensions: LQG, LTR, H2",
+      "Loop transfer recovery (LTR)"
     ]
   },
   {
@@ -605,41 +330,118 @@
     ]
   },
   {
-    "objectID": "LTR.html",
-    "href": "LTR.html",
-    "title": "Loop transfer recovery (LTR)",
+    "objectID": "dynamic_programming_LQR.html",
+    "href": "dynamic_programming_LQR.html",
+    "title": "LQR via dynamic programming",
     "section": "",
     "text": "Back to top",
     "crumbs": [
-      "10. Some extensions: LQG, LTR, H2",
-      "Loop transfer recovery (LTR)"
+      "5. Discrete-time optimal control – dynamic programming",
+      "LQR via dynamic programming"
     ]
   },
   {
-    "objectID": "reduction_order_model.html",
-    "href": "reduction_order_model.html",
-    "title": "Model order reduction",
+    "objectID": "uncertainty.html",
+    "href": "uncertainty.html",
+    "title": "Uncertainty modelling",
     "section": "",
     "text": "Back to top",
     "crumbs": [
-      "14. Model and controller order reduction",
-      "Model order reduction"
+      "11. Uncertainty modelling and analysis",
+      "Uncertainty modelling"
     ]
   },
   {
-    "objectID": "stochastic_LQR.html",
-    "href": "stochastic_LQR.html",
-    "title": "Stochastic LQR control",
+    "objectID": "opt_algo_references.html",
+    "href": "opt_algo_references.html",
+    "title": "References for optimization algorithms",
+    "section": "",
+    "text": "Pretty much identical to the literature recommended in the previous section on optimization theory.\nIf a single reference book on nonlinear optimization is to be recommended, be it (Nocedal and Wright 2006) that sits on your book shelf.\nIf one or two more can still fit, (Bertsekas 2016), (Luenberger and Ye 2021) are classical comprehensive references on nonlinear programming (the latter covers linear programming too).\nWhile all the three books are only available for purchase, there is a wealth of resources are freely available online such as the notes (Gros and Diehl 2022) accompanying a course on optimal control, which do a decent job of introduction to a nonlinear programming, and beautifully typeset modern textbooks (Kochenderfer and Wheeler 2019) and (Martins and Ning 2022), the former based on Julia language.\nWhen restricting to convex optimization, the bible of this field (Boyd and Vandenberghe 2004) is also freely available online. It is a must-have for everyone interested in optimization. Another textbook biased towards convex optimization is (Calafiore 2014), which is freely accessible through its web version. Yet another advanced and treatment of convex optimization is (Ben-Tal and Nemirovski 2023), which is also freely available online.\nMaybe a bit unexpected resources on theory are materials accompanying some optimization software. Partilarly recommendable is (“MOSEK Modeling Cookbook” 2024), it is very useful even if you do not indend to use their software.\n\n\n\n\n Back to topReferences\n\nBen-Tal, Aharon, and Arkadi Nemirovski. 2023. “Lectures on Modern Convex Optimization - 2020/2021/2022/2023 Analysis, Algorithms, Engineering Applications.” Lecture Notes. Technion & Georgia Institute of Technology. https://www2.isye.gatech.edu/~nemirovs/LMCOLN2023Spring.pdf.\n\n\nBertsekas, Dimitri. 2016. Nonlinear Programming. 3rd ed. Belmont, Mass: Athena Scientific. http://www.athenasc.com/nonlinbook.html.\n\n\nBoyd, Stephen, and Lieven Vandenberghe. 2004. Convex Optimization. Seventh printing with corrections 2009. Cambridge, UK: Cambridge University Press. https://web.stanford.edu/~boyd/cvxbook/.\n\n\nCalafiore, Giuseppe C. 2014. Optimization Models. Cambridge, UK: Cambridge University Press. https://people.eecs.berkeley.edu/~elghaoui/optmodbook.html.\n\n\nGros, Sebastien, and Moritz Diehl. 2022. “Numerical Optimal Control (Draft).” Systems Control and Optimization Laboratory IMTEK, Faculty of Engineering, University of Freiburg. https://www.syscop.de/files/2020ss/NOC/book-NOCSE.pdf.\n\n\nKochenderfer, Mykel J., and Tim A. Wheeler. 2019. Algorithms for Optimization. The MIT Press. https://algorithmsbook.com/optimization/.\n\n\nLuenberger, David G., and Yinyu Ye. 2021. Linear and Nonlinear Programming. 5th ed. Vol. 228. International Series in Operations Research & Management Science. Cham, Switzerland: Springer. https://doi.org/10.1007/978-3-030-85450-8.\n\n\nMartins, Joaquim R. R. A., and Andrew Ning. 2022. Engineering Design Optimization. Cambridge ; New York, NY: Cambridge University Press. https://mdobook.github.io/.\n\n\n“MOSEK Modeling Cookbook.” 2024. Mosek ApS. https://docs.mosek.com/MOSEKModelingCookbook-a4paper.pdf.\n\n\nNocedal, Jorge, and Stephen Wright. 2006. Numerical Optimization. 2nd ed. Springer Series in Operations Research and Financial Engineering. New York: Springer. https://doi.org/10.1007/978-0-387-40065-5.",
+    "crumbs": [
+      "2. Optimization – algorithms",
+      "References for optimization algorithms"
+    ]
+  },
+  {
+    "objectID": "opt_theory_unconstrained.html",
+    "href": "opt_theory_unconstrained.html",
+    "title": "Theory for unconstrained optimization",
+    "section": "",
+    "text": "Here we are going to analyze the optimization problem with no constraints \n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad  f(\\bm x).\nWhy are we considering such an unrealistic problem? After all, every engineering problem is subject to some constraints.\nBesides the standard teacher’s answer that we should always start with easier problems, there is another answer: it is common for analysis and algorithms for constrained optimization problems to reformulate them as unconstrained ones and then apply tools for unconstrained problems.",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Theory for unconstrained optimization"
+    ]
+  },
+  {
+    "objectID": "opt_theory_unconstrained.html#local-vs-global-optimality",
+    "href": "opt_theory_unconstrained.html#local-vs-global-optimality",
+    "title": "Theory for unconstrained optimization",
+    "section": "Local vs global optimality",
+    "text": "Local vs global optimality\nFirst, let’s define carefully what we mean by a minimum in the unconstrained problem.\n\n\n\n\n\n\nCaution\n\n\n\nFor those whose mother tongue does not use articles such as the and a/an in English, it is worth emphasizing that there is a difference between “the minimum” and “a minimum”. In the former we assume that there is just one minimum, in the latter we make no such assumption.\n\n\nConsider a (scalar) function of a scalar variable for simplicity\n\nWe say, that the function has a local minimum at x^\\star if f(x)\\geq f(x^\\star) in an \\varepsilon neighbourhood. All the red dots in the above figure are local minima. Similarly, of course, the function has a local maximum at x^\\star if f(x)\\leq f(x^\\star) in an \\varepsilon neighbourhood. Such local maxima are the green dots in the figure. The smallest and the largest of these are global minima and maxima, respectively.",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Theory for unconstrained optimization"
+    ]
+  },
+  {
+    "objectID": "opt_theory_unconstrained.html#conditions-of-optimality",
+    "href": "opt_theory_unconstrained.html#conditions-of-optimality",
+    "title": "Theory for unconstrained optimization",
+    "section": "Conditions of optimality",
+    "text": "Conditions of optimality\nHere we consider two types of conditions of optimality for unconstrained minimization problems: necessary and sufficient conditions. Necessary conditions must be satisfied at the minimum, but even when they are, the optimality is not guaranteed. On the other hand, the sufficient conditions need not be satisfied at the minimum, but if they are, the optimality is guaranteed. We show the necessary conditions of the first and second order, while the sufficient condition only of the second order.\n\nScalar optimization variable\nYou may want to have a look at the video, but below we continue with the text that summarizes the video.\n\nWe recall here the fundamental assumption made at the beginning of our introduction to optimization – we only consider optimization variables that are real-valued (first, just scalar x \\in \\mathbb R, later vectors \\bm x \\in \\mathbb R^n), and objective functions f() that are sufficiently smooth – all the derivatives exist. Then the conditions of optimality can be derived upon inspecting the Taylor series approximation of the cost function around the minimum.\n\nTaylor series approximation around the optimum\nDenote x^\\star as the (local) minimum of the function f(x). The Taylor series expansion of f(x) around x^\\star is\n\nf(x^\\star+\\alpha) = f(x^\\star)+\\left.\\frac{\\mathrm{d}f(x)}{\\mathrm{d} x}\\right|_{x=x^\\star}\\alpha + \\frac{1}{2}\\left.\\frac{\\mathrm{d^2}f(x)}{\\mathrm{d} x^2}\\right|_{x=x^\\star}\\alpha^2 + {\\color{blue}\\mathcal{O}(\\alpha^3)},\n where \\mathcal{O}() is called Big O and has the property that \n\\lim_{\\alpha\\rightarrow 0}\\frac{\\mathcal{O}(\\alpha^3)}{\\alpha^3} \\leq M&lt;\\infty.\n\nAlternatively, we can write the Taylor series expansion as \nf(x^\\star+\\alpha) = f(x^\\star)+\\left.\\frac{\\mathrm{d}f(x)}{\\mathrm{d} x}\\right|_{x=x^\\star}\\alpha + \\frac{1}{2}\\left.\\frac{\\mathrm{d^2}f(x)}{\\mathrm{d} x^2}\\right|_{x=x^\\star}\\alpha^2 + {\\color{red}o(\\alpha^2)},\n using the little o with the property that \n\\lim_{\\alpha\\rightarrow 0}\\frac{o(\\alpha^2)}{\\alpha^2} = 0.\n\nWhether \\mathcal{O}() or \\mathcal{o}() concepts are used, it is just a matter of personal preference. They both express that the higher-order terms in the expansion tend to be negligible compare to the first- and second-order term as \\alpha is getting smaller. \\mathcal O(\\alpha^3) goes to zero at least as fast as a cubic function, while o(\\alpha^2) goes to zero faster than a quadratic function.\nIt is indeed important to understand that this negligibility of the higher-order terms is only valid asymptotically – for a particular \\alpha it may easily happend that, say, the third-order term is still dominating.\n\n\nFirst-order necessary conditions of optimality\nFor \\alpha sufficiently small, the first-order Taylor series expansion is a good approximation of the function f(x) around the minimum. Since \\alpha enters this expansion linearly, the cost function can increase or decrease with \\alpha, depending on the sign of the first derivative. The only way to ensure that the function as a (local) minimu at x^\\star is to have the first derivative equal to zero, that is \\boxed{\n\\left.\\frac{\\mathrm{d}f(x)}{\\mathrm{d} x}\\right|_{x=x^\\star} = 0.}\n\n\n\nSecond-order necessary conditions of optimality\nOnce the first-order necessary condition of optimality is satisfied, the dominating term (as \\alpha is getting smalle) is the second-order term \\frac{1}{2}\\left.\\frac{\\mathrm{d^2}f(x)}{\\mathrm{d} x^2}\\right|_{x=x^\\star}\\alpha^2. Since \\alpha is squared, it is the sign of the second derivative that determines the contribution of the whole second-order term to the cost function value. For the minimum, the second derivative must be nonnegative, that is\n\n\\boxed{\\left.\\frac{\\mathrm{d^2}f(x)}{\\mathrm{d} x^2}\\right|_{x=x^\\star} \\geq 0.}\n\nFor completeness we state that the sign must be nonpositive for the maximum.\n\n\nSecond-order sufficient condition of optimality\nFollowing the same line of reasoning as above, the if the second derivative is positive, the miniumum is guaranteed, that is, the sufficient condition of optimality is \n\\boxed{\\left.\\frac{\\mathrm{d^2}f(x)}{\\mathrm{d} x^2}\\right|_{x=x^\\star} &gt; 0.}\n\nIf the second derivative fails to be positive and is just zero (thus still satisfying the necessary condition), does it mean that the point is not a minimum? No. We must examine higher order terms.\n\n\n\nVector optimization variable\nOnce again, should you prefer watching a video, here it is, but below we continue with the text that covers the content of the video.\n\n\nFirst-order necessary conditions of optimality\nOne way to handle the vector variables is to convert the vector problem into a scalar one by fixing a direction to an arbitrary vector \\bm d and then considering the scalar function of the form f(\\bm x^\\star + \\alpha \\bm d). For convenience we define a new function \ng(\\alpha) \\coloneqq f(\\bm x^\\star + \\alpha \\bm d)\n and from now on we can invoke the results for scalar functions. Namely, we expand the g() function around zero as \ng(\\alpha) = g(0) + \\frac{\\mathrm{d}g(\\alpha)}{\\mathrm{d}\\alpha}\\bigg|_{\\alpha=0}\\alpha + \\frac{1}{2}\\frac{\\mathrm{d}^2 g(\\alpha)}{\\mathrm{d}\\alpha^2}\\bigg|_{\\alpha=0}\\alpha^2 + \\mathcal{O}(\\alpha^3),\n and argue that the first-order necessary condition of optimality is \n\\frac{\\mathrm{d}g(\\alpha)}{\\mathrm{d}\\alpha}\\bigg|_{\\alpha=0} = 0.\n\nNow, invoking the chain rule, we go back from g() to f() \n\\frac{\\mathrm{d}g(\\alpha)}{\\mathrm{d}\\alpha}\\bigg|_{\\alpha=0} = \\frac{\\partial f(\\bm x)}{\\partial\\bm x}\\bigg|_{\\bm x=\\bm x^\\star} \\frac{\\partial(\\bm x^\\star + \\alpha \\bm d)}{\\partial\\alpha}\\bigg|_{\\alpha=0} = \\frac{\\partial f(\\bm x)}{\\partial\\bm x}\\bigg|_{\\bm x=\\bm x^\\star}\\,\\bm d = 0,\n where \\frac{\\partial f(\\bm x)}{\\partial\\bm x}\\bigg|_{\\bm x=\\bm x^\\star} is a row vector of partial derivatives of f() evaluated at \\bm x^\\star. Since the vector \\bm d is arbitrary, the necessary condition is that\n\n\\frac{\\partial f(\\bm x)}{\\partial\\bm x}\\bigg|_{\\bm x=\\bm x^\\star} = \\mathbf 0,  \n\nMore often than not we use the column vector to store partial derivatives. We call it the gradient of the function f() and denoted it as \n\\nabla f(\\bm x) \\coloneqq \\begin{bmatrix}\\frac{\\partial f(\\bm x)}{\\partial x_1} \\\\ \\frac{\\partial f(\\bm x)}{\\partial x_n} \\\\ \\vdots \\\\ \\frac{\\partial f(\\bm x)}{\\partial x_n}\\end{bmatrix}.  \n\nThe first-order necessary condition of optimality using gradients is then \n\\boxed{\\left.\\nabla f(\\bm x)\\right|_{x=x^\\star} = \\mathbf 0.  }\n\n\n\n\n\n\n\nGradient is a column vector\n\n\n\nIn some literature the gradient \\nabla f(\\bm x) is defined as a row vector. For the condition of optimality it does not matteer since all we require is that all partial derivatives vanish. But for other purposes in our text we regard the gradient as a vector living in the same vector space \\mathbb R^n as the optimization variable. The row vector is sometimes denoted as \\mathrm Df(\\bm x).\n\n\n\nComputing the gradient of a scalar function of a vector variable\nA convenient way is to compute the differential fist and then to identify the derivative in it. Recall that the differential is the first-order approximation to the increment of the function due to a change in the variable\n\n\\Delta f \\approx \\mathrm{d}f = \\nabla f(x)^\\top \\mathrm d \\bm x.\n\nFinding the differential of a function is conceptually easier than finding the derivative since it is a scalar quantity. When searching for the differential of a composed function, we follow the same rules as for the derivative (such as that the one for finding the differential of a product). Let’s illustrate it using an example.\n\nExample 1 For the function \nf(\\mathbf x) = \\frac{1}{2}\\bm{x}^\\top\\mathbf{Q}\\bm{x} + \\mathbf{r}^\\top\\bm{x},\n where \\mathbf Q is symetric, the differential is \n\\mathrm{d}f = \\frac{1}{2}\\mathrm d\\bm{x}^\\top\\mathbf{Q}\\bm{x} + \\frac{1}{2}\\bm{x}^\\top\\mathbf{Q}\\mathrm d\\bm{x} + \\mathbf{r}^\\top\\mathrm{d}\\bm{x},\n in which the first two terms can be combined thanks to the fact that they are scalars \n\\mathrm{d}f = \\left(\\bm{x}^\\top\\frac{\\mathbf{Q} + \\mathbf{Q}^\\top}{2} + \\mathbf{r}^\\top\\right)\\mathrm{d}\\bm{x},\n and finally, since we assumed that \\mathbf Q is a symmetric matrix, we get \n\\mathrm{d}f = \\left(\\mathbf{Q}\\bm{x} + \\mathbf{r}\\right)^\\top\\mathrm{d}\\bm{x},\n from which we can identify the gradient as \n\\nabla f(\\mathbf{x}) = \\mathbf{Q}\\mathbf{x} + \\mathbf{r}.\n\nThe first-order condition of optimality is then \n\\boxed{\\mathbf{Q}\\mathbf{x} = -\\mathbf{r}.}\n\nAlthough this was just an example, it is actually a very useful one. Keep this result in mind – necessary condition of optimality of a quadratic function comes in the form of a set of linear equations.\n\n\n\n\nSecond-order necessary conditions of optimality\nAs before, we fix the direction \\bm d and consider the function g(\\alpha) = f(\\bm x^\\star + \\alpha \\bm d). We expand the expression for the first derivative as \n\\frac{\\mathrm d g(\\alpha)}{\\mathrm d \\alpha} = \\sum_{i=1}^{n}\\frac{\\partial f(\\bm x)}{\\partial x_i}\\bigg|_{\\bm x = \\bm x^\\star} d_i,\n and differentiating this once again, we get the second derivative \n\\frac{\\mathrm d^2 g(\\alpha)}{\\mathrm d \\alpha^2} = \\sum_{i,j=1}^{n}\\frac{\\partial^2 f(\\bm x)}{\\partial x_ix_j}\\bigg|_{\\bm x = \\bm x^\\star}d_id_j\n\n\n\\begin{aligned}\n\\frac{\\mathrm d^2 g(\\alpha)}{\\mathrm d \\alpha^2}\\bigg|_{\\alpha=0} &= \\sum_{i,j=1}^{n}\\frac{\\text{d}^2}{\\text{d}x_ix_j}f(\\bm x)\\bigg|_{\\bm x = \\bm x^\\star}d_id_j\\\\\n&= \\mathbf d^\\text{T} \\underbrace{\\nabla^\\text{2}f(\\mathbf x)\\bigg|_{\\bm x = \\bm x^\\star}}_\\text{Hessian} \\mathbf d.\n\\end{aligned}\n where \\nabla^2 f(\\mathbf x) is the Hessian (the symmetrix matrix of the second-order mixed partial derivatives) \n\\nabla^2 f(x) = \\begin{bmatrix}\n                 \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_1^2} && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_1\\partial x_2} && \\ldots && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_1\\partial x_n}\\\\\n                 \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_2\\partial x_1} && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_2^2} && \\ldots && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_2\\partial x_n}\\\\\n                 \\vdots\\\\\n                 \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_n\\partial x_1} && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_n\\partial x_2} && \\ldots && \\frac{\\partial^2 f(\\mathbf x)}{\\partial x_n\\partial x_n}.\n                \\end{bmatrix}\n\nSince \\bm d is arbitrary, the second-order necessary condition of optimality is then \n\\boxed{\\nabla^\\text{2}f(\\mathbf x)\\bigg|_{\\bm x = \\bm x^\\star} \\succeq 0,}\n where, once again, the inequality \\succeq reads that the matrix is positive semidefinite.\n\n\nSecond-order sufficient condition of optimality\n\n\\boxed{\\nabla^2 f(\\mathbf x)\\bigg|_{\\bm x = \\bm x^\\star} \\succ 0,}\n where, once again, the inequality \\succ reads that the matrix is positive definite.\n\nExample 2 For the quadratic function f(\\mathbf x) = \\frac{1}{2}\\mathbf{x}^\\mathrm{T}\\mathbf{Q}\\mathbf{x} + \\mathbf{r}^\\mathrm{T}\\mathbf{x}, the Hessian is \n\\nabla^2 f(\\mathbf{x}) = \\mathbf{Q}\n and the second-order necessary condition of optimality is \n\\boxed{\\mathbf{Q} \\succeq 0.}\n\nSecond-order sufficient condition of optimality is then \n\\boxed{\\mathbf{Q} \\succ 0.}\n\nOnce again, this was more than just an example – quadratic functions are so important for us that it is worth remembering this result.",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Theory for unconstrained optimization"
+    ]
+  },
+  {
+    "objectID": "opt_theory_unconstrained.html#classification-of-stationary-points",
+    "href": "opt_theory_unconstrained.html#classification-of-stationary-points",
+    "title": "Theory for unconstrained optimization",
+    "section": "Classification of stationary points",
+    "text": "Classification of stationary points\nFor a stationary (also critical) \\bm x^\\star, that is, one that satisfies the first-order necessary condition \n\\nabla f(\\bm x^\\star) = 0,\n\nwe can classify it as\n\nMinimum: \\nabla^2 f(x^\\star)\\succ 0\nMaximum: \\nabla^2 f(x^\\star)\\prec 0\nSaddle point: \\nabla^2 f(x^\\star) indefinite\nSingular point (we cannot decide): \\nabla^2 f(x^\\star)=0\n\n\nExample 3 (Minimum of a quadratic function) We consider a quadratic function f(\\mathbf x) = \\frac{1}{2}\\mathbf{x}^\\mathrm{T}\\mathbf{Q}\\mathbf{x} + \\mathbf{r}^\\mathrm{T}\\mathbf{x} for a particular \\mathbf{Q} and \\mathbf{r}.\n\n\nCode\nQ = [1 1; 1 2]\nr = [0, 1]\n\nusing LinearAlgebra\nx_stationary = -Q\\r\neigvals(Q) \n\n\n2-element Vector{Float64}:\n 0.38196601125010515\n 2.618033988749895\n\n\nThe matrix is positive definite, so the stationary point is a minimum. In fact, the minimum. Surface and contour plots of the function are shown below.\n\nCode\nf(x) = 1/2*dot(x,Q*x)+dot(x,r)\nx1_data = x2_data = -4:0.1:4;  \nf_data = [f([x1,x2]) for x2=x2_data, x1=x1_data];\n\nusing Plots\ndisplay(surface(x1_data,x2_data,f_data))\ncontour(x1_data,x2_data,f_data)\ndisplay(plot!([x_stationary[1]], [x_stationary[2]], marker=:circle, label=\"Stationary point\"))\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n(a) Surface plot\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Contour plot\n\n\n\n\n\n\n\nFigure 1: Minimum of a quadratic function\n\n\n\n\n\nExample 4 (Saddle point of a quadratic function)  \n\n\nCode\nQ = [-1 1; 1 2]\nr = [0, 1]\n\nusing LinearAlgebra\nx_stationary = -Q\\r\neigvals(Q)\n\n\n2-element Vector{Float64}:\n -1.3027756377319946\n  2.302775637731995\n\n\nThe matrix is indefinite, so the stationary point is a saddle point. Surface and contour plots of the function are shown below.\n\nCode\nf(x) = 1/2*dot(x,Q*x)+dot(x,r)\n\nx1_data = x2_data = -4:0.1:4;  \nf_data = [f([x1,x2]) for x2=x2_data, x1=x1_data];\n\nusing Plots\ndisplay(surface(x1_data,x2_data,f_data))\ncontour(x1_data,x2_data,f_data)\ndisplay(plot!([x_stationary[1]], [x_stationary[2]], marker=:circle, label=\"Stationary point\"))\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n(a) Surface plot\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Contour plot\n\n\n\n\n\n\n\nFigure 2: Saddle point of a quadratic function\n\n\n\n\n\nExample 5 (Singular point of a quadratic function)  \n\n\nCode\nQ = [2 0; 0 0]\nr = [3, 0]\n\nusing LinearAlgebra\neigvals(Q)\n\n\n2-element Vector{Float64}:\n 0.0\n 2.0\n\n\nThe matrix Q is singular, which has two consequences:\n\nWe cannot compute the stationary point since Q is not invertible. In fact, there is a whole line (a subspace) of stationary points.\nThe matrix Q is positive semidefinite, which generally means that optimality cannot be concluded. But in this particular case of a quadratic function, there are no higher-order terms in the Taylor series expansion, so the stationary point is a minimum.\n\nSurface and contour plots of the function are shown below.\n\nCode\nf(x) = 1/2*dot(x,Q*x)+dot(x,r)\n\nx1_data = x2_data = -4:0.1:4;  \nf_data = [f([x1,x2]) for x2=x2_data, x1=x1_data];\n\nusing Plots\ndisplay(surface(x1_data,x2_data,f_data))\ndisplay(contour(x1_data,x2_data,f_data))\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n(a) Surface plot\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Contour plot\n\n\n\n\n\n\n\nFigure 3: Singular point of a quadratic function\n\n\n\n\n\nExample 6 (Singular point of a non-quadratic function) Consider the function f(\\bm x) = x_1^2 + x_2^4. Its gradient is \\nabla f(\\bm x) = \\begin{bmatrix}2x_1\\\\ 4x_2^3\\end{bmatrix} and it vanishes at \\bm x^\\star = \\begin{bmatrix}0\\\\ 0\\end{bmatrix}. The Hessian is \\nabla^2 f(\\bm x) = \\begin{bmatrix}2 & 0\\\\ 0 & 12x_2^2\\end{bmatrix}, which when evaluated at the stationary point is \\nabla^2 f(\\bm x)\\bigg|_{\\bm x=\\mathbf 0} = \\begin{bmatrix}2 & 0\\\\ 0 & 0\\end{bmatrix}, which is positive semidefinite. We cannot conclude if the function attains a minimum at \\bm x^\\star.\nWe need to examine higher-order terms in the Taylor series expansion. The third derivatives are \n\\frac{\\partial^3 f}{\\partial x_1^3} = 0, \\quad \\frac{\\partial^3 f}{\\partial x_1^2\\partial x_2} = 0, \\quad \\frac{\\partial^3 f}{\\partial x_1\\partial x_2^2} = 0, \\quad \\frac{\\partial^3 f}{\\partial x_2^3} = 24x_2,\n and when evaluated at zero, they all vanish.\nAll but one fourth derivatives also vanish. The one that does not is \n\\frac{\\partial^4 f}{\\partial x_2^4} = 24,\n which is positive, and since the associated derivative is of the even order, the power si also even, hence the function attains a minimum at \\bm x^\\star = \\begin{bmatrix}0\\\\ 0\\end{bmatrix}.\nThis can also be visually confirmed by the surface and contour plots of the function.\n\nCode\nf(x) = x[1]^2 + x[2]^4\n\nx1_data = x2_data = -4:0.1:4;  \nf_data = [f([x1,x2]) for x2=x2_data, x1=x1_data];\n\nusing Plots\ndisplay(surface(x1_data,x2_data,f_data))\ncontour(x1_data,x2_data,f_data)\ndisplay(plot!([x_stationary[1]], [x_stationary[2]], marker=:circle, label=\"Stationary point\"))\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n(a) Surface plot\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) Contour plot\n\n\n\n\n\n\n\nFigure 4: Singular point of a non-quadratic function",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Theory for unconstrained optimization"
+    ]
+  },
+  {
+    "objectID": "cont_indir_time_optimal.html",
+    "href": "cont_indir_time_optimal.html",
+    "title": "Time-optimal control",
     "section": "",
     "text": "Back to top",
     "crumbs": [
-      "10. Some extensions: LQG, LTR, H2",
-      "Stochastic LQR control"
+      "8. Continuous-time optimal control - indirect approach via Pontryagin's maximum principle",
+      "Time-optimal control"
     ]
   },
   {
-    "objectID": "opt_problems.html",
-    "href": "opt_problems.html",
+    "objectID": "cont_dir_collocation.html",
+    "href": "cont_dir_collocation.html",
+    "title": "Collocation methods for optimal control",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "9. Continuous-time optimal control - direct approach via numerical optimization",
+      "Collocation methods for optimal control"
+    ]
+  },
+  {
+    "objectID": "opt_algo_solvers.html",
+    "href": "opt_algo_solvers.html",
+    "title": "Numerical solvers",
+    "section": "",
+    "text": "Gurobi Optimizer\nIBM ILOG CPLEX\nKnitro\nMOSEK\nIpopt\nSNOPT\nNLPQLP\nfmincon\nfminunc\nfminsearch\nfminbnd\nfminimax\nfmincon\nOptimization Toolbox for Matlab\nJuMP\nConvex.jl\nOptim.jl\nNLopt.jl\nBlackBoxOptim.jl\nBayesianOptimization.jl\nCMAES.jl\nDirectSearch.jl\nEvolutionary.jl\n\n\n\n\n Back to top",
+    "crumbs": [
+      "2. Optimization – algorithms",
+      "Numerical solvers"
+    ]
+  },
+  {
+    "objectID": "opt_theory_problems.html",
+    "href": "opt_theory_problems.html",
     "title": "Optimization problems",
     "section": "",
     "text": "We formulate a general optimization problem (also a mathematical program) as \n\\begin{aligned}\n\\operatorname*{minimize} \\quad & f(\\bm x) \\\\\n\\text{subject to} \\quad & \\bm x \\in \\mathcal{X},\n\\end{aligned}\n where f is a scalar function, \\bm x can be a scalar, a vector, a matrix or perhaps even a variable of yet another type, and \\mathcal{X} is a set of values that \\bm x can take, also called the feasible set.\n\n\n\n\n\n\nNote\n\n\n\nThe term “program” here has nothing to do with a computer program. Instead, it was used by the US military during the WWII to refer to plans or schedules in training and logistics.\n\n\nIf maximization of the objective function f() is desired, we can simply multiply the objective function by -1 and minimize the resulting function.\nTypically there are two types of constraints that can be imposed on the optimization variable \\bm x:\n\nexplicit characterization of the set such as \\bm x \\in \\mathbb{R}^n or \\bm x \\in \\mathbb{Z}^n, possibly even a direction enumeration such as \\bm x \\in \\{0,1\\}^n in the case of binary variables,\nimplicit characterization of the set using equations and inequalities such as g_i(\\bm x) \\leq 0 and h_i(\\bm x) = 0 for i = 1, \\ldots, m and j = 1, \\ldots, p.\n\nAn example of a more structured and yet sufficiently general optimization problems over several real and integer variables is \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^{n_x}, \\, \\bm y \\in \\mathbb{Z}^{n_y}} \\quad & f(\\bm x, \\bm y) \\\\\n\\text{subject to} \\quad & g_i(\\bm x, \\bm y) \\leq 0, \\quad i = 1, \\ldots, m, \\\\\n& h_j(\\bm x, \\bm y) = 0, \\quad j = 1, \\ldots, p.\n\\end{aligned}\n\nIndeed, for named sets such as \\mathbb R or \\mathbb Z, it is common to place the set constraints directly underneath the word “minimize”. But it is just one convention, and these constraints could be listed into the “subject to” section as well.\n\n\n\n\n\n\nInteger optimization not in this course\n\n\n\nIn this course we are only going to consider optimization problems with real-valued variables. This decision does not suggest that optimization with integer variables is less relevant for optimal control, quite the opposite! It is just that the theory and algorithms for integer or mixed integer optimization are based on different principles than those for real variables. And they can hardly fit into a single course. Good news for the interested students is that a graduate course named Combinatorial algorithms (B3B35KOA) covering integer optimization in detail is offered by the Cybernetics and Robotics study program at CTU FEE. Applications of integer optimization to optimal control are part of the course on Hybrid systems (B3B39HYS).\n\n\nThe form of an optimization problem that we are going to use in our course most often than not is \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & f(\\bm x) \\\\\n\\text{subject to} \\quad & g_i(\\bm x) \\leq 0, \\quad i = 1, \\ldots, m, \\\\\n& h_i(\\bm x) = 0, \\quad i = 1, \\ldots, p,\n\\end{aligned}\n which can also be written using vector-valued functions (reflected in the use of the bold face for their names) \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & f(\\bm x) \\\\\n\\text{subject to} \\quad & \\mathbf g(\\bm x) \\leq 0,\\\\\n& \\mathbf h(\\bm x) = 0.\n\\end{aligned}",
@@ -649,8 +451,8 @@
     ]
   },
   {
-    "objectID": "opt_problems.html#optimization-problem-formulation",
-    "href": "opt_problems.html#optimization-problem-formulation",
+    "objectID": "opt_theory_problems.html#optimization-problem-formulation",
+    "href": "opt_theory_problems.html#optimization-problem-formulation",
     "title": "Optimization problems",
     "section": "",
     "text": "We formulate a general optimization problem (also a mathematical program) as \n\\begin{aligned}\n\\operatorname*{minimize} \\quad & f(\\bm x) \\\\\n\\text{subject to} \\quad & \\bm x \\in \\mathcal{X},\n\\end{aligned}\n where f is a scalar function, \\bm x can be a scalar, a vector, a matrix or perhaps even a variable of yet another type, and \\mathcal{X} is a set of values that \\bm x can take, also called the feasible set.\n\n\n\n\n\n\nNote\n\n\n\nThe term “program” here has nothing to do with a computer program. Instead, it was used by the US military during the WWII to refer to plans or schedules in training and logistics.\n\n\nIf maximization of the objective function f() is desired, we can simply multiply the objective function by -1 and minimize the resulting function.\nTypically there are two types of constraints that can be imposed on the optimization variable \\bm x:\n\nexplicit characterization of the set such as \\bm x \\in \\mathbb{R}^n or \\bm x \\in \\mathbb{Z}^n, possibly even a direction enumeration such as \\bm x \\in \\{0,1\\}^n in the case of binary variables,\nimplicit characterization of the set using equations and inequalities such as g_i(\\bm x) \\leq 0 and h_i(\\bm x) = 0 for i = 1, \\ldots, m and j = 1, \\ldots, p.\n\nAn example of a more structured and yet sufficiently general optimization problems over several real and integer variables is \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^{n_x}, \\, \\bm y \\in \\mathbb{Z}^{n_y}} \\quad & f(\\bm x, \\bm y) \\\\\n\\text{subject to} \\quad & g_i(\\bm x, \\bm y) \\leq 0, \\quad i = 1, \\ldots, m, \\\\\n& h_j(\\bm x, \\bm y) = 0, \\quad j = 1, \\ldots, p.\n\\end{aligned}\n\nIndeed, for named sets such as \\mathbb R or \\mathbb Z, it is common to place the set constraints directly underneath the word “minimize”. But it is just one convention, and these constraints could be listed into the “subject to” section as well.\n\n\n\n\n\n\nInteger optimization not in this course\n\n\n\nIn this course we are only going to consider optimization problems with real-valued variables. This decision does not suggest that optimization with integer variables is less relevant for optimal control, quite the opposite! It is just that the theory and algorithms for integer or mixed integer optimization are based on different principles than those for real variables. And they can hardly fit into a single course. Good news for the interested students is that a graduate course named Combinatorial algorithms (B3B35KOA) covering integer optimization in detail is offered by the Cybernetics and Robotics study program at CTU FEE. Applications of integer optimization to optimal control are part of the course on Hybrid systems (B3B39HYS).\n\n\nThe form of an optimization problem that we are going to use in our course most often than not is \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & f(\\bm x) \\\\\n\\text{subject to} \\quad & g_i(\\bm x) \\leq 0, \\quad i = 1, \\ldots, m, \\\\\n& h_i(\\bm x) = 0, \\quad i = 1, \\ldots, p,\n\\end{aligned}\n which can also be written using vector-valued functions (reflected in the use of the bold face for their names) \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & f(\\bm x) \\\\\n\\text{subject to} \\quad & \\mathbf g(\\bm x) \\leq 0,\\\\\n& \\mathbf h(\\bm x) = 0.\n\\end{aligned}",
@@ -660,8 +462,8 @@
     ]
   },
   {
-    "objectID": "opt_problems.html#properties-of-optimization-problems",
-    "href": "opt_problems.html#properties-of-optimization-problems",
+    "objectID": "opt_theory_problems.html#properties-of-optimization-problems",
+    "href": "opt_theory_problems.html#properties-of-optimization-problems",
     "title": "Optimization problems",
     "section": "Properties of optimization problems",
     "text": "Properties of optimization problems\nIt is now the presence/absence and the properties of individual components in the optimization problem defined above that characterize classes of optimization problems. In particular, we can identify the following properties:\n\nUnconstrained vs constrained\n\nPractically relevant problems are almost always constrained. But still there are good reasons to study unconstrained problems too, as many theoretical results and algorithms for constrained problems are based on transformations to unconstrained problems.\n\nLinear vs nonlinear\n\nBy linear problems we mean problems where the objective function and all the functions defining the constraints are linear (or actually affine) functions of the optimization variable \\bm x. Such problems constitute the simplest class of optimization problems, are very well understood, and there are efficient algorithms for solving them. In contrast, nonlinear problems are typically more difficult to solve (but see the discussion of the role of convexity below).\n\nSmooth vs nonsmooth\n\nEfficient algorithms for optimization over real variables benefit heavily from knowledge of the derivatives of the objective and constraint functions. If the functions are differentiable (aka smooth), we say that the whole optimization problem is smooth. Nonsmooth problems are typically a more difficult to analyze and solve (but again, see the discussion of the role of convexity below).\n\nConvex vs nonconvex\n\nIf the objective function and the feasible set are convex (the latter holds when the functions defining the inequality constraints are convex and the functions defining the equality constrains are affine), the whole optimization problem is convex. Convex optimization problems are very well understood and there are efficient algorithms for solving them. In contrast, nonconvex problems are typically more difficult to solve. It turns out that convexity is a lot more important property than linearity and smoothness when it comes to solving optimization problems efficiently.",
@@ -671,8 +473,8 @@
     ]
   },
   {
-    "objectID": "opt_problems.html#classes-of-optimization-problems",
-    "href": "opt_problems.html#classes-of-optimization-problems",
+    "objectID": "opt_theory_problems.html#classes-of-optimization-problems",
+    "href": "opt_theory_problems.html#classes-of-optimization-problems",
     "title": "Optimization problems",
     "section": "Classes of optimization problems",
     "text": "Classes of optimization problems\nBased on the properties discussed above, we can identify the following distinct classes of optimization problems:\n\nLinear program (LP)\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & \\mathbf c^\\top \\bm x \\\\\n\\text{subject to} \\quad & \\mathbf A_\\mathrm{ineq}\\bm x \\leq \\mathbf b_\\mathrm{ineq},\\\\\n& \\mathbf A_\\mathrm{eq}\\bm x = \\mathbf b_\\mathrm{eq}.\n\\end{aligned}\n\nAn LP is obviously linear, hence it is also smooth and convex.\nSome theoretical results and numerical algorithms require a linear program in a specific form, called the standard form: \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & \\mathbf c^\\top \\bm x \\\\\n\\text{subject to} \\quad & \\mathbf A\\bm x = \\mathbf b,\\\\\n& \\bm x \\geq \\mathbf 0,\n\\end{aligned}\n where the inequality \\bm x \\geq \\mathbf 0 is understood componentwise, that is, x_i \\geq 0 for all i = 1, \\ldots, n.\n\n\nQuadratic program (QP)\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & \\bm x^\\top \\mathbf Q \\bm x +  \\mathbf c^\\top \\bm x \\\\\n\\text{subject to} \\quad & \\mathbf A_\\mathrm{ineq}\\bm x \\leq \\mathbf b_\\mathrm{ineq},\\\\\n& \\mathbf A_\\mathrm{eq}\\bm x = \\mathbf b_\\mathrm{eq}.\n\\end{aligned}\n\nEven though the QP is nonlinear, it is smooth and if the matrix \\mathbf Q is positive semidefinite, it is convex. Its analysis and numerical solution are not much more difficult than those of an LP problem.\n\nQuadratically constrained quadratic program (QCQP)\nIt is worth emphasizing that for the standard QP the constraints are still given by a system of linear equations and inequalities. Sometimes we can encounter problems in which not only the cost function but also the functions defining the constraints are quadratic as in \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & \\bm x^\\top \\mathbf Q \\bm x +  \\mathbf c^\\top \\bm x \\\\\n\\text{subject to} \\quad & \\bm x^\\top \\mathbf A_i\\bm x + \\mathbf b_i \\bm x + c_i \\leq \\mathbf 0, \\quad i=1, \\ldots, m.\n\\end{aligned}\n\nA QCQP problem is convex if and only if the the constraints define a convex feasible set, which is the case when all the matrices \\mathbf A_i are positive semidefinite.\n\n\n\nConic program (CP)\nFirst, what is a cone? It is a set such that if something is in the cone, then a multiple of it by a nonnegative number is still in the set. We are going to restrict ourselves to regular cones, which are are pointed, closed and convex. An example of such regular cone in a plane is in Figure 1 below.\n\n\n\n\n\n\nFigure 1: Regular (pointed, convex, closed) cone in a plane\n\n\n\nNow, what is the point in using cones in optimization? Reformulation of nonlinear optimization problems using cones constitutes a systematic way to identify what these (conic) optimization problems have in common with linear programs, for which powerful theory and efficient algorithms exist.\nNote that an LP in the standard form can be written as \n\\begin{aligned}\n\\operatorname*{minimize} &\\quad \\mathbf c^\\top \\bm x\\\\\n\\text{subject to} &\\quad \\mathbf A\\bm x = \\mathbf b,\\\\\n&\\quad \\bm x\\in \\mathbb{R}_+^n,\n\\end{aligned}\n where \\mathbb R_+^n is a positive orthant. Now, the positive orthant is a convex cone! We can then see the LP as an instance of a general conic optimization problem (conic program)\n\n\\begin{aligned}\n\\operatorname*{minimize} &\\quad \\mathbf c^\\top \\bm x\\\\\n\\text{subject to} &\\quad \\mathbf A\\bm x = \\mathbf b,\\\\\n&\\quad \\bm x\\in \\mathcal{K},\n\\end{aligned}\n where \\mathcal{K} is a cone in \\mathbb R^n.\n\n\n\n\n\n\nInequality as belonging to a cone\n\n\n\nA fundamental idea unrolled here: the inequality \\bm x\\geq 0 can be interpreted as \\bm x belonging to a componentwise nonegative cone, that is \\bm x \\in \\mathbb R_+^n. What if some other cone \\mathcal K is considered? What would be the interpretation of the inequality then?\n\n\nSometimes in order to emphasize that the inequality is induced by the cone \\mathcal K, we write it as \\geq_\\mathcal{K}. Another convention – the one we actually adopt here – is to use another symbol for the inequality \\succeq to distinguish it from the componentwise meaning, assuming that the cone is understood from the context. We then interpret conic inequalities such as \n\\mathbf A_\\mathrm{ineq}\\bm x \\succeq \\mathbf b_\\mathrm{ineq}\n in the sense that \n\\mathbf A_\\mathrm{ineq}\\bm x - \\mathbf b_\\mathrm{ineq} \\in \\mathcal{K}.\n\nIt is high time to explore some concrete cones (other than the positive orthant). We consider just two, but there are a few more, see the literature.\n\nSecond-order cone program (SOCP)\nThe most immediate cone in \\mathbb R^n is the second-order cone, also called the Lorentz cone or even the ice cream cone. We explain it in \\mathbb R^3 for the ease of visualization, but generalization to \\mathbb R^n is straightforward. The second-order cone in \\mathbb R^3 is defined as \n\\mathcal{K}_\\mathrm{SOC}^3 = \\left\\{ \\bm x \\in \\mathbb R^3 \\mid \\sqrt{x_1^2 + x_2^2} \\leq x_3 \\right\\}.\n\nand is visualized in Figure 2 below.\n\n\n\n\n\n\n\n\nFigure 2: A second-order cone in 3D\n\n\n\n\n\nWhich of the three axes plays the role of the axis of symmetry for the cone must be agreed beforhand. Singling this direction out, the SOC in \\mathbb R^n can also be formulated as \n\\mathcal{K}_\\mathrm{SOC}^n = \\left\\{ (\\bm x, t) \\in \\mathbb R^{n-1} \\times \\mathbb R \\mid \\|\\bm x\\|_2 \\leq t \\right\\}.\n\nA second-order conic program in standard form is then \n\\begin{aligned}\n\\operatorname*{minimize} &\\quad \\mathbf c^\\top \\bm x\\\\\n\\text{subject to} &\\quad \\mathbf A\\bm x = \\mathbf b,\\\\\n&\\quad \\bm x\\in \\mathcal{K}_\\mathrm{SOC}^n,\n\\end{aligned}\n\nwhich can be written explicitly as \n\\begin{aligned}\n\\operatorname*{minimize} &\\quad \\mathbf c^\\top \\bm x\\\\\n\\text{subject to} &\\quad \\mathbf A\\bm x = \\mathbf b,\\\\\n&\\quad x_1^2 + \\cdots + x_{n-1}^2 - x_n^2 \\leq 0.\n\\end{aligned}\n\nA second-order conic program can also come in non-standard form such as \n\\begin{aligned}\n\\operatorname*{minimize} &\\quad \\mathbf c^\\top \\bm x\\\\\n\\text{subject to} &\\quad \\mathbf A_\\mathrm{ineq}\\bm x \\succeq  \\mathbf b_\\mathrm{ineq}.\n\\end{aligned}\n\nAssuming the data is structured as \n\\begin{bmatrix}\n\\mathbf A\\\\\n\\mathbf c^\\top\n\\end{bmatrix}\n\\bm x \\succeq\n\\begin{bmatrix}\n\\mathbf b\\\\\nd\n\\end{bmatrix},\n the inequality can be rewritten as \n\\begin{bmatrix}\n\\mathbf A\\\\\n\\mathbf c^\\top\n\\end{bmatrix}\n\\bm x -\n\\begin{bmatrix}\n\\mathbf b\\\\\nd\n\\end{bmatrix} \\in \\mathcal{K}_\\mathrm{SOC}^n,\n which finally gives \n\\|\\mathbf A \\bm x - \\mathbf b\\|_2 \\leq \\mathbf c^\\top \\bm x + d.\n\nTo summarize, another form of a second-order cone program (SOCP) is\n\n\\begin{aligned}\n\\operatorname*{minimize} &\\quad \\mathbf c^\\top \\bm x\\\\\n\\text{subject to} &\\quad \\mathbf A_\\mathrm{eq}\\bm x = \\mathbf b_\\mathrm{eq},\\\\\n&\\quad \\|\\mathbf A \\bm x - \\mathbf b\\|_2 \\leq \\mathbf c^\\top \\bm x + d.\n\\end{aligned}\n\nWe can see that the SOCP contains both linear and quadratic constraints, hence it generalizes LP and QP, including convex QCQP. To see the latter, expand the square of \\|\\mathbf A \\bm x - \\mathbf b\\|_2 into (\\bm x^\\top \\mathbf A^\\top  - \\mathbf b^\\top)(\\mathbf A \\bm x - \\mathbf b) = \\bm x^\\top \\mathbf A^\\top \\mathbf A \\bm x + \\ldots\n\n\nSemidefinite program (SDP)\nAnother cone of great importance the control theory is the cone of positive semidefinite matrices. It is commonly denoted as \\mathcal S_+^n and is defined as \n\\mathcal S_+^n = \\left\\{ \\bm X \\in \\mathbb R^{n \\times n} \\mid \\bm X = \\bm X^\\top, \\, \\bm z^\\top \\bm X \\bm z \\geq 0\\; \\forall \\bm z\\in \\mathbb R^n \\right\\},\n and with this cone the inequality \\mathbf X \\succeq 0 is a common way to express that \\mathbf X is positive semidefinite.\nUnlike the previous classes of optimization problems, this one is formulated with matrix variables instead of vector ones. But nothing prevents us from collecting the components of a symmetric matrix into a vector and proceed with vectors as usual, if needed:\n\n\\bm X = \\begin{bmatrix} x_1 & x_2 & x_3 \\\\ x_2 & x_4 & x_5\\\\ x_3 & x_5 & x_6 \\end{bmatrix},\n\\quad\n\\bm x = \\begin{bmatrix} x_1 \\\\ x_2 \\\\ \\vdots \\\\ x_6 \\end{bmatrix}.\n\nAn optimization problem with matrix variables constrained to be in the cone of semidefinite matrices (or their vector representations) is called a semidefinite program (SDP). As usual, we start with the standard form, in which the cost function is linear and the optimization is subject to an affine constraint and a conic constraint. In the following, in place of the inner products of two vectors \\mathbf c^\\top x we are going to use inner products of matrices defined as \n\\langle \\mathbf C, \\bm X\\rangle = \\operatorname{Tr} \\mathbf C \\bm X,\n where \\operatorname{Tr} is a trace of a matrix defined as the sum of the diagonal elements.\nThe SDP program in the standard form is then \n\\begin{aligned}\n\\operatorname{minimize}_{\\bm X} &\\quad \\operatorname{Tr} \\mathbf C \\bm X\\\\\n\\text{subject to} &\\quad \\operatorname{Tr} \\mathbf A_i \\bm X = \\mathbf b_i, \\quad i=1, \\ldots, m,\\\\\n&\\quad \\bm X \\in \\mathcal S_+^n,\n\\end{aligned}\n where the latter constraint is more often than not written as \\bm X \\succeq 0, understanding from the context that the cone of positive definite matrices is assumed.\n\n\nOther conic programs\nWe are not going to cover them here, but we only enumerate a few other cones useful in optimization: rotated second-order cone, exponential cone, power cone, … A concise overview is in (“MOSEK Modeling Cookbook” 2024)\n\n\n\nGeometric program (GP)\n\n\nNonlinear program (NLP)\nFor completeness we include here once again the general nonlinear programming problem:\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} \\quad & f(\\bm x) \\\\\n\\text{subject to} \\quad & \\mathbf g(\\bm x) \\leq 0,\\\\\n& \\mathbf h(\\bm x) = 0.\n\\end{aligned}\n\nSmoothness of the problem can easily be determined based on the differentiability of the functions. Convexity can also be determined by inspecting the functions, but this is not necessarily easy. One way to check convexity of a function is to view it as a composition of simple functions and exploit the knowledge about convexity of these simple functions. See (Boyd and Vandenberghe 2004, sec. 3.2)",
@@ -682,14 +484,190 @@
     ]
   },
   {
-    "objectID": "opt_problems.html#recommended-literature",
-    "href": "opt_problems.html#recommended-literature",
-    "title": "Optimization problems",
-    "section": "Recommended literature",
-    "text": "Recommended literature\nIf a single reference book on nonlinear optimization is to be recommended, be it (Nocedal and Wright 2006) that sits on your book shelf.\nIf one or two more can still fit, (Bertsekas 2016), (Luenberger and Ye 2021) are classical comprehensive references on nonlinear programming (the latter covers linear programming too).\nWhile all the three books are only available for purchase, there is a wealth of resources are freely available online such as the notes (Gros and Diehl 2022) accompanying a course on optimal control, which do a decent job of introduction to a nonlinear programming, and beautifully typeset modern textbooks (Kochenderfer and Wheeler 2019) and (Martins and Ning 2022), the former based on Julia language.\nWhen restricting to convex optimization, the bible of this field (Boyd and Vandenberghe 2004) is also freely available online. It is a must-have for everyone interested in optimization. Another textbook biased towards convex optimization is (Calafiore 2014), which is freely accessible through its web version. Yet another advanced and treatment of convex optimization is (Ben-Tal and Nemirovski 2023), which is also freely available online.\nMaybe a bit unexpected resources on theory are materials accompanying some optimization software. Partilarly recommendable is (“MOSEK Modeling Cookbook” 2024), it is very useful even if you do not indend to use their software.",
+    "objectID": "opt_theory_reformulations.html",
+    "href": "opt_theory_reformulations.html",
+    "title": "Problem reformulations",
+    "section": "",
+    "text": "Given a function f(\\bm x), we can maximize it by minimizing -f(\\bm x).",
     "crumbs": [
       "1. Optimization – theory",
-      "Optimization problems"
+      "Problem reformulations"
+    ]
+  },
+  {
+    "objectID": "opt_theory_reformulations.html#maximization-into-minimization",
+    "href": "opt_theory_reformulations.html#maximization-into-minimization",
+    "title": "Problem reformulations",
+    "section": "",
+    "text": "Given a function f(\\bm x), we can maximize it by minimizing -f(\\bm x).",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Problem reformulations"
+    ]
+  },
+  {
+    "objectID": "opt_theory_reformulations.html#equality-into-inequality-constraints",
+    "href": "opt_theory_reformulations.html#equality-into-inequality-constraints",
+    "title": "Problem reformulations",
+    "section": "Equality into inequality constraints",
+    "text": "Equality into inequality constraints\nAs a matter of fact, we could declare as the most general format of an NLP problem the one with only inequality constraints. This is because we can always transform an equality constraint into two inequality constraints. Given an equality constraint h(\\bm x) = 0, we can write it as h(\\bm x) \\leq 0 and -h(\\bm x) \\leq 0, that is,\n\n\\underbrace{\\begin{bmatrix}\nh(\\bm x) \\\\\n-h(\\bm x)\n\\end{bmatrix}}_{\\mathbf g(\\bm x)} \\leq \\mathbf 0.\n\nOn the other hand, it may be useful to keep the equality constraints explicit in the problem formulation for the benefit of theoretical analysis, numerical methods and convenience of the user/modeller.",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Problem reformulations"
+    ]
+  },
+  {
+    "objectID": "opt_theory_reformulations.html#inequality-into-sort-of-equality-constraints",
+    "href": "opt_theory_reformulations.html#inequality-into-sort-of-equality-constraints",
+    "title": "Problem reformulations",
+    "section": "Inequality into “sort-of” equality constraints",
+    "text": "Inequality into “sort-of” equality constraints\nConsider the inequality constraint g(\\bm x) \\leq 0. By introducing a slack variable s and imposing the nonnegativity condition, we can turn the inequality into the equality g(\\bm x) + s = 0. Well, we have not completely discarded an inequality because now we have s \\geq 0. But this new problem may be better suited for some theoretical analysis or numerical methods.\nIt is also possible to express the nonnegativity constraint implicitly by considering an unrestricted variable s and using it within the inequality through its square s^2:\n\ng(\\bm x) + s^2 = 0.",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Problem reformulations"
+    ]
+  },
+  {
+    "objectID": "opt_theory_reformulations.html#linear-cost-function-always-possible",
+    "href": "opt_theory_reformulations.html#linear-cost-function-always-possible",
+    "title": "Problem reformulations",
+    "section": "Linear cost function always possible",
+    "text": "Linear cost function always possible\nGiven a cost function f(\\bm x) to be minimized, we can always upper-bound it by a new variable \\gamma accompanied by a new constraint f(\\bm x) \\leq \\gamma and then minimize just \\gamma \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm{x}\\in\\mathbb R^n, \\gamma\\in\\mathbb R} & \\quad \\gamma \\\\\n\\text{subject to} & \\quad f(\\bm x) \\leq \\gamma.\n\\end{aligned}",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Problem reformulations"
+    ]
+  },
+  {
+    "objectID": "opt_theory_reformulations.html#absolute-value",
+    "href": "opt_theory_reformulations.html#absolute-value",
+    "title": "Problem reformulations",
+    "section": "Absolute value",
+    "text": "Absolute value\nConsider an optimization problem in which the cost function contains the absolute value of a variable \n\\begin{aligned}\n\\operatorname*{minimize} &\\quad \\sum_i c_i|x_i|\\\\\n\\text{subject to} &\\quad \\mathbf A \\bm x \\geq \\mathbf b.\n\\end{aligned}\n\nWe also impose the restriction that all the coefficients c_i are nonnegative. The cost function is then a sum of piecewise linear convex function, which can be shown to be convex.\nThe trouble with the absolute value function is that it is not linear, it is not even smooth. And yet, as we will see below, this optimization with the absolute value can be reformulated as a linear program.\nOne possible reformulation introduces two new nonnegative (vector) variables \\bm x^+\\geq 0 and \\bm x^-\\geq 0 and with which the original variables can be expressed as x_i = x_i^+ - x_i^-, \\; i=1, \\ldots, n. The cost function can then be written as \\sum c_i|x_i| = \\sum_i c_i (x_i^+ + x_i^-).\nThis may look surprising (and incorrect) at first, but we argue that at an optimum, x_i^+ or x_i^- must be zero. Otherwise we could subtract (in case c_i&gt;0) the same amount from/to both, which would not change the satisfaction of the constraints (this modification cancels in x_i = x_i^+ - x_i^-), and the cost would be further reduced.\nThe LP in the standard form then changes to\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x^+\\in \\mathbb R^n, \\bm x^-\\in \\mathbb R^n} &\\quad \\mathbf c^\\top (\\bm x^+ + \\bm x^-)\\\\\n\\text{subject to} &\\quad \\mathbf A \\bm x^+ - \\mathbf A \\bm x^- \\geq \\mathbf b,\\\\\n&\\quad \\bm x^+ \\geq \\mathbf 0,\\\\\n&\\quad \\bm x^- \\geq \\mathbf 0.\n\\end{aligned}\n\nAnother possibility is to exploit the reformulation of z_i = |x_i| as x_i\\leq z and -x_i\\leq z. The original problem then transforms into\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm z\\in \\mathbb R^n, \\bm x\\in \\mathbb R^n} &\\quad \\mathbf c^\\top \\bm z\\\\\n\\text{subject to} &\\quad \\mathbf A \\bm x \\geq \\mathbf b,\\\\\n&\\qquad \\bm x \\leq \\bm z,\\\\\n&\\quad -\\bm x \\leq \\bm z.\n\\end{aligned}",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Problem reformulations"
+    ]
+  },
+  {
+    "objectID": "opt_theory_reformulations.html#piecewise-linear",
+    "href": "opt_theory_reformulations.html#piecewise-linear",
+    "title": "Problem reformulations",
+    "section": "Piecewise linear",
+    "text": "Piecewise linear",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Problem reformulations"
+    ]
+  },
+  {
+    "objectID": "opt_theory_reformulations.html#quadratic",
+    "href": "opt_theory_reformulations.html#quadratic",
+    "title": "Problem reformulations",
+    "section": "Quadratic",
+    "text": "Quadratic",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Problem reformulations"
+    ]
+  },
+  {
+    "objectID": "cont_indir_CARE.html",
+    "href": "cont_indir_CARE.html",
+    "title": "Continuous-time Riccati equation",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "7. Continuous-time optimal control - indirect approach via calculus of variations",
+      "Continuous-time Riccati equation"
+    ]
+  },
+  {
+    "objectID": "discr_dir_mpc_recursive_feasibility.html",
+    "href": "discr_dir_mpc_recursive_feasibility.html",
+    "title": "Recursive feasibility",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "6. More on MPC",
+      "Recursive feasibility"
+    ]
+  },
+  {
+    "objectID": "cont_indir_LQR_inf_horizon.html",
+    "href": "cont_indir_LQR_inf_horizon.html",
+    "title": "Indirect approach to LQR on an infinite horizon",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "7. Continuous-time optimal control - indirect approach via calculus of variations",
+      "Indirect approach to LQR on an infinite horizon"
+    ]
+  },
+  {
+    "objectID": "discr_indir_DARE.html",
+    "href": "discr_indir_DARE.html",
+    "title": "Discrete-time algebraic Riccati equation (DARE)",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "4. Discrete-time optimal control – indirect approach",
+      "Discrete-time algebraic Riccati equation (DARE)"
+    ]
+  },
+  {
+    "objectID": "discr_dir_mpc_solvers.html",
+    "href": "discr_dir_mpc_solvers.html",
+    "title": "Numerical solvers for MPC",
+    "section": "",
+    "text": "Essentially QP solvers with some extra features for MPC:\n\nwarmstarting requires fesibility of the previous solution. If only a fixed number of iterations is allowed (in favor of predictable timing), for some methods the iterations may temporarily lose feasibility.\n…\nqpOASES\nOSQP\nDAQP\nqpSWIFT\nProxQP\nPiQP\nECOS\nHPIPM\n\n\n\n\n Back to top",
+    "crumbs": [
+      "3. Discrete-time optimal control – direct approach",
+      "Numerical solvers for MPC"
+    ]
+  },
+  {
+    "objectID": "opt_algo_unconstrained.html",
+    "href": "opt_algo_unconstrained.html",
+    "title": "Algorithms for unconstrained optimization",
+    "section": "",
+    "text": "Our motivation for studying numerical algorithms for unconstrained optimization remains the same as when we studied the conditions of optimality for such unconstrained problems – such algorithms constitute building blocks for constrained optimization problems. Indeed, many algorithms for constrained problems are based on reformulating the constrained problem into an unconstrained one and then applying the algorithms studied in this section.\nIt may be useful to recapitulate our motivation for studying optimization algorithms in general – after all, there are dozens of commercial or free&open-source software tools for solving optimization problems. Why not just use them? There are two answers beyond the traditional “at a grad school we should understand what we are using”:\nThere is certainly no shortage of algorithms for unconstrained optimization. In this crash course we can cover only a few. But the few we cover here certainly form a solid theoretical basis and provide practically usable tools.\nOne possible way to classify the algorithms is based on whether they use derivatives of the objective functions or not. In this course, we only consider the former approaches as they leads to more efficient algorithms. For the latter methods, we can refer to the literature (the prominent example is Nelder-Mead method).\nAll the relevant methods are iterative. Based on what happens within each iteration, we can classify them into two categories:",
+    "crumbs": [
+      "2. Optimization – algorithms",
+      "Algorithms for unconstrained optimization"
+    ]
+  },
+  {
+    "objectID": "opt_algo_unconstrained.html#descent-methods",
+    "href": "opt_algo_unconstrained.html#descent-methods",
+    "title": "Algorithms for unconstrained optimization",
+    "section": "Descent methods",
+    "text": "Descent methods\nThe obvious quality that the search direction needs to satisfy, is that the cost function decreses along it, at least locally (for a small step length).\n\nDefinition 1 (Descent direction) At the current iterate \\bm x_k, the direction \\bm d_k is called a descent direction if \n\\nabla f(\\bm x_k)^\\top \\bm d_k &lt; 0,\n that is, the directional derivative is negative along the direction \\bm d_k.\n\nThe product above is an inner product of the two vectors \\bm d_k and \\nabla f(\\mathbf x_k). Recall that it is defined as \n\\nabla f(\\bm x_k)^\\top \\bm d_k = \\|\\nabla f(\\bm x_k)\\| \\|\\bm d_k\\| \\cos \\theta,\n where \\theta is the angle between the gradient and the search direction. This condition has a nice geometric interpretation in a contour plot for an optimization in \\mathbb R^2. Consider the line tangent to the function countour at \\bm x_k. A descent direction must be in the other half-plane generated by the tangent line than into which the gradient \\nabla f(\\bm x_k) points.\nBeware that it is only guaranteed that the cost function is reduced if the length of the step is sufficently small. For longer steps the higher-order terms in the Taylor’s series approximation of the cost function can dominate.\nBut which descent direction to choose? How to find it?\n\nSteepest descent (aka gradient descent) method\nA natural candidate for a descent direction is the negative of the gradient \n\\bm d_k = -\\nabla f(\\bm x_k).\n\nIn fact, among all descent directions, this is the one for which the descent is steepest (the gradient determines the direction of steepest ascent), though we will see later that this does not mean that the convergence of the method is the fastest.\nIn each iteration of the gradient method, this is the how the solution is updated\n\n\\boxed{\n\\bm x_{k+1} = \\bm x_{k} - \\alpha_k \\nabla f(\\bm x_{k}).}\n\nBut where to find the step length \\alpha_k?\n\n\n\n\n\n\nNote\n\n\n\nWe address the problem of line search immediately below, right after we just introduced the gradient descent method, but the methods for line search are relevant for all descent directions, not just the steepest one.\n\n\n\n\nStep length determination (aka line search)\nNote that once the search direction has been fixed (whether we used the negative of the gradient or any other descent direction), the problem of finding the step length \\alpha_k is just a scalar optimization problem. It turns out, however, that besides finding the true minimum along the search directions, it is often sufficient to find the minimum only approximately, or not aiming at minimization at all and work with a fixed step length instead.\n\nFixed length of the step\nHere we give a guidance on the choice of the lenght of the step. But we need to introduce a useful concept first.\n\nDefinition 2 (L-smoothness) For a continuously differentiable function f, the gradient \\nabla f is said to be L-smooth if there exists a constant L&gt;0 such that \n\\|\\nabla f(x) - \\nabla f(y)\\| \\leq L \\|x-y\\|.\n\n\nNot that if the second derivatives exist, L is an upper bound on the norm of the Hessian \n\\|\\nabla^2 f\\|\\leq L.\n\nFor quadratic functions, L is the largest eigenvalue of the Hessian \nL = \\max_i \\lambda_i (\\mathbf Q).\n\nThe usefulness of the concept of L-smoothness is that it provides a quadratic function that serves as an upper bound for the original function. This is formulated as the following lemma.\n\nLemma 1 (Descent lemma) Consider an L-smooth function f. Then for any \\mathbf x_k and \\mathbf x_{k+1}, the following inequality holds \nf(\\mathbf x_{k+1}) \\leq  f(\\mathbf x_{k}) + \\nabla f(\\mathbf x_k)^\\top (\\mathbf x_{k-1}-\\mathbf x_{k}) + \\frac{L}{2}\\|\\mathbf x_{k-1}-\\mathbf x_{k}\\|^2\n\n\nWhat implication does the result have on the determination of the step length?\n\n\\alpha = \\frac{1}{L}\n\n\n\nExact line search\nA number of methos exist: bisection, golden section, Newton, As finding true minium in each iteration is often too computationally costly and hardly needed, we do not have them here. The only exception the Newton’s method, which for vector variables constitutes another descent method on its own and we cover it later.\n\nExample 1 Here we develop a solution for an exact minimization of a quadratic functions f(\\bm x) = \\frac{1}{2} \\bm x^\\top\\mathbf Q \\bm x + \\mathbf c^\\top \\bm x along a given direction. We show that it leads to a closed-form formula. Although not particularly useful in practice, it is a good exercise in understanding the problem of line search. Furthermore, we will use it later to demonstrate the behaviour of the steepest descent method. The problem is to \\operatorname*{minimize}_{\\alpha_k} f(\\bm x_k + \\alpha_k \\bm d_k). We express the cost as a function of the current iterate, the direction, and step length. \n\\begin{aligned}\nf(\\bm x_k + \\alpha_k \\bm d_k) &= \\frac{1}{2}(\\bm x_k + \\alpha_k\\bm d_k)^\\top\\mathbf Q (\\bm x_k + \\alpha_k\\bm d_k) +\\mathbf c^\\top(\\bm x_k + \\alpha_k\\bm d_k)\\\\\n&= \\frac{1}{2} \\bm x_k^\\top\\mathbf Q \\bm x_k + \\bm d_k^\\top\\mathbf Q\\bm x_k \\alpha_k + \\frac{1}{2} \\bm d_k^\\top\\mathbf Q\\bm d_k \\alpha_k^2+ \\mathbf c^\\top(\\bm x_k + \\alpha_k\\bm d_k).\n\\end{aligned}\n\nDifferentiating the function with respect to the length of the step, we get \n\\frac{\\mathrm{d}f(\\bm x_k + \\alpha_k\\bm d_k)}{\\mathrm{d}\\alpha_k} = \\bm d_k^\\top \\underbrace{(\\mathbf Q\\bm x_k + \\mathbf c)}_{\\nabla f(\\bm x_k)} + \\bm d_k^\\top\\mathbf Q\\bm d_k \\alpha_k.\n\nAnd now setting the derivative to zero, we find the optimal step length \n\\boxed{\n\\alpha_k = -\\frac{\\bm d_k^\\top \\nabla f(\\bm x_k)}{\\bm d_k^\\top\\mathbf Q\\bm d_k} = -\\frac{\\bm d_k^\\top (\\mathbf Q\\bm x_k + \\mathbf c)}{\\bm d_k^\\top\\mathbf Q\\bm d_k}.}\n\n\n\n\nApproximate line search – backtracking\nThere are several methods for approximate line search. Here we describe the popular backtracking algorithm, which is based on the Armijo / Wolfe conditions.\nThe algorithm is parameterized by three parameter: \\alpha_0&gt;0, \\beta\\in(0,1), \\gamma\\in(0,1). The k-th iteration of the algorithm goes like this: set the step lenght \\alpha_k to the initial value \\alpha_0. Evaluate the decrease in the cost function and unless it is sufficient, reduce the step length by \\alpha_k = \\beta \\alpha_k.\nHow do we determine if the decrease is sufficient? There are several conditions of sufficient decrease. The most commonly used is called Armijo condition, which reads \nf(\\bm x_k+\\alpha_k\\bm d_k) \\leq f(\\bm x_k) + \\gamma \\alpha_k \\mathbf d^T \\nabla f(\\bm x_k).\n\nEquivalently, the condition that sends the algorithm into another reduction of \\alpha_k by \\alpha_k = \\beta\\alpha_k is \nf(\\bm x_k) - f(\\bm x_k+\\alpha_k\\bm d_k) &lt; -\\gamma \\alpha_k \\mathbf d^T \\nabla f(\\bm x_k).\n\nThe backtracking algorithm can be implemented as follows\n\n\nShow the code\nfunction backtracking_line_search(f, ∇fₖ, xₖ, dₖ; α₀=1.0, β=0.5, γ=0.1)\n    α = α₀\n    while f(xₖ)-f(xₖ+α*dₖ) &lt; -γ*α*dot(dₖ,∇fₖ)\n        α *= β\n    end\n    return α\nend\n\n\n\n\n\nNewton’s method\n\n\nQuasi-Newton’s methods\n\n\nConjugate gradient method",
+    "crumbs": [
+      "2. Optimization – algorithms",
+      "Algorithms for unconstrained optimization"
+    ]
+  },
+  {
+    "objectID": "opt_algo_unconstrained.html#trust-region-methods",
+    "href": "opt_algo_unconstrained.html#trust-region-methods",
+    "title": "Algorithms for unconstrained optimization",
+    "section": "Trust region methods",
+    "text": "Trust region methods",
+    "crumbs": [
+      "2. Optimization – algorithms",
+      "Algorithms for unconstrained optimization"
+    ]
+  },
+  {
+    "objectID": "rocond_H_infinity_control.html",
+    "href": "rocond_H_infinity_control.html",
+    "title": "Hinfinity-optimal control",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "12. Robust control",
+      "Hinfinity-optimal control"
     ]
   },
   {
@@ -722,146 +700,190 @@
     ]
   },
   {
-    "objectID": "opt_reformulations.html",
-    "href": "opt_reformulations.html",
-    "title": "Problem reformulations",
-    "section": "",
-    "text": "Given a function f(\\bm x), we can maximize it by minimizing -f(\\bm x).",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Problem reformulations"
-    ]
-  },
-  {
-    "objectID": "opt_reformulations.html#maximization-into-minimization",
-    "href": "opt_reformulations.html#maximization-into-minimization",
-    "title": "Problem reformulations",
-    "section": "",
-    "text": "Given a function f(\\bm x), we can maximize it by minimizing -f(\\bm x).",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Problem reformulations"
-    ]
-  },
-  {
-    "objectID": "opt_reformulations.html#equality-into-inequality-constraints",
-    "href": "opt_reformulations.html#equality-into-inequality-constraints",
-    "title": "Problem reformulations",
-    "section": "Equality into inequality constraints",
-    "text": "Equality into inequality constraints\nAs a matter of fact, we could declare as the most general format of an NLP problem the one with only inequality constraints. This is because we can always transform an equality constraint into two inequality constraints. Given an equality constraint h(\\bm x) = 0, we can write it as h(\\bm x) \\leq 0 and -h(\\bm x) \\leq 0, that is,\n\n\\underbrace{\\begin{bmatrix}\nh(\\bm x) \\\\\n-h(\\bm x)\n\\end{bmatrix}}_{\\mathbf g(\\bm x)} \\leq \\mathbf 0.\n\nOn the other hand, it may be useful to keep the equality constraints explicit in the problem formulation for the benefit of theoretical analysis, numerical methods and convenience of the user/modeller.",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Problem reformulations"
-    ]
-  },
-  {
-    "objectID": "opt_reformulations.html#inequality-into-sort-of-equality-constraints",
-    "href": "opt_reformulations.html#inequality-into-sort-of-equality-constraints",
-    "title": "Problem reformulations",
-    "section": "Inequality into “sort-of” equality constraints",
-    "text": "Inequality into “sort-of” equality constraints\nConsider the inequality constraint g(\\bm x) \\leq 0. By introducing a slack variable s and imposing the nonnegativity condition, we can turn the inequality into the equality g(\\bm x) + s = 0. Well, we have not completely discarded an inequality because now we have s \\geq 0. But this new problem may be better suited for some theoretical analysis or numerical methods.\nIt is also possible to express the nonnegativity constraint implicitly by considering an unrestricted variable s and using it within the inequality through its square s^2:\n\ng(\\bm x) + s^2 = 0.",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Problem reformulations"
-    ]
-  },
-  {
-    "objectID": "opt_reformulations.html#linear-cost-function-always-possible",
-    "href": "opt_reformulations.html#linear-cost-function-always-possible",
-    "title": "Problem reformulations",
-    "section": "Linear cost function always possible",
-    "text": "Linear cost function always possible\nGiven a cost function f(\\bm x) to be minimized, we can always upper-bound it by a new variable \\gamma accompanied by a new constraint f(\\bm x) \\leq \\gamma and then minimize just \\gamma \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm{x}\\in\\mathbb R^n, \\gamma\\in\\mathbb R} & \\quad \\gamma \\\\\n\\text{subject to} & \\quad f(\\bm x) \\leq \\gamma.\n\\end{aligned}",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Problem reformulations"
-    ]
-  },
-  {
-    "objectID": "opt_reformulations.html#absolute-value",
-    "href": "opt_reformulations.html#absolute-value",
-    "title": "Problem reformulations",
-    "section": "Absolute value",
-    "text": "Absolute value\nConsider an optimization problem in which the cost function contains the absolute value of a variable \n\\begin{aligned}\n\\operatorname*{minimize} &\\quad \\sum_i c_i|x_i|\\\\\n\\text{subject to} &\\quad \\mathbf A \\bm x \\geq \\mathbf b.\n\\end{aligned}\n\nWe also impose the restriction that all the coefficients c_i are nonnegative. The cost function is then a sum of piecewise linear convex function, which can be shown to be convex.\nThe trouble with the absolute value function is that it is not linear, it is not even smooth. And yet, as we will see below, this optimization with the absolute value can be reformulated as a linear program.\nOne possible reformulation introduces two new nonnegative (vector) variables \\bm x^+\\geq 0 and \\bm x^-\\geq 0 and with which the original variables can be expressed as x_i = x_i^+ - x_i^-, \\; i=1, \\ldots, n. The cost function can then be written as \\sum c_i|x_i| = \\sum_i c_i (x_i^+ + x_i^-).\nThis may look surprising (and incorrect) at first, but we argue that at an optimum, x_i^+ or x_i^- must be zero. Otherwise we could subtract (in case c_i&gt;0) the same amount from/to both, which would not change the satisfaction of the constraints (this modification cancels in x_i = x_i^+ - x_i^-), and the cost would be further reduced.\nThe LP in the standard form then changes to\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x^+\\in \\mathbb R^n, \\bm x^-\\in \\mathbb R^n} &\\quad \\mathbf c^\\top (\\bm x^+ + \\bm x^-)\\\\\n\\text{subject to} &\\quad \\mathbf A \\bm x^+ - \\mathbf A \\bm x^- \\geq \\mathbf b,\\\\\n&\\quad \\bm x^+ \\geq \\mathbf 0,\\\\\n&\\quad \\bm x^- \\geq \\mathbf 0.\n\\end{aligned}\n\nAnother possibility is to exploit the reformulation of z_i = |x_i| as x_i\\leq z and -x_i\\leq z. The original problem then transforms into\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm z\\in \\mathbb R^n, \\bm x\\in \\mathbb R^n} &\\quad \\mathbf c^\\top \\bm z\\\\\n\\text{subject to} &\\quad \\mathbf A \\bm x \\geq \\mathbf b,\\\\\n&\\qquad \\bm x \\leq \\bm z,\\\\\n&\\quad -\\bm x \\leq \\bm z.\n\\end{aligned}",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Problem reformulations"
-    ]
-  },
-  {
-    "objectID": "opt_reformulations.html#piecewise-linear",
-    "href": "opt_reformulations.html#piecewise-linear",
-    "title": "Problem reformulations",
-    "section": "Piecewise linear",
-    "text": "Piecewise linear",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Problem reformulations"
-    ]
-  },
-  {
-    "objectID": "opt_reformulations.html#quadratic",
-    "href": "opt_reformulations.html#quadratic",
-    "title": "Problem reformulations",
-    "section": "Quadratic",
-    "text": "Quadratic",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Problem reformulations"
-    ]
-  },
-  {
-    "objectID": "discr_indir_LQR_fin_horizon.html",
-    "href": "discr_indir_LQR_fin_horizon.html",
-    "title": "Discrete-time LQR-optimal control on a finite horizon",
+    "objectID": "dynamic_programming.html",
+    "href": "dynamic_programming.html",
+    "title": "Optimal control via dynamic programming",
     "section": "",
     "text": "Back to top",
     "crumbs": [
-      "4. Discrete-time optimal control – indirect approach",
-      "Discrete-time LQR-optimal control on a finite horizon"
+      "5. Discrete-time optimal control – dynamic programming",
+      "Optimal control via dynamic programming"
     ]
   },
   {
-    "objectID": "limits_of_performance_MIMO.html",
-    "href": "limits_of_performance_MIMO.html",
-    "title": "Limits for MIMO systems",
+    "objectID": "cont_indir_Pontryagin.html",
+    "href": "cont_indir_Pontryagin.html",
+    "title": "Pontryagin’s maximum principle",
     "section": "",
     "text": "Back to top",
     "crumbs": [
-      "13. Limits of performance",
-      "Limits for MIMO systems"
+      "8. Continuous-time optimal control - indirect approach via Pontryagin's maximum principle",
+      "Pontryagin's maximum principle"
     ]
   },
   {
-    "objectID": "discr_indir_LQR_inf_horizon.html",
-    "href": "discr_indir_LQR_inf_horizon.html",
-    "title": "Discrete-time LQR-optimal control on an infinite horizon",
+    "objectID": "cont_indir_constrained.html",
+    "href": "cont_indir_constrained.html",
+    "title": "Constrained optimal control",
     "section": "",
     "text": "Back to top",
     "crumbs": [
-      "4. Discrete-time optimal control – indirect approach",
-      "Discrete-time LQR-optimal control on an infinite horizon"
+      "8. Continuous-time optimal control - indirect approach via Pontryagin's maximum principle",
+      "Constrained optimal control"
     ]
   },
   {
-    "objectID": "cont_indir_calculus_of_variations.html",
-    "href": "cont_indir_calculus_of_variations.html",
-    "title": "Calculus of variations and optimal control",
+    "objectID": "discr_dir_mpc.html",
+    "href": "discr_dir_mpc.html",
+    "title": "Model predictive control (MPC)",
     "section": "",
-    "text": "(Kirk 2004), (Lewis, Vrabie, and Syrmo 2012), (Liberzon 2011), (Sussmann and Willems 1997)",
+    "text": "In the previous section we learnt how to compute an optimal control sequence on a finite time horizon using numerical methods for solving nonlinear programs (NLP), and quadratic programs (QP) in particular. There are two major deficiencies of such approach:\n\nThe control sequence was computed under the assumption that the mathematical model is perfectly accurate. As soon as the reality deviates from the model, either because of some unmodelled dynamics or because of the presence of (external) disturbances, the performance of the system will deteriorate. We need a way to turn the presented open-loop (also feedforward) control scheme into a feedback one.\nThe control sequence was computed for a finite time horizon. It is commonly required to consider an infinite time horizon, which is not possible with the presented approach based on solving finite-dimensional mathematical programs.\n\nThere are several ways to address these issues. Here we introduced one of them. It is knowns are Model Predictive Control (MPC), or also Receding Horizon Control (RHC). Some more are presented in the next two sections (one based on indirect approach, another one based on dynamic programming).",
     "crumbs": [
-      "7. Continuous-time optimal control - indirect approach via calculus of variations",
-      "Calculus of variations and optimal control"
+      "3. Discrete-time optimal control – direct approach",
+      "Model predictive control (MPC)"
     ]
   },
   {
-    "objectID": "cont_indir_calculus_of_variations.html#literature",
-    "href": "cont_indir_calculus_of_variations.html#literature",
-    "title": "Calculus of variations and optimal control",
+    "objectID": "discr_dir_mpc.html#deficiencies-of-precomputed-open-loop-optimal-control",
+    "href": "discr_dir_mpc.html#deficiencies-of-precomputed-open-loop-optimal-control",
+    "title": "Model predictive control (MPC)",
     "section": "",
-    "text": "(Kirk 2004), (Lewis, Vrabie, and Syrmo 2012), (Liberzon 2011), (Sussmann and Willems 1997)",
+    "text": "In the previous section we learnt how to compute an optimal control sequence on a finite time horizon using numerical methods for solving nonlinear programs (NLP), and quadratic programs (QP) in particular. There are two major deficiencies of such approach:\n\nThe control sequence was computed under the assumption that the mathematical model is perfectly accurate. As soon as the reality deviates from the model, either because of some unmodelled dynamics or because of the presence of (external) disturbances, the performance of the system will deteriorate. We need a way to turn the presented open-loop (also feedforward) control scheme into a feedback one.\nThe control sequence was computed for a finite time horizon. It is commonly required to consider an infinite time horizon, which is not possible with the presented approach based on solving finite-dimensional mathematical programs.\n\nThere are several ways to address these issues. Here we introduced one of them. It is knowns are Model Predictive Control (MPC), or also Receding Horizon Control (RHC). Some more are presented in the next two sections (one based on indirect approach, another one based on dynamic programming).",
     "crumbs": [
-      "7. Continuous-time optimal control - indirect approach via calculus of variations",
-      "Calculus of variations and optimal control"
+      "3. Discrete-time optimal control – direct approach",
+      "Model predictive control (MPC)"
+    ]
+  },
+  {
+    "objectID": "discr_dir_mpc.html#model-predictive-control-mpc-as-a-way-to-turn-open-loop-control-into-feedback-control",
+    "href": "discr_dir_mpc.html#model-predictive-control-mpc-as-a-way-to-turn-open-loop-control-into-feedback-control",
+    "title": "Model predictive control (MPC)",
+    "section": "Model predictive control (MPC) as a way to turn open-loop control into feedback control",
+    "text": "Model predictive control (MPC) as a way to turn open-loop control into feedback control\nThe idea is to compute an optimal control sequence on a finite time horizon using the material presented in the previous section, apply only the first control action to the system, and then repeat the procedure upon shifting the time horizon by one time step.\nAlthough this name “model predictive control” is commonly used in the control community, the other – perhaps a bit less popular – name “receding horizon control” is equally descriptive, if not even a bit more.\n\n\n\n\n\n\nNote\n\n\n\nIt may take a few moments to digest the idea, but it is actually quite natural. As a matter of fact, this is the way most of us control our lifes every day. We plan our actions on a finite time horizon, and while building this plan we use our understanding (model) of the world. We then perform the first action from our plan, observe the impact of our action and possibly a change in the environment, and update our plan accordingly on a new (shifted) time horizon. We repeat this procedure over and over again. It is crucial that the prediction horizon must be long enough so that the full impact of our actions can be observed.",
+    "crumbs": [
+      "3. Discrete-time optimal control – direct approach",
+      "Model predictive control (MPC)"
+    ]
+  },
+  {
+    "objectID": "discr_dir_mpc.html#linear-vs-nonlinear-mpc",
+    "href": "discr_dir_mpc.html#linear-vs-nonlinear-mpc",
+    "title": "Model predictive control (MPC)",
+    "section": "Linear vs nonlinear MPC",
+    "text": "Linear vs nonlinear MPC\nx",
+    "crumbs": [
+      "3. Discrete-time optimal control – direct approach",
+      "Model predictive control (MPC)"
+    ]
+  },
+  {
+    "objectID": "discr_dir_mpc.html#prediction-horizon-vs-control",
+    "href": "discr_dir_mpc.html#prediction-horizon-vs-control",
+    "title": "Model predictive control (MPC)",
+    "section": "Prediction horizon vs control",
+    "text": "Prediction horizon vs control\nx",
+    "crumbs": [
+      "3. Discrete-time optimal control – direct approach",
+      "Model predictive control (MPC)"
+    ]
+  },
+  {
+    "objectID": "discr_dir_mpc.html#hard-constraints-vs-soft-constraints",
+    "href": "discr_dir_mpc.html#hard-constraints-vs-soft-constraints",
+    "title": "Model predictive control (MPC)",
+    "section": "Hard constraints vs soft constraints",
+    "text": "Hard constraints vs soft constraints\nx",
+    "crumbs": [
+      "3. Discrete-time optimal control – direct approach",
+      "Model predictive control (MPC)"
+    ]
+  },
+  {
+    "objectID": "discr_dir_mpc.html#literature",
+    "href": "discr_dir_mpc.html#literature",
+    "title": "Model predictive control (MPC)",
+    "section": "Literature",
+    "text": "Literature\n(Rawlings, Mayne, and Diehl 2017), (Borrelli, Bemporad, and Morari 2017), (Gros and Diehl 2022) (Bemporad 2021)",
+    "crumbs": [
+      "3. Discrete-time optimal control – direct approach",
+      "Model predictive control (MPC)"
+    ]
+  },
+  {
+    "objectID": "opt_theory_modellers.html",
+    "href": "opt_theory_modellers.html",
+    "title": "Optimization modelling languages",
+    "section": "",
+    "text": "Realistically complex optimization problems cannot be solved with just a pen and a paper – computer programs (often called optimization solvers) are needed to solve them. And now comes the challenge: as various solvers for even the same class of problems differ in the algorithms they implement, so do their interfaces – every solver expects the inputs (the data defining the optimization problem) in a specific format. This makes it difficult to switch between solvers, as the problem data has to be reformatted every time.\n\nExample 1 (Data formatting for different solvers) Consider the following optimization problem: \n\\begin{aligned}\n  \\operatorname*{minimize}_{\\bm x \\in \\mathbb R^2} & \\quad \\frac{1}{2} \\bm x^\\top \\begin{bmatrix}4 & 1\\\\ 1 & 2 \\end{bmatrix} \\bm x + \\begin{bmatrix}1 \\\\ 1\\end{bmatrix}^\\top \\bm x \\\\\n  \\text{subject to} & \\quad \\begin{bmatrix}1 \\\\ 0 \\\\ 0\\end{bmatrix} \\leq \\begin{bmatrix} 1 & 1\\\\ 1 & 0\\\\ 0 & 1\\end{bmatrix} \\bm x \\leq  \\begin{bmatrix}1 \\\\ 0.7 \\\\ 0.7\\end{bmatrix}\n\\end{aligned}\n\nThere are dozens of solvers that can be used to solve this problem. Here we demonstrate a usage of these two: OSQP and COSMO.jl. And we are going to call the solvers in Julia (using the the wrappers OSQP.jl for the former). First, we start with OSQP (in fact, this is their example):\n\n\nShow the code\nusing OSQP\nusing SparseArrays\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nproblem_OSQP = OSQP.Model()\nOSQP.setup!(problem_OSQP; P=P, q=q, A=A, l=l, u=u, alpha=1, verbose=false)\n\n# Solve the optimization problem and show the results\nresults_OSQP = OSQP.solve!(problem_OSQP)\nresults_OSQP.x\n\n\nNow we do the same with COSMO. First, we must take into account that COSMO cannot accept two-sided inequalities, so we have to reformulate the problem so that the constraints are only in the form of \\mathbf A\\bm x + b \\geq \\bm 0: \n\\begin{aligned}\n  \\operatorname*{minimize}_{\\bm x \\in \\mathbb R^2} & \\quad \\frac{1}{2} \\bm x^\\top \\begin{bmatrix}4 & 1\\\\ 1 & 2 \\end{bmatrix} \\bm x + \\begin{bmatrix}1 \\\\ 1\\end{bmatrix}^\\top \\bm x \\\\\n  \\text{subject to} & \\quad \\begin{bmatrix} -1 & -1\\\\ -1 & 0\\\\ 0 & -1\\\\ 1 & 1\\\\ 1 & 0\\\\ 0 & 1\\end{bmatrix}\\bm x + \\begin{bmatrix}1 \\\\ 0.7 \\\\ 0.7 \\\\ -1 \\\\ 0 \\\\ 0\\end{bmatrix} \\geq  \\mathbf 0.\n\\end{aligned}\n\n\n\nShow the code\nusing COSMO\nusing SparseArrays\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nAa = [-A; A]\nba = [u; -l]\n\nproblem_COSMO = COSMO.Model()\nconstraint = COSMO.Constraint(Aa, ba, COSMO.Nonnegatives)\nsettings = COSMO.Settings(verbose=false)\nassemble!(problem_COSMO, P, q, constraint, settings = settings)\n\n# Solve the optimization problem and show the results\nresults_COSMO = COSMO.optimize!(problem_COSMO)\nresults_COSMO.x\n\n\nAlthough the two solvers are solving the same problem, the data has to be formatted differently for each of them (and the difference in syntax is not negligible either).\nWhat if we could formulate the same problem without considering the pecualiarities of each solver? It turns out that it is possible. In Julia we can use JuMP.jl:\n\n\nShow the code\nusing JuMP\nusing SparseArrays\nusing OSQP, COSMO\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nmodel_JuMP = Model()\n@variable(model_JuMP, x[1:2])\n@objective(model_JuMP, Min, 0.5*x'*P*x + q'*x)\n@constraint(model_JuMP, A*x .&lt;= u)\n@constraint(model_JuMP, A*x .&gt;= l)\n\n# Solve the optimization problem using OSQP and show the results\nset_silent(model_JuMP)\nset_optimizer(model_JuMP, OSQP.Optimizer)\noptimize!(model_JuMP)\ntermination_status(model_JuMP)\nx_OSQP = value.(x)\n\n# Now solve the problem using COSMO and show the results\nset_optimizer(model_JuMP, COSMO.Optimizer)\noptimize!(model_JuMP)\ntermination_status(model_JuMP)\nx_COSMO = value.(x)\n\n\n\nNotice how the optimization problem is defined just once in the last code and then different solvers can be chosen to solve it. The code represents an instance of a so-called optimization modelling language (OML), or actually its major class called algebraic modelling language (AML).\nThe key motivation for using an OML/AML is to separate the process of formulating the problem from the process of solving it (using a particular solver). Furthermore, such solver-independent problem description (called optimization model) better mimics the way we formulate these problems using a pen and a paper, making it (perhaps) a bit more convenient to write our own and read someone else’s models.",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Optimization modelling languages"
+    ]
+  },
+  {
+    "objectID": "opt_theory_modellers.html#why-optimization-modelling-languages",
+    "href": "opt_theory_modellers.html#why-optimization-modelling-languages",
+    "title": "Optimization modelling languages",
+    "section": "",
+    "text": "Realistically complex optimization problems cannot be solved with just a pen and a paper – computer programs (often called optimization solvers) are needed to solve them. And now comes the challenge: as various solvers for even the same class of problems differ in the algorithms they implement, so do their interfaces – every solver expects the inputs (the data defining the optimization problem) in a specific format. This makes it difficult to switch between solvers, as the problem data has to be reformatted every time.\n\nExample 1 (Data formatting for different solvers) Consider the following optimization problem: \n\\begin{aligned}\n  \\operatorname*{minimize}_{\\bm x \\in \\mathbb R^2} & \\quad \\frac{1}{2} \\bm x^\\top \\begin{bmatrix}4 & 1\\\\ 1 & 2 \\end{bmatrix} \\bm x + \\begin{bmatrix}1 \\\\ 1\\end{bmatrix}^\\top \\bm x \\\\\n  \\text{subject to} & \\quad \\begin{bmatrix}1 \\\\ 0 \\\\ 0\\end{bmatrix} \\leq \\begin{bmatrix} 1 & 1\\\\ 1 & 0\\\\ 0 & 1\\end{bmatrix} \\bm x \\leq  \\begin{bmatrix}1 \\\\ 0.7 \\\\ 0.7\\end{bmatrix}\n\\end{aligned}\n\nThere are dozens of solvers that can be used to solve this problem. Here we demonstrate a usage of these two: OSQP and COSMO.jl. And we are going to call the solvers in Julia (using the the wrappers OSQP.jl for the former). First, we start with OSQP (in fact, this is their example):\n\n\nShow the code\nusing OSQP\nusing SparseArrays\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nproblem_OSQP = OSQP.Model()\nOSQP.setup!(problem_OSQP; P=P, q=q, A=A, l=l, u=u, alpha=1, verbose=false)\n\n# Solve the optimization problem and show the results\nresults_OSQP = OSQP.solve!(problem_OSQP)\nresults_OSQP.x\n\n\nNow we do the same with COSMO. First, we must take into account that COSMO cannot accept two-sided inequalities, so we have to reformulate the problem so that the constraints are only in the form of \\mathbf A\\bm x + b \\geq \\bm 0: \n\\begin{aligned}\n  \\operatorname*{minimize}_{\\bm x \\in \\mathbb R^2} & \\quad \\frac{1}{2} \\bm x^\\top \\begin{bmatrix}4 & 1\\\\ 1 & 2 \\end{bmatrix} \\bm x + \\begin{bmatrix}1 \\\\ 1\\end{bmatrix}^\\top \\bm x \\\\\n  \\text{subject to} & \\quad \\begin{bmatrix} -1 & -1\\\\ -1 & 0\\\\ 0 & -1\\\\ 1 & 1\\\\ 1 & 0\\\\ 0 & 1\\end{bmatrix}\\bm x + \\begin{bmatrix}1 \\\\ 0.7 \\\\ 0.7 \\\\ -1 \\\\ 0 \\\\ 0\\end{bmatrix} \\geq  \\mathbf 0.\n\\end{aligned}\n\n\n\nShow the code\nusing COSMO\nusing SparseArrays\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nAa = [-A; A]\nba = [u; -l]\n\nproblem_COSMO = COSMO.Model()\nconstraint = COSMO.Constraint(Aa, ba, COSMO.Nonnegatives)\nsettings = COSMO.Settings(verbose=false)\nassemble!(problem_COSMO, P, q, constraint, settings = settings)\n\n# Solve the optimization problem and show the results\nresults_COSMO = COSMO.optimize!(problem_COSMO)\nresults_COSMO.x\n\n\nAlthough the two solvers are solving the same problem, the data has to be formatted differently for each of them (and the difference in syntax is not negligible either).\nWhat if we could formulate the same problem without considering the pecualiarities of each solver? It turns out that it is possible. In Julia we can use JuMP.jl:\n\n\nShow the code\nusing JuMP\nusing SparseArrays\nusing OSQP, COSMO\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nmodel_JuMP = Model()\n@variable(model_JuMP, x[1:2])\n@objective(model_JuMP, Min, 0.5*x'*P*x + q'*x)\n@constraint(model_JuMP, A*x .&lt;= u)\n@constraint(model_JuMP, A*x .&gt;= l)\n\n# Solve the optimization problem using OSQP and show the results\nset_silent(model_JuMP)\nset_optimizer(model_JuMP, OSQP.Optimizer)\noptimize!(model_JuMP)\ntermination_status(model_JuMP)\nx_OSQP = value.(x)\n\n# Now solve the problem using COSMO and show the results\nset_optimizer(model_JuMP, COSMO.Optimizer)\noptimize!(model_JuMP)\ntermination_status(model_JuMP)\nx_COSMO = value.(x)\n\n\n\nNotice how the optimization problem is defined just once in the last code and then different solvers can be chosen to solve it. The code represents an instance of a so-called optimization modelling language (OML), or actually its major class called algebraic modelling language (AML).\nThe key motivation for using an OML/AML is to separate the process of formulating the problem from the process of solving it (using a particular solver). Furthermore, such solver-independent problem description (called optimization model) better mimics the way we formulate these problems using a pen and a paper, making it (perhaps) a bit more convenient to write our own and read someone else’s models.",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Optimization modelling languages"
+    ]
+  },
+  {
+    "objectID": "opt_theory_modellers.html#why-not-optimization-modelling-languages",
+    "href": "opt_theory_modellers.html#why-not-optimization-modelling-languages",
+    "title": "Optimization modelling languages",
+    "section": "Why not optimization modelling languages?",
+    "text": "Why not optimization modelling languages?\nAs a matter of fact, some optimization experts even keep avoiding OML/AML altogether. For example, if a company pays for a (not really cheap) license of Gurobi Optimizer – a powerful optimization library for (MI)LP/QP/QCQP –, it may be the case that for a particular very large-scale optimization problem their optimization specialist will have hard time to find a third-party solver of comparable performance. If then its Python API makes definition of optimization problems convenient too (see the code below), maybe there is little regret that such problem definitions cannot be reused with a third-party solver. The more so that since it is tailored to Gurobi solver, it will offer control over the finest details.\n\n\nShow the code\nimport gurobipy as gp\nimport numpy as np\n\n# Define the data for the model\nP = np.array([[4.0, 1.0], [1.0, 2.0]])\nq = np.array([1.0, 1.0])\nA = np.array([[1.0, 1.0], [1.0, 0.0], [0.0, 1.0]])\nl = np.array([1.0, 0.0, 0.0])\nu = np.array([1.0, 0.7, 0.7])\n\n# Create a new model\nm = gp.Model(\"qp\")\n\n# Create a vector variable\nx = m.addMVar((2,))\n\n# Set the objective\nobj = 1/2*(x@P@x + q@x)\nm.setObjective(obj)\n\n# Add the constraints\nm.addConstr(A@x &gt;= l, \"c1\")\nm.addConstr(A@x &lt;= u, \"c2\")\n\n# Run the solver\nm.optimize()\n\n# Print the results\nfor v in m.getVars():\n    print(f\"{v.VarName} {v.X:g}\")\n\nprint(f\"Obj: {m.ObjVal:g}\")\n\n\nSimilar and yet different is the story of the IBM ILOG CPLEX, another top-notch solvers addressing the same problems as Gurobi. They do have their own modeling language called Optimization Modelling Language (OPL), but it is also only interfacing with their solver(s). We can only guess that their motivation for developing their own optimization modelling language was that at the time of its developments (in 1990s) Python was still in pre-2.0 stage and formulating optimization problems in programming languages like C/C++ or Fortran was nowhere close to being convenient. Gurobi, in turn, started in 2008, when Python was already a popular language.",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Optimization modelling languages"
+    ]
+  },
+  {
+    "objectID": "opt_theory_modellers.html#language-independent-optimization-modelling-languages",
+    "href": "opt_theory_modellers.html#language-independent-optimization-modelling-languages",
+    "title": "Optimization modelling languages",
+    "section": "Language-independent optimization modelling languages",
+    "text": "Language-independent optimization modelling languages\nOptimization/algebraic modelling languages were originally developed outside programming languages, essentially as standalone tools. Examples are AMPL, GAMS, and, say, GLPK/GMPL (MathProg). We listed these main names here since they can be bumped across (they are still actively developed), but we are not going to discuss them in our course any further. The reason is that there are now alternatives that are implemented as packages/toolboxes in programming languages such as Julia, Matlab, and Python, which offer a more fluent workflow – a user can use the same programming language to acquire the data, preprocess them, formulate the optimization problem, configure and call a solver, and finally do some postprocessing including a visualization and whatever reporting, all without leaving the language of their choice.",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Optimization modelling languages"
+    ]
+  },
+  {
+    "objectID": "opt_theory_modellers.html#optimization-modelling-in-julia",
+    "href": "opt_theory_modellers.html#optimization-modelling-in-julia",
+    "title": "Optimization modelling languages",
+    "section": "Optimization modelling in Julia",
+    "text": "Optimization modelling in Julia\nMy obvious (personal) bias towards Julia programming language is partly due to the terrific support for optimization modelling in Julia:\n\nJuMP.jl not only constitutes one of the flagship packages of the Julia ecosystem but it is on par with the state of the art optimization modelling languages. Furthermore, being a free and open source software, it enjoys a vibrant community of developers and users. They even meet annually at JuMP-dev conference (in 2023 in Boston, MA).\nConvex.jl is an implementation of the concept of Disciplined Convex Programming (DCP) in Julia (below we also list its implementations in Matlab and Python). Even though it is now registered as a part of the JuMP.jl project, it is still a separate concept. Interesting, convenient, but it seems to be in a maintanence mode now.\n\n\n\nShow the code\nusing Convex, SCS\n\n# Define the problem data and build the problem description\nP = [4.0 1.0; 1.0 2.0]\nq = [1.0, 1.0]\nA = [1.0 1.0; 1.0 0.0; 0.0 1.0]\nl = [1.0, 0.0, 0.0]\nu = [1.0, 0.7, 0.7]\n\n# Create a vector variable of size n\nx = Variable(2)\n\n# Define the objective \nobjective = 1/2*quadform(x,P) + dot(q,x)\n\n# Define the constraints\nconstraints = [l &lt;= A*x, A*x &lt;= u]\n\n# Define the overal description of the optimization problem\nproblem = minimize(objective, constraints)\n\n# Solve the problem\nsolve!(problem, SCS.Optimizer; silent_solver = true)\n\n# Check the status of the problem\nproblem.status # :Optimal, :Infeasible, :Unbounded etc.\n\n# Get the optimum value\nproblem.optval\n\n# Get the optimal x\nx.value",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Optimization modelling languages"
+    ]
+  },
+  {
+    "objectID": "opt_theory_modellers.html#optimization-modelling-in-matlab",
+    "href": "opt_theory_modellers.html#optimization-modelling-in-matlab",
+    "title": "Optimization modelling languages",
+    "section": "Optimization modelling in Matlab",
+    "text": "Optimization modelling in Matlab\nPopularity of Matlab as a language and an ecosystem for control-related computations is undeniable. Therefore, let’s have a look at what is available for modelling optimization problems in Matlab:\n\nOptimization Toolbox for Matlab is one of the commercial toolboxes produced by Matlab and Simulink creators. Since the R2017b release the toolbox supports Problem-based optimization workflow (besides the more traditional Solver-based optimization workflow supported since the beginning), which can be regarded as a kind of an optimization/algebraic modelling language, albeit restricted to their own solvers.\nYalmip started as Yet Another LMI Parser quite some time ago (which reveals its control theoretic roots), but these days it serves as fairly complete algebraic modelling language (within Matlab), interfacing to perhaps any optimization solver, both commercial and free&open-source. It is free and open-source. Is is still actively developed and maintained and it abounds with tutorials and examples.\nCVX is a Matlab counterpart of Convex.jl (or the other way around, if you like, since it has been here longer). The name stipulates that it only allows convex optimization probles (unlike Yalmip) – it follows the Disciplined Convex Programming (DCP) paradigm. Unfortunately, the development seems to have stalled – the last update is from 2020.",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Optimization modelling languages"
+    ]
+  },
+  {
+    "objectID": "opt_theory_modellers.html#optimization-modelling-in-python",
+    "href": "opt_theory_modellers.html#optimization-modelling-in-python",
+    "title": "Optimization modelling languages",
+    "section": "Optimization modelling in Python",
+    "text": "Optimization modelling in Python\nPython is a very popular language for scientific computing. Although it is arguable if it is actually suitable for implementation of numerical algoritms, when it comes to building optimization models, it does its job fairly well (and the numerical solvers it calls can be developed in different language). Several packages implementing OML/AML are available:\n\ncvxpy is yet another instantiation of Disciplined Convex Programming that we alredy mention when introducing Convex.jl and CVX. And it turns out that this one exhibits the greatest momentum. The team of developers seems to be have exceeded a critical mass, hence the tools seems like a safe bet already.\nPyomo is a popular open-source optimization modelling language within Python.\nAPMonitor and GEKKO are relatively young projects, primarily motivated by applications of machine learning and optimization in chemical process engineering.",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Optimization modelling languages"
     ]
   },
   {
@@ -887,91 +909,80 @@
     ]
   },
   {
-    "objectID": "opt_modellers.html",
-    "href": "opt_modellers.html",
-    "title": "Optimization modelling languages",
+    "objectID": "opt_theory_constrained.html",
+    "href": "opt_theory_constrained.html",
+    "title": "Theory for constrained optimization",
     "section": "",
-    "text": "Realistically complex optimization problems cannot be solved with just a pen and a paper – computer programs (often called optimization solvers) are needed to solve them. And now comes the challenge: as various solvers for even the same class of problems differ in the algorithms they implement, so do their interfaces – every solver expects the inputs (the data defining the optimization problem) in a specific format. This makes it difficult to switch between solvers, as the problem data has to be reformatted every time.\n\nExample 1 (Data formatting for different solvers) Consider the following optimization problem: \n\\begin{aligned}\n  \\operatorname*{minimize}_{\\bm x \\in \\mathbb R^2} & \\quad \\frac{1}{2} \\bm x^\\top \\begin{bmatrix}4 & 1\\\\ 1 & 2 \\end{bmatrix} \\bm x + \\begin{bmatrix}1 \\\\ 1\\end{bmatrix}^\\top \\bm x \\\\\n  \\text{subject to} & \\quad \\begin{bmatrix}1 \\\\ 0 \\\\ 0\\end{bmatrix} \\leq \\begin{bmatrix} 1 & 1\\\\ 1 & 0\\\\ 0 & 1\\end{bmatrix} \\bm x \\leq  \\begin{bmatrix}1 \\\\ 0.7 \\\\ 0.7\\end{bmatrix}\n\\end{aligned}\n\nThere are dozens of solvers that can be used to solve this problem. Here we demonstrate a usage of these two: OSQP and COSMO.jl. And we are going to call the solvers in Julia (using the the wrappers OSQP.jl for the former). First, we start with OSQP (in fact, this is their example):\n\n\nShow the code\nusing OSQP\nusing SparseArrays\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nproblem_OSQP = OSQP.Model()\nOSQP.setup!(problem_OSQP; P=P, q=q, A=A, l=l, u=u, alpha=1, verbose=false)\n\n# Solve the optimization problem and show the results\nresults_OSQP = OSQP.solve!(problem_OSQP)\nresults_OSQP.x\n\n\nNow we do the same with COSMO. First, we must take into account that COSMO cannot accept two-sided inequalities, so we have to reformulate the problem so that the constraints are only in the form of \\mathbf A\\bm x + b \\geq \\bm 0: \n\\begin{aligned}\n  \\operatorname*{minimize}_{\\bm x \\in \\mathbb R^2} & \\quad \\frac{1}{2} \\bm x^\\top \\begin{bmatrix}4 & 1\\\\ 1 & 2 \\end{bmatrix} \\bm x + \\begin{bmatrix}1 \\\\ 1\\end{bmatrix}^\\top \\bm x \\\\\n  \\text{subject to} & \\quad \\begin{bmatrix} -1 & -1\\\\ -1 & 0\\\\ 0 & -1\\\\ 1 & 1\\\\ 1 & 0\\\\ 0 & 1\\end{bmatrix}\\bm x + \\begin{bmatrix}1 \\\\ 0.7 \\\\ 0.7 \\\\ -1 \\\\ 0 \\\\ 0\\end{bmatrix} \\geq  \\mathbf 0.\n\\end{aligned}\n\n\n\nShow the code\nusing COSMO\nusing SparseArrays\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nAa = [-A; A]\nba = [u; -l]\n\nproblem_COSMO = COSMO.Model()\nconstraint = COSMO.Constraint(Aa, ba, COSMO.Nonnegatives)\nsettings = COSMO.Settings(verbose=false)\nassemble!(problem_COSMO, P, q, constraint, settings = settings)\n\n# Solve the optimization problem and show the results\nresults_COSMO = COSMO.optimize!(problem_COSMO)\nresults_COSMO.x\n\n\nAlthough the two solvers are solving the same problem, the data has to be formatted differently for each of them (and the difference in syntax is not negligible either).\nWhat if we could formulate the same problem without considering the pecualiarities of each solver? It turns out that it is possible. In Julia we can use JuMP.jl:\n\n\nShow the code\nusing JuMP\nusing SparseArrays\nusing OSQP, COSMO\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nmodel_JuMP = Model()\n@variable(model_JuMP, x[1:2])\n@objective(model_JuMP, Min, 0.5*x'*P*x + q'*x)\n@constraint(model_JuMP, A*x .&lt;= u)\n@constraint(model_JuMP, A*x .&gt;= l)\n\n# Solve the optimization problem using OSQP and show the results\nset_silent(model_JuMP)\nset_optimizer(model_JuMP, OSQP.Optimizer)\noptimize!(model_JuMP)\ntermination_status(model_JuMP)\nx_OSQP = value.(x)\n\n# Now solve the problem using COSMO and show the results\nset_optimizer(model_JuMP, COSMO.Optimizer)\noptimize!(model_JuMP)\ntermination_status(model_JuMP)\nx_COSMO = value.(x)\n\n\n\nNotice how the optimization problem is defined just once in the last code and then different solvers can be chosen to solve it. The code represents an instance of a so-called optimization modelling language (OML), or actually its major class called algebraic modelling language (AML).\nThe key motivation for using an OML/AML is to separate the process of formulating the problem from the process of solving it (using a particular solver). Furthermore, such solver-independent problem description (called optimization model) better mimics the way we formulate these problems using a pen and a paper, making it (perhaps) a bit more convenient to write our own and read someone else’s models.",
+    "text": "We consider the following optimization problem with equality constraints \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x\\in\\mathbb{R}^n} &\\quad f(\\bm x)\\\\\n\\text{subject to} &\\quad \\mathbf h(\\bm x) = \\mathbf 0,\n\\end{aligned}\n where \\mathbf h(\\bm x) \\in \\mathbb R^m defines a set of m equations \n\\begin{aligned}\nh_1(\\bm x) &= 0\\\\\nh_2(\\bm x) &= 0\\\\\n\\vdots\\\\\nh_m(\\bm x) &= 0.\n\\end{aligned}\n\nAugmenting the original cost function f with the constraint functions h_i scaled by Lagrange variables \\lambda_i gives the Lagrangian function \n\\mathcal{L}(\\bm x,\\boldsymbol\\lambda) \\coloneqq f(\\bm x) + \\sum_{i=1}^m \\lambda_i h_i(\\bm x) = f(\\bm x) + \\boldsymbol \\lambda^\\top \\mathbf h(\\bm x).\n\n\n\n\n\nThe first-order necessary condition of optimality is \n\\nabla \\mathcal{L}(\\bm x,\\boldsymbol\\lambda) = \\mathbf 0,\n which amounts to two (generally vector) equations \n\\boxed{\n\\begin{aligned}\n\\nabla f(\\bm x) + \\sum_{i=1}^m \\lambda_i \\nabla h_i(\\bm x) &= \\mathbf 0\\\\\n\\mathbf{h}(\\bm x) &= \\mathbf 0.\n\\end{aligned}}\n\nDefining a matrix \\nabla \\mathbf h(\\bm x) \\in \\mathbb R^{n\\times m} as horizontally stacked gradients of the constraint functions \n\\nabla \\mathbf h(\\bm x) \\coloneqq \\begin{bmatrix}\n                                 \\nabla h_1(\\bm x) && \\nabla h_2(\\bm x) && \\ldots && \\nabla h_m(\\bm x)\n                            \\end{bmatrix},\n in fact, a transpose of the Jacobian matrix, the necessary condition can be rewritten in a vector form as \\boxed\n{\\begin{aligned}\n\\nabla f(\\bm x) + \\nabla \\mathbf h(\\bm x)\\boldsymbol \\lambda &= \\mathbf 0\\\\\n\\mathbf{h}(\\bm x) &= \\mathbf 0.\n\\end{aligned}}\n\nBeware of the nonregularity issue! The (\\nabla \\mathbf h(\\bm x))^\\mathrm T is regular at a given \\bm x (the \\bm x is a regular point) if it has a full column rank. Rank-deficiency reveals a defect in formulation.\n\nExample 1 (Equality-constrained quadratic program) \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} &\\quad \\frac{1}{2}\\bm{x}^\\top\\mathbf{Q}\\bm{x} + \\mathbf{r}^\\top\\bm{x}\\\\\n\\text{subject to} &\\quad \\mathbf A \\bm x + \\mathbf b = \\mathbf 0.\n\\end{aligned}\n\nThe first-order necessary condition of optimality is\n\n\\begin{bmatrix}\n  \\mathbf Q & \\mathbf A^\\top\\\\\\mathbf A & \\mathbf 0\n\\end{bmatrix}\n\\begin{bmatrix}\n  \\bm x \\\\ \\boldsymbol \\lambda\n\\end{bmatrix}\n=\n\\begin{bmatrix}\n  -\\mathbf r\\\\\\mathbf b\n\\end{bmatrix}.\n\n\n\n\n\n\nUsing the unconstrained Hessian \\nabla^2_{\\mathbf{x}\\bm{x}} \\mathcal{L}(\\bm x,\\boldsymbol \\lambda) is too conservative. Instead, use projected Hessian\n\n\\mathbf{Z}^\\mathrm{T}\\;\\nabla^2_{\\bm{x}\\bm{x}} \\mathcal{L}(\\bm x,\\boldsymbol \\lambda)\\;\\mathbf Z &gt; 0,\n where \\mathbf Z is an (orthonormal) basis of the nullspace of the Jacobian (\\nabla \\mathbf h(\\bm x))^\\top.",
     "crumbs": [
       "1. Optimization – theory",
-      "Optimization modelling languages"
+      "Theory for constrained optimization"
     ]
   },
   {
-    "objectID": "opt_modellers.html#why-optimization-modelling-languages",
-    "href": "opt_modellers.html#why-optimization-modelling-languages",
-    "title": "Optimization modelling languages",
+    "objectID": "opt_theory_constrained.html#equality-constraints",
+    "href": "opt_theory_constrained.html#equality-constraints",
+    "title": "Theory for constrained optimization",
     "section": "",
-    "text": "Realistically complex optimization problems cannot be solved with just a pen and a paper – computer programs (often called optimization solvers) are needed to solve them. And now comes the challenge: as various solvers for even the same class of problems differ in the algorithms they implement, so do their interfaces – every solver expects the inputs (the data defining the optimization problem) in a specific format. This makes it difficult to switch between solvers, as the problem data has to be reformatted every time.\n\nExample 1 (Data formatting for different solvers) Consider the following optimization problem: \n\\begin{aligned}\n  \\operatorname*{minimize}_{\\bm x \\in \\mathbb R^2} & \\quad \\frac{1}{2} \\bm x^\\top \\begin{bmatrix}4 & 1\\\\ 1 & 2 \\end{bmatrix} \\bm x + \\begin{bmatrix}1 \\\\ 1\\end{bmatrix}^\\top \\bm x \\\\\n  \\text{subject to} & \\quad \\begin{bmatrix}1 \\\\ 0 \\\\ 0\\end{bmatrix} \\leq \\begin{bmatrix} 1 & 1\\\\ 1 & 0\\\\ 0 & 1\\end{bmatrix} \\bm x \\leq  \\begin{bmatrix}1 \\\\ 0.7 \\\\ 0.7\\end{bmatrix}\n\\end{aligned}\n\nThere are dozens of solvers that can be used to solve this problem. Here we demonstrate a usage of these two: OSQP and COSMO.jl. And we are going to call the solvers in Julia (using the the wrappers OSQP.jl for the former). First, we start with OSQP (in fact, this is their example):\n\n\nShow the code\nusing OSQP\nusing SparseArrays\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nproblem_OSQP = OSQP.Model()\nOSQP.setup!(problem_OSQP; P=P, q=q, A=A, l=l, u=u, alpha=1, verbose=false)\n\n# Solve the optimization problem and show the results\nresults_OSQP = OSQP.solve!(problem_OSQP)\nresults_OSQP.x\n\n\nNow we do the same with COSMO. First, we must take into account that COSMO cannot accept two-sided inequalities, so we have to reformulate the problem so that the constraints are only in the form of \\mathbf A\\bm x + b \\geq \\bm 0: \n\\begin{aligned}\n  \\operatorname*{minimize}_{\\bm x \\in \\mathbb R^2} & \\quad \\frac{1}{2} \\bm x^\\top \\begin{bmatrix}4 & 1\\\\ 1 & 2 \\end{bmatrix} \\bm x + \\begin{bmatrix}1 \\\\ 1\\end{bmatrix}^\\top \\bm x \\\\\n  \\text{subject to} & \\quad \\begin{bmatrix} -1 & -1\\\\ -1 & 0\\\\ 0 & -1\\\\ 1 & 1\\\\ 1 & 0\\\\ 0 & 1\\end{bmatrix}\\bm x + \\begin{bmatrix}1 \\\\ 0.7 \\\\ 0.7 \\\\ -1 \\\\ 0 \\\\ 0\\end{bmatrix} \\geq  \\mathbf 0.\n\\end{aligned}\n\n\n\nShow the code\nusing COSMO\nusing SparseArrays\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nAa = [-A; A]\nba = [u; -l]\n\nproblem_COSMO = COSMO.Model()\nconstraint = COSMO.Constraint(Aa, ba, COSMO.Nonnegatives)\nsettings = COSMO.Settings(verbose=false)\nassemble!(problem_COSMO, P, q, constraint, settings = settings)\n\n# Solve the optimization problem and show the results\nresults_COSMO = COSMO.optimize!(problem_COSMO)\nresults_COSMO.x\n\n\nAlthough the two solvers are solving the same problem, the data has to be formatted differently for each of them (and the difference in syntax is not negligible either).\nWhat if we could formulate the same problem without considering the pecualiarities of each solver? It turns out that it is possible. In Julia we can use JuMP.jl:\n\n\nShow the code\nusing JuMP\nusing SparseArrays\nusing OSQP, COSMO\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nmodel_JuMP = Model()\n@variable(model_JuMP, x[1:2])\n@objective(model_JuMP, Min, 0.5*x'*P*x + q'*x)\n@constraint(model_JuMP, A*x .&lt;= u)\n@constraint(model_JuMP, A*x .&gt;= l)\n\n# Solve the optimization problem using OSQP and show the results\nset_silent(model_JuMP)\nset_optimizer(model_JuMP, OSQP.Optimizer)\noptimize!(model_JuMP)\ntermination_status(model_JuMP)\nx_OSQP = value.(x)\n\n# Now solve the problem using COSMO and show the results\nset_optimizer(model_JuMP, COSMO.Optimizer)\noptimize!(model_JuMP)\ntermination_status(model_JuMP)\nx_COSMO = value.(x)\n\n\n\nNotice how the optimization problem is defined just once in the last code and then different solvers can be chosen to solve it. The code represents an instance of a so-called optimization modelling language (OML), or actually its major class called algebraic modelling language (AML).\nThe key motivation for using an OML/AML is to separate the process of formulating the problem from the process of solving it (using a particular solver). Furthermore, such solver-independent problem description (called optimization model) better mimics the way we formulate these problems using a pen and a paper, making it (perhaps) a bit more convenient to write our own and read someone else’s models.",
+    "text": "We consider the following optimization problem with equality constraints \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x\\in\\mathbb{R}^n} &\\quad f(\\bm x)\\\\\n\\text{subject to} &\\quad \\mathbf h(\\bm x) = \\mathbf 0,\n\\end{aligned}\n where \\mathbf h(\\bm x) \\in \\mathbb R^m defines a set of m equations \n\\begin{aligned}\nh_1(\\bm x) &= 0\\\\\nh_2(\\bm x) &= 0\\\\\n\\vdots\\\\\nh_m(\\bm x) &= 0.\n\\end{aligned}\n\nAugmenting the original cost function f with the constraint functions h_i scaled by Lagrange variables \\lambda_i gives the Lagrangian function \n\\mathcal{L}(\\bm x,\\boldsymbol\\lambda) \\coloneqq f(\\bm x) + \\sum_{i=1}^m \\lambda_i h_i(\\bm x) = f(\\bm x) + \\boldsymbol \\lambda^\\top \\mathbf h(\\bm x).\n\n\n\n\n\nThe first-order necessary condition of optimality is \n\\nabla \\mathcal{L}(\\bm x,\\boldsymbol\\lambda) = \\mathbf 0,\n which amounts to two (generally vector) equations \n\\boxed{\n\\begin{aligned}\n\\nabla f(\\bm x) + \\sum_{i=1}^m \\lambda_i \\nabla h_i(\\bm x) &= \\mathbf 0\\\\\n\\mathbf{h}(\\bm x) &= \\mathbf 0.\n\\end{aligned}}\n\nDefining a matrix \\nabla \\mathbf h(\\bm x) \\in \\mathbb R^{n\\times m} as horizontally stacked gradients of the constraint functions \n\\nabla \\mathbf h(\\bm x) \\coloneqq \\begin{bmatrix}\n                                 \\nabla h_1(\\bm x) && \\nabla h_2(\\bm x) && \\ldots && \\nabla h_m(\\bm x)\n                            \\end{bmatrix},\n in fact, a transpose of the Jacobian matrix, the necessary condition can be rewritten in a vector form as \\boxed\n{\\begin{aligned}\n\\nabla f(\\bm x) + \\nabla \\mathbf h(\\bm x)\\boldsymbol \\lambda &= \\mathbf 0\\\\\n\\mathbf{h}(\\bm x) &= \\mathbf 0.\n\\end{aligned}}\n\nBeware of the nonregularity issue! The (\\nabla \\mathbf h(\\bm x))^\\mathrm T is regular at a given \\bm x (the \\bm x is a regular point) if it has a full column rank. Rank-deficiency reveals a defect in formulation.\n\nExample 1 (Equality-constrained quadratic program) \n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x \\in \\mathbb{R}^n} &\\quad \\frac{1}{2}\\bm{x}^\\top\\mathbf{Q}\\bm{x} + \\mathbf{r}^\\top\\bm{x}\\\\\n\\text{subject to} &\\quad \\mathbf A \\bm x + \\mathbf b = \\mathbf 0.\n\\end{aligned}\n\nThe first-order necessary condition of optimality is\n\n\\begin{bmatrix}\n  \\mathbf Q & \\mathbf A^\\top\\\\\\mathbf A & \\mathbf 0\n\\end{bmatrix}\n\\begin{bmatrix}\n  \\bm x \\\\ \\boldsymbol \\lambda\n\\end{bmatrix}\n=\n\\begin{bmatrix}\n  -\\mathbf r\\\\\\mathbf b\n\\end{bmatrix}.\n\n\n\n\n\n\nUsing the unconstrained Hessian \\nabla^2_{\\mathbf{x}\\bm{x}} \\mathcal{L}(\\bm x,\\boldsymbol \\lambda) is too conservative. Instead, use projected Hessian\n\n\\mathbf{Z}^\\mathrm{T}\\;\\nabla^2_{\\bm{x}\\bm{x}} \\mathcal{L}(\\bm x,\\boldsymbol \\lambda)\\;\\mathbf Z &gt; 0,\n where \\mathbf Z is an (orthonormal) basis of the nullspace of the Jacobian (\\nabla \\mathbf h(\\bm x))^\\top.",
     "crumbs": [
       "1. Optimization – theory",
-      "Optimization modelling languages"
+      "Theory for constrained optimization"
     ]
   },
   {
-    "objectID": "opt_modellers.html#why-not-optimization-modelling-languages",
-    "href": "opt_modellers.html#why-not-optimization-modelling-languages",
-    "title": "Optimization modelling languages",
-    "section": "Why not optimization modelling languages?",
-    "text": "Why not optimization modelling languages?\nAs a matter of fact, some optimization experts even keep avoiding OML/AML altogether. For example, if a company pays for a (not really cheap) license of Gurobi Optimizer – a powerful optimization library for (MI)LP/QP/QCQP –, it may be the case that for a particular very large-scale optimization problem their optimization specialist will have hard time to find a third-party solver of comparable performance. If then its Python API makes definition of optimization problems convenient too (see the code below), maybe there is little regret that such problem definitions cannot be reused with a third-party solver. The more so that since it is tailored to Gurobi solver, it will offer control over the finest details.\n\n\nShow the code\nimport gurobipy as gp\nimport numpy as np\n\n# Define the data for the model\nP = np.array([[4.0, 1.0], [1.0, 2.0]])\nq = np.array([1.0, 1.0])\nA = np.array([[1.0, 1.0], [1.0, 0.0], [0.0, 1.0]])\nl = np.array([1.0, 0.0, 0.0])\nu = np.array([1.0, 0.7, 0.7])\n\n# Create a new model\nm = gp.Model(\"qp\")\n\n# Create a vector variable\nx = m.addMVar((2,))\n\n# Set the objective\nobj = 1/2*(x@P@x + q@x)\nm.setObjective(obj)\n\n# Add the constraints\nm.addConstr(A@x &gt;= l, \"c1\")\nm.addConstr(A@x &lt;= u, \"c2\")\n\n# Run the solver\nm.optimize()\n\n# Print the results\nfor v in m.getVars():\n    print(f\"{v.VarName} {v.X:g}\")\n\nprint(f\"Obj: {m.ObjVal:g}\")\n\n\nSimilar and yet different is the story of the IBM ILOG CPLEX, another top-notch solvers addressing the same problems as Gurobi. They do have their own modeling language called Optimization Modelling Language (OPL), but it is also only interfacing with their solver(s). We can only guess that their motivation for developing their own optimization modelling language was that at the time of its developments (in 1990s) Python was still in pre-2.0 stage and formulating optimization problems in programming languages like C/C++ or Fortran was nowhere close to being convenient. Gurobi, in turn, started in 2008, when Python was already a popular language.",
+    "objectID": "opt_theory_constrained.html#inequality-constraints",
+    "href": "opt_theory_constrained.html#inequality-constraints",
+    "title": "Theory for constrained optimization",
+    "section": "Inequality constraints",
+    "text": "Inequality constraints\n\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x\\in\\mathbb{R}^n} &\\quad f(\\bm x)\\\\\n\\text{subject to} &\\quad \\mathbf g(\\bm x) \\leq \\mathbf 0,\n\\end{aligned}\n where \\mathbf g(\\bm x) \\in \\mathbb R^p defines a set of p inequalities.\n\nFirst-order necessary condition of optimality\nKarush-Kuhn-Tucker (KKT) conditions of optimality are then composed of these four (sets of) conditions \n\\begin{aligned}\n\\nabla f(\\bm x) + \\sum_{i=1}^p \\mu_i \\nabla g_i(\\bm x) &= \\mathbf 0,\\\\\n\\mathbf{g}(\\bm{x}) &\\leq \\mathbf 0,\\\\\n\\mu_i g_i(\\bm x) &= 0,\\quad i = 1,2,\\ldots, m\\\\\n\\mu_i &\\geq 0,\\quad   i = 1,2,\\ldots, m.\n\\end{aligned}",
     "crumbs": [
       "1. Optimization – theory",
-      "Optimization modelling languages"
+      "Theory for constrained optimization"
     ]
   },
   {
-    "objectID": "opt_modellers.html#language-independent-optimization-modelling-languages",
-    "href": "opt_modellers.html#language-independent-optimization-modelling-languages",
-    "title": "Optimization modelling languages",
-    "section": "Language-independent optimization modelling languages",
-    "text": "Language-independent optimization modelling languages\nOptimization/algebraic modelling languages were originally developed outside programming languages, essentially as standalone tools. Examples are AMPL, GAMS, and, say, GLPK/GMPL (MathProg). We listed these main names here since they can be bumped across (they are still actively developed), but we are not going to discuss them in our course any further. The reason is that there are now alternatives that are implemented as packages/toolboxes in programming languages such as Julia, Matlab, and Python, which offer a more fluent workflow – a user can use the same programming language to acquire the data, preprocess them, formulate the optimization problem, configure and call a solver, and finally do some postprocessing including a visualization and whatever reporting, all without leaving the language of their choice.",
+    "objectID": "opt_theory_constrained.html#equality-and-inequality-constraints",
+    "href": "opt_theory_constrained.html#equality-and-inequality-constraints",
+    "title": "Theory for constrained optimization",
+    "section": "Equality and inequality constraints",
+    "text": "Equality and inequality constraints\n\n\\begin{aligned}\n\\operatorname*{minimize}_{\\bm x\\in\\mathbb{R}^n} &\\quad f(\\bm x)\\\\\n\\text{subject to} &\\quad \\mathbf h(\\bm x) = \\mathbf 0,\\\\\n                    &\\quad \\mathbf g(\\bm x) \\leq \\mathbf 0.\n\\end{aligned}\n\n\nFirst-order necessary condition of optimality\nThe KKT conditions\n\n\\begin{aligned}\n\\nabla f(\\bm x) + \\sum_{i=1}^m \\lambda_i \\nabla h_i(\\bm x) + \\sum_{i=1}^p \\mu_i \\nabla g_i(\\bm x) &= \\mathbf 0\\\\\n\\mathbf{h}(\\mathbf{x}) &= \\mathbf 0\\\\\n\\mathbf{g}(\\mathbf{x}) &\\leq \\mathbf 0\\\\\n\\mu_i g_i(\\bm x) &= 0,\\quad i = 1,\\ldots, m\\\\\n\\mu_i &\\geq 0,\\quad   i = 1,\\ldots, m.\n\\end{aligned}",
     "crumbs": [
       "1. Optimization – theory",
-      "Optimization modelling languages"
+      "Theory for constrained optimization"
     ]
   },
   {
-    "objectID": "opt_modellers.html#optimization-modelling-in-julia",
-    "href": "opt_modellers.html#optimization-modelling-in-julia",
-    "title": "Optimization modelling languages",
-    "section": "Optimization modelling in Julia",
-    "text": "Optimization modelling in Julia\nMy obvious (personal) bias towards Julia programming language is partly due to the terrific support for optimization modelling in Julia:\n\nJuMP.jl not only constitutes one of the flagship packages of the Julia ecosystem but it is on par with the state of the art optimization modelling languages. Furthermore, being a free and open source software, it enjoys a vibrant community of developers and users. They even meet annually at JuMP-dev conference (in 2023 in Boston, MA).\nConvex.jl is an implementation of the concept of Disciplined Convex Programming (DCP) in Julia (below we also list its implementations in Matlab and Python). Even though it is now registered as a part of the JuMP.jl project, it is still a separate concept. Interesting, convenient, but it seems to be in a maintanence mode now.\n\n\n\nShow the code\nusing Convex, SCS\n\n# Define the problem data and build the problem description\nP = [4.0 1.0; 1.0 2.0]\nq = [1.0, 1.0]\nA = [1.0 1.0; 1.0 0.0; 0.0 1.0]\nl = [1.0, 0.0, 0.0]\nu = [1.0, 0.7, 0.7]\n\n# Create a vector variable of size n\nx = Variable(2)\n\n# Define the objective \nobjective = 1/2*quadform(x,P) + dot(q,x)\n\n# Define the constraints\nconstraints = [l &lt;= A*x, A*x &lt;= u]\n\n# Define the overal description of the optimization problem\nproblem = minimize(objective, constraints)\n\n# Solve the problem\nsolve!(problem, SCS.Optimizer; silent_solver = true)\n\n# Check the status of the problem\nproblem.status # :Optimal, :Infeasible, :Unbounded etc.\n\n# Get the optimum value\nproblem.optval\n\n# Get the optimal x\nx.value",
+    "objectID": "opt_theory_constrained.html#duality",
+    "href": "opt_theory_constrained.html#duality",
+    "title": "Theory for constrained optimization",
+    "section": "Duality",
+    "text": "Duality\nDuality theory offers another view of the original optimization problem by bringing in another but related one.\nCorresponding to the general optimization problem \n  \\begin{aligned}\n  \\operatorname*{minimize}\\;&f(\\bm x)\\\\\n  \\text{subject to}\\; & \\mathbf g(\\bm x)\\leq \\mathbf 0\\\\\n  & \\mathbf h(\\bm x) = \\mathbf 0,\n  \\end{aligned}\n\nwe form the Lagrangian function \\mathcal L(\\bm x,\\bm \\lambda,\\bm \\mu) = f(\\bm x) + \\bm \\lambda^\\top \\mathbf h(\\bm x) + \\bm \\mu^\\top \\mathbf g(\\bm x)\nFor any (fixed) values of (\\bm \\lambda,\\bm \\mu) such that \\bm \\mu\\geq 0, we define the Lagrange dual function through the following unconstrained optimization problem \nq(\\bm\\lambda,\\bm\\mu) = \\inf_{\\bm x}\\mathcal L(\\bm x,\\bm \\lambda,\\bm \\mu).\n\nObviously, it is alway possible to pick a feasible solution \\bm x, in which case the value of the Lagrangian and the original function coincide, and so the result of this minimization is no worse (larger) than the minimum for the original optimization problem. It can thus serve as a lower bound q(\\bm \\lambda,\\bm \\mu) \\leq f(\\bm x^\\star).\nThis result is called weak duality. A natural idea is to find the values of \\bm \\lambda and \\bm \\mu such that this lower bound is tightest, that is, \n\\begin{aligned}\n  \\operatorname*{maximize}_{\\bm\\lambda, \\bm\\mu}\\; & q(\\bm\\lambda,\\bm\\mu)\\\\\n  \\text{subject to}\\;& \\bm\\mu \\geq \\mathbf 0.\n\\end{aligned}\n\nUnder some circumstances the result can be tight, which leads to strong duality, which means that the minimum of the original (primal) problem and the maximum of the dual problem coincide. \nq(\\bm \\lambda^\\star,\\bm \\mu^\\star) = f(\\bm x^\\star).\n\nThis related dual optimization problem can have some advantages for development of both theory and algorithms.",
     "crumbs": [
       "1. Optimization – theory",
-      "Optimization modelling languages"
+      "Theory for constrained optimization"
     ]
   },
   {
-    "objectID": "opt_modellers.html#optimization-modelling-in-matlab",
-    "href": "opt_modellers.html#optimization-modelling-in-matlab",
-    "title": "Optimization modelling languages",
-    "section": "Optimization modelling in Matlab",
-    "text": "Optimization modelling in Matlab\nPopularity of Matlab as a language and an ecosystem for control-related computations is undeniable. Therefore, let’s have a look at what is available for modelling optimization problems in Matlab:\n\nOptimization Toolbox for Matlab is one of the commercial toolboxes produced by Matlab and Simulink creators. Since the R2017b release the toolbox supports Problem-based optimization workflow, which can be regarded as a kind of an optimization/algebraic modelling language, albeit restricted to their own solvers.\nYalmip started as Yet Another LMI Parser quite some time ago (which reveals its control theoretic roots), but these days it serves as fairly complete algebraic modelling language (within Matlab), interfacing to perhaps any optimization solver, both commercial and free&open-source. It is free and open-source. Is is still actively developed and maintained and it abounds with tutorials and examples.\nCVX is a Matlab counterpart of Convex.jl (or the other way around, if you like, since it has been here longer). The name stipulates that it only allows convex optimization probles (unlike Yalmip) – it follows the Disciplined Convex Programming (DCP) paradigm. Unfortunately, the development seems to have stalled – the last update is from 2020.",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Optimization modelling languages"
-    ]
-  },
-  {
-    "objectID": "opt_modellers.html#optimization-modelling-in-python",
-    "href": "opt_modellers.html#optimization-modelling-in-python",
-    "title": "Optimization modelling languages",
-    "section": "Optimization modelling in Python",
-    "text": "Optimization modelling in Python\nPython is a very popular language for scientific computing. Although it is arguable if it is actually suitable for implementation of numerical algoritms, when it comes to building optimization models, it does its job fairly well (and the numerical solvers it calls can be developed in different language). Several packages implementing OML/AML are available:\n\ncvxpy is yet another instantiation of Disciplined Convex Programming that we alredy mention when introducing Convex.jl and CVX. And it turns out that this one exhibits the greatest momentum. The team of developers seems to be have exceeded a critical mass, hence the tools seems like a safe bet already.\nPyomo is a popular open-source optimization modelling language within Python.\nAPMonitor and GEKKO are relatively young projects, primarily motivated by applications of machine learning and optimization in chemical process engineering.",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Optimization modelling languages"
-    ]
-  },
-  {
-    "objectID": "discr_dir_mpc_stability.html",
-    "href": "discr_dir_mpc_stability.html",
-    "title": "Stability of MPC",
+    "objectID": "discr_dir_mpc_explicit.html",
+    "href": "discr_dir_mpc_explicit.html",
+    "title": "Explicit MPC",
     "section": "",
-    "text": "Back to top",
+    "text": "(A. Bemporad, Borrelli, and Morari 2002), (Alberto Bemporad 2021), (Alessio and Bemporad 2009), (Borrelli, Bemporad, and Morari 2017)",
     "crumbs": [
       "6. More on MPC",
-      "Stability of MPC"
+      "Explicit MPC"
+    ]
+  },
+  {
+    "objectID": "discr_dir_mpc_explicit.html#literature",
+    "href": "discr_dir_mpc_explicit.html#literature",
+    "title": "Explicit MPC",
+    "section": "",
+    "text": "(A. Bemporad, Borrelli, and Morari 2002), (Alberto Bemporad 2021), (Alessio and Bemporad 2009), (Borrelli, Bemporad, and Morari 2017)",
+    "crumbs": [
+      "6. More on MPC",
+      "Explicit MPC"
     ]
   },
   {
