@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.9">
+<meta name="generator" content="quarto-1.5.21">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -659,19 +659,18 @@ g(\bm x) + s^2 = 0.
 <p>Consider an optimization problem in which the cost function contains the absolute value of a variable <span class="math display">
 \begin{aligned}
 \operatorname*{minimize} &amp;\quad \sum_i c_i|x_i|\\
-\text{subject to} &amp;\quad \mathbf A \bm x = \mathbf b,\\
-&amp;\quad \bm x \geq 0.
+\text{subject to} &amp;\quad \mathbf A \bm x \geq \mathbf b.
 \end{aligned}
 </span></p>
 <p>We also impose the restriction that all the coefficients <span class="math inline">c_i</span> are nonnegative. The cost function is then a sum of piecewise linear convex function, which can be shown to be convex.</p>
 <p>The trouble with the absolute value function is that it is not linear, it is not even smooth. And yet, as we will see below, this optimization with the absolute value can be reformulated as a linear program.</p>
 <p>One possible reformulation introduces two new nonnegative (vector) variables <span class="math inline">\bm x^+\geq 0</span> and <span class="math inline">\bm x^-\geq 0</span> and with which the original variables can be expressed as <span class="math inline">x_i = x_i^+ - x_i^-, \; i=1, \ldots, n</span>. The cost function can then be written as <span class="math inline">\sum c_i|x_i| = \sum_i c_i (x_i^+ + x_i^-)</span>.</p>
-<p>This may look surprising (and incorrect) at first, but we argue that at an optimum, <span class="math inline">x_i^+</span> or <span class="math inline">x_i^-</span> must be zero. Otherwise we could subtract (in case <span class="math inline">c_i&gt;0</span>) or add (in case <span class="math inline">c_i&gt;0</span>) the same amount from/to both, which would not change the satisfaction of the constraints (this modification cancels in <span class="math inline">x_i = x_i^+ - x_i^-</span>), and the cost would be further reduced.</p>
+<p>This may look surprising (and incorrect) at first, but we argue that at an optimum, <span class="math inline">x_i^+</span> or <span class="math inline">x_i^-</span> must be zero. Otherwise we could subtract (in case <span class="math inline">c_i&gt;0</span>) the same amount from/to both, which would not change the satisfaction of the constraints (this modification cancels in <span class="math inline">x_i = x_i^+ - x_i^-</span>), and the cost would be further reduced.</p>
 <p>The LP in the standard form then changes to</p>
 <p><span class="math display">
 \begin{aligned}
 \operatorname*{minimize}_{\bm x^+\in \mathbb R^n, \bm x^-\in \mathbb R^n} &amp;\quad \mathbf c^\top (\bm x^+ + \bm x^-)\\
-\text{subject to} &amp;\quad \mathbf A \bm x^+ - \mathbf A \bm x^- = \mathbf b,\\
+\text{subject to} &amp;\quad \mathbf A \bm x^+ - \mathbf A \bm x^- \geq \mathbf b,\\
 &amp;\quad \bm x^+ \geq \mathbf 0,\\
 &amp;\quad \bm x^- \geq \mathbf 0.
 \end{aligned}
@@ -680,7 +679,7 @@ g(\bm x) + s^2 = 0.
 <p><span class="math display">
 \begin{aligned}
 \operatorname*{minimize}_{\bm z\in \mathbb R^n, \bm x\in \mathbb R^n} &amp;\quad \mathbf c^\top \bm z\\
-\text{subject to} &amp;\quad \mathbf A \bm x = \mathbf b,\\
+\text{subject to} &amp;\quad \mathbf A \bm x \geq \mathbf b,\\
 &amp;\qquad \bm x \leq \bm z,\\
 &amp;\quad -\bm x \leq \bm z.
 \end{aligned}
@@ -775,6 +774,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/hurak\.github\.io\/orr\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -809,7 +826,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');

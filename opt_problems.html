@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.9">
+<meta name="generator" content="quarto-1.5.21">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -897,8 +897,8 @@ d
 <section id="semidefinite-program-sdp" class="level4">
 <h4 class="anchored" data-anchor-id="semidefinite-program-sdp">Semidefinite program (SDP)</h4>
 <p>Another cone of great importance the control theory is the cone of positive semidefinite matrices. It is commonly denoted as <span class="math inline">\mathcal S_+^n</span> and is defined as <span class="math display">
-\mathcal S_+^n = \left\{ \bm X = \bm X^\top \in \mathbb R^{n \times n} \mid \bm z^\top \bm X \bm z \geq 0\, \forall \bm z\in \mathbb R^n \right\},
-</span> where <span class="math inline">\mathbf X \succeq 0</span> is a common way to express that <span class="math inline">\mathbf X</span> is positive semidefinite.</p>
+\mathcal S_+^n = \left\{ \bm X \in \mathbb R^{n \times n} \mid \bm X = \bm X^\top, \, \bm z^\top \bm X \bm z \geq 0\; \forall \bm z\in \mathbb R^n \right\},
+</span> and with this cone the inequality <span class="math inline">\mathbf X \succeq 0</span> is a common way to express that <span class="math inline">\mathbf X</span> is positive semidefinite.</p>
 <p>Unlike the previous classes of optimization problems, this one is formulated with matrix variables instead of vector ones. But nothing prevents us from collecting the components of a symmetric matrix into a vector and proceed with vectors as usual, if needed:</p>
 <p><span class="math display">
 \bm X = \begin{bmatrix} x_1 &amp; x_2 &amp; x_3 \\ x_2 &amp; x_4 &amp; x_5\\ x_3 &amp; x_5 &amp; x_6 \end{bmatrix},
@@ -1060,6 +1060,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/hurak\.github\.io\/orr\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -1094,7 +1112,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
