@@ -1,7 +1,7 @@
 ---
 title: "Numerical solvers"
 bibliography: 
-    - ref_numerical_optimal_control.bib
+    - ref_optimization.bib
 format:
     html:
         html-math-method: katex
@@ -12,31 +12,24 @@ execute:
 jupyter: julia-1.10
 ---
 
-- Gurobi Optimizer
-- IBM ILOG CPLEX
-- Knitro
-- MOSEK
+The number of numerical solvers is huge. First, we give a short biased list of solvers which we may use within this course. 
 
-- Ipopt
-- SNOPT
-- NLPQLP
-- fmincon
-- fminunc
-- fminsearch
-- fminbnd
-- fminimax
-- fmincon
+- [Optimization Toolbox for Matlab](https://www.mathworks.com/products/optimization.html): fmincon, fminunc, linprog, quadpro, ... Available within the all-university Matlab license for all students and employees at CTU.
+- [Gurobi Optimizer](https://www.gurobi.com/solutions/gurobi-optimizer/): LP, QP, SOCP, MIP, commercial (but free academic license available).
+- [IBM ILOG CPLEX](https://www.ibm.com/products/ilog-cplex-optimization-studio/cplex-optimizer): LP, QP, SOCP, MIP, commercial.
+- [MOSEK](https://www.mosek.com): LP, QP, MIP, SOCP, SDP, commercial (but free academic license available).
+- [HIGHS](https://highs.dev): LP, QP, MIP, open source.
+- [Knitro](https://www.artelys.com/solvers/knitro/): NLP, commercial.
+- [Ipopt](https://coin-or.github.io/Ipopt/): NLP, open source.
+- [SEDUMI](http://sedumi.ie.lehigh.edu): SOCP, SDP, open source.
+- ...
 
-- Optimization Toolbox for Matlab
+Second, for a reasonably comprehensive and well maintained list of solvers, consult the [NEOS Guide to Optimization](https://neos-guide.org/guide/) web page (in particular the [link at the bottom](https://neos-server.org/neos/solvers/index.html) of that page). Similar list is maintained within Hans Mittelman's [Decision Tree for Optimization Software](https://plato.asu.edu/sub/pns.html) web page.
 
-- JuMP
-- Convex.jl
-- Optim.jl
-- NLopt.jl
-- BlackBoxOptim.jl
-- BayesianOptimization.jl
-- CMAES.jl
-- DirectSearch.jl
-- Evolutionary.jl
+Working in Matlab and using Yalmip for defining and solving optimization problems, the [list of optimization solvers supported by Yalmip](https://yalmip.github.io/allsolvers/) shows what is available. 
+
+Similarly, users of Julia and JuMP will find the [list of solvers supported by JuMP](https://jump.dev/JuMP.jl/stable/installation/#Supported-solvers) useful. The list is worth consulting even if Julia is not the tool of choice, as many solvers are indepdenent of Julia.  
+
+
 
 
