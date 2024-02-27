@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Numerical solvers</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – Economic MPC</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -30,8 +50,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./opt_algo_references.html" rel="next">
-<link href="./opt_algo_constrained.html" rel="prev">
+<link href="./cont_indir_calculus_of_variations.html" rel="next">
+<link href="./discr_dir_mpc_explicit.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +102,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_algo_derivatives.html">2. Optimization – algorithms</a></li><li class="breadcrumb-item"><a href="./opt_algo_solvers.html">Numerical solvers</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_dir_mpc_stability.html">6. More on MPC</a></li><li class="breadcrumb-item"><a href="./discr_dir_mpc_economic.html">Economic MPC</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -118,13 +138,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_theory_problems.html" class="sidebar-item-text sidebar-link">
+  <a href="./opt_problems.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Optimization problems</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_theory_reformulations.html" class="sidebar-item-text sidebar-link">
+  <a href="./opt_reformulations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Problem reformulations</span></a>
   </div>
 </li>
@@ -142,14 +162,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_theory_modellers.html" class="sidebar-item-text sidebar-link">
+  <a href="./opt_modellers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Optimization modelling languages</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./opt_theory_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References for optimization theory</span></a>
   </div>
 </li>
       </ul>
@@ -183,14 +197,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_algo_solvers.html" class="sidebar-item-text sidebar-link active">
+  <a href="./opt_solvers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Numerical solvers</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./opt_algo_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References for optimization algorithms</span></a>
   </div>
 </li>
       </ul>
@@ -311,7 +319,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_dir_mpc_economic.html" class="sidebar-item-text sidebar-link">
+  <a href="./discr_dir_mpc_economic.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Economic MPC</span></a>
   </div>
 </li>
@@ -554,15 +562,21 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#literature" id="toc-literature" class="nav-link active" data-scroll-target="#literature">Literature</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_algo_derivatives.html">2. Optimization – algorithms</a></li><li class="breadcrumb-item"><a href="./opt_algo_solvers.html">Numerical solvers</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_dir_mpc_stability.html">6. More on MPC</a></li><li class="breadcrumb-item"><a href="./discr_dir_mpc_economic.html">Economic MPC</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Numerical solvers</h1>
+<h1 class="title">Economic MPC</h1>
 </div>
 
 
@@ -579,25 +593,28 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The number of numerical solvers is huge. First, we give a short biased list of solvers which we may use within this course.</p>
-<ul>
-<li><a href="https://www.mathworks.com/products/optimization.html">Optimization Toolbox for Matlab</a>: fmincon, fminunc, linprog, quadpro, … Available within the all-university Matlab license for all students and employees at CTU.</li>
-<li><a href="https://www.gurobi.com/solutions/gurobi-optimizer/">Gurobi Optimizer</a>: LP, QP, SOCP, MIP, commercial (but free academic license available).</li>
-<li><a href="https://www.ibm.com/products/ilog-cplex-optimization-studio/cplex-optimizer">IBM ILOG CPLEX</a>: LP, QP, SOCP, MIP, commercial.</li>
-<li><a href="https://www.mosek.com">MOSEK</a>: LP, QP, MIP, SOCP, SDP, commercial (but free academic license available).</li>
-<li><a href="https://highs.dev">HIGHS</a>: LP, QP, MIP, open source.</li>
-<li><a href="https://www.artelys.com/solvers/knitro/">Knitro</a>: NLP, commercial.</li>
-<li><a href="https://coin-or.github.io/Ipopt/">Ipopt</a>: NLP, open source.</li>
-<li><a href="http://sedumi.ie.lehigh.edu">SEDUMI</a>: SOCP, SDP, open source.</li>
-<li>…</li>
-</ul>
-<p>Second, for a reasonably comprehensive and well maintained list of solvers, consult the <a href="https://neos-guide.org/guide/">NEOS Guide to Optimization</a> web page (in particular the <a href="https://neos-server.org/neos/solvers/index.html">link at the bottom</a> of that page). Similar list is maintained within Hans Mittelman’s <a href="https://plato.asu.edu/sub/pns.html">Decision Tree for Optimization Software</a> web page.</p>
-<p>Working in Matlab and using Yalmip for defining and solving optimization problems, the <a href="https://yalmip.github.io/allsolvers/">list of optimization solvers supported by Yalmip</a> shows what is available.</p>
-<p>Similarly, users of Julia and JuMP will find the <a href="https://jump.dev/JuMP.jl/stable/installation/#Supported-solvers">list of solvers supported by JuMP</a> useful. The list is worth consulting even if Julia is not the tool of choice, as many solvers are indepdenent of Julia.</p>
+<section id="literature" class="level2">
+<h2 class="anchored" data-anchor-id="literature">Literature</h2>
+<p><span class="citation" data-cites="ellisEconomicModelPredictive2017">(<a href="#ref-ellisEconomicModelPredictive2017" role="doc-biblioref">Ellis, Liu, and Christofides 2017</a>)</span>, <span class="citation" data-cites="ellisTutorialReviewEconomic2014">(<a href="#ref-ellisTutorialReviewEconomic2014" role="doc-biblioref">Ellis, Durand, and Christofides 2014</a>)</span>, <span class="citation" data-cites="faulwasserEconomicNonlinearModel2018">(<a href="#ref-faulwasserEconomicNonlinearModel2018" role="doc-biblioref">Faulwasser, Grüne, and Müller 2018</a>)</span>, <span class="citation" data-cites="rawlingsFundamentalsEconomicModel2012">(<a href="#ref-rawlingsFundamentalsEconomicModel2012" role="doc-biblioref">Rawlings, Angeli, and Bates 2012</a>)</span></p>
 
 
 
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-ellisTutorialReviewEconomic2014" class="csl-entry" role="listitem">
+Ellis, Matthew, Helen Durand, and Panagiotis D. Christofides. 2014. <span>“A Tutorial Review of Economic Model Predictive Control Methods.”</span> <em>Journal of Process Control</em>, Economic nonlinear model predictive control, 24 (8): 1156–78. <a href="https://doi.org/10.1016/j.jprocont.2014.03.010">https://doi.org/10.1016/j.jprocont.2014.03.010</a>.
+</div>
+<div id="ref-ellisEconomicModelPredictive2017" class="csl-entry" role="listitem">
+Ellis, Matthew, Jinfeng Liu, and Panagiotis D. Christofides. 2017. <em>Economic <span>Model Predictive Control</span>: <span>Theory</span>, <span>Formulations</span> and <span>Chemical Process Applications</span></em>. Advances in <span>Industrial Control</span>. <span>Cham</span>: <span>Springer</span>. <a href="https://doi.org/10.1007/978-3-319-41108-8">https://doi.org/10.1007/978-3-319-41108-8</a>.
+</div>
+<div id="ref-faulwasserEconomicNonlinearModel2018" class="csl-entry" role="listitem">
+Faulwasser, Timm, Lars Grüne, and Matthias A. Müller. 2018. <span>“Economic <span>Nonlinear Model Predictive Control</span>.”</span> <em>Foundations and Trends<span></span> in Systems and Control</em> 5 (1): 1–98. <a href="https://doi.org/10.1561/2600000014">https://doi.org/10.1561/2600000014</a>.
+</div>
+<div id="ref-rawlingsFundamentalsEconomicModel2012" class="csl-entry" role="listitem">
+Rawlings, James B., David Angeli, and Cuyler N. Bates. 2012. <span>“Fundamentals of Economic Model Predictive Control.”</span> In <em>2012 <span>IEEE</span> 51st <span>IEEE Conference</span> on <span>Decision</span> and <span>Control</span> (<span>CDC</span>)</em>, 3851–61. <a href="https://doi.org/10.1109/CDC.2012.6425822">https://doi.org/10.1109/CDC.2012.6425822</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1009,13 +1026,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./opt_algo_constrained.html" class="pagination-link" aria-label="Algorithms for constrained optimization">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Algorithms for constrained optimization</span>
+      <a href="./discr_dir_mpc_explicit.html" class="pagination-link" aria-label="Explicit MPC">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Explicit MPC</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./opt_algo_references.html" class="pagination-link" aria-label="References for optimization algorithms">
-        <span class="nav-page-text">References for optimization algorithms</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cont_indir_calculus_of_variations.html" class="pagination-link" aria-label="Calculus of variations and optimal control">
+        <span class="nav-page-text">Calculus of variations and optimal control</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1027,7 +1044,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

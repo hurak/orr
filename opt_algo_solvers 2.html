@@ -579,21 +579,31 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The number of numerical solvers is huge. First, we give a short biased list of solvers which we may use within this course.</p>
 <ul>
-<li><a href="https://www.mathworks.com/products/optimization.html">Optimization Toolbox for Matlab</a>: fmincon, fminunc, linprog, quadpro, … Available within the all-university Matlab license for all students and employees at CTU.</li>
-<li><a href="https://www.gurobi.com/solutions/gurobi-optimizer/">Gurobi Optimizer</a>: LP, QP, SOCP, MIP, commercial (but free academic license available).</li>
-<li><a href="https://www.ibm.com/products/ilog-cplex-optimization-studio/cplex-optimizer">IBM ILOG CPLEX</a>: LP, QP, SOCP, MIP, commercial.</li>
-<li><a href="https://www.mosek.com">MOSEK</a>: LP, QP, MIP, SOCP, SDP, commercial (but free academic license available).</li>
-<li><a href="https://highs.dev">HIGHS</a>: LP, QP, MIP, open source.</li>
-<li><a href="https://www.artelys.com/solvers/knitro/">Knitro</a>: NLP, commercial.</li>
-<li><a href="https://coin-or.github.io/Ipopt/">Ipopt</a>: NLP, open source.</li>
-<li><a href="http://sedumi.ie.lehigh.edu">SEDUMI</a>: SOCP, SDP, open source.</li>
-<li>…</li>
+<li><p>Gurobi Optimizer</p></li>
+<li><p>IBM ILOG CPLEX</p></li>
+<li><p>Knitro</p></li>
+<li><p>MOSEK</p></li>
+<li><p>Ipopt</p></li>
+<li><p>SNOPT</p></li>
+<li><p>NLPQLP</p></li>
+<li><p>fmincon</p></li>
+<li><p>fminunc</p></li>
+<li><p>fminsearch</p></li>
+<li><p>fminbnd</p></li>
+<li><p>fminimax</p></li>
+<li><p>fmincon</p></li>
+<li><p>Optimization Toolbox for Matlab</p></li>
+<li><p>JuMP</p></li>
+<li><p>Convex.jl</p></li>
+<li><p>Optim.jl</p></li>
+<li><p>NLopt.jl</p></li>
+<li><p>BlackBoxOptim.jl</p></li>
+<li><p>BayesianOptimization.jl</p></li>
+<li><p>CMAES.jl</p></li>
+<li><p>DirectSearch.jl</p></li>
+<li><p>Evolutionary.jl</p></li>
 </ul>
-<p>Second, for a reasonably comprehensive and well maintained list of solvers, consult the <a href="https://neos-guide.org/guide/">NEOS Guide to Optimization</a> web page (in particular the <a href="https://neos-server.org/neos/solvers/index.html">link at the bottom</a> of that page). Similar list is maintained within Hans Mittelman’s <a href="https://plato.asu.edu/sub/pns.html">Decision Tree for Optimization Software</a> web page.</p>
-<p>Working in Matlab and using Yalmip for defining and solving optimization problems, the <a href="https://yalmip.github.io/allsolvers/">list of optimization solvers supported by Yalmip</a> shows what is available.</p>
-<p>Similarly, users of Julia and JuMP will find the <a href="https://jump.dev/JuMP.jl/stable/installation/#Supported-solvers">list of solvers supported by JuMP</a> useful. The list is worth consulting even if Julia is not the tool of choice, as many solvers are indepdenent of Julia.</p>
 
 
 
@@ -679,7 +689,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/hurak\.github\.io\/orr\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

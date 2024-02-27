@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Numerical solvers</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – Mixed sensitivity design</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./opt_algo_references.html" rel="next">
-<link href="./opt_algo_constrained.html" rel="prev">
+<link href="./rocond_H_infinity_control.html" rel="next">
+<link href="./robustness.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_algo_derivatives.html">2. Optimization – algorithms</a></li><li class="breadcrumb-item"><a href="./opt_algo_solvers.html">Numerical solvers</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rocond_mixed_sensitivity.html">12. Robust control</a></li><li class="breadcrumb-item"><a href="./rocond_mixed_sensitivity.html">Mixed sensitivity design</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -118,13 +118,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_theory_problems.html" class="sidebar-item-text sidebar-link">
+  <a href="./opt_problems.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Optimization problems</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_theory_reformulations.html" class="sidebar-item-text sidebar-link">
+  <a href="./opt_reformulations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Problem reformulations</span></a>
   </div>
 </li>
@@ -142,14 +142,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_theory_modellers.html" class="sidebar-item-text sidebar-link">
+  <a href="./opt_modellers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Optimization modelling languages</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./opt_theory_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References for optimization theory</span></a>
   </div>
 </li>
       </ul>
@@ -183,14 +177,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_algo_solvers.html" class="sidebar-item-text sidebar-link active">
+  <a href="./opt_solvers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Numerical solvers</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./opt_algo_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References for optimization algorithms</span></a>
   </div>
 </li>
       </ul>
@@ -485,7 +473,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rocond_mixed_sensitivity.html" class="sidebar-item-text sidebar-link">
+  <a href="./rocond_mixed_sensitivity.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Mixed sensitivity design</span></a>
   </div>
 </li>
@@ -560,9 +548,9 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_algo_derivatives.html">2. Optimization – algorithms</a></li><li class="breadcrumb-item"><a href="./opt_algo_solvers.html">Numerical solvers</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rocond_mixed_sensitivity.html">12. Robust control</a></li><li class="breadcrumb-item"><a href="./rocond_mixed_sensitivity.html">Mixed sensitivity design</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Numerical solvers</h1>
+<h1 class="title">Mixed sensitivity design</h1>
 </div>
 
 
@@ -579,21 +567,6 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The number of numerical solvers is huge. First, we give a short biased list of solvers which we may use within this course.</p>
-<ul>
-<li><a href="https://www.mathworks.com/products/optimization.html">Optimization Toolbox for Matlab</a>: fmincon, fminunc, linprog, quadpro, … Available within the all-university Matlab license for all students and employees at CTU.</li>
-<li><a href="https://www.gurobi.com/solutions/gurobi-optimizer/">Gurobi Optimizer</a>: LP, QP, SOCP, MIP, commercial (but free academic license available).</li>
-<li><a href="https://www.ibm.com/products/ilog-cplex-optimization-studio/cplex-optimizer">IBM ILOG CPLEX</a>: LP, QP, SOCP, MIP, commercial.</li>
-<li><a href="https://www.mosek.com">MOSEK</a>: LP, QP, MIP, SOCP, SDP, commercial (but free academic license available).</li>
-<li><a href="https://highs.dev">HIGHS</a>: LP, QP, MIP, open source.</li>
-<li><a href="https://www.artelys.com/solvers/knitro/">Knitro</a>: NLP, commercial.</li>
-<li><a href="https://coin-or.github.io/Ipopt/">Ipopt</a>: NLP, open source.</li>
-<li><a href="http://sedumi.ie.lehigh.edu">SEDUMI</a>: SOCP, SDP, open source.</li>
-<li>…</li>
-</ul>
-<p>Second, for a reasonably comprehensive and well maintained list of solvers, consult the <a href="https://neos-guide.org/guide/">NEOS Guide to Optimization</a> web page (in particular the <a href="https://neos-server.org/neos/solvers/index.html">link at the bottom</a> of that page). Similar list is maintained within Hans Mittelman’s <a href="https://plato.asu.edu/sub/pns.html">Decision Tree for Optimization Software</a> web page.</p>
-<p>Working in Matlab and using Yalmip for defining and solving optimization problems, the <a href="https://yalmip.github.io/allsolvers/">list of optimization solvers supported by Yalmip</a> shows what is available.</p>
-<p>Similarly, users of Julia and JuMP will find the <a href="https://jump.dev/JuMP.jl/stable/installation/#Supported-solvers">list of solvers supported by JuMP</a> useful. The list is worth consulting even if Julia is not the tool of choice, as many solvers are indepdenent of Julia.</p>
 
 
 
@@ -1009,13 +982,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./opt_algo_constrained.html" class="pagination-link" aria-label="Algorithms for constrained optimization">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Algorithms for constrained optimization</span>
+      <a href="./robustness.html" class="pagination-link" aria-label="Robustness analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Robustness analysis</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./opt_algo_references.html" class="pagination-link" aria-label="References for optimization algorithms">
-        <span class="nav-page-text">References for optimization algorithms</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./rocond_H_infinity_control.html" class="pagination-link" aria-label="Hinfinity-optimal control">
+        <span class="nav-page-text">Hinfinity-optimal control</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

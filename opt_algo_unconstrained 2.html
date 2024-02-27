@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Numerical solvers</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – Algorithms for unconstrained optimization</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,8 +64,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./opt_algo_references.html" rel="next">
-<link href="./opt_algo_constrained.html" rel="prev">
+<link href="./opt_algo_constrained.html" rel="next">
+<link href="./opt_algo_derivatives.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,6 +103,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -82,7 +159,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_algo_derivatives.html">2. Optimization – algorithms</a></li><li class="breadcrumb-item"><a href="./opt_algo_solvers.html">Numerical solvers</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_algo_derivatives.html">2. Optimization – algorithms</a></li><li class="breadcrumb-item"><a href="./opt_algo_unconstrained.html">Algorithms for unconstrained optimization</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -171,7 +248,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_algo_unconstrained.html" class="sidebar-item-text sidebar-link">
+  <a href="./opt_algo_unconstrained.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Algorithms for unconstrained optimization</span></a>
   </div>
 </li>
@@ -183,7 +260,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_algo_solvers.html" class="sidebar-item-text sidebar-link active">
+  <a href="./opt_algo_solvers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Numerical solvers</span></a>
   </div>
 </li>
@@ -554,15 +631,29 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#descent-methods" id="toc-descent-methods" class="nav-link active" data-scroll-target="#descent-methods">Descent methods</a>
+  <ul class="collapse">
+  <li><a href="#steepest-descent-aka-gradient-descent-method" id="toc-steepest-descent-aka-gradient-descent-method" class="nav-link" data-scroll-target="#steepest-descent-aka-gradient-descent-method">Steepest descent (aka gradient descent) method</a></li>
+  <li><a href="#step-length-determination-aka-line-search" id="toc-step-length-determination-aka-line-search" class="nav-link" data-scroll-target="#step-length-determination-aka-line-search">Step length determination (aka line search)</a></li>
+  <li><a href="#newtons-method" id="toc-newtons-method" class="nav-link" data-scroll-target="#newtons-method">Newton’s method</a></li>
+  <li><a href="#quasi-newtons-methods" id="toc-quasi-newtons-methods" class="nav-link" data-scroll-target="#quasi-newtons-methods">Quasi-Newton’s methods</a></li>
+  <li><a href="#conjugate-gradient-method" id="toc-conjugate-gradient-method" class="nav-link" data-scroll-target="#conjugate-gradient-method">Conjugate gradient method</a></li>
+  </ul></li>
+  <li><a href="#trust-region-methods" id="toc-trust-region-methods" class="nav-link" data-scroll-target="#trust-region-methods">Trust region methods</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_algo_derivatives.html">2. Optimization – algorithms</a></li><li class="breadcrumb-item"><a href="./opt_algo_solvers.html">Numerical solvers</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_algo_derivatives.html">2. Optimization – algorithms</a></li><li class="breadcrumb-item"><a href="./opt_algo_unconstrained.html">Algorithms for unconstrained optimization</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Numerical solvers</h1>
+<h1 class="title">Algorithms for unconstrained optimization</h1>
 </div>
 
 
@@ -579,23 +670,151 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The number of numerical solvers is huge. First, we give a short biased list of solvers which we may use within this course.</p>
+<p>Our motivation for studying numerical algorithms for unconstrained optimization remains the same as when we studied the conditions of optimality for such unconstrained problems – such algorithms constitute building blocks for constrained optimization problems. Indeed, many algorithms for constrained problems are based on reformulating the constrained problem into an unconstrained one and then applying the algorithms studied in this section.</p>
+<p>It may be useful to recapitulate our motivation for studying optimization algorithms in general – after all, there are dozens of commercial or free&amp;open-source software tools for solving optimization problems. Why not just use them? There are two answers beyond the traditional “at a grad school we should understand what we are using”:</p>
 <ul>
-<li><a href="https://www.mathworks.com/products/optimization.html">Optimization Toolbox for Matlab</a>: fmincon, fminunc, linprog, quadpro, … Available within the all-university Matlab license for all students and employees at CTU.</li>
-<li><a href="https://www.gurobi.com/solutions/gurobi-optimizer/">Gurobi Optimizer</a>: LP, QP, SOCP, MIP, commercial (but free academic license available).</li>
-<li><a href="https://www.ibm.com/products/ilog-cplex-optimization-studio/cplex-optimizer">IBM ILOG CPLEX</a>: LP, QP, SOCP, MIP, commercial.</li>
-<li><a href="https://www.mosek.com">MOSEK</a>: LP, QP, MIP, SOCP, SDP, commercial (but free academic license available).</li>
-<li><a href="https://highs.dev">HIGHS</a>: LP, QP, MIP, open source.</li>
-<li><a href="https://www.artelys.com/solvers/knitro/">Knitro</a>: NLP, commercial.</li>
-<li><a href="https://coin-or.github.io/Ipopt/">Ipopt</a>: NLP, open source.</li>
-<li><a href="http://sedumi.ie.lehigh.edu">SEDUMI</a>: SOCP, SDP, open source.</li>
-<li>…</li>
+<li>There is no single solver that works best for all problems. Therefore we must be aware of the principles, strenghts and weaknesses of the algorithms in order to choose the right one for our problem.</li>
+<li>This is a control engineering course and numerical optimization is becoming an integral part of control systems. While developing a control system, we may find ourselves in need of developing our own implementation of an optimization algorithm or adjusting an existing one. This requires deeper understanding of algorithms than just casual usage of high-level functions in Matlab or Python.</li>
 </ul>
-<p>Second, for a reasonably comprehensive and well maintained list of solvers, consult the <a href="https://neos-guide.org/guide/">NEOS Guide to Optimization</a> web page (in particular the <a href="https://neos-server.org/neos/solvers/index.html">link at the bottom</a> of that page). Similar list is maintained within Hans Mittelman’s <a href="https://plato.asu.edu/sub/pns.html">Decision Tree for Optimization Software</a> web page.</p>
-<p>Working in Matlab and using Yalmip for defining and solving optimization problems, the <a href="https://yalmip.github.io/allsolvers/">list of optimization solvers supported by Yalmip</a> shows what is available.</p>
-<p>Similarly, users of Julia and JuMP will find the <a href="https://jump.dev/JuMP.jl/stable/installation/#Supported-solvers">list of solvers supported by JuMP</a> useful. The list is worth consulting even if Julia is not the tool of choice, as many solvers are indepdenent of Julia.</p>
+<p>There is certainly no shortage of algorithms for unconstrained optimization. In this crash course we can cover only a few. But the few we cover here certainly form a solid theoretical basis and provide practically usable tools.</p>
+<p>One possible way to classify the algorithms is based on <strong>whether they use derivatives</strong> of the objective functions <strong>or not</strong>. In this course, we only consider the former approaches as they leads to more efficient algorithms. For the latter methods, we can refer to the literature (the prominent example is Nelder-Mead method).</p>
+<p>All the relevant methods are <strong>iterative</strong>. Based on what happens within each iteration, we can classify them into two categories:</p>
+<dl>
+<dt>Descent methods</dt>
+<dd>
+In each iteration, fix the search direction <span class="math inline">d_k</span> first, and then determine how far to go along that direction, that is, find the step length <span class="math inline">\alpha_k</span> that minimizes (exactly or approximately) <span class="math inline">f(x_k + \alpha_k d_k)</span>. In the next iteration the search direction is updated.
+</dd>
+<dt>Trust region methods</dt>
+<dd>
+In each iteration, fix the region (typically a ball) around the current solution, in which a simpler (typically a quadratic) function approximates the original cost function reasonably accurately, and then find the minimum of this simpler cost function.
+</dd>
+</dl>
+<section id="descent-methods" class="level2">
+<h2 class="anchored" data-anchor-id="descent-methods">Descent methods</h2>
+<p>The obvious quality that the search direction needs to satisfy, is that the cost function decreses along it, at least locally (for a small step length).</p>
+<div id="def-descent-direction" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1 (Descent direction)</strong></span> At the current iterate <span class="math inline">\bm x_k</span>, the direction <span class="math inline">\bm d_k</span> is called a <em>descent direction</em> if <span class="math display">
+\nabla f(\bm x_k)^\top \bm d_k &lt; 0,
+</span> that is, the <em>directional derivative</em> is negative along the direction <span class="math inline">\bm d_k</span>.</p>
+</div>
+<p>The product above is an inner product of the two vectors <span class="math inline">\bm d_k</span> and <span class="math inline">\nabla f(\mathbf x_k)</span>. Recall that it is defined as <span class="math display">
+\nabla f(\bm x_k)^\top \bm d_k = \|\nabla f(\bm x_k)\| \|\bm d_k\| \cos \theta,
+</span> where <span class="math inline">\theta</span> is the angle between the gradient and the search direction. This condition has a nice geometric interpretation in a contour plot for an optimization in <span class="math inline">\mathbb R^2</span>. Consider the line tangent to the function countour at <span class="math inline">\bm x_k</span>. A descent direction must be in the other half-plane generated by the tangent line than into which the gradient <span class="math inline">\nabla f(\bm x_k)</span> points.</p>
+<p>Beware that it is only guaranteed that the cost function is reduced if the length of the step is sufficently small. For longer steps the higher-order terms in the Taylor’s series approximation of the cost function can dominate.</p>
+<p>But which descent direction to choose? How to find it?</p>
+<section id="steepest-descent-aka-gradient-descent-method" class="level3">
+<h3 class="anchored" data-anchor-id="steepest-descent-aka-gradient-descent-method">Steepest descent (aka gradient descent) method</h3>
+<p>A natural candidate for a descent direction is the negative of the gradient <span class="math display">
+\bm d_k = -\nabla f(\bm x_k).
+</span></p>
+<p>In fact, among all descent directions, this is the one for which the descent is steepest (the gradient determines the direction of steepest ascent), though we will see later that this does not mean that the convergence of the method is the fastest.</p>
+<p>In each iteration of the gradient method, this is the how the solution is updated</p>
+<p><span class="math display">
+\boxed{
+\bm x_{k+1} = \bm x_{k} - \alpha_k \nabla f(\bm x_{k}).}
+</span></p>
+<p>But where to find the step length <span class="math inline">\alpha_k</span>?</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We address the problem of line search immediately below, right after we just introduced the gradient descent method, but the methods for line search are relevant for all descent directions, not just the steepest one.</p>
+</div>
+</div>
+</section>
+<section id="step-length-determination-aka-line-search" class="level3">
+<h3 class="anchored" data-anchor-id="step-length-determination-aka-line-search">Step length determination (aka line search)</h3>
+<p>Note that once the search direction has been fixed (whether we used the negative of the gradient or any other descent direction), the problem of finding the step length <span class="math inline">\alpha_k</span> is just a scalar optimization problem. It turns out, however, that besides finding the true minimum along the search directions, it is often sufficient to find the minimum only approximately, or not aiming at minimization at all and work with a fixed step length instead.</p>
+<section id="fixed-length-of-the-step" class="level4">
+<h4 class="anchored" data-anchor-id="fixed-length-of-the-step">Fixed length of the step</h4>
+<p>Here we give a guidance on the choice of the lenght of the step. But we need to introduce a useful concept first.</p>
+<div id="def-Lsmoothness" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2 (L-smoothness)</strong></span> For a continuously differentiable function <span class="math inline">f</span>, the gradient <span class="math inline">\nabla f</span> is said to be <em>L-smooth</em> if there exists a constant <span class="math inline">L&gt;0</span> such that <span class="math display">
+\|\nabla f(x) - \nabla f(y)\| \leq L \|x-y\|.
+</span></p>
+</div>
+<p>Not that if the second derivatives exist, <span class="math inline">L</span> is an upper bound on the norm of the Hessian <span class="math display">
+\|\nabla^2 f\|\leq L.
+</span></p>
+<p>For quadratic functions, <span class="math inline">L</span> is the largest eigenvalue of the Hessian <span class="math display">
+L = \max_i \lambda_i (\mathbf Q).
+</span></p>
+<p>The usefulness of the concept of L-smoothness is that it provides a quadratic function that serves as an upper bound for the original function. This is formulated as the following lemma.</p>
+<div id="lem-descent-lemma" class="theorem lemma">
+<p><span class="theorem-title"><strong>Lemma 1 (Descent lemma)</strong></span> Consider an <span class="math inline">L</span>-smooth function <span class="math inline">f</span>. Then for any <span class="math inline">\mathbf x_k</span> and <span class="math inline">\mathbf x_{k+1}</span>, the following inequality holds <span class="math display">
+f(\mathbf x_{k+1}) \leq  f(\mathbf x_{k}) + \nabla f(\mathbf x_k)^\top (\mathbf x_{k-1}-\mathbf x_{k}) + \frac{L}{2}\|\mathbf x_{k-1}-\mathbf x_{k}\|^2
+</span></p>
+</div>
+<p>What implication does the result have on the determination of the step length?</p>
+<p><span class="math display">
+\alpha = \frac{1}{L}
+</span></p>
+</section>
+<section id="exact-line-search" class="level4">
+<h4 class="anchored" data-anchor-id="exact-line-search">Exact line search</h4>
+<p>A number of methos exist: bisection, golden section, Newton, As finding true minium in each iteration is often too computationally costly and hardly needed, we do not have them here. The only exception the Newton’s method, which for vector variables constitutes another descent method on its own and we cover it later.</p>
+<div id="exm-exact-line-search-quadratic" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1</strong></span> Here we develop a solution for an exact minimization of a quadratic functions <span class="math inline">f(\bm x) = \frac{1}{2} \bm x^\top\mathbf Q \bm x + \mathbf c^\top \bm x</span> along a given direction. We show that it leads to a closed-form formula. Although not particularly useful in practice, it is a good exercise in understanding the problem of line search. Furthermore, we will use it later to demonstrate the behaviour of the steepest descent method. The problem is to <span class="math inline">\operatorname*{minimize}_{\alpha_k} f(\bm x_k + \alpha_k \bm d_k)</span>. We express the cost as a function of the current iterate, the direction, and step length. <span class="math display">
+\begin{aligned}
+f(\bm x_k + \alpha_k \bm d_k) &amp;= \frac{1}{2}(\bm x_k + \alpha_k\bm d_k)^\top\mathbf Q (\bm x_k + \alpha_k\bm d_k) +\mathbf c^\top(\bm x_k + \alpha_k\bm d_k)\\
+&amp;= \frac{1}{2} \bm x_k^\top\mathbf Q \bm x_k + \bm d_k^\top\mathbf Q\bm x_k \alpha_k + \frac{1}{2} \bm d_k^\top\mathbf Q\bm d_k \alpha_k^2+ \mathbf c^\top(\bm x_k + \alpha_k\bm d_k).
+\end{aligned}
+</span></p>
+<p>Differentiating the function with respect to the length of the step, we get <span class="math display">
+\frac{\mathrm{d}f(\bm x_k + \alpha_k\bm d_k)}{\mathrm{d}\alpha_k} = \bm d_k^\top \underbrace{(\mathbf Q\bm x_k + \mathbf c)}_{\nabla f(\bm x_k)} + \bm d_k^\top\mathbf Q\bm d_k \alpha_k.
+</span></p>
+<p>And now setting the derivative to zero, we find the optimal step length <span class="math display">
+\boxed{
+\alpha_k = -\frac{\bm d_k^\top \nabla f(\bm x_k)}{\bm d_k^\top\mathbf Q\bm d_k} = -\frac{\bm d_k^\top (\mathbf Q\bm x_k + \mathbf c)}{\bm d_k^\top\mathbf Q\bm d_k}.}
+</span></p>
+</div>
+</section>
+<section id="approximate-line-search-backtracking" class="level4">
+<h4 class="anchored" data-anchor-id="approximate-line-search-backtracking">Approximate line search – backtracking</h4>
+<p>There are several methods for approximate line search. Here we describe the popular backtracking algorithm, which is based on the Armijo / Wolfe conditions.</p>
+<p>The algorithm is parameterized by three parameter: <span class="math inline">\alpha_0&gt;0</span>, <span class="math inline">\beta\in(0,1)</span>, <span class="math inline">\gamma\in(0,1)</span>. The <span class="math inline">k</span>-th iteration of the algorithm goes like this: set the step lenght <span class="math inline">\alpha_k</span> to the initial value <span class="math inline">\alpha_0</span>. Evaluate the decrease in the cost function and unless it is sufficient, reduce the step length by <span class="math inline">\alpha_k = \beta \alpha_k</span>.</p>
+<p>How do we determine if the decrease is sufficient? There are several <em>conditions of sufficient decrease</em>. The most commonly used is called Armijo condition, which reads <span class="math display">
+f(\bm x_k+\alpha_k\bm d_k) \leq f(\bm x_k) + \gamma \alpha_k \mathbf d^T \nabla f(\bm x_k).
+</span></p>
+<p>Equivalently, the condition that sends the algorithm into another reduction of <span class="math inline">\alpha_k</span> by <span class="math inline">\alpha_k = \beta\alpha_k</span> is <span class="math display">
+f(\bm x_k) - f(\bm x_k+\alpha_k\bm d_k) &lt; -\gamma \alpha_k \mathbf d^T \nabla f(\bm x_k).
+</span></p>
+<p>The backtracking algorithm can be implemented as follows</p>
+<div id="8ba43f79" class="cell">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">backtracking_line_search</span>(f, ∇fₖ, xₖ, dₖ; α₀<span class="op">=</span><span class="fl">1.0</span>, β<span class="op">=</span><span class="fl">0.5</span>, γ<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    α <span class="op">=</span> α₀</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="fu">f</span>(xₖ)<span class="fu">-f</span>(xₖ<span class="op">+</span>α<span class="op">*</span>dₖ) <span class="op">&lt;</span> <span class="fu">-γ*α*dot</span>(dₖ,∇fₖ)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        α <span class="op">*=</span> β</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> α</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="newtons-method" class="level3">
+<h3 class="anchored" data-anchor-id="newtons-method">Newton’s method</h3>
+</section>
+<section id="quasi-newtons-methods" class="level3">
+<h3 class="anchored" data-anchor-id="quasi-newtons-methods">Quasi-Newton’s methods</h3>
+</section>
+<section id="conjugate-gradient-method" class="level3">
+<h3 class="anchored" data-anchor-id="conjugate-gradient-method">Conjugate gradient method</h3>
+</section>
+</section>
+<section id="trust-region-methods" class="level2">
+<h2 class="anchored" data-anchor-id="trust-region-methods">Trust region methods</h2>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -679,7 +898,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/hurak\.github\.io\/orr\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -1009,13 +1228,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./opt_algo_constrained.html" class="pagination-link" aria-label="Algorithms for constrained optimization">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Algorithms for constrained optimization</span>
+      <a href="./opt_algo_derivatives.html" class="pagination-link" aria-label="Computing derivatives">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Computing derivatives</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./opt_algo_references.html" class="pagination-link" aria-label="References for optimization algorithms">
-        <span class="nav-page-text">References for optimization algorithms</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./opt_algo_constrained.html" class="pagination-link" aria-label="Algorithms for constrained optimization">
+        <span class="nav-page-text">Algorithms for constrained optimization</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1027,7 +1246,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
