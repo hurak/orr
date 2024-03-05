@@ -20,9 +20,25 @@ There are three ways to compute derivatives:
 
 ## Symbolic methods
 
-These are essentially the methods that we have all learnt to apply using a pen and paper. A bunch of rules.
+These are essentially the methods that we have all learnt to apply using a pen and paper. A bunch of rules. The outcome is an expression.
 
 ## Numerical finite-difference (FD) methods
+
+These methods approximate the derivative by computing differences between the function values at different points, hence the name *finite-difference (FD)* methods. The simplest FD methods follow from the definition of the derivative after omiting the limit:
+
+$$
+\frac{\mathrm d f(x)}{\mathrm d x} \approx \frac{f(x+\alpha)-f(x)}{\alpha}\qquad\qquad \text{forward difference}
+$$
+or
+$$
+\frac{\mathrm d f(x)}{\mathrm d x} \approx \frac{f(x)-f(x-\alpha)}{\alpha}\qquad\qquad \text{backward difference}
+$$
+or
+$$
+\frac{\mathrm d f(x)}{\mathrm d x} \approx \frac{f(x+\frac{\alpha}{2})-f(x-\frac{\alpha}{2})}{\alpha}\qquad\qquad \text{central difference}
+$$
+
+For functions of vector variables, the same idea applies, but now we have to compute the difference for each component of the vector.
 
 ## Algorithmic (also Automatic) differentiation methods
 

@@ -329,7 +329,7 @@ $$
 
 In words, the diagonal entries of the Hessian matrix are inverted and they then form the diagonal of the scaling matrix.
 
-It is worth emphasizing how the algorithm changed: the direction of steepest descent (the negative of the gradient) is premultiplied by some (scaling) matrix. We will see in a few moments that another method---Newton's method---has a perfectly identical structure.  
+It is worth emphasizing how the algorithm changed: the direction of steepest descent (the negative of the gradient) is premultiplied by some (scaling) matrix. We will see in a few moments that another method – Newton's method – has a perfectly identical structure.  
 
 ### Newton's method
 
@@ -397,13 +397,13 @@ A few observations
 
 - If compared with steepest descent (gradient) method, especially with its scaled version (\ref{eq:scaled_gradient_method}), Newton's method fits into the framework nicely because the inverse $[\nabla^2 f(\mathbf x_k)]^{-1}$ of the Hessian can be regarded as a kind of a scaling matrix $\mathbf D$. Indeed, you can find arguments in some textbooks that Newton's method involves scaling that is optimal in some sense. We skip the details here because we only wanted to highlight the similarity in the structure of the two methods.   
 
-The great popularity of Newton's method is mainly due to its nice convergence---quadratic. Although we skip any discussion of convergence rates here, note that for all other methods this is an ideal that aims to be approached.
+The great popularity of Newton's method is mainly due to its nice convergence – quadratic. Although we skip any discussion of convergence rates here, note that for all other methods this is an ideal that aims to be approached.
 
 The nice convergence rate of Newton's method is compensated by a few disadvantages
 
 - The need to compute the Hessian. This is perhaps not quite clear with simple problems but can play some role with huge problems.
 - Once the Hessian is computed, it must be inverted (actually, a linear system must by solved). But this assumes that Hessian is nonsingular. How can we guarantee this for a given problem? 
-- It is not only that Hessian must be nonsingular but it must also be positive (definite). Note that in the scalar case this corresponds to the situation when the second derivative is positive. Negativeness of the second derivative can send the algorithm in the opposite direction---away from the local minimum---, which which would ruin the convergence of the algorithm.
+- It is not only that Hessian must be nonsingular but it must also be positive (definite). Note that in the scalar case this corresponds to the situation when the second derivative is positive. Negativeness of the second derivative can send the algorithm in the opposite direction – away from the local minimum – , which which would ruin the convergence of the algorithm.
 
 The last two issues are handled by some modification of the standard Newton's method
 
