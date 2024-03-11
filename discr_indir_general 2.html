@@ -795,7 +795,7 @@ Important
 <li><p>The third set of equations are just algebraic equations that relate the control inputs to the state and co-state variables. Sometimes it is called a <em>stationarity equation</em>.</p></li>
 <li><p>The last two are just single (vector) equations related to the end and the beginning of the time horizon. They are both stated in the general enough form that allows the corresponding states to be treated as either fixed or subject to optimization. In particular, if the final state is to be treated as free (subject to optimization), that is, <span class="math inline">\mathrm{d}\bm x_N</span> can be atritrary and the only way the corresponding equation can be satisfied is <span class="math inline">\nabla_{\bm x_N}\phi=\lambda_N</span>. If, on the other hand, the final state is to be treated as fixed, the the corresponding equation is just replaced by <span class="math inline">\bm x_N = \mathbf x^\text{ref}</span>. Similarly for the initial state. But as we have hinted a few times, most often than not the initial state will be regarded as fixed and not subject to optimization, in which case the corresponding equation is replaced by <span class="math inline">\bm x_i = \mathbf x^\text{init}</span>.</p></li>
 </ul>
-<p>To summarize, the equations that give the necessary conditions of optimality for a general nonlinear discrete-time optimal control problem form a <em>two-point boundary value problem</em> (TP-BVP). Values of some variables are specified at the initial time, values of some (maybe the same or some other) variables are defined at the final time. The equations prescribe the evolution of some variables forward in time while for some other variables the evolution backward in time is dictated.</p>
+<p>To summarize, the equations that give the necessary conditions of optimality for a general nonlinear discrete-time optimal control problem form a <em>two-point boundary value problem</em> (TP-BVP). Value of some variables are specified in the initial time, value of some (maybe the same or some other) variables are defined at the final time, and the equations prescribe the evolution of some variables forward in time while for some other the evolution in the bacward-in-time direction is prescribed.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -809,7 +809,6 @@ Note
 <p>This is in contrast with the initial value problem (IVP) for state equations, for which we only specify the state at one end of the time horizon – the initial state – and then the state equation disctates the evolution of the (state) variable forward in time.</p>
 </div>
 </div>
-<p>Boundary value problems are notoriously difficult to solve. Typically we can only solve them numerically, in which case it is appropriate to ask if anything has been gained by this indirect procedure compared with the direct one. After all, we did not even incorporate the inequality constraints in the problem, which was a piece of case in the direct approach. But we will see that in some special cases the TP-BVP they can be solved analytically and the outcome is particularly useful and would never have been discovered, if only the direct approach had been followed. We elaborate on this in the next section.</p>
 
 
 </section>
@@ -896,7 +895,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/hurak\.github\.io\/orr\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
