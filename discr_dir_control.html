@@ -312,7 +312,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_indir.html" class="sidebar-item-text sidebar-link">
+  <a href="./discr_indir_general.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">General nonlinear discrete-time optimal control</span></a>
   </div>
 </li>
@@ -816,7 +816,7 @@ Tip
 \text{subject to} &amp;\quad \widetilde{\mathbf A} \bar{\bm z} + \tilde{\bm b} = \mathbf 0.
 \end{aligned}
 </span></p>
-<div id="5b3cb636" class="cell">
+<div id="58d865da" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">direct_dlqr_simultaneous</span>(A,B,x₀,Q,R,S,N)</span>
@@ -1105,7 +1105,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/hurak\.github\.io\/orr\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

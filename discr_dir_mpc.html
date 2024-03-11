@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.22">
+<meta name="generator" content="quarto-1.5.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -51,7 +51,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./discr_dir_mpc_solvers.html" rel="next">
-<link href="./discr_dir_control.html" rel="prev">
+<link href="./discr_dir_LQR.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -102,7 +102,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_dir_control.html">3. Discrete-time optimal control – direct approach</a></li><li class="breadcrumb-item"><a href="./discr_dir_mpc.html">Model predictive control (MPC)</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_dir_general.html">3. Discrete-time optimal control – direct approach</a></li><li class="breadcrumb-item"><a href="./discr_dir_mpc.html">Model predictive control (MPC)</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -226,8 +226,14 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_dir_control.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Control on a finite horizon as an optimization</span></a>
+  <a href="./discr_dir_general.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">General finite-horizon nonlinear discrete-time optimal control as nonlinear program</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_dir_LQR.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Finite-horizon LQR-optimal control as QP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -255,7 +261,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_indir.html" class="sidebar-item-text sidebar-link">
+  <a href="./discr_indir_general.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">General nonlinear discrete-time optimal control</span></a>
   </div>
 </li>
@@ -591,7 +597,7 @@ div.csl-indent {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_dir_control.html">3. Discrete-time optimal control – direct approach</a></li><li class="breadcrumb-item"><a href="./discr_dir_mpc.html">Model predictive control (MPC)</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_dir_general.html">3. Discrete-time optimal control – direct approach</a></li><li class="breadcrumb-item"><a href="./discr_dir_mpc.html">Model predictive control (MPC)</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Model predictive control (MPC)</h1>
 </div>
@@ -757,7 +763,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -1082,8 +1088,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./discr_dir_control.html" class="pagination-link" aria-label="Control on a finite horizon as an optimization">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Control on a finite horizon as an optimization</span>
+      <a href="./discr_dir_LQR.html" class="pagination-link" aria-label="Finite-horizon LQR-optimal control as QP">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Finite-horizon LQR-optimal control as QP</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
