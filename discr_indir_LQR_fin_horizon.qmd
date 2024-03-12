@@ -1,5 +1,7 @@
 ---
-title: "Discrete-time LQR-optimal control on a finite horizon"
+title: "Discrete-time LQR on a finite horizon"
+bibliography: 
+    - ref_optimal_control.bib
 format:
     html:
         html-math-method: katex
@@ -9,3 +11,523 @@ execute:
 jupyter: julia-1.10
 ---
 
+We consider a linear time-invariant (LTI) system described by the state equation
+$$
+\bm x_{k+1} = \mathbf A \bm x_{k} + \mathbf B \bm u_k, \qquad \bm x_0 = \mathbf x_0,
+$$
+and our goal is to find a (vector) control sequence $\bm u_0, \bm u_{1},\ldots, \bm u_{N-1}$ that minimizes
+$$
+ J_0^N = \frac{1}{2}\bm x_N^\top\mathbf S_N\bm x_N + \frac{1}{2}\sum_{k=0}^{N-1}\left[\bm x_k^\top \mathbf Q \bm x_k+\bm u_k^\top \mathbf R\bm u_k\right],
+$$
+where the quadratic cost function is parameterized the matrices that must be symmetric and at least positive semidefinite, otherwise the corresponding quadratic terms will not play a good role of penalizing the (weighted) distance from zero. 
+
+::: {.callout-important}
+## Regulation vs tracking
+Indeed, with the current setup our goal is to bring the state to zero and keep the control effort as small as possible. This control problem is called *regulation*. Later we are going to extend this into the problem of *tracking* a nonzero reference state (or even output, after adding the output variables into the game) trajectory.
+:::
+
+We will see in a moment that the matrix $\mathbf R$ must comply with an even stricter condition – it must be positive definite. To summarize the assumptions about the matrices, we require
+$$
+\mathbf S_N\succeq 0, \mathbf Q\succeq 0, \mathbf R\succ 0.
+$$
+
+::: {.callout-note}
+## Time-invariant systems can start at time zero   
+For time-invariant systems we can set the initial time to zero, that is, $i=0$, without loss of generality. 
+:::
+
+The Hamiltonian for our problem is
+$$
+\boxed{
+ H(\bm x_k, \bm u_k, \bm \lambda_{k+1}) = \frac{1}{2}\left(\bm x_k^\top \mathbf Q\bm x_k+\bm u_k^\top \mathbf R\bm u_k\right) + \boldsymbol \lambda_{k+1}^\top\left(\mathbf A\bm x_k+\mathbf B\bm u_k\right).
+}
+$$
+
+In the following derivations we use the shorthand notation $H_k$ for $H(\bm x_k, \bm u_k, \bm \lambda_{k+1})$.
+
+Substituting into the general necessary conditions derived in the previous section we obtain 
+$$
+\begin{aligned}
+ \mathbf x_{k+1} &= \nabla_{\boldsymbol \lambda_{k+1}}H_k=\mathbf A\bm x_k+\mathbf B\bm u_k,\\
+ \boldsymbol\lambda_k &= \nabla_{\mathbf x_{k}}H_k=\mathbf Q\bm x_k+\mathbf A^\top\boldsymbol\lambda_{k+1},\\
+ \mathbf 0 &= \nabla_{\mathbf u_{k}}H_k = \mathbf R\bm u_k + \mathbf B^\top\boldsymbol\lambda_{k+1},\\
+ 0 &= (\mathbf S_N \bm x_N - \boldsymbol \lambda_N)^\top\; \text{d} \bm x_N,\\
+ \bm x_0 &= \mathbf x_0. 
+\end{aligned}
+$$
+
+The last two equations represent boundary conditions. Note that here we have already fixed the initial state. If this is not appropriate in a particular scenario, go back and adjust the boundary equation accordingly. 
+
+The third equation above – the stationarity equation – can be used to extract the optimal control
+$$
+\bm u_k = -\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda_{k+1}.
+$$
+
+The need for nonsingularity of $\mathbf R$ is now obvious. Upon substituting the recipe for the optimal $\bm u_k$ into the state and the co-state equations, two recursive (or recurrent or just discrete-time) equations result
+$$
+ \begin{bmatrix}
+ \mathbf x_{k+1}\\\boldsymbol\lambda_k
+\end{bmatrix}
+=
+\begin{bmatrix}
+ \mathbf A & -\mathbf B\mathbf R^{-1}\mathbf B^\top\\\mathbf Q & \mathbf A^\top
+\end{bmatrix}
+\begin{bmatrix}
+ \bm x_k \\ \boldsymbol\lambda_{k+1}
+\end{bmatrix}.
+$$
+
+This is a two-point boundary value problem (TP-BVP). The problem is of order $2n$, where $n$ is the dimension of the state space. In order to solve it we need $2n$ boundary values: $n$ boundary values are provided by $\bm x_i = \mathbf x_0$, and $n$ boundary values are given by the other boundary condition, from which $\boldsymbol\lambda_N$ must be extracted. Most of our subsequent discussion will revolve around this task. 
+
+An idea might come into our mind: provided $\mathbf A$ is nonsingular, we can left-multiply the above equation by the inverse of $\mathbf A$ to obtain
+$$
+\begin{bmatrix}
+ \mathbf x_{k}\\\boldsymbol\lambda_k
+\end{bmatrix}
+=
+\begin{bmatrix}
+ \mathbf A^{-1} & \mathbf A^{-1}\mathbf B\mathbf R^{-1}\mathbf B^\top\\\mathbf Q\mathbf A^{-1} & \mathbf A^\top+\mathbf Q\mathbf A^{-1}\mathbf B\mathbf R^{-1}\mathbf B^\top
+\end{bmatrix}
+\begin{bmatrix}
+ \mathbf x_{k+1} \\ \boldsymbol\lambda_{k+1}
+\end{bmatrix}
+$${#eq-discrete-Hamiltonian-system}
+
+This helped at least to have both variable evolving in the same direction in time (both backward) but we do not know $\boldsymbol\lambda_N$ anyway. Nonetheless, do not forget this result. We are going to invoke it later.
+
+### Zero-input case and discrete-time (algebraic) Lyapunov equation
+Before we delve into solution of the original problem, let us investigate a somewhat artificial problem when no control input is applied. We compute the cost of not controlling the system at all. This will give us some valuable insight.
+
+We start by evaluating the cost of starting at the terminal time $N$ and then proceed backwards in time, that is, decrease the initial time to to $N-1, N-2$ and so on. For simplicity of notation we omit the upper index in the cost function, since the final time remains the same throughout the computation. But we do use the lower index here
+$$
+\begin{aligned}
+J_N &= \frac{1}{2}\bm x_N^\top \mathbf S_N\bm x_N\\
+J_{N-1} &= \frac{1}{2}\bm x_N^\top\mathbf  S_N\bm x_N + \frac{1}{2}\mathbf x_{N-1}^\top \mathbf Q_{N-1}\mathbf x_{N-1}\\
+	&= \frac{1}{2}\mathbf x_{N-1}^\top\left(\mathbf A^\top \mathbf S_NA+\mathbf Q\right)\mathbf x_{N-1}\\
+J_{N-2} &=\ldots
+\end{aligned}
+$$
+
+Upon introducing a new name $\mathbf S_{N-1}$ for term $\mathbf A^\top \mathbf S_N \mathbf A+\mathbf Q$ and similarly for all preceding times, we arrive at a **discrete-time Lyapunov equation**
+$$
+\boxed{\mathbf S_{k} = \mathbf A^\top \mathbf S_{k+1}\mathbf A+\mathbf Q.}
+$$
+
+This is a very famous and well-investigated equation in systems and control theory. Its solution is given by 
+$$
+\mathbf S_k = (\mathbf A^\top)^{N-k}\mathbf S_N\mathbf A^{N-k} + \sum_{i=k}^{N-1}\left(\mathbf A^\top \right)^{N-i-1}\mathbf Q\mathbf A^{N-i-1}.
+$$
+
+Having the sequence of $\mathbf S_k$ at hand, the cost function when starting at time $k$ (and finishing at time $N$) can be readily evaluated as
+$$
+J_k = \frac{1}{2}\bm x_k^\top \mathbf S_k\bm x_k.
+$$
+
+We will come back to this observation in a few moments. Before we do that, note that if the plant is stable, the cost over $[-\infty,N]$ is finite and is given by
+$$
+J_{-\infty}^N = \frac{1}{2}\bm x_{-\infty}^\top \mathbf S_{-\infty} \bm x_{-\infty},
+$$
+or, equivalently (thanks to the fact that the system is time-invariant) – and perhaps even more conveniently – we can introduce a new time $k' = N-k$, which then ranges over $[0,\infty]$ as $k$ goes from $N$ to $-\infty$
+$$
+J_0^\infty = \frac{1}{2}\bm x_0^\top \mathbf S_\infty \bm x_0.
+$$
+
+Even though this result was derived for the no-control case, which is not what we are after in the course on control design, it is still useful. It gives some hint as for the structure of the cost function. Indeed, we will see later that even in the case of nonzero control, the cost will be a quadratic function of the initial state.
+
+When it comes to the computation of $\mathbf S_\infty$, besides the implementation of the limiting iterative process, we may exploit the fact that in the steady state
+$$
+\mathbf S_k = \mathbf S_{k+1},
+$$
+which turns the difference Lyapunov equation into the even more famous **algebraic Lyapunov equation** (ALE)
+$$
+\boxed{\mathbf S = \mathbf A^\top \mathbf S\mathbf A+\mathbf Q.}
+$$
+
+Notoriously known facts about this equation (studied in introductory courses on linear systems) are
+
+- If $\mathbf A$ stable and $\mathbf Q\succeq 0$, then there is a solution to the ALE satisfying $\mathbf S\succeq 0$.
+- If $\mathbf A$ stable and $(\mathbf A,\sqrt{\mathbf Q})$ observable, then there is a {\color{blue}unique} solution to ALE satisfying $\mathbf S\succ 0$.
+
+If the system is unstable, the cost can be finite or infinite, depending on $\mathbf Q$. As a trivial example, for $\mathbf Q=0$, the cost will stay finite --- exactly zero --- disregarding the system blowing out.
+
+Concerning methods for numerical solution, ALE is just a linear equation and as such can be reformulated into the standard $\mathbf A \bm x=\mathbf b$ form (using a trick based on *Kronecker product*, see [kron](https://www.mathworks.com/help/matlab/ref/kron.html) in Matlab). Specialized algorithms exist and some of them are implemented in [dlyap](https://www.mathworks.com/help/control/ref/dlyap.html) function in Matlab. State-of-the-art Julia implementations are in [MatrixEquations.jl](https://github.com/andreasvarga/MatrixEquations.jl) package.
+
+## Fixed final state and finite time horizon
+
+Back to the nonzero control case. First we are going to investigate the scenario when the final requested state is given by $\mathbf x^\text{ref}$. The optimal control problem turns into
+$$
+\begin{aligned}
+\operatorname*{minimize}_{\bm x_0, \bm{x}_{1},\ldots,\bm{x}_{N},\bm{u}_{0},\ldots,\bm{u}_{N-1}} &\; \frac{1}{2}\sum_{k=0}^{N-1}\left[\bm x_k^T \mathbf Q \bm x_k+\bm u_k^T \mathbf R\bm u_k\right]\\
+\text{s.t. } & \; \mathbf x_{k+1} = \mathbf A \mathbf x_{k} + \mathbf B \bm u_k,\\
+&\; \bm x_0 = \mathbf x_0,\\
+&\; \bm x_N = \mathbf x^\text{ref},\\
+&\; \mathbf Q\geq 0, \mathbf R>0.
+\end{aligned}
+$$
+
+{{< video https://www.youtube.com/embed/lI3TpldnVW0?si=luwvea7gfPW8pvo9 >}}
+
+Note also that the term penalizing the final state is removed from the cost because it is always fixed. After eliminating the controls using the stationarity equation
+$$
+\bm u_k = -\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda_{k+1},
+$$
+and replacing the general boundary condition at the final time by $\bm x_N = \mathbf x^\text{ref}$, the two-point boundary value problem specializes to 
+$$
+\begin{aligned}
+ \mathbf x_{k+1} &=\mathbf A\bm x_k-\mathbf B\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda_{k+1},\\
+\boldsymbol\lambda_k &= \mathbf Q\bm x_k+\mathbf A^\top\boldsymbol\lambda_{k+1},\\
+ \bm x_0 &= \mathbf x_0,\\
+ \bm x_N &= \mathbf x^\text{ref}.
+\end{aligned}
+$$ 
+
+This problem is clearly an instance of a two-point boundary value problem (TP-BVP) as the state vector is specified at both ends of the time interval. The costate is left unspecified, but it is fine because only $2n$ boundary conditions are needed. While BVP are generally difficult to solve, our problem at hand adds one more layer of complexity. For the state variable its evolution forward in time is specified by the state equation, while for the co-state variable the evolution backward in time is prescribed by the co-state equation. 
+
+$$
+ \begin{bmatrix}
+ \mathbf x_{k+1}\\\boldsymbol\lambda_k
+\end{bmatrix}
+=
+\begin{bmatrix}
+ \mathbf A & -\mathbf B\mathbf R^{-1}\mathbf B^\top\\\mathbf Q & \mathbf A^\top
+\end{bmatrix}
+\begin{bmatrix}
+ \bm x_k \\ \boldsymbol\lambda_{k+1}.
+\end{bmatrix}
+$$
+
+There is not much we can do with these equations in this form. However, in case of a nonsingular matrix $\mathbf A$, we can invoke the discrete-time Hamiltonian system (@eq-discrete-Hamiltonian-system), in which we reorganized the equations so that both state and co-state variables evolve backwards. For convenience we give it here again
+$$
+\begin{bmatrix}
+ \mathbf x_{k}\\\boldsymbol\lambda_k
+\end{bmatrix}
+=\underbrace{
+\begin{bmatrix}
+ \mathbf A^{-1} & \mathbf A^{-1}\mathbf B\mathbf R^{-1}\mathbf B^\top\\\mathbf Q\mathbf A^{-1} & \mathbf A^\top+\mathbf Q\mathbf A^{-1}\mathbf B\mathbf R^{-1}\mathbf B^\top
+\end{bmatrix}}_{\mathbf H}
+\begin{bmatrix}
+ \mathbf x_{k+1} \\ \boldsymbol\lambda_{k+1}.
+\end{bmatrix}
+$$
+
+This can be used to relate the state and costate at the initial and final times of the interval 
+$$
+\begin{bmatrix}
+ \mathbf x_{0}\\\boldsymbol\lambda_0
+\end{bmatrix}
+=\underbrace{
+\begin{bmatrix}
+ \mathbf A^{-1} & \mathbf A^{-1}\mathbf B\mathbf R^{-1}\mathbf B^\top\\\mathbf Q\mathbf A^{-1} & \mathbf A^\top+\mathbf Q\mathbf A^{-1}\mathbf B\mathbf R^{-1}\mathbf B^\top
+\end{bmatrix}^N}_{\mathbf M\coloneqq \mathbf H^N}
+\begin{bmatrix}
+ \mathbf x_{N} \\ \boldsymbol\lambda_{N}
+\end{bmatrix}.
+$$
+
+From the first equation we can get $\boldsymbol \lambda_N$. First, let's rewrite it here
+$$
+\mathbf M_{12}\boldsymbol \lambda_N = \bm x_0-\mathbf M_{11}\bm x_N,
+$$
+from which (after substituting for the known initial and final states)
+$$
+\boldsymbol \lambda_N = \mathbf M_{12}^{-1}(\mathbf r_0-\mathbf M_{11}\mathbf r_N).
+$$
+
+Having the final state and the final co-state,  $\bm x_N$ and $\boldsymbol \lambda_N$, respectively, we can solve the Hamiltonian system backward to get the states and co-states on the whole time interval $[0,N-1]$.
+
+### Special case: minimum-energy control ($\mathbf Q = \mathbf 0$)
+We can get some more insight into the problem if we further restrict the class of problems we can treat. Namely, we will assume
+$$
+ \mathbf Q = \mathbf 0.
+$$
+
+This is a significant restriction, nonetheless the resulting problem is still practically reasonable. And we do not need to assume that $\mathbf A$ is nonsingular. The cost function is then 
+$$
+ J = \sum_{k=0}^N \mathbf u^\top_k\;\bm u_k = \sum_{k=0}^N \|\mathbf u\|_2^2,   
+$$
+which is why the problem is called the *minimum-energy control* problem. Rewriting the state and co-state equations with the new restriction $\mathbf Q=\mathbf 0$ we get 
+$$
+\begin{aligned}
+ \bm x_{k+1} &= \mathbf A\bm x_k - \mathbf B\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda_{k+1}\\
+ \boldsymbol \lambda_k &= \mathbf A^\top\boldsymbol\lambda_{k+1}.
+\end{aligned}
+$$
+
+It is obvious why we wanted to enforce the $\mathbf Q=\mathbf 0$ restriction — the co-state equation is now completely decoupled from the state equation and can be solved independently
+$$
+ \boldsymbol \lambda_k = (\mathbf A^\top)^{N-k}\boldsymbol \lambda_N.
+$$
+
+Now substitute this solution of the co-state equation into the state equation
+$$
+ \bm x_{k+1} = \mathbf A\bm x_k - \mathbf B\mathbf R^{-1}\mathbf B^\top(\mathbf A^\top)^{N-k-1}\boldsymbol \lambda_N.
+$$
+
+Finding a solution to the state equation is now straightforward — the second summand on the right is considered as a an "input". The solution is then
+$$
+ \bm x_{k} = \mathbf A^k\bm x_0 - \sum_{i=0}^{k-1}\mathbf A^{k-1-i}\mathbf B\mathbf R^{-1}\mathbf B^\top(\mathbf A^\top)^{N-i-1}\boldsymbol \lambda_N.
+$$
+
+The last step reveals the motivation for all the previous steps — we can now express the state at the final time, and by doing that we introduce some known quantity into the problem
+$$
+ \bm x_{N} = \mathbf x^\text{ref}= \mathbf A^N\bm x_0 - \underbrace{\sum_{i=0}^{N-1}\mathbf A^{N-1-i}\mathbf B\mathbf R^{-1}\mathbf B^\top(\mathbf A^\top)^{N-i-1}}_{G_{0,N,R}}\boldsymbol \lambda_N.
+$$
+ 
+This enables us to calculate $\boldsymbol \lambda_N$ directly as a solution to a linear equation. To make the notation simpler, denote the sum in the expression above by $\mathbf G_{0,N,R}$ (we will discuss this particular object in a while)
+$$
+ \boldsymbol \lambda_N = -\mathbf G^{-1}_{0,N,R}\; (\mathbf x^\text{ref}-\mathbf A^N\bm x_0).
+$$
+
+The rest is quite straightforward as the optimal control depends (through the stationarity equation) on the co-state
+$$
+\boxed{
+\bm u_k = \mathbf R^{-1}\mathbf B^\top(\mathbf A^\top)^{N-k-1}\mathbf G^{-1}_{0,N,R}\; (\mathbf x^\text{ref}-\mathbf A^N\bm x_0).
+}
+$$
+
+This is the desired formula for computation of the optimal control. 
+
+A few observations can be made
+
+- The control is proportional to the difference $(\mathbf x^\text{ref}-\mathbf A^N\bm x_0)$. The intuitive interpretation is that the further the requested final state is from the state into which the system would finally evolve without any control, the higher the control is needed.  
+- The control is proportional to the inverse of a matrix $\mathbf G_{0,N,R}$ which is called weighted reachability Gramian. The standard result from the theory of linear dynamic systems is that nonsingularity of a reachability Gramian is equivalent to reachability of the system. More on this below.
+ 
+#### Weighted reachability Gramian
+Recall (perhaps from your linear systems course) that there is a matrix called discrete-time reachability Gramian defined as
+$$
+ \mathbf G = \sum_{k=0}^{\infty} \mathbf A^{k}\mathbf B\mathbf B^\top(\mathbf A^\top)^k
+$$
+and the nonsingularity of this matrix serves as a test of reachability for stable discrete-time linear systems.
+
+How does this classical object relate to the object $\mathbf G_{0,N,R}$ introduced in the previous paragraph? First consider the restriction of the summation from the infinite interval $[0,\infty]$ to $[0,N-1]$. In other words, we analyze the matrix
+$$
+ \mathbf G_{0,N} = \sum_{k=0}^{N-1} \mathbf A^{N-1-k}\mathbf B\mathbf B^\top(\mathbf A^\top)^{N-1-k}.
+$$
+
+Recall that Caley-Hamilton theorem tells us that every higher power of an $N\times N$ matrix can be expressed as a linear combination of powers of 0 through $N-1$. In other words, using higher order powers of $A$ than $N-1$ cannot increase the rank of the matrix. 
+
+Finally, provided $\mathbf R$ is nonsingular (hence $\mathbf R^{-1}$ is nonsingular as well), the rank of the Gramian is not changed after introducing the weight  
+$$
+ \mathbf G_{0,N,R} = \sum_{k=0}^{N-1} \mathbf A^{N-1-k}\mathbf B\mathbf R^{-1}\mathbf B^\top(\mathbf A^\top)^{N-1-k}.
+$$
+
+The weighted Gramian defined on a finite discrete-time horizon is invertible if and only if the (stable) system is reachable. This conclusion is quite natural: if an optimal control is to be found, first it must be guaranteed that any control can be found which brings the system from an arbitrary initial state into an arbitrary final state on a finite time interval — the very definition of reachability.
+
+To summarize the whole fixed-final state case, the optimal control can be computed numerically by solving a TP-BVP. For the minimum-problem even a formula exists and there is no need for a numerical optimization solver. But the outcome is always just a sequence of controls. In this regard, the new (indirect) approach did not offer much more that what the direct approach did. Although the new insight is rewarding, it is paid for by the inability to handle constraints on the control or state variables.
+
+## Free final state and finite time horizon
+
+The previous discussion revolved around the task of bringing the system to a given final state exactly. What if we relax this strict requirement and instead just request that the system be eventually brought to the close vicinity of the requested state? How close — this could be affected by the terminal state penalty in the cost function. 
+
+{{< video https://www.youtube.com/embed/INdJDfZKCW0?si=yXu5erpqutp0CPUy >}}
+
+The only change with respect to the previous development is just in the boundary condition — the one at the final time. Now the final state $\bm x_N$ can also be used as a parameter for our optimization. Hence $\text{d}\bm x_N\neq 0$ and the other term in the product must vanish. We write down again the full necessary conditions including the new boundary conditions
+$$
+\begin{aligned}
+ \bm x_{k+1} &=\mathbf A\bm x_k-\mathbf B\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda_{k+1},\\
+ \boldsymbol\lambda_k &= \mathbf Q\bm x_k+\mathbf A^\top\boldsymbol\lambda_{k+1},\\
+ \bm u_k &= -\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda_{k+1},\\
+ \mathbf S_N \bm x_N &= \boldsymbol \lambda_N,\\
+ \bm x_0 &= \mathbf x_0. 
+\end{aligned}
+$$
+
+We find ourselves in a pretty much similar trouble as before. The final-time boundary condition refers to the variables whose values we do not know. The solution is provided by the *insightful guess*, namely, why not trying to extend the linear relationship between the state and the co-state at the final time to all preceding discrete times? That is, we assume
+$$
+ \mathbf S_k \bm x_k = \boldsymbol \lambda_k.
+$${#eq-sweep-assumption}
+ 
+At first, we can have no idea if it works. But let's try it and see what happens. Substitute (@eq-sweep-assumption) into the state and co-state equations. We start with the state equation
+$$
+ \bm x_{k+1} =\mathbf A\bm x_k-\mathbf B\mathbf R^{-1}\mathbf B^\top\mathbf S_{k+1}\bm x_{k+1}.
+$$
+
+Solving for $\bm x_{k+1}$ yields
+$$
+ \bm x_{k+1} =(\mathbf I+\mathbf B\mathbf R^{-1}\mathbf B^\top\mathbf S_{k+1})^{-1}\mathbf A\bm x_k.
+$$
+
+Now perform the same substitution into the co-state equation
+$$
+ \mathbf S_k \bm x_k = \mathbf Q\bm x_k+\mathbf A^\top\mathbf S_{k+1}\bm x_{k+1},
+$$
+and substitute for $\bm x_{k+1}$ from the state equation into the previous equation to get
+$$
+ \mathbf S_k \bm x_k = \mathbf Q\bm x_k+\mathbf A^\top\mathbf S_{k+1}(\mathbf I+\mathbf B\mathbf R^{-1}\mathbf B^\top\mathbf S_{k+1})^{-1}\mathbf A\bm x_k.
+$$
+
+Since this equation must hold for an arbitrary $\bm x_k$, we get an equation in the matrices $\mathbf S_k$
+$$
+\boxed{
+\mathbf S_k = \mathbf Q+\mathbf A^\top\mathbf S_{k+1}(\mathbf I+\mathbf B\mathbf R^{-1}\mathbf B^\top\mathbf S_{k+1})^{-1}\mathbf A.
+}
+$$
+
+This is a superfamous equation and is called **difference (or discrete-time) Riccati equation**. When initialized with $\mathbf S_N$, it generates the sequence of matrices $\mathbf S_{N-1}, \mathbf S_{N-2}, \mathbf S_{N-3},\ldots$ Indeed, a noteworthy feature of this sequence is that it is initialized at the final time and the equation prescribes how the sequence evolves backwards.
+
+Once we have generated a sufficiently long sequence (down to $\mathbf S_{1}$), the optimal control sequence $\bm u_0, \bm u_1, \ldots, \bm u_{N-1}$ is then computed using the stationary equation
+$$
+ \bm u_k = -\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda_{k+1}=-\mathbf R^{-1}\mathbf B^\top\mathbf S_{k+1}\bm x_{k+1}.
+$$
+
+This suggests that the optimal control is generated using the state but the current scheme is noncausal because the control at a given time depends on the state at the next time. But turning this into a causal one is easy — just substitute the state equation for $\bm x_{k+1}$ and get 
+$$
+ \bm u_k =-\mathbf R^{-1}\mathbf B^\top\mathbf S_{k+1}(\mathbf A\bm x_{k}+\mathbf B\bm u_{k}).
+$$ 
+
+Solving this equation for $\bm u_k$ gives
+$$
+ \bm u_k =\underbrace{(\mathbf I + \mathbf R^{-1}\mathbf B^\top\mathbf S_{k+1}\mathbf B)^{-1}\mathbf R^{-1}\mathbf B^\top\mathbf S_{k+1}\mathbf A}_{\mathbf K_k}\mathbf x_{k}.
+$$ 
+
+Mission accomplished. This is our desired control. A striking observation is that although we made no specifications as for the controller structure, the optimal control strategy turned out a feedback one! Let's write it down explicitly
+$$
+\boxed{
+\bm u_k =\mathbf K_k \bm x_{k}.
+}
+$$ 
+
+::: {.callout-important}
+## LQ-optimal control on a finite time horizon with a free final state is a feedback control
+The importance of this result can hardly be overstated – the optimal control comes in the form of a proportional state-feedback control law.
+:::
+
+The feedback gain is time-varying and deserves a name after its inventor — **Kalman gain**. Incorporating the knowledge that $R$ is nonsingular, a minor simplification of the lengthy expression can be made
+$$
+ \mathbf K_k = (\mathbf R + \mathbf B^\top\mathbf S_{k+1}\mathbf B)^{-1}\mathbf B^\top\mathbf S_{k+1}\mathbf A.
+$$
+  
+Before we move on, let us elaborate a bit more on the difference Riccati equation. Invoking a popular (but hard to reliably memorize) rule for inversion of a sum of two matrices called *matrix inversion lemma*, which reads
+$$
+ (\mathbf A_{11}^{-1}+\mathbf A_{12}\mathbf A_{22}\mathbf A_{21})^{-1} =\mathbf A_{11}-\mathbf A_{11}\mathbf A_{12}(\mathbf A_{21}\mathbf A_{11}\mathbf A_{12}+\mathbf A_{22}^{-1})^{-1}\mathbf A_{21}\mathbf A_{11}, 
+$$
+the Riccati equation can be rewritten (after multiplying the brackets out) as
+$$
+\boxed{
+ \mathbf S_k = \mathbf Q + \mathbf A^\top\mathbf S_{k+1}\mathbf A - \mathbf A^\top\mathbf S_{k+1}\mathbf B( \mathbf B^\top\mathbf S_{k+1}\mathbf B+\mathbf R)^{-1}\mathbf B^\top\mathbf S_{k+1}\mathbf A,
+}
+$$
+which we will regard as an alternative form of difference Riccati equation.
+
+Observing that the steps of the computation of the Kalman gain $\mathbf K_k$ reappear in the computation of the solution of the Riccati equation, a more efficient arrangement of the computation in every iteration step is
+$$
+\boxed{
+\begin{aligned}
+ \mathbf K_k &= \left(\mathbf B^\top \mathbf S_{k+1}\mathbf B+\mathbf R\right)^{-1}\mathbf B^\top \mathbf S_{k+1}\mathbf A\\
+ \mathbf S_k &= \mathbf A^\top \mathbf S_{k+1}(\mathbf A-\mathbf B\mathbf K_k) + \mathbf Q.
+\end{aligned}
+}
+$$ 
+
+Finally, yet another equivalent version of Riccati equation is known as \emph{Joseph's stabilized Riccati equation}
+$$
+\boxed{
+ \mathbf S_k = (\mathbf A-\mathbf B\mathbf K_k)^\top \mathbf S_{k+1}(\mathbf A-\mathbf B\mathbf K_k) + \mathbf K_k^\top \mathbf R\mathbf K_k + \mathbf Q.
+}
+$$
+
+Showing the equivalence can be an exercise.
+
+### Second order sufficient conditions
+So far we only found a solution that satisfies the first-order necessary equation but we have been warned at the introductory lessons to optimization that such solution need not necessarily constitute an optimum (minimum in our case). In order to check this, the second derivative (Hessian, curvature matrix) must be found and checked for positive definiteness. Our strategy will be to find the value of the optimal cost first and then we will identify its second derivative with respect to $\bm u_k$.
+
+The trick to find the value of the optimal cost is from [@lewisOptimalControl2012] and it is rather technical and it may be hard to learn a general lesson from it. Nonetheless we will need the result. Therefore we swiftly go through the procedure without pretending that we are building a general competence. The trick is based on the observation that 
+$$
+ \frac{1}{2}\sum_{k=0}^{N-1}(\mathbf x^\top _{k+1}\mathbf S_{k+1} \mathbf x_{k+1} - \mathbf x^\top _{k}\mathbf S_{k} \mathbf x_{k}) = \frac{1}{2}\mathbf x^\top _{N}\mathbf S_{N} \mathbf x_{N} - \frac{1}{2}\mathbf x^\top _{0}\mathbf S_{0} \mathbf x_{0}.
+$$
+ 
+Now consider our optimization criterion and add zero to it. The value of the cost function does not change. Weird procedure, right? Observing that zero can also be expressed as the right hand side minus the left hand side in the above equation, we get
+$$
+ J_0 = \frac{1}{2}\bm x_0^\top\mathbf S_0\bm x_0 + \frac{1}{2}\sum_{k=0}^{N-1}\left[\mathbf x^\top _{k+1}\mathbf S_{k+1} \mathbf x_{k+1}+\bm x_k^\top (\mathbf Q - \mathbf S_k) \bm x_k+\bm u_k^\top \mathbf R\bm u_k\right].
+$$
+ 
+Substituting the state equation, the cost function transforms to
+$$
+\begin{aligned}
+ J_0 &= \frac{1}{2}\bm x_0^\top\mathbf S_0\bm x_0 + \frac{1}{2}\sum_{k=0}^{N-1}[\mathbf x^\top _{k}(\mathbf A^\top \mathbf S_{k+1}\mathbf A + \mathbf Q - \mathbf S_k) \mathbf x_{k}+\bm x_k^\top \mathbf A^\top \mathbf S_{k+1}\mathbf B \bm u_k\\
+&\qquad\qquad\qquad\qquad+\bm u_k^\top \mathbf B^\top \mathbf S_{k+1}\mathbf A \bm x_k+\bm u_k^\top (\mathbf B^\top \mathbf S_{k+1}\mathbf B + \mathbf R)\bm u_k].
+\end{aligned}
+$$
+
+Substituting the Riccati equation (\ref{eq:difference_Riccati_2}) into the first term above
+$$
+\begin{aligned}
+ J_0 &= \frac{1}{2}\bm x_0^\top\mathbf S_0\bm x_0 + \frac{1}{2}\sum_{k=0}^{N-1}[\mathbf x^\top _{k}(\mathbf A^\top \mathbf S_{k+1}\mathbf B( \mathbf B^\top \mathbf S_{k+1}\mathbf B+\mathbf R)^{-1}\mathbf B^\top \mathbf S_{k+1}\mathbf A) \mathbf x_{k}+\bm x_k^\top \mathbf A^\top \mathbf S_{k+1}\mathbf B \bm u_k\\
+&\qquad\qquad\qquad\qquad+\bm u_k^\top \mathbf B^\top \mathbf S_{k+1}\mathbf A \bm x_k+\bm u_k^\top (\mathbf B^\top \mathbf S_{k+1}\mathbf B + \mathbf R)\bm u_k].
+\end{aligned}
+$$
+
+The time-varying Hessian with respect to the control $\bm u_k$ is 
+$$
+ \nabla_{\bm u_k}^2 J_0 = \mathbf B^\top \mathbf S_{k+1}\mathbf B + \mathbf R.
+$$
+
+Provided that $\mathbf R\succ 0$, it can be seen that it is always guaranteed that $\nabla_{\bm u_k}^2 J_0\succ 0$. To prove this it must be shown that $\mathbf B^\top \mathbf S_{k+1}\mathbf B\succeq 0$. As usual, let us make things more intuitive by switching to the scalar case. The previous expression simplifies to $b^2s_{k+1}$. No matter what the value of $b$ is, the square is always nonnegative. It remains to show that $s_{k+1}\geq0$ (and in the matrix case $\mathbf S_{k+1}\succeq 0$). This can be seen from the prescription for $\mathbf S_{k}$ given by the Riccati equation using similar arguments for proving positive semidefiniteness of compound expressions. 
+
+To conclude, the solution to the first-order necessary conditions represented by the Riccati equation is always a minimizing solution.
+
+We can work a bit more with the value of the optimal cost. Substituting the optimal control we can see (after some careful two-line work) that 
+$$
+ J_0 = \frac{1}{2}\bm x_0^\top  \mathbf S_0 \bm x_0.
+$$
+
+The same conclusion can be obtained for any time instant $k$ inside the interval $[0,N]$
+$$
+\boxed{
+ J_k = \frac{1}{2}\bm x_k^\top  \mathbf S_k \bm x_k.
+}
+$$
+
+This is a result that we have already seen in the no-control case: the optimal cost can be obtained as a quadratic function of the initial state using a matrix obtained as a solution to some iteration. We will use this result in the future derivations.
+
+### Numerical example with a scalar and first-order system
+
+As usual, some practical insight can be developed by analyzing the things when restricted to the scalar case. For this, consider a first order system described by the first-order state equation
+$$
+ x_{k+1} = ax_k + bu_k
+$$
+and the optimization criterion in the form
+$$
+ J_0 = \frac{1}{2}s_N x_N^2 + \frac{1}{2}\sum_{k=0}^{N-1}\left[ q x_k^2+r u_k^2\right ].
+$$
+
+The scalar Riccati equation simplifies to 
+$$
+s_k = a^2s_{k+1} - \frac{a^2b^2s_{k+1}^2}{b^2s_{k+1}+r} + q
+$$
+or
+$$
+s_k = \frac{a^2rs_{k+1}}{b^2s_{k+1}+r} + q.
+$$
+
+\begin{figure}[ht]
+ \centering
+ \includegraphics[width=9cm]{./figures/scaopt_outputs.pdf}
+ % scaopt_outputs.pdf: 507x390 pixel, 72dpi, 17.89x13.76 cm, bb=0 0 507 390
+ \caption{The optimal values for the solution sequence $s_k$ or Riccati equation, the state feedback gain $K_k$ and the states $x_k$.}
+ \label{fig:scaopt_outputs}
+\end{figure}
+
+Obviously the final state is not particularly close to zero, which is the desired final value. However, increasing the $s_N$ term we can bring the system arbitrarily close, as the next simulation in Fig.~\ref{fig:scaopt_outputs_sn50k} confirms.
+
+\begin{figure}[ht]
+ \centering
+ \includegraphics[width=9cm]{./figures/scaopt_outputs_sn50k.pdf}
+ % scaopt_outputs.pdf: 507x390 pixel, 72dpi, 17.89x13.76 cm, bb=0 0 507 390
+ \caption{The optimal values for the solution sequence $s_k$ or Riccati equation, the state feedback gain $K_k$ and the states $x_k$.}
+ \label{fig:scaopt_outputs_sn50k}
+\end{figure}
+
+The last outputs suggests that both $s_N$ and $K_k$ stay constant for most of the control interval and only change dramatically towards the end of the control interval. This is indeed the case as highlighted in the next simulation output in Fig.~\ref{fig:scaopt_outputs_sn50k_N300} when the control interval was stretched a bit.
+
+\begin{figure}[ht]
+ \centering
+ \includegraphics[width=9cm]{./figures/scaopt_outputs_sn50k_N300.pdf}
+ % scaopt_outputs.pdf: 507x390 pixel, 72dpi, 17.89x13.76 cm, bb=0 0 507 390
+ \caption{The optimal values for the solution sequence $s_k$ or Riccati equation, the state feedback gain $K_k$ and the states $x_k$.}
+ \label{fig:scaopt_outputs_sn50k_N300}
+\end{figure}
+
+The observation in the example poses a question of how much is lost after replacing the optimal control represented by the sequence $\mathbf K_k$ by a constant value $\mathbf K$. A natural candidate is the steady-state value that $\mathbf K_k$  has as the beginning of the control interval, that is at $k=0$ in our case.     
+
+Obviously, on a finite-horizon there is not much to be investigated, the constant feedback gain is just *suboptimal*, but things are somewhat more involved as the control horizon stretches to infinity, that is, $N\rightarrow \infty$. Note that allowing this is just a formal mathematical relaxation — now the optimization is done over the set of infinite control sequences but how fast or slow the response of our controlled system is depends on the choice of the weighting matrices. We will investigate this next. 

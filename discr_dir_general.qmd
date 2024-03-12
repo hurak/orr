@@ -60,16 +60,16 @@ $$
  \text{subject to}  &\quad \bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k),\quad k=i, \ldots, N-1,\\
                     &\quad \bm u_{\min} \leq \bm u_k \leq \bm u_{\max},\\ 
                     &\quad \bm x_{\min} \leq \bm x_k \leq \bm x_{\max},\\
-                    &\quad\bm x_i = \mathbf r_\text{init},\\
-                    &\quad \left(\bm x_N = \mathbf r_\text{final}, \; \text{or} \; \mathbf h_\text{final}(\bm x_N) =  \mathbf 0, \text{or} \; \mathbf g_\text{final}(\bm x_N) \leq  \mathbf 0\right),                    
+                    &\quad\bm x_i = \mathbf x^\text{init},\\
+                    &\quad \left(\bm x_N = \mathbf x^\text{ref}, \; \text{or} \; \mathbf h_\text{final}(\bm x_N) =  \mathbf 0, \text{or} \; \mathbf g_\text{final}(\bm x_N) \leq  \mathbf 0\right),                    
 \end{aligned}
 $$
 where 
 
 - $\bm u_{\min}$ and $\bm u_{\max}$ are lower and upper bounds on the control, respectively, 
 - $\bm x_{\min}$ and $\bm x_{\max}$ are lower and upper bounds on the state, respectively, 
-- $\mathbf r_\text{init}$ is a constant (fixed) initial state,
-- $\mathbf r_\text{final}$ is a constant (fixed) final state, 
+- $\mathbf x^\text{init}$ is a fixed initial state,
+- $\mathbf x^\text{ref}$ is a required (reference) final state, 
 - and the functions $\mathbf g_\text{final}()$ and $\mathbf h_\text{final}()$ can be used to define the constraint set for the final state.
 
 

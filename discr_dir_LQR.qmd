@@ -9,12 +9,12 @@ execute:
 jupyter: julia-1.10
 ---
 
-Here we specialize the general procedure from the previous section to the case of a linear system and a quadratic cost. we start by considering a simple problem of *regulation*, wherein the goal is to bring the system either exactly or approximately to zero final state, that is, $\bm r_N=\mathbf 0$ and we want $\bm x_N=\mathbf r_N$ or $\bm x_N\approx\mathbf r_N$, respectively. 
+Here we specialize the general procedure from the previous section to the case of a linear system and a quadratic cost. we start by considering a simple problem of *regulation*, wherein the goal is to bring the system either exactly or approximately to zero final state, that is, $\mathbf x^\text{ref}=\mathbf 0$ and we want $\bm x_N=\mathbf x^\text{ref}$ or $\bm x_N\approx\mathbf x^\text{ref}$, respectively. 
 $$
 \begin{aligned}
  \operatorname*{minimize}_{\mathbf u_0,\ldots, \mathbf u_{N-1}, \mathbf x_{0},\ldots, \mathbf x_N} &\quad  \frac{1}{2} \bm x_N^\top \mathbf S \bm x_N + \frac{1}{2} \sum_{k=0}^{N-1} \left(\bm x_k^\top \mathbf Q \bm x_k + \bm u_k^\top \mathbf R \bm u_k \right)\\ 
 \text{subject to}   &\quad \bm x_{k+1} = \mathbf A\bm x_k + \mathbf B\bm u_k,\quad k = 0, \ldots, N-1, \\
-                    &\quad \bm x_0 = \mathbf r_0,\\
+                    &\quad \bm x_0 = \mathbf x_0,\\
                     &\quad \bm x_N = \mathbf 0\;  (\text{or}\, \bm x_N \approx \mathbf 0).
  \end{aligned}
  $$
@@ -40,13 +40,13 @@ $$
  \begin{bmatrix} \bm u_0^\top & \bm u_1^\top & \ldots & \bm u_{N-1}^\top \end{bmatrix}
  \underbrace{\begin{bmatrix}\mathbf R & & & \\ & \mathbf R & &\\ & &\ddots & \\ & & & \mathbf R \end{bmatrix}}_{\overline{\mathbf R}}
  \underbrace{\begin{bmatrix} \bm u_0 \\ \bm u_1 \\ \vdots \\ \bm u_{N-1} \end{bmatrix}}_{\bar{\bm u}}\right)
- + \underbrace{\frac{1}{2}\bm x_0^\top \mathbf Q \bm x_0}_{\mathrm{constant}}
+ + \underbrace{\frac{1}{2}\mathbf x_0^\top \mathbf Q \mathbf x_0}_{\mathrm{constant}}
 \end{aligned}
 $$
 subject to
 $$
 \begin{bmatrix} \bm x_1 \\ \bm x_2 \\ \bm x_3\\ \vdots \\ \bm x_N \end{bmatrix} = \underbrace{\begin{bmatrix}\mathbf 0 & & & &\\\mathbf A & \mathbf 0 & & &\\ &\mathbf A &\mathbf 0 & & \\ & & &\ddots & \\& & &\mathbf A & \mathbf 0 \end{bmatrix}}_{\overline{\mathbf A}} 
- \begin{bmatrix} \bm x_1 \\ \bm x_2 \\ \bm x_3\\ \vdots \\ \bm x_N \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf B & & & & \\ & \mathbf B & & & \\& &\mathbf B & \\ & & &\ddots \\ & & & & \mathbf B \end{bmatrix}}_{\overline{\mathbf B}}\begin{bmatrix} \bm u_0 \\ \bm u_1 \\ \bm u_2\\\vdots \\ \bm u_{N-1} \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf A\\\mathbf 0\\\mathbf 0\\\vdots\\\mathbf 0\end{bmatrix}}_{\overline{\mathbf A}_0}\bm x_0.   
+ \begin{bmatrix} \bm x_1 \\ \bm x_2 \\ \bm x_3\\ \vdots \\ \bm x_N \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf B & & & & \\ & \mathbf B & & & \\& &\mathbf B & \\ & & &\ddots \\ & & & & \mathbf B \end{bmatrix}}_{\overline{\mathbf B}}\begin{bmatrix} \bm u_0 \\ \bm u_1 \\ \bm u_2\\\vdots \\ \bm u_{N-1} \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf A\\\mathbf 0\\\mathbf 0\\\vdots\\\mathbf 0\end{bmatrix}}_{\overline{\mathbf A}_0}\mathbf x_0.   
 $$
 
 Note that the last term in the cost function can be discarded because it is constant.
@@ -54,7 +54,7 @@ Note that the last term in the cost function can be discarded because it is cons
 The terms with the $\bar{\bm x}$ vector can be combined and we get
 $$
 \begin{bmatrix} \mathbf 0 \\ \mathbf 0 \\ \mathbf 0\\ \vdots \\ \mathbf 0 \end{bmatrix} = \underbrace{\begin{bmatrix}-\mathbf I & & & &\\\mathbf A & -\mathbf I & & &\\ &\mathbf A &-\mathbf I & & \\ & & &\ddots & \\& & &\mathbf A & -\mathbf I \end{bmatrix}}_{\overline{\mathbf A} - \mathbf I} 
-\begin{bmatrix} \mathbf x_1 \\ \mathbf x_2 \\ \mathbf x_3\\ \vdots \\ \mathbf x_N \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf B & & & & \\ & \mathbf B & & & \\& &\mathbf B & \\ & & &\ddots \\ & & & & \mathbf B \end{bmatrix}}_{\overline{\mathbf B}}\begin{bmatrix} \mathbf u_0 \\ \mathbf u_1 \\ \mathbf u_2\\\vdots \\ \mathbf u_{N-1} \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf A\\\mathbf 0\\\mathbf 0\\\vdots\\\mathbf 0\end{bmatrix}}_{\overline{\mathbf A}_0}\bm x_0.
+\begin{bmatrix} \mathbf x_1 \\ \mathbf x_2 \\ \mathbf x_3\\ \vdots \\ \mathbf x_N \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf B & & & & \\ & \mathbf B & & & \\& &\mathbf B & \\ & & &\ddots \\ & & & & \mathbf B \end{bmatrix}}_{\overline{\mathbf B}}\begin{bmatrix} \mathbf u_0 \\ \mathbf u_1 \\ \mathbf u_2\\\vdots \\ \mathbf u_{N-1} \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf A\\\mathbf 0\\\mathbf 0\\\vdots\\\mathbf 0\end{bmatrix}}_{\overline{\mathbf A}_0}\mathbf x_0.
 $$ {#eq-linear_system_linear_constraints_matrix_format} 
 
 Upon stacking the two "long" vectors into $\bar{\bm z}$ we reformulate the optimization problem as 
@@ -63,7 +63,7 @@ $$
 $$
 subject to
 $$
-\mathbf 0 = \underbrace{\begin{bmatrix}(\overline{\mathbf A}-\mathbf I) & \overline{\mathbf B}\end{bmatrix}}_{\widetilde{\mathbf A}}\underbrace{\begin{bmatrix}\bar{\bm x}\\\bar{\bm u}\end{bmatrix}}_{\bar{\bm z}} + \underbrace{\overline{\mathbf A}_0 \bm x_0}_{\tilde{\mathbf b}}.
+\mathbf 0 = \underbrace{\begin{bmatrix}(\overline{\mathbf A}-\mathbf I) & \overline{\mathbf B}\end{bmatrix}}_{\widetilde{\mathbf A}}\underbrace{\begin{bmatrix}\bar{\bm x}\\\bar{\bm u}\end{bmatrix}}_{\bar{\bm z}} + \underbrace{\overline{\mathbf A}_0 \mathbf x_0}_{\tilde{\mathbf b}}.
 $$
 
 To summarize, we have reformulated the optimal control problem as a linearly constrained quadratic program 
@@ -172,20 +172,20 @@ We may also want to add constraints on $\bm x_k$ as well, which may reflect some
 
 ### Sequential (dense) formulation
 
-We can express $\bar{\bm x}$ as a function of $\bar{\bm u}$ and $\bm x_0$. This can be done in a straightforward way using (@eq-linear_system_linear_constraints_matrix_format), namely, 
+We can express $\bar{\bm x}$ as a function of $\bar{\bm u}$ and $\mathbf x_0$. This can be done in a straightforward way using (@eq-linear_system_linear_constraints_matrix_format), namely, 
 $$
-\bar{\bm x} = (\mathbf I-\overline{\mathbf A})^{-1}\overline{\mathbf B} \bm u + (\mathbf I-\overline{\mathbf A})^{-1} \overline{\mathbf A}_0 \bm x_0.
+\bar{\bm x} = (\mathbf I-\overline{\mathbf A})^{-1}\overline{\mathbf B} \bm u + (\mathbf I-\overline{\mathbf A})^{-1} \overline{\mathbf A}_0 \mathbf x_0.
 $$
 
 However, instead of solving the sets of equations, we can do this substitution in a more insightful way. Write down the state equation for several discrete times
 $$
 \begin{aligned}
- \bm x_1 &= \mathbf A\bm x_0 + \mathbf B\bm u_0\\
- \bm x_2 &= \mathbf A\bm x_0 + \mathbf B\bm u_0\\
-     &= \mathbf A(\mathbf A\bm x_0 + \mathbf B\bm u_0)+ \mathbf B\bm u_0\\
-     &= \mathbf A^2\bm x_0 + \mathbf A\mathbf B\bm u_0 + \mathbf B\bm u_0\\
+ \bm x_1 &= \mathbf A\mathbf x_0 + \mathbf B\bm u_0\\
+ \bm x_2 &= \mathbf A\mathbf x_0 + \mathbf B\bm u_0\\
+     &= \mathbf A(\mathbf A\mathbf x_0 + \mathbf B\bm u_0)+ \mathbf B\bm u_0\\
+     &= \mathbf A^2\mathbf x_0 + \mathbf A\mathbf B\bm u_0 + \mathbf B\bm u_0\\
      &\vdots\\
- \bm x_k &= \mathbf A^k\bm x_0 + \mathbf A^{k-1}\mathbf B\bm u_0 +\mathbf A^{k-2}\mathbf B\bm u_1 +\ldots \mathbf B\bm u_{k-1}.
+ \bm x_k &= \mathbf A^k\mathbf x_0 + \mathbf A^{k-1}\mathbf B\bm u_0 +\mathbf A^{k-2}\mathbf B\bm u_1 +\ldots \mathbf B\bm u_{k-1}.
 \end{aligned}
 $$
 
@@ -209,40 +209,40 @@ $$
  \underbrace{
   \begin{bmatrix}
  \mathbf A\\\mathbf A^2\\\vdots\\\mathbf A^N
- \end{bmatrix}}_{\widehat{\mathbf A}}\bm x_0
+ \end{bmatrix}}_{\widehat{\mathbf A}}\mathbf x_0
 $$
 
-For convenience, let's rewrite the compact relation between $\bar{\bm x}$ and $\bar{\bm u}$ and $\bm x_0$
+For convenience, let's rewrite the compact relation between $\bar{\bm x}$ and $\bar{\bm u}$ and $\mathbf x_0$
 $$
- \bar{\bm x} = \widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \bm x_0.
+ \bar{\bm x} = \widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \mathbf x_0.
 $$ {#eq-x_as_function_of_u_and_x0}
 
 We can now substitute this into the original cost, which then becomes independent of $\bar{\bm x}$, which we reflect by using a new name $\tilde J$
 $$
 \begin{aligned}
- \tilde J(\bar{\bm u};\bm x_0) &= \frac{1}{2}(\widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \bm x_0)^\top\overline{\mathbf Q} (\widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \bm x_0) + \frac{1}{2}\bar{\bm u}^\top\overline{\mathbf R} \bar{\bm u} + \frac{1}{2}\bm x_0^\top\mathbf Q\bm x_0\\
- &= \frac{1}{2}\bar{\bm u}^\top\widehat{\mathbf C}^\top \overline{\mathbf Q} \widehat{\mathbf C} \bar{\bm u} + \bm x_0^\top\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf C} \bar{\bm u} + \frac{1}{2} \bm x_0^\top\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf A} \bm x_0 + \frac{1}{2}\bar{\bm u}^\top\overline{\mathbf R} \bar{\bm u} + \frac{1}{2}\bm x_0^\top\mathbf Q\bm x_0\\
- &= \frac{1}{2}\bar{\bm u}^\top(\widehat{\mathbf C}^\top \overline{\mathbf Q} \widehat{\mathbf C} + \overline{\mathbf R})\bar{\bm u} + \bm x_0^\top\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf C} \bar{\bm u} + \frac{1}{2} \bm x_0^\top(\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf A} + \mathbf Q)\bm x_0. 
+ \tilde J(\bar{\bm u};\mathbf x_0) &= \frac{1}{2}(\widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \mathbf x_0)^\top\overline{\mathbf Q} (\widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \mathbf x_0) + \frac{1}{2}\bar{\bm u}^\top\overline{\mathbf R} \bar{\bm u} + \frac{1}{2}\mathbf x_0^\top\mathbf Q\mathbf x_0\\
+ &= \frac{1}{2}\bar{\bm u}^\top\widehat{\mathbf C}^\top \overline{\mathbf Q} \widehat{\mathbf C} \bar{\bm u} + \mathbf x_0^\top\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf C} \bar{\bm u} + \frac{1}{2} \mathbf x_0^\top\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf A} \mathbf x_0 + \frac{1}{2}\bar{\bm u}^\top\overline{\mathbf R} \bar{\bm u} + \frac{1}{2}\mathbf x_0^\top\mathbf Q\mathbf x_0\\
+ &= \frac{1}{2}\bar{\bm u}^\top(\widehat{\mathbf C}^\top \overline{\mathbf Q} \widehat{\mathbf C} + \overline{\mathbf R})\bar{\bm u} + \mathbf x_0^\top\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf C} \bar{\bm u} + \frac{1}{2} \mathbf x_0^\top(\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf A} + \mathbf Q)\mathbf x_0. 
 \end{aligned}
 $$
 
 The last term (the one independent of $\bar{\bm u}$) does not have an impact on the optimal $\bar{\bm u}$ and therefore it can be discarded, but such minor modification perhaps does no justify a new name for the cost function and we write it as
 $$
- \tilde J(\bar{\bm u};\bm x_0) = \frac{1}{2}\bar{\bm u}^\top\underbrace{(\widehat{\mathbf C}^\top \overline{\mathbf Q} \widehat{\mathbf C} + \overline{\mathbf R})}_{\mathbf H}\bar{\bm u} +  \bm x_0^\top\underbrace{\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf C}}_{\mathbf F^\top} \bar{\bm u}.
+ \tilde J(\bar{\bm u};\mathbf x_0) = \frac{1}{2}\bar{\bm u}^\top\underbrace{(\widehat{\mathbf C}^\top \overline{\mathbf Q} \widehat{\mathbf C} + \overline{\mathbf R})}_{\mathbf H}\bar{\bm u} +  \mathbf x_0^\top\underbrace{\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf C}}_{\mathbf F^\top} \bar{\bm u}.
 $$
 
-This cost is a function of $\bar{\bm u}$, the initial state $\bm x_0$ is regarded as a fixed parameter. Its gradient is
+This cost is a function of $\bar{\bm u}$, the initial state $\mathbf x_0$ is regarded as a fixed parameter. Its gradient is
 $$
- \nabla \tilde J = \mathbf H\bar{\bm u}+\mathbf F\bm x_0.
+ \nabla \tilde J = \mathbf H\bar{\bm u}+\mathbf F\mathbf x_0.
 $$
 
 Setting it to zero leads to the following linear system of equations
 $$
- \mathbf H\bar{\bm u}=-\mathbf F\bm x_0
+ \mathbf H\bar{\bm u}=-\mathbf F\mathbf x_0
 $$
 that needs to be solved for $\bar{\bm u}$. Formally, we write the solution as
 $$
- \bar{\bm u} = -\mathbf H^{-1} \mathbf F \bm x_0.
+ \bar{\bm u} = -\mathbf H^{-1} \mathbf F \mathbf x_0.
 $$
 
 ::: {.callout-note}
@@ -254,7 +254,7 @@ Solving linear equations by direct computation of the matrix inverse is not a re
 Adding constraints on $\bar{\bm u}$ is straightforward. It is just that instead of a linear system we will have a linear system with additional inequality constraints. Let's get one
 $$
 \begin{aligned}
- \operatorname*{minimize}_{\bar{\bm u}} & \quad \frac{1}{2}\bar{\bm u}^T \mathbf H \bar{\bm u} + \bm x_0^T\mathbf F^T \bar{\bm u}\\
+ \operatorname*{minimize}_{\bar{\bm u}} & \quad \frac{1}{2}\bar{\bm u}^T \mathbf H \bar{\bm u} + \mathbf x_0^T\mathbf F^T \bar{\bm u}\\
  \text{subject to} &\quad \bar{\bm u} \leq \bar{\mathbf u}_\mathrm{max}\\
                &\quad \bar{\bm u} \geq \bar{\mathbf u}_\mathrm{min}, 
 \end{aligned}
@@ -262,7 +262,7 @@ $$
 which we can rewrite more explicitly (in the matrix-vector format) as
 $$
 \begin{aligned}
- \operatorname*{minimize}_{\bar{\bm u}} & \quad \frac{1}{2}\bar{\bm u}^T \mathbf H \bar{\bm u} + \bm x_0^T\mathbf F^T \bar{\bm u}\\
+ \operatorname*{minimize}_{\bar{\bm u}} & \quad \frac{1}{2}\bar{\bm u}^T \mathbf H \bar{\bm u} + \mathbf x_0^T\mathbf F^T \bar{\bm u}\\
  \text{subject to} & \begin{bmatrix}
                   \mathbf{I}  &    &         &    \\
                     & \mathbf{I}  &         &    \\
@@ -285,12 +285,12 @@ $$
 
 #### Adding the constraints on states
 
-We might feel a little bit uneasy about loosing an immediate access to $\bar{\bm x}$. But the game is not lost. We just need to express $\bar{\bm x}$ as a function of $\bar{\bm u}$ and $\bm x_0$ and impose the constraint on the result. But such expression is already available, see (@eq-x_as_function_of_u_and_x0). Therefore, we can formulate the constraint, say, an upper bound on the state vector 
+We might feel a little bit uneasy about loosing an immediate access to $\bar{\bm x}$. But the game is not lost. We just need to express $\bar{\bm x}$ as a function of $\bar{\bm u}$ and $\mathbf x_0$ and impose the constraint on the result. But such expression is already available, see (@eq-x_as_function_of_u_and_x0). Therefore, we can formulate the constraint, say, an upper bound on the state vector 
 $$
  \bm x_k \leq \mathbf x_\mathrm{max}
 $$
 as
 $$
- \bar{\mathbf x}_\mathrm{min} \leq \widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \bm x_0 \leq \bar{\mathbf x}_\mathrm{max}, 
+ \bar{\mathbf x}_\mathrm{min} \leq \widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \mathbf x_0 \leq \bar{\mathbf x}_\mathrm{max}, 
 $$
 where the the bars in $\bar{\mathbf x}_\mathrm{min}$ and $\bar{\mathbf x}_\mathrm{max}$ obviously indicates that these vectors were obtained by stacking the corresponding vectors for all times $k=1,\ldots,N$.

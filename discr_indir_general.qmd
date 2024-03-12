@@ -11,6 +11,8 @@ jupyter: julia-1.10
 
 While in the previous chapter we formulated an optimal control problem (OCP) directly as a mathematical programming (general NLP or even QP) problem over the control (and possibly state) trajectories, in this chapter we introduce an alternative – *indirect* – approach. The essence of the approach is that we formulate first-order necessary conditions of optimality for the OCP in the form of equations, and then solve these. Although less straightforward to extend with additional constraints than the direct approach, the indirect approach also exhibits some advantages. In particular, in some cases (such as a quadratic cost and a linear system) it yields a feedback controller and not just a control trajetory.
 
+{{< video https://www.youtube.com/embed/J14PTv9J6cs?si=cACBQb5BLcEck2-D >}}
+
 ## Optimization constrains given only by the state equations
 
 As in the chapter on the direct approach, here we also start by considering a general nonlinear and possibly time-varying discrete-time dynamical system characterized by the state vector $\bm x_k\in\mathbb R^n$ whose evolution in discrete time $k$ is uniquely determined by the state equation
@@ -58,14 +60,20 @@ Having formulated a finite-dimensional constrained nonlinear optimization proble
 
 By introducing Lagrange multipliers ${\color{blue}\bm\lambda_k}$ we turn the constrained problem into an unconstrained one. The new cost function (we use the prime to distinguish it from the original cost) is
 $$
- {J'}_i^N(\bm x_i, \ldots, \bm x_N, \bm u_i, \ldots, \bm u_{N-1},{\color{blue}\bm \lambda_i, \ldots, ..., \bm \lambda_{N-1}}) = \phi(\bm x_N,N) + \sum_{k=i}^{N-1}\left[L_{k}(\bm x_k,\bm u_k)+\bm {\color{blue}\lambda^\top_{k}}\;\left[\mathbf f_k(\bm x_k,\bm u_k)-\bm x_{k+1}\right]\right].
+\begin{aligned}
+ & {J'}_i^N(\bm x_i, \ldots, \bm x_N, \bm u_i, \ldots, \bm u_{N-1},{\color{blue}\bm \lambda_i, \ldots, \bm \lambda_{N-1}}) \\
+ &\qquad\qquad\qquad = \phi(\bm x_N,N) + \sum_{k=i}^{N-1}\left[L_{k}(\bm x_k,\bm u_k)+\bm {\color{blue}\lambda^\top_{k}}\;\left[\mathbf f_k(\bm x_k,\bm u_k)-\bm x_{k+1}\right]\right].
+\end{aligned} 
 $$
 
 From now on, in principle, we do not need any guidance here, do we? We are given an unconstrained optimization problem and its solution is just a few steps away. In particular, stationary point(s) must be found (and then we are going to argue if these qualify as minimizers or not). This calls for differentiating the above expression with respect to all the variables and setting these derivatives equal to zeros. 
 
 Although the principles are clear, some hindsight might be shared here if compact formulas are to be found. First such advice is to rename the variable(s) ${\color{blue}\boldsymbol \lambda_k}$ to ${\color{red}\boldsymbol \lambda_{k+1}}$ 
 $$
- {J'}_i^N(\bm x_i, \ldots, \bm x_N, \bm u_i, \ldots, \bm u_{N-1},{\color{red}\bm \lambda_{i+1}, \ldots, ..., \bm \lambda_{N}}) = \phi(N,\bm x_N) + \sum_{k=i}^{N-1}\left[L_{k}(\bm x_k,\bm u_k)+\boldsymbol {\color{red}\boldsymbol \lambda^\top_{k+1}}\;\left[\mathbf f_k(\bm x_k,\bm u_k)-\mathbf x_{k+1}\right]\right].
+\begin{aligned}
+& {J'}_i^N(\bm x_i, \ldots, \bm x_N, \bm u_i, \ldots, \bm u_{N-1},{\color{red}\bm \lambda_{i+1}, \ldots, \bm \lambda_{N}}) \\
+& \qquad\qquad\qquad = \phi(N,\bm x_N) + \sum_{k=i}^{N-1}\left[L_{k}(\bm x_k,\bm u_k)+\boldsymbol {\color{red}\boldsymbol \lambda^\top_{k+1}}\; \left[\mathbf f_k(\bm x_k,\bm u_k)-\mathbf x_{k+1}\right]\right].
+\end{aligned}
 $$
 
 This is really just a notational decision but thanks to it our resulting formulas will enjoy some symmetry. 
@@ -74,7 +82,7 @@ This is really just a notational decision but thanks to it our resulting formula
 Maybe it would be more didactic to leave you to go on without this advice notation and only then to nudge you to figure out this remedy on your own. But admittedly this is not the kind of competence that we aim at in this course. Let's spend time with more rewarding things.
 :::
 
-Another notational advice – but this one is more systematic and fundamental – is to make the above expression a bit shorter by introducing a new variable defined as
+Another notational advice – but this one is more systematic and fundamental — is to make the above expression a bit shorter by introducing a new variable defined as
 $$\boxed{H_k(\bm x_k,\bm u_k,\boldsymbol\lambda_{k+1}) = L_{k}(\bm x_k,\bm u_k)+\boldsymbol \lambda_{k+1}^\top \; \mathbf f_k(\bm x_k,\bm u_k).}
 $$
 
@@ -139,7 +147,7 @@ $$
 }
 $$
 
-Recall that since $\mathbf f$ is a vector function, $\nabla \mathbf f$ is not just a gradient but rather a matrix whose columns are gradients of the individual components of the vector $\mathbf f$ – it is a transpose of Jacobian. 
+Recall that since $\mathbf f$ is a vector function, $\nabla \mathbf f$ is not just a gradient but rather a matrix whose columns are gradients of the individual components of the vector $\mathbf f$ — it is a transpose of Jacobian. 
 
 ::: {.callout-note}
 The first three necessary conditions above can be made completely "symmetric" by running the second one from $k=i$ because the $\boldsymbol\lambda_i$ introduced this way does not influence the rest of the problem and we could easily live with one useless variable.
@@ -160,7 +168,7 @@ It is a crucial property of the co-state equation that it dictates the evolution
 To summarize, the equations that give the necessary conditions of optimality for a general nonlinear discrete-time optimal control problem form a *two-point boundary value problem* (TP-BVP). Values of some variables are specified at the initial time, values of some (maybe the same or some other) variables are defined at the final time. The equations prescribe the evolution of some variables forward in time while for some other variables the evolution backward in time is dictated. 
 
 ::: {.callout-note}
-This is in contrast with the initial value problem (IVP) for state equations, for which we only specify the state at one end of the time horizon – the initial state – and then the state equation disctates the evolution of the (state) variable forward in time.  
+This is in contrast with the initial value problem (IVP) for state equations, for which we only specify the state at one end of the time horizon — the initial state — and then the state equation disctates the evolution of the (state) variable forward in time.  
 :::
 
 Boundary value problems are notoriously difficult to solve. Typically we can only solve them numerically, in which case it is appropriate to ask if anything has been gained by this indirect procedure compared with the direct one. After all, we did not even incorporate the inequality constraints in the problem, which was a piece of case in the direct approach. But we will see that in some special cases the TP-BVP they can be solved analytically and the outcome is particularly useful and would never have been discovered, if only the direct approach had been followed. We elaborate on this in the next section.
