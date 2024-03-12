@@ -305,6 +305,12 @@ window.Quarto = {
  <span class="menu-text">Numerical solvers for MPC</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_dir_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References for direct approach to discrete-time optimal control</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -325,7 +331,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./discr_indir_LQR_fin_horizon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Discrete-time LQR-optimal control on a finite horizon</span></a>
+ <span class="menu-text">Discrete-time LQR on a finite horizon</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -338,6 +344,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./discr_indir_DARE.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Discrete-time algebraic Riccati equation (DARE)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_indir_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References for indirect approach to discrete-time optimal control</span></a>
   </div>
 </li>
       </ul>
@@ -669,11 +681,11 @@ window.Quarto = {
 </header>
 
 
-<p>Here we specialize the general procedure from the previous section to the case of a linear system and a quadratic cost. we start by considering a simple problem of <em>regulation</em>, wherein the goal is to bring the system either exactly or approximately to zero final state, that is, <span class="math inline">\bm r_N=\mathbf 0</span> and we want <span class="math inline">\bm x_N=\mathbf r_N</span> or <span class="math inline">\bm x_N\approx\mathbf r_N</span>, respectively. <span class="math display">
+<p>Here we specialize the general procedure from the previous section to the case of a linear system and a quadratic cost. we start by considering a simple problem of <em>regulation</em>, wherein the goal is to bring the system either exactly or approximately to zero final state, that is, <span class="math inline">\mathbf x^\text{ref}=\mathbf 0</span> and we want <span class="math inline">\bm x_N=\mathbf x^\text{ref}</span> or <span class="math inline">\bm x_N\approx\mathbf x^\text{ref}</span>, respectively. <span class="math display">
 \begin{aligned}
 \operatorname*{minimize}_{\mathbf u_0,\ldots, \mathbf u_{N-1}, \mathbf x_{0},\ldots, \mathbf x_N} &amp;\quad  \frac{1}{2} \bm x_N^\top \mathbf S \bm x_N + \frac{1}{2} \sum_{k=0}^{N-1} \left(\bm x_k^\top \mathbf Q \bm x_k + \bm u_k^\top \mathbf R \bm u_k \right)\\
 \text{subject to}   &amp;\quad \bm x_{k+1} = \mathbf A\bm x_k + \mathbf B\bm u_k,\quad k = 0, \ldots, N-1, \\
-                    &amp;\quad \bm x_0 = \mathbf r_0,\\
+                    &amp;\quad \bm x_0 = \mathbf x_0,\\
                     &amp;\quad \bm x_N = \mathbf 0\;  (\text{or}\, \bm x_N \approx \mathbf 0).
 \end{aligned}
 </span></p>
@@ -706,21 +718,21 @@ Tip
 \begin{bmatrix} \bm u_0^\top &amp; \bm u_1^\top &amp; \ldots &amp; \bm u_{N-1}^\top \end{bmatrix}
 \underbrace{\begin{bmatrix}\mathbf R &amp; &amp; &amp; \\ &amp; \mathbf R &amp; &amp;\\ &amp; &amp;\ddots &amp; \\ &amp; &amp; &amp; \mathbf R \end{bmatrix}}_{\overline{\mathbf R}}
 \underbrace{\begin{bmatrix} \bm u_0 \\ \bm u_1 \\ \vdots \\ \bm u_{N-1} \end{bmatrix}}_{\bar{\bm u}}\right)
-+ \underbrace{\frac{1}{2}\bm x_0^\top \mathbf Q \bm x_0}_{\mathrm{constant}}
++ \underbrace{\frac{1}{2}\mathbf x_0^\top \mathbf Q \mathbf x_0}_{\mathrm{constant}}
 \end{aligned}
 </span> subject to <span class="math display">
 \begin{bmatrix} \bm x_1 \\ \bm x_2 \\ \bm x_3\\ \vdots \\ \bm x_N \end{bmatrix} = \underbrace{\begin{bmatrix}\mathbf 0 &amp; &amp; &amp; &amp;\\\mathbf A &amp; \mathbf 0 &amp; &amp; &amp;\\ &amp;\mathbf A &amp;\mathbf 0 &amp; &amp; \\ &amp; &amp; &amp;\ddots &amp; \\&amp; &amp; &amp;\mathbf A &amp; \mathbf 0 \end{bmatrix}}_{\overline{\mathbf A}}
-\begin{bmatrix} \bm x_1 \\ \bm x_2 \\ \bm x_3\\ \vdots \\ \bm x_N \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf B &amp; &amp; &amp; &amp; \\ &amp; \mathbf B &amp; &amp; &amp; \\&amp; &amp;\mathbf B &amp; \\ &amp; &amp; &amp;\ddots \\ &amp; &amp; &amp; &amp; \mathbf B \end{bmatrix}}_{\overline{\mathbf B}}\begin{bmatrix} \bm u_0 \\ \bm u_1 \\ \bm u_2\\\vdots \\ \bm u_{N-1} \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf A\\\mathbf 0\\\mathbf 0\\\vdots\\\mathbf 0\end{bmatrix}}_{\overline{\mathbf A}_0}\bm x_0.   
+\begin{bmatrix} \bm x_1 \\ \bm x_2 \\ \bm x_3\\ \vdots \\ \bm x_N \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf B &amp; &amp; &amp; &amp; \\ &amp; \mathbf B &amp; &amp; &amp; \\&amp; &amp;\mathbf B &amp; \\ &amp; &amp; &amp;\ddots \\ &amp; &amp; &amp; &amp; \mathbf B \end{bmatrix}}_{\overline{\mathbf B}}\begin{bmatrix} \bm u_0 \\ \bm u_1 \\ \bm u_2\\\vdots \\ \bm u_{N-1} \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf A\\\mathbf 0\\\mathbf 0\\\vdots\\\mathbf 0\end{bmatrix}}_{\overline{\mathbf A}_0}\mathbf x_0.   
 </span></p>
 <p>Note that the last term in the cost function can be discarded because it is constant.</p>
 <p>The terms with the <span class="math inline">\bar{\bm x}</span> vector can be combined and we get <span id="eq-linear_system_linear_constraints_matrix_format"><span class="math display">
 \begin{bmatrix} \mathbf 0 \\ \mathbf 0 \\ \mathbf 0\\ \vdots \\ \mathbf 0 \end{bmatrix} = \underbrace{\begin{bmatrix}-\mathbf I &amp; &amp; &amp; &amp;\\\mathbf A &amp; -\mathbf I &amp; &amp; &amp;\\ &amp;\mathbf A &amp;-\mathbf I &amp; &amp; \\ &amp; &amp; &amp;\ddots &amp; \\&amp; &amp; &amp;\mathbf A &amp; -\mathbf I \end{bmatrix}}_{\overline{\mathbf A} - \mathbf I}
-\begin{bmatrix} \mathbf x_1 \\ \mathbf x_2 \\ \mathbf x_3\\ \vdots \\ \mathbf x_N \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf B &amp; &amp; &amp; &amp; \\ &amp; \mathbf B &amp; &amp; &amp; \\&amp; &amp;\mathbf B &amp; \\ &amp; &amp; &amp;\ddots \\ &amp; &amp; &amp; &amp; \mathbf B \end{bmatrix}}_{\overline{\mathbf B}}\begin{bmatrix} \mathbf u_0 \\ \mathbf u_1 \\ \mathbf u_2\\\vdots \\ \mathbf u_{N-1} \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf A\\\mathbf 0\\\mathbf 0\\\vdots\\\mathbf 0\end{bmatrix}}_{\overline{\mathbf A}_0}\bm x_0.
+\begin{bmatrix} \mathbf x_1 \\ \mathbf x_2 \\ \mathbf x_3\\ \vdots \\ \mathbf x_N \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf B &amp; &amp; &amp; &amp; \\ &amp; \mathbf B &amp; &amp; &amp; \\&amp; &amp;\mathbf B &amp; \\ &amp; &amp; &amp;\ddots \\ &amp; &amp; &amp; &amp; \mathbf B \end{bmatrix}}_{\overline{\mathbf B}}\begin{bmatrix} \mathbf u_0 \\ \mathbf u_1 \\ \mathbf u_2\\\vdots \\ \mathbf u_{N-1} \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf A\\\mathbf 0\\\mathbf 0\\\vdots\\\mathbf 0\end{bmatrix}}_{\overline{\mathbf A}_0}\mathbf x_0.
 \tag{1}</span></span></p>
 <p>Upon stacking the two “long” vectors into <span class="math inline">\bar{\bm z}</span> we reformulate the optimization problem as <span class="math display">
 \operatorname*{minimize}_{\widetilde{\mathbf z}\in\mathbb{R}^{2N}}\quad \frac{1}{2}\underbrace{\begin{bmatrix}\bar{\bm x}^\top &amp;\bar{\bm u}^\top\end{bmatrix}}_{\bar{\bm z}^\top} \underbrace{\begin{bmatrix}\overline{\mathbf Q} &amp; \\ &amp; \overline{\mathbf R} \end{bmatrix}}_{\widetilde{\mathbf Q}}\underbrace{\begin{bmatrix}\bar{\bm x}\\\bar{\bm u}\end{bmatrix}}_{\bar{\bm z}}
 </span> subject to <span class="math display">
-\mathbf 0 = \underbrace{\begin{bmatrix}(\overline{\mathbf A}-\mathbf I) &amp; \overline{\mathbf B}\end{bmatrix}}_{\widetilde{\mathbf A}}\underbrace{\begin{bmatrix}\bar{\bm x}\\\bar{\bm u}\end{bmatrix}}_{\bar{\bm z}} + \underbrace{\overline{\mathbf A}_0 \bm x_0}_{\tilde{\mathbf b}}.
+\mathbf 0 = \underbrace{\begin{bmatrix}(\overline{\mathbf A}-\mathbf I) &amp; \overline{\mathbf B}\end{bmatrix}}_{\widetilde{\mathbf A}}\underbrace{\begin{bmatrix}\bar{\bm x}\\\bar{\bm u}\end{bmatrix}}_{\bar{\bm z}} + \underbrace{\overline{\mathbf A}_0 \mathbf x_0}_{\tilde{\mathbf b}}.
 </span></p>
 <p>To summarize, we have reformulated the optimal control problem as a linearly constrained quadratic program <span class="math display">
 \boxed{
@@ -729,7 +741,7 @@ Tip
 \text{subject to} &amp;\quad \widetilde{\mathbf A} \bar{\bm z} + \tilde{\bm b} = \mathbf 0.
 \end{aligned}}
 </span></p>
-<div id="fb8c9bcb" class="cell">
+<div id="5e261907" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">direct_dlqr_simultaneous</span>(A,B,x₀,Q,R,S,N)</span>
@@ -822,17 +834,17 @@ Tip
 </section>
 <section id="sequential-dense-formulation" class="level3">
 <h3 class="anchored" data-anchor-id="sequential-dense-formulation">Sequential (dense) formulation</h3>
-<p>We can express <span class="math inline">\bar{\bm x}</span> as a function of <span class="math inline">\bar{\bm u}</span> and <span class="math inline">\bm x_0</span>. This can be done in a straightforward way using (<a href="#eq-linear_system_linear_constraints_matrix_format" class="quarto-xref">Equation&nbsp;1</a>), namely, <span class="math display">
-\bar{\bm x} = (\mathbf I-\overline{\mathbf A})^{-1}\overline{\mathbf B} \bm u + (\mathbf I-\overline{\mathbf A})^{-1} \overline{\mathbf A}_0 \bm x_0.
+<p>We can express <span class="math inline">\bar{\bm x}</span> as a function of <span class="math inline">\bar{\bm u}</span> and <span class="math inline">\mathbf x_0</span>. This can be done in a straightforward way using (<a href="#eq-linear_system_linear_constraints_matrix_format" class="quarto-xref">Equation&nbsp;1</a>), namely, <span class="math display">
+\bar{\bm x} = (\mathbf I-\overline{\mathbf A})^{-1}\overline{\mathbf B} \bm u + (\mathbf I-\overline{\mathbf A})^{-1} \overline{\mathbf A}_0 \mathbf x_0.
 </span></p>
 <p>However, instead of solving the sets of equations, we can do this substitution in a more insightful way. Write down the state equation for several discrete times <span class="math display">
 \begin{aligned}
-\bm x_1 &amp;= \mathbf A\bm x_0 + \mathbf B\bm u_0\\
-\bm x_2 &amp;= \mathbf A\bm x_0 + \mathbf B\bm u_0\\
-     &amp;= \mathbf A(\mathbf A\bm x_0 + \mathbf B\bm u_0)+ \mathbf B\bm u_0\\
-     &amp;= \mathbf A^2\bm x_0 + \mathbf A\mathbf B\bm u_0 + \mathbf B\bm u_0\\
+\bm x_1 &amp;= \mathbf A\mathbf x_0 + \mathbf B\bm u_0\\
+\bm x_2 &amp;= \mathbf A\mathbf x_0 + \mathbf B\bm u_0\\
+     &amp;= \mathbf A(\mathbf A\mathbf x_0 + \mathbf B\bm u_0)+ \mathbf B\bm u_0\\
+     &amp;= \mathbf A^2\mathbf x_0 + \mathbf A\mathbf B\bm u_0 + \mathbf B\bm u_0\\
      &amp;\vdots\\
-\bm x_k &amp;= \mathbf A^k\bm x_0 + \mathbf A^{k-1}\mathbf B\bm u_0 +\mathbf A^{k-2}\mathbf B\bm u_1 +\ldots \mathbf B\bm u_{k-1}.
+\bm x_k &amp;= \mathbf A^k\mathbf x_0 + \mathbf A^{k-1}\mathbf B\bm u_0 +\mathbf A^{k-2}\mathbf B\bm u_1 +\ldots \mathbf B\bm u_{k-1}.
 \end{aligned}
 </span></p>
 <p>Rewriting into matrix-vector form (and extending the time <span class="math inline">k</span> up to the final time <span class="math inline">N</span>) <span class="math display">
@@ -854,28 +866,28 @@ Tip
 \underbrace{
   \begin{bmatrix}
 \mathbf A\\\mathbf A^2\\\vdots\\\mathbf A^N
-\end{bmatrix}}_{\widehat{\mathbf A}}\bm x_0
+\end{bmatrix}}_{\widehat{\mathbf A}}\mathbf x_0
 </span></p>
-<p>For convenience, let’s rewrite the compact relation between <span class="math inline">\bar{\bm x}</span> and <span class="math inline">\bar{\bm u}</span> and <span class="math inline">\bm x_0</span> <span id="eq-x_as_function_of_u_and_x0"><span class="math display">
-\bar{\bm x} = \widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \bm x_0.
+<p>For convenience, let’s rewrite the compact relation between <span class="math inline">\bar{\bm x}</span> and <span class="math inline">\bar{\bm u}</span> and <span class="math inline">\mathbf x_0</span> <span id="eq-x_as_function_of_u_and_x0"><span class="math display">
+\bar{\bm x} = \widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \mathbf x_0.
 \tag{2}</span></span></p>
 <p>We can now substitute this into the original cost, which then becomes independent of <span class="math inline">\bar{\bm x}</span>, which we reflect by using a new name <span class="math inline">\tilde J</span> <span class="math display">
 \begin{aligned}
-\tilde J(\bar{\bm u};\bm x_0) &amp;= \frac{1}{2}(\widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \bm x_0)^\top\overline{\mathbf Q} (\widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \bm x_0) + \frac{1}{2}\bar{\bm u}^\top\overline{\mathbf R} \bar{\bm u} + \frac{1}{2}\bm x_0^\top\mathbf Q\bm x_0\\
-&amp;= \frac{1}{2}\bar{\bm u}^\top\widehat{\mathbf C}^\top \overline{\mathbf Q} \widehat{\mathbf C} \bar{\bm u} + \bm x_0^\top\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf C} \bar{\bm u} + \frac{1}{2} \bm x_0^\top\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf A} \bm x_0 + \frac{1}{2}\bar{\bm u}^\top\overline{\mathbf R} \bar{\bm u} + \frac{1}{2}\bm x_0^\top\mathbf Q\bm x_0\\
-&amp;= \frac{1}{2}\bar{\bm u}^\top(\widehat{\mathbf C}^\top \overline{\mathbf Q} \widehat{\mathbf C} + \overline{\mathbf R})\bar{\bm u} + \bm x_0^\top\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf C} \bar{\bm u} + \frac{1}{2} \bm x_0^\top(\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf A} + \mathbf Q)\bm x_0.
+\tilde J(\bar{\bm u};\mathbf x_0) &amp;= \frac{1}{2}(\widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \mathbf x_0)^\top\overline{\mathbf Q} (\widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \mathbf x_0) + \frac{1}{2}\bar{\bm u}^\top\overline{\mathbf R} \bar{\bm u} + \frac{1}{2}\mathbf x_0^\top\mathbf Q\mathbf x_0\\
+&amp;= \frac{1}{2}\bar{\bm u}^\top\widehat{\mathbf C}^\top \overline{\mathbf Q} \widehat{\mathbf C} \bar{\bm u} + \mathbf x_0^\top\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf C} \bar{\bm u} + \frac{1}{2} \mathbf x_0^\top\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf A} \mathbf x_0 + \frac{1}{2}\bar{\bm u}^\top\overline{\mathbf R} \bar{\bm u} + \frac{1}{2}\mathbf x_0^\top\mathbf Q\mathbf x_0\\
+&amp;= \frac{1}{2}\bar{\bm u}^\top(\widehat{\mathbf C}^\top \overline{\mathbf Q} \widehat{\mathbf C} + \overline{\mathbf R})\bar{\bm u} + \mathbf x_0^\top\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf C} \bar{\bm u} + \frac{1}{2} \mathbf x_0^\top(\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf A} + \mathbf Q)\mathbf x_0.
 \end{aligned}
 </span></p>
 <p>The last term (the one independent of <span class="math inline">\bar{\bm u}</span>) does not have an impact on the optimal <span class="math inline">\bar{\bm u}</span> and therefore it can be discarded, but such minor modification perhaps does no justify a new name for the cost function and we write it as <span class="math display">
-\tilde J(\bar{\bm u};\bm x_0) = \frac{1}{2}\bar{\bm u}^\top\underbrace{(\widehat{\mathbf C}^\top \overline{\mathbf Q} \widehat{\mathbf C} + \overline{\mathbf R})}_{\mathbf H}\bar{\bm u} +  \bm x_0^\top\underbrace{\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf C}}_{\mathbf F^\top} \bar{\bm u}.
+\tilde J(\bar{\bm u};\mathbf x_0) = \frac{1}{2}\bar{\bm u}^\top\underbrace{(\widehat{\mathbf C}^\top \overline{\mathbf Q} \widehat{\mathbf C} + \overline{\mathbf R})}_{\mathbf H}\bar{\bm u} +  \mathbf x_0^\top\underbrace{\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf C}}_{\mathbf F^\top} \bar{\bm u}.
 </span></p>
-<p>This cost is a function of <span class="math inline">\bar{\bm u}</span>, the initial state <span class="math inline">\bm x_0</span> is regarded as a fixed parameter. Its gradient is <span class="math display">
-\nabla \tilde J = \mathbf H\bar{\bm u}+\mathbf F\bm x_0.
+<p>This cost is a function of <span class="math inline">\bar{\bm u}</span>, the initial state <span class="math inline">\mathbf x_0</span> is regarded as a fixed parameter. Its gradient is <span class="math display">
+\nabla \tilde J = \mathbf H\bar{\bm u}+\mathbf F\mathbf x_0.
 </span></p>
 <p>Setting it to zero leads to the following linear system of equations <span class="math display">
-\mathbf H\bar{\bm u}=-\mathbf F\bm x_0
+\mathbf H\bar{\bm u}=-\mathbf F\mathbf x_0
 </span> that needs to be solved for <span class="math inline">\bar{\bm u}</span>. Formally, we write the solution as <span class="math display">
-\bar{\bm u} = -\mathbf H^{-1} \mathbf F \bm x_0.
+\bar{\bm u} = -\mathbf H^{-1} \mathbf F \mathbf x_0.
 </span></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -894,13 +906,13 @@ Note
 <h4 class="anchored" data-anchor-id="adding-the-constraints-on-controls">Adding the constraints on controls</h4>
 <p>Adding constraints on <span class="math inline">\bar{\bm u}</span> is straightforward. It is just that instead of a linear system we will have a linear system with additional inequality constraints. Let’s get one <span class="math display">
 \begin{aligned}
-\operatorname*{minimize}_{\bar{\bm u}} &amp; \quad \frac{1}{2}\bar{\bm u}^T \mathbf H \bar{\bm u} + \bm x_0^T\mathbf F^T \bar{\bm u}\\
+\operatorname*{minimize}_{\bar{\bm u}} &amp; \quad \frac{1}{2}\bar{\bm u}^T \mathbf H \bar{\bm u} + \mathbf x_0^T\mathbf F^T \bar{\bm u}\\
 \text{subject to} &amp;\quad \bar{\bm u} \leq \bar{\mathbf u}_\mathrm{max}\\
                &amp;\quad \bar{\bm u} \geq \bar{\mathbf u}_\mathrm{min},
 \end{aligned}
 </span> which we can rewrite more explicitly (in the matrix-vector format) as <span class="math display">
 \begin{aligned}
-\operatorname*{minimize}_{\bar{\bm u}} &amp; \quad \frac{1}{2}\bar{\bm u}^T \mathbf H \bar{\bm u} + \bm x_0^T\mathbf F^T \bar{\bm u}\\
+\operatorname*{minimize}_{\bar{\bm u}} &amp; \quad \frac{1}{2}\bar{\bm u}^T \mathbf H \bar{\bm u} + \mathbf x_0^T\mathbf F^T \bar{\bm u}\\
 \text{subject to} &amp; \begin{bmatrix}
                   \mathbf{I}  &amp;    &amp;         &amp;    \\
                     &amp; \mathbf{I}  &amp;         &amp;    \\
@@ -923,10 +935,10 @@ Note
 </section>
 <section id="adding-the-constraints-on-states" class="level4">
 <h4 class="anchored" data-anchor-id="adding-the-constraints-on-states">Adding the constraints on states</h4>
-<p>We might feel a little bit uneasy about loosing an immediate access to <span class="math inline">\bar{\bm x}</span>. But the game is not lost. We just need to express <span class="math inline">\bar{\bm x}</span> as a function of <span class="math inline">\bar{\bm u}</span> and <span class="math inline">\bm x_0</span> and impose the constraint on the result. But such expression is already available, see (<a href="#eq-x_as_function_of_u_and_x0" class="quarto-xref">Equation&nbsp;2</a>). Therefore, we can formulate the constraint, say, an upper bound on the state vector <span class="math display">
+<p>We might feel a little bit uneasy about loosing an immediate access to <span class="math inline">\bar{\bm x}</span>. But the game is not lost. We just need to express <span class="math inline">\bar{\bm x}</span> as a function of <span class="math inline">\bar{\bm u}</span> and <span class="math inline">\mathbf x_0</span> and impose the constraint on the result. But such expression is already available, see (<a href="#eq-x_as_function_of_u_and_x0" class="quarto-xref">Equation&nbsp;2</a>). Therefore, we can formulate the constraint, say, an upper bound on the state vector <span class="math display">
 \bm x_k \leq \mathbf x_\mathrm{max}
 </span> as <span class="math display">
-\bar{\mathbf x}_\mathrm{min} \leq \widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \bm x_0 \leq \bar{\mathbf x}_\mathrm{max},
+\bar{\mathbf x}_\mathrm{min} \leq \widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \mathbf x_0 \leq \bar{\mathbf x}_\mathrm{max},
 </span> where the the bars in <span class="math inline">\bar{\mathbf x}_\mathrm{min}</span> and <span class="math inline">\bar{\mathbf x}_\mathrm{max}</span> obviously indicates that these vectors were obtained by stacking the corresponding vectors for all times <span class="math inline">k=1,\ldots,N</span>.</p>
 
 

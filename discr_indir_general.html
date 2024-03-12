@@ -31,7 +31,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./discr_indir_LQR_fin_horizon.html" rel="next">
-<link href="./discr_dir_mpc_solvers.html" rel="prev">
+<link href="./discr_dir_references.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -271,6 +271,12 @@ window.Quarto = {
  <span class="menu-text">Numerical solvers for MPC</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_dir_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References for direct approach to discrete-time optimal control</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -291,7 +297,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./discr_indir_LQR_fin_horizon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Discrete-time LQR-optimal control on a finite horizon</span></a>
+ <span class="menu-text">Discrete-time LQR on a finite horizon</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -304,6 +310,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./discr_indir_DARE.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Discrete-time algebraic Riccati equation (DARE)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_indir_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References for indirect approach to discrete-time optimal control</span></a>
   </div>
 </li>
       </ul>
@@ -638,6 +650,7 @@ window.Quarto = {
 
 
 <p>While in the previous chapter we formulated an optimal control problem (OCP) directly as a mathematical programming (general NLP or even QP) problem over the control (and possibly state) trajectories, in this chapter we introduce an alternative – <em>indirect</em> – approach. The essence of the approach is that we formulate first-order necessary conditions of optimality for the OCP in the form of equations, and then solve these. Although less straightforward to extend with additional constraints than the direct approach, the indirect approach also exhibits some advantages. In particular, in some cases (such as a quadratic cost and a linear system) it yields a feedback controller and not just a control trajetory.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/J14PTv9J6cs?si=cACBQb5BLcEck2-D" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <section id="optimization-constrains-given-only-by-the-state-equations" class="level2">
 <h2 class="anchored" data-anchor-id="optimization-constrains-given-only-by-the-state-equations">Optimization constrains given only by the state equations</h2>
 <p>As in the chapter on the direct approach, here we also start by considering a general nonlinear and possibly time-varying discrete-time dynamical system characterized by the state vector <span class="math inline">\bm x_k\in\mathbb R^n</span> whose evolution in discrete time <span class="math inline">k</span> is uniquely determined by the state equation <span class="math display">
@@ -690,11 +703,17 @@ Setting <span class="math inline">\phi=\frac{1}{2}s_N x_N^2</span> and <span cla
 <h2 class="anchored" data-anchor-id="derivation-of-the-first-order-necessary-conditions-of-optimality">Derivation of the first-order necessary conditions of optimality</h2>
 <p>Having formulated a finite-dimensional constrained nonlinear optimization problem, we avoid the temptation to call an NLP solver to solve it numerically and proceed instead with our own analysis of the problem. Let’s see how far we can get.</p>
 <p>By introducing Lagrange multipliers <span class="math inline">{\color{blue}\bm\lambda_k}</span> we turn the constrained problem into an unconstrained one. The new cost function (we use the prime to distinguish it from the original cost) is <span class="math display">
-{J'}_i^N(\bm x_i, \ldots, \bm x_N, \bm u_i, \ldots, \bm u_{N-1},{\color{blue}\bm \lambda_i, \ldots, ..., \bm \lambda_{N-1}}) = \phi(\bm x_N,N) + \sum_{k=i}^{N-1}\left[L_{k}(\bm x_k,\bm u_k)+\bm {\color{blue}\lambda^\top_{k}}\;\left[\mathbf f_k(\bm x_k,\bm u_k)-\bm x_{k+1}\right]\right].
+\begin{aligned}
+&amp; {J'}_i^N(\bm x_i, \ldots, \bm x_N, \bm u_i, \ldots, \bm u_{N-1},{\color{blue}\bm \lambda_i, \ldots, \bm \lambda_{N-1}}) \\
+&amp;\qquad\qquad\qquad = \phi(\bm x_N,N) + \sum_{k=i}^{N-1}\left[L_{k}(\bm x_k,\bm u_k)+\bm {\color{blue}\lambda^\top_{k}}\;\left[\mathbf f_k(\bm x_k,\bm u_k)-\bm x_{k+1}\right]\right].
+\end{aligned}
 </span></p>
 <p>From now on, in principle, we do not need any guidance here, do we? We are given an unconstrained optimization problem and its solution is just a few steps away. In particular, stationary point(s) must be found (and then we are going to argue if these qualify as minimizers or not). This calls for differentiating the above expression with respect to all the variables and setting these derivatives equal to zeros.</p>
 <p>Although the principles are clear, some hindsight might be shared here if compact formulas are to be found. First such advice is to rename the variable(s) <span class="math inline">{\color{blue}\boldsymbol \lambda_k}</span> to <span class="math inline">{\color{red}\boldsymbol \lambda_{k+1}}</span> <span class="math display">
-{J'}_i^N(\bm x_i, \ldots, \bm x_N, \bm u_i, \ldots, \bm u_{N-1},{\color{red}\bm \lambda_{i+1}, \ldots, ..., \bm \lambda_{N}}) = \phi(N,\bm x_N) + \sum_{k=i}^{N-1}\left[L_{k}(\bm x_k,\bm u_k)+\boldsymbol {\color{red}\boldsymbol \lambda^\top_{k+1}}\;\left[\mathbf f_k(\bm x_k,\bm u_k)-\mathbf x_{k+1}\right]\right].
+\begin{aligned}
+&amp; {J'}_i^N(\bm x_i, \ldots, \bm x_N, \bm u_i, \ldots, \bm u_{N-1},{\color{red}\bm \lambda_{i+1}, \ldots, \bm \lambda_{N}}) \\
+&amp; \qquad\qquad\qquad = \phi(N,\bm x_N) + \sum_{k=i}^{N-1}\left[L_{k}(\bm x_k,\bm u_k)+\boldsymbol {\color{red}\boldsymbol \lambda^\top_{k+1}}\; \left[\mathbf f_k(\bm x_k,\bm u_k)-\mathbf x_{k+1}\right]\right].
+\end{aligned}
 </span></p>
 <p>This is really just a notational decision but thanks to it our resulting formulas will enjoy some symmetry.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -710,7 +729,7 @@ Note
 <p>Maybe it would be more didactic to leave you to go on without this advice notation and only then to nudge you to figure out this remedy on your own. But admittedly this is not the kind of competence that we aim at in this course. Let’s spend time with more rewarding things.</p>
 </div>
 </div>
-<p>Another notational advice – but this one is more systematic and fundamental – is to make the above expression a bit shorter by introducing a new variable defined as <span class="math display">\boxed{H_k(\bm x_k,\bm u_k,\boldsymbol\lambda_{k+1}) = L_{k}(\bm x_k,\bm u_k)+\boldsymbol \lambda_{k+1}^\top \; \mathbf f_k(\bm x_k,\bm u_k).}
+<p>Another notational advice – but this one is more systematic and fundamental — is to make the above expression a bit shorter by introducing a new variable defined as <span class="math display">\boxed{H_k(\bm x_k,\bm u_k,\boldsymbol\lambda_{k+1}) = L_{k}(\bm x_k,\bm u_k)+\boldsymbol \lambda_{k+1}^\top \; \mathbf f_k(\bm x_k,\bm u_k).}
 </span></p>
 <p>We will call this new function <em>Hamiltonian</em>. Indeed, the choice of this name is motivated by the analogy with the equally named concept used in physics and theoretical mechanics, but we will only make more references to this analogy later in the course once we transition to continuous-time systems modelled by differential equations.</p>
 <p>Introducing the Hamiltonian reformulates the cost function (and we omit the explicit dependence on all its input arguments) as <span class="math display">
@@ -723,12 +742,12 @@ Note
 <p>Although this step was not necessary, it will make things a bit more convenient once we start looking for the derivatives. And the time for it has just come.</p>
 <p>Recall now the recommended procedure for finding derivatives of functions of vectors – find the differential instead and identify the derivative in the result. The gradient is then (by convention) obtained as the transpose of the derivative. Following this derivative-identification procedure, we anticipate the differential of the augmented cost function in the following form <span class="math display">
 \begin{split}
-\text{d}{J'}_i^N &amp;= (\qquad)^\text{T}\; \text{d}\bm x_N + (\qquad)^\text{T}\; \text{d}\bm x_i \\&amp;+ \sum_{k=i+1}^{N-1}(\qquad)^\text{T}\; \text{d}\bm x_k + \sum_{k=i}^{N-1}(\qquad)^\text{T}\; \text{d}\bm u_k + \sum_{k=i+1}^{N}(\qquad)^\text{T}\; \text{d}\boldsymbol \lambda_k.
+\text{d}{J'}_i^N &amp;= (\qquad)^\top \; \text{d}\bm x_N + (\qquad)^\top \; \text{d}\bm x_i \\&amp;+ \sum_{k=i+1}^{N-1}(\qquad)^\top \; \text{d}\bm x_k + \sum_{k=i}^{N-1}(\qquad)^\top \; \text{d}\bm u_k + \sum_{k=i+1}^{N}(\qquad)^\top \; \text{d}\boldsymbol \lambda_k.
 \end{split}
 </span></p>
 <p>Identifying the gradients amounts to filling in the empty brackets. It straightforward if tedious (in particular the lower and upper bounds on the summation indices must be carefuly checked). The solution is <span class="math display">
 \begin{split}
-\text{d}{J'}_i^N &amp;= \left(\nabla_{\bm x_N}\phi-\lambda_N\right)^\text{T}\; \text{d}\bm x_N + \left(\nabla_{\bm x_i}H_i\right)^\text{T}\; \text{d}\bm x_i \\&amp;+ \sum_{k=i+1}^{N-1}\left(\nabla_{\bm x_k}H_k-\boldsymbol\lambda_k\right)^\text{T}\; \text{d}\bm x_k + \sum_{k=i}^{N-1}\left(\nabla_{\bm u_k}H_k\right)^\text{T}\; \text{d}\bm u_k + \sum_{k=i+1}^{N}\left(\nabla_{\boldsymbol \lambda_k}H_{k-1}-\bm x_k\right)^\text{T}\; \text{d}\boldsymbol \lambda_k.
+\text{d}{J'}_i^N &amp;= \left(\nabla_{\bm x_N}\phi-\lambda_N\right)^\top \; \text{d}\bm x_N + \left(\nabla_{\bm x_i}H_i\right)^\top \; \text{d}\bm x_i \\&amp;+ \sum_{k=i+1}^{N-1}\left(\nabla_{\bm x_k}H_k-\boldsymbol\lambda_k\right)^\top \; \text{d}\bm x_k + \sum_{k=i}^{N-1}\left(\nabla_{\bm u_k}H_k\right)^\top \; \text{d}\bm u_k + \sum_{k=i+1}^{N}\left(\nabla_{\boldsymbol \lambda_k}H_{k-1}-\bm x_k\right)^\top \; \text{d}\boldsymbol \lambda_k.
 \end{split}
 </span></p>
 <p>The ultimate goal of this derivation was to find stationary points for the augmented cost function, that is, to find conditions under which <span class="math inline">\text{d}{J'}_i^N=0</span>. In typical optimization problems, the optimization is conducted with respect to all the participating variables, which means that the corresponding differentials may be arbitrary and the only way to guarantee that the total differential of <span class="math inline">J_i'</span> is zeros is to make the associated gradients (the contents of the brackets) equal to zero. There are two exceptions to this rule in our case, though:</p>
@@ -760,7 +779,7 @@ Note
 \end{aligned}
 }
 </span></p>
-<p>Recall that since <span class="math inline">\mathbf f</span> is a vector function, <span class="math inline">\nabla \mathbf f</span> is not just a gradient but rather a matrix whose columns are gradients of the individual components of the vector <span class="math inline">\mathbf f</span> – it is a transpose of Jacobian.</p>
+<p>Recall that since <span class="math inline">\mathbf f</span> is a vector function, <span class="math inline">\nabla \mathbf f</span> is not just a gradient but rather a matrix whose columns are gradients of the individual components of the vector <span class="math inline">\mathbf f</span> — it is a transpose of Jacobian.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -806,7 +825,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This is in contrast with the initial value problem (IVP) for state equations, for which we only specify the state at one end of the time horizon – the initial state – and then the state equation disctates the evolution of the (state) variable forward in time.</p>
+<p>This is in contrast with the initial value problem (IVP) for state equations, for which we only specify the state at one end of the time horizon — the initial state — and then the state equation disctates the evolution of the (state) variable forward in time.</p>
 </div>
 </div>
 <p>Boundary value problems are notoriously difficult to solve. Typically we can only solve them numerically, in which case it is appropriate to ask if anything has been gained by this indirect procedure compared with the direct one. After all, we did not even incorporate the inequality constraints in the problem, which was a piece of case in the direct approach. But we will see that in some special cases the TP-BVP they can be solved analytically and the outcome is particularly useful and would never have been discovered, if only the direct approach had been followed. We elaborate on this in the next section.</p>
@@ -1226,13 +1245,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./discr_dir_mpc_solvers.html" class="pagination-link" aria-label="Numerical solvers for MPC">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Numerical solvers for MPC</span>
+      <a href="./discr_dir_references.html" class="pagination-link" aria-label="References for direct approach to discrete-time optimal control">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">References for direct approach to discrete-time optimal control</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./discr_indir_LQR_fin_horizon.html" class="pagination-link" aria-label="Discrete-time LQR-optimal control on a finite horizon">
-        <span class="nav-page-text">Discrete-time LQR-optimal control on a finite horizon</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./discr_indir_LQR_fin_horizon.html" class="pagination-link" aria-label="Discrete-time LQR on a finite horizon">
+        <span class="nav-page-text">Discrete-time LQR on a finite horizon</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
