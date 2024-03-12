@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Optimization modelling languages</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – General nonlinear discrete-time optimal control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -64,8 +30,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./opt_theory_references.html" rel="next">
-<link href="./opt_theory_constrained.html" rel="prev">
+<link href="./discr_indir_LQR_fin_horizon.html" rel="next">
+<link href="./discr_dir_mpc_solvers.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -159,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_problems.html">1. Optimization – theory</a></li><li class="breadcrumb-item"><a href="./opt_theory_modellers.html">Optimization modelling languages</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_indir_general.html">4. Discrete-time optimal control – indirect approach</a></li><li class="breadcrumb-item"><a href="./discr_indir_general.html">General nonlinear discrete-time optimal control</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -219,7 +185,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_theory_modellers.html" class="sidebar-item-text sidebar-link active">
+  <a href="./opt_theory_modellers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Optimization modelling languages</span></a>
   </div>
 </li>
@@ -305,12 +271,6 @@ window.Quarto = {
  <span class="menu-text">Numerical solvers for MPC</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./discr_dir_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References for direct approach to discrete-time optimal control</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -324,7 +284,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_indir_general.html" class="sidebar-item-text sidebar-link">
+  <a href="./discr_indir_general.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">General nonlinear discrete-time optimal control</span></a>
   </div>
 </li>
@@ -344,12 +304,6 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./discr_indir_DARE.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Discrete-time algebraic Riccati equation (DARE)</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./discr_indir_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References for indirect approach to discrete-time optimal control</span></a>
   </div>
 </li>
       </ul>
@@ -654,21 +608,19 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#why-optimization-modelling-languages" id="toc-why-optimization-modelling-languages" class="nav-link active" data-scroll-target="#why-optimization-modelling-languages">Why optimization modelling languages?</a></li>
-  <li><a href="#why-not-optimization-modelling-languages" id="toc-why-not-optimization-modelling-languages" class="nav-link" data-scroll-target="#why-not-optimization-modelling-languages">Why not optimization modelling languages?</a></li>
-  <li><a href="#language-independent-optimization-modelling-languages" id="toc-language-independent-optimization-modelling-languages" class="nav-link" data-scroll-target="#language-independent-optimization-modelling-languages">Language-independent optimization modelling languages</a></li>
-  <li><a href="#optimization-modelling-in-julia" id="toc-optimization-modelling-in-julia" class="nav-link" data-scroll-target="#optimization-modelling-in-julia">Optimization modelling in Julia</a></li>
-  <li><a href="#optimization-modelling-in-matlab" id="toc-optimization-modelling-in-matlab" class="nav-link" data-scroll-target="#optimization-modelling-in-matlab">Optimization modelling in Matlab</a></li>
-  <li><a href="#optimization-modelling-in-python" id="toc-optimization-modelling-in-python" class="nav-link" data-scroll-target="#optimization-modelling-in-python">Optimization modelling in Python</a></li>
+  <li><a href="#optimization-constrains-given-only-by-the-state-equations" id="toc-optimization-constrains-given-only-by-the-state-equations" class="nav-link active" data-scroll-target="#optimization-constrains-given-only-by-the-state-equations">Optimization constrains given only by the state equations</a></li>
+  <li><a href="#general-additive-cost-function" id="toc-general-additive-cost-function" class="nav-link" data-scroll-target="#general-additive-cost-function">General additive cost function</a></li>
+  <li><a href="#derivation-of-the-first-order-necessary-conditions-of-optimality" id="toc-derivation-of-the-first-order-necessary-conditions-of-optimality" class="nav-link" data-scroll-target="#derivation-of-the-first-order-necessary-conditions-of-optimality">Derivation of the first-order necessary conditions of optimality</a></li>
+  <li><a href="#necessary-conditions-of-optimality-as-two-point-boundary-value-problem-tp-bvp" id="toc-necessary-conditions-of-optimality-as-two-point-boundary-value-problem-tp-bvp" class="nav-link" data-scroll-target="#necessary-conditions-of-optimality-as-two-point-boundary-value-problem-tp-bvp">Necessary conditions of optimality as two-point boundary value problem (TP-BVP)</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_problems.html">1. Optimization – theory</a></li><li class="breadcrumb-item"><a href="./opt_theory_modellers.html">Optimization modelling languages</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_indir_general.html">4. Discrete-time optimal control – indirect approach</a></li><li class="breadcrumb-item"><a href="./discr_indir_general.html">General nonlinear discrete-time optimal control</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Optimization modelling languages</h1>
+<h1 class="title">General nonlinear discrete-time optimal control</h1>
 </div>
 
 
@@ -685,218 +637,186 @@ window.Quarto = {
 </header>
 
 
-<section id="why-optimization-modelling-languages" class="level2">
-<h2 class="anchored" data-anchor-id="why-optimization-modelling-languages">Why optimization modelling languages?</h2>
-<p>Realistically complex optimization problems cannot be solved with just a pen and a paper – computer programs (often called <em>optimization solvers</em>) are needed to solve them. And now comes the challenge: as various solvers for even the same class of problems differ in the algorithms they implement, so do their interfaces – every solver expects the inputs (the data defining the optimization problem) in a specific format. This makes it difficult to switch between solvers, as the problem data has to be reformatted every time.</p>
-<div id="exm-data-formatting" class="theorem example">
-<p><span class="theorem-title"><strong>Example 1 (Data formatting for different solvers)</strong></span> Consider the following optimization problem: <span class="math display">
+<p>While in the previous chapter we formulated an optimal control problem (OCP) directly as a mathematical programming (general NLP or even QP) problem over the control (and possibly state) trajectories, in this chapter we introduce an alternative – <em>indirect</em> – approach. The essence of the approach is that we formulate first-order necessary conditions of optimality for the OCP in the form of equations, and then solve these. Although less straightforward to extend with additional constraints than the direct approach, the indirect approach also exhibits some advantages. In particular, in some cases (such as a quadratic cost and a linear system) it yields a feedback controller and not just a control trajetory.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/J14PTv9J6cs?si=cACBQb5BLcEck2-D" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<section id="optimization-constrains-given-only-by-the-state-equations" class="level2">
+<h2 class="anchored" data-anchor-id="optimization-constrains-given-only-by-the-state-equations">Optimization constrains given only by the state equations</h2>
+<p>As in the chapter on the direct approach, here we also start by considering a general nonlinear and possibly time-varying discrete-time dynamical system characterized by the state vector <span class="math inline">\bm x_k\in\mathbb R^n</span> whose evolution in discrete time <span class="math inline">k</span> is uniquely determined by the state equation <span class="math display">
+\bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k),
+</span> accompanied by the initial state (vector) <span class="math inline">\bm x_i\in\mathbb R^n</span> and a sequence of control inputs <span class="math inline">\bm u_i, \bm u_{i+1}, \ldots, \bm u_{k-1}</span>, where the control variable can also be a vector, that is, <span class="math inline">\bm u_k \in \mathbb R^m</span>.</p>
+<p>These state equations will constitute the only constraints of the optimization problem. Unlike in the direct approach, here in our introductory treatment we do not impose any inequality constraints such as bounds on the control inputs, because the theory to be presented is not able to handle them.</p>
+</section>
+<section id="general-additive-cost-function" class="level2">
+<h2 class="anchored" data-anchor-id="general-additive-cost-function">General additive cost function</h2>
+<p>For the above described dynamical system we want to find a control sequence <span class="math inline">\bm u_k</span> that minimizes a suitable optimization criterion over a finite horizon <span class="math inline">k\in[i,N]</span>. Namely, we will look for a control that minimizes a criterion of the following kind <span id="eq-general_nonlinear_optimal_control"><span class="math display">
+J_i^N(\underbrace{\bm x_{i+1}, \bm x_{i+2}, \ldots, \bm x_{N}}_{\bar{\bm x}}, \underbrace{\bm u_{i}, \ldots, \bm u_{N-1}}_{\bar{\bm u}};\bm x_i) = \phi(\bm x_N,N) + \sum_{k=i}^{N-1} L_k(\bm x_k,\bm u_k).
+\tag{1}</span></span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Regarding the notation <span class="math inline">J_i^N(\cdot)</span> for the cost, if the initial and final times are understood from the context, they do not have to be displayed. But we will soon need to indicate the initial time explicitly in our derivations.</p>
+</div>
+</div>
+<p>The property of the presented cost function that will turn out crucial in our subsequent work is that is <em>additive</em> over the time horizon. Although this restricts the class of cost functions a bit, it is still general enough to encompass a wide range of problems, such as minimizing the total (financial) cost to be paid, the total energy to be used, the total distance to be travelled, the cumulative error to be minimized, etc.</p>
+<p>Here is a list of a few popular cost functions.</p>
+<dl>
+<dt>Minimum-time (or time-optimal) problem</dt>
+<dd>
+Setting <span class="math inline">\phi=1</span> and <span class="math inline">L_k=1</span> gives <span class="math inline">J=N-i</span>, that is, the length of the time horizon, the duration of control. Altough in this course we do not introduce concepts and tools for optimization over integer variables, in this simple case of just a single integer variable even a simple search over the length of control interval will be computationally tractable. Furthermore, as we will see in one of the next chapters once we switch from discrete-time to continuous-time systems, this time-optimal control design problem will turn out tractable using the tools presented in this course.
+</dd>
+<dt>Minimum-fuel problem</dt>
+<dd>
+Setting <span class="math inline">\phi=0</span> and <span class="math inline">L_k=|u_k|</span>, which gives <span class="math inline">J=\sum_{k=i}^{N-1}|u_k|</span>.
+</dd>
+<dt>Minimum-energy problem</dt>
+<dd>
+Setting <span class="math inline">\phi=0</span> and <span class="math inline">L_k=\frac{1}{2} u_k^2</span>, which gives <span class="math inline">J=\frac{1}{2} \sum_{k=i}^{N-1} u_k^2</span>. It is fair to admit that this sum of squared inputs cannot always be interpretted as the energy – for instance, what if the control input is a degree of openning of a valve? Sum of angles over time can hardly be interpreted as energy. Instead, it should be interpretted in the mathematical way as the (squared) norm, that is, a “size” of the input. Note that the same objection can be given to the previous case of a minimum-fuel problem.
+</dd>
+<dt>Mixed quadratic problem (also LQ-optimal control problem)</dt>
+<dd>
+Setting <span class="math inline">\phi=\frac{1}{2}s_N x_N^2</span> and <span class="math inline">L_k=\frac{1}{2} (qx_k^2+ru_k^2),\, q,r\geq 0</span>, which gives <span class="math inline">J=\frac{1}{2}s_Nx_N^2+\frac{1}{2} \sum_{k=i}^{N-1} (r x_k^2+q u_k^2)</span>. Or in the case of vector state and control variables <span class="math inline">J=\frac{1}{2}\bm x_N^\top \mathbf S_N \bm x_N+\frac{1}{2} \sum_{k=i}^{N-1} (\bm x_k^\top \mathbf Q \bm x_k + \bm u_k^\top \mathbf R \bm u_k), \, \mathbf Q, \mathbf R \succeq 0</span>. This type of an optimization cost is particularly popular. Both for the mathematical reasons (we all now appreciate the nice properties of quadratic functions) and for practical engineering reasons as it allows us to capture a trade-off between the control performance (penalty on <span class="math inline">\bm x_k</span>) and control effort (penalty on <span class="math inline">\bm u_k</span>). Note also that the state at the terminal time <span class="math inline">N</span> is penalized separately just in order to allow another trade-off between the transient and terminal behavior. The cost function can also be modified to penalize deviation of the state from some nonzero desired (aka reference) state trajectory, that is <span class="math inline">J=\frac{1}{2}(\bm x_N - \bm x_N^\text{ref})^\top \mathbf S_N (\bm x_N - \bm x_N^\text{ref}) +\frac{1}{2} \sum_{k=i}^{N-1} \left((\bm x_k - \bm x_k^\text{ref})^\top \mathbf Q (\bm x_k - \bm x_k^\text{ref}) + \bm u_k^\top \mathbf R \bm u_k\right)</span>.
+</dd>
+</dl>
+<p>Note that in none of these cost function did we include <span class="math inline">\bm u_{N}</span> as an optimization variables as it has no influence over the interval <span class="math inline">[i,N]</span>.</p>
+<p>It is perhaps needless to emphasize that while in some other applications maximizing may seem more appropriate (such as maximizing the yield, bandwidth or robustness), we can always reformulate the maximization into minimization. Therefore in our course we alway formulate the optimal control problems as minimization problems.</p>
+</section>
+<section id="derivation-of-the-first-order-necessary-conditions-of-optimality" class="level2">
+<h2 class="anchored" data-anchor-id="derivation-of-the-first-order-necessary-conditions-of-optimality">Derivation of the first-order necessary conditions of optimality</h2>
+<p>Having formulated a finite-dimensional constrained nonlinear optimization problem, we avoid the temptation to call an NLP solver to solve it numerically and proceed instead with our own analysis of the problem. Let’s see how far we can get.</p>
+<p>By introducing Lagrange multipliers <span class="math inline">{\color{blue}\bm\lambda_k}</span> we turn the constrained problem into an unconstrained one. The new cost function (we use the prime to distinguish it from the original cost) is <span class="math display">
 \begin{aligned}
-  \operatorname*{minimize}_{\bm x \in \mathbb R^2} &amp; \quad \frac{1}{2} \bm x^\top \begin{bmatrix}4 &amp; 1\\ 1 &amp; 2 \end{bmatrix} \bm x + \begin{bmatrix}1 \\ 1\end{bmatrix}^\top \bm x \\
-  \text{subject to} &amp; \quad \begin{bmatrix}1 \\ 0 \\ 0\end{bmatrix} \leq \begin{bmatrix} 1 &amp; 1\\ 1 &amp; 0\\ 0 &amp; 1\end{bmatrix} \bm x \leq  \begin{bmatrix}1 \\ 0.7 \\ 0.7\end{bmatrix}
+&amp; {J'}_i^N(\bm x_i, \ldots, \bm x_N, \bm u_i, \ldots, \bm u_{N-1},{\color{blue}\bm \lambda_i, \ldots, \bm \lambda_{N-1}}) \\
+&amp;\qquad\qquad\qquad = \phi(\bm x_N,N) + \sum_{k=i}^{N-1}\left[L_{k}(\bm x_k,\bm u_k)+\bm {\color{blue}\lambda^\top_{k}}\;\left[\mathbf f_k(\bm x_k,\bm u_k)-\bm x_{k+1}\right]\right].
 \end{aligned}
 </span></p>
-<p>There are dozens of solvers that can be used to solve this problem. Here we demonstrate a usage of these two: <a href="https://osqp.org">OSQP</a> and <a href="https://oxfordcontrol.github.io/COSMO.jl/stable/">COSMO.jl</a>. And we are going to call the solvers in Julia (using the the wrappers <a href="https://github.com/osqp/OSQP.jl">OSQP.jl</a> for the former). First, we start with OSQP (in fact, this is their example):</p>
-<div id="60ea0693" class="cell">
-<details open="" class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">OSQP</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SparseArrays</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the problem data and build the problem description</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">4.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">2.0</span>])</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">1.0</span>]</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">0.0</span>; <span class="fl">0.0</span> <span class="fl">1.0</span>])</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.0</span>; <span class="fl">0.0</span>]</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.7</span>; <span class="fl">0.7</span>]</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>problem_OSQP <span class="op">=</span> OSQP.<span class="fu">Model</span>()</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>OSQP.<span class="fu">setup!</span>(problem_OSQP; P<span class="op">=</span>P, q<span class="op">=</span>q, A<span class="op">=</span>A, l<span class="op">=</span>l, u<span class="op">=</span>u, alpha<span class="op">=</span><span class="fl">1</span>, verbose<span class="op">=</span><span class="cn">false</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the optimization problem and show the results</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>results_OSQP <span class="op">=</span> OSQP.<span class="fu">solve!</span>(problem_OSQP)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>results_OSQP.x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>Now we do the same with COSMO. First, we must take into account that COSMO cannot accept two-sided inequalities, so we have to reformulate the problem so that the constraints are only in the form of <span class="math inline">\mathbf A\bm x + b \geq \bm 0</span>: <span class="math display">
+<p>From now on, in principle, we do not need any guidance here, do we? We are given an unconstrained optimization problem and its solution is just a few steps away. In particular, stationary point(s) must be found (and then we are going to argue if these qualify as minimizers or not). This calls for differentiating the above expression with respect to all the variables and setting these derivatives equal to zeros.</p>
+<p>Although the principles are clear, some hindsight might be shared here if compact formulas are to be found. First such advice is to rename the variable(s) <span class="math inline">{\color{blue}\boldsymbol \lambda_k}</span> to <span class="math inline">{\color{red}\boldsymbol \lambda_{k+1}}</span> <span class="math display">
 \begin{aligned}
-  \operatorname*{minimize}_{\bm x \in \mathbb R^2} &amp; \quad \frac{1}{2} \bm x^\top \begin{bmatrix}4 &amp; 1\\ 1 &amp; 2 \end{bmatrix} \bm x + \begin{bmatrix}1 \\ 1\end{bmatrix}^\top \bm x \\
-  \text{subject to} &amp; \quad \begin{bmatrix} -1 &amp; -1\\ -1 &amp; 0\\ 0 &amp; -1\\ 1 &amp; 1\\ 1 &amp; 0\\ 0 &amp; 1\end{bmatrix}\bm x + \begin{bmatrix}1 \\ 0.7 \\ 0.7 \\ -1 \\ 0 \\ 0\end{bmatrix} \geq  \mathbf 0.
+&amp; {J'}_i^N(\bm x_i, \ldots, \bm x_N, \bm u_i, \ldots, \bm u_{N-1},{\color{red}\bm \lambda_{i+1}, \ldots, \bm \lambda_{N}}) \\
+&amp; \qquad\qquad\qquad = \phi(N,\bm x_N) + \sum_{k=i}^{N-1}\left[L_{k}(\bm x_k,\bm u_k)+\boldsymbol {\color{red}\boldsymbol \lambda^\top_{k+1}}\; \left[\mathbf f_k(\bm x_k,\bm u_k)-\mathbf x_{k+1}\right]\right].
 \end{aligned}
 </span></p>
-<div id="e96d13cf" class="cell">
-<details open="" class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">COSMO</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SparseArrays</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the problem data and build the problem description</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">4.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">2.0</span>])</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">1.0</span>]</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">0.0</span>; <span class="fl">0.0</span> <span class="fl">1.0</span>])</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.0</span>; <span class="fl">0.0</span>]</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.7</span>; <span class="fl">0.7</span>]</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>Aa <span class="op">=</span> [<span class="op">-</span>A; A]</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>ba <span class="op">=</span> [u; <span class="op">-</span>l]</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>problem_COSMO <span class="op">=</span> COSMO.<span class="fu">Model</span>()</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>constraint <span class="op">=</span> COSMO.<span class="fu">Constraint</span>(Aa, ba, COSMO.Nonnegatives)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>settings <span class="op">=</span> COSMO.<span class="fu">Settings</span>(verbose<span class="op">=</span><span class="cn">false</span>)</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">assemble!</span>(problem_COSMO, P, q, constraint, settings <span class="op">=</span> settings)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the optimization problem and show the results</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>results_COSMO <span class="op">=</span> COSMO.<span class="fu">optimize!</span>(problem_COSMO)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>results_COSMO.x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<p>This is really just a notational decision but thanks to it our resulting formulas will enjoy some symmetry.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<p>Although the two solvers are solving the same problem, the data has to be formatted differently for each of them (and the difference in syntax is not negligible either).</p>
-<p>What if we could formulate the same problem without considering the pecualiarities of each solver? It turns out that it is possible. In Julia we can use <a href="https://jump.dev/JuMP.jl/stable/">JuMP.jl</a>:</p>
-<div id="d8bbe5ce" class="cell">
-<details open="" class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">JuMP</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SparseArrays</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">OSQP</span>, <span class="bu">COSMO</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the problem data and build the problem description</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">4.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">2.0</span>])</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">1.0</span>]</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">0.0</span>; <span class="fl">0.0</span> <span class="fl">1.0</span>])</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.0</span>; <span class="fl">0.0</span>]</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.7</span>; <span class="fl">0.7</span>]</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>model_JuMP <span class="op">=</span> <span class="fu">Model</span>()</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="pp">@variable</span>(model_JuMP, x[<span class="fl">1</span><span class="op">:</span><span class="fl">2</span>])</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="pp">@objective</span>(model_JuMP, Min, <span class="fl">0.5</span><span class="op">*</span>x<span class="op">'*</span>P<span class="op">*</span>x <span class="op">+</span> q<span class="op">'*</span>x)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(model_JuMP, A<span class="op">*</span>x <span class="op">.&lt;=</span> u)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(model_JuMP, A<span class="op">*</span>x <span class="op">.&gt;=</span> l)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the optimization problem using OSQP and show the results</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="fu">set_silent</span>(model_JuMP)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="fu">set_optimizer</span>(model_JuMP, OSQP.Optimizer)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="fu">optimize!</span>(model_JuMP)</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="fu">termination_status</span>(model_JuMP)</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>x_OSQP <span class="op">=</span> <span class="fu">value</span>.(x)</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Now solve the problem using COSMO and show the results</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="fu">set_optimizer</span>(model_JuMP, COSMO.Optimizer)</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="fu">optimize!</span>(model_JuMP)</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="fu">termination_status</span>(model_JuMP)</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>x_COSMO <span class="op">=</span> <span class="fu">value</span>.(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="callout-title-container flex-fill">
+Note
 </div>
 </div>
-<p>Notice how the optimization problem is defined just once in the last code and then different solvers can be chosen to solve it. The code represents an instance of a so-called <em>optimization modelling language (OML)</em>, or actually its major class called <em>algebraic modelling language (AML)</em>.</p>
-<p>The key motivation for using an OML/AML is to separate the process of formulating the problem from the process of solving it (using a particular solver). Furthermore, such solver-independent problem description (called optimization model) better mimics the way we formulate these problems using a pen and a paper, making it (perhaps) a bit more convenient to write our own and read someone else’s models.</p>
-</section>
-<section id="why-not-optimization-modelling-languages" class="level2">
-<h2 class="anchored" data-anchor-id="why-not-optimization-modelling-languages">Why not optimization modelling languages?</h2>
-<p>As a matter of fact, some optimization experts even keep avoiding OML/AML altogether. For example, if a company pays for a (not really cheap) license of <a href="https://www.gurobi.com/solutions/gurobi-optimizer/">Gurobi Optimizer</a> – a powerful optimization library for (MI)LP/QP/QCQP –, it may be the case that for a particular very large-scale optimization problem their optimization specialist will have hard time to find a third-party solver of comparable performance. If then <a href="https://www.gurobi.com/documentation/current/refman/py_python_api_overview.html">its Python API</a> makes definition of optimization problems convenient too (see the code below), maybe there is little regret that such problem definitions cannot be reused with a third-party solver. The more so that since it is tailored to Gurobi solver, it will offer control over the finest details.</p>
-<div id="a558ce9a" class="cell">
-<details open="" class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="bu">gurobipy</span> as gp</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="bu">numpy</span> as np</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the data for the model</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> np.<span class="fu">array</span>([[<span class="fl">4.0</span>, <span class="fl">1.0</span>], [<span class="fl">1.0</span>, <span class="fl">2.0</span>]])</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> np.<span class="fu">array</span>([<span class="fl">1.0</span>, <span class="fl">1.0</span>])</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.<span class="fu">array</span>([[<span class="fl">1.0</span>, <span class="fl">1.0</span>], [<span class="fl">1.0</span>, <span class="fl">0.0</span>], [<span class="fl">0.0</span>, <span class="fl">1.0</span>]])</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> np.<span class="fu">array</span>([<span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>])</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> np.<span class="fu">array</span>([<span class="fl">1.0</span>, <span class="fl">0.7</span>, <span class="fl">0.7</span>])</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new model</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> gp.<span class="fu">Model</span>(<span class="st">"qp"</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a vector variable</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> m.<span class="fu">addMVar</span>((<span class="fl">2</span>,))</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the objective</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>obj <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="fu">*</span>(x<span class="pp">@P@x</span> <span class="op">+</span> q<span class="pp">@x</span>)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>m.<span class="fu">setObjective</span>(obj)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the constraints</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>m.<span class="fu">addConstr</span>(A<span class="pp">@x</span> <span class="op">&gt;=</span> l, <span class="st">"c1"</span>)</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>m.<span class="fu">addConstr</span>(A<span class="pp">@x</span> <span class="op">&lt;=</span> u, <span class="st">"c2"</span>)</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the solver</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>m.<span class="fu">optimize</span>()</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> v <span class="kw">in</span> m.<span class="fu">getVars</span>()<span class="op">:</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(f<span class="st">"{v.VarName} {v.X:g}"</span>)</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f<span class="st">"Obj: {m.ObjVal:g}"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="callout-body-container callout-body">
+<p>Maybe it would be more didactic to leave you to go on without this advice notation and only then to nudge you to figure out this remedy on your own. But admittedly this is not the kind of competence that we aim at in this course. Let’s spend time with more rewarding things.</p>
 </div>
-<p>Similar and yet different is the story of the <a href="https://www.ibm.com/products/ilog-cplex-optimization-studio/cplex-optimizer">IBM ILOG CPLEX</a>, another top-notch solvers addressing the same problems as Gurobi. They do have their own modeling language called <a href="https://www.ibm.com/docs/en/icos/22.1.1?topic=opl-optimization-programming-language">Optimization Modelling Language (OPL)</a>, but it is also only interfacing with their solver(s). We can only guess that their motivation for developing their own optimization modelling language was that at the time of its developments (in 1990s) Python was still in pre-2.0 stage and formulating optimization problems in programming languages like C/C++ or Fortran was nowhere close to being convenient. Gurobi, in turn, started in 2008, when Python was already a popular language.</p>
-</section>
-<section id="language-independent-optimization-modelling-languages" class="level2">
-<h2 class="anchored" data-anchor-id="language-independent-optimization-modelling-languages">Language-independent optimization modelling languages</h2>
-<p>Optimization/algebraic modelling languages were originally developed outside programming languages, essentially as standalone tools. Examples are <a href="https://ampl.com/learn/ampl-book/">AMPL</a>, <a href="https://www.gams.com/latest/docs/UG_MAIN.html#UG_Language_Environment">GAMS</a>, and, say, <a href="https://en.wikibooks.org/wiki/GLPK/GMPL_(MathProg)">GLPK/GMPL (MathProg)</a>. We listed these main names here since they can be bumped across (they are still actively developed), but we are not going to discuss them in our course any further. The reason is that there are now alternatives that are implemented as packages/toolboxes in programming languages such as Julia, Matlab, and Python, which offer a more fluent workflow – a user can use the same programming language to acquire the data, preprocess them, formulate the optimization problem, configure and call a solver, and finally do some postprocessing including a visualization and whatever reporting, all without leaving the language of their choice.</p>
-</section>
-<section id="optimization-modelling-in-julia" class="level2">
-<h2 class="anchored" data-anchor-id="optimization-modelling-in-julia">Optimization modelling in Julia</h2>
-<p>My obvious (personal) bias towards Julia programming language is partly due to the terrific support for optimization modelling in Julia:</p>
+</div>
+<p>Another notational advice – but this one is more systematic and fundamental — is to make the above expression a bit shorter by introducing a new variable defined as <span class="math display">\boxed{H_k(\bm x_k,\bm u_k,\boldsymbol\lambda_{k+1}) = L_{k}(\bm x_k,\bm u_k)+\boldsymbol \lambda_{k+1}^\top \; \mathbf f_k(\bm x_k,\bm u_k).}
+</span></p>
+<p>We will call this new function <em>Hamiltonian</em>. Indeed, the choice of this name is motivated by the analogy with the equally named concept used in physics and theoretical mechanics, but we will only make more references to this analogy later in the course once we transition to continuous-time systems modelled by differential equations.</p>
+<p>Introducing the Hamiltonian reformulates the cost function (and we omit the explicit dependence on all its input arguments) as <span class="math display">
+{J'}_i^N = \phi(N,\bm x_N) + \sum_{k=i}^{N-1}\left[H_{k}(\bm x_k,\bm u_k,\boldsymbol\lambda_{k+1})-\boldsymbol\lambda^\top_{k+1}\;\mathbf x_{k+1}\right].
+</span></p>
+<p>The final polishing of the expression before starting to compute the derivatives consists in bringing together the terms that contain related variables: the state <span class="math inline">\bm x_N</span> at the final time, the state <span class="math inline">\bm x_i</span> at the initial time, and the states, controls and Lagrange multipliers in the transient period<br>
+<span class="math display">
+{J'}_i^N = \underbrace{\phi(N,\bm x_N) -\boldsymbol\lambda^\top_{N}\;\mathbf x_{N}}_\text{at terminal time} + \underbrace{H_i(\bm x_i,\mathbf u_i,\boldsymbol\lambda_{i+1})}_\text{at initial time} + \sum_{k=i+1}^{N-1}\left[H_{k}(\bm x_k,\bm u_k,\boldsymbol\lambda_{k+1})-\boldsymbol\lambda^\top_{k}\;\mathbf x_{k}\right].
+</span></p>
+<p>Although this step was not necessary, it will make things a bit more convenient once we start looking for the derivatives. And the time for it has just come.</p>
+<p>Recall now the recommended procedure for finding derivatives of functions of vectors – find the differential instead and identify the derivative in the result. The gradient is then (by convention) obtained as the transpose of the derivative. Following this derivative-identification procedure, we anticipate the differential of the augmented cost function in the following form <span class="math display">
+\begin{split}
+\text{d}{J'}_i^N &amp;= (\qquad)^\top \; \text{d}\bm x_N + (\qquad)^\top \; \text{d}\bm x_i \\&amp;+ \sum_{k=i+1}^{N-1}(\qquad)^\top \; \text{d}\bm x_k + \sum_{k=i}^{N-1}(\qquad)^\top \; \text{d}\bm u_k + \sum_{k=i+1}^{N}(\qquad)^\top \; \text{d}\boldsymbol \lambda_k.
+\end{split}
+</span></p>
+<p>Identifying the gradients amounts to filling in the empty brackets. It straightforward if tedious (in particular the lower and upper bounds on the summation indices must be carefuly checked). The solution is <span class="math display">
+\begin{split}
+\text{d}{J'}_i^N &amp;= \left(\nabla_{\bm x_N}\phi-\lambda_N\right)^\top \; \text{d}\bm x_N + \left(\nabla_{\bm x_i}H_i\right)^\top \; \text{d}\bm x_i \\&amp;+ \sum_{k=i+1}^{N-1}\left(\nabla_{\bm x_k}H_k-\boldsymbol\lambda_k\right)^\top \; \text{d}\bm x_k + \sum_{k=i}^{N-1}\left(\nabla_{\bm u_k}H_k\right)^\top \; \text{d}\bm u_k + \sum_{k=i+1}^{N}\left(\nabla_{\boldsymbol \lambda_k}H_{k-1}-\bm x_k\right)^\top \; \text{d}\boldsymbol \lambda_k.
+\end{split}
+</span></p>
+<p>The ultimate goal of this derivation was to find stationary points for the augmented cost function, that is, to find conditions under which <span class="math inline">\text{d}{J'}_i^N=0</span>. In typical optimization problems, the optimization is conducted with respect to all the participating variables, which means that the corresponding differentials may be arbitrary and the only way to guarantee that the total differential of <span class="math inline">J_i'</span> is zeros is to make the associated gradients (the contents of the brackets) equal to zero. There are two exceptions to this rule in our case, though:</p>
 <ul>
-<li><p><a href="https://jump.dev">JuMP.jl</a> not only constitutes one of the flagship packages of the Julia ecosystem but it is on par with the state of the art optimization modelling languages. Furthermore, being a free and open source software, it enjoys a vibrant community of developers and users. They even meet annually at JuMP-dev conference (<a href="https://jump.dev/meetings/jumpdev2023/">in 2023 in Boston, MA</a>).</p></li>
-<li><p><a href="https://jump.dev/Convex.jl">Convex.jl</a> is an implementation of the concept of <a href="https://fenchel.stanford.edu/home">Disciplined Convex Programming (DCP)</a> in Julia (below we also list its implementations in Matlab and Python). Even though it is now registered as a part of the JuMP.jl project, it is still a separate concept. Interesting, convenient, but it seems to be in a maintanence mode now.</p></li>
-</ul>
-<div id="ea93b6e8" class="cell">
-<details open="" class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Convex</span>, <span class="bu">SCS</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the problem data and build the problem description</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> [<span class="fl">4.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">2.0</span>]</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">1.0</span>]</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">0.0</span>; <span class="fl">0.0</span> <span class="fl">1.0</span>]</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>]</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">0.7</span>, <span class="fl">0.7</span>]</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a vector variable of size n</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fu">Variable</span>(<span class="fl">2</span>)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the objective </span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>objective <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="fu">*quadform</span>(x,P) <span class="op">+</span> <span class="fu">dot</span>(q,x)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the constraints</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>constraints <span class="op">=</span> [l <span class="op">&lt;=</span> A<span class="op">*</span>x, A<span class="op">*</span>x <span class="op">&lt;=</span> u]</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the overal description of the optimization problem</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>problem <span class="op">=</span> <span class="fu">minimize</span>(objective, constraints)</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the problem</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="fu">solve!</span>(problem, SCS.Optimizer; silent_solver <span class="op">=</span> <span class="cn">true</span>)</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the status of the problem</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>problem.status <span class="co"># :Optimal, :Infeasible, :Unbounded etc.</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the optimum value</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>problem.optval</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the optimal x</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>x.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="optimization-modelling-in-matlab" class="level2">
-<h2 class="anchored" data-anchor-id="optimization-modelling-in-matlab">Optimization modelling in Matlab</h2>
-<p>Popularity of Matlab as a language and an ecosystem for control-related computations is undeniable. Therefore, let’s have a look at what is available for modelling optimization problems in Matlab:</p>
-<ul>
-<li><p><a href="https://www.mathworks.com/help/optim/index.html?s_tid=CRUX_lftnav">Optimization Toolbox for Matlab</a> is one of the commercial toolboxes produced by Matlab and Simulink creators. Since the R2017b release the toolbox supports <a href="https://www.mathworks.com/help/optim/ug/problem-based-workflow.html">Problem-based optimization workflow</a> (besides the more traditional <a href="https://www.mathworks.com/help/optim/optimization-problem-setup-solver-based.html">Solver-based optimization workflow</a> supported since the beginning), which can be regarded as a kind of an optimization/algebraic modelling language, albeit restricted to their own solvers.</p></li>
-<li><p><a href="https://yalmip.github.io">Yalmip</a> started as <em>Yet Another LMI Parser</em> quite some time ago (which reveals its control theoretic roots), but these days it serves as fairly complete algebraic modelling language (within Matlab), interfacing to perhaps any optimization solver, both commercial and free&amp;open-source. It is free and open-source. Is is still actively developed and maintained and it abounds with tutorials and examples.</p></li>
-<li><p><a href="http://cvxr.com/cvx/">CVX</a> is a Matlab counterpart of Convex.jl (or the other way around, if you like, since it has been here longer). The name stipulates that it only allows convex optimization probles (unlike Yalmip) – it follows the <a href="https://fenchel.stanford.edu/home">Disciplined Convex Programming (DCP)</a> paradigm. Unfortunately, the development seems to have stalled – the last update is from 2020.</p></li>
+<li><p>The state at the initial time is typically fixed and not available for optimization. Then <span class="math inline">\text{d}\bm x_i=0</span> and the corresponding necessary condition is replaced by the statement that <span class="math inline">\bm x_i</span> is equal to some particular value, say, <span class="math inline">\bm x_i = \mathbf x^\text{init}</span>. We have already discussed this before. In fact, in these situations we might even prefer to reflect it by the notation <span class="math inline">J_i^N(\ldots;\bm x_i)</span>, which emphasizes that <span class="math inline">\bm x_i</span> is a parameter and not a variable. But in the solution below we do allow for the possibility that <span class="math inline">\bm x_i</span> is a variable too (hence <span class="math inline">\text{d}\bm x_i\neq 0</span>) for completeness.</p></li>
+<li><p>The state at the final time may also be given/fixed, in which case the corresponding condition is replaced by the statement that <span class="math inline">\bm x_N</span> is equal to some particular value, say, <span class="math inline">\bm x_N = \mathbf x^\text{ref}</span>. But if it is not the case, then the final state is also subject to optimization and the corresponding necessary condition of optimality is obtained by setting the content of the corresponding brackets to zero.</p></li>
 </ul>
 </section>
-<section id="optimization-modelling-in-python" class="level2">
-<h2 class="anchored" data-anchor-id="optimization-modelling-in-python">Optimization modelling in Python</h2>
-<p>Python is a very popular language for scientific computing. Although it is arguable if it is actually suitable for implementation of numerical algoritms, when it comes to building optimization models, it does its job fairly well (and the numerical solvers it calls can be developed in different language). Several packages implementing OML/AML are available:</p>
+<section id="necessary-conditions-of-optimality-as-two-point-boundary-value-problem-tp-bvp" class="level2">
+<h2 class="anchored" data-anchor-id="necessary-conditions-of-optimality-as-two-point-boundary-value-problem-tp-bvp">Necessary conditions of optimality as two-point boundary value problem (TP-BVP)</h2>
+<p>The ultimate form of the first-order necessary conditions of optimality, which incorporates the special cases discussed above, is given by these equations <span class="math display">
+\boxed{
+\begin{aligned}
+\mathbf x_{k+1} &amp;= \nabla_{\boldsymbol\lambda_{k+1}}H_k, \;\;\; \color{gray}{k=i,\ldots, N-1},\\
+\boldsymbol\lambda_k &amp;= \nabla_{\bm x_k}H_k, \;\;\; \color{gray}{k=i+1,\ldots, N-1}\\
+0 &amp;=  \nabla_{\bm u_k}H_k, \;\;\; \color{gray}{k=i,\ldots, N-1}\\
+\color{blue}{0} &amp;= \color{blue}{\left(\nabla_{\bm x_N}\phi-\lambda_N\right)^\top \mathrm{d}\bm x_N},\\
+\color{blue}{0} &amp;= \color{blue}{\left(\nabla_{\bm x_i}H_i\right)^\top \mathrm{d}\bm x_i},
+\end{aligned}
+}
+</span> or more explicitly <span class="math display">
+\boxed{
+\begin{aligned}
+\mathbf x_{k+1} &amp;= \mathbf f_k(\bm x_k,\bm u_k), \;\;\; \color{gray}{k=i,\ldots, N-1},\\
+\boldsymbol\lambda_k &amp;= \nabla_{\bm x_k}\mathbf f_k\;\;   \boldsymbol\lambda_{\mathbf k+1}+\nabla_{\bm x_k}L_k, \;\;\; \color{gray}{k=i+1,\ldots, N-1}\\
+0 &amp;=  \nabla_{\bm u_k}\mathbf f_k\;\; \boldsymbol\lambda_{k+1}+\nabla_{u_k}L_k, \;\;\; \color{gray}{k=i,\ldots, N-1}\\
+\color{blue}{0} &amp;= \color{blue}{\left(\nabla_{\bm x_N}\phi-\lambda_N\right)^\top \mathrm{d}\bm x_N},\\
+\color{blue}{0} &amp;= \color{blue}{\left(\nabla_{\bm x_i}H_i\right)^\top \mathrm{d}\bm x_i}.
+\end{aligned}
+}
+</span></p>
+<p>Recall that since <span class="math inline">\mathbf f</span> is a vector function, <span class="math inline">\nabla \mathbf f</span> is not just a gradient but rather a matrix whose columns are gradients of the individual components of the vector <span class="math inline">\mathbf f</span> — it is a transpose of Jacobian.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The first three necessary conditions above can be made completely “symmetric” by running the second one from <span class="math inline">k=i</span> because the <span class="math inline">\boldsymbol\lambda_i</span> introduced this way does not influence the rest of the problem and we could easily live with one useless variable.</p>
+</div>
+</div>
+<p>We have just derived the (necessary) conditions of optimality in the form of five sets of (vector) equations:</p>
 <ul>
-<li><p><a href="https://www.cvxpy.org">cvxpy</a> is yet another instantiation of <a href="https://fenchel.stanford.edu/home">Disciplined Convex Programming</a> that we alredy mention when introducing Convex.jl and CVX. And it turns out that this one exhibits the greatest momentum. The team of developers seems to be have exceeded a critical mass, hence the tools seems like a safe bet already.</p></li>
-<li><p><a href="http://www.pyomo.org">Pyomo</a> is a popular open-source optimization modelling language within Python.</p></li>
-<li><p><a href="https://github.com/APMonitor/">APMonitor</a> and <a href="https://gekko.readthedocs.io/en/latest/">GEKKO</a> are relatively young projects, primarily motivated by applications of machine learning and optimization in chemical process engineering.</p></li>
+<li>The first two are <em>recursive</em> (or <em>recurrent</em> or also just <em>discrete-time</em>) equations, which means that they introduce coupling between the variables evaluated at consecutive times. In fact, the former is just the standard state equation that gives the state at one time as a function of the state (and the control) at the previous time. The latter gives a prescription for the variable <span class="math inline">\bm \lambda_k</span> as a function of (among others) the same variable evaluated at the next (!) time, that is, <span class="math inline">\bm \lambda_{k+1}</span>. Although from the optimization perspective these variables play the role of Lagrange multipliers, we call them <em>co-state variables</em> in optimal control theory because of the way they relate to the state equations. The corresponding vector equation is called a <em>co-state equation</em>.</li>
 </ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is a crucial property of the co-state equation that it dictates the evolution of the co-state variable backward in time.</p>
+</div>
+</div>
+<ul>
+<li><p>The third set of equations are just algebraic equations that relate the control inputs to the state and co-state variables. Sometimes it is called a <em>stationarity equation</em>.</p></li>
+<li><p>The last two are just single (vector) equations related to the end and the beginning of the time horizon. They are both stated in the general enough form that allows the corresponding states to be treated as either fixed or subject to optimization. In particular, if the final state is to be treated as free (subject to optimization), that is, <span class="math inline">\mathrm{d}\bm x_N</span> can be atritrary and the only way the corresponding equation can be satisfied is <span class="math inline">\nabla_{\bm x_N}\phi=\lambda_N</span>. If, on the other hand, the final state is to be treated as fixed, the the corresponding equation is just replaced by <span class="math inline">\bm x_N = \mathbf x^\text{ref}</span>. Similarly for the initial state. But as we have hinted a few times, most often than not the initial state will be regarded as fixed and not subject to optimization, in which case the corresponding equation is replaced by <span class="math inline">\bm x_i = \mathbf x^\text{init}</span>.</p></li>
+</ul>
+<p>To summarize, the equations that give the necessary conditions of optimality for a general nonlinear discrete-time optimal control problem form a <em>two-point boundary value problem</em> (TP-BVP). Values of some variables are specified at the initial time, values of some (maybe the same or some other) variables are defined at the final time. The equations prescribe the evolution of some variables forward in time while for some other variables the evolution backward in time is dictated.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is in contrast with the initial value problem (IVP) for state equations, for which we only specify the state at one end of the time horizon — the initial state — and then the state equation disctates the evolution of the (state) variable forward in time.</p>
+</div>
+</div>
+<p>Boundary value problems are notoriously difficult to solve. Typically we can only solve them numerically, in which case it is appropriate to ask if anything has been gained by this indirect procedure compared with the direct one. After all, we did not even incorporate the inequality constraints in the problem, which was a piece of case in the direct approach. But we will see that in some special cases the TP-BVP they can be solved analytically and the outcome is particularly useful and would never have been discovered, if only the direct approach had been followed. We elaborate on this in the next section.</p>
 
 
 </section>
@@ -983,7 +903,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/hurak\.github\.io\/orr\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -1313,13 +1233,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./opt_theory_constrained.html" class="pagination-link" aria-label="Theory for constrained optimization">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Theory for constrained optimization</span>
+      <a href="./discr_dir_mpc_solvers.html" class="pagination-link" aria-label="Numerical solvers for MPC">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Numerical solvers for MPC</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./opt_theory_references.html" class="pagination-link" aria-label="References for optimization theory">
-        <span class="nav-page-text">References for optimization theory</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./discr_indir_LQR_fin_horizon.html" class="pagination-link" aria-label="Discrete-time LQR on a finite horizon">
+        <span class="nav-page-text">Discrete-time LQR on a finite horizon</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
