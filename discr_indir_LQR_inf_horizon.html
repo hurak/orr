@@ -69,6 +69,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -572,8 +615,19 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#why-the-infinite-time-horizon" id="toc-why-the-infinite-time-horizon" class="nav-link active" data-scroll-target="#why-the-infinite-time-horizon">Why the infinite time horizon?</a></li>
+  <li><a href="#steady-state-solution-to-discrete-time-riccati-equation" id="toc-steady-state-solution-to-discrete-time-riccati-equation" class="nav-link" data-scroll-target="#steady-state-solution-to-discrete-time-riccati-equation">Steady-state solution to discrete-time Riccati equation</a>
+  <ul class="collapse">
+  <li><a href="#notation" id="toc-notation" class="nav-link" data-scroll-target="#notation">Notation</a></li>
+  <li><a href="#how-to-compute-the-steady-state-solution-to-riccati-equation" id="toc-how-to-compute-the-steady-state-solution-to-riccati-equation" class="nav-link" data-scroll-target="#how-to-compute-the-steady-state-solution-to-riccati-equation">How to compute the steady-state solution to Riccati equation?</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -597,8 +651,82 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>In this section we are going to solve the LQR problem on the time horizon extended to infinity, that is, our goal is to find an infinite (vector) control sequence <span class="math inline">\bm u_0, \bm u_{1},\ldots, \bm u_{\infty}</span> that minimizes <span class="math display">
+J_0^\infty = \frac{1}{2}\sum_{k=0}^{\infty}\left[\bm x_k^\top \mathbf Q \bm x_k+\bm u_k^\top \mathbf R\bm u_k\right],
+</span> where, as before <span class="math inline">\mathbf Q = \mathbf Q^\top \succeq 0</span> and <span class="math inline">\mathbf R = \mathbf R^\top \succ 0</span> and the system is modelled by <span class="math display">
+\bm x_{k+1} = \mathbf A \bm x_{k} + \mathbf B \bm u_k, \qquad \bm x_0 = \mathbf x_0.
+</span></p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There is no penalty on the terminal state in the infinite time horizon LQR problem.</p>
+</div>
+</div>
+<section id="why-the-infinite-time-horizon" class="level2">
+<h2 class="anchored" data-anchor-id="why-the-infinite-time-horizon">Why the infinite time horizon?</h2>
+<p>The first question that must inevitably pop up is the one about the motivation for introducing the infinite time horizon:</p>
+<blockquote class="blockquote">
+<p>Does the introduction of an infinite time horizon reflect that we do not care about when the controller accomplishes the task?</p>
+</blockquote>
+<p>No, certainly not. The infinite time horizon is introduced to model the case when the system is expected to operate indefinitely. This is a common scenario in practice, for example, in the case of temperature control in a building.</p>
+<p>Similarly, the infinite time horizon can be used in the scenarios when the final time is not known and we leave it up to the controller to take as much time as it needs to reach the desired state. But even then we can still express our desire to reach the desired state as soon as possible by choosing the weights <span class="math inline">\mathbf Q</span> and <span class="math inline">\mathbf R</span> appropriately.</p>
+</section>
+<section id="steady-state-solution-to-discrete-time-riccati-equation" class="level2">
+<h2 class="anchored" data-anchor-id="steady-state-solution-to-discrete-time-riccati-equation">Steady-state solution to discrete-time Riccati equation</h2>
+<p>We have seen in the previous section that the solution to LQR problem with free final state and finite time horizon is given by a time-varying state feedback control law <span class="math inline">\bm u_k = \mathbf K_k \bm x_k</span>. The sequence of gains <span class="math inline">\mathbf K_k</span> for <span class="math inline">k=0,\ldots, N-1,</span> is given by the sequence of matrices <span class="math inline">\mathbf S_k</span> for <span class="math inline">k=0,\ldots, N</span>, which in turn is given as the solution to the (discrete-time) Riccati equation initialized by the penalty <span class="math inline">\mathbf S_N</span> and solved backwards in time. But we have also seen that, at least in our example, provided the time interval was long enough, the sequence <span class="math inline">\mathbf K_k</span> and <span class="math inline">\mathbf S_k</span> both converged to some steady state values as the time <span class="math inline">k</span> proceeded backwards towards the beginning of the time interval.</p>
+<p>While using these steady-state values instead of the full sequences lead to a suboptimal solution on a finite time horizon, it turns out that it actually gives the optimal solution on an infinite time horizon. Although our argument here may be viewed as rather hand-wavy, it is intuitive — there is no end to the time interval, hence the steady-state values are not given a chance to change “towards the end”, as we observed in the finite time horizon case.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Other approaches exist for solving the infinite time horizon LQR problem that do not make any reference to the finite time horizon problem, some of them are very elegant and concise, but here we intentionally stick to viewing it as the extension of the finite time horizon problem.</p>
+</div>
+</div>
+<section id="notation" class="level3">
+<h3 class="anchored" data-anchor-id="notation">Notation</h3>
+<p>Before we proceed with the discussion of how to find the steady-state values (the limits) of <span class="math inline">\mathbf S_k</span> and subsequently <span class="math inline">\mathbf K_k</span>, we must discuss the notation first. So, while icreasing the time horizon <span class="math inline">N</span> and the solution to the Riccati equation settles towards the beginning of the time interval. We can thenk pick the steady-state values right at the initial time <span class="math inline">k=0</span>, that is, <span class="math inline">\mathbf S_0</span> and <span class="math inline">\mathbf K_0</span>. But thanks to time invariance, we can also fix the final time to some (arbitrary) <span class="math inline">N</span> and strech the interval by moving its beginning toward <span class="math inline">-\infty</span>. The limits of the sequences <span class="math inline">\mathbf S_k</span> and <span class="math inline">\mathbf K_k</span> can be then considered at <span class="math inline">k</span> goes toward <span class="math inline">-\infty</span>. It seems appropriate to denote these limits as <span class="math inline">\mathbf S_{-\infty}</span> and <span class="math inline">\mathbf K_{-\infty}</span> then. Well, the fact is that the commonly accepted notation for the limits found in the literature is just <span class="math inline">\mathbf S_\infty</span> and <span class="math inline">\mathbf K_\infty</span> <span class="math display">
+\mathbf S_\infty \triangleq \lim_{k\rightarrow -\infty} \mathbf S_k, \qquad \mathbf K_\infty \triangleq \lim_{k\rightarrow -\infty} \mathbf K_k.
+</span></p>
+</section>
+<section id="how-to-compute-the-steady-state-solution-to-riccati-equation" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-compute-the-steady-state-solution-to-riccati-equation">How to compute the steady-state solution to Riccati equation?</h3>
+<p>Leaving aside for the moment the important question whether and under which conditions such a limit <span class="math inline">\mathbf S_\infty</span> exists, the immediate question is how to compute such limit. One straightforward strategy is to run the recurrent scheme (Riccati equation) and generate the sequence <span class="math inline">\mathbf S_{N}, \mathbf S_{N-1}, \mathbf S_{N-2}, \ldots</span> so long as there is a nonnegligible improvement, that is, once <span class="math inline">\mathbf S_{k}\approx\mathbf S_{k+1}</span>, stop iterating. That is certainly doable.</p>
+<p>There is, however, another idea. We apply the steady-state condition <span class="math display">
+\mathbf S_{\infty} = \mathbf S_k=\mathbf S_{k+1}
+</span> to the Riccati equation. The resulting equation <span class="math display">
+\mathbf S_{\infty}=\mathbf A^\text{T}\left[\mathbf S_{\infty}-\mathbf S_{\infty}\mathbf B(\mathbf B^\text{T}\mathbf S_{\infty}\mathbf B+\mathbf R)^{-1}\mathbf B^\text{T}\mathbf S_{\infty}\right]\mathbf A+\mathbf Q
+</span> is called <strong>discrete-time algebraic Riccati equation</strong> (DARE) and it is one of the most important equations in the field of computational control design.</p>
+<p>The equation may look quite “messy” and offers hardly any insight. Remember the good advice to shring the problem to the scalar size while studying similar matrix-vector expressions and striving to get some insight. Our DARE simplifies to <span class="math display">
+s_\infty = a^2s_\infty - \frac{a^2b^2s_\infty^2}{b^2s_\infty+r} + q
+</span></p>
+<p>Multiplying both sides by the denominator we get the equivalent quadratic (in <span class="math inline">s_\infty</span>) equation <span class="math display">
+b^2s_\infty^2 + (r - a^2b^2 - b^2q)s_\infty - qr = 0.
+</span></p>
+<p>Voilà! A scalar DARE is just a quadratic equation, for which the solutions can be found readily.</p>
+<p>There is a caveat here, though, reflected in using plural in “solutions” above. Quadratic equation can have two (or none) real solutions. But the sequence produced by original recursive Riccati equation is determined uniquely! What’s up? How are the solutions to ARE related to the limiting solution of recursive Riccati equation?</p>
+<p>Answering this question will keep us busy for most of this lecture. We will structure this broad question into several sub-questions</p>
+<ul>
+<li>Under which conditions it is guaranteed that there exists a (bounded) limiting solution <span class="math inline">\mathbf S_\infty</span> to the recursive Riccati equation for all initial (actually final) values <span class="math inline">\mathbf S_N</span>?</li>
+<li>Under which conditions is the limit solution unique for arbitrary <span class="math inline">\mathbf S_N</span>?</li>
+<li>Under which conditions is it guaranteed that the time-invariant feedback gain <span class="math inline">\mathbf K_\infty</span> computed from <span class="math inline">\mathbf S_\infty</span> stabilizes the system (on the infinite control interval)?</li>
+</ul>
 
 
+</section>
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1030,7 +1158,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
