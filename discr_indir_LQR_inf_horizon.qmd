@@ -8,3 +8,77 @@ execute:
     enabled: false
 jupyter: julia-1.10
 ---
+
+In this section we are going to solve the LQR problem on the time horizon extended to infinity, that is, our goal is to find an infinite (vector) control sequence $\bm u_0, \bm u_{1},\ldots, \bm u_{\infty}$ that minimizes
+$$
+ J_0^\infty = \frac{1}{2}\sum_{k=0}^{\infty}\left[\bm x_k^\top \mathbf Q \bm x_k+\bm u_k^\top \mathbf R\bm u_k\right],
+$$
+where, as before $\mathbf Q = \mathbf Q^\top \succeq 0$ and $\mathbf R = \mathbf R^\top \succ 0$ and the system is modelled by
+$$
+\bm x_{k+1} = \mathbf A \bm x_{k} + \mathbf B \bm u_k, \qquad \bm x_0 = \mathbf x_0.
+$$
+
+::: {.callout-important}
+There is no penalty on the terminal state in the infinite time horizon LQR problem.
+:::
+
+## Why the infinite time horizon?
+
+The first question that must inevitably pop up is the one about the motivation for introducing the infinite time horizon: 
+
+> Does the introduction of an infinite time horizon reflect that we do not care about when the controller accomplishes the task?
+
+No, certainly not. The infinite time horizon is introduced to model the case when the system is expected to operate indefinitely. This is a common scenario in practice, for example, in the case of temperature control in a building. 
+
+Similarly, the infinite time horizon can be used in the scenarios when the final time is not known and we leave it up to the controller to take as much time as it needs to reach the desired state. But even then we can still express our desire to reach the desired state as soon as possible by choosing the weights $\mathbf Q$ and $\mathbf R$ appropriately.
+
+## Steady-state solution to discrete-time Riccati equation
+
+We have seen in the previous section that the solution to LQR problem with free final state and finite time horizon is given by a time-varying state feedback control law $\bm u_k = \mathbf K_k \bm x_k$. The sequence of gains $\mathbf K_k$ for $k=0,\ldots, N-1,$ is given by the sequence of matrices $\mathbf S_k$ for $k=0,\ldots, N$, which in turn is given as the solution to the (discrete-time) Riccati equation initialized by the penalty $\mathbf S_N$ and solved backwards in time. But we have also seen that, at least in our example, provided the time interval was long enough, the sequence $\mathbf K_k$ and $\mathbf S_k$ both converged to some steady state values as the time $k$ proceeded backwards towards the beginning of the time interval.
+
+While using these steady-state values instead of the full sequences lead to a suboptimal solution on a finite time horizon, it turns out that it actually gives the optimal solution on an infinite time horizon. Although our argument here may be viewed as rather hand-wavy, it is intuitive — there is no end to the time interval, hence the steady-state values are not given a chance to change "towards the end", as we observed in the finite time horizon case. 
+
+::: {.callout-note}
+Other approaches exist for solving the infinite time horizon LQR problem that do not make any reference to the finite time horizon problem, some of them are very elegant and concise, but here we intentionally stick to viewing it as the extension of the finite time horizon problem.
+:::
+
+### Notation
+
+Before we proceed with the discussion of how to find the steady-state values (the limits) of $\mathbf S_k$ and subsequently $\mathbf K_k$, we must discuss the notation first. So, while icreasing the time horizon $N$ and the solution to the Riccati equation settles towards the beginning of the time interval. We can thenk pick the steady-state values right at the initial time $k=0$, that is, $\mathbf S_0$ and $\mathbf K_0$. But thanks to time invariance, we can also fix the final time to some (arbitrary) $N$ and strech the interval by moving its beginning toward $-\infty$. The limits of the sequences $\mathbf S_k$ and $\mathbf K_k$ can be then considered at $k$ goes toward $-\infty$. It seems appropriate to denote these limits as $\mathbf S_{-\infty}$ and $\mathbf K_{-\infty}$ then. Well, the fact is that the commonly accepted notation for the limits found in the literature is just $\mathbf S_\infty$ and $\mathbf K_\infty$
+$$ 
+\mathbf S_\infty \triangleq \lim_{k\rightarrow -\infty} \mathbf S_k, \qquad \mathbf K_\infty \triangleq \lim_{k\rightarrow -\infty} \mathbf K_k. 
+$$
+
+### How to compute the steady-state solution to Riccati equation?
+
+Leaving aside for the moment the important question whether and under which conditions such a limit $\mathbf S_\infty$ exists, the immediate question is how to compute such limit. One straightforward strategy is to run the recurrent scheme (Riccati equation) and generate the sequence $\mathbf S_{N}, \mathbf S_{N-1}, \mathbf S_{N-2}, \ldots$ so long as there is a nonnegligible improvement, that is, once $\mathbf S_{k}\approx\mathbf S_{k+1}$, stop iterating. That is certainly doable.   
+
+There is, however, another idea. We apply the steady-state condition
+$$
+ \mathbf S_{\infty} = \mathbf S_k=\mathbf S_{k+1}
+$$
+to the Riccati equation. The resulting equation
+$$
+\mathbf S_{\infty}=\mathbf A^\text{T}\left[\mathbf S_{\infty}-\mathbf S_{\infty}\mathbf B(\mathbf B^\text{T}\mathbf S_{\infty}\mathbf B+\mathbf R)^{-1}\mathbf B^\text{T}\mathbf S_{\infty}\right]\mathbf A+\mathbf Q
+$$
+is called **discrete-time algebraic Riccati equation** (DARE) and it is one of the most important equations in the field of computational control design. 
+
+The equation may look quite "messy" and offers hardly any insight. Remember the good advice to shring the problem to the scalar size while studying similar matrix-vector expressions and striving to get some insight. Our DARE simplifies to
+$$
+s_\infty = a^2s_\infty - \frac{a^2b^2s_\infty^2}{b^2s_\infty+r} + q
+$$
+
+Multiplying both sides by the denominator we get the equivalent quadratic (in $s_\infty$) equation
+$$
+ b^2s_\infty^2 + (r - a^2b^2 - b^2q)s_\infty - qr = 0.
+$$
+
+Voilà! A scalar DARE is just a quadratic equation, for which the solutions can be found readily. 
+
+There is a caveat here, though, reflected in using plural in "solutions" above. Quadratic equation can have two (or none) real solutions. But the sequence produced by original recursive Riccati equation is determined uniquely! What's up? How are the solutions to ARE related to the limiting solution of recursive Riccati equation?  
+
+Answering this question will keep us busy for most of this lecture. We will structure this broad question into several sub-questions
+
+- Under which conditions it is guaranteed that there exists a (bounded) limiting solution $\mathbf S_\infty$ to the recursive Riccati equation for all initial (actually final) values $\mathbf S_N$?
+- Under which conditions is the limit solution unique for arbitrary $\mathbf S_N$?
+- Under which conditions is it guaranteed that the time-invariant feedback gain $\mathbf K_\infty$ computed from $\mathbf S_\infty$ stabilizes the system (on the infinite control interval)? 
