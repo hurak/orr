@@ -627,7 +627,10 @@ window.Quarto = {
    
   <ul>
   <li><a href="#bellmans-principle-of-optimality-and-dynamic-programming" id="toc-bellmans-principle-of-optimality-and-dynamic-programming" class="nav-link active" data-scroll-target="#bellmans-principle-of-optimality-and-dynamic-programming">Bellman’s principle of optimality and dynamic programming</a></li>
-  <li><a href="#bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem" id="toc-bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem" class="nav-link" data-scroll-target="#bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem">Bellman’s principle of optimality applied to the discrete-time optimal control problem</a></li>
+  <li><a href="#bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem" id="toc-bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem" class="nav-link" data-scroll-target="#bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem">Bellman’s principle of optimality applied to the discrete-time optimal control problem</a>
+  <ul class="collapse">
+  <li><a href="#alternative-formulation-of-dynamic-programming-using-q-factors" id="toc-alternative-formulation-of-dynamic-programming-using-q-factors" class="nav-link" data-scroll-target="#alternative-formulation-of-dynamic-programming-using-q-factors">Alternative formulation of dynamic programming using Q-factors</a></li>
+  </ul></li>
   <li><a href="#dynamic-programming-as-a-numerical-algorithm-for-solving-the-discrete-time-optimal-control-problem" id="toc-dynamic-programming-as-a-numerical-algorithm-for-solving-the-discrete-time-optimal-control-problem" class="nav-link" data-scroll-target="#dynamic-programming-as-a-numerical-algorithm-for-solving-the-discrete-time-optimal-control-problem">Dynamic programming as a numerical algorithm for solving the discrete-time optimal control problem</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -656,6 +659,7 @@ window.Quarto = {
 
 <p>In the previous two chapters we explained direct and indirect approaches to discrete-time optimal control. While the former conveniently allows incorporating almost arbitrary constraints, it only provides a control trajectory (a finite sequence of values of the control variable); if feedback is needed, the optimization must be performed in every sampling period (thus implementing the concept of receding horizon or model predictive control, MPC). The latter, in contrast, can lead to a (state) feedback control law, but this only happens in special cases such as a regulation of a linear system minimizing a quadratic cost (LQR) while assuming no bound constraints on the the control or state variables; in the general case it leads to a two-point boundary value problem, which can only be solved numerically for trajectories.</p>
 <p>In this chapter we present yet another approach — dynamic programming DP. It also allows imposing constraints (in fact, even constraints such as integrality of variables, which are not compatible with our derivative-based optimization toolset exploited so far), and yet it directly leads to feedback controllers.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/7qRCZ9_wfYI?si=hLh9IPUoSin2VXoY" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <p>While in the case of linear systems with a quadratic cost function, dynamic programming provides another route to the theoretical results that we already know — Riccati equation based solution to the LQR problem —, in the the case of general nonlinear dynamical systems with general cost functions, the feedback controllers come in the form of look-up tables. This format of a feedback controller gives some hint about disadvantages of DP, namely, both computation and then the use of these look-up tables do not scale well with the dimension of the state space (aka curse of dimensionality). Various approximation schemes exist — one promising branch is known as reinforcement learning.</p>
 <section id="bellmans-principle-of-optimality-and-dynamic-programming" class="level2">
 <h2 class="anchored" data-anchor-id="bellmans-principle-of-optimality-and-dynamic-programming">Bellman’s principle of optimality and dynamic programming</h2>
@@ -1010,7 +1014,7 @@ window.Quarto = {
 </span> defined on the discrete time interval <span class="math inline">[i,N]</span>, with the initial state <span class="math inline">\bm x_i</span> fixed (<span class="math inline">\bm x_i = \mathbf x_i</span>) We aim at minimizing the cost function <span class="math display">
 J_i^N\left(\bm x_i, \bm u_i, \bm u_{i+1}, \ldots, \bm u_{N-1}\right) = \phi(\bm x_N,N) + \sum_{k=i}^{N-1}L_k(\bm x_k,\bm u_k).
 </span></p>
-<p>Some comments on the notation are in order. Indeed, a well tuned and systematically used notation can help here a lot.</p>
+<p>Before we proceed, some comments on the notation are in order. Indeed, a well tuned and systematically used notation is instrumental in dynamic programming.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1034,7 +1038,7 @@ We omit the state trajectory from the notation for the cost function and leave j
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The cost function is clearly a function of the full sequence <span class="math inline">\bm x_i, \bm x_{i+1},\ldots, \bm x_N</span> of the state vectors too. In the previous chapters we handled it systematically (either by considering them as optimization variables in the simultaneous direct approach or by introducing Lagrange multipliers in the indirect approache). But here we want to emphasize the fact that starting with <span class="math inline">\mathbf x_{i+1}</span>, the whole state trajectory is uniquelly determined by the initial state <span class="math inline">\mathbf x_i</span> and the corresponding control trajectory <span class="math inline">\bm u_i, \bm u_{i+1},\ldots, \bm u_{N-1}</span>. Therefore, we write the cost function as a function of the initial state, the initial time (we already agreed above not to emphasize the final time), and the sequence of controls.</p>
+<p>The cost function is clearly a function of the full sequence <span class="math inline">\bm x_i, \bm x_{i+1},\ldots, \bm x_N</span> of the state vectors too. In the previous chapters we handled it systematically (either by considering them as optimization variables in the simultaneous direct approach or by introducing Lagrange multipliers in the indirect approache). But here we want to emphasize the fact that starting with <span class="math inline">\bm x_{i+1}</span>, the whole state trajectory is uniquelly determined by the initial state <span class="math inline">\bm x_i</span> and the corresponding control trajectory <span class="math inline">\bm u_i, \bm u_{i+1},\ldots, \bm u_{N-1}</span>. Therefore, we write the cost function as a function of the initial state, the initial time (we already agreed above not to emphasize the final time), and the sequence of controls.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -1043,18 +1047,19 @@ We omit the state trajectory from the notation for the cost function and leave j
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+We use the lower index to display dependence on time
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The dependence on the discrete time is reflected by the lower indices: not only in <span class="math inline">\bm x_k</span> and <span class="math inline">\bm u_k</span> but also in <span class="math inline">\mathbf f_k()</span>, <span class="math inline">L_k()</span> and <span class="math inline">J_k()</span>. We could perhaps write these as <span class="math inline">\mathbf f(\cdot,\cdot,k)</span>, <span class="math inline">L(\cdot,\cdot,k)</span> and <span class="math inline">J(\cdot,\cdot,k)</span> to better indicate that <span class="math inline">k</span> is really an argument for these functions, but we prefer making it compatible with the way we indicate the time dependence of <span class="math inline">\mathbf x_k</span> and <span class="math inline">\mathbf u_k</span>.</p>
+<p>The dependence on the discrete time is reflected by the lower indices: not only in <span class="math inline">\bm x_k</span> and <span class="math inline">\bm u_k</span> but also in <span class="math inline">\mathbf f_k()</span>, <span class="math inline">L_k()</span> and <span class="math inline">J_k()</span>. We could perhaps write these as <span class="math inline">\mathbf f(\cdot,\cdot,k)</span>, <span class="math inline">L(\cdot,\cdot,k)</span> and <span class="math inline">J(\cdot,\cdot,k)</span> to better indicate that <span class="math inline">k</span> is really an argument for these functions, but we prefer making it compatible with the way we indicate the time dependence of <span class="math inline">\bm x_k</span> and <span class="math inline">\bm u_k</span>.</p>
 </div>
 </div>
 <p>Having introduced the cost function parameterized by the initial state, initial time and the full sequence of controls, we now introduce the <em>optimal cost function</em></p>
-<p><span class="math display">
+<p><span id="eq-optimal_cost_function"><span class="math display">
 \boxed{
-    J^\star_i(\bm x_i) = \min_{\bm u_i,\ldots, \bm u_{N-1}} J_i\left(\mathbf x_i, \bm u_i, \bm u_{i+1}, \ldots, \bm u_{N-1}\right).}
-</span></p>
+    J^\star_i(\bm x_i) = \min_{\bm u_i,\ldots, \bm u_{N-1}} J_i\left(\bm x_i, \bm u_i, \bm u_{i+1}, \ldots, \bm u_{N-1}\right).}
+\tag{1}</span></span></p>
+<p>The sequence of controls in the above minimization may be subject to some constraints, but we do not indicate them here for the sake of notational simplicity.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1068,24 +1073,59 @@ Difference between the <span class="math inline">J_i</span> and <span class="mat
 <p>Understanding the difference is crucial. While the cost function <span class="math inline">J_i</span> depends on the (initial) state, the (initial) time and the sequence of controls applied over the whole interval, the optimal cost function <span class="math inline">J^\star_i</span> only depends on the (initial) state and the (initial) time.</p>
 </div>
 </div>
-<p>Assume now that we have already found an optimal control sequence from any given state <span class="math inline">\bm x_{k+1}</span> at time <span class="math inline">k+1</span> on, i.e., we already have <span class="math inline">\bm u_{k+1},\bm u_{k+2},\ldots, \bm u_{N-1}</span> yielding the optimal cost <span class="math inline">J_{k+1}^\star(\bm x_{k+1})</span>. Don’t ask me where we get such optimal sequence, right now we just assume we have it. We will soon show how to actually find it.</p>
-<p>Now, if we apply arbitrary (not necessarily optimal) control <span class="math inline">\bm u_k</span> at a given state <span class="math inline">\bm x_{k}</span> at time <span class="math inline">k</span>, the cost is <span class="math display">
-J_k(\bm x_k,\bm u_k, {\color{blue}\bm u_{k+1}, \ldots, \bm u_{N-1}}) = L_k(\bm x_k,\bm u_k) + {\color{blue}J_{k+1}^\star(\bm x_{k+1})}.
+<p>Assume now that we can find an optimal control sequence from any given state <span class="math inline">\bm x_{k+1}</span> at time <span class="math inline">k+1</span> on, i.e., we can find <span class="math inline">\bm u_{k+1}^\star,\bm u_{k+2}^\star,\ldots, \bm u_{N-1}^\star</span> yielding the optimal cost <span class="math inline">J_{k+1}^\star(\bm x_{k+1})</span>. We will soon show how to actually find it, but for the time being we just assume we can have it. We now show how it can be used to find the optimal cost <span class="math inline">J_k^\star(\bm x_k)</span> at state <span class="math inline">\bm x_k</span> and time <span class="math inline">k</span>.</p>
+<p>Let’s now consider the following strategy: with the system at state <span class="math inline">\bm x_k</span> and time <span class="math inline">k</span> we apply some control <span class="math inline">\bm u_k</span>, not necessarily an optimal one, which brings the system to the state <span class="math inline">\bm x_{k+1}</span> in the next time <span class="math inline">k+1</span>. But from then on we use the control sequence <span class="math inline">\bm u_{k+1}^\star,\bm u_{k+2}^\star,\ldots, \bm u_{N-1}^\star</span> that is optimal from <span class="math inline">\bm x_{k+1}</span>. The corresponding cost is <span id="eq-cost_of_the_all_but_one_optimal_controls"><span class="math display">
+L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1}).
+\tag{2}</span></span></p>
+<p>Bellman’s principle of optimality states that if we optimize the above expression over <span class="math inline">\bm u_k</span>, we get the optimal cost <span class="math inline">J_k^\star(\bm x_k)</span> at time <span class="math inline">k</span> <span id="eq-bellman_for_discrete_time_optimal_control"><span class="math display">
+\boxed{J_k^\star(\bm x_k) = \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1})\right).}
+\tag{3}</span></span></p>
+<p>Hence, at a given state <span class="math inline">\bm x_{k}</span> and time <span class="math inline">k</span>, the optimization is performed over only one (possibly vector) control <span class="math inline">\bm u_k</span> and not the whole trajectory as the definition of the optimal cost in <a href="#eq-optimal_cost_function" class="quarto-xref">Equation&nbsp;1</a> suggests! What a simplification!</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The minimization needs to be performed over the whole sum <span class="math inline">L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1})</span>, because <span class="math inline">\bm x_{k+1}</span> is a function of <span class="math inline">\bm u_k</span> (recall that <span class="math inline">\bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k)</span>). We can also write <a href="#eq-bellman_for_discrete_time_optimal_control" class="quarto-xref">Equation&nbsp;3</a> as <span class="math display">
+J_k^\star(\bm x_k) = \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\mathbf f_k(\bm x_k,\bm u_k))\right),
+</span> which makes it more apparent.</p>
+</div>
+</div>
+<p>Once we have the optimal cost function <span class="math inline">J^\star_{k}</span>, the optimal control <span class="math inline">\bm u_k^\star(x_k)</span> at a given time <span class="math inline">k</span> and state <span class="math inline">\bm x_k</span> is obtained by <span class="math display">
+\boxed{
+    \bm u_k^\star(\bm x_k) = \arg \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\mathbf f_k(\bm x_k,\bm u_k))\right).}
 </span></p>
-<p>I highlighted the (sub)sequence of controls on the left hand side starting with <span class="math inline">\mathbf u_{k+1}</span> to emphasize that these were already fixed by the assumed availability of the optimal cost function <span class="math inline">J^*_{k+1}</span>.</p>
-<p>According to Bellman, the optimal cost from time <span class="math inline">k</span> on (the cost to go) is <span id="eq-bellman_for_discrete_time_optimal_control"><span class="math display">
-\boxed{J_k^\star(\mathbf x_k) = \min_{\mathbf u_k}\left(L_k(\mathbf x_k,\mathbf u_k) + J_{k+1}^\star(\mathbf x_{k+1})\right).}
-\tag{1}</span></span></p>
-<p>Hence, at a given state <span class="math inline">\bm x_{k}</span> and time <span class="math inline">k</span>, the optimization is performed over only one control <span class="math inline">\bm u_k</span> and not the whole sequence! What a simplification!</p>
-<p>What we have got in <a href="#eq-bellman_for_discrete_time_optimal_control" class="quarto-xref">Equation&nbsp;1</a> is a recursion scheme. Is initialized at <span class="math inline">k=N-1</span> (because <span class="math inline">k+1=N</span>) by invoking <span class="math inline">J^*_N(\bm x_N) = \phi(\bm x_N)</span> and it proceeds backwards in time.</p>
-<p>Let’s emphasize here that the minimization needs to be performed over the whole sum <span class="math inline">L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1})</span> because <span class="math inline">\bm x_{k+1}</span> is a function of <span class="math inline">\bm u_k</span> (recall that <span class="math inline">\bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k)</span>). We could have written <a href="#eq-bellman_for_discrete_time_optimal_control" class="quarto-xref">Equation&nbsp;1</a> perhaps as <span class="math display">
-\boxed{J_k^\star(\bm x_k) = \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\mathbf f_k(\bm x_k,\bm u_k))\right).}
+<section id="alternative-formulation-of-dynamic-programming-using-q-factors" class="level3">
+<h3 class="anchored" data-anchor-id="alternative-formulation-of-dynamic-programming-using-q-factors">Alternative formulation of dynamic programming using Q-factors</h3>
+<p>The cost function in <a href="#eq-cost_of_the_all_but_one_optimal_controls" class="quarto-xref">Equation&nbsp;2</a> is sometimes called <em>Q-factor</em> and we denote it <span class="math inline">Q_k(\bm x_k,\bm u_k)</span>. We write its definition here for convenience <span class="math display">
+Q^\star_k(\bm x_k,\bm u_k) = L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1}).
 </span></p>
-<p>We will now show how to actually apply this result to solve an optimal control problem.</p>
+<p>The optimal cost function <span class="math inline">J_k^\star(\bm x_k)</span> can be recovered from the optimal Q-factor <span class="math inline">Q_k^\star(\bm x_k,\bm u_k)</span> by taking the minimum over <span class="math inline">\bm u_k</span> <span class="math display">
+J_k^\star(\bm x_k) = \min_{\bm u_k} Q_k^\star(\bm x_k,\bm u_k).
+</span></p>
+<p>Bellman’s principle of optimality can be then expressed using the optimal Q-factor as <span class="math display">
+\boxed{Q_k^\star(\bm x_k,\bm u_k) = L_k(\bm x_k,\bm u_k) + \min_{\bm u_{k+1}} Q_{k+1}^\star(\bm x_{k+1},\bm u_{k+1})}.
+</span></p>
+<p>Optimal control is then obtained from the optimal Q-factor as the minimizing control <span class="math display">
+\boxed{\bm u_k^\star(\bm x_k) = \arg \min_{\bm u_k} Q_k^\star(\bm x_k,\bm u_k).}
+</span></p>
+</section>
 </section>
 <section id="dynamic-programming-as-a-numerical-algorithm-for-solving-the-discrete-time-optimal-control-problem" class="level2">
 <h2 class="anchored" data-anchor-id="dynamic-programming-as-a-numerical-algorithm-for-solving-the-discrete-time-optimal-control-problem">Dynamic programming as a numerical algorithm for solving the discrete-time optimal control problem</h2>
-<p>… to be continued …</p>
+<p>Based on what we have seen so far, it turns out that the key to solving the discrete-time optimal control problem is to find some… functions. Either the optimal cost function <span class="math inline">J_k^\star(\bm x_k)</span> or the optimal Q-factor <span class="math inline">Q_k^\star(\bm x_k,\bm u_k)</span>. Once we have them, we can easily find the optimal control <span class="math inline">\bm u_k^\star(\bm x_k)</span>. The question however is how to find these functions. We have seen some recursions for both of them, but it is not clear how to turn these into practical algorithms. We do it here.</p>
+<p>We are going to solve <a href="#eq-bellman_for_discrete_time_optimal_control" class="quarto-xref">Equation&nbsp;3</a> backwards in (discrete) time at a <em>grid of states</em>. Indeed, gridding the state space is the key technique in dynamic programming, because DP assumes a finite state space. If it is not finite, we must grid it.</p>
+<p>We start with the final time <span class="math inline">N</span>. We evaluate the terminal cost function <span class="math inline">\phi(\bm x_N)</span> at a grid of states, which directly yields the optimal costs <span class="math inline">J_N^\star(\bm x_N)</span>.</p>
+<p>We then proceed to the time <span class="math inline">N-1</span>. Evaluating the optimal cost function <span class="math inline">J^\star_{N-1}</span> at each grid point in the state space calls for some optimization, namely <span class="math display">
+\min_{u_{N-1}} \left(L_{N-1}(\bm x_{N-1},\bm u_{N-1}) + J_{N}^\star(\mathbf f_{N-1}(\bm x_{N-1}, \bm u_{N-1}))\right).
+</span></p>
+<p>We save the optimal costs and the corresponding controls at the given grid points (giving two arrays of values), decrement the time to <span class="math inline">N-2</span>, and repeat. All the way down to the initial time <span class="math inline">i</span>.</p>
+<p>Let’s summarize that as an outcome of this whole procedure we have two tables – one for the optimal cost, the other for the optimal control.</p>
 
 
 </section>
