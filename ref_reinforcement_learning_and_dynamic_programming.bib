@@ -1,0 +1,869 @@
+@inproceedings{abbeelApplicationReinforcementLearning2006,
+  title = {An {{Application}} of {{Reinforcement Learning}} to {{Aerobatic Helicopter Flight}}},
+  booktitle = {Advances in {{Neural Information Processing Systems}}},
+  author = {Abbeel, Pieter and Coates, Adam and Quigley, Morgan and Ng, Andrew},
+  year = {2006},
+  volume = {19},
+  publisher = {MIT Press},
+  url = {https://proceedings.neurips.cc/paper/2006/hash/98c39996bf1543e974747a2549b3107c-Abstract.html},
+  urldate = {2023-09-08},
+  abstract = {Autonomous helicopter flight is widely regarded to be a highly challenging control problem. This paper presents the first successful autonomous completion on a real RC helicopter of the following four aerobatic maneuvers: forward flip and sideways roll at low speed, tail-in funnel, and nose-in funnel. Our experimental results significantly extend the state of the art in autonomous helicopter flight. We used the following approach: First we had a pilot fly the helicopter to help us find a helicopter dynamics model and a reward (cost) function. Then we used a reinforcement learning (optimal control) algorithm to find a controller that is optimized for the resulting model and reward function. More specifically, we used differential dynamic programming (DDP), an extension of the linear quadratic regulator (LQR).}
+}
+
+@article{bellemareAutonomousNavigationStratospheric2020,
+  title = {Autonomous Navigation of Stratospheric Balloons Using Reinforcement Learning},
+  author = {Bellemare, Marc G. and Candido, Salvatore and Castro, Pablo Samuel and Gong, Jun and Machado, Marlos C. and Moitra, Subhodeep and Ponda, Sameera S. and Wang, Ziyu},
+  year = {2020},
+  month = dec,
+  journal = {Nature},
+  volume = {588},
+  number = {7836},
+  pages = {77--82},
+  publisher = {Nature Publishing Group},
+  issn = {1476-4687},
+  doi = {10.1038/s41586-020-2939-8},
+  url = {https://www.nature.com/articles/s41586-020-2939-8},
+  urldate = {2021-11-17},
+  abstract = {Efficiently navigating a superpressure balloon in the stratosphere1 requires the integration of a multitude of cues, such as wind speed and solar elevation, and the process is complicated by forecast errors and sparse wind measurements. Coupled with the need to make decisions in real time, these factors rule out the use of conventional control techniques2,3. Here we describe the use of reinforcement learning4,5 to create a high-performing flight controller. Our algorithm uses data augmentation6,7 and a self-correcting design to overcome the key technical challenge of reinforcement learning from imperfect data, which has proved to be a major obstacle to its application to physical systems8. We deployed our controller to station Loon superpressure balloons at multiple locations across the globe, including a 39-day controlled experiment over the Pacific Ocean. Analyses show that the controller outperforms Loon's previous algorithm and is robust to the natural diversity in stratospheric winds. These results demonstrate that reinforcement learning is an effective solution to real-world autonomous control problems in which neither conventional methods nor human intervention suffice, offering clues about what may be needed to create artificially intelligent agents that continuously interact with real, dynamic environments.},
+  copyright = {2020 The Author(s), under exclusive licence to Springer Nature Limited},
+  langid = {english},
+  annotation = {Bandiera\_abtest: a Cg\_type: Nature Research Journals Primary\_atype: Research Subject\_term: Aerospace engineering;Computer science Subject\_term\_id: aerospace-engineering;computer-science}
+}
+
+@book{bellmanDynamicProgramming1957,
+  title = {Dynamic {{Programming}}},
+  author = {Bellman, Richard},
+  year = {1957},
+  publisher = {Princeton University Press},
+  urldate = {2023-01-13},
+  langid = {english}
+}
+
+@inproceedings{bernatDriverEngineerReinforcement2020,
+  title = {The Driver and the Engineer: {{Reinforcement}} Learning and Robust Control},
+  shorttitle = {The Driver and the Engineer},
+  booktitle = {2020 {{American Control Conference}} ({{ACC}})},
+  author = {Bernat, Natalie and Chen, Jiexin and Matni, Nikolai and Doyle, John},
+  year = {2020},
+  month = jul,
+  pages = {3932--3939},
+  issn = {2378-5861},
+  doi = {10.23919/ACC45564.2020.9147347},
+  abstract = {Reinforcement learning (RL) and other AI methods are exciting approaches to data-driven control design, but RL's emphasis on maximizing expected performance contrasts with robust control theory (RCT), which puts central emphasis on the impact of model uncertainty and worst case scenarios. This paper argues that these approaches are potentially complementary, roughly analogous to that of a driver and an engineer in, say, formula one racing. Each is indispensable but with radically different roles. If RL takes the driver seat in safety critical applications, RCT may still play a role in plant design, and also in diagnosing and mitigating the effects of performance degradation due to changes or failures in component or environments. While much RCT research emphasizes synthesis of controllers, as does RL, in practice RCT's impact has perhaps already been greater in using hard limits and tradeoffs on robust performance to provide insight into plant design, interpreted broadly as including sensor, actuator, communications, and computer selection and placement in addition to core plant dynamics. More automation may ultimately require more rigor and theory, not less, if our systems are going to be both more efficient and robust. Here we use the simplest possible toy model to illustrate how RCT can potentially augment RL in finding mechanistic explanations when control is not merely hard, but impossible, and issues in making them more compatibly data-driven. Despite the simplicity, questions abound. We also discuss the relevance of these ideas to more realistic challenges.}
+}
+
+@book{bertsekasAbstractDynamicProgramming2022,
+  title = {Abstract {{Dynamic Programming}}},
+  author = {Bertsekas, Dimitri P.},
+  year = {31 ledna 2022},
+  edition = {3},
+  publisher = {Athena Scientific},
+  address = {Belmont, Massachusetts},
+  url = {https://web.mit.edu/dimitrib/www/AbstractDP_ED3_TEXT_2021.pdf},
+  abstract = {This is the 3rd edition of a research monograph providing a synthesis of old research on the foundations of dynamic programming (DP), with the modern theory of approximate DP and new research on semicontractive models. It aims at a unified and economical development of the core theory and algorithms of total cost sequential decision problems, based on the strong connections of the subject with fixed point theory. The analysis focuses on the abstract mapping that underlies DP and defines the mathematical character of the associated problem. The discussion centers on two fundamental properties that this mapping may have: monotonicity and (weighted sup-norm) contraction. It turns out that the nature of the analytical and algorithmic DP theory is determined primarily by the presence or absence of these two properties, and the rest of the problem's structure is largely inconsequential. New research is focused on two areas: 1) The ramifications of these properties in the context of algorithms for approximate DP, and 2) The new class of semicontractive models, exemplified by stochastic shortest path problems, where some but not all policies are contractive. The 3rd edition is very similar to the 2nd edition, except for the addition of a new chapter (Chapter 5), which deals with abstract DP models for sequential minimax problems and zero-sum games, The book is an excellent supplement to several of our books: Neuro-Dynamic Programming (Athena Scientific, 1996), Dynamic Programming and Optimal Control (Athena Scientific, 2017), Reinforcement Learning and Optimal Control (Athena Scientific, 2019), and Rollout, Policy Iteration, and Distributed Reinforcement Learning (Athena Scientific, 2020).},
+  isbn = {978-1-886529-47-2}
+}
+
+@book{bertsekasCourseReinforcementLearning2023,
+  title = {A {{Course}} in {{Reinforcement Learning}}},
+  author = {Bertsekas, Dimitri P.},
+  year = {2023},
+  publisher = {Athena Scientific},
+  address = {Belmont, Massachusetts},
+  url = {https://web.mit.edu/dimitrib/www/RLCOURSECOMPLETE.pdf},
+  urldate = {2023-09-15},
+  isbn = {978-1-886529-49-6}
+}
+
+@book{bertsekasDynamicProgrammingOptimal2012,
+  title = {Dynamic {{Programming}} and {{Optimal Control}}},
+  author = {Bertsekas, Dimitri P.},
+  year = {2012},
+  edition = {4},
+  volume = {II},
+  publisher = {Athena Scientific},
+  address = {Belmont, Massachusetts},
+  url = {http://athenasc.com/dpbook.html},
+  abstract = {A two-volume set, consisting of the latest editions of the two volumes (4th edition (2017) for Vol. I, and 4th edition (2012) for Vol. II). Much supplementary material can be found at the book's web page. The first volume is oriented towards modeling, conceptualization, and finite-horizon problems, but also includes a substantive introduction to infinite horizon problems that is suitable for classroom use, as well as an up-to-date account of some of the most interesting developments in approximate dynamic programming. The second volume is oriented towards mathematical analysis and computation, treats infinite horizon problems extensively, and provides a detailed account of approximate large-scale dynamic programming and reinforcement learning. This is a textbook on the far-ranging algorithmic methododogy of Dynamic Programming, which can be used for optimal control, Markovian decision problems, planning and sequential decision making under uncertainty, and discrete/combinatorial optimization. The treatment focuses on basic unifying themes, and conceptual foundations. It illustrates the versatility, power, and generality of the method with many examples and applications from engineering, operations research, and other fields. It also addresses extensively the practical application of the methodology, possibly through the use of approximations, and provides an introduction to the methodology of Neuro-Dynamic Programming, which is the focus of much recent research.},
+  isbn = {978-1-886529-44-1},
+  langid = {english}
+}
+
+@book{bertsekasDynamicProgrammingOptimal2017,
+  title = {Dynamic {{Programming}} and {{Optimal Control}}},
+  author = {Bertsekas, Dimitri P.},
+  year = {2017},
+  edition = {4},
+  volume = {I},
+  publisher = {Athena Scientific},
+  address = {Belmont, Massachusetts},
+  url = {http://athenasc.com/dpbook.html},
+  abstract = {This 4th edition is a major revision of Vol. I of the leading two-volume dynamic programming textbook by Bertsekas, and contains a substantial amount of new material, particularly on approximate DP in Chapter 6. This chapter was thoroughly reorganized and rewritten, to bring it in line, both with the contents of Vol. II, whose latest edition appeared in 2012, and with recent developments, which have propelled approximate DP to the forefront of attention. Some of the highlights of the revision of Chapter 6 are an increased emphasis on one-step and multistep lookahead methods, parametric approximation architectures, neural networks, rollout, and Monte Carlo tree search. Among other applications, these methods have been instrumental in the recent spectacular success of computer Go programs. The material on approximate DP also provides an introduction and some perspective for the more analytically oriented treatment of Vol. II.The book includes a substantial number of examples, and exercises, detailed solutions of many of which are posted on the internet. It was developed through teaching graduate courses at M.I.T., and is supported by a large amount of educational material, such as slides and videos, posted at the MIT Open Courseware, the author's, and the publisher's web sites.Contents: 1. The Dynamic Programming Algorithm. 2. Deterministic Systems and the Shortest PathProblem. 3. Problems with Perfect State Information. 4. Problems with Imperfect State Information. 5. Introduction to Infinite Horizon Problems. 6. Approximate Dynamic Programming. 7. Deterministic Continuous-Time Optimal Control.},
+  isbn = {978-1-886529-43-4},
+  langid = {english}
+}
+
+@article{bertsekasDynamicProgrammingSuboptimal2005,
+  title = {Dynamic {{Programming}} and {{Suboptimal Control}}: {{A Survey}} from {{ADP}} to {{MPC}}},
+  shorttitle = {Dynamic {{Programming}} and {{Suboptimal Control}}},
+  author = {Bertsekas, Dimitri P.},
+  year = {2005},
+  month = jan,
+  journal = {European Journal of Control},
+  volume = {11},
+  number = {4},
+  pages = {310--334},
+  issn = {0947-3580},
+  doi = {10.3166/ejc.11.310-334},
+  url = {https://www.sciencedirect.com/science/article/pii/S0947358005710402},
+  urldate = {2021-11-17},
+  abstract = {We survey some recent research directions within the field of approximate dynamic programming, with a particular emphasis on rollout algorithms and model predictive control (MPC). We argue that while they are motivated by different concerns, these two methodologies are closely connected, and the mathematical essence of their desirable properties (cost improvement and stability, respectively) is couched on the central dynamic programming idea of policy iteration. In particular, among other things, we show that the most common MPC schemes can be viewed as rollout algorithms and are related to policy iteration methods. Furthermore, we embed rollout and MPC within a new unifying suboptimal control framework, based on a concept of restricted or constrained structure policies, which contains these schemes as special cases.},
+  langid = {english}
+}
+
+@book{bertsekasLessonsAlphaZeroOptimal2022,
+  title = {Lessons from {{AlphaZero}} for {{Optimal}}, {{Model Predictive}}, and {{Adaptive Control}}},
+  author = {Bertsekas, Dimitri P.},
+  year = {2022},
+  month = feb,
+  publisher = {Athena Scientific},
+  address = {Belmont Massachusetts},
+  url = {http://web.mit.edu/dimitrib/www/LessonsfromAlphazero.pdf},
+  urldate = {2022-03-03},
+  isbn = {1-886529-17-5}
+}
+
+@book{bertsekasReinforcementLearningOptimal2019,
+  title = {Reinforcement {{Learning}} and {{Optimal Control}}},
+  author = {Bertsekas, Dimitri},
+  year = {2019},
+  month = jul,
+  edition = {1st edition},
+  publisher = {Athena Scientific},
+  address = {Belmont, Massachusetts},
+  url = {https://www.mit.edu/~dimitrib/RLbook.html},
+  abstract = {This book considers large and challenging multistage decision problems, which can be solved in principle by dynamic programming, but their exact solution is computationally intractable. We discuss solution methods that rely on approximations to produce suboptimal policies with adequate performance. These methods are known by several essentially equivalent names: reinforcement learning, approximate dynamic programming, and neuro-dynamic programming. They underlie, among others, the recent impressive successes of self-learning in the context of games such as chess and Go. One of the aims of the book is to explore the common boundary between artificial intelligence and optimal control, and to form a bridge that is accessible by workers with background in either field. Another aim is to organize coherently the broad mosaic of methods that have proved successful in practice while having a solid theoretical and/or logical foundation. This may help researchers and practitioners to find their way through the maze of competing ideas that constitute the current state of the art. The mathematical style of this book is somewhat different than other books by the same author. While we provide a rigorous, albeit short, mathematical account of the theory of finite and infinite horizon dynamic programming, and some fundamental approximation methods, we rely more on intuitive explanations and less on proof-based insights. We also illustrate the methodology with many example algorithms and applications. Selected sections, instructional videos and slides, and other supporting material may be found at the author's website.},
+  isbn = {978-1-886529-39-7},
+  langid = {english}
+}
+
+@misc{bertsekasReinforcementLearningOptimal2021,
+  title = {Reinforcement {{Learning}} and {{Optimal Control}} and {{Rollout}}, {{Policy Iteration}}, and {{Distributed Reinforcement Learning}}},
+  author = {Bertsekas, Dimitri},
+  year = {2021},
+  month = jun,
+  url = {http://web.mit.edu/dimitrib/www/RL_CH1_ROLLOUT_CLASS_NOTES.pdf},
+  abstract = {Class Notes for Reinforcement Learning Course ASU CSE 691; Spring 2021}
+}
+
+@book{bertsekasRolloutPolicyIteration2020,
+  title = {Rollout, {{Policy Iteration}}, and {{Distributed Reinforcement Learning}}},
+  author = {Bertsekas, Dimitri},
+  year = {2020},
+  month = aug,
+  publisher = {Athena Scientific},
+  address = {Belmont, Massachusetts},
+  url = {https://web.mit.edu/dimitrib/www/dp_rollout_book.html},
+  abstract = {This is a monograph at the forefront of research on reinforcement learning, also referred to by other names such as approximate dynamic programming and neuro-dynamic programming. It focuses on the fundamental idea of policy iteration, i.e., start from some policy, and successively generate one or more improved policies. If just one improved policy is generated, this is called rollout, which, based on broad and consistent computational experience, appears to be one of the most versatile and reliable of all reinforcement learning methods. Among others, it can be applied on-line using easily implementable simulation, and it can be used for discrete deterministic combinatorial optimization, as well as for stochastic Markov decision problems. Approximate policy iteration is more ambitious than rollout, but it is a strictly off-line method, and it is generally far more computationally intensive. This motivates the use of parallel and distributed computation. One of the purposes of the monograph is to discuss distributed (possibly asynchronous) methods that relate to rollout and policy iteration, both in the context of an exact and an approximate implementation involving neural networks or other approximation architectures. Several of the ideas that we develop in some depth in this monograph have been central in the implementation of recent high profile successes, such as the AlphaZero program for playing chess, Go, and other games. In addition to the fundamental process of successive policy iteration/improvement, this program includes the use of deep neural networks for representation of both value functions and policies, the extensive use of large scale parallelization, and the simplification of lookahead minimization, through methods involving Monte Carlo tree search and pruning of the lookahead tree. In this monograph, we also focus on policy iteration, value and policy neural network representations, parallel and distributed computation, and lookahead simplification. Thus while there are significant differences, the principal design ideas that form the core of this monograph are shared by the AlphaZero architecture, except that we develop these ideas in a broader and less application-specific framework. Among its special features, the book: a) Presents new research relating to distributed asynchronous computation, partitioned architectures, and multiagent systems, with application to challenging large scale optimization problems, such as combinatorial/discrete optimization, as well as partially observed Markov decision problems. b) Describes variants of rollout and policy iteration for problems with a multiagent structure, which allow a dramatic reduction of the computational requirements for lookahead minimization. c) Establishes a connection of rollout with model predictive control, one of the most prominent control system design methodologies. d) Expands the coverage of some research areas discussed in 2019 textbook Reinforcement Learning and Optimal Control by the same author. See the author's website for selected sections, instructional videos and slides, and other supporting material.},
+  isbn = {978-1-886529-07-6},
+  langid = {english}
+}
+
+@inproceedings{bradtkeAdaptiveLinearQuadratic1994,
+  title = {Adaptive Linear Quadratic Control Using Policy Iteration},
+  booktitle = {Proceedings of 1994 {{American Control Conference}} - {{ACC}} '94},
+  author = {Bradtke, S.J. and Ydstie, B.E. and Barto, A.G.},
+  year = {1994},
+  month = jun,
+  volume = {3},
+  pages = {3475-3479 vol.3},
+  doi = {10.1109/ACC.1994.735224},
+  abstract = {In this paper we present the stability and convergence results for dynamic programming-based reinforcement learning applied to linear quadratic regulation (LQR). The specific algorithm we analyze is based on Q-learning and it is proven to converge to an optimal controller provided that the underlying system is controllable and a particular signal vector is persistently excited. This is the first convergence result for DP-based reinforcement learning algorithms for a continuous problem.}
+}
+
+@inproceedings{buLQRFirstOrder2020,
+  title = {{{LQR}} via {{First Order Flows}}},
+  booktitle = {2020 {{American Control Conference}} ({{ACC}})},
+  author = {Bu, Jingjing and Mesbahi, Afshin and Mesbahi, Mehran},
+  year = {2020},
+  month = jul,
+  pages = {4683--4688},
+  issn = {2378-5861},
+  doi = {10.23919/ACC45564.2020.9147853},
+  abstract = {We consider the Linear-Quadratic-Regulator (LQR) problem in terms of optimizing a real-valued matrix function over the set of feedback gains. Such a setup facilitates examining the implications of a natural initial-state independent formulation of LQR in designing first order algorithms. We characterize several analytical properties (smoothness, coerciveness, quadratic growth) that are crucial in the analysis of gradient-based algorithms. We then examine three types of well-posed flows for LQR: gradient flow, natural gradient flow and the quasi-Newton flow. The coercive property suggests that these flows admit unique solutions while gradient dominated property indicates that the corresponding Lyapunov functionals decay at an exponential rate; quadratic growth on the other hand guarantees that the trajectories of these flows are exponentially stable in the sense of Lyapunov.}
+}
+
+@incollection{busoniuApproximateDynamicProgramming2010,
+  title = {Approximate Dynamic Programming and Reinforcement Learning},
+  booktitle = {Interactive {{Collaborative Information Systems}}},
+  author = {Busoniu, L. and De Schutter, B. and Babu{\v s}ka, R.},
+  editor = {Babu{\v s}ka, R. and Groen, F.C.A.},
+  year = {2010},
+  pages = {3--44},
+  publisher = {Springer},
+  abstract = {The increasing complexity of our world demands new perspectives on the role of technology in human decision making. We need new technology to cope with the increasingly complex and information-rich nature of our modern society. This is particularly true for critical environments such as crisis management and traffic management, where humans need to engage in close collaborations with artificial systems to observe and understand the situation and respond in a sensible way. The book Interactive Collaborative Information Systems addresses techniques that support humans in situations in which complex information handling is required and that facilitate distributed decision-making. The theme integrates research from information technology, artificial intelligence and human sciences to obtain a multidisciplinary foundation from which innovative actor-agent systems for critical environments can emerge. It emphasizes the importance of building actor-agent communities: close collaborations between human and artificial actors that highlight their complementary capabilities in situations where task distribution is flexible and adaptive. This book focuses on the employment of innovative agent technology, advanced machine learning techniques, and cognition-based interface technology for the use in collaborative decision support systems.},
+  isbn = {978-3-642-11687-2},
+  langid = {english}
+}
+
+@book{busoniuReinforcementLearningDynamic2010,
+  title = {Reinforcement {{Learning}} and {{Dynamic Programming Using Function Approximators}}},
+  author = {Busoniu, Lucian and Babuska, Robert and De Schutter, Bart and Ernst, Damien},
+  year = {2010},
+  month = apr,
+  edition = {1},
+  publisher = {CRC Press},
+  isbn = {1-4398-2108-9}
+}
+
+@misc{candidoDriftingEfficientlyStratosphere2021,
+  title = {Drifting {{Efficiently Through}} the {{Stratosphere Using Deep Reinforcement Learning}}},
+  author = {Candido, Salvatore},
+  year = {2021},
+  month = aug,
+  journal = {Medium},
+  url = {https://blog.x.company/drifting-efficiently-through-the-stratosphere-using-deep-reinforcement-learning-c38723ee2e90},
+  urldate = {2021-11-12},
+  abstract = {How Loon and Google AI achieved the world's first deployment of reinforcement learning in a production aerospace system},
+  langid = {english}
+}
+
+@book{caoStochasticLearningOptimization2007,
+  title = {Stochastic {{Learning}} and {{Optimization}}: {{A Sensitivity-Based Approach}}},
+  shorttitle = {Stochastic {{Learning}} and {{Optimization}}},
+  author = {Cao, Xi-Ren},
+  year = {2007},
+  publisher = {Springer},
+  address = {New York, NY},
+  url = {https://doi.org/10.1007/978-0-387-69082-7},
+  abstract = {Performance optimization is vital in the design and operation of modern engineering systems, including communications, manufacturing, robotics, and logistics. Most engineering systems are too complicated to model, or the system parameters cannot be easily identified, so learning techniques have to be applied. This book provides a unified framework based on a sensitivity point of view. It also introduces new approaches and proposes new research topics within this sensitivity-based framework. This new perspective on a popular topic is presented by a well respected expert in the field.},
+  isbn = {978-0-387-36787-3}
+}
+
+@phdthesis{fejlekDemonstrationbasedOptimalControl2024,
+  title = {Demonstration-Based {{Optimal Control}} of {{Nonlinear Systems}}},
+  author = {Fejlek, Ji{\v r}{\'i}},
+  year = {2024},
+  address = {Prague, Czechia},
+  school = {Czech Technical University}
+}
+
+@article{francois-lavetIntroductionDeepReinforcement2018,
+  title = {An {{Introduction}} to {{Deep Reinforcement Learning}}},
+  author = {{Francois-Lavet}, Vincent and Henderson, Peter and Islam, Riashat and Bellemare, Marc G. and Pineau, Joelle},
+  year = {2018},
+  journal = {Foundations and Trends{\textregistered} in Machine Learning},
+  volume = {11},
+  number = {3-4},
+  eprint = {1811.12560},
+  pages = {219--354},
+  issn = {1935-8237, 1935-8245},
+  doi = {10.1561/2200000071},
+  url = {http://arxiv.org/abs/1811.12560},
+  urldate = {2020-01-27},
+  abstract = {Deep reinforcement learning is the combination of reinforcement learning (RL) and deep learning. This field of research has been able to solve a wide range of complex decision-making tasks that were previously out of reach for a machine. Thus, deep RL opens up many new applications in domains such as healthcare, robotics, smart grids, finance, and many more. This manuscript provides an introduction to deep reinforcement learning models, algorithms and techniques. Particular focus is on the aspects related to generalization and how deep RL can be used for practical applications. We assume the reader is familiar with basic machine learning concepts.},
+  archiveprefix = {arxiv}
+}
+
+@article{gorgesRelationsModelPredictive2017,
+  title = {Relations between {{Model Predictive Control}} and {{Reinforcement Learning}}},
+  author = {G{\"o}rges, Daniel},
+  year = {2017},
+  month = jul,
+  journal = {IFAC-PapersOnLine},
+  series = {20th {{IFAC World Congress}}},
+  volume = {50},
+  number = {1},
+  pages = {4920--4928},
+  issn = {2405-8963},
+  doi = {10.1016/j.ifacol.2017.08.747},
+  url = {https://www.sciencedirect.com/science/article/pii/S2405896317311941},
+  urldate = {2021-11-11},
+  abstract = {In this paper relations between model predictive control and reinforcement learning are studied for discrete-time linear time-invariant systems with state and input constraints and a quadratic value function. The principles of model predictive control and reinforcement learning are reviewed in a tutorial manner. From model predictive control theory it is inferred that the optimal value function is piecewise quadratic on polyhedra and that the optimal policy is piecewise affine on polyhedra. Various ideas for exploiting the knowledge on the structure and the properties of the optimal value function and the optimal policy in reinforcement learning theory and practice are presented. The ideas can be used for deriving stability and feasibility criteria and for accelerating the learning process which can facilitate reinforcement learning for systems with high order, fast dynamics, and strict safety requirements.},
+  langid = {english}
+}
+
+@book{gosaviSimulationBasedOptimizationParametric2015,
+  title = {Simulation-{{Based Optimization}}: {{Parametric Optimization Techniques}} and {{Reinforcement Learning}}},
+  author = {Gosavi, Abhijt},
+  year = {2015},
+  series = {Operations {{Research}}/{{Computer Science Interfaces Series}}},
+  edition = {2},
+  number = {55},
+  publisher = {Springer},
+  address = {New York, NY},
+  url = {https://doi.org/10.1007/978-1-4899-7491-4},
+  urldate = {2023-01-26},
+  isbn = {978-1-4899-7490-7}
+}
+
+@misc{hasseltReinforcementLearningLecture2021,
+  type = {{Course}},
+  title = {{Reinforcement Learning Lecture Series 2021}},
+  author = {van Hasselt, Hado and Borsa, Diana and Hessel, Matteo},
+  year = {2021},
+  journal = {Deepmind},
+  url = {https://deepmind.com/learning-resources/reinforcement-learning-series-2021},
+  urldate = {2021-11-20},
+  abstract = {We research and build safe AI systems that learn how to solve problems and advance scientific discovery for all. Explore our work: deepmind.com/research},
+  langid = {ALL}
+}
+
+@article{hauserGaussianProcessBased2019,
+  title = {Gaussian {{Process Based Model-free Control}} with {{Q-Learning}}},
+  author = {Hauser, Jan and Pachner, Daniel and Havlena, Vladim{\'i}r},
+  year = {2019},
+  month = jan,
+  journal = {IFAC-PapersOnLine},
+  series = {5th {{IFAC Conference}} on {{Intelligent Control}} and {{Automation Sciences ICONS}} 2019},
+  volume = {52},
+  number = {11},
+  pages = {236--243},
+  issn = {2405-8963},
+  doi = {10.1016/j.ifacol.2019.09.147},
+  url = {https://www.sciencedirect.com/science/article/pii/S2405896319307797},
+  urldate = {2021-10-13},
+  abstract = {The aim of this paper is to demonstrate a new algorithm for Machine Learning (ML) based on Gaussian Process Regression (GPR) and how it can be used as a practical control design technique. An optimized control law for a nonlinear process is found directly by training the algorithm on noisy data collected from the process when controlled by a sub-optimal controller. A simplified nonlinear Fan Coil Unit (FCU) model is used as an example for which the fan speed control is designed using the off-policy Q-learning algorithm. Additionally, the algorithm properties are discussed, i.e. learning process robustness, Gaussian Process (GP) kernel functions choice. The simulation results are compared to a simple PI design based on a linearized model.},
+  langid = {english}
+}
+
+@mastersthesis{hodanReinforcementLearningbasedControl2023,
+  title = {Reinforcement Learning-Based Control System for the {{Sk8o}} Robot},
+  author = {Hodan, Dominik},
+  year = {2023},
+  month = jun,
+  address = {Prague},
+  school = {Czech Technical University}
+}
+
+@article{huReinforcementLearningHybrid2019,
+  title = {Reinforcement {{Learning}} for {{Hybrid}} and {{Plug-In Hybrid Electric Vehicle Energy Management}}: {{Recent Advances}} and {{Prospects}}},
+  shorttitle = {Reinforcement {{Learning}} for {{Hybrid}} and {{Plug-In Hybrid Electric Vehicle Energy Management}}},
+  author = {Hu, Xiaosong and Liu, Teng and Qi, Xuewei and Barth, Matthew},
+  year = {2019},
+  month = sep,
+  journal = {IEEE Industrial Electronics Magazine},
+  volume = {13},
+  number = {3},
+  pages = {16--25},
+  issn = {1941-0115},
+  doi = {10.1109/MIE.2019.2913015},
+  abstract = {Energy management is a critical technology in plug-in hybrid-electric vehicles (PHEVs) for maximizing efficiency, fuel economy, and range, as well as reducing pollutant emissions. At the same time, deep reinforcement learning (DRL) has become an effective and important methodology to formulate model-free and realtime energy-management strategies for HEVs and PHEVs. In this article, we describe the energy-management issues of HEVs/PHEVs and summarize a variety of potential DRL applications for onboard energy management. In addition to the control objective and constraints, an elaborate model of the powertrain components is necessary as part of the solution. For example, the modeling of an engine involves the calculation of the fuel consumption, an estimate of efficiency, and the derivation of the torque and angular speed. Also, a computation of efficiency and an expression of the power balance are required for motor modeling. The transfer process of the speed and power from the motor/generator to the final drive is part of the transmission modeling.}
+}
+
+@book{kamalapurkarReinforcementLearningOptimal2018,
+  title = {Reinforcement {{Learning}} for {{Optimal Feedback Control}}: {{A Lyapunov-Based Approach}}},
+  shorttitle = {Reinforcement {{Learning}} for {{Optimal Feedback Control}}},
+  author = {Kamalapurkar, Rushikesh and Walters, Patrick and Rosenfeld, Joel and Dixon, Warren},
+  year = {2018},
+  month = may,
+  edition = {1st ed. 2018 edition},
+  publisher = {Springer},
+  address = {New York, NY},
+  isbn = {978-3-319-78383-3},
+  langid = {english}
+}
+
+@article{kaufmannChampionlevelDroneRacing2023,
+  title = {Champion-Level Drone Racing Using Deep Reinforcement Learning},
+  author = {Kaufmann, Elia and Bauersfeld, Leonard and Loquercio, Antonio and M{\"u}ller, Matthias and Koltun, Vladlen and Scaramuzza, Davide},
+  year = {2023},
+  month = aug,
+  journal = {Nature},
+  volume = {620},
+  number = {7976},
+  pages = {982--987},
+  publisher = {Nature Publishing Group},
+  issn = {1476-4687},
+  doi = {10.1038/s41586-023-06419-4},
+  url = {https://www.nature.com/articles/s41586-023-06419-4},
+  urldate = {2023-09-07},
+  abstract = {First-person view (FPV) drone racing is a televised sport in which professional competitors pilot high-speed aircraft through a 3D circuit. Each pilot sees the environment from the perspective of their drone by means of video streamed from an onboard camera. Reaching the level of professional pilots with an autonomous drone is challenging because the robot needs to fly at its physical limits while estimating its speed and location in the circuit exclusively from onboard sensors1. Here we introduce Swift, an autonomous system that can race physical vehicles at the level of the human world champions. The system combines deep reinforcement learning (RL) in simulation with data collected in the physical world. Swift competed against three human champions, including the world champions of two international leagues, in real-world head-to-head races. Swift won several races against each of the human champions and demonstrated the fastest recorded race time. This work represents a milestone for mobile robotics and machine intelligence2, which may inspire the deployment of hybrid learning-based solutions in other physical systems.},
+  copyright = {2023 The Author(s)},
+  langid = {english}
+}
+
+@article{kiumarsiOptimalAutonomousControl2018,
+  title = {Optimal and {{Autonomous Control Using Reinforcement Learning}}: {{A Survey}}},
+  shorttitle = {Optimal and {{Autonomous Control Using Reinforcement Learning}}},
+  author = {Kiumarsi, Bahare and Vamvoudakis, Kyriakos G. and Modares, Hamidreza and Lewis, Frank L.},
+  year = {2018},
+  month = jun,
+  journal = {IEEE Transactions on Neural Networks and Learning Systems},
+  volume = {29},
+  number = {6},
+  pages = {2042--2062},
+  issn = {2162-2388},
+  doi = {10.1109/TNNLS.2017.2773458},
+  abstract = {This paper reviews the current state of the art on reinforcement learning (RL)-based feedback control solutions to optimal regulation and tracking of single and multiagent systems. Existing RL solutions to both optimal H2 and H{$\infty$} control problems, as well as graphical games, will be reviewed. RL methods learn the solution to optimal control and game problems online and using measured data along the system trajectories. We discuss Q-learning and the integral RL algorithm as core algorithms for discrete-time (DT) and continuous-time (CT) systems, respectively. Moreover, we discuss a new direction of off-policy RL for both CT and DT systems. Finally, we review several applications.}
+}
+
+@book{kochenderferAlgorithmsDecisionMaking2022,
+  title = {Algorithms for Decision Making},
+  author = {Kochenderfer, Mykel J. and Wheeler, Tim A. and Wray, Kyle H.},
+  year = {2022},
+  publisher = {MIT Press},
+  url = {https://algorithmsbook.com/#download},
+  isbn = {978-0-262-04701-2}
+}
+
+@inproceedings{kooiInclinedQuadrotorLanding2021,
+  title = {Inclined {{Quadrotor Landing}} Using {{Deep Reinforcement Learning}}},
+  booktitle = {2021 {{IEEE}}/{{RSJ International Conference}} on {{Intelligent Robots}} and {{Systems}} ({{IROS}})},
+  author = {Kooi, Jacob E. and Babu{\v s}ka, Robert},
+  year = {2021},
+  month = sep,
+  pages = {2361--2368},
+  issn = {2153-0866},
+  doi = {10.1109/IROS51168.2021.9636096},
+  abstract = {Landing a quadrotor on an inclined surface is a challenging maneuver. The final state of any inclined landing trajectory is not an equilibrium, which precludes the use of most conventional control methods. We propose a deep reinforcement learning approach to design an autonomous landing controller for inclined surfaces. Using the proximal policy optimization (PPO) algorithm with sparse rewards and a tailored curriculum learning approach, an inclined landing policy can be trained in simulation in less than 90 minutes on a standard laptop. The policy then directly runs on a real Crazyflie 2.1 quadrotor and successfully performs real inclined landings in a flying arena. A single policy evaluation takes approximately 2.5 ms, which makes it suitable for a future embedded implementation on the quadrotor.}
+}
+
+@article{kubalikSymbolicRegressionMethods2021,
+  title = {Symbolic {{Regression Methods}} for {{Reinforcement Learning}}},
+  author = {Kubal{\'i}k, Ji{\v r}{\'i} and Derner, Erik and {\v Z}egklitz, Jan and Babu{\v s}ka, Robert},
+  year = {2021},
+  journal = {IEEE Access},
+  volume = {9},
+  pages = {139697--139711},
+  issn = {2169-3536},
+  doi = {10.1109/ACCESS.2021.3119000},
+  abstract = {Reinforcement learning algorithms can solve dynamic decision-making and optimal control problems. With continuous-valued state and input variables, reinforcement learning algorithms must rely on function approximators to represent the value function and policy mappings. Commonly used numerical approximators, such as neural networks or basis function expansions, have two main drawbacks: they are black-box models offering little insight into the mappings learned, and they require extensive trial and error tuning of their hyper-parameters. In this paper, we propose a new approach to constructing smooth value functions in the form of analytic expressions by using symbolic regression. We introduce three off-line methods for finding value functions based on a state-transition model: symbolic value iteration, symbolic policy iteration, and a direct solution of the Bellman equation. The methods are illustrated on four nonlinear control problems: velocity control under friction, one-link and two-link pendulum swing-up, and magnetic manipulation. The results show that the value functions yield well-performing policies and are compact, mathematically tractable, and easy to plug into other algorithms. This makes them potentially suitable for further analysis of the closed-loop system. A comparison with an alternative approach using neural networks shows that our method outperforms the neural network-based one.}
+}
+
+@article{lagoudakisLeastsquaresPolicyIteration2003,
+  title = {Least-Squares Policy Iteration},
+  author = {Lagoudakis, Michail G. and Parr, Ronald},
+  year = {2003},
+  month = dec,
+  journal = {The Journal of Machine Learning Research},
+  volume = {4},
+  number = {null},
+  pages = {1107--1149},
+  issn = {1532-4435},
+  abstract = {We propose a new approach to reinforcement learning for control problems which combines value-function approximation with linear architectures and approximate policy iteration. This new approach is motivated by the least-squares temporal-difference learning algorithm (LSTD) for prediction problems, which is known for its efficient use of sample experiences compared to pure temporal-difference algorithms. Heretofore, LSTD has not had a straightforward application to control problems mainly because LSTD learns the state value function of a fixed policy which cannot be used for action selection and control without a model of the underlying process. Our new algorithm, least-squares policy iteration (LSPI), learns the state-action value function which allows for action selection without a model and for incremental policy improvement within a policy-iteration framework. LSPI is a model-free, off-policy method which can use efficiently (and reuse in each iteration) sample experiences collected in any manner. By separating the sample collection method, the choice of the linear approximation architecture, and the solution method, LSPI allows for focused attention on the distinct elements that contribute to practical reinforcement learning. LSPI is tested on the simple task of balancing an inverted pendulum and the harder task of balancing and riding a bicycle to a target location. In both cases, LSPI learns to control the pendulum or the bicycle by merely observing a relatively small number of trials where actions are selected randomly. LSPI is also compared against Q-learning (both with and without experience replay) using the same value function architecture. While LSPI achieves good performance fairly consistently on the difficult bicycle task, Q-learning variants were rarely able to balance for more than a small fraction of the time needed to reach the target location.}
+}
+
+@misc{leeFundamentalLimitationsLearning2023,
+  title = {The {{Fundamental Limitations}} of {{Learning Linear-Quadratic Regulators}}},
+  author = {Lee, Bruce D. and Ziemann, Ingvar and Tsiamis, Anastasios and Sandberg, Henrik and Matni, Nikolai},
+  year = {2023},
+  month = mar,
+  number = {arXiv:2303.15637},
+  eprint = {2303.15637},
+  primaryclass = {cs, eess},
+  publisher = {arXiv},
+  url = {http://arxiv.org/abs/2303.15637},
+  urldate = {2023-04-01},
+  abstract = {We present a local minimax lower bound on the excess cost of designing a linear-quadratic controller from offline data. The bound is valid for any offline exploration policy that consists of a stabilizing controller and an energy bounded exploratory input. The derivation leverages a relaxation of the minimax estimation problem to Bayesian estimation, and an application of Van Trees' inequality. We show that the bound aligns with system-theoretic intuition. In particular, we demonstrate that the lower bound increases when the optimal control objective value increases. We also show that the lower bound increases when the system is poorly excitable, as characterized by the spectrum of the controllability gramian of the system mapping the noise to the state and the \${\textbackslash}mathcal\{H\}\_{\textbackslash}infty\$ norm of the system mapping the input to the state. We further show that for some classes of systems, the lower bound may be exponential in the state dimension, demonstrating exponential sample complexity for learning the linear-quadratic regulator offline.},
+  archiveprefix = {arxiv}
+}
+
+@article{leeIntegralQlearningExplorized2012,
+  title = {Integral {{Q-learning}} and Explorized Policy Iteration for Adaptive Optimal Control of Continuous-Time Linear Systems},
+  author = {Lee, Jae Young and Park, Jin Bae and Choi, Yoon Ho},
+  year = {2012},
+  month = nov,
+  journal = {Automatica},
+  volume = {48},
+  number = {11},
+  pages = {2850--2859},
+  issn = {0005-1098},
+  doi = {10.1016/j.automatica.2012.06.008},
+  url = {https://www.sciencedirect.com/science/article/pii/S0005109812002592},
+  urldate = {2021-11-11},
+  abstract = {This paper proposes an integral Q-learning for continuous-time (CT) linear time-invariant (LTI) systems, which solves a linear quadratic regulation (LQR) problem in real time for a given system and a value function, without knowledge about the system dynamics A and B. Here, Q-learning is referred to as a family of reinforcement learning methods which find the optimal policy by interaction with an uncertain environment. In the evolution of the algorithm, we first develop an explorized policy iteration (PI) method which is able to deal with known exploration signals. Then, the integral Q-learning algorithm for CT LTI systems is derived based on this PI and the variants of Q-functions derived from the singular perturbation of the control input. The proposed Q-learning scheme evaluates the current value function and the improved control policy at the same time, and are proven stable and convergent to the LQ optimal solution, provided that the initial policy is stabilizing. For the proposed algorithms, practical online implementation methods are investigated in terms of persistency of excitation (PE) and explorations. Finally, simulation results are provided for the better comparison and verification of the performance.},
+  langid = {english}
+}
+
+@article{leePrimalDualQLearningFramework2019,
+  title = {Primal-{{Dual Q-Learning Framework}} for {{LQR Design}}},
+  author = {Lee, Donghwan and Hu, Jianghai},
+  year = {2019},
+  month = sep,
+  journal = {IEEE Transactions on Automatic Control},
+  volume = {64},
+  number = {9},
+  pages = {3756--3763},
+  issn = {1558-2523},
+  doi = {10.1109/TAC.2018.2884649},
+  abstract = {Recently, reinforcement learning (RL) is receiving more and more attentions due to its successful demonstrations outperforming human performance in certain challenging tasks. The goal of this paper is to study a new optimization formulation of the linear quadratic regulator (LQR) problem via the Lagrangian duality theories in order to lay theoretical foundations of potentially effective RL algorithms. The new optimization problem includes the Q-function parameters so that it can be directly used to develop Q-learning algorithms, known to be one of the most popular RL algorithms. We prove relations between saddle-points of the Lagrangian function and the optimal solutions of the Bellman equation. As an example of its applications, we propose a model-free primal-dual Q-learning algorithm to solve the LQR problem and demonstrate its validity through examples.}
+}
+
+@inproceedings{levineGuidedPolicySearch2013,
+  title = {Guided {{Policy Search}}},
+  booktitle = {Proceedings of the 30th {{International Conference}} on {{Machine Learning}}},
+  author = {Levine, Sergey and Koltun, Vladlen},
+  year = {2013},
+  month = may,
+  pages = {1--9},
+  publisher = {PMLR},
+  issn = {1938-7228},
+  url = {https://proceedings.mlr.press/v28/levine13.html},
+  urldate = {2021-11-26},
+  abstract = {Direct policy search can effectively scale to high-dimensional systems, but complex policies with hundreds of parameters often present a challenge for such methods, requiring numerous samples and often falling into poor local optima. We present a guided policy search algorithm that uses trajectory optimization to direct policy learning and avoid poor local optima. We show how differential dynamic programming can be used to generate suitable guiding samples, and describe a regularized importance sampled policy optimization that incorporates these samples into the policy search. We evaluate the method by learning neural network controllers for planar swimming, hopping, and walking, as well as simulated 3D humanoid running.},
+  langid = {english}
+}
+
+@article{lewisReinforcementLearningAdaptive2009,
+  title = {Reinforcement Learning and Adaptive Dynamic Programming for Feedback Control},
+  author = {Lewis, Frank L. and Vrabie, Draguna},
+  year = {Third 2009},
+  journal = {IEEE Circuits and Systems Magazine},
+  volume = {9},
+  number = {3},
+  pages = {32--50},
+  issn = {1558-0830},
+  doi = {10.1109/MCAS.2009.933854},
+  abstract = {Living organisms learn by acting on their environment, observing the resulting reward stimulus, and adjusting their actions accordingly to improve the reward. This action-based or reinforcement learning can capture notions of optimal behavior occurring in natural systems. We describe mathematical formulations for reinforcement learning and a practical implementation method known as adaptive dynamic programming. These give us insight into the design of controllers for man-made engineered systems that both learn and exhibit optimal behavior.}
+}
+
+@book{lewisReinforcementLearningApproximate2013,
+  title = {Reinforcement {{Learning}} and {{Approximate Dynamic Programming}} for {{Feedback Control}}},
+  author = {Lewis, Frank L. and Liu, Derong},
+  year = {2013},
+  month = jan,
+  publisher = {John Wiley \& Sons},
+  abstract = {Reinforcement learning (RL) and adaptive dynamic programming (ADP) has been one of the most critical research fields in science and engineering for modern complex systems. This book describes the latest RL and ADP techniques for decision and control in human engineered systems, covering both single player decision and control and multi-player games. Edited by the pioneers of RL and ADP research, the book brings together ideas and methods from many fields and provides an important and timely guidance on controlling a wide variety of systems, such as robots, industrial processes, and economic decision-making.},
+  isbn = {978-1-118-45397-1},
+  langid = {english}
+}
+
+@article{lewisReinforcementLearningFeedback2012,
+  title = {Reinforcement {{Learning}} and {{Feedback Control}}: {{Using Natural Decision Methods}} to {{Design Optimal Adaptive Controllers}}},
+  shorttitle = {Reinforcement {{Learning}} and {{Feedback Control}}},
+  author = {Lewis, Frank L. and Vrabie, Draguna and Vamvoudakis, Kyriakos G.},
+  year = {2012},
+  month = dec,
+  journal = {IEEE Control Systems Magazine},
+  volume = {32},
+  number = {6},
+  pages = {76--105},
+  issn = {1941-000X},
+  doi = {10.1109/MCS.2012.2214134},
+  abstract = {This article describes the use of principles of reinforcement learning to design feedback controllers for discrete- and continuous-time dynamical systems that combine features of adaptive control and optimal control. Adaptive control [1], [2] and optimal control [3] represent different philosophies for designing feedback controllers. Optimal controllers are normally designed of ine by solving Hamilton JacobiBellman (HJB) equations, for example, the Riccati equation, using complete knowledge of the system dynamics. Determining optimal control policies for nonlinear systems requires the offline solution of nonlinear HJB equations, which are often difficult or impossible to solve. By contrast, adaptive controllers learn online to control unknown systems using data measured in real time along the system trajectories. Adaptive controllers are not usually designed to be optimal in the sense of minimizing user-prescribed performance functions. Indirect adaptive controllers use system identification techniques to first identify the system parameters and then use the obtained model to solve optimal design equations [1]. Adaptive controllers may satisfy certain inverse optimality conditions [4].}
+}
+
+@incollection{lewisReinforcementLearningOptimal2012,
+  title = {Reinforcement Learning and Optimal Adaptive Control},
+  author = {Lewis, Frank L. and Vrabie, Draguna and Syrmos, Vassilis L.},
+  year = {2012},
+  month = feb,
+  edition = {3},
+  isbn = {978-0-470-63349-6}
+}
+
+@book{liReinforcementLearningOptimal2023,
+  title = {Reinforcement {{Learning}}: {{Optimal Feedback Control}} with {{Industrial Applications}}},
+  shorttitle = {Reinforcement {{Learning}}},
+  author = {Li, Jinna and Lewis, Frank L. and Fan, Jialu},
+  year = {2023},
+  month = jul,
+  series = {Advances in {{Industrial Control}}},
+  publisher = {Springer},
+  address = {Cham},
+  url = {https://doi.org/10.1007/978-3-031-28394-9},
+  abstract = {This book offers a thorough introduction to the basics and scientific and technological innovations involved in the modern study of reinforcement-learning-based feedback control. The authors address a wide variety of systems including work on nonlinear, networked, multi-agent and multi-player systems.A concise description of classical reinforcement learning (RL), the basics of optimal control with dynamic programming and network control architectures, and a brief introduction to typical algorithms build the foundation for the remainder of the book. Extensive research on data-driven robust control for nonlinear systems with unknown dynamics and multi-player systems follows. Data-driven optimal control of networked single- and multi-player systems leads readers into the development of novel RL algorithms with increased learning efficiency. The book concludes with a treatment of how these RL algorithms can achieve optimal synchronization policies for multi-agentsystems with unknown model parameters and how game RL can solve problems of optimal operation in various process industries. Illustrative numerical examples and complex process control applications emphasize the realistic usefulness of the algorithms discussed. The combination of practical algorithms, theoretical analysis and comprehensive examples presented in Reinforcement Learning will interest researchers and practitioners studying or using optimal and adaptive control, machine learning, artificial intelligence, and operations research, whether advancing the theory or applying it in mineral-process, chemical-process, power-supply or other industries.},
+  isbn = {978-3-031-28393-2},
+  langid = {english}
+}
+
+@article{mehtaConvexQLearningPart2020,
+  title = {Convex {{Q-Learning}}, {{Part}} 1: {{Deterministic Optimal Control}}},
+  shorttitle = {Convex {{Q-Learning}}, {{Part}} 1},
+  author = {Mehta, Prashant G. and Meyn, Sean P.},
+  year = {2020},
+  month = aug,
+  journal = {arXiv:2008.03559 [cs, math]},
+  eprint = {2008.03559},
+  primaryclass = {cs, math},
+  url = {http://arxiv.org/abs/2008.03559},
+  urldate = {2021-11-12},
+  abstract = {It is well known that the extension of Watkins' algorithm to general function approximation settings is challenging: does the projected Bellman equation have a solution? If so, is the solution useful in the sense of generating a good policy? And, if the preceding questions are answered in the affirmative, is the algorithm consistent? These questions are unanswered even in the special case of Q-function approximations that are linear in the parameter. The challenge seems paradoxical, given the long history of convex analytic approaches to dynamic programming. The paper begins with a brief survey of linear programming approaches to optimal control, leading to a particular over parameterization that lends itself to applications in reinforcement learning. The main conclusions are summarized as follows: (i) The new class of convex Q-learning algorithms is introduced based on the convex relaxation of the Bellman equation. Convergence is established under general conditions, including a linear function approximation for the Q-function. (ii) A batch implementation appears similar to the famed DQN algorithm (one engine behind AlphaZero). It is shown that in fact the algorithms are very different: while convex Q-learning solves a convex program that approximates the Bellman equation, theory for DQN is no stronger than for Watkins' algorithm with function approximation: (a) it is shown that both seek solutions to the same fixed point equation, and (b) the ODE approximations for the two algorithms coincide, and little is known about the stability of this ODE. These results are obtained for deterministic nonlinear systems with total cost criterion. Many extensions are proposed, including kernel implementation, and extension to MDP models.},
+  archiveprefix = {arxiv}
+}
+
+@book{meynControlSystemsReinforcement2022,
+  title = {Control {{Systems}} and {{Reinforcement Learning}}},
+  author = {Meyn, Sean},
+  year = {2022},
+  month = may,
+  publisher = {Cambridge University Press},
+  url = {https://meyn.ece.ufl.edu/control-systems-and-reinforcement-learning/},
+  urldate = {2021-08-25},
+  abstract = {A product of decades of teaching and research on RL and stochastic control. This page contains a link to the August 4 draft, and will soon contain links to supplementary material.},
+  isbn = {978-1-316-51196-1},
+  langid = {american}
+}
+
+@article{moerlandModelbasedReinforcementLearning2021,
+  title = {Model-Based {{Reinforcement Learning}}: {{A Survey}}},
+  shorttitle = {Model-Based {{Reinforcement Learning}}},
+  author = {Moerland, Thomas M. and Broekens, Joost and Jonker, Catholijn M.},
+  year = {2021},
+  month = feb,
+  journal = {arXiv:2006.16712 [cs, stat]},
+  eprint = {2006.16712},
+  primaryclass = {cs, stat},
+  url = {http://arxiv.org/abs/2006.16712},
+  urldate = {2021-11-22},
+  abstract = {Sequential decision making, commonly formalized as Markov Decision Process (MDP) optimization, is a key challenge in artificial intelligence. Two key approaches to this problem are reinforcement learning (RL) and planning. This paper presents a survey of the integration of both fields, better known as model-based reinforcement learning. Model-based RL has two main steps. First, we systematically cover approaches to dynamics model learning, including challenges like dealing with stochasticity, uncertainty, partial observability, and temporal abstraction. Second, we present a systematic categorization of planning-learning integration, including aspects like: where to start planning, what budgets to allocate to planning and real data collection, how to plan, and how to integrate planning in the learning and acting loop. After these two section, we also discuss implicit model-based RL as an end-to-end alternative for model learning and planning, and we cover the potential benefits of model-based RL, like enhanced data efficiency, targeted exploration, and improved stability. The survey also draws connection to several related RL fields, like hierarchical RL and transfer. Altogether, the survey presents a broad conceptual overview of planning-learning combinations for MDP optimization.},
+  archiveprefix = {arxiv}
+}
+
+@inproceedings{mordatchModelBasedMethodsReinforcement2020,
+  title = {{Model-Based Methods in Reinforcement Learning}},
+  booktitle = {{International Conference on Machine Learning (ICML)}},
+  author = {Mordatch, Igor and Hamrick, Jessica},
+  year = {2020},
+  url = {https://sites.google.com/view/mbrl-tutorial},
+  urldate = {2021-11-22},
+  abstract = {Abstract},
+  langid = {czech}
+}
+
+@book{powellOptimalLearning2012,
+  title = {Optimal {{Learning}}},
+  author = {Powell, Warren B. and Ryzhov, Ilya O.},
+  year = {2012},
+  month = apr,
+  edition = {1},
+  publisher = {Wiley},
+  isbn = {0-470-59669-4}
+}
+
+@book{powellReinforcementLearningStochastic2022,
+  title = {Reinforcement {{Learning}} and {{Stochastic Optimization}}: {{A}} Unified Framework for Sequential Decisions},
+  author = {Powell, Warren B.},
+  year = {2022},
+  month = mar,
+  publisher = {Wiley},
+  url = {https://castlelab.princeton.edu/rlso/},
+  urldate = {2021-08-25},
+  abstract = {Sequential decision problems, which consist of ``decision, information, decision, information,'' are ubiquitous, spanning virtually every human activity ranging from business applications, health (personal and public health, and medical decision making), energy, the sciences, all fields of engineering, finance, and e-commerce. The diversity of applications attracted the attention of at least 15 distinct fields of research, using eight distinct notational systems which produced a vast array of analytical tools. A byproduct is that powerful tools developed in one community may be unknown to other communities. Reinforcement Learning and Stochastic Optimization offers a single canonical framework that can model any sequential decision problem using five core components: state variables, decision variables, exogenous information variables, transition function, and objective function. This book highlights twelve types of uncertainty that might enter any model and pulls together the diverse set of methods for making decisions, known as policies, into four fundamental classes that span every method suggested in the academic literature or used in practice. Reinforcement Learning and Stochastic Optimization is the first book to provide a balanced treatment of the different methods for modeling and solving sequential decision problems, following the style used by most books on machine learning, optimization, and simulation. The presentation is designed for readers with a course in probability and statistics, and an interest in modeling and applications. Linear programming is occasionally used for specific problem classes. The book is designed for readers who are new to the field, as well as those with some background in optimization under uncertainty. Throughout this book, readers will find references to over 100 different applications, spanning pure learning problems, dynamic resource allocation problems, general state-dependent problems, and hybrid learning/resource allocation problems such as those that arose in the COVID pandemic. There are 370 exercises, organized into seven groups, ranging from review questions, modeling, computation, problem solving, theory, programming exercises and a ``diary problem'' that a reader chooses at the beginning of the book, and which is used as a basis for questions throughout the rest of the book.},
+  isbn = {978-1-119-81503-7},
+  langid = {american}
+}
+
+@book{putermanMarkovDecisionProcesses2005,
+  title = {Markov {{Decision Processes}}: {{Discrete Stochastic Dynamic Programming}}},
+  shorttitle = {Markov {{Decision Processes}}},
+  author = {Puterman, Martin L.},
+  year = {2005},
+  series = {Wiley {{Series}} in {{Probability}} and {{Statistics}}},
+  publisher = {Wiley-Interscience},
+  address = {Hoboken, NJ},
+  url = {https://www.wiley.com/en-us/Markov+Decision+Processes%3A+Discrete+Stochastic+Dynamic+Programming-p-9780471727828},
+  abstract = {The Wiley-Interscience Paperback Series consists of selected books that have been made more accessible to consumers in an effort to increase global appeal and general circulation. With these new unabridged softcover volumes, Wiley hopes to extend the lives of these works by making them available to future generations of statisticians, mathematicians, and scientists."This text is unique in bringing together so many results hitherto found only in part in other texts and papers. . . . The text is fairly self-contained, inclusive of some basic mathematical results needed, and provides a rich diet of examples, applications, and exercises. The bibliographical material at the end of each chapter is excellent, not only from a historical perspective, but because it is valuable for researchers in acquiring a good perspective of the MDP research potential."{\texthorizontalbar}Zentralblatt fur Mathematik". . . it is of great value to advanced-level students, researchers, and professional practitioners of this field to have now a complete volume (with more than 600 pages) devoted to this topic. . . . Markov Decision Processes: Discrete Stochastic Dynamic Programming represents an up-to-date, unified, and rigorous treatment of theoretical and computational aspects of discrete-time Markov decision processes."{\texthorizontalbar}Journal of the American Statistical Association},
+  isbn = {978-0-471-72782-8},
+  langid = {english}
+}
+
+@misc{rechtArgMin,
+  type = {Blog},
+  title = {Arg Min},
+  author = {Recht, Benjamin},
+  journal = {arg min blog},
+  url = {http://benjamin-recht.github.io/},
+  urldate = {2021-11-14},
+  abstract = {Musings on systems, information, learning, and optimization.}
+}
+
+@misc{rechtOutsiderTourReinforcement2018,
+  type = {Blog},
+  title = {An {{Outsider}}'s {{Tour}} of {{Reinforcement Learning}}},
+  author = {Recht, Benjamin},
+  year = {2018},
+  month = jun,
+  journal = {arg min blog},
+  url = {http://benjamin-recht.github.io/2018/06/25/outsider-rl/},
+  urldate = {2021-11-14},
+  abstract = {Musings on systems, information, learning, and optimization.}
+}
+
+@article{rechtTourReinforcementLearning2019,
+  title = {A {{Tour}} of {{Reinforcement Learning}}: {{The View}} from {{Continuous Control}}},
+  shorttitle = {A {{Tour}} of {{Reinforcement Learning}}},
+  author = {Recht, Benjamin},
+  year = {2019},
+  journal = {Annual Review of Control, Robotics, and Autonomous Systems},
+  volume = {2},
+  number = {1},
+  pages = {253--279},
+  doi = {10.1146/annurev-control-053018-023825},
+  url = {https://doi.org/10.1146/annurev-control-053018-023825},
+  urldate = {2021-09-10},
+  abstract = {This article surveys reinforcement learning from the perspective of optimization and control, with a focus on continuous control applications. It reviews the general formulation, terminology, and typical experimental implementations of reinforcement learning as well as competing solution paradigms. In order to compare the relative merits of various techniques, it presents a case study of the linear quadratic regulator (LQR) with unknown dynamics, perhaps the simplest and best-studied problem in optimal control. It also describes how merging techniques from learning theory and control can provide nonasymptotic characterizations of LQR performance and shows that these characterizations tend to match experimental behavior. In turn, when revisiting more complex applications, many of the observed phenomena in LQR persist. In particular, theory and experiment demonstrate the role and importance of models and the cost of generality in reinforcement learning algorithms. The article concludes with a discussion of some of the challenges in designing learning systems that safely and reliably interact with complex and uncertain environments and how tools from reinforcement learning and control might be combined to approach these challenges.}
+}
+
+@misc{ReinforcementLearningMATLAB,
+  title = {Reinforcement Learning with {{MATLAB}} and {{Simulink}}},
+  publisher = {The Mathworks},
+  url = {https://www.mathworks.com/campaigns/offers/reinforcement-learning-with-matlab-ebook.html},
+  urldate = {2021-11-19}
+}
+
+@misc{RlCompetition,
+  title = {Rl-{{Competition}}},
+  url = {http://www.rl-competition.org/},
+  urldate = {2013-05-05}
+}
+
+@misc{silverIntroductionReinforcementLearning2015,
+  type = {Course},
+  title = {Introduction to Reinforcement Learning},
+  author = {Silver, David},
+  year = {2015},
+  journal = {Deepmind},
+  url = {https://deepmind.com/learning-resources/-introduction-reinforcement-learning-david-silver},
+  urldate = {2021-11-19},
+  abstract = {We research and build safe AI systems that learn how to solve problems and advance scientific discovery for all. Explore our work: deepmind.com/research}
+}
+
+@article{singhReinforcementLearningRobotic2022,
+  title = {Reinforcement Learning in Robotic Applications: A Comprehensive Survey},
+  shorttitle = {Reinforcement Learning in Robotic Applications},
+  author = {Singh, Bharat and Kumar, Rajesh and Singh, Vinay Pratap},
+  year = {2022},
+  month = feb,
+  journal = {Artificial Intelligence Review},
+  volume = {55},
+  number = {2},
+  pages = {945--990},
+  issn = {1573-7462},
+  doi = {10.1007/s10462-021-09997-9},
+  url = {https://doi.org/10.1007/s10462-021-09997-9},
+  urldate = {2023-09-08},
+  abstract = {In recent trends, artificial intelligence (AI) is used for the creation of complex automated control systems. Still, researchers are trying to make a completely autonomous system that resembles human beings. Researchers working in AI think that there is a strong connection present between the learning pattern of human and AI. They have analyzed that machine learning (ML) algorithms can effectively make self-learning systems. ML algorithms are a sub-field of AI in which reinforcement learning (RL) is the only available methodology that resembles the learning mechanism of the human brain. Therefore, RL must take a key role in the creation of autonomous robotic systems. In recent years, RL has been applied on many platforms of the robotic systems like an air-based, under-water, land-based, etc., and got a lot of success in solving complex tasks. In this paper, a brief overview of the application of reinforcement algorithms in robotic science is presented. This survey offered a comprehensive review based on segments as (1) development of RL (2) types of RL algorithm like; Actor-Critic, DeepRL, multi-agent RL and Human-centered algorithm (3) various applications of RL in robotics based on their usage platforms such as land-based, water-based and air-based, (4) RL algorithms/mechanism used in robotic applications. Finally, an open discussion is provided that potentially raises a range of future research directions in robotics. The objective of this survey is to present a guidance point for future research in a more meaningful direction.},
+  langid = {english}
+}
+
+@article{songReachingLimitAutonomous2023,
+  title = {Reaching the Limit in Autonomous Racing: {{Optimal}} Control versus Reinforcement Learning},
+  shorttitle = {Reaching the Limit in Autonomous Racing},
+  author = {Song, Yunlong and Romero, Angel and M{\"u}ller, Matthias and Koltun, Vladlen and Scaramuzza, Davide},
+  year = {2023},
+  month = sep,
+  journal = {Science Robotics},
+  volume = {8},
+  number = {82},
+  pages = {eadg1462},
+  publisher = {American Association for the Advancement of Science},
+  doi = {10.1126/scirobotics.adg1462},
+  url = {https://www.science.org/doi/full/10.1126/scirobotics.adg1462},
+  urldate = {2023-09-15},
+  abstract = {A central question in robotics is how to design a control system for an agile mobile robot. This paper studies this question systematically, focusing on a challenging setting: autonomous drone racing. We show that a neural network controller trained with reinforcement learning (RL) outperformed optimal control (OC) methods in this setting. We then investigated which fundamental factors have contributed to the success of RL or have limited OC. Our study indicates that the fundamental advantage of RL over OC is not that it optimizes its objective better but that it optimizes a better objective. OC decomposes the problem into planning and control with an explicit intermediate representation, such as a trajectory, that serves as an interface. This decomposition limits the range of behaviors that can be expressed by the controller, leading to inferior control performance when facing unmodeled effects. In contrast, RL can directly optimize a task-level objective and can leverage domain randomization to cope with model uncertainty, allowing the discovery of more robust control responses. Our findings allowed us to push an agile drone to its maximum performance, achieving a peak acceleration greater than 12 times the gravitational acceleration and a peak velocity of 108 kilometers per hour. Our policy achieved superhuman control within minutes of training on a standard workstation. This work presents a milestone in agile robotics and sheds light on the role of RL and OC in robot control.}
+}
+
+@misc{SpinningDeepRL,
+  title = {Spinning {{Up}} in {{Deep RL}}!},
+  url = {https://spinningup.openai.com/en/latest/},
+  urldate = {2020-01-27}
+}
+
+@article{suttonReinforcementLearningDirect1992,
+  title = {Reinforcement Learning Is Direct Adaptive Optimal Control},
+  author = {Sutton, R.S. and Barto, A.G. and Williams, R.J.},
+  year = {1992},
+  month = apr,
+  journal = {IEEE Control Systems Magazine},
+  volume = {12},
+  number = {2},
+  pages = {19--22},
+  issn = {1941-000X},
+  doi = {10.1109/37.126844},
+  abstract = {Neural network reinforcement learning methods are described and considered as a direct approach to adaptive optimal control of nonlinear systems. These methods have their roots in studies of animal learning and in early learning control work. An emerging deeper understanding of these methods is summarized that is obtained by viewing them as a synthesis of dynamic programming and stochastic approximation methods. The focus is on Q-learning systems, which maintain estimates of utilities for all state-action pairs and make use of these estimates to select actions. The use of hybrid direct/indirect methods is briefly discussed.{$<>$}}
+}
+
+@book{suttonReinforcementLearningIntroduction2018,
+  title = {Reinforcement {{Learning}}: {{An Introduction}}},
+  shorttitle = {Reinforcement {{Learning}}},
+  author = {Sutton, Richard S. and Barto, Andrew G.},
+  year = {2018},
+  month = nov,
+  edition = {2},
+  publisher = {A Bradford Book},
+  address = {Cambridge, Massachusetts},
+  url = {http://incompleteideas.net/book/the-book-2nd.html},
+  abstract = {The significantly expanded and updated new edition of a widely used text on reinforcement learning, one of the most active research areas in artificial intelligence.Reinforcement learning, one of the most active research areas in artificial intelligence, is a computational approach to learning whereby an agent tries to maximize the total amount of reward it receives while interacting with a complex, uncertain environment. In Reinforcement Learning, Richard Sutton and Andrew Barto provide a clear and simple account of the field's key ideas and algorithms. This second edition has been significantly expanded and updated, presenting new topics and updating coverage of other topics.Like the first edition, this second edition focuses on core online learning algorithms, with the more mathematical material set off in shaded boxes. Part I covers as much of reinforcement learning as possible without going beyond the tabular case for which exact solutions can be found. Many algorithms presented in this part are new to the second edition, including UCB, Expected Sarsa, and Double Learning. Part II extends these ideas to function approximation, with new sections on such topics as artificial neural networks and the Fourier basis, and offers expanded treatment of off-policy learning and policy-gradient methods. Part III has new chapters on reinforcement learning's relationships to psychology and neuroscience, as well as an updated case-studies chapter including AlphaGo and AlphaGo Zero, Atari game playing, and IBM Watson's wagering strategy. The final chapter discusses the future societal impacts of reinforcement learning.},
+  isbn = {978-0-262-03924-6},
+  langid = {english}
+}
+
+@article{tipaldiReinforcementLearningSpacecraft2022,
+  title = {Reinforcement Learning in Spacecraft Control Applications: {{Advances}}, Prospects, and Challenges},
+  shorttitle = {Reinforcement Learning in Spacecraft Control Applications},
+  author = {Tipaldi, Massimo and Iervolino, Raffaele and Massenio, Paolo Roberto},
+  year = {2022},
+  month = jan,
+  journal = {Annual Reviews in Control},
+  volume = {54},
+  pages = {1--23},
+  issn = {1367-5788},
+  doi = {10.1016/j.arcontrol.2022.07.004},
+  url = {https://www.sciencedirect.com/science/article/pii/S136757882200089X},
+  urldate = {2023-09-08},
+  abstract = {This paper presents and analyzes Reinforcement Learning (RL) based approaches to solve spacecraft control problems. Different application fields are considered, e.g., guidance, navigation and control systems for spacecraft landing on celestial bodies, constellation orbital control, and maneuver planning in orbit transfers. It is discussed how RL solutions can address the emerging needs of designing spacecraft with highly autonomous on-board capabilities and implementing controllers (i.e., RL agents) robust to system uncertainties and adaptive to changing environments. For each application field, the RL framework core elements (e.g., the reward function, the RL algorithm and the environment model used for the RL agent training) are discussed with the aim of providing some guidelines in the formulation of spacecraft control problems via a RL framework. At the same time, the adoption of RL in real space projects is also analyzed. Different open points are identified and discussed, e.g., the availability of high-fidelity simulators for the RL agent training and the verification of RL-based solutions. This way, recommendations for future work are proposed with the aim of reducing the technological gap between the solutions proposed by the academic community and the needs/requirements of the space industry.}
+}
+
+@article{wangReinforcementLearningBuilding2020,
+  title = {Reinforcement Learning for Building Controls: {{The}} Opportunities and Challenges},
+  shorttitle = {Reinforcement Learning for Building Controls},
+  author = {Wang, Zhe and Hong, Tianzhen},
+  year = {2020},
+  month = jul,
+  journal = {Applied Energy},
+  volume = {269},
+  pages = {115036},
+  issn = {0306-2619},
+  doi = {10.1016/j.apenergy.2020.115036},
+  url = {https://www.sciencedirect.com/science/article/pii/S0306261920305481},
+  urldate = {2023-09-08},
+  abstract = {Building controls are becoming more important and complicated due to the dynamic and stochastic energy demand, on-site intermittent energy supply, as well as energy storage, making it difficult for them to be optimized by conventional control techniques. Reinforcement Learning (RL), as an emerging control technique, has attracted growing research interest and demonstrated its potential to enhance building performance while addressing some limitations of other advanced control techniques, such as model predictive control. This study conducted a comprehensive review of existing studies that applied RL for building controls. It provided a detailed breakdown of the existing RL studies that use a specific variation of each major component of the Reinforcement Learning: algorithm, state, action, reward, and environment. We found RL for building controls is still in the research stage with limited applications (11\%) in real buildings. Three significant barriers prevent the adoption of RL controllers in actual building controls: (1) the training process is time consuming and data demanding, (2) the control security and robustness need to be enhanced, and (3) the generalization capabilities of RL controllers need to be improved using approaches such as transfer learning. Future research may focus on developing RL controllers that could be used in real buildings, addressing current RL challenges, such as accelerating training and enhancing control robustness, as well as developing an open-source testbed and dataset for performance benchmarking of RL controllers.}
+}
+
+@article{wangSystemLevelApproachController2019,
+  title = {A {{System-Level Approach}} to {{Controller Synthesis}}},
+  author = {Wang, Yuh-Shyang and Matni, Nikolai and Doyle, John C.},
+  year = {2019},
+  journal = {IEEE Transactions on Automatic Control},
+  volume = {64},
+  number = {10},
+  pages = {4079--4093},
+  issn = {1558-2523},
+  doi = {10.1109/TAC.2018.2890753},
+  abstract = {Biological and advanced cyber-physical control systems often have limited, sparse, uncertain, and distributed communication and computing in addition to sensing and actuation. Fortunately, the corresponding plants and performance requirements are also sparse and structured, and this must be exploited to make constrained controller design feasible and tractable. We introduce a new ``system level'' (SL) approach involving three complementary SL elements. SL parameterizations (SLPs) provide an alternative to the Youla parameterization of all stabilizing controllers and the responses they achieve, and combine with SL constraints (SLCs) to parameterize the largest known class of constrained stabilizing controllers that admit a convex characterization, generalizing quadratic invariance. SLPs also lead to a generalization of detectability and stabilizability, suggesting the existence of a rich separation structure, that when combined with SLCs is naturally applicable to structurally constrained controllers and systems. We further provide a catalog of useful SLCs, most importantly including sparsity, delay, and locality constraints on both communication and computing internal to the controller, and external system performance. Finally, we formulate SL synthesis problems, which define the broadest known class of constrained optimal control problems that can be solved using convex programming.}
+}
+
+@article{watkinsQlearning1992,
+  title = {Q-Learning},
+  author = {Watkins, Christopher J. C. H. and Dayan, Peter},
+  year = {1992},
+  month = may,
+  journal = {Machine Learning},
+  volume = {8},
+  number = {3},
+  pages = {279--292},
+  issn = {1573-0565},
+  doi = {10.1007/BF00992698},
+  url = {https://doi.org/10.1007/BF00992698},
+  urldate = {2021-11-12},
+  abstract = {Q-learning (Watkins, 1989) is a simple way for agents to learn how to act optimally in controlled Markovian domains. It amounts to an incremental method for dynamic programming which imposes limited computational demands. It works by successively improving its evaluations of the quality of particular actions at particular states.},
+  langid = {english}
+}
+
+@article{wonAdaptiveDeepReinforcement2020,
+  title = {An Adaptive Deep Reinforcement Learning Framework Enables Curling Robots with Human-like Performance in Real-World Conditions},
+  author = {Won, Dong-Ok and M{\"u}ller, Klaus-Robert and Lee, Seong-Whan},
+  year = {2020},
+  month = sep,
+  journal = {Science Robotics},
+  volume = {5},
+  number = {46},
+  pages = {eabb9764},
+  publisher = {American Association for the Advancement of Science},
+  doi = {10.1126/scirobotics.abb9764},
+  url = {https://www.science.org/doi/10.1126/scirobotics.abb9764},
+  urldate = {2023-09-14},
+  abstract = {The game of curling can be considered a good test bed for studying the interaction between artificial intelligence systems and the real world. In curling, the environmental characteristics change at every moment, and every throw has an impact on the outcome of the match. Furthermore, there is no time for relearning during a curling match due to the timing rules of the game. Here, we report a curling robot that can achieve human-level performance in the game of curling using an adaptive deep reinforcement learning framework. Our proposed adaptation framework extends standard deep reinforcement learning using temporal features, which learn to compensate for the uncertainties and nonstationarities that are an unavoidable part of curling. Our curling robot, Curly, was able to win three of four official matches against expert human teams [top-ranked women's curling teams and Korea national wheelchair curling team (reserve team)]. These results indicate that the gap between physics-based simulators and the real world can be narrowed.}
+}

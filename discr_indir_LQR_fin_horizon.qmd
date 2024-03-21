@@ -377,13 +377,13 @@ $$
 
 Solving this equation for $\bm u_k$ gives
 $$
- \bm u_k =\underbrace{(\mathbf I + \mathbf R^{-1}\mathbf B^\top\mathbf S_{k+1}\mathbf B)^{-1}\mathbf R^{-1}\mathbf B^\top\mathbf S_{k+1}\mathbf A}_{\mathbf K_k}\mathbf x_{k}.
+ \bm u_k = -\underbrace{(\mathbf I + \mathbf R^{-1}\mathbf B^\top\mathbf S_{k+1}\mathbf B)^{-1}\mathbf R^{-1}\mathbf B^\top\mathbf S_{k+1}\mathbf A}_{\mathbf K_k}\mathbf x_{k}.
 $$ 
 
 Mission accomplished. This is our desired control. A striking observation is that although we made no specifications as for the controller structure, the optimal control strategy turned out a feedback one! Let's write it down explicitly
 $$
 \boxed{
-\bm u_k =\mathbf K_k \bm x_{k}.
+\bm u_k = -\mathbf K_k \bm x_{k}.
 }
 $$ 
 
@@ -392,10 +392,10 @@ $$
 The importance of this result can hardly be overstated – the optimal control comes in the form of a proportional state-feedback control law.
 :::
 
-The feedback gain is time-varying and deserves a name after its inventor — **Kalman gain**. Incorporating the knowledge that $R$ is nonsingular, a minor simplification of the lengthy expression can be made
+The feedback gain is time-varying and deserves a name after its inventor — **Kalman gain**. Incorporating the knowledge that $\mathbf R$ is nonsingular, a minor simplification of the lengthy expression can be made
 $$
  \mathbf K_k = (\mathbf R + \mathbf B^\top\mathbf S_{k+1}\mathbf B)^{-1}\mathbf B^\top\mathbf S_{k+1}\mathbf A.
-$$
+$${#eq-Kalman-gain}
   
 Before we move on, let us elaborate a bit more on the difference Riccati equation. Invoking a popular (but hard to reliably memorize) rule for inversion of a sum of two matrices called *matrix inversion lemma*, which reads
 $$
@@ -419,12 +419,12 @@ $$
 }
 $$ 
 
-Finally, yet another equivalent version of Riccati equation is known as \emph{Joseph's stabilized Riccati equation}
+Finally, yet another equivalent version of Riccati equation is known as *Joseph stabilized form of Riccati equation*
 $$
 \boxed{
  \mathbf S_k = (\mathbf A-\mathbf B\mathbf K_k)^\top \mathbf S_{k+1}(\mathbf A-\mathbf B\mathbf K_k) + \mathbf K_k^\top \mathbf R\mathbf K_k + \mathbf Q.
 }
-$$
+$${#eq-Joseph-stabilized-Riccati}
 
 Showing the equivalence can be an exercise.
 
@@ -449,7 +449,7 @@ $$
 \end{aligned}
 $$
 
-Substituting the Riccati equation (\ref{eq:difference_Riccati_2}) into the first term above
+Substituting for $\mathbf S_k$ from the Riccati equation gives
 $$
 \begin{aligned}
  J_0 &= \frac{1}{2}\bm x_0^\top\mathbf S_0\bm x_0 + \frac{1}{2}\sum_{k=0}^{N-1}[\mathbf x^\top _{k}(\mathbf A^\top \mathbf S_{k+1}\mathbf B( \mathbf B^\top \mathbf S_{k+1}\mathbf B+\mathbf R)^{-1}\mathbf B^\top \mathbf S_{k+1}\mathbf A) \mathbf x_{k}+\bm x_k^\top \mathbf A^\top \mathbf S_{k+1}\mathbf B \bm u_k\\
