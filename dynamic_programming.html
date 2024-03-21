@@ -341,6 +341,12 @@ window.Quarto = {
  <span class="menu-text">LQR via dynamic programming</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References for dynamic programming approach to discrete-time optimal control</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -658,10 +664,10 @@ window.Quarto = {
 <p><span class="theorem-title"><strong>Example 1 (Reusing the plan for a trip from Prague to Ostrava)</strong></span> We are planning a car trip from Prague to Ostrava and you are searching for a route that minimizes the total time. Using the online planner we learn that the fastest route from Prague to Ostrava is — as bizarre as it sounds — via (actually around) Brno.</p>
 <iframe style="border:none" src="https://frame.mapy.cz/s/munotenatu" width="700" height="466" frameborder="0">
 </iframe>
-<p>Now, is it possible to reuse this plan for our friends from Brno?</p>
+<p>Now, is it possible to reuse this plan for our friends from Brno who are also heading for Ostrava?</p>
 <iframe style="border:none" src="https://frame.mapy.cz/s/hasebevole" width="700" height="466" frameborder="0">
 </iframe>
-<p>The answer is yes, but we surely did not even need the planner to answer it. And yet it hides the key wisdom of the whole chapter — the Bellman’s principle of optimality.</p>
+<p>The answer is yes, as the planner confirms. Surely did not even need the planner to answer such trivial question. And yet it demonstrates the key wisdom of the whole chapter — the Bellman’s principle of optimality —, which we now state formally.</p>
 </div>
 <div id="thm-bellmans-principle-of-optimality" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 1 (Bellman’s principle of optimality)</strong></span> An optimal policy has the property that whatever the initial state and initial decision are, the remaining decisions must constitute an optimal policy with regard to the state resulting from the first decision.</p>
@@ -823,12 +829,13 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>The task is now to find the shortest path from <code>A</code> to <code>I</code>. What are possible solution strategies? We can start enumerating all the possible paths and calculate their costs (by summing the costs of the participating edges). Needless to say, this strategy based on enumeration scale very badly with the growing number of nodes.</p>
-<p>Alternatively, we solve the problem using dynamic programming and relying on Bellman’s principle of optimality. Before we proceed, we need to define the concept of a <em>stage</em>. It is perhaps less common and natural when it comes to solving graph problems, but we introduce it with anticipation of discrete-time optimal control problems. By the <em>k</em>th stage we understand the node at which the <em>k</em>th decision needs to be made. In our case, starting at <code>A</code>, 4 decisions need to be made to reach the final node. But let’s agree that we also denote the final node as the stage, the 5th one, even if no decision is to be made here. The total number of stages is N=5.</p>
+<p>The task is now to find the shortest path from <code>A</code> to <code>I</code>. What are possible solution strategies? We can start enumerating all the possible paths and calculate their costs (by summing the costs of the participating edges). Needless to say, this strategy based on enumeration scales very badly with the growing number of nodes.</p>
+<p>Alternatively, we solve the problem using dynamic programming and relying on Bellman’s principle of optimality. Before we proceed, we need to define the concept of a <em>stage</em>. It is perhaps less common and natural when it comes to solving graph problems, but we introduce it with anticipation of discrete-time optimal control problems. By the <em>k</em>th stage we understand the node at which the <em>k</em>th decision needs to be made. In our case, starting at <code>A</code>, 4 decisions need to be made to reach the final node. But let’s agree that we also denote the final node as the stage, the 5th one, even if no decision is to be made here. The total number of stages is then N=5.</p>
 <p>The crucial attribute of the strategy based on dynamic programming is that we proceed <em>backwards</em>. We start at the very final <em>stage</em>. At this stage, there is just one node and there is nothing we can do, but note that it also makes sense to formulate problems with several possible nodes at the final stage, each with a different (terminal) costs — we will actually use once we switch to the optimal control setting. Now we proceed backwards to the last but one, that is, the <em>(N-1)</em>th stage.</p>
 <p>These are <code>F</code> and <code>H</code> nodes at this 4the stage. In these two nodes there is again no freedom as for the actions, but for each of them we can record their respective <em>cost to go</em>: 4 for the <code>F</code> node and 2 for the <code>H</code> node. These costs reflect how costly it is to reach the terminal node from them.</p>
-<p>Things are only getting interesting if we now proceed to the 3rd stage. We now have to consider three possible nodes: <code>C</code>, <code>E</code> and <code>G</code>. For the <code>C</code> and <code>G</code> nodes there is still just one action and we can only record their costs to go. The cost for the <code>C</code> node can be computed as the cost for the immediate transition from <code>C</code> to <code>F</code> plus the cost for the <code>F</code> node, which we recorded previously, that is, 3+4=7. We record the value of 7 with the <code>C</code> node. Similarly for the <code>G</code> node. For the <code>E</code> node there are two possible actions — two possible decisions to be made, two possible paths to choose from. Either to the left (or, actually, up in our orientation of the graph), which would bring us to the node <code>F</code>, or to the right (or down), which would bring us to the node <code>H</code>. We compute the costs to go for both decisions and choose the decision with a smaller cost. Here the cost of the decision to go to the left is composed of the cost to transition to F plus the cost to go from <code>F</code>, that is, 3+4=7. The cost to go for the decision to go right is composed of the transition cost from <code>E</code> to <code>H</code> plus the cost to go from <code>H</code>, that is, 2+2=4. Obviously, the optimal decision is to go right, that is, to the node <code>H</code>. Here, on top of the value of the optimal (smallest) cost to go from the node we also record the optimal decision (go to the right/down). We do it by coloring the edge in blue.</p>
-<p>We proceed one stage backwards to the 2nd stage, and we compute the costs to go for the nodes <code>B</code> and <code>D</code>. Again we record the optimal costs to go and the actual optimal decisions.</p>
+<p>Things are only getting interesting if we now proceed to the 3rd stage. We now have to consider three possible nodes: <code>C</code>, <code>E</code> and <code>G</code>. For the <code>C</code> and <code>G</code> nodes there is still just one action and we can only record their costs to go. The cost for the <code>C</code> node can be computed as the cost for the immediate transition from <code>C</code> to <code>F</code> plus the cost for the <code>F</code> node, which we recorded previously, that is, 3+4=7. We record the value of 7 with the <code>C</code> node. Similarly for the <code>G</code> node. For the <code>E</code> node there are two possible actions — two possible decisions to be made, two possible paths to choose from. Either to the left (or, actually, up in our orientation of the graph), which would bring us to the node <code>F</code>, or to the right (or down), which would bring us to the node <code>H</code>. We compute the costs to go for both decisions and choose the decision with a smaller cost. Here the cost of the decision to go to the left is composed of the cost of the transition to F plus the cost to go from <code>F</code>, that is, 3+4=7. The cost to go for the decision to go right is composed of the transition cost from <code>E</code> to <code>H</code> plus the cost to go from <code>H</code>, that is, 2+2=4. Obviously, the optimal decision is to go right, that is, to the node <code>H</code>. Here, on top of the value of the optimal (smallest) cost to go from the node we also record the optimal decision (go to the right/down). We do it by coloring the edge in blue.</p>
+<p>Note that in principle we should have highlighted the edges from <code>F</code> to <code>I</code>, from <code>C</code> to <code>F</code>, and from <code>G</code> to <code>H</code>. It was unnecessary here since there were the only possible edges emanating from these nodes.</p>
+<p>We proceed backwards to the 2nd stage, and we compute the costs to go for the nodes <code>B</code> and <code>D</code>. Again we record their optimal values and the actual optimal decisions.</p>
 <p>One last shift backwards and we are at the initial node A, for which we can do the same computation of the costs to go. Note that here coincidently both decisions have the same cost to go, hence both possible decisions/actions are optimal and we can just toss a coin.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
@@ -993,7 +1000,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>Maybe it is not immediately claar from the graph, but when viewed as an itinerary for a trip, it provides a feedback controller. Even if for whichever reason we find ourselves out of the optimal path, we can always have a look at the graph — it will guide us along the path that is optimal from the given node.</p>
+<p>Maybe it is not immediately clear from the graph, but when viewed as an itinerary for a trip, it provides a feedback controller. Even if for whichever reason we find ourselves out of the optimal path, we can always have a look at the graph — it will guide us along the path that is optimal from that given node. For example, if we happen to be in node <code>C</code>, we do have a plan. Well, here is misleadingly simple as there is no decision to be made, but you get the point.</p>
 </div>
 </section>
 <section id="bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem" class="level2">
@@ -1061,7 +1068,7 @@ Difference between the <span class="math inline">J_i</span> and <span class="mat
 <p>Understanding the difference is crucial. While the cost function <span class="math inline">J_i</span> depends on the (initial) state, the (initial) time and the sequence of controls applied over the whole interval, the optimal cost function <span class="math inline">J^\star_i</span> only depends on the (initial) state and the (initial) time.</p>
 </div>
 </div>
-<p>Assume now that we have already found an optimal control sequence from any given state <span class="math inline">\bm x_{k+1}</span> at time <span class="math inline">k+1</span> on, i.e., we already have <span class="math inline">\bm u_{k+1},\bm u_{k+2},\ldots, \bm u_{N-1}</span> yielding the optimal cost <span class="math inline">J_{k+1}^\star(\bm x_{k+1})</span>. Don’t ask me where we get such optimal sequence, right now we just assume we have it.</p>
+<p>Assume now that we have already found an optimal control sequence from any given state <span class="math inline">\bm x_{k+1}</span> at time <span class="math inline">k+1</span> on, i.e., we already have <span class="math inline">\bm u_{k+1},\bm u_{k+2},\ldots, \bm u_{N-1}</span> yielding the optimal cost <span class="math inline">J_{k+1}^\star(\bm x_{k+1})</span>. Don’t ask me where we get such optimal sequence, right now we just assume we have it. We will soon show how to actually find it.</p>
 <p>Now, if we apply arbitrary (not necessarily optimal) control <span class="math inline">\bm u_k</span> at a given state <span class="math inline">\bm x_{k}</span> at time <span class="math inline">k</span>, the cost is <span class="math display">
 J_k(\bm x_k,\bm u_k, {\color{blue}\bm u_{k+1}, \ldots, \bm u_{N-1}}) = L_k(\bm x_k,\bm u_k) + {\color{blue}J_{k+1}^\star(\bm x_{k+1})}.
 </span></p>
