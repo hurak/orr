@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.24">
+<meta name="generator" content="quarto-1.5.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -69,6 +69,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -597,6 +640,41 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>In the previous section we have used dynamic programming as a numerical algorithm for solving a general discrete-time optimal control problem. We now show how to use dynamic programming to solve the discrete-time LQR problem. We consider a linear discrete-time system modelled by <span class="math display">
+\bm x_{k+1} = \mathbf A\bm x_k + \mathbf B\bm u_k,
+</span> for which we want to minimize the quadratic cost given by <span class="math display">
+J_0(\bm x_0, \bm u_0, \bm u_1, \ldots, \bm u_{N-1}) = \frac{1}{2}\bm x_N^\top \mathbf S_N \bm x_N + \frac{1}{2}\sum_{k=0}^{N-1}\left(\bm x_k^\top \mathbf Q \bm x_k + \bm u_k^\top \mathbf R \bm u_k\right),
+</span> with <span class="math inline">\mathbf S_N\succeq 0, \mathbf Q\succeq 0, \mathbf R\succ 0</span>, as usual.</p>
+<p>We now invoke the principle of optimality, that is, we start at the end of the time interval and evaluate the optimal cost <span class="math display">
+J_N^\star(\bm x_N) = \frac{1}{2}\bm x_N^\top \mathbf S_N \bm x_N.
+</span></p>
+<p>Obviously, here we did not even have to do any optimization since at the and of the interval the cost can no longer be influenced by any control. We just evaluated the cost.</p>
+<p>We then proceed backwards in time, that is, we decrease the time to <span class="math inline">k=N-1</span>. Here do have to optimize: <span class="math display">
+J^\star_{N-1}(\bm x_{N-1}) = \min_{\bm u_{N-1}\in\mathbb R^m} J_{N-1}(\bm x_{N-1},\bm u_{N-1}) = \min_{\bm u_{N-1}\in\mathbb R^m} \left[L(\bm x_{N-1},\bm u_{N-1}) + J^\star_{N}(\bm x_{N}) \right].
+</span></p>
+<p>We now expand the expression for the cost<br>
+<span class="math display">
+\begin{aligned}
+J_{N-1}(\bm x_{N-1},\bm u_{N-1}) &amp;= \frac{1}{2} \left(\mathbf x_{N-1}^\top \mathbf Q \mathbf x_{N-1} + \mathbf u_{N-1}^\top \mathbf R \mathbf u_{N-1} \right) + J^\star_{N}(\bm x_{N}) \\
+&amp;= \frac{1}{2} \left(\mathbf x_{N-1}^\top \mathbf Q \mathbf x_{N-1} + \mathbf u_{N-1}^\top \mathbf R \mathbf u_{N-1} \right) + \frac{1}{2}\mathbf x_N^\top \mathbf S_N \mathbf x_N\\
+&amp;= \frac{1}{2} \left( \mathbf x_{N-1}^\top \mathbf Q \mathbf x_{N-1} + \mathbf u_{N-1}^\top \mathbf R \mathbf u_{N-1} + \mathbf x_N^\top \mathbf S_N \mathbf x_N \right)\\
+&amp;= \frac{1}{2} \left[ \mathbf x_{N-1}^\top \mathbf Q \mathbf x_{N-1} + \mathbf u_{N-1}^\top \mathbf R \mathbf u_{N-1} + (\mathbf x_{N-1}^\top \mathbf A^\top + \mathbf u_{N-1}^\top \mathbf B^\top) \mathbf S_N (\mathbf A\mathbf x_{N-1} + \mathbf B\mathbf u_{N-1}) \right]\\
+&amp;= \frac{1}{2} \left[\mathbf x_{N-1}^\top (\mathbf Q  + \mathbf A^\top\mathbf S_N \mathbf A)\mathbf x_{N-1} + 2\mathbf x^\top_{N-1}\mathbf A ^\top \mathbf S_N \mathbf B  \mathbf u_{N-1} + \mathbf u^\top_{N-1}(\mathbf R + \mathbf B^\top \mathbf S_n \mathbf B)\mathbf u_{N-1} \right].
+\end{aligned}
+</span></p>
+<p>We assumed no constraint on <span class="math inline">\mathbf u_{N-1}</span>, hence finding the minimum of <span class="math inline">J_{N-1}</span> is as easy as setting its gradient to zero <span class="math display">
+\mathbf 0 = \nabla_{\bm u_{N-1}} J_{N-1} = (\mathbf R + \mathbf B^\top \mathbf S_n \mathbf B)\bm u_{N-1} + \mathbf B^\top \mathbf S_N\mathbf A\bm x_{N-1},
+</span> which leads to <span class="math display">
+\bm u_{N-1}^\star = -\underbrace{(\mathbf B^\top \mathbf S_N\mathbf B + \mathbf R)^{-1}\mathbf B^\top \mathbf S_N \mathbf A}_{\mathbf K_{N-1}} \bm x_{N-1},
+</span> which amounts to solving a system of linear equations. We can also recognize the Kalman gain matrix <span class="math inline">\mathbf K_{N-1}</span>, which we derived using the indirect approach in the previous chapter.</p>
+<p>The optimal cost <span class="math inline">J^\star_{N-1}</span> can be obtained by substituting <span class="math inline">\bm u_{N-1}^\star</span> into <span class="math inline">J_{N-1}</span> <span class="math display">
+J_{N-1}^\star = \frac{1}{2}\bm x_{N-1}^\top \underbrace{\left[(\mathbf A-\mathbf B\mathbf K_{N-1})^\top \mathbf S_N(\mathbf A-\mathbf B\mathbf K_{N-1}) + \mathbf K_{N-1}^\top \mathbf R \mathbf K_{N-1} + \mathbf Q\right]}_{\mathbf S_{N-1}} \bm x_{N-1}.
+</span></p>
+<p>Note that the optimal cost <span class="math inline">J^\star_{N-1}</span> is also a quadratic function of the state as is the cost <span class="math inline">J^\star_{N}</span>. We denote the matrix that defines this quadratic function as <span class="math inline">\mathbf S_{N-1}</span>. We do this in anticipation of continuation of this recursive procedure to <span class="math inline">k = N-2, N-3, \ldots</span>, which will give <span class="math inline">\mathbf S_{N-2}, \mathbf S_{N-3}, \ldots</span>. The rest of the story is quite predictable, isn’t it? Applying the Bellman’s principle of optimality we (re)discovered the discrete-time Riccati equation in the <em>Joseph stabilized form</em> <span class="math display">
+\mathbf S_k = (\mathbf A-\mathbf B\mathbf K_{N-1})^\top \mathbf S_N(\mathbf A-\mathbf B\mathbf K_{N-1}) + \mathbf K_{N-1}^\top \mathbf R \mathbf K_{N-1} + \mathbf Q,
+</span> together with the prescription for the state feedback (Kalman) gain <span class="math display">
+\mathbf K_{k} = (\mathbf B^\top \mathbf S_N\mathbf B + \mathbf R)^{-1}\mathbf B^\top \mathbf S_N \mathbf A.
+</span></p>
 
 
 
@@ -636,18 +714,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -679,7 +746,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp("https:\/\/hurak\.github\.io\/orr\/");

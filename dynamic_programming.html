@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.24">
+<meta name="generator" content="quarto-1.5.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -623,7 +623,6 @@ window.Quarto = {
   <li><a href="#bellmans-principle-of-optimality-and-dynamic-programming" id="toc-bellmans-principle-of-optimality-and-dynamic-programming" class="nav-link active" data-scroll-target="#bellmans-principle-of-optimality-and-dynamic-programming">Bellman’s principle of optimality and dynamic programming</a></li>
   <li><a href="#bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem" id="toc-bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem" class="nav-link" data-scroll-target="#bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem">Bellman’s principle of optimality applied to the discrete-time optimal control problem</a></li>
   <li><a href="#dynamic-programming-as-a-numerical-algorithm-for-solving-the-discrete-time-optimal-control-problem" id="toc-dynamic-programming-as-a-numerical-algorithm-for-solving-the-discrete-time-optimal-control-problem" class="nav-link" data-scroll-target="#dynamic-programming-as-a-numerical-algorithm-for-solving-the-discrete-time-optimal-control-problem">Dynamic programming as a numerical algorithm for solving the discrete-time optimal control problem</a></li>
-  <li><a href="#dynamic-programming-as-a-theoretical-framework-for-solving-the-discrete-time-lqr-problem" id="toc-dynamic-programming-as-a-theoretical-framework-for-solving-the-discrete-time-lqr-problem" class="nav-link" data-scroll-target="#dynamic-programming-as-a-theoretical-framework-for-solving-the-discrete-time-lqr-problem">Dynamic programming as a theoretical framework for solving the discrete-time LQR problem</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -1080,10 +1079,6 @@ J_k(\bm x_k,\bm u_k, {\color{blue}\bm u_{k+1}, \ldots, \bm u_{N-1}}) = L_k(\bm x
 <section id="dynamic-programming-as-a-numerical-algorithm-for-solving-the-discrete-time-optimal-control-problem" class="level2">
 <h2 class="anchored" data-anchor-id="dynamic-programming-as-a-numerical-algorithm-for-solving-the-discrete-time-optimal-control-problem">Dynamic programming as a numerical algorithm for solving the discrete-time optimal control problem</h2>
 <p>… to be continued …</p>
-</section>
-<section id="dynamic-programming-as-a-theoretical-framework-for-solving-the-discrete-time-lqr-problem" class="level2">
-<h2 class="anchored" data-anchor-id="dynamic-programming-as-a-theoretical-framework-for-solving-the-discrete-time-lqr-problem">Dynamic programming as a theoretical framework for solving the discrete-time LQR problem</h2>
-<p>… to be continued …</p>
 
 
 </section>
@@ -1124,18 +1119,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1167,7 +1151,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp("https:\/\/hurak\.github\.io\/orr\/");
