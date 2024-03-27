@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.25">
+<meta name="generator" content="quarto-1.5.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – LQR via dynamic programming</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – Solving LQR via dynamic programming</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,7 +31,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./dynamic_programming_references.html" rel="next">
-<link href="./dynamic_programming.html" rel="prev">
+<link href="./dynamic_programming_tabular.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -125,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dynamic_programming.html">5. Discrete-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./dynamic_programming_LQR.html">LQR via dynamic programming</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dynamic_programming.html">5. Discrete-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./dynamic_programming_LQR.html">Solving LQR via dynamic programming</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -332,13 +332,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dynamic_programming.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Optimal control via dynamic programming</span></a>
+ <span class="menu-text">Dynamic programming and discrete-time optimal control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming_tabular.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tables as outcomes of dynamic programming</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dynamic_programming_LQR.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">LQR via dynamic programming</span></a>
+ <span class="menu-text">Solving LQR via dynamic programming</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -372,14 +378,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_dir_mpc_explicit.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Explicit MPC</span></a>
+  <a href="./discr_dir_mpc_economic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Economic MPC</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_dir_mpc_economic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Economic MPC</span></a>
+  <a href="./discr_dir_mpc_explicit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Explicit MPC</span></a>
   </div>
 </li>
       </ul>
@@ -396,7 +402,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_calculus_of_variations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Calculus of variations and optimal control</span></a>
+ <span class="menu-text">Calculus of variations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -421,6 +427,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_CARE.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Continuous-time Riccati equation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_indir_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References for indirect approach to continuous-time optimal control</span></a>
   </div>
 </li>
       </ul>
@@ -627,9 +639,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dynamic_programming.html">5. Discrete-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./dynamic_programming_LQR.html">LQR via dynamic programming</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dynamic_programming.html">5. Discrete-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./dynamic_programming_LQR.html">Solving LQR via dynamic programming</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">LQR via dynamic programming</h1>
+<h1 class="title">Solving LQR via dynamic programming</h1>
 </div>
 
 
@@ -1107,8 +1119,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./dynamic_programming.html" class="pagination-link" aria-label="Optimal control via dynamic programming">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Optimal control via dynamic programming</span>
+      <a href="./dynamic_programming_tabular.html" class="pagination-link" aria-label="Tables as outcomes of dynamic programming">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Tables as outcomes of dynamic programming</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

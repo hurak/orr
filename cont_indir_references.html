@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Indirect approach to LQR on a finite horizon</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – References for indirect approach to continuous-time optimal control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -30,8 +50,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./cont_indir_LQR_inf_horizon.html" rel="next">
-<link href="./cont_indir_via_calculus_of_variations.html" rel="prev">
+<link href="./cont_indir_Pontryagin.html" rel="next">
+<link href="./cont_indir_CARE.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +102,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_LQR_fin_horizon.html">Indirect approach to LQR on a finite horizon</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_references.html">References for indirect approach to continuous-time optimal control</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -370,7 +390,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_LQR_fin_horizon.html" class="sidebar-item-text sidebar-link active">
+  <a href="./cont_indir_LQR_fin_horizon.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Indirect approach to LQR on a finite horizon</span></a>
   </div>
 </li>
@@ -388,7 +408,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_references.html" class="sidebar-item-text sidebar-link">
+  <a href="./cont_indir_references.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">References for indirect approach to continuous-time optimal control</span></a>
   </div>
 </li>
@@ -596,9 +616,9 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_LQR_fin_horizon.html">Indirect approach to LQR on a finite horizon</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_references.html">References for indirect approach to continuous-time optimal control</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Indirect approach to LQR on a finite horizon</h1>
+<h1 class="title">References for indirect approach to continuous-time optimal control</h1>
 </div>
 
 
@@ -615,10 +635,30 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>Indirect approach to optimal control is based on <em>calculus of variations</em> (and its later extension in the form of <em>Pontryagin’s principle of maximum</em>). Calculus of variations is an advanced mathematical discipline that requires non-trivial foundations and effort to master. In our course, however, we take the liberty of aiming for intuitive understanding rather than mathematical rigor. At roughly the same level, the calculus of variations is introduced in books on optimal control, such as the classic and affordable <span class="citation" data-cites="kirkOptimalControlTheory2004">(<a href="#ref-kirkOptimalControlTheory2004" role="doc-biblioref">Kirk 2004</a>)</span>, the popular and online available <span class="citation" data-cites="lewisOptimalControl2012">(<a href="#ref-lewisOptimalControl2012" role="doc-biblioref">Lewis, Vrabie, and Syrmo 2012</a>)</span>, or very accessible and also freely available online <span class="citation" data-cites="liberzonCalculusVariationsOptimal2011">(<a href="#ref-liberzonCalculusVariationsOptimal2011" role="doc-biblioref">Liberzon 2011</a>)</span>.</p>
+<p>With anticipation, we provide here a reference to the paper <span class="citation" data-cites="sussmann300YearsOptimal1997">(<a href="#ref-sussmann300YearsOptimal1997" role="doc-biblioref">Sussmann and Willems 1997</a>)</span>, which shows how the celebrated Pontryagin’s principle of maximum extends the calculus of variations significantly. But we will only discuss this in the next chapter.</p>
+<p>For those interested in a having a standard reference for the calculus of variations, the classic <span class="citation" data-cites="gelfandCalculusVariations2000">(<a href="#ref-gelfandCalculusVariations2000" role="doc-biblioref">Gelfand and Fomin 2020</a>)</span> is recommendable, the more so that it is fairly slim.</p>
 
 
 
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-gelfandCalculusVariations2000" class="csl-entry" role="listitem">
+Gelfand, I. M., and S. V. Fomin. 2020. <em>Calculus of <span>Variations</span></em>. Reprint of the 1963 edition. Mineola, N.Y: Dover Publications.
+</div>
+<div id="ref-kirkOptimalControlTheory2004" class="csl-entry" role="listitem">
+Kirk, Donald E. 2004. <em>Optimal <span>Control Theory</span>: <span>An Introduction</span></em>. Reprint of the 1970 edition. Dover Publications.
+</div>
+<div id="ref-lewisOptimalControl2012" class="csl-entry" role="listitem">
+Lewis, Frank L., Draguna Vrabie, and Vassilis L. Syrmo. 2012. <em>Optimal <span>Control</span></em>. 3rd ed. John Wiley &amp; Sons. <a href="https://lewisgroup.uta.edu/FL%20books/Lewis%20optimal%20control%203rd%20edition%202012.pdf">https://lewisgroup.uta.edu/FL%20books/Lewis%20optimal%20control%203rd%20edition%202012.pdf</a>.
+</div>
+<div id="ref-liberzonCalculusVariationsOptimal2011" class="csl-entry" role="listitem">
+Liberzon, Daniel. 2011. <em>Calculus of <span>Variations</span> and <span>Optimal Control Theory</span>: <span>A Concise Introduction</span></em>. <span>Princeton University Press</span>. <a href="http://liberzon.csl.illinois.edu/teaching/cvoc/cvoc.html">http://liberzon.csl.illinois.edu/teaching/cvoc/cvoc.html</a>.
+</div>
+<div id="ref-sussmann300YearsOptimal1997" class="csl-entry" role="listitem">
+Sussmann, H. J., and J. C. Willems. 1997. <span>“300 Years of Optimal Control: From the Brachystochrone to the Maximum Principle.”</span> <em>IEEE Control Systems</em> 17 (3): 32–44. <a href="https://doi.org/10.1109/37.588098">https://doi.org/10.1109/37.588098</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1041,13 +1081,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cont_indir_via_calculus_of_variations.html" class="pagination-link" aria-label="Indirect approach to optimal control">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Indirect approach to optimal control</span>
+      <a href="./cont_indir_CARE.html" class="pagination-link" aria-label="Continuous-time Riccati equation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Continuous-time Riccati equation</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cont_indir_LQR_inf_horizon.html" class="pagination-link" aria-label="Indirect approach to LQR on an infinite horizon">
-        <span class="nav-page-text">Indirect approach to LQR on an infinite horizon</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cont_indir_Pontryagin.html" class="pagination-link" aria-label="Pontryagin's maximum principle">
+        <span class="nav-page-text">Pontryagin’s maximum principle</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

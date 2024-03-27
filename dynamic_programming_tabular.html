@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Indirect approach to LQR on a finite horizon</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – Tables as outcomes of dynamic programming</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./cont_indir_LQR_inf_horizon.html" rel="next">
-<link href="./cont_indir_via_calculus_of_variations.html" rel="prev">
+<link href="./dynamic_programming_LQR.html" rel="next">
+<link href="./dynamic_programming.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,6 +69,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -82,7 +125,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_LQR_fin_horizon.html">Indirect approach to LQR on a finite horizon</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dynamic_programming.html">5. Discrete-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./dynamic_programming_tabular.html">Tables as outcomes of dynamic programming</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -294,7 +337,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dynamic_programming_tabular.html" class="sidebar-item-text sidebar-link">
+  <a href="./dynamic_programming_tabular.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Tables as outcomes of dynamic programming</span></a>
   </div>
 </li>
@@ -370,7 +413,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_LQR_fin_horizon.html" class="sidebar-item-text sidebar-link active">
+  <a href="./cont_indir_LQR_fin_horizon.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Indirect approach to LQR on a finite horizon</span></a>
   </div>
 </li>
@@ -596,9 +639,9 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_LQR_fin_horizon.html">Indirect approach to LQR on a finite horizon</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dynamic_programming.html">5. Discrete-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./dynamic_programming_tabular.html">Tables as outcomes of dynamic programming</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Indirect approach to LQR on a finite horizon</h1>
+<h1 class="title">Tables as outcomes of dynamic programming</h1>
 </div>
 
 
@@ -615,6 +658,14 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>Based on what we have seen so far, it turns out that the key to solving the discrete-time optimal control problem is to find some… functions. Either the optimal cost function <span class="math inline">J_k^\star(\bm x_k)</span> or the optimal Q-factor <span class="math inline">Q_k^\star(\bm x_k,\bm u_k)</span>. Once we have them, we can easily find the optimal control <span class="math inline">\bm u_k^\star(\bm x_k)</span>. The question however is how to find these functions. We have seen some recursions for both of them, but it is not clear how to turn these into practical algorithms. We do it here.</p>
+<p>We are going to solve <strong>?@eq-bellman_for_discrete_time_optimal_control</strong> backwards in (discrete) time at a <em>grid of states</em>. Indeed, gridding the state space is the key technique in dynamic programming, because DP assumes a finite state space. If it is not finite, we must grid it.</p>
+<p>We start with the final time <span class="math inline">N</span>. We evaluate the terminal cost function <span class="math inline">\phi(\bm x_N)</span> at a grid of states, which directly yields the optimal costs <span class="math inline">J_N^\star(\bm x_N)</span>.</p>
+<p>We then proceed to the time <span class="math inline">N-1</span>. Evaluating the optimal cost function <span class="math inline">J^\star_{N-1}</span> at each grid point in the state space calls for some optimization, namely <span class="math display">
+\min_{u_{N-1}} \left(L_{N-1}(\bm x_{N-1},\bm u_{N-1}) + J_{N}^\star(\mathbf f_{N-1}(\bm x_{N-1}, \bm u_{N-1}))\right).
+</span></p>
+<p>We save the optimal costs and the corresponding controls at the given grid points (giving two arrays of values), decrement the time to <span class="math inline">N-2</span>, and repeat. All the way down to the initial time <span class="math inline">i</span>.</p>
+<p>Let’s summarize that as an outcome of this whole procedure we have two tables – one for the optimal cost, the other for the optimal control.</p>
 
 
 
@@ -1041,13 +1092,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cont_indir_via_calculus_of_variations.html" class="pagination-link" aria-label="Indirect approach to optimal control">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Indirect approach to optimal control</span>
+      <a href="./dynamic_programming.html" class="pagination-link" aria-label="Dynamic programming and discrete-time optimal control">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Dynamic programming and discrete-time optimal control</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cont_indir_LQR_inf_horizon.html" class="pagination-link" aria-label="Indirect approach to LQR on an infinite horizon">
-        <span class="nav-page-text">Indirect approach to LQR on an infinite horizon</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./dynamic_programming_LQR.html" class="pagination-link" aria-label="Solving LQR via dynamic programming">
+        <span class="nav-page-text">Solving LQR via dynamic programming</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

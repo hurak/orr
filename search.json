@@ -37,7 +37,7 @@
     "href": "discr_dir_mpc_explicit.html",
     "title": "Explicit MPC",
     "section": "",
-    "text": "(A. Bemporad, Borrelli, and Morari 2002), (Alberto Bemporad 2021), (Alessio and Bemporad 2009), (Borrelli, Bemporad, and Morari 2017)",
+    "text": "The popular framework of MPC prescribes a control law implicitly. at a given time the optimal control input",
     "crumbs": [
       "6. More on MPC",
       "Explicit MPC"
@@ -47,8 +47,8 @@
     "objectID": "discr_dir_mpc_explicit.html#literature",
     "href": "discr_dir_mpc_explicit.html#literature",
     "title": "Explicit MPC",
-    "section": "",
-    "text": "(A. Bemporad, Borrelli, and Morari 2002), (Alberto Bemporad 2021), (Alessio and Bemporad 2009), (Borrelli, Bemporad, and Morari 2017)",
+    "section": "Literature",
+    "text": "Literature\n(A. Bemporad, Borrelli, and Morari 2002), (Alberto Bemporad 2021), (Alessio and Bemporad 2009), (Borrelli, Bemporad, and Morari 2017)",
     "crumbs": [
       "6. More on MPC",
       "Explicit MPC"
@@ -110,223 +110,135 @@
     ]
   },
   {
-    "objectID": "cont_indir_via_calculus_of_variations.html",
-    "href": "cont_indir_via_calculus_of_variations.html",
-    "title": "Indirect approach to optimal control",
+    "objectID": "discr_dir_mpc_economic.html",
+    "href": "discr_dir_mpc_economic.html",
+    "title": "Economic MPC",
+    "section": "",
+    "text": "(Ellis, Liu, and Christofides 2017), (Ellis, Durand, and Christofides 2014), (Faulwasser, Grüne, and Müller 2018), (Rawlings, Angeli, and Bates 2012)",
+    "crumbs": [
+      "6. More on MPC",
+      "Economic MPC"
+    ]
+  },
+  {
+    "objectID": "discr_dir_mpc_economic.html#literature",
+    "href": "discr_dir_mpc_economic.html#literature",
+    "title": "Economic MPC",
+    "section": "",
+    "text": "(Ellis, Liu, and Christofides 2017), (Ellis, Durand, and Christofides 2014), (Faulwasser, Grüne, and Müller 2018), (Rawlings, Angeli, and Bates 2012)",
+    "crumbs": [
+      "6. More on MPC",
+      "Economic MPC"
+    ]
+  },
+  {
+    "objectID": "robustness.html",
+    "href": "robustness.html",
+    "title": "Robustness analysis",
     "section": "",
     "text": "Back to top",
     "crumbs": [
-      "7. Continuous-time optimal control - indirect approach via calculus of variations",
-      "Indirect approach to optimal control"
+      "11. Uncertainty modelling and analysis",
+      "Robustness analysis"
     ]
   },
   {
-    "objectID": "rocond_mixed_sensitivity.html",
-    "href": "rocond_mixed_sensitivity.html",
-    "title": "Mixed sensitivity design",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "12. Robust control",
-      "Mixed sensitivity design"
-    ]
-  },
-  {
-    "objectID": "opt_theory_modellers.html",
-    "href": "opt_theory_modellers.html",
-    "title": "Optimization modelling languages",
-    "section": "",
-    "text": "Realistically complex optimization problems cannot be solved with just a pen and a paper – computer programs (often called optimization solvers) are needed to solve them. And now comes the challenge: as various solvers for even the same class of problems differ in the algorithms they implement, so do their interfaces – every solver expects the inputs (the data defining the optimization problem) in a specific format. This makes it difficult to switch between solvers, as the problem data has to be reformatted every time.\n\nExample 1 (Data formatting for different solvers) Consider the following optimization problem: \n\\begin{aligned}\n  \\operatorname*{minimize}_{\\bm x \\in \\mathbb R^2} & \\quad \\frac{1}{2} \\bm x^\\top \\begin{bmatrix}4 & 1\\\\ 1 & 2 \\end{bmatrix} \\bm x + \\begin{bmatrix}1 \\\\ 1\\end{bmatrix}^\\top \\bm x \\\\\n  \\text{subject to} & \\quad \\begin{bmatrix}1 \\\\ 0 \\\\ 0\\end{bmatrix} \\leq \\begin{bmatrix} 1 & 1\\\\ 1 & 0\\\\ 0 & 1\\end{bmatrix} \\bm x \\leq  \\begin{bmatrix}1 \\\\ 0.7 \\\\ 0.7\\end{bmatrix}\n\\end{aligned}\n\nThere are dozens of solvers that can be used to solve this problem. Here we demonstrate a usage of these two: OSQP and COSMO.jl. And we are going to call the solvers in Julia (using the the wrappers OSQP.jl for the former). First, we start with OSQP (in fact, this is their example):\n\n\nShow the code\nusing OSQP\nusing SparseArrays\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nproblem_OSQP = OSQP.Model()\nOSQP.setup!(problem_OSQP; P=P, q=q, A=A, l=l, u=u, alpha=1, verbose=false)\n\n# Solve the optimization problem and show the results\nresults_OSQP = OSQP.solve!(problem_OSQP)\nresults_OSQP.x\n\n\nNow we do the same with COSMO. First, we must take into account that COSMO cannot accept two-sided inequalities, so we have to reformulate the problem so that the constraints are only in the form of \\mathbf A\\bm x + b \\geq \\bm 0: \n\\begin{aligned}\n  \\operatorname*{minimize}_{\\bm x \\in \\mathbb R^2} & \\quad \\frac{1}{2} \\bm x^\\top \\begin{bmatrix}4 & 1\\\\ 1 & 2 \\end{bmatrix} \\bm x + \\begin{bmatrix}1 \\\\ 1\\end{bmatrix}^\\top \\bm x \\\\\n  \\text{subject to} & \\quad \\begin{bmatrix} -1 & -1\\\\ -1 & 0\\\\ 0 & -1\\\\ 1 & 1\\\\ 1 & 0\\\\ 0 & 1\\end{bmatrix}\\bm x + \\begin{bmatrix}1 \\\\ 0.7 \\\\ 0.7 \\\\ -1 \\\\ 0 \\\\ 0\\end{bmatrix} \\geq  \\mathbf 0.\n\\end{aligned}\n\n\n\nShow the code\nusing COSMO\nusing SparseArrays\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nAa = [-A; A]\nba = [u; -l]\n\nproblem_COSMO = COSMO.Model()\nconstraint = COSMO.Constraint(Aa, ba, COSMO.Nonnegatives)\nsettings = COSMO.Settings(verbose=false)\nassemble!(problem_COSMO, P, q, constraint, settings = settings)\n\n# Solve the optimization problem and show the results\nresults_COSMO = COSMO.optimize!(problem_COSMO)\nresults_COSMO.x\n\n\nAlthough the two solvers are solving the same problem, the data has to be formatted differently for each of them (and the difference in syntax is not negligible either).\nWhat if we could formulate the same problem without considering the pecualiarities of each solver? It turns out that it is possible. In Julia we can use JuMP.jl:\n\n\nShow the code\nusing JuMP\nusing SparseArrays\nusing OSQP, COSMO\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nmodel_JuMP = Model()\n@variable(model_JuMP, x[1:2])\n@objective(model_JuMP, Min, 0.5*x'*P*x + q'*x)\n@constraint(model_JuMP, A*x .&lt;= u)\n@constraint(model_JuMP, A*x .&gt;= l)\n\n# Solve the optimization problem using OSQP and show the results\nset_silent(model_JuMP)\nset_optimizer(model_JuMP, OSQP.Optimizer)\noptimize!(model_JuMP)\ntermination_status(model_JuMP)\nx_OSQP = value.(x)\n\n# Now solve the problem using COSMO and show the results\nset_optimizer(model_JuMP, COSMO.Optimizer)\noptimize!(model_JuMP)\ntermination_status(model_JuMP)\nx_COSMO = value.(x)\n\n\n\nNotice how the optimization problem is defined just once in the last code and then different solvers can be chosen to solve it. The code represents an instance of a so-called optimization modelling language (OML), or actually its major class called algebraic modelling language (AML).\nThe key motivation for using an OML/AML is to separate the process of formulating the problem from the process of solving it (using a particular solver). Furthermore, such solver-independent problem description (called optimization model) better mimics the way we formulate these problems using a pen and a paper, making it (perhaps) a bit more convenient to write our own and read someone else’s models.",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Optimization modelling languages"
-    ]
-  },
-  {
-    "objectID": "opt_theory_modellers.html#why-optimization-modelling-languages",
-    "href": "opt_theory_modellers.html#why-optimization-modelling-languages",
-    "title": "Optimization modelling languages",
-    "section": "",
-    "text": "Realistically complex optimization problems cannot be solved with just a pen and a paper – computer programs (often called optimization solvers) are needed to solve them. And now comes the challenge: as various solvers for even the same class of problems differ in the algorithms they implement, so do their interfaces – every solver expects the inputs (the data defining the optimization problem) in a specific format. This makes it difficult to switch between solvers, as the problem data has to be reformatted every time.\n\nExample 1 (Data formatting for different solvers) Consider the following optimization problem: \n\\begin{aligned}\n  \\operatorname*{minimize}_{\\bm x \\in \\mathbb R^2} & \\quad \\frac{1}{2} \\bm x^\\top \\begin{bmatrix}4 & 1\\\\ 1 & 2 \\end{bmatrix} \\bm x + \\begin{bmatrix}1 \\\\ 1\\end{bmatrix}^\\top \\bm x \\\\\n  \\text{subject to} & \\quad \\begin{bmatrix}1 \\\\ 0 \\\\ 0\\end{bmatrix} \\leq \\begin{bmatrix} 1 & 1\\\\ 1 & 0\\\\ 0 & 1\\end{bmatrix} \\bm x \\leq  \\begin{bmatrix}1 \\\\ 0.7 \\\\ 0.7\\end{bmatrix}\n\\end{aligned}\n\nThere are dozens of solvers that can be used to solve this problem. Here we demonstrate a usage of these two: OSQP and COSMO.jl. And we are going to call the solvers in Julia (using the the wrappers OSQP.jl for the former). First, we start with OSQP (in fact, this is their example):\n\n\nShow the code\nusing OSQP\nusing SparseArrays\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nproblem_OSQP = OSQP.Model()\nOSQP.setup!(problem_OSQP; P=P, q=q, A=A, l=l, u=u, alpha=1, verbose=false)\n\n# Solve the optimization problem and show the results\nresults_OSQP = OSQP.solve!(problem_OSQP)\nresults_OSQP.x\n\n\nNow we do the same with COSMO. First, we must take into account that COSMO cannot accept two-sided inequalities, so we have to reformulate the problem so that the constraints are only in the form of \\mathbf A\\bm x + b \\geq \\bm 0: \n\\begin{aligned}\n  \\operatorname*{minimize}_{\\bm x \\in \\mathbb R^2} & \\quad \\frac{1}{2} \\bm x^\\top \\begin{bmatrix}4 & 1\\\\ 1 & 2 \\end{bmatrix} \\bm x + \\begin{bmatrix}1 \\\\ 1\\end{bmatrix}^\\top \\bm x \\\\\n  \\text{subject to} & \\quad \\begin{bmatrix} -1 & -1\\\\ -1 & 0\\\\ 0 & -1\\\\ 1 & 1\\\\ 1 & 0\\\\ 0 & 1\\end{bmatrix}\\bm x + \\begin{bmatrix}1 \\\\ 0.7 \\\\ 0.7 \\\\ -1 \\\\ 0 \\\\ 0\\end{bmatrix} \\geq  \\mathbf 0.\n\\end{aligned}\n\n\n\nShow the code\nusing COSMO\nusing SparseArrays\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nAa = [-A; A]\nba = [u; -l]\n\nproblem_COSMO = COSMO.Model()\nconstraint = COSMO.Constraint(Aa, ba, COSMO.Nonnegatives)\nsettings = COSMO.Settings(verbose=false)\nassemble!(problem_COSMO, P, q, constraint, settings = settings)\n\n# Solve the optimization problem and show the results\nresults_COSMO = COSMO.optimize!(problem_COSMO)\nresults_COSMO.x\n\n\nAlthough the two solvers are solving the same problem, the data has to be formatted differently for each of them (and the difference in syntax is not negligible either).\nWhat if we could formulate the same problem without considering the pecualiarities of each solver? It turns out that it is possible. In Julia we can use JuMP.jl:\n\n\nShow the code\nusing JuMP\nusing SparseArrays\nusing OSQP, COSMO\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nmodel_JuMP = Model()\n@variable(model_JuMP, x[1:2])\n@objective(model_JuMP, Min, 0.5*x'*P*x + q'*x)\n@constraint(model_JuMP, A*x .&lt;= u)\n@constraint(model_JuMP, A*x .&gt;= l)\n\n# Solve the optimization problem using OSQP and show the results\nset_silent(model_JuMP)\nset_optimizer(model_JuMP, OSQP.Optimizer)\noptimize!(model_JuMP)\ntermination_status(model_JuMP)\nx_OSQP = value.(x)\n\n# Now solve the problem using COSMO and show the results\nset_optimizer(model_JuMP, COSMO.Optimizer)\noptimize!(model_JuMP)\ntermination_status(model_JuMP)\nx_COSMO = value.(x)\n\n\n\nNotice how the optimization problem is defined just once in the last code and then different solvers can be chosen to solve it. The code represents an instance of a so-called optimization modelling language (OML), or actually its major class called algebraic modelling language (AML).\nThe key motivation for using an OML/AML is to separate the process of formulating the problem from the process of solving it (using a particular solver). Furthermore, such solver-independent problem description (called optimization model) better mimics the way we formulate these problems using a pen and a paper, making it (perhaps) a bit more convenient to write our own and read someone else’s models.",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Optimization modelling languages"
-    ]
-  },
-  {
-    "objectID": "opt_theory_modellers.html#why-not-optimization-modelling-languages",
-    "href": "opt_theory_modellers.html#why-not-optimization-modelling-languages",
-    "title": "Optimization modelling languages",
-    "section": "Why not optimization modelling languages?",
-    "text": "Why not optimization modelling languages?\nAs a matter of fact, some optimization experts even keep avoiding OML/AML altogether. For example, if a company pays for a (not really cheap) license of Gurobi Optimizer – a powerful optimization library for (MI)LP/QP/QCQP –, it may be the case that for a particular very large-scale optimization problem their optimization specialist will have hard time to find a third-party solver of comparable performance. If then its Python API makes definition of optimization problems convenient too (see the code below), maybe there is little regret that such problem definitions cannot be reused with a third-party solver. The more so that since it is tailored to Gurobi solver, it will offer control over the finest details.\n\n\nShow the code\nimport gurobipy as gp\nimport numpy as np\n\n# Define the data for the model\nP = np.array([[4.0, 1.0], [1.0, 2.0]])\nq = np.array([1.0, 1.0])\nA = np.array([[1.0, 1.0], [1.0, 0.0], [0.0, 1.0]])\nl = np.array([1.0, 0.0, 0.0])\nu = np.array([1.0, 0.7, 0.7])\n\n# Create a new model\nm = gp.Model(\"qp\")\n\n# Create a vector variable\nx = m.addMVar((2,))\n\n# Set the objective\nobj = 1/2*(x@P@x + q@x)\nm.setObjective(obj)\n\n# Add the constraints\nm.addConstr(A@x &gt;= l, \"c1\")\nm.addConstr(A@x &lt;= u, \"c2\")\n\n# Run the solver\nm.optimize()\n\n# Print the results\nfor v in m.getVars():\n    print(f\"{v.VarName} {v.X:g}\")\n\nprint(f\"Obj: {m.ObjVal:g}\")\n\n\nSimilar and yet different is the story of the IBM ILOG CPLEX, another top-notch solvers addressing the same problems as Gurobi. They do have their own modeling language called Optimization Modelling Language (OPL), but it is also only interfacing with their solver(s). We can only guess that their motivation for developing their own optimization modelling language was that at the time of its developments (in 1990s) Python was still in pre-2.0 stage and formulating optimization problems in programming languages like C/C++ or Fortran was nowhere close to being convenient. Gurobi, in turn, started in 2008, when Python was already a popular language.",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Optimization modelling languages"
-    ]
-  },
-  {
-    "objectID": "opt_theory_modellers.html#language-independent-optimization-modelling-languages",
-    "href": "opt_theory_modellers.html#language-independent-optimization-modelling-languages",
-    "title": "Optimization modelling languages",
-    "section": "Language-independent optimization modelling languages",
-    "text": "Language-independent optimization modelling languages\nOptimization/algebraic modelling languages were originally developed outside programming languages, essentially as standalone tools. Examples are AMPL, GAMS, and, say, GLPK/GMPL (MathProg). We listed these main names here since they can be bumped across (they are still actively developed), but we are not going to discuss them in our course any further. The reason is that there are now alternatives that are implemented as packages/toolboxes in programming languages such as Julia, Matlab, and Python, which offer a more fluent workflow – a user can use the same programming language to acquire the data, preprocess them, formulate the optimization problem, configure and call a solver, and finally do some postprocessing including a visualization and whatever reporting, all without leaving the language of their choice.",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Optimization modelling languages"
-    ]
-  },
-  {
-    "objectID": "opt_theory_modellers.html#optimization-modelling-in-julia",
-    "href": "opt_theory_modellers.html#optimization-modelling-in-julia",
-    "title": "Optimization modelling languages",
-    "section": "Optimization modelling in Julia",
-    "text": "Optimization modelling in Julia\nMy obvious (personal) bias towards Julia programming language is partly due to the terrific support for optimization modelling in Julia:\n\nJuMP.jl not only constitutes one of the flagship packages of the Julia ecosystem but it is on par with the state of the art optimization modelling languages. Furthermore, being a free and open source software, it enjoys a vibrant community of developers and users. They even meet annually at JuMP-dev conference (in 2023 in Boston, MA).\nConvex.jl is an implementation of the concept of Disciplined Convex Programming (DCP) in Julia (below we also list its implementations in Matlab and Python). Even though it is now registered as a part of the JuMP.jl project, it is still a separate concept. Interesting, convenient, but it seems to be in a maintanence mode now.\n\n\n\nShow the code\nusing Convex, SCS\n\n# Define the problem data and build the problem description\nP = [4.0 1.0; 1.0 2.0]\nq = [1.0, 1.0]\nA = [1.0 1.0; 1.0 0.0; 0.0 1.0]\nl = [1.0, 0.0, 0.0]\nu = [1.0, 0.7, 0.7]\n\n# Create a vector variable of size n\nx = Variable(2)\n\n# Define the objective \nobjective = 1/2*quadform(x,P) + dot(q,x)\n\n# Define the constraints\nconstraints = [l &lt;= A*x, A*x &lt;= u]\n\n# Define the overal description of the optimization problem\nproblem = minimize(objective, constraints)\n\n# Solve the problem\nsolve!(problem, SCS.Optimizer; silent_solver = true)\n\n# Check the status of the problem\nproblem.status # :Optimal, :Infeasible, :Unbounded etc.\n\n# Get the optimum value\nproblem.optval\n\n# Get the optimal x\nx.value",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Optimization modelling languages"
-    ]
-  },
-  {
-    "objectID": "opt_theory_modellers.html#optimization-modelling-in-matlab",
-    "href": "opt_theory_modellers.html#optimization-modelling-in-matlab",
-    "title": "Optimization modelling languages",
-    "section": "Optimization modelling in Matlab",
-    "text": "Optimization modelling in Matlab\nPopularity of Matlab as a language and an ecosystem for control-related computations is undeniable. Therefore, let’s have a look at what is available for modelling optimization problems in Matlab:\n\nOptimization Toolbox for Matlab is one of the commercial toolboxes produced by Matlab and Simulink creators. Since the R2017b release the toolbox supports Problem-based optimization workflow (besides the more traditional Solver-based optimization workflow supported since the beginning), which can be regarded as a kind of an optimization/algebraic modelling language, albeit restricted to their own solvers.\nYalmip started as Yet Another LMI Parser quite some time ago (which reveals its control theoretic roots), but these days it serves as fairly complete algebraic modelling language (within Matlab), interfacing to perhaps any optimization solver, both commercial and free&open-source. It is free and open-source. Is is still actively developed and maintained and it abounds with tutorials and examples.\nCVX is a Matlab counterpart of Convex.jl (or the other way around, if you like, since it has been here longer). The name stipulates that it only allows convex optimization probles (unlike Yalmip) – it follows the Disciplined Convex Programming (DCP) paradigm. Unfortunately, the development seems to have stalled – the last update is from 2020.",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Optimization modelling languages"
-    ]
-  },
-  {
-    "objectID": "opt_theory_modellers.html#optimization-modelling-in-python",
-    "href": "opt_theory_modellers.html#optimization-modelling-in-python",
-    "title": "Optimization modelling languages",
-    "section": "Optimization modelling in Python",
-    "text": "Optimization modelling in Python\nPython is a very popular language for scientific computing. Although it is arguable if it is actually suitable for implementation of numerical algoritms, when it comes to building optimization models, it does its job fairly well (and the numerical solvers it calls can be developed in different language). Several packages implementing OML/AML are available:\n\ncvxpy is yet another instantiation of Disciplined Convex Programming that we alredy mention when introducing Convex.jl and CVX. And it turns out that this one exhibits the greatest momentum. The team of developers seems to be have exceeded a critical mass, hence the tools seems like a safe bet already.\nPyomo is a popular open-source optimization modelling language within Python.\nAPMonitor and GEKKO are relatively young projects, primarily motivated by applications of machine learning and optimization in chemical process engineering.",
-    "crumbs": [
-      "1. Optimization – theory",
-      "Optimization modelling languages"
-    ]
-  },
-  {
-    "objectID": "discr_dir_mpc.html",
-    "href": "discr_dir_mpc.html",
-    "title": "Model predictive control (MPC)",
-    "section": "",
-    "text": "In the previous section we learnt how to compute an optimal control sequence on a finite time horizon using numerical methods for solving nonlinear programs (NLP), and quadratic programs (QP) in particular. There are two major deficiencies of such approach:\n\nThe control sequence was computed under the assumption that the mathematical model is perfectly accurate. As soon as the reality deviates from the model, either because of some unmodelled dynamics or because of the presence of (external) disturbances, the performance of the system will deteriorate. We need a way to turn the presented open-loop (also feedforward) control scheme into a feedback one.\nThe control sequence was computed for a finite time horizon. It is commonly required to consider an infinite time horizon, which is not possible with the presented approach based on solving finite-dimensional mathematical programs.\n\nThere are several ways to address these issues. Here we introduced one of them. It is knowns are Model Predictive Control (MPC), or also Receding Horizon Control (RHC). Some more are presented in the next two sections (one based on indirect approach, another one based on dynamic programming).",
-    "crumbs": [
-      "3. Discrete-time optimal control – direct approach",
-      "Model predictive control (MPC)"
-    ]
-  },
-  {
-    "objectID": "discr_dir_mpc.html#deficiencies-of-precomputed-open-loop-optimal-control",
-    "href": "discr_dir_mpc.html#deficiencies-of-precomputed-open-loop-optimal-control",
-    "title": "Model predictive control (MPC)",
-    "section": "",
-    "text": "In the previous section we learnt how to compute an optimal control sequence on a finite time horizon using numerical methods for solving nonlinear programs (NLP), and quadratic programs (QP) in particular. There are two major deficiencies of such approach:\n\nThe control sequence was computed under the assumption that the mathematical model is perfectly accurate. As soon as the reality deviates from the model, either because of some unmodelled dynamics or because of the presence of (external) disturbances, the performance of the system will deteriorate. We need a way to turn the presented open-loop (also feedforward) control scheme into a feedback one.\nThe control sequence was computed for a finite time horizon. It is commonly required to consider an infinite time horizon, which is not possible with the presented approach based on solving finite-dimensional mathematical programs.\n\nThere are several ways to address these issues. Here we introduced one of them. It is knowns are Model Predictive Control (MPC), or also Receding Horizon Control (RHC). Some more are presented in the next two sections (one based on indirect approach, another one based on dynamic programming).",
-    "crumbs": [
-      "3. Discrete-time optimal control – direct approach",
-      "Model predictive control (MPC)"
-    ]
-  },
-  {
-    "objectID": "discr_dir_mpc.html#model-predictive-control-mpc-as-a-way-to-turn-open-loop-control-into-feedback-control",
-    "href": "discr_dir_mpc.html#model-predictive-control-mpc-as-a-way-to-turn-open-loop-control-into-feedback-control",
-    "title": "Model predictive control (MPC)",
-    "section": "Model predictive control (MPC) as a way to turn open-loop control into feedback control",
-    "text": "Model predictive control (MPC) as a way to turn open-loop control into feedback control\nThe idea is to compute an optimal control sequence on a finite time horizon using the material presented in the previous section, apply only the first control action to the system, and then repeat the procedure upon shifting the time horizon by one time step.\nAlthough this name “model predictive control” is commonly used in the control community, the other – perhaps a bit less popular – name “receding horizon control” is equally descriptive, if not even a bit more.\n\n\n\n\n\n\nNote\n\n\n\nIt may take a few moments to digest the idea, but it is actually quite natural. As a matter of fact, this is the way most of us control our lifes every day. We plan our actions on a finite time horizon, and while building this plan we use our understanding (model) of the world. We then perform the first action from our plan, observe the impact of our action and possibly a change in the environment, and update our plan accordingly on a new (shifted) time horizon. We repeat this procedure over and over again. It is crucial that the prediction horizon must be long enough so that the full impact of our actions can be observed.",
-    "crumbs": [
-      "3. Discrete-time optimal control – direct approach",
-      "Model predictive control (MPC)"
-    ]
-  },
-  {
-    "objectID": "discr_dir_mpc.html#linear-vs-nonlinear-mpc",
-    "href": "discr_dir_mpc.html#linear-vs-nonlinear-mpc",
-    "title": "Model predictive control (MPC)",
-    "section": "Linear vs nonlinear MPC",
-    "text": "Linear vs nonlinear MPC\nx",
-    "crumbs": [
-      "3. Discrete-time optimal control – direct approach",
-      "Model predictive control (MPC)"
-    ]
-  },
-  {
-    "objectID": "discr_dir_mpc.html#prediction-horizon-vs-control",
-    "href": "discr_dir_mpc.html#prediction-horizon-vs-control",
-    "title": "Model predictive control (MPC)",
-    "section": "Prediction horizon vs control",
-    "text": "Prediction horizon vs control\nx",
-    "crumbs": [
-      "3. Discrete-time optimal control – direct approach",
-      "Model predictive control (MPC)"
-    ]
-  },
-  {
-    "objectID": "discr_dir_mpc.html#hard-constraints-vs-soft-constraints",
-    "href": "discr_dir_mpc.html#hard-constraints-vs-soft-constraints",
-    "title": "Model predictive control (MPC)",
-    "section": "Hard constraints vs soft constraints",
-    "text": "Hard constraints vs soft constraints\nx",
-    "crumbs": [
-      "3. Discrete-time optimal control – direct approach",
-      "Model predictive control (MPC)"
-    ]
-  },
-  {
-    "objectID": "discr_dir_mpc.html#literature",
-    "href": "discr_dir_mpc.html#literature",
-    "title": "Model predictive control (MPC)",
-    "section": "Literature",
-    "text": "Literature\n(Rawlings, Mayne, and Diehl 2017), (Borrelli, Bemporad, and Morari 2017), (Gros and Diehl 2022) (Bemporad 2021)",
-    "crumbs": [
-      "3. Discrete-time optimal control – direct approach",
-      "Model predictive control (MPC)"
-    ]
-  },
-  {
-    "objectID": "discr_indir_LQR_inf_horizon.html",
-    "href": "discr_indir_LQR_inf_horizon.html",
-    "title": "Discrete-time LQR-optimal control on an infinite horizon",
-    "section": "",
-    "text": "In this section we are going to solve the LQR problem on the time horizon extended to infinity, that is, our goal is to find an infinite (vector) control sequence \\bm u_0, \\bm u_{1},\\ldots, \\bm u_{\\infty} that minimizes \nJ_0^\\infty = \\frac{1}{2}\\sum_{k=0}^{\\infty}\\left[\\bm x_k^\\top \\mathbf Q \\bm x_k+\\bm u_k^\\top \\mathbf R\\bm u_k\\right],\n where, as before \\mathbf Q = \\mathbf Q^\\top \\succeq 0 and \\mathbf R = \\mathbf R^\\top \\succ 0 and the system is modelled by \n\\bm x_{k+1} = \\mathbf A \\bm x_{k} + \\mathbf B \\bm u_k, \\qquad \\bm x_0 = \\mathbf x_0.",
-    "crumbs": [
-      "4. Discrete-time optimal control – indirect approach",
-      "Discrete-time LQR-optimal control on an infinite horizon"
-    ]
-  },
-  {
-    "objectID": "discr_indir_LQR_inf_horizon.html#why-the-infinite-time-horizon",
-    "href": "discr_indir_LQR_inf_horizon.html#why-the-infinite-time-horizon",
-    "title": "Discrete-time LQR-optimal control on an infinite horizon",
-    "section": "Why the infinite time horizon?",
-    "text": "Why the infinite time horizon?\nThe first question that must inevitably pop up is the one about the motivation for introducing the infinite time horizon:\n\nDoes the introduction of an infinite time horizon reflect that we do not care about when the controller accomplishes the task?\n\nNo, certainly not. The infinite time horizon is introduced to model the case when the system is expected to operate indefinitely. This is a common scenario in practice, for example, in the case of temperature control in a building.\nSimilarly, the infinite time horizon can be used in the scenarios when the final time is not known and we leave it up to the controller to take as much time as it needs to reach the desired state. But even then we can still express our desire to reach the desired state as soon as possible by choosing the weights \\mathbf Q and \\mathbf R appropriately.",
-    "crumbs": [
-      "4. Discrete-time optimal control – indirect approach",
-      "Discrete-time LQR-optimal control on an infinite horizon"
-    ]
-  },
-  {
-    "objectID": "discr_indir_LQR_inf_horizon.html#steady-state-solution-to-discrete-time-riccati-equation",
-    "href": "discr_indir_LQR_inf_horizon.html#steady-state-solution-to-discrete-time-riccati-equation",
-    "title": "Discrete-time LQR-optimal control on an infinite horizon",
-    "section": "Steady-state solution to discrete-time Riccati equation",
-    "text": "Steady-state solution to discrete-time Riccati equation\nWe have seen in the previous section that the solution to LQR problem with free final state and finite time horizon is given by a time-varying state feedback control law \\bm u_k = \\mathbf K_k \\bm x_k. The sequence of gains \\mathbf K_k for k=0,\\ldots, N-1, is given by the sequence of matrices \\mathbf S_k for k=0,\\ldots, N, which in turn is given as the solution to the (discrete-time) Riccati equation initialized by the penalty \\mathbf S_N and solved backwards in time. But we have also seen that, at least in our example, provided the time interval was long enough, the sequence \\mathbf K_k and \\mathbf S_k both converged to some steady state values as the time k proceeded backwards towards the beginning of the time interval.\nWhile using these steady-state values instead of the full sequences lead to a suboptimal solution on a finite time horizon, it turns out that it actually gives the optimal solution on an infinite time horizon. Although our argument here may be viewed as rather hand-wavy, it is intuitive — there is no end to the time interval, hence the steady-state values are not given a chance to change “towards the end”, as we observed in the finite time horizon case.\n\n\n\n\n\n\nNote\n\n\n\nOther approaches exist for solving the infinite time horizon LQR problem that do not make any reference to the finite time horizon problem, some of them are very elegant and concise, but here we intentionally stick to viewing it as the extension of the finite time horizon problem.\n\n\n\nNotation\nBefore we proceed with the discussion of how to find the steady-state values (the limits) of \\mathbf S_k and subsequently \\mathbf K_k, we must discuss the notation first. So, while icreasing the time horizon N and the solution to the Riccati equation settles towards the beginning of the time interval. We can thenk pick the steady-state values right at the initial time k=0, that is, \\mathbf S_0 and \\mathbf K_0. But thanks to time invariance, we can also fix the final time to some (arbitrary) N and strech the interval by moving its beginning toward -\\infty. The limits of the sequences \\mathbf S_k and \\mathbf K_k can be then considered at k goes toward -\\infty. It seems appropriate to denote these limits as \\mathbf S_{-\\infty} and \\mathbf K_{-\\infty} then. Well, the fact is that the commonly accepted notation for the limits found in the literature is just \\mathbf S_\\infty and \\mathbf K_\\infty \n\\mathbf S_\\infty \\triangleq \\lim_{k\\rightarrow -\\infty} \\mathbf S_k, \\qquad \\mathbf K_\\infty \\triangleq \\lim_{k\\rightarrow -\\infty} \\mathbf K_k.\n\n\n\nHow to compute the steady-state solution to Riccati equation?\nLeaving aside for the moment the important question whether and under which conditions such a limit \\mathbf S_\\infty exists, the immediate question is how to compute such limit. One straightforward strategy is to run the recurrent scheme (Riccati equation) and generate the sequence \\mathbf S_{N}, \\mathbf S_{N-1}, \\mathbf S_{N-2}, \\ldots so long as there is a nonnegligible improvement, that is, once \\mathbf S_{k}\\approx\\mathbf S_{k+1}, stop iterating. That is certainly doable.\nThere is, however, another idea. We apply the steady-state condition \n\\mathbf S_{\\infty} = \\mathbf S_k=\\mathbf S_{k+1}\n to the Riccati equation. The resulting equation \n\\mathbf S_{\\infty}=\\mathbf A^\\text{T}\\left[\\mathbf S_{\\infty}-\\mathbf S_{\\infty}\\mathbf B(\\mathbf B^\\text{T}\\mathbf S_{\\infty}\\mathbf B+\\mathbf R)^{-1}\\mathbf B^\\text{T}\\mathbf S_{\\infty}\\right]\\mathbf A+\\mathbf Q\n is called discrete-time algebraic Riccati equation (DARE) and it is one of the most important equations in the field of computational control design.\nThe equation may look quite “messy” and offers hardly any insight. Remember the good advice to shring the problem to the scalar size while studying similar matrix-vector expressions and striving to get some insight. Our DARE simplifies to \ns_\\infty = a^2s_\\infty - \\frac{a^2b^2s_\\infty^2}{b^2s_\\infty+r} + q\n\nMultiplying both sides by the denominator we get the equivalent quadratic (in s_\\infty) equation \nb^2s_\\infty^2 + (r - a^2b^2 - b^2q)s_\\infty - qr = 0.\n\nVoilà! A scalar DARE is just a quadratic equation, for which the solutions can be found readily.\nThere is a caveat here, though, reflected in using plural in “solutions” above. Quadratic equation can have two (or none) real solutions. But the sequence produced by original recursive Riccati equation is determined uniquely! What’s up? How are the solutions to ARE related to the limiting solution of recursive Riccati equation?\nAnswering this question will keep us busy for most of this lecture. We will structure this broad question into several sub-questions\n\nUnder which conditions it is guaranteed that there exists a (bounded) limiting solution \\mathbf S_\\infty to the recursive Riccati equation for all initial (actually final) values \\mathbf S_N?\nUnder which conditions is the limit solution unique for arbitrary \\mathbf S_N?\nUnder which conditions is it guaranteed that the time-invariant feedback gain \\mathbf K_\\infty computed from \\mathbf S_\\infty stabilizes the system (on the infinite control interval)?",
-    "crumbs": [
-      "4. Discrete-time optimal control – indirect approach",
-      "Discrete-time LQR-optimal control on an infinite horizon"
-    ]
-  },
-  {
-    "objectID": "limits_of_performance_MIMO.html",
-    "href": "limits_of_performance_MIMO.html",
-    "title": "Limits for MIMO systems",
+    "objectID": "limits_of_performance_SISO.html",
+    "href": "limits_of_performance_SISO.html",
+    "title": "Limits for SISO systems",
     "section": "",
     "text": "Back to top",
     "crumbs": [
       "13. Limits of performance",
-      "Limits for MIMO systems"
+      "Limits for SISO systems"
+    ]
+  },
+  {
+    "objectID": "cont_indir_calculus_of_variations.html",
+    "href": "cont_indir_calculus_of_variations.html",
+    "title": "Calculus of variations",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "7. Continuous-time optimal control - indirect approach via calculus of variations",
+      "Calculus of variations"
+    ]
+  },
+  {
+    "objectID": "discr_indir_general.html",
+    "href": "discr_indir_general.html",
+    "title": "General nonlinear discrete-time optimal control",
+    "section": "",
+    "text": "While in the previous chapter we formulated an optimal control problem (OCP) directly as a mathematical programming (general NLP or even QP) problem over the control (and possibly state) trajectories, in this chapter we introduce an alternative – indirect – approach. The essence of the approach is that we formulate first-order necessary conditions of optimality for the OCP in the form of equations, and then solve these. Although less straightforward to extend with additional constraints than the direct approach, the indirect approach also exhibits some advantages. In particular, in some cases (such as a quadratic cost and a linear system) it yields a feedback controller and not just a control trajetory.",
+    "crumbs": [
+      "4. Discrete-time optimal control – indirect approach",
+      "General nonlinear discrete-time optimal control"
+    ]
+  },
+  {
+    "objectID": "discr_indir_general.html#optimization-constrains-given-only-by-the-state-equations",
+    "href": "discr_indir_general.html#optimization-constrains-given-only-by-the-state-equations",
+    "title": "General nonlinear discrete-time optimal control",
+    "section": "Optimization constrains given only by the state equations",
+    "text": "Optimization constrains given only by the state equations\nAs in the chapter on the direct approach, here we also start by considering a general nonlinear and possibly time-varying discrete-time dynamical system characterized by the state vector \\bm x_k\\in\\mathbb R^n whose evolution in discrete time k is uniquely determined by the state equation \n\\bm x_{k+1} = \\mathbf f_k(\\bm x_k,\\bm u_k),\n accompanied by the initial state (vector) \\bm x_i\\in\\mathbb R^n and a sequence of control inputs \\bm u_i, \\bm u_{i+1}, \\ldots, \\bm u_{k-1}, where the control variable can also be a vector, that is, \\bm u_k \\in \\mathbb R^m.\nThese state equations will constitute the only constraints of the optimization problem. Unlike in the direct approach, here in our introductory treatment we do not impose any inequality constraints such as bounds on the control inputs, because the theory to be presented is not able to handle them.",
+    "crumbs": [
+      "4. Discrete-time optimal control – indirect approach",
+      "General nonlinear discrete-time optimal control"
+    ]
+  },
+  {
+    "objectID": "discr_indir_general.html#general-additive-cost-function",
+    "href": "discr_indir_general.html#general-additive-cost-function",
+    "title": "General nonlinear discrete-time optimal control",
+    "section": "General additive cost function",
+    "text": "General additive cost function\nFor the above described dynamical system we want to find a control sequence \\bm u_k that minimizes a suitable optimization criterion over a finite horizon k\\in[i,N]. Namely, we will look for a control that minimizes a criterion of the following kind \nJ_i^N(\\underbrace{\\bm x_{i+1}, \\bm x_{i+2}, \\ldots, \\bm x_{N}}_{\\bar{\\bm x}}, \\underbrace{\\bm u_{i}, \\ldots, \\bm u_{N-1}}_{\\bar{\\bm u}};\\bm x_i) = \\phi(\\bm x_N,N) + \\sum_{k=i}^{N-1} L_k(\\bm x_k,\\bm u_k).\n\\tag{1}\n\n\n\n\n\n\nNote\n\n\n\nRegarding the notation J_i^N(\\cdot) for the cost, if the initial and final times are understood from the context, they do not have to be displayed. But we will soon need to indicate the initial time explicitly in our derivations.\n\n\nThe property of the presented cost function that will turn out crucial in our subsequent work is that is additive over the time horizon. Although this restricts the class of cost functions a bit, it is still general enough to encompass a wide range of problems, such as minimizing the total (financial) cost to be paid, the total energy to be used, the total distance to be travelled, the cumulative error to be minimized, etc.\nHere is a list of a few popular cost functions.\n\nMinimum-time (or time-optimal) problem\n\nSetting \\phi=1 and L_k=1 gives J=N-i, that is, the length of the time horizon, the duration of control. Altough in this course we do not introduce concepts and tools for optimization over integer variables, in this simple case of just a single integer variable even a simple search over the length of control interval will be computationally tractable. Furthermore, as we will see in one of the next chapters once we switch from discrete-time to continuous-time systems, this time-optimal control design problem will turn out tractable using the tools presented in this course.\n\nMinimum-fuel problem\n\nSetting \\phi=0 and L_k=|u_k|, which gives J=\\sum_{k=i}^{N-1}|u_k|.\n\nMinimum-energy problem\n\nSetting \\phi=0 and L_k=\\frac{1}{2} u_k^2, which gives J=\\frac{1}{2} \\sum_{k=i}^{N-1} u_k^2. It is fair to admit that this sum of squared inputs cannot always be interpretted as the energy – for instance, what if the control input is a degree of openning of a valve? Sum of angles over time can hardly be interpreted as energy. Instead, it should be interpretted in the mathematical way as the (squared) norm, that is, a “size” of the input. Note that the same objection can be given to the previous case of a minimum-fuel problem.\n\nMixed quadratic problem (also LQ-optimal control problem)\n\nSetting \\phi=\\frac{1}{2}s_N x_N^2 and L_k=\\frac{1}{2} (qx_k^2+ru_k^2),\\, q,r\\geq 0, which gives J=\\frac{1}{2}s_Nx_N^2+\\frac{1}{2} \\sum_{k=i}^{N-1} (r x_k^2+q u_k^2). Or in the case of vector state and control variables J=\\frac{1}{2}\\bm x_N^\\top \\mathbf S_N \\bm x_N+\\frac{1}{2} \\sum_{k=i}^{N-1} (\\bm x_k^\\top \\mathbf Q \\bm x_k + \\bm u_k^\\top \\mathbf R \\bm u_k), \\, \\mathbf Q, \\mathbf R \\succeq 0. This type of an optimization cost is particularly popular. Both for the mathematical reasons (we all now appreciate the nice properties of quadratic functions) and for practical engineering reasons as it allows us to capture a trade-off between the control performance (penalty on \\bm x_k) and control effort (penalty on \\bm u_k). Note also that the state at the terminal time N is penalized separately just in order to allow another trade-off between the transient and terminal behavior. The cost function can also be modified to penalize deviation of the state from some nonzero desired (aka reference) state trajectory, that is J=\\frac{1}{2}(\\bm x_N - \\bm x_N^\\text{ref})^\\top \\mathbf S_N (\\bm x_N - \\bm x_N^\\text{ref}) +\\frac{1}{2} \\sum_{k=i}^{N-1} \\left((\\bm x_k - \\bm x_k^\\text{ref})^\\top \\mathbf Q (\\bm x_k - \\bm x_k^\\text{ref}) + \\bm u_k^\\top \\mathbf R \\bm u_k\\right).\n\n\nNote that in none of these cost function did we include \\bm u_{N} as an optimization variables as it has no influence over the interval [i,N].\nIt is perhaps needless to emphasize that while in some other applications maximizing may seem more appropriate (such as maximizing the yield, bandwidth or robustness), we can always reformulate the maximization into minimization. Therefore in our course we alway formulate the optimal control problems as minimization problems.",
+    "crumbs": [
+      "4. Discrete-time optimal control – indirect approach",
+      "General nonlinear discrete-time optimal control"
+    ]
+  },
+  {
+    "objectID": "discr_indir_general.html#derivation-of-the-first-order-necessary-conditions-of-optimality",
+    "href": "discr_indir_general.html#derivation-of-the-first-order-necessary-conditions-of-optimality",
+    "title": "General nonlinear discrete-time optimal control",
+    "section": "Derivation of the first-order necessary conditions of optimality",
+    "text": "Derivation of the first-order necessary conditions of optimality\nHaving formulated a finite-dimensional constrained nonlinear optimization problem, we avoid the temptation to call an NLP solver to solve it numerically and proceed instead with our own analysis of the problem. Let’s see how far we can get.\nBy introducing Lagrange multipliers {\\color{blue}\\bm\\lambda_k} we turn the constrained problem into an unconstrained one. The new cost function (we use the prime to distinguish it from the original cost) is \n\\begin{aligned}\n& {J'}_i^N(\\bm x_i, \\ldots, \\bm x_N, \\bm u_i, \\ldots, \\bm u_{N-1},{\\color{blue}\\bm \\lambda_i, \\ldots, \\bm \\lambda_{N-1}}) \\\\\n&\\qquad\\qquad\\qquad = \\phi(\\bm x_N,N) + \\sum_{k=i}^{N-1}\\left[L_{k}(\\bm x_k,\\bm u_k)+\\bm {\\color{blue}\\lambda^\\top_{k}}\\;\\left[\\mathbf f_k(\\bm x_k,\\bm u_k)-\\bm x_{k+1}\\right]\\right].\n\\end{aligned}\n\nFrom now on, in principle, we do not need any guidance here, do we? We are given an unconstrained optimization problem and its solution is just a few steps away. In particular, stationary point(s) must be found (and then we are going to argue if these qualify as minimizers or not). This calls for differentiating the above expression with respect to all the variables and setting these derivatives equal to zeros.\nAlthough the principles are clear, some hindsight might be shared here if compact formulas are to be found. First such advice is to rename the variable(s) {\\color{blue}\\boldsymbol \\lambda_k} to {\\color{red}\\boldsymbol \\lambda_{k+1}} \n\\begin{aligned}\n& {J'}_i^N(\\bm x_i, \\ldots, \\bm x_N, \\bm u_i, \\ldots, \\bm u_{N-1},{\\color{red}\\bm \\lambda_{i+1}, \\ldots, \\bm \\lambda_{N}}) \\\\\n& \\qquad\\qquad\\qquad = \\phi(N,\\bm x_N) + \\sum_{k=i}^{N-1}\\left[L_{k}(\\bm x_k,\\bm u_k)+\\boldsymbol {\\color{red}\\boldsymbol \\lambda^\\top_{k+1}}\\; \\left[\\mathbf f_k(\\bm x_k,\\bm u_k)-\\mathbf x_{k+1}\\right]\\right].\n\\end{aligned}\n\nThis is really just a notational decision but thanks to it our resulting formulas will enjoy some symmetry.\n\n\n\n\n\n\nNote\n\n\n\nMaybe it would be more didactic to leave you to go on without this advice notation and only then to nudge you to figure out this remedy on your own. But admittedly this is not the kind of competence that we aim at in this course. Let’s spend time with more rewarding things.\n\n\nAnother notational advice – but this one is more systematic and fundamental — is to make the above expression a bit shorter by introducing a new variable defined as \\boxed{H_k(\\bm x_k,\\bm u_k,\\boldsymbol\\lambda_{k+1}) = L_{k}(\\bm x_k,\\bm u_k)+\\boldsymbol \\lambda_{k+1}^\\top \\; \\mathbf f_k(\\bm x_k,\\bm u_k).}\n\nWe will call this new function Hamiltonian. Indeed, the choice of this name is motivated by the analogy with the equally named concept used in physics and theoretical mechanics, but we will only make more references to this analogy later in the course once we transition to continuous-time systems modelled by differential equations.\nIntroducing the Hamiltonian reformulates the cost function (and we omit the explicit dependence on all its input arguments) as \n{J'}_i^N = \\phi(N,\\bm x_N) + \\sum_{k=i}^{N-1}\\left[H_{k}(\\bm x_k,\\bm u_k,\\boldsymbol\\lambda_{k+1})-\\boldsymbol\\lambda^\\top_{k+1}\\;\\mathbf x_{k+1}\\right].\n\nThe final polishing of the expression before starting to compute the derivatives consists in bringing together the terms that contain related variables: the state \\bm x_N at the final time, the state \\bm x_i at the initial time, and the states, controls and Lagrange multipliers in the transient period\n\n{J'}_i^N = \\underbrace{\\phi(N,\\bm x_N) -\\boldsymbol\\lambda^\\top_{N}\\;\\mathbf x_{N}}_\\text{at terminal time} + \\underbrace{H_i(\\bm x_i,\\mathbf u_i,\\boldsymbol\\lambda_{i+1})}_\\text{at initial time} + \\sum_{k=i+1}^{N-1}\\left[H_{k}(\\bm x_k,\\bm u_k,\\boldsymbol\\lambda_{k+1})-\\boldsymbol\\lambda^\\top_{k}\\;\\mathbf x_{k}\\right].\n\nAlthough this step was not necessary, it will make things a bit more convenient once we start looking for the derivatives. And the time for it has just come.\nRecall now the recommended procedure for finding derivatives of functions of vectors – find the differential instead and identify the derivative in the result. The gradient is then (by convention) obtained as the transpose of the derivative. Following this derivative-identification procedure, we anticipate the differential of the augmented cost function in the following form \n\\begin{split}\n\\text{d}{J'}_i^N &= (\\qquad)^\\top \\; \\text{d}\\bm x_N + (\\qquad)^\\top \\; \\text{d}\\bm x_i \\\\&+ \\sum_{k=i+1}^{N-1}(\\qquad)^\\top \\; \\text{d}\\bm x_k + \\sum_{k=i}^{N-1}(\\qquad)^\\top \\; \\text{d}\\bm u_k + \\sum_{k=i+1}^{N}(\\qquad)^\\top \\; \\text{d}\\boldsymbol \\lambda_k.\n\\end{split}\n\nIdentifying the gradients amounts to filling in the empty brackets. It straightforward if tedious (in particular the lower and upper bounds on the summation indices must be carefuly checked). The solution is \n\\begin{split}\n\\text{d}{J'}_i^N &= \\left(\\nabla_{\\bm x_N}\\phi-\\lambda_N\\right)^\\top \\; \\text{d}\\bm x_N + \\left(\\nabla_{\\bm x_i}H_i\\right)^\\top \\; \\text{d}\\bm x_i \\\\&+ \\sum_{k=i+1}^{N-1}\\left(\\nabla_{\\bm x_k}H_k-\\boldsymbol\\lambda_k\\right)^\\top \\; \\text{d}\\bm x_k + \\sum_{k=i}^{N-1}\\left(\\nabla_{\\bm u_k}H_k\\right)^\\top \\; \\text{d}\\bm u_k + \\sum_{k=i+1}^{N}\\left(\\nabla_{\\boldsymbol \\lambda_k}H_{k-1}-\\bm x_k\\right)^\\top \\; \\text{d}\\boldsymbol \\lambda_k.\n\\end{split}\n\nThe ultimate goal of this derivation was to find stationary points for the augmented cost function, that is, to find conditions under which \\text{d}{J'}_i^N=0. In typical optimization problems, the optimization is conducted with respect to all the participating variables, which means that the corresponding differentials may be arbitrary and the only way to guarantee that the total differential of J_i' is zeros is to make the associated gradients (the contents of the brackets) equal to zero. There are two exceptions to this rule in our case, though:\n\nThe state at the initial time is typically fixed and not available for optimization. Then \\text{d}\\bm x_i=0 and the corresponding necessary condition is replaced by the statement that \\bm x_i is equal to some particular value, say, \\bm x_i = \\mathbf x^\\text{init}. We have already discussed this before. In fact, in these situations we might even prefer to reflect it by the notation J_i^N(\\ldots;\\bm x_i), which emphasizes that \\bm x_i is a parameter and not a variable. But in the solution below we do allow for the possibility that \\bm x_i is a variable too (hence \\text{d}\\bm x_i\\neq 0) for completeness.\nThe state at the final time may also be given/fixed, in which case the corresponding condition is replaced by the statement that \\bm x_N is equal to some particular value, say, \\bm x_N = \\mathbf x^\\text{ref}. But if it is not the case, then the final state is also subject to optimization and the corresponding necessary condition of optimality is obtained by setting the content of the corresponding brackets to zero.",
+    "crumbs": [
+      "4. Discrete-time optimal control – indirect approach",
+      "General nonlinear discrete-time optimal control"
+    ]
+  },
+  {
+    "objectID": "discr_indir_general.html#necessary-conditions-of-optimality-as-two-point-boundary-value-problem-tp-bvp",
+    "href": "discr_indir_general.html#necessary-conditions-of-optimality-as-two-point-boundary-value-problem-tp-bvp",
+    "title": "General nonlinear discrete-time optimal control",
+    "section": "Necessary conditions of optimality as two-point boundary value problem (TP-BVP)",
+    "text": "Necessary conditions of optimality as two-point boundary value problem (TP-BVP)\nThe ultimate form of the first-order necessary conditions of optimality, which incorporates the special cases discussed above, is given by these equations \n\\boxed{\n\\begin{aligned}\n\\mathbf x_{k+1} &= \\nabla_{\\boldsymbol\\lambda_{k+1}}H_k, \\;\\;\\; \\color{gray}{k=i,\\ldots, N-1},\\\\\n\\boldsymbol\\lambda_k &= \\nabla_{\\bm x_k}H_k, \\;\\;\\; \\color{gray}{k=i+1,\\ldots, N-1}\\\\\n0 &=  \\nabla_{\\bm u_k}H_k, \\;\\;\\; \\color{gray}{k=i,\\ldots, N-1}\\\\\n\\color{blue}{0} &= \\color{blue}{\\left(\\nabla_{\\bm x_N}\\phi-\\lambda_N\\right)^\\top \\mathrm{d}\\bm x_N},\\\\\n\\color{blue}{0} &= \\color{blue}{\\left(\\nabla_{\\bm x_i}H_i\\right)^\\top \\mathrm{d}\\bm x_i},\n\\end{aligned}\n}\n or more explicitly \n\\boxed{\n\\begin{aligned}\n\\mathbf x_{k+1} &= \\mathbf f_k(\\bm x_k,\\bm u_k), \\;\\;\\; \\color{gray}{k=i,\\ldots, N-1},\\\\\n\\boldsymbol\\lambda_k &= \\nabla_{\\bm x_k}\\mathbf f_k\\;\\;   \\boldsymbol\\lambda_{\\mathbf k+1}+\\nabla_{\\bm x_k}L_k, \\;\\;\\; \\color{gray}{k=i+1,\\ldots, N-1}\\\\\n0 &=  \\nabla_{\\bm u_k}\\mathbf f_k\\;\\; \\boldsymbol\\lambda_{k+1}+\\nabla_{u_k}L_k, \\;\\;\\; \\color{gray}{k=i,\\ldots, N-1}\\\\\n\\color{blue}{0} &= \\color{blue}{\\left(\\nabla_{\\bm x_N}\\phi-\\lambda_N\\right)^\\top \\mathrm{d}\\bm x_N},\\\\\n\\color{blue}{0} &= \\color{blue}{\\left(\\nabla_{\\bm x_i}H_i\\right)^\\top \\mathrm{d}\\bm x_i}.\n\\end{aligned}\n}\n\nRecall that since \\mathbf f is a vector function, \\nabla \\mathbf f is not just a gradient but rather a matrix whose columns are gradients of the individual components of the vector \\mathbf f — it is a transpose of Jacobian.\n\n\n\n\n\n\nNote\n\n\n\nThe first three necessary conditions above can be made completely “symmetric” by running the second one from k=i because the \\boldsymbol\\lambda_i introduced this way does not influence the rest of the problem and we could easily live with one useless variable.\n\n\nWe have just derived the (necessary) conditions of optimality in the form of five sets of (vector) equations:\n\nThe first two are recursive (or recurrent or also just discrete-time) equations, which means that they introduce coupling between the variables evaluated at consecutive times. In fact, the former is just the standard state equation that gives the state at one time as a function of the state (and the control) at the previous time. The latter gives a prescription for the variable \\bm \\lambda_k as a function of (among others) the same variable evaluated at the next (!) time, that is, \\bm \\lambda_{k+1}. Although from the optimization perspective these variables play the role of Lagrange multipliers, we call them co-state variables in optimal control theory because of the way they relate to the state equations. The corresponding vector equation is called a co-state equation.\n\n\n\n\n\n\n\nImportant\n\n\n\nIt is a crucial property of the co-state equation that it dictates the evolution of the co-state variable backward in time.\n\n\n\nThe third set of equations are just algebraic equations that relate the control inputs to the state and co-state variables. Sometimes it is called a stationarity equation.\nThe last two are just single (vector) equations related to the end and the beginning of the time horizon. They are both stated in the general enough form that allows the corresponding states to be treated as either fixed or subject to optimization. In particular, if the final state is to be treated as free (subject to optimization), that is, \\mathrm{d}\\bm x_N can be atritrary and the only way the corresponding equation can be satisfied is \\nabla_{\\bm x_N}\\phi=\\lambda_N. If, on the other hand, the final state is to be treated as fixed, the the corresponding equation is just replaced by \\bm x_N = \\mathbf x^\\text{ref}. Similarly for the initial state. But as we have hinted a few times, most often than not the initial state will be regarded as fixed and not subject to optimization, in which case the corresponding equation is replaced by \\bm x_i = \\mathbf x^\\text{init}.\n\nTo summarize, the equations that give the necessary conditions of optimality for a general nonlinear discrete-time optimal control problem form a two-point boundary value problem (TP-BVP). Values of some variables are specified at the initial time, values of some (maybe the same or some other) variables are defined at the final time. The equations prescribe the evolution of some variables forward in time while for some other variables the evolution backward in time is dictated.\n\n\n\n\n\n\nNote\n\n\n\nThis is in contrast with the initial value problem (IVP) for state equations, for which we only specify the state at one end of the time horizon — the initial state — and then the state equation disctates the evolution of the (state) variable forward in time.\n\n\nBoundary value problems are notoriously difficult to solve. Typically we can only solve them numerically, in which case it is appropriate to ask if anything has been gained by this indirect procedure compared with the direct one. After all, we did not even incorporate the inequality constraints in the problem, which was a piece of case in the direct approach. But we will see that in some special cases the TP-BVP they can be solved analytically and the outcome is particularly useful and would never have been discovered, if only the direct approach had been followed. We elaborate on this in the next section.",
+    "crumbs": [
+      "4. Discrete-time optimal control – indirect approach",
+      "General nonlinear discrete-time optimal control"
+    ]
+  },
+  {
+    "objectID": "cont_indir_constrained.html",
+    "href": "cont_indir_constrained.html",
+    "title": "Constrained optimal control",
+    "section": "",
+    "text": "Back to top",
+    "crumbs": [
+      "8. Continuous-time optimal control - indirect approach via Pontryagin's maximum principle",
+      "Constrained optimal control"
+    ]
+  },
+  {
+    "objectID": "dynamic_programming_tabular.html",
+    "href": "dynamic_programming_tabular.html",
+    "title": "Tables as outcomes of dynamic programming",
+    "section": "",
+    "text": "Based on what we have seen so far, it turns out that the key to solving the discrete-time optimal control problem is to find some… functions. Either the optimal cost function J_k^\\star(\\bm x_k) or the optimal Q-factor Q_k^\\star(\\bm x_k,\\bm u_k). Once we have them, we can easily find the optimal control \\bm u_k^\\star(\\bm x_k). The question however is how to find these functions. We have seen some recursions for both of them, but it is not clear how to turn these into practical algorithms. We do it here.\nWe are going to solve ?@eq-bellman_for_discrete_time_optimal_control backwards in (discrete) time at a grid of states. Indeed, gridding the state space is the key technique in dynamic programming, because DP assumes a finite state space. If it is not finite, we must grid it.\nWe start with the final time N. We evaluate the terminal cost function \\phi(\\bm x_N) at a grid of states, which directly yields the optimal costs J_N^\\star(\\bm x_N).\nWe then proceed to the time N-1. Evaluating the optimal cost function J^\\star_{N-1} at each grid point in the state space calls for some optimization, namely \n\\min_{u_{N-1}} \\left(L_{N-1}(\\bm x_{N-1},\\bm u_{N-1}) + J_{N}^\\star(\\mathbf f_{N-1}(\\bm x_{N-1}, \\bm u_{N-1}))\\right).\n\nWe save the optimal costs and the corresponding controls at the given grid points (giving two arrays of values), decrement the time to N-2, and repeat. All the way down to the initial time i.\nLet’s summarize that as an outcome of this whole procedure we have two tables – one for the optimal cost, the other for the optimal control.\n\n\n\n Back to top",
+    "crumbs": [
+      "5. Discrete-time optimal control – dynamic programming",
+      "Tables as outcomes of dynamic programming"
     ]
   },
   {
@@ -805,12 +717,12 @@
   {
     "objectID": "dynamic_programming_LQR.html",
     "href": "dynamic_programming_LQR.html",
-    "title": "LQR via dynamic programming",
+    "title": "Solving LQR via dynamic programming",
     "section": "",
     "text": "In the previous section we have used dynamic programming as a numerical algorithm for solving a general discrete-time optimal control problem. We now show how to use dynamic programming to solve the discrete-time LQR problem. We consider a linear discrete-time system modelled by \n\\bm x_{k+1} = \\mathbf A\\bm x_k + \\mathbf B\\bm u_k,\n for which we want to minimize the quadratic cost given by \nJ_0(\\bm x_0, \\bm u_0, \\bm u_1, \\ldots, \\bm u_{N-1}) = \\frac{1}{2}\\bm x_N^\\top \\mathbf S_N \\bm x_N + \\frac{1}{2}\\sum_{k=0}^{N-1}\\left(\\bm x_k^\\top \\mathbf Q \\bm x_k + \\bm u_k^\\top \\mathbf R \\bm u_k\\right),\n with \\mathbf S_N\\succeq 0, \\mathbf Q\\succeq 0, \\mathbf R\\succ 0, as usual.\nWe now invoke the principle of optimality, that is, we start at the end of the time interval and evaluate the optimal cost \nJ_N^\\star(\\bm x_N) = \\frac{1}{2}\\bm x_N^\\top \\mathbf S_N \\bm x_N.\n\nObviously, here we did not even have to do any optimization since at the and of the interval the cost can no longer be influenced by any control. We just evaluated the cost.\nWe then proceed backwards in time, that is, we decrease the time to k=N-1. Here do have to optimize: \nJ^\\star_{N-1}(\\bm x_{N-1}) = \\min_{\\bm u_{N-1}\\in\\mathbb R^m} J_{N-1}(\\bm x_{N-1},\\bm u_{N-1}) = \\min_{\\bm u_{N-1}\\in\\mathbb R^m} \\left[L(\\bm x_{N-1},\\bm u_{N-1}) + J^\\star_{N}(\\bm x_{N}) \\right].\n\nWe now expand the expression for the cost\n\n\\begin{aligned}\nJ_{N-1}(\\bm x_{N-1},\\bm u_{N-1}) &= \\frac{1}{2} \\left(\\mathbf x_{N-1}^\\top \\mathbf Q \\mathbf x_{N-1} + \\mathbf u_{N-1}^\\top \\mathbf R \\mathbf u_{N-1} \\right) + J^\\star_{N}(\\bm x_{N}) \\\\\n&= \\frac{1}{2} \\left(\\mathbf x_{N-1}^\\top \\mathbf Q \\mathbf x_{N-1} + \\mathbf u_{N-1}^\\top \\mathbf R \\mathbf u_{N-1} \\right) + \\frac{1}{2}\\mathbf x_N^\\top \\mathbf S_N \\mathbf x_N\\\\\n&= \\frac{1}{2} \\left( \\mathbf x_{N-1}^\\top \\mathbf Q \\mathbf x_{N-1} + \\mathbf u_{N-1}^\\top \\mathbf R \\mathbf u_{N-1} + \\mathbf x_N^\\top \\mathbf S_N \\mathbf x_N \\right)\\\\\n&= \\frac{1}{2} \\left[ \\mathbf x_{N-1}^\\top \\mathbf Q \\mathbf x_{N-1} + \\mathbf u_{N-1}^\\top \\mathbf R \\mathbf u_{N-1} + (\\mathbf x_{N-1}^\\top \\mathbf A^\\top + \\mathbf u_{N-1}^\\top \\mathbf B^\\top) \\mathbf S_N (\\mathbf A\\mathbf x_{N-1} + \\mathbf B\\mathbf u_{N-1}) \\right]\\\\\n&= \\frac{1}{2} \\left[\\mathbf x_{N-1}^\\top (\\mathbf Q  + \\mathbf A^\\top\\mathbf S_N \\mathbf A)\\mathbf x_{N-1} + 2\\mathbf x^\\top_{N-1}\\mathbf A ^\\top \\mathbf S_N \\mathbf B  \\mathbf u_{N-1} + \\mathbf u^\\top_{N-1}(\\mathbf R + \\mathbf B^\\top \\mathbf S_n \\mathbf B)\\mathbf u_{N-1} \\right].\n\\end{aligned}\n\nWe assumed no constraint on \\mathbf u_{N-1}, hence finding the minimum of J_{N-1} is as easy as setting its gradient to zero \n\\mathbf 0 = \\nabla_{\\bm u_{N-1}} J_{N-1} = (\\mathbf R + \\mathbf B^\\top \\mathbf S_n \\mathbf B)\\bm u_{N-1} + \\mathbf B^\\top \\mathbf S_N\\mathbf A\\bm x_{N-1},\n which leads to \n\\bm u_{N-1}^\\star = -\\underbrace{(\\mathbf B^\\top \\mathbf S_N\\mathbf B + \\mathbf R)^{-1}\\mathbf B^\\top \\mathbf S_N \\mathbf A}_{\\mathbf K_{N-1}} \\bm x_{N-1},\n which amounts to solving a system of linear equations. We can also recognize the Kalman gain matrix \\mathbf K_{N-1}, which we derived using the indirect approach in the previous chapter.\nThe optimal cost J^\\star_{N-1} can be obtained by substituting \\bm u_{N-1}^\\star into J_{N-1} \nJ_{N-1}^\\star = \\frac{1}{2}\\bm x_{N-1}^\\top \\underbrace{\\left[(\\mathbf A-\\mathbf B\\mathbf K_{N-1})^\\top \\mathbf S_N(\\mathbf A-\\mathbf B\\mathbf K_{N-1}) + \\mathbf K_{N-1}^\\top \\mathbf R \\mathbf K_{N-1} + \\mathbf Q\\right]}_{\\mathbf S_{N-1}} \\bm x_{N-1}.\n\nNote that the optimal cost J^\\star_{N-1} is also a quadratic function of the state as is the cost J^\\star_{N}. We denote the matrix that defines this quadratic function as \\mathbf S_{N-1}. We do this in anticipation of continuation of this recursive procedure to k = N-2, N-3, \\ldots, which will give \\mathbf S_{N-2}, \\mathbf S_{N-3}, \\ldots. The rest of the story is quite predictable, isn’t it? Applying the Bellman’s principle of optimality we (re)discovered the discrete-time Riccati equation in the Joseph stabilized form \n\\mathbf S_k = (\\mathbf A-\\mathbf B\\mathbf K_{N-1})^\\top \\mathbf S_N(\\mathbf A-\\mathbf B\\mathbf K_{N-1}) + \\mathbf K_{N-1}^\\top \\mathbf R \\mathbf K_{N-1} + \\mathbf Q,\n together with the prescription for the state feedback (Kalman) gain \n\\mathbf K_{k} = (\\mathbf B^\\top \\mathbf S_N\\mathbf B + \\mathbf R)^{-1}\\mathbf B^\\top \\mathbf S_N \\mathbf A.\n\n\n\n\n Back to top",
     "crumbs": [
       "5. Discrete-time optimal control – dynamic programming",
-      "LQR via dynamic programming"
+      "Solving LQR via dynamic programming"
     ]
   },
   {
@@ -922,45 +834,34 @@
   {
     "objectID": "dynamic_programming.html",
     "href": "dynamic_programming.html",
-    "title": "Optimal control via dynamic programming",
+    "title": "Dynamic programming and discrete-time optimal control",
     "section": "",
     "text": "In the previous two chapters we explained direct and indirect approaches to discrete-time optimal control. While the former conveniently allows incorporating almost arbitrary constraints, it only provides a control trajectory (a finite sequence of values of the control variable); if feedback is needed, the optimization must be performed in every sampling period (thus implementing the concept of receding horizon or model predictive control, MPC). The latter, in contrast, can lead to a (state) feedback control law, but this only happens in special cases such as a regulation of a linear system minimizing a quadratic cost (LQR) while assuming no bound constraints on the the control or state variables; in the general case it leads to a two-point boundary value problem, which can only be solved numerically for trajectories.\nIn this chapter we present yet another approach — dynamic programming DP. It also allows imposing constraints (in fact, even constraints such as integrality of variables, which are not compatible with our derivative-based optimization toolset exploited so far), and yet it directly leads to feedback controllers.\nWhile in the case of linear systems with a quadratic cost function, dynamic programming provides another route to the theoretical results that we already know — Riccati equation based solution to the LQR problem —, in the the case of general nonlinear dynamical systems with general cost functions, the feedback controllers come in the form of look-up tables. This format of a feedback controller gives some hint about disadvantages of DP, namely, both computation and then the use of these look-up tables do not scale well with the dimension of the state space (aka curse of dimensionality). Various approximation schemes exist — one promising branch is known as reinforcement learning.",
     "crumbs": [
       "5. Discrete-time optimal control – dynamic programming",
-      "Optimal control via dynamic programming"
+      "Dynamic programming and discrete-time optimal control"
     ]
   },
   {
     "objectID": "dynamic_programming.html#bellmans-principle-of-optimality-and-dynamic-programming",
     "href": "dynamic_programming.html#bellmans-principle-of-optimality-and-dynamic-programming",
-    "title": "Optimal control via dynamic programming",
+    "title": "Dynamic programming and discrete-time optimal control",
     "section": "Bellman’s principle of optimality and dynamic programming",
     "text": "Bellman’s principle of optimality and dynamic programming\nWe start by considering the following example.\n\nExample 1 (Reusing the plan for a trip from Prague to Ostrava) We are planning a car trip from Prague to Ostrava and you are searching for a route that minimizes the total time. Using the online planner we learn that the fastest route from Prague to Ostrava is — as bizarre as it sounds — via (actually around) Brno.\n\n\nNow, is it possible to reuse this plan for our friends from Brno who are also heading for Ostrava?\n\n\nThe answer is yes, as the planner confirms. Surely did not even need the planner to answer such trivial question. And yet it demonstrates the key wisdom of the whole chapter — the Bellman’s principle of optimality —, which we now state formally.\n\n\nTheorem 1 (Bellman’s principle of optimality) An optimal policy has the property that whatever the initial state and initial decision are, the remaining decisions must constitute an optimal policy with regard to the state resulting from the first decision.\n\nWe now investigate this idea a bit more quantitatively using a simple computational example of finding a shortest path in a graph.\n\nExample 2 (Shortest path in a graph) We consider a directional graph with nodes A, B, C, D, and E and edges with the prescribed lengths as in the figure below.\n\n\n\n\n\n\n\nG\n\n\n\nA\n\nA\n\n\n\nB\n\nB\n\n\n\nA-&gt;B\n\n\n3\n\n\n\nD\n\nD\n\n\n\nA-&gt;D\n\n\n1\n\n\n\nC\n\nC\n\n\n\nB-&gt;C\n\n\n2\n\n\n\nE\n\nE\n\n\n\nB-&gt;E\n\n\n1\n\n\n\nD-&gt;E\n\n\n3\n\n\n\nG\n\nG\n\n\n\nD-&gt;G\n\n\n2\n\n\n\nF\n\nF\n\n\n\nC-&gt;F\n\n\n3\n\n\n\nE-&gt;F\n\n\n3\n\n\n\nH\n\nH\n\n\n\nE-&gt;H\n\n\n2\n\n\n\nG-&gt;H\n\n\n4\n\n\n\nI\n\nI\n\n\n\nF-&gt;I\n\n\n4\n\n\n\nH-&gt;I\n\n\n2\n\n\n\n\n\n\n\n\nThe task is now to find the shortest path from A to I. What are possible solution strategies? We can start enumerating all the possible paths and calculate their costs (by summing the costs of the participating edges). Needless to say, this strategy based on enumeration scales very badly with the growing number of nodes.\nAlternatively, we solve the problem using dynamic programming and relying on Bellman’s principle of optimality. Before we proceed, we need to define the concept of a stage. It is perhaps less common and natural when it comes to solving graph problems, but we introduce it with anticipation of discrete-time optimal control problems. By the kth stage we understand the node at which the kth decision needs to be made. In our case, starting at A, 4 decisions need to be made to reach the final node. But let’s agree that we also denote the final node as the stage, the 5th one, even if no decision is to be made here. The total number of stages is then N=5.\nThe crucial attribute of the strategy based on dynamic programming is that we proceed backwards. We start at the very final stage. At this stage, there is just one node and there is nothing we can do, but note that it also makes sense to formulate problems with several possible nodes at the final stage, each with a different (terminal) costs — we will actually use once we switch to the optimal control setting. Now we proceed backwards to the last but one, that is, the (N-1)th stage.\nThese are F and H nodes at this 4the stage. In these two nodes there is again no freedom as for the actions, but for each of them we can record their respective cost to go: 4 for the F node and 2 for the H node. These costs reflect how costly it is to reach the terminal node from them.\nThings are only getting interesting if we now proceed to the 3rd stage. We now have to consider three possible nodes: C, E and G. For the C and G nodes there is still just one action and we can only record their costs to go. The cost for the C node can be computed as the cost for the immediate transition from C to F plus the cost for the F node, which we recorded previously, that is, 3+4=7. We record the value of 7 with the C node. Similarly for the G node. For the E node there are two possible actions — two possible decisions to be made, two possible paths to choose from. Either to the left (or, actually, up in our orientation of the graph), which would bring us to the node F, or to the right (or down), which would bring us to the node H. We compute the costs to go for both decisions and choose the decision with a smaller cost. Here the cost of the decision to go to the left is composed of the cost of the transition to F plus the cost to go from F, that is, 3+4=7. The cost to go for the decision to go right is composed of the transition cost from E to H plus the cost to go from H, that is, 2+2=4. Obviously, the optimal decision is to go right, that is, to the node H. Here, on top of the value of the optimal (smallest) cost to go from the node we also record the optimal decision (go to the right/down). We do it by coloring the edge in blue.\nNote that in principle we should have highlighted the edges from F to I, from C to F, and from G to H. It was unnecessary here since there were the only possible edges emanating from these nodes.\nWe proceed backwards to the 2nd stage, and we compute the costs to go for the nodes B and D. Again we record their optimal values and the actual optimal decisions.\nOne last shift backwards and we are at the initial node A, for which we can do the same computation of the costs to go. Note that here coincidently both decisions have the same cost to go, hence both possible decisions/actions are optimal and we can just toss a coin.\n\n\n\n\n\n\n\nG\n\n\n\nA\n\nA\n8\n\n\n\nB\n\nB\n5\n\n\n\nA-&gt;B\n\n\n3\n\n\n\nD\n\nD\n7\n\n\n\nA-&gt;D\n\n\n1\n\n\n\nC\n\nC\n7\n\n\n\nB-&gt;C\n\n\n2\n\n\n\nE\n\nE\n4\n\n\n\nB-&gt;E\n\n\n1\n\n\n\nD-&gt;E\n\n\n3\n\n\n\nG\n\nG\n6\n\n\n\nD-&gt;G\n\n\n2\n\n\n\nF\n\nF\n4\n\n\n\nC-&gt;F\n\n\n3\n\n\n\nE-&gt;F\n\n\n3\n\n\n\nH\n\nH\n2\n\n\n\nE-&gt;H\n\n\n2\n\n\n\nG-&gt;H\n\n\n4\n\n\n\nI\n\nI\n0\n\n\n\nF-&gt;I\n\n\n4\n\n\n\nH-&gt;I\n\n\n2\n\n\n\n\n\n\n\n\nMaybe it is not immediately clear from the graph, but when viewed as an itinerary for a trip, it provides a feedback controller. Even if for whichever reason we find ourselves out of the optimal path, we can always have a look at the graph — it will guide us along the path that is optimal from that given node. For example, if we happen to be in node C, we do have a plan. Well, here is misleadingly simple as there is no decision to be made, but you get the point.",
     "crumbs": [
       "5. Discrete-time optimal control – dynamic programming",
-      "Optimal control via dynamic programming"
+      "Dynamic programming and discrete-time optimal control"
     ]
   },
   {
     "objectID": "dynamic_programming.html#bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem",
     "href": "dynamic_programming.html#bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem",
-    "title": "Optimal control via dynamic programming",
+    "title": "Dynamic programming and discrete-time optimal control",
     "section": "Bellman’s principle of optimality applied to the discrete-time optimal control problem",
     "text": "Bellman’s principle of optimality applied to the discrete-time optimal control problem\nLet’s recapitulate here the problem of optimal control for a discrete-time system. In particular, we consider the system modelled by \n\\bm x_{k+1} = \\mathbf f_k(\\bm x_k,\\bm u_k),\n defined on the discrete time interval [i,N], with the initial state \\bm x_i fixed (\\bm x_i = \\mathbf x_i) We aim at minimizing the cost function \nJ_i^N\\left(\\bm x_i, \\bm u_i, \\bm u_{i+1}, \\ldots, \\bm u_{N-1}\\right) = \\phi(\\bm x_N,N) + \\sum_{k=i}^{N-1}L_k(\\bm x_k,\\bm u_k).\n\nBefore we proceed, some comments on the notation are in order. Indeed, a well tuned and systematically used notation is instrumental in dynamic programming.\n\n\n\n\n\n\nWe omit the final time from the notation for the cost function\n\n\n\nWhile the cost function does depend on the final time too, in most if not all our analyses we assume that it is fixed and understood from the context. Hence we will not explicitly indicate the dependence on the final time. We will write just J_i(\\ldots). This may help reduce the notational clutter as we are going to need the upper index for something else soon.\n\n\n\n\n\n\n\n\nWe omit the state trajectory from the notation for the cost function and leave just the initial state\n\n\n\nThe cost function is clearly a function of the full sequence \\bm x_i, \\bm x_{i+1},\\ldots, \\bm x_N of the state vectors too. In the previous chapters we handled it systematically (either by considering them as optimization variables in the simultaneous direct approach or by introducing Lagrange multipliers in the indirect approache). But here we want to emphasize the fact that starting with \\bm x_{i+1}, the whole state trajectory is uniquelly determined by the initial state \\bm x_i and the corresponding control trajectory \\bm u_i, \\bm u_{i+1},\\ldots, \\bm u_{N-1}. Therefore, we write the cost function as a function of the initial state, the initial time (we already agreed above not to emphasize the final time), and the sequence of controls.\n\n\n\n\n\n\n\n\nWe use the lower index to display dependence on time\n\n\n\nThe dependence on the discrete time is reflected by the lower indices: not only in \\bm x_k and \\bm u_k but also in \\mathbf f_k(), L_k() and J_k(). We could perhaps write these as \\mathbf f(\\cdot,\\cdot,k), L(\\cdot,\\cdot,k) and J(\\cdot,\\cdot,k) to better indicate that k is really an argument for these functions, but we prefer making it compatible with the way we indicate the time dependence of \\bm x_k and \\bm u_k.\n\n\nHaving introduced the cost function parameterized by the initial state, initial time and the full sequence of controls, we now introduce the optimal cost function\n\n\\boxed{\n    J^\\star_i(\\bm x_i) = \\min_{\\bm u_i,\\ldots, \\bm u_{N-1}} J_i\\left(\\bm x_i, \\bm u_i, \\bm u_{i+1}, \\ldots, \\bm u_{N-1}\\right).}\n\\tag{1}\nThe sequence of controls in the above minimization may be subject to some constraints, but we do not indicate them here for the sake of notational simplicity.\n\n\n\n\n\n\nDifference between the J_i and J^\\star_i functions\n\n\n\nUnderstanding the difference is crucial. While the cost function J_i depends on the (initial) state, the (initial) time and the sequence of controls applied over the whole interval, the optimal cost function J^\\star_i only depends on the (initial) state and the (initial) time.\n\n\nAssume now that we can find an optimal control sequence from any given state \\bm x_{k+1} at time k+1 on, i.e., we can find \\bm u_{k+1}^\\star,\\bm u_{k+2}^\\star,\\ldots, \\bm u_{N-1}^\\star yielding the optimal cost J_{k+1}^\\star(\\bm x_{k+1}). We will soon show how to actually find it, but for the time being we just assume we can have it. We now show how it can be used to find the optimal cost J_k^\\star(\\bm x_k) at state \\bm x_k and time k.\nLet’s now consider the following strategy: with the system at state \\bm x_k and time k we apply some control \\bm u_k, not necessarily an optimal one, which brings the system to the state \\bm x_{k+1} in the next time k+1. But from then on we use the control sequence \\bm u_{k+1}^\\star,\\bm u_{k+2}^\\star,\\ldots, \\bm u_{N-1}^\\star that is optimal from \\bm x_{k+1}. The corresponding cost is \nL_k(\\bm x_k,\\bm u_k) + J_{k+1}^\\star(\\bm x_{k+1}).\n\\tag{2}\nBellman’s principle of optimality states that if we optimize the above expression over \\bm u_k, we get the optimal cost J_k^\\star(\\bm x_k) at time k \n\\boxed{J_k^\\star(\\bm x_k) = \\min_{\\bm u_k}\\left(L_k(\\bm x_k,\\bm u_k) + J_{k+1}^\\star(\\bm x_{k+1})\\right).}\n\\tag{3}\nHence, at a given state \\bm x_{k} and time k, the optimization is performed over only one (possibly vector) control \\bm u_k and not the whole trajectory as the definition of the optimal cost in Equation 1 suggests! What a simplification!\n\n\n\n\n\n\nImportant\n\n\n\nThe minimization needs to be performed over the whole sum L_k(\\bm x_k,\\bm u_k) + J_{k+1}^\\star(\\bm x_{k+1}), because \\bm x_{k+1} is a function of \\bm u_k (recall that \\bm x_{k+1} = \\mathbf f_k(\\bm x_k,\\bm u_k)). We can also write Equation 3 as \nJ_k^\\star(\\bm x_k) = \\min_{\\bm u_k}\\left(L_k(\\bm x_k,\\bm u_k) + J_{k+1}^\\star(\\mathbf f_k(\\bm x_k,\\bm u_k))\\right),\n which makes it more apparent.\n\n\nOnce we have the optimal cost function J^\\star_{k}, the optimal control \\bm u_k^\\star(x_k) at a given time k and state \\bm x_k is obtained by \n\\boxed{\n    \\bm u_k^\\star(\\bm x_k) = \\arg \\min_{\\bm u_k}\\left(L_k(\\bm x_k,\\bm u_k) + J_{k+1}^\\star(\\mathbf f_k(\\bm x_k,\\bm u_k))\\right).}\n\n\nAlternative formulation of dynamic programming using Q-factors\nThe cost function in Equation 2 is sometimes called Q-factor and we denote it Q_k(\\bm x_k,\\bm u_k). We write its definition here for convenience \nQ^\\star_k(\\bm x_k,\\bm u_k) = L_k(\\bm x_k,\\bm u_k) + J_{k+1}^\\star(\\bm x_{k+1}).\n\nThe optimal cost function J_k^\\star(\\bm x_k) can be recovered from the optimal Q-factor Q_k^\\star(\\bm x_k,\\bm u_k) by taking the minimum over \\bm u_k \nJ_k^\\star(\\bm x_k) = \\min_{\\bm u_k} Q_k^\\star(\\bm x_k,\\bm u_k).\n\nBellman’s principle of optimality can be then expressed using the optimal Q-factor as \n\\boxed{Q_k^\\star(\\bm x_k,\\bm u_k) = L_k(\\bm x_k,\\bm u_k) + \\min_{\\bm u_{k+1}} Q_{k+1}^\\star(\\bm x_{k+1},\\bm u_{k+1})}.\n\nOptimal control is then obtained from the optimal Q-factor as the minimizing control \n\\boxed{\\bm u_k^\\star(\\bm x_k) = \\arg \\min_{\\bm u_k} Q_k^\\star(\\bm x_k,\\bm u_k).}",
     "crumbs": [
       "5. Discrete-time optimal control – dynamic programming",
-      "Optimal control via dynamic programming"
-    ]
-  },
-  {
-    "objectID": "dynamic_programming.html#dynamic-programming-as-a-numerical-algorithm-for-solving-the-discrete-time-optimal-control-problem",
-    "href": "dynamic_programming.html#dynamic-programming-as-a-numerical-algorithm-for-solving-the-discrete-time-optimal-control-problem",
-    "title": "Optimal control via dynamic programming",
-    "section": "Dynamic programming as a numerical algorithm for solving the discrete-time optimal control problem",
-    "text": "Dynamic programming as a numerical algorithm for solving the discrete-time optimal control problem\nBased on what we have seen so far, it turns out that the key to solving the discrete-time optimal control problem is to find some… functions. Either the optimal cost function J_k^\\star(\\bm x_k) or the optimal Q-factor Q_k^\\star(\\bm x_k,\\bm u_k). Once we have them, we can easily find the optimal control \\bm u_k^\\star(\\bm x_k). The question however is how to find these functions. We have seen some recursions for both of them, but it is not clear how to turn these into practical algorithms. We do it here.\nWe are going to solve Equation 3 backwards in (discrete) time at a grid of states. Indeed, gridding the state space is the key technique in dynamic programming, because DP assumes a finite state space. If it is not finite, we must grid it.\nWe start with the final time N. We evaluate the terminal cost function \\phi(\\bm x_N) at a grid of states, which directly yields the optimal costs J_N^\\star(\\bm x_N).\nWe then proceed to the time N-1. Evaluating the optimal cost function J^\\star_{N-1} at each grid point in the state space calls for some optimization, namely \n\\min_{u_{N-1}} \\left(L_{N-1}(\\bm x_{N-1},\\bm u_{N-1}) + J_{N}^\\star(\\mathbf f_{N-1}(\\bm x_{N-1}, \\bm u_{N-1}))\\right).\n\nWe save the optimal costs and the corresponding controls at the given grid points (giving two arrays of values), decrement the time to N-2, and repeat. All the way down to the initial time i.\nLet’s summarize that as an outcome of this whole procedure we have two tables – one for the optimal cost, the other for the optimal control.",
-    "crumbs": [
-      "5. Discrete-time optimal control – dynamic programming",
-      "Optimal control via dynamic programming"
+      "Dynamic programming and discrete-time optimal control"
     ]
   },
   {
@@ -975,135 +876,234 @@
     ]
   },
   {
-    "objectID": "cont_indir_constrained.html",
-    "href": "cont_indir_constrained.html",
-    "title": "Constrained optimal control",
-    "section": "",
-    "text": "Back to top",
-    "crumbs": [
-      "8. Continuous-time optimal control - indirect approach via Pontryagin's maximum principle",
-      "Constrained optimal control"
-    ]
-  },
-  {
-    "objectID": "discr_indir_general.html",
-    "href": "discr_indir_general.html",
-    "title": "General nonlinear discrete-time optimal control",
-    "section": "",
-    "text": "While in the previous chapter we formulated an optimal control problem (OCP) directly as a mathematical programming (general NLP or even QP) problem over the control (and possibly state) trajectories, in this chapter we introduce an alternative – indirect – approach. The essence of the approach is that we formulate first-order necessary conditions of optimality for the OCP in the form of equations, and then solve these. Although less straightforward to extend with additional constraints than the direct approach, the indirect approach also exhibits some advantages. In particular, in some cases (such as a quadratic cost and a linear system) it yields a feedback controller and not just a control trajetory.",
-    "crumbs": [
-      "4. Discrete-time optimal control – indirect approach",
-      "General nonlinear discrete-time optimal control"
-    ]
-  },
-  {
-    "objectID": "discr_indir_general.html#optimization-constrains-given-only-by-the-state-equations",
-    "href": "discr_indir_general.html#optimization-constrains-given-only-by-the-state-equations",
-    "title": "General nonlinear discrete-time optimal control",
-    "section": "Optimization constrains given only by the state equations",
-    "text": "Optimization constrains given only by the state equations\nAs in the chapter on the direct approach, here we also start by considering a general nonlinear and possibly time-varying discrete-time dynamical system characterized by the state vector \\bm x_k\\in\\mathbb R^n whose evolution in discrete time k is uniquely determined by the state equation \n\\bm x_{k+1} = \\mathbf f_k(\\bm x_k,\\bm u_k),\n accompanied by the initial state (vector) \\bm x_i\\in\\mathbb R^n and a sequence of control inputs \\bm u_i, \\bm u_{i+1}, \\ldots, \\bm u_{k-1}, where the control variable can also be a vector, that is, \\bm u_k \\in \\mathbb R^m.\nThese state equations will constitute the only constraints of the optimization problem. Unlike in the direct approach, here in our introductory treatment we do not impose any inequality constraints such as bounds on the control inputs, because the theory to be presented is not able to handle them.",
-    "crumbs": [
-      "4. Discrete-time optimal control – indirect approach",
-      "General nonlinear discrete-time optimal control"
-    ]
-  },
-  {
-    "objectID": "discr_indir_general.html#general-additive-cost-function",
-    "href": "discr_indir_general.html#general-additive-cost-function",
-    "title": "General nonlinear discrete-time optimal control",
-    "section": "General additive cost function",
-    "text": "General additive cost function\nFor the above described dynamical system we want to find a control sequence \\bm u_k that minimizes a suitable optimization criterion over a finite horizon k\\in[i,N]. Namely, we will look for a control that minimizes a criterion of the following kind \nJ_i^N(\\underbrace{\\bm x_{i+1}, \\bm x_{i+2}, \\ldots, \\bm x_{N}}_{\\bar{\\bm x}}, \\underbrace{\\bm u_{i}, \\ldots, \\bm u_{N-1}}_{\\bar{\\bm u}};\\bm x_i) = \\phi(\\bm x_N,N) + \\sum_{k=i}^{N-1} L_k(\\bm x_k,\\bm u_k).\n\\tag{1}\n\n\n\n\n\n\nNote\n\n\n\nRegarding the notation J_i^N(\\cdot) for the cost, if the initial and final times are understood from the context, they do not have to be displayed. But we will soon need to indicate the initial time explicitly in our derivations.\n\n\nThe property of the presented cost function that will turn out crucial in our subsequent work is that is additive over the time horizon. Although this restricts the class of cost functions a bit, it is still general enough to encompass a wide range of problems, such as minimizing the total (financial) cost to be paid, the total energy to be used, the total distance to be travelled, the cumulative error to be minimized, etc.\nHere is a list of a few popular cost functions.\n\nMinimum-time (or time-optimal) problem\n\nSetting \\phi=1 and L_k=1 gives J=N-i, that is, the length of the time horizon, the duration of control. Altough in this course we do not introduce concepts and tools for optimization over integer variables, in this simple case of just a single integer variable even a simple search over the length of control interval will be computationally tractable. Furthermore, as we will see in one of the next chapters once we switch from discrete-time to continuous-time systems, this time-optimal control design problem will turn out tractable using the tools presented in this course.\n\nMinimum-fuel problem\n\nSetting \\phi=0 and L_k=|u_k|, which gives J=\\sum_{k=i}^{N-1}|u_k|.\n\nMinimum-energy problem\n\nSetting \\phi=0 and L_k=\\frac{1}{2} u_k^2, which gives J=\\frac{1}{2} \\sum_{k=i}^{N-1} u_k^2. It is fair to admit that this sum of squared inputs cannot always be interpretted as the energy – for instance, what if the control input is a degree of openning of a valve? Sum of angles over time can hardly be interpreted as energy. Instead, it should be interpretted in the mathematical way as the (squared) norm, that is, a “size” of the input. Note that the same objection can be given to the previous case of a minimum-fuel problem.\n\nMixed quadratic problem (also LQ-optimal control problem)\n\nSetting \\phi=\\frac{1}{2}s_N x_N^2 and L_k=\\frac{1}{2} (qx_k^2+ru_k^2),\\, q,r\\geq 0, which gives J=\\frac{1}{2}s_Nx_N^2+\\frac{1}{2} \\sum_{k=i}^{N-1} (r x_k^2+q u_k^2). Or in the case of vector state and control variables J=\\frac{1}{2}\\bm x_N^\\top \\mathbf S_N \\bm x_N+\\frac{1}{2} \\sum_{k=i}^{N-1} (\\bm x_k^\\top \\mathbf Q \\bm x_k + \\bm u_k^\\top \\mathbf R \\bm u_k), \\, \\mathbf Q, \\mathbf R \\succeq 0. This type of an optimization cost is particularly popular. Both for the mathematical reasons (we all now appreciate the nice properties of quadratic functions) and for practical engineering reasons as it allows us to capture a trade-off between the control performance (penalty on \\bm x_k) and control effort (penalty on \\bm u_k). Note also that the state at the terminal time N is penalized separately just in order to allow another trade-off between the transient and terminal behavior. The cost function can also be modified to penalize deviation of the state from some nonzero desired (aka reference) state trajectory, that is J=\\frac{1}{2}(\\bm x_N - \\bm x_N^\\text{ref})^\\top \\mathbf S_N (\\bm x_N - \\bm x_N^\\text{ref}) +\\frac{1}{2} \\sum_{k=i}^{N-1} \\left((\\bm x_k - \\bm x_k^\\text{ref})^\\top \\mathbf Q (\\bm x_k - \\bm x_k^\\text{ref}) + \\bm u_k^\\top \\mathbf R \\bm u_k\\right).\n\n\nNote that in none of these cost function did we include \\bm u_{N} as an optimization variables as it has no influence over the interval [i,N].\nIt is perhaps needless to emphasize that while in some other applications maximizing may seem more appropriate (such as maximizing the yield, bandwidth or robustness), we can always reformulate the maximization into minimization. Therefore in our course we alway formulate the optimal control problems as minimization problems.",
-    "crumbs": [
-      "4. Discrete-time optimal control – indirect approach",
-      "General nonlinear discrete-time optimal control"
-    ]
-  },
-  {
-    "objectID": "discr_indir_general.html#derivation-of-the-first-order-necessary-conditions-of-optimality",
-    "href": "discr_indir_general.html#derivation-of-the-first-order-necessary-conditions-of-optimality",
-    "title": "General nonlinear discrete-time optimal control",
-    "section": "Derivation of the first-order necessary conditions of optimality",
-    "text": "Derivation of the first-order necessary conditions of optimality\nHaving formulated a finite-dimensional constrained nonlinear optimization problem, we avoid the temptation to call an NLP solver to solve it numerically and proceed instead with our own analysis of the problem. Let’s see how far we can get.\nBy introducing Lagrange multipliers {\\color{blue}\\bm\\lambda_k} we turn the constrained problem into an unconstrained one. The new cost function (we use the prime to distinguish it from the original cost) is \n\\begin{aligned}\n& {J'}_i^N(\\bm x_i, \\ldots, \\bm x_N, \\bm u_i, \\ldots, \\bm u_{N-1},{\\color{blue}\\bm \\lambda_i, \\ldots, \\bm \\lambda_{N-1}}) \\\\\n&\\qquad\\qquad\\qquad = \\phi(\\bm x_N,N) + \\sum_{k=i}^{N-1}\\left[L_{k}(\\bm x_k,\\bm u_k)+\\bm {\\color{blue}\\lambda^\\top_{k}}\\;\\left[\\mathbf f_k(\\bm x_k,\\bm u_k)-\\bm x_{k+1}\\right]\\right].\n\\end{aligned}\n\nFrom now on, in principle, we do not need any guidance here, do we? We are given an unconstrained optimization problem and its solution is just a few steps away. In particular, stationary point(s) must be found (and then we are going to argue if these qualify as minimizers or not). This calls for differentiating the above expression with respect to all the variables and setting these derivatives equal to zeros.\nAlthough the principles are clear, some hindsight might be shared here if compact formulas are to be found. First such advice is to rename the variable(s) {\\color{blue}\\boldsymbol \\lambda_k} to {\\color{red}\\boldsymbol \\lambda_{k+1}} \n\\begin{aligned}\n& {J'}_i^N(\\bm x_i, \\ldots, \\bm x_N, \\bm u_i, \\ldots, \\bm u_{N-1},{\\color{red}\\bm \\lambda_{i+1}, \\ldots, \\bm \\lambda_{N}}) \\\\\n& \\qquad\\qquad\\qquad = \\phi(N,\\bm x_N) + \\sum_{k=i}^{N-1}\\left[L_{k}(\\bm x_k,\\bm u_k)+\\boldsymbol {\\color{red}\\boldsymbol \\lambda^\\top_{k+1}}\\; \\left[\\mathbf f_k(\\bm x_k,\\bm u_k)-\\mathbf x_{k+1}\\right]\\right].\n\\end{aligned}\n\nThis is really just a notational decision but thanks to it our resulting formulas will enjoy some symmetry.\n\n\n\n\n\n\nNote\n\n\n\nMaybe it would be more didactic to leave you to go on without this advice notation and only then to nudge you to figure out this remedy on your own. But admittedly this is not the kind of competence that we aim at in this course. Let’s spend time with more rewarding things.\n\n\nAnother notational advice – but this one is more systematic and fundamental — is to make the above expression a bit shorter by introducing a new variable defined as \\boxed{H_k(\\bm x_k,\\bm u_k,\\boldsymbol\\lambda_{k+1}) = L_{k}(\\bm x_k,\\bm u_k)+\\boldsymbol \\lambda_{k+1}^\\top \\; \\mathbf f_k(\\bm x_k,\\bm u_k).}\n\nWe will call this new function Hamiltonian. Indeed, the choice of this name is motivated by the analogy with the equally named concept used in physics and theoretical mechanics, but we will only make more references to this analogy later in the course once we transition to continuous-time systems modelled by differential equations.\nIntroducing the Hamiltonian reformulates the cost function (and we omit the explicit dependence on all its input arguments) as \n{J'}_i^N = \\phi(N,\\bm x_N) + \\sum_{k=i}^{N-1}\\left[H_{k}(\\bm x_k,\\bm u_k,\\boldsymbol\\lambda_{k+1})-\\boldsymbol\\lambda^\\top_{k+1}\\;\\mathbf x_{k+1}\\right].\n\nThe final polishing of the expression before starting to compute the derivatives consists in bringing together the terms that contain related variables: the state \\bm x_N at the final time, the state \\bm x_i at the initial time, and the states, controls and Lagrange multipliers in the transient period\n\n{J'}_i^N = \\underbrace{\\phi(N,\\bm x_N) -\\boldsymbol\\lambda^\\top_{N}\\;\\mathbf x_{N}}_\\text{at terminal time} + \\underbrace{H_i(\\bm x_i,\\mathbf u_i,\\boldsymbol\\lambda_{i+1})}_\\text{at initial time} + \\sum_{k=i+1}^{N-1}\\left[H_{k}(\\bm x_k,\\bm u_k,\\boldsymbol\\lambda_{k+1})-\\boldsymbol\\lambda^\\top_{k}\\;\\mathbf x_{k}\\right].\n\nAlthough this step was not necessary, it will make things a bit more convenient once we start looking for the derivatives. And the time for it has just come.\nRecall now the recommended procedure for finding derivatives of functions of vectors – find the differential instead and identify the derivative in the result. The gradient is then (by convention) obtained as the transpose of the derivative. Following this derivative-identification procedure, we anticipate the differential of the augmented cost function in the following form \n\\begin{split}\n\\text{d}{J'}_i^N &= (\\qquad)^\\top \\; \\text{d}\\bm x_N + (\\qquad)^\\top \\; \\text{d}\\bm x_i \\\\&+ \\sum_{k=i+1}^{N-1}(\\qquad)^\\top \\; \\text{d}\\bm x_k + \\sum_{k=i}^{N-1}(\\qquad)^\\top \\; \\text{d}\\bm u_k + \\sum_{k=i+1}^{N}(\\qquad)^\\top \\; \\text{d}\\boldsymbol \\lambda_k.\n\\end{split}\n\nIdentifying the gradients amounts to filling in the empty brackets. It straightforward if tedious (in particular the lower and upper bounds on the summation indices must be carefuly checked). The solution is \n\\begin{split}\n\\text{d}{J'}_i^N &= \\left(\\nabla_{\\bm x_N}\\phi-\\lambda_N\\right)^\\top \\; \\text{d}\\bm x_N + \\left(\\nabla_{\\bm x_i}H_i\\right)^\\top \\; \\text{d}\\bm x_i \\\\&+ \\sum_{k=i+1}^{N-1}\\left(\\nabla_{\\bm x_k}H_k-\\boldsymbol\\lambda_k\\right)^\\top \\; \\text{d}\\bm x_k + \\sum_{k=i}^{N-1}\\left(\\nabla_{\\bm u_k}H_k\\right)^\\top \\; \\text{d}\\bm u_k + \\sum_{k=i+1}^{N}\\left(\\nabla_{\\boldsymbol \\lambda_k}H_{k-1}-\\bm x_k\\right)^\\top \\; \\text{d}\\boldsymbol \\lambda_k.\n\\end{split}\n\nThe ultimate goal of this derivation was to find stationary points for the augmented cost function, that is, to find conditions under which \\text{d}{J'}_i^N=0. In typical optimization problems, the optimization is conducted with respect to all the participating variables, which means that the corresponding differentials may be arbitrary and the only way to guarantee that the total differential of J_i' is zeros is to make the associated gradients (the contents of the brackets) equal to zero. There are two exceptions to this rule in our case, though:\n\nThe state at the initial time is typically fixed and not available for optimization. Then \\text{d}\\bm x_i=0 and the corresponding necessary condition is replaced by the statement that \\bm x_i is equal to some particular value, say, \\bm x_i = \\mathbf x^\\text{init}. We have already discussed this before. In fact, in these situations we might even prefer to reflect it by the notation J_i^N(\\ldots;\\bm x_i), which emphasizes that \\bm x_i is a parameter and not a variable. But in the solution below we do allow for the possibility that \\bm x_i is a variable too (hence \\text{d}\\bm x_i\\neq 0) for completeness.\nThe state at the final time may also be given/fixed, in which case the corresponding condition is replaced by the statement that \\bm x_N is equal to some particular value, say, \\bm x_N = \\mathbf x^\\text{ref}. But if it is not the case, then the final state is also subject to optimization and the corresponding necessary condition of optimality is obtained by setting the content of the corresponding brackets to zero.",
-    "crumbs": [
-      "4. Discrete-time optimal control – indirect approach",
-      "General nonlinear discrete-time optimal control"
-    ]
-  },
-  {
-    "objectID": "discr_indir_general.html#necessary-conditions-of-optimality-as-two-point-boundary-value-problem-tp-bvp",
-    "href": "discr_indir_general.html#necessary-conditions-of-optimality-as-two-point-boundary-value-problem-tp-bvp",
-    "title": "General nonlinear discrete-time optimal control",
-    "section": "Necessary conditions of optimality as two-point boundary value problem (TP-BVP)",
-    "text": "Necessary conditions of optimality as two-point boundary value problem (TP-BVP)\nThe ultimate form of the first-order necessary conditions of optimality, which incorporates the special cases discussed above, is given by these equations \n\\boxed{\n\\begin{aligned}\n\\mathbf x_{k+1} &= \\nabla_{\\boldsymbol\\lambda_{k+1}}H_k, \\;\\;\\; \\color{gray}{k=i,\\ldots, N-1},\\\\\n\\boldsymbol\\lambda_k &= \\nabla_{\\bm x_k}H_k, \\;\\;\\; \\color{gray}{k=i+1,\\ldots, N-1}\\\\\n0 &=  \\nabla_{\\bm u_k}H_k, \\;\\;\\; \\color{gray}{k=i,\\ldots, N-1}\\\\\n\\color{blue}{0} &= \\color{blue}{\\left(\\nabla_{\\bm x_N}\\phi-\\lambda_N\\right)^\\top \\mathrm{d}\\bm x_N},\\\\\n\\color{blue}{0} &= \\color{blue}{\\left(\\nabla_{\\bm x_i}H_i\\right)^\\top \\mathrm{d}\\bm x_i},\n\\end{aligned}\n}\n or more explicitly \n\\boxed{\n\\begin{aligned}\n\\mathbf x_{k+1} &= \\mathbf f_k(\\bm x_k,\\bm u_k), \\;\\;\\; \\color{gray}{k=i,\\ldots, N-1},\\\\\n\\boldsymbol\\lambda_k &= \\nabla_{\\bm x_k}\\mathbf f_k\\;\\;   \\boldsymbol\\lambda_{\\mathbf k+1}+\\nabla_{\\bm x_k}L_k, \\;\\;\\; \\color{gray}{k=i+1,\\ldots, N-1}\\\\\n0 &=  \\nabla_{\\bm u_k}\\mathbf f_k\\;\\; \\boldsymbol\\lambda_{k+1}+\\nabla_{u_k}L_k, \\;\\;\\; \\color{gray}{k=i,\\ldots, N-1}\\\\\n\\color{blue}{0} &= \\color{blue}{\\left(\\nabla_{\\bm x_N}\\phi-\\lambda_N\\right)^\\top \\mathrm{d}\\bm x_N},\\\\\n\\color{blue}{0} &= \\color{blue}{\\left(\\nabla_{\\bm x_i}H_i\\right)^\\top \\mathrm{d}\\bm x_i}.\n\\end{aligned}\n}\n\nRecall that since \\mathbf f is a vector function, \\nabla \\mathbf f is not just a gradient but rather a matrix whose columns are gradients of the individual components of the vector \\mathbf f — it is a transpose of Jacobian.\n\n\n\n\n\n\nNote\n\n\n\nThe first three necessary conditions above can be made completely “symmetric” by running the second one from k=i because the \\boldsymbol\\lambda_i introduced this way does not influence the rest of the problem and we could easily live with one useless variable.\n\n\nWe have just derived the (necessary) conditions of optimality in the form of five sets of (vector) equations:\n\nThe first two are recursive (or recurrent or also just discrete-time) equations, which means that they introduce coupling between the variables evaluated at consecutive times. In fact, the former is just the standard state equation that gives the state at one time as a function of the state (and the control) at the previous time. The latter gives a prescription for the variable \\bm \\lambda_k as a function of (among others) the same variable evaluated at the next (!) time, that is, \\bm \\lambda_{k+1}. Although from the optimization perspective these variables play the role of Lagrange multipliers, we call them co-state variables in optimal control theory because of the way they relate to the state equations. The corresponding vector equation is called a co-state equation.\n\n\n\n\n\n\n\nImportant\n\n\n\nIt is a crucial property of the co-state equation that it dictates the evolution of the co-state variable backward in time.\n\n\n\nThe third set of equations are just algebraic equations that relate the control inputs to the state and co-state variables. Sometimes it is called a stationarity equation.\nThe last two are just single (vector) equations related to the end and the beginning of the time horizon. They are both stated in the general enough form that allows the corresponding states to be treated as either fixed or subject to optimization. In particular, if the final state is to be treated as free (subject to optimization), that is, \\mathrm{d}\\bm x_N can be atritrary and the only way the corresponding equation can be satisfied is \\nabla_{\\bm x_N}\\phi=\\lambda_N. If, on the other hand, the final state is to be treated as fixed, the the corresponding equation is just replaced by \\bm x_N = \\mathbf x^\\text{ref}. Similarly for the initial state. But as we have hinted a few times, most often than not the initial state will be regarded as fixed and not subject to optimization, in which case the corresponding equation is replaced by \\bm x_i = \\mathbf x^\\text{init}.\n\nTo summarize, the equations that give the necessary conditions of optimality for a general nonlinear discrete-time optimal control problem form a two-point boundary value problem (TP-BVP). Values of some variables are specified at the initial time, values of some (maybe the same or some other) variables are defined at the final time. The equations prescribe the evolution of some variables forward in time while for some other variables the evolution backward in time is dictated.\n\n\n\n\n\n\nNote\n\n\n\nThis is in contrast with the initial value problem (IVP) for state equations, for which we only specify the state at one end of the time horizon — the initial state — and then the state equation disctates the evolution of the (state) variable forward in time.\n\n\nBoundary value problems are notoriously difficult to solve. Typically we can only solve them numerically, in which case it is appropriate to ask if anything has been gained by this indirect procedure compared with the direct one. After all, we did not even incorporate the inequality constraints in the problem, which was a piece of case in the direct approach. But we will see that in some special cases the TP-BVP they can be solved analytically and the outcome is particularly useful and would never have been discovered, if only the direct approach had been followed. We elaborate on this in the next section.",
-    "crumbs": [
-      "4. Discrete-time optimal control – indirect approach",
-      "General nonlinear discrete-time optimal control"
-    ]
-  },
-  {
-    "objectID": "cont_indir_calculus_of_variations.html",
-    "href": "cont_indir_calculus_of_variations.html",
-    "title": "Calculus of variations and optimal control",
-    "section": "",
-    "text": "(Kirk 2004), (Lewis, Vrabie, and Syrmo 2012), (Liberzon 2011), (Sussmann and Willems 1997)",
-    "crumbs": [
-      "7. Continuous-time optimal control - indirect approach via calculus of variations",
-      "Calculus of variations and optimal control"
-    ]
-  },
-  {
-    "objectID": "cont_indir_calculus_of_variations.html#literature",
-    "href": "cont_indir_calculus_of_variations.html#literature",
-    "title": "Calculus of variations and optimal control",
-    "section": "",
-    "text": "(Kirk 2004), (Lewis, Vrabie, and Syrmo 2012), (Liberzon 2011), (Sussmann and Willems 1997)",
-    "crumbs": [
-      "7. Continuous-time optimal control - indirect approach via calculus of variations",
-      "Calculus of variations and optimal control"
-    ]
-  },
-  {
-    "objectID": "limits_of_performance_SISO.html",
-    "href": "limits_of_performance_SISO.html",
-    "title": "Limits for SISO systems",
+    "objectID": "limits_of_performance_MIMO.html",
+    "href": "limits_of_performance_MIMO.html",
+    "title": "Limits for MIMO systems",
     "section": "",
     "text": "Back to top",
     "crumbs": [
       "13. Limits of performance",
-      "Limits for SISO systems"
+      "Limits for MIMO systems"
     ]
   },
   {
-    "objectID": "robustness.html",
-    "href": "robustness.html",
-    "title": "Robustness analysis",
+    "objectID": "discr_indir_LQR_inf_horizon.html",
+    "href": "discr_indir_LQR_inf_horizon.html",
+    "title": "Discrete-time LQR-optimal control on an infinite horizon",
+    "section": "",
+    "text": "In this section we are going to solve the LQR problem on the time horizon extended to infinity, that is, our goal is to find an infinite (vector) control sequence \\bm u_0, \\bm u_{1},\\ldots, \\bm u_{\\infty} that minimizes \nJ_0^\\infty = \\frac{1}{2}\\sum_{k=0}^{\\infty}\\left[\\bm x_k^\\top \\mathbf Q \\bm x_k+\\bm u_k^\\top \\mathbf R\\bm u_k\\right],\n where, as before \\mathbf Q = \\mathbf Q^\\top \\succeq 0 and \\mathbf R = \\mathbf R^\\top \\succ 0 and the system is modelled by \n\\bm x_{k+1} = \\mathbf A \\bm x_{k} + \\mathbf B \\bm u_k, \\qquad \\bm x_0 = \\mathbf x_0.",
+    "crumbs": [
+      "4. Discrete-time optimal control – indirect approach",
+      "Discrete-time LQR-optimal control on an infinite horizon"
+    ]
+  },
+  {
+    "objectID": "discr_indir_LQR_inf_horizon.html#why-the-infinite-time-horizon",
+    "href": "discr_indir_LQR_inf_horizon.html#why-the-infinite-time-horizon",
+    "title": "Discrete-time LQR-optimal control on an infinite horizon",
+    "section": "Why the infinite time horizon?",
+    "text": "Why the infinite time horizon?\nThe first question that must inevitably pop up is the one about the motivation for introducing the infinite time horizon:\n\nDoes the introduction of an infinite time horizon reflect that we do not care about when the controller accomplishes the task?\n\nNo, certainly not. The infinite time horizon is introduced to model the case when the system is expected to operate indefinitely. This is a common scenario in practice, for example, in the case of temperature control in a building.\nSimilarly, the infinite time horizon can be used in the scenarios when the final time is not known and we leave it up to the controller to take as much time as it needs to reach the desired state. But even then we can still express our desire to reach the desired state as soon as possible by choosing the weights \\mathbf Q and \\mathbf R appropriately.",
+    "crumbs": [
+      "4. Discrete-time optimal control – indirect approach",
+      "Discrete-time LQR-optimal control on an infinite horizon"
+    ]
+  },
+  {
+    "objectID": "discr_indir_LQR_inf_horizon.html#steady-state-solution-to-discrete-time-riccati-equation",
+    "href": "discr_indir_LQR_inf_horizon.html#steady-state-solution-to-discrete-time-riccati-equation",
+    "title": "Discrete-time LQR-optimal control on an infinite horizon",
+    "section": "Steady-state solution to discrete-time Riccati equation",
+    "text": "Steady-state solution to discrete-time Riccati equation\nWe have seen in the previous section that the solution to LQR problem with free final state and finite time horizon is given by a time-varying state feedback control law \\bm u_k = \\mathbf K_k \\bm x_k. The sequence of gains \\mathbf K_k for k=0,\\ldots, N-1, is given by the sequence of matrices \\mathbf S_k for k=0,\\ldots, N, which in turn is given as the solution to the (discrete-time) Riccati equation initialized by the penalty \\mathbf S_N and solved backwards in time. But we have also seen that, at least in our example, provided the time interval was long enough, the sequence \\mathbf K_k and \\mathbf S_k both converged to some steady state values as the time k proceeded backwards towards the beginning of the time interval.\nWhile using these steady-state values instead of the full sequences lead to a suboptimal solution on a finite time horizon, it turns out that it actually gives the optimal solution on an infinite time horizon. Although our argument here may be viewed as rather hand-wavy, it is intuitive — there is no end to the time interval, hence the steady-state values are not given a chance to change “towards the end”, as we observed in the finite time horizon case.\n\n\n\n\n\n\nNote\n\n\n\nOther approaches exist for solving the infinite time horizon LQR problem that do not make any reference to the finite time horizon problem, some of them are very elegant and concise, but here we intentionally stick to viewing it as the extension of the finite time horizon problem.\n\n\n\nNotation\nBefore we proceed with the discussion of how to find the steady-state values (the limits) of \\mathbf S_k and subsequently \\mathbf K_k, we must discuss the notation first. So, while icreasing the time horizon N and the solution to the Riccati equation settles towards the beginning of the time interval. We can thenk pick the steady-state values right at the initial time k=0, that is, \\mathbf S_0 and \\mathbf K_0. But thanks to time invariance, we can also fix the final time to some (arbitrary) N and strech the interval by moving its beginning toward -\\infty. The limits of the sequences \\mathbf S_k and \\mathbf K_k can be then considered at k goes toward -\\infty. It seems appropriate to denote these limits as \\mathbf S_{-\\infty} and \\mathbf K_{-\\infty} then. Well, the fact is that the commonly accepted notation for the limits found in the literature is just \\mathbf S_\\infty and \\mathbf K_\\infty \n\\mathbf S_\\infty \\triangleq \\lim_{k\\rightarrow -\\infty} \\mathbf S_k, \\qquad \\mathbf K_\\infty \\triangleq \\lim_{k\\rightarrow -\\infty} \\mathbf K_k.\n\n\n\nHow to compute the steady-state solution to Riccati equation?\nLeaving aside for the moment the important question whether and under which conditions such a limit \\mathbf S_\\infty exists, the immediate question is how to compute such limit. One straightforward strategy is to run the recurrent scheme (Riccati equation) and generate the sequence \\mathbf S_{N}, \\mathbf S_{N-1}, \\mathbf S_{N-2}, \\ldots so long as there is a nonnegligible improvement, that is, once \\mathbf S_{k}\\approx\\mathbf S_{k+1}, stop iterating. That is certainly doable.\nThere is, however, another idea. We apply the steady-state condition \n\\mathbf S_{\\infty} = \\mathbf S_k=\\mathbf S_{k+1}\n to the Riccati equation. The resulting equation \n\\mathbf S_{\\infty}=\\mathbf A^\\text{T}\\left[\\mathbf S_{\\infty}-\\mathbf S_{\\infty}\\mathbf B(\\mathbf B^\\text{T}\\mathbf S_{\\infty}\\mathbf B+\\mathbf R)^{-1}\\mathbf B^\\text{T}\\mathbf S_{\\infty}\\right]\\mathbf A+\\mathbf Q\n is called discrete-time algebraic Riccati equation (DARE) and it is one of the most important equations in the field of computational control design.\nThe equation may look quite “messy” and offers hardly any insight. Remember the good advice to shring the problem to the scalar size while studying similar matrix-vector expressions and striving to get some insight. Our DARE simplifies to \ns_\\infty = a^2s_\\infty - \\frac{a^2b^2s_\\infty^2}{b^2s_\\infty+r} + q\n\nMultiplying both sides by the denominator we get the equivalent quadratic (in s_\\infty) equation \nb^2s_\\infty^2 + (r - a^2b^2 - b^2q)s_\\infty - qr = 0.\n\nVoilà! A scalar DARE is just a quadratic equation, for which the solutions can be found readily.\nThere is a caveat here, though, reflected in using plural in “solutions” above. Quadratic equation can have two (or none) real solutions. But the sequence produced by original recursive Riccati equation is determined uniquely! What’s up? How are the solutions to ARE related to the limiting solution of recursive Riccati equation?\nAnswering this question will keep us busy for most of this lecture. We will structure this broad question into several sub-questions\n\nUnder which conditions it is guaranteed that there exists a (bounded) limiting solution \\mathbf S_\\infty to the recursive Riccati equation for all initial (actually final) values \\mathbf S_N?\nUnder which conditions is the limit solution unique for arbitrary \\mathbf S_N?\nUnder which conditions is it guaranteed that the time-invariant feedback gain \\mathbf K_\\infty computed from \\mathbf S_\\infty stabilizes the system (on the infinite control interval)?",
+    "crumbs": [
+      "4. Discrete-time optimal control – indirect approach",
+      "Discrete-time LQR-optimal control on an infinite horizon"
+    ]
+  },
+  {
+    "objectID": "discr_dir_mpc.html",
+    "href": "discr_dir_mpc.html",
+    "title": "Model predictive control (MPC)",
+    "section": "",
+    "text": "In the previous section we learnt how to compute an optimal control sequence on a finite time horizon using numerical methods for solving nonlinear programs (NLP), and quadratic programs (QP) in particular. There are two major deficiencies of such approach:\n\nThe control sequence was computed under the assumption that the mathematical model is perfectly accurate. As soon as the reality deviates from the model, either because of some unmodelled dynamics or because of the presence of (external) disturbances, the performance of the system will deteriorate. We need a way to turn the presented open-loop (also feedforward) control scheme into a feedback one.\nThe control sequence was computed for a finite time horizon. It is commonly required to consider an infinite time horizon, which is not possible with the presented approach based on solving finite-dimensional mathematical programs.\n\nThere are several ways to address these issues. Here we introduced one of them. It is knowns are Model Predictive Control (MPC), or also Receding Horizon Control (RHC). Some more are presented in the next two sections (one based on indirect approach, another one based on dynamic programming).",
+    "crumbs": [
+      "3. Discrete-time optimal control – direct approach",
+      "Model predictive control (MPC)"
+    ]
+  },
+  {
+    "objectID": "discr_dir_mpc.html#deficiencies-of-precomputed-open-loop-optimal-control",
+    "href": "discr_dir_mpc.html#deficiencies-of-precomputed-open-loop-optimal-control",
+    "title": "Model predictive control (MPC)",
+    "section": "",
+    "text": "In the previous section we learnt how to compute an optimal control sequence on a finite time horizon using numerical methods for solving nonlinear programs (NLP), and quadratic programs (QP) in particular. There are two major deficiencies of such approach:\n\nThe control sequence was computed under the assumption that the mathematical model is perfectly accurate. As soon as the reality deviates from the model, either because of some unmodelled dynamics or because of the presence of (external) disturbances, the performance of the system will deteriorate. We need a way to turn the presented open-loop (also feedforward) control scheme into a feedback one.\nThe control sequence was computed for a finite time horizon. It is commonly required to consider an infinite time horizon, which is not possible with the presented approach based on solving finite-dimensional mathematical programs.\n\nThere are several ways to address these issues. Here we introduced one of them. It is knowns are Model Predictive Control (MPC), or also Receding Horizon Control (RHC). Some more are presented in the next two sections (one based on indirect approach, another one based on dynamic programming).",
+    "crumbs": [
+      "3. Discrete-time optimal control – direct approach",
+      "Model predictive control (MPC)"
+    ]
+  },
+  {
+    "objectID": "discr_dir_mpc.html#model-predictive-control-mpc-as-a-way-to-turn-open-loop-control-into-feedback-control",
+    "href": "discr_dir_mpc.html#model-predictive-control-mpc-as-a-way-to-turn-open-loop-control-into-feedback-control",
+    "title": "Model predictive control (MPC)",
+    "section": "Model predictive control (MPC) as a way to turn open-loop control into feedback control",
+    "text": "Model predictive control (MPC) as a way to turn open-loop control into feedback control\nThe idea is to compute an optimal control sequence on a finite time horizon using the material presented in the previous section, apply only the first control action to the system, and then repeat the procedure upon shifting the time horizon by one time step.\nAlthough this name “model predictive control” is commonly used in the control community, the other – perhaps a bit less popular – name “receding horizon control” is equally descriptive, if not even a bit more.\n\n\n\n\n\n\nNote\n\n\n\nIt may take a few moments to digest the idea, but it is actually quite natural. As a matter of fact, this is the way most of us control our lifes every day. We plan our actions on a finite time horizon, and while building this plan we use our understanding (model) of the world. We then perform the first action from our plan, observe the impact of our action and possibly a change in the environment, and update our plan accordingly on a new (shifted) time horizon. We repeat this procedure over and over again. It is crucial that the prediction horizon must be long enough so that the full impact of our actions can be observed.",
+    "crumbs": [
+      "3. Discrete-time optimal control – direct approach",
+      "Model predictive control (MPC)"
+    ]
+  },
+  {
+    "objectID": "discr_dir_mpc.html#linear-vs-nonlinear-mpc",
+    "href": "discr_dir_mpc.html#linear-vs-nonlinear-mpc",
+    "title": "Model predictive control (MPC)",
+    "section": "Linear vs nonlinear MPC",
+    "text": "Linear vs nonlinear MPC\nx",
+    "crumbs": [
+      "3. Discrete-time optimal control – direct approach",
+      "Model predictive control (MPC)"
+    ]
+  },
+  {
+    "objectID": "discr_dir_mpc.html#prediction-horizon-vs-control",
+    "href": "discr_dir_mpc.html#prediction-horizon-vs-control",
+    "title": "Model predictive control (MPC)",
+    "section": "Prediction horizon vs control",
+    "text": "Prediction horizon vs control\nx",
+    "crumbs": [
+      "3. Discrete-time optimal control – direct approach",
+      "Model predictive control (MPC)"
+    ]
+  },
+  {
+    "objectID": "discr_dir_mpc.html#hard-constraints-vs-soft-constraints",
+    "href": "discr_dir_mpc.html#hard-constraints-vs-soft-constraints",
+    "title": "Model predictive control (MPC)",
+    "section": "Hard constraints vs soft constraints",
+    "text": "Hard constraints vs soft constraints\nx",
+    "crumbs": [
+      "3. Discrete-time optimal control – direct approach",
+      "Model predictive control (MPC)"
+    ]
+  },
+  {
+    "objectID": "discr_dir_mpc.html#literature",
+    "href": "discr_dir_mpc.html#literature",
+    "title": "Model predictive control (MPC)",
+    "section": "Literature",
+    "text": "Literature\n(Rawlings, Mayne, and Diehl 2017), (Borrelli, Bemporad, and Morari 2017), (Gros and Diehl 2022) (Bemporad 2021)",
+    "crumbs": [
+      "3. Discrete-time optimal control – direct approach",
+      "Model predictive control (MPC)"
+    ]
+  },
+  {
+    "objectID": "opt_theory_modellers.html",
+    "href": "opt_theory_modellers.html",
+    "title": "Optimization modelling languages",
+    "section": "",
+    "text": "Realistically complex optimization problems cannot be solved with just a pen and a paper – computer programs (often called optimization solvers) are needed to solve them. And now comes the challenge: as various solvers for even the same class of problems differ in the algorithms they implement, so do their interfaces – every solver expects the inputs (the data defining the optimization problem) in a specific format. This makes it difficult to switch between solvers, as the problem data has to be reformatted every time.\n\nExample 1 (Data formatting for different solvers) Consider the following optimization problem: \n\\begin{aligned}\n  \\operatorname*{minimize}_{\\bm x \\in \\mathbb R^2} & \\quad \\frac{1}{2} \\bm x^\\top \\begin{bmatrix}4 & 1\\\\ 1 & 2 \\end{bmatrix} \\bm x + \\begin{bmatrix}1 \\\\ 1\\end{bmatrix}^\\top \\bm x \\\\\n  \\text{subject to} & \\quad \\begin{bmatrix}1 \\\\ 0 \\\\ 0\\end{bmatrix} \\leq \\begin{bmatrix} 1 & 1\\\\ 1 & 0\\\\ 0 & 1\\end{bmatrix} \\bm x \\leq  \\begin{bmatrix}1 \\\\ 0.7 \\\\ 0.7\\end{bmatrix}\n\\end{aligned}\n\nThere are dozens of solvers that can be used to solve this problem. Here we demonstrate a usage of these two: OSQP and COSMO.jl. And we are going to call the solvers in Julia (using the the wrappers OSQP.jl for the former). First, we start with OSQP (in fact, this is their example):\n\n\nShow the code\nusing OSQP\nusing SparseArrays\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nproblem_OSQP = OSQP.Model()\nOSQP.setup!(problem_OSQP; P=P, q=q, A=A, l=l, u=u, alpha=1, verbose=false)\n\n# Solve the optimization problem and show the results\nresults_OSQP = OSQP.solve!(problem_OSQP)\nresults_OSQP.x\n\n\nNow we do the same with COSMO. First, we must take into account that COSMO cannot accept two-sided inequalities, so we have to reformulate the problem so that the constraints are only in the form of \\mathbf A\\bm x + b \\geq \\bm 0: \n\\begin{aligned}\n  \\operatorname*{minimize}_{\\bm x \\in \\mathbb R^2} & \\quad \\frac{1}{2} \\bm x^\\top \\begin{bmatrix}4 & 1\\\\ 1 & 2 \\end{bmatrix} \\bm x + \\begin{bmatrix}1 \\\\ 1\\end{bmatrix}^\\top \\bm x \\\\\n  \\text{subject to} & \\quad \\begin{bmatrix} -1 & -1\\\\ -1 & 0\\\\ 0 & -1\\\\ 1 & 1\\\\ 1 & 0\\\\ 0 & 1\\end{bmatrix}\\bm x + \\begin{bmatrix}1 \\\\ 0.7 \\\\ 0.7 \\\\ -1 \\\\ 0 \\\\ 0\\end{bmatrix} \\geq  \\mathbf 0.\n\\end{aligned}\n\n\n\nShow the code\nusing COSMO\nusing SparseArrays\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nAa = [-A; A]\nba = [u; -l]\n\nproblem_COSMO = COSMO.Model()\nconstraint = COSMO.Constraint(Aa, ba, COSMO.Nonnegatives)\nsettings = COSMO.Settings(verbose=false)\nassemble!(problem_COSMO, P, q, constraint, settings = settings)\n\n# Solve the optimization problem and show the results\nresults_COSMO = COSMO.optimize!(problem_COSMO)\nresults_COSMO.x\n\n\nAlthough the two solvers are solving the same problem, the data has to be formatted differently for each of them (and the difference in syntax is not negligible either).\nWhat if we could formulate the same problem without considering the pecualiarities of each solver? It turns out that it is possible. In Julia we can use JuMP.jl:\n\n\nShow the code\nusing JuMP\nusing SparseArrays\nusing OSQP, COSMO\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nmodel_JuMP = Model()\n@variable(model_JuMP, x[1:2])\n@objective(model_JuMP, Min, 0.5*x'*P*x + q'*x)\n@constraint(model_JuMP, A*x .&lt;= u)\n@constraint(model_JuMP, A*x .&gt;= l)\n\n# Solve the optimization problem using OSQP and show the results\nset_silent(model_JuMP)\nset_optimizer(model_JuMP, OSQP.Optimizer)\noptimize!(model_JuMP)\ntermination_status(model_JuMP)\nx_OSQP = value.(x)\n\n# Now solve the problem using COSMO and show the results\nset_optimizer(model_JuMP, COSMO.Optimizer)\noptimize!(model_JuMP)\ntermination_status(model_JuMP)\nx_COSMO = value.(x)\n\n\n\nNotice how the optimization problem is defined just once in the last code and then different solvers can be chosen to solve it. The code represents an instance of a so-called optimization modelling language (OML), or actually its major class called algebraic modelling language (AML).\nThe key motivation for using an OML/AML is to separate the process of formulating the problem from the process of solving it (using a particular solver). Furthermore, such solver-independent problem description (called optimization model) better mimics the way we formulate these problems using a pen and a paper, making it (perhaps) a bit more convenient to write our own and read someone else’s models.",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Optimization modelling languages"
+    ]
+  },
+  {
+    "objectID": "opt_theory_modellers.html#why-optimization-modelling-languages",
+    "href": "opt_theory_modellers.html#why-optimization-modelling-languages",
+    "title": "Optimization modelling languages",
+    "section": "",
+    "text": "Realistically complex optimization problems cannot be solved with just a pen and a paper – computer programs (often called optimization solvers) are needed to solve them. And now comes the challenge: as various solvers for even the same class of problems differ in the algorithms they implement, so do their interfaces – every solver expects the inputs (the data defining the optimization problem) in a specific format. This makes it difficult to switch between solvers, as the problem data has to be reformatted every time.\n\nExample 1 (Data formatting for different solvers) Consider the following optimization problem: \n\\begin{aligned}\n  \\operatorname*{minimize}_{\\bm x \\in \\mathbb R^2} & \\quad \\frac{1}{2} \\bm x^\\top \\begin{bmatrix}4 & 1\\\\ 1 & 2 \\end{bmatrix} \\bm x + \\begin{bmatrix}1 \\\\ 1\\end{bmatrix}^\\top \\bm x \\\\\n  \\text{subject to} & \\quad \\begin{bmatrix}1 \\\\ 0 \\\\ 0\\end{bmatrix} \\leq \\begin{bmatrix} 1 & 1\\\\ 1 & 0\\\\ 0 & 1\\end{bmatrix} \\bm x \\leq  \\begin{bmatrix}1 \\\\ 0.7 \\\\ 0.7\\end{bmatrix}\n\\end{aligned}\n\nThere are dozens of solvers that can be used to solve this problem. Here we demonstrate a usage of these two: OSQP and COSMO.jl. And we are going to call the solvers in Julia (using the the wrappers OSQP.jl for the former). First, we start with OSQP (in fact, this is their example):\n\n\nShow the code\nusing OSQP\nusing SparseArrays\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nproblem_OSQP = OSQP.Model()\nOSQP.setup!(problem_OSQP; P=P, q=q, A=A, l=l, u=u, alpha=1, verbose=false)\n\n# Solve the optimization problem and show the results\nresults_OSQP = OSQP.solve!(problem_OSQP)\nresults_OSQP.x\n\n\nNow we do the same with COSMO. First, we must take into account that COSMO cannot accept two-sided inequalities, so we have to reformulate the problem so that the constraints are only in the form of \\mathbf A\\bm x + b \\geq \\bm 0: \n\\begin{aligned}\n  \\operatorname*{minimize}_{\\bm x \\in \\mathbb R^2} & \\quad \\frac{1}{2} \\bm x^\\top \\begin{bmatrix}4 & 1\\\\ 1 & 2 \\end{bmatrix} \\bm x + \\begin{bmatrix}1 \\\\ 1\\end{bmatrix}^\\top \\bm x \\\\\n  \\text{subject to} & \\quad \\begin{bmatrix} -1 & -1\\\\ -1 & 0\\\\ 0 & -1\\\\ 1 & 1\\\\ 1 & 0\\\\ 0 & 1\\end{bmatrix}\\bm x + \\begin{bmatrix}1 \\\\ 0.7 \\\\ 0.7 \\\\ -1 \\\\ 0 \\\\ 0\\end{bmatrix} \\geq  \\mathbf 0.\n\\end{aligned}\n\n\n\nShow the code\nusing COSMO\nusing SparseArrays\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nAa = [-A; A]\nba = [u; -l]\n\nproblem_COSMO = COSMO.Model()\nconstraint = COSMO.Constraint(Aa, ba, COSMO.Nonnegatives)\nsettings = COSMO.Settings(verbose=false)\nassemble!(problem_COSMO, P, q, constraint, settings = settings)\n\n# Solve the optimization problem and show the results\nresults_COSMO = COSMO.optimize!(problem_COSMO)\nresults_COSMO.x\n\n\nAlthough the two solvers are solving the same problem, the data has to be formatted differently for each of them (and the difference in syntax is not negligible either).\nWhat if we could formulate the same problem without considering the pecualiarities of each solver? It turns out that it is possible. In Julia we can use JuMP.jl:\n\n\nShow the code\nusing JuMP\nusing SparseArrays\nusing OSQP, COSMO\n\n# Define the problem data and build the problem description\nP = sparse([4.0 1.0; 1.0 2.0])\nq = [1.0; 1.0]\nA = sparse([1.0 1.0; 1.0 0.0; 0.0 1.0])\nl = [1.0; 0.0; 0.0]\nu = [1.0; 0.7; 0.7]\n\nmodel_JuMP = Model()\n@variable(model_JuMP, x[1:2])\n@objective(model_JuMP, Min, 0.5*x'*P*x + q'*x)\n@constraint(model_JuMP, A*x .&lt;= u)\n@constraint(model_JuMP, A*x .&gt;= l)\n\n# Solve the optimization problem using OSQP and show the results\nset_silent(model_JuMP)\nset_optimizer(model_JuMP, OSQP.Optimizer)\noptimize!(model_JuMP)\ntermination_status(model_JuMP)\nx_OSQP = value.(x)\n\n# Now solve the problem using COSMO and show the results\nset_optimizer(model_JuMP, COSMO.Optimizer)\noptimize!(model_JuMP)\ntermination_status(model_JuMP)\nx_COSMO = value.(x)\n\n\n\nNotice how the optimization problem is defined just once in the last code and then different solvers can be chosen to solve it. The code represents an instance of a so-called optimization modelling language (OML), or actually its major class called algebraic modelling language (AML).\nThe key motivation for using an OML/AML is to separate the process of formulating the problem from the process of solving it (using a particular solver). Furthermore, such solver-independent problem description (called optimization model) better mimics the way we formulate these problems using a pen and a paper, making it (perhaps) a bit more convenient to write our own and read someone else’s models.",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Optimization modelling languages"
+    ]
+  },
+  {
+    "objectID": "opt_theory_modellers.html#why-not-optimization-modelling-languages",
+    "href": "opt_theory_modellers.html#why-not-optimization-modelling-languages",
+    "title": "Optimization modelling languages",
+    "section": "Why not optimization modelling languages?",
+    "text": "Why not optimization modelling languages?\nAs a matter of fact, some optimization experts even keep avoiding OML/AML altogether. For example, if a company pays for a (not really cheap) license of Gurobi Optimizer – a powerful optimization library for (MI)LP/QP/QCQP –, it may be the case that for a particular very large-scale optimization problem their optimization specialist will have hard time to find a third-party solver of comparable performance. If then its Python API makes definition of optimization problems convenient too (see the code below), maybe there is little regret that such problem definitions cannot be reused with a third-party solver. The more so that since it is tailored to Gurobi solver, it will offer control over the finest details.\n\n\nShow the code\nimport gurobipy as gp\nimport numpy as np\n\n# Define the data for the model\nP = np.array([[4.0, 1.0], [1.0, 2.0]])\nq = np.array([1.0, 1.0])\nA = np.array([[1.0, 1.0], [1.0, 0.0], [0.0, 1.0]])\nl = np.array([1.0, 0.0, 0.0])\nu = np.array([1.0, 0.7, 0.7])\n\n# Create a new model\nm = gp.Model(\"qp\")\n\n# Create a vector variable\nx = m.addMVar((2,))\n\n# Set the objective\nobj = 1/2*(x@P@x + q@x)\nm.setObjective(obj)\n\n# Add the constraints\nm.addConstr(A@x &gt;= l, \"c1\")\nm.addConstr(A@x &lt;= u, \"c2\")\n\n# Run the solver\nm.optimize()\n\n# Print the results\nfor v in m.getVars():\n    print(f\"{v.VarName} {v.X:g}\")\n\nprint(f\"Obj: {m.ObjVal:g}\")\n\n\nSimilar and yet different is the story of the IBM ILOG CPLEX, another top-notch solvers addressing the same problems as Gurobi. They do have their own modeling language called Optimization Modelling Language (OPL), but it is also only interfacing with their solver(s). We can only guess that their motivation for developing their own optimization modelling language was that at the time of its developments (in 1990s) Python was still in pre-2.0 stage and formulating optimization problems in programming languages like C/C++ or Fortran was nowhere close to being convenient. Gurobi, in turn, started in 2008, when Python was already a popular language.",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Optimization modelling languages"
+    ]
+  },
+  {
+    "objectID": "opt_theory_modellers.html#language-independent-optimization-modelling-languages",
+    "href": "opt_theory_modellers.html#language-independent-optimization-modelling-languages",
+    "title": "Optimization modelling languages",
+    "section": "Language-independent optimization modelling languages",
+    "text": "Language-independent optimization modelling languages\nOptimization/algebraic modelling languages were originally developed outside programming languages, essentially as standalone tools. Examples are AMPL, GAMS, and, say, GLPK/GMPL (MathProg). We listed these main names here since they can be bumped across (they are still actively developed), but we are not going to discuss them in our course any further. The reason is that there are now alternatives that are implemented as packages/toolboxes in programming languages such as Julia, Matlab, and Python, which offer a more fluent workflow – a user can use the same programming language to acquire the data, preprocess them, formulate the optimization problem, configure and call a solver, and finally do some postprocessing including a visualization and whatever reporting, all without leaving the language of their choice.",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Optimization modelling languages"
+    ]
+  },
+  {
+    "objectID": "opt_theory_modellers.html#optimization-modelling-in-julia",
+    "href": "opt_theory_modellers.html#optimization-modelling-in-julia",
+    "title": "Optimization modelling languages",
+    "section": "Optimization modelling in Julia",
+    "text": "Optimization modelling in Julia\nMy obvious (personal) bias towards Julia programming language is partly due to the terrific support for optimization modelling in Julia:\n\nJuMP.jl not only constitutes one of the flagship packages of the Julia ecosystem but it is on par with the state of the art optimization modelling languages. Furthermore, being a free and open source software, it enjoys a vibrant community of developers and users. They even meet annually at JuMP-dev conference (in 2023 in Boston, MA).\nConvex.jl is an implementation of the concept of Disciplined Convex Programming (DCP) in Julia (below we also list its implementations in Matlab and Python). Even though it is now registered as a part of the JuMP.jl project, it is still a separate concept. Interesting, convenient, but it seems to be in a maintanence mode now.\n\n\n\nShow the code\nusing Convex, SCS\n\n# Define the problem data and build the problem description\nP = [4.0 1.0; 1.0 2.0]\nq = [1.0, 1.0]\nA = [1.0 1.0; 1.0 0.0; 0.0 1.0]\nl = [1.0, 0.0, 0.0]\nu = [1.0, 0.7, 0.7]\n\n# Create a vector variable of size n\nx = Variable(2)\n\n# Define the objective \nobjective = 1/2*quadform(x,P) + dot(q,x)\n\n# Define the constraints\nconstraints = [l &lt;= A*x, A*x &lt;= u]\n\n# Define the overal description of the optimization problem\nproblem = minimize(objective, constraints)\n\n# Solve the problem\nsolve!(problem, SCS.Optimizer; silent_solver = true)\n\n# Check the status of the problem\nproblem.status # :Optimal, :Infeasible, :Unbounded etc.\n\n# Get the optimum value\nproblem.optval\n\n# Get the optimal x\nx.value",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Optimization modelling languages"
+    ]
+  },
+  {
+    "objectID": "opt_theory_modellers.html#optimization-modelling-in-matlab",
+    "href": "opt_theory_modellers.html#optimization-modelling-in-matlab",
+    "title": "Optimization modelling languages",
+    "section": "Optimization modelling in Matlab",
+    "text": "Optimization modelling in Matlab\nPopularity of Matlab as a language and an ecosystem for control-related computations is undeniable. Therefore, let’s have a look at what is available for modelling optimization problems in Matlab:\n\nOptimization Toolbox for Matlab is one of the commercial toolboxes produced by Matlab and Simulink creators. Since the R2017b release the toolbox supports Problem-based optimization workflow (besides the more traditional Solver-based optimization workflow supported since the beginning), which can be regarded as a kind of an optimization/algebraic modelling language, albeit restricted to their own solvers.\nYalmip started as Yet Another LMI Parser quite some time ago (which reveals its control theoretic roots), but these days it serves as fairly complete algebraic modelling language (within Matlab), interfacing to perhaps any optimization solver, both commercial and free&open-source. It is free and open-source. Is is still actively developed and maintained and it abounds with tutorials and examples.\nCVX is a Matlab counterpart of Convex.jl (or the other way around, if you like, since it has been here longer). The name stipulates that it only allows convex optimization probles (unlike Yalmip) – it follows the Disciplined Convex Programming (DCP) paradigm. Unfortunately, the development seems to have stalled – the last update is from 2020.",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Optimization modelling languages"
+    ]
+  },
+  {
+    "objectID": "opt_theory_modellers.html#optimization-modelling-in-python",
+    "href": "opt_theory_modellers.html#optimization-modelling-in-python",
+    "title": "Optimization modelling languages",
+    "section": "Optimization modelling in Python",
+    "text": "Optimization modelling in Python\nPython is a very popular language for scientific computing. Although it is arguable if it is actually suitable for implementation of numerical algoritms, when it comes to building optimization models, it does its job fairly well (and the numerical solvers it calls can be developed in different language). Several packages implementing OML/AML are available:\n\ncvxpy is yet another instantiation of Disciplined Convex Programming that we alredy mention when introducing Convex.jl and CVX. And it turns out that this one exhibits the greatest momentum. The team of developers seems to be have exceeded a critical mass, hence the tools seems like a safe bet already.\nPyomo is a popular open-source optimization modelling language within Python.\nAPMonitor and GEKKO are relatively young projects, primarily motivated by applications of machine learning and optimization in chemical process engineering.",
+    "crumbs": [
+      "1. Optimization – theory",
+      "Optimization modelling languages"
+    ]
+  },
+  {
+    "objectID": "rocond_mixed_sensitivity.html",
+    "href": "rocond_mixed_sensitivity.html",
+    "title": "Mixed sensitivity design",
     "section": "",
     "text": "Back to top",
     "crumbs": [
-      "11. Uncertainty modelling and analysis",
-      "Robustness analysis"
+      "12. Robust control",
+      "Mixed sensitivity design"
     ]
   },
   {
-    "objectID": "discr_dir_mpc_economic.html",
-    "href": "discr_dir_mpc_economic.html",
-    "title": "Economic MPC",
+    "objectID": "cont_indir_via_calculus_of_variations.html",
+    "href": "cont_indir_via_calculus_of_variations.html",
+    "title": "Indirect approach to optimal control",
     "section": "",
-    "text": "(Ellis, Liu, and Christofides 2017), (Ellis, Durand, and Christofides 2014), (Faulwasser, Grüne, and Müller 2018), (Rawlings, Angeli, and Bates 2012)",
+    "text": "Back to top",
     "crumbs": [
-      "6. More on MPC",
-      "Economic MPC"
+      "7. Continuous-time optimal control - indirect approach via calculus of variations",
+      "Indirect approach to optimal control"
     ]
   },
   {
-    "objectID": "discr_dir_mpc_economic.html#literature",
-    "href": "discr_dir_mpc_economic.html#literature",
-    "title": "Economic MPC",
+    "objectID": "cont_indir_references.html",
+    "href": "cont_indir_references.html",
+    "title": "References for indirect approach to continuous-time optimal control",
     "section": "",
-    "text": "(Ellis, Liu, and Christofides 2017), (Ellis, Durand, and Christofides 2014), (Faulwasser, Grüne, and Müller 2018), (Rawlings, Angeli, and Bates 2012)",
+    "text": "Indirect approach to optimal control is based on calculus of variations (and its later extension in the form of Pontryagin’s principle of maximum). Calculus of variations is an advanced mathematical discipline that requires non-trivial foundations and effort to master. In our course, however, we take the liberty of aiming for intuitive understanding rather than mathematical rigor. At roughly the same level, the calculus of variations is introduced in books on optimal control, such as the classic and affordable (Kirk 2004), the popular and online available (Lewis, Vrabie, and Syrmo 2012), or very accessible and also freely available online (Liberzon 2011).\nWith anticipation, we provide here a reference to the paper (Sussmann and Willems 1997), which shows how the celebrated Pontryagin’s principle of maximum extends the calculus of variations significantly. But we will only discuss this in the next chapter.\nFor those interested in a having a standard reference for the calculus of variations, the classic (Gelfand and Fomin 2020) is recommendable, the more so that it is fairly slim.\n\n\n\n\n Back to topReferences\n\nGelfand, I. M., and S. V. Fomin. 2020. Calculus of Variations. Reprint of the 1963 edition. Mineola, N.Y: Dover Publications.\n\n\nKirk, Donald E. 2004. Optimal Control Theory: An Introduction. Reprint of the 1970 edition. Dover Publications.\n\n\nLewis, Frank L., Draguna Vrabie, and Vassilis L. Syrmo. 2012. Optimal Control. 3rd ed. John Wiley & Sons. https://lewisgroup.uta.edu/FL%20books/Lewis%20optimal%20control%203rd%20edition%202012.pdf.\n\n\nLiberzon, Daniel. 2011. Calculus of Variations and Optimal Control Theory: A Concise Introduction. Princeton University Press. http://liberzon.csl.illinois.edu/teaching/cvoc/cvoc.html.\n\n\nSussmann, H. J., and J. C. Willems. 1997. “300 Years of Optimal Control: From the Brachystochrone to the Maximum Principle.” IEEE Control Systems 17 (3): 32–44. https://doi.org/10.1109/37.588098.",
     "crumbs": [
-      "6. More on MPC",
-      "Economic MPC"
+      "7. Continuous-time optimal control - indirect approach via calculus of variations",
+      "References for indirect approach to continuous-time optimal control"
     ]
   },
   {

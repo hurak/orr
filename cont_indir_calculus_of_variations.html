@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.25">
+<meta name="generator" content="quarto-1.5.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Calculus of variations and optimal control</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – Calculus of variations</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -51,7 +31,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./cont_indir_via_calculus_of_variations.html" rel="next">
-<link href="./discr_dir_mpc_economic.html" rel="prev">
+<link href="./discr_dir_mpc_explicit.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -102,7 +82,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">Calculus of variations and optimal control</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">Calculus of variations</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -309,13 +289,19 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dynamic_programming.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Optimal control via dynamic programming</span></a>
+ <span class="menu-text">Dynamic programming and discrete-time optimal control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming_tabular.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tables as outcomes of dynamic programming</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dynamic_programming_LQR.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">LQR via dynamic programming</span></a>
+ <span class="menu-text">Solving LQR via dynamic programming</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -349,14 +335,14 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_dir_mpc_explicit.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Explicit MPC</span></a>
+  <a href="./discr_dir_mpc_economic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Economic MPC</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_dir_mpc_economic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Economic MPC</span></a>
+  <a href="./discr_dir_mpc_explicit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Explicit MPC</span></a>
   </div>
 </li>
       </ul>
@@ -373,7 +359,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_calculus_of_variations.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Calculus of variations and optimal control</span></a>
+ <span class="menu-text">Calculus of variations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -398,6 +384,12 @@ div.csl-indent {
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_CARE.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Continuous-time Riccati equation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_indir_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References for indirect approach to continuous-time optimal control</span></a>
   </div>
 </li>
       </ul>
@@ -598,21 +590,15 @@ div.csl-indent {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#literature" id="toc-literature" class="nav-link active" data-scroll-target="#literature">Literature</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">Calculus of variations and optimal control</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">Calculus of variations</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Calculus of variations and optimal control</h1>
+<h1 class="title">Calculus of variations</h1>
 </div>
 
 
@@ -629,28 +615,10 @@ div.csl-indent {
 </header>
 
 
-<section id="literature" class="level2">
-<h2 class="anchored" data-anchor-id="literature">Literature</h2>
-<p><span class="citation" data-cites="kirkOptimalControlTheory2004">(<a href="#ref-kirkOptimalControlTheory2004" role="doc-biblioref">Kirk 2004</a>)</span>, <span class="citation" data-cites="lewisOptimalControl2012">(<a href="#ref-lewisOptimalControl2012" role="doc-biblioref">Lewis, Vrabie, and Syrmo 2012</a>)</span>, <span class="citation" data-cites="liberzonCalculusVariationsOptimal2011">(<a href="#ref-liberzonCalculusVariationsOptimal2011" role="doc-biblioref">Liberzon 2011</a>)</span>, <span class="citation" data-cites="sussmann300YearsOptimal1997">(<a href="#ref-sussmann300YearsOptimal1997" role="doc-biblioref">Sussmann and Willems 1997</a>)</span></p>
 
 
 
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-kirkOptimalControlTheory2004" class="csl-entry" role="listitem">
-Kirk, Donald E. 2004. <em>Optimal <span>Control Theory</span>: <span>An Introduction</span></em>. Reprint of the 1970 edition. Dover Publications.
-</div>
-<div id="ref-lewisOptimalControl2012" class="csl-entry" role="listitem">
-Lewis, Frank L., Draguna Vrabie, and Vassilis L. Syrmo. 2012. <em>Optimal <span>Control</span></em>. 3rd ed. John Wiley &amp; Sons. <a href="https://lewisgroup.uta.edu/FL%20books/Lewis%20optimal%20control%203rd%20edition%202012.pdf">https://lewisgroup.uta.edu/FL%20books/Lewis%20optimal%20control%203rd%20edition%202012.pdf</a>.
-</div>
-<div id="ref-liberzonCalculusVariationsOptimal2011" class="csl-entry" role="listitem">
-Liberzon, Daniel. 2011. <em>Calculus of <span>Variations</span> and <span>Optimal Control Theory</span>: <span>A Concise Introduction</span></em>. <span>Princeton University Press</span>. <a href="http://liberzon.csl.illinois.edu/teaching/cvoc/cvoc.html">http://liberzon.csl.illinois.edu/teaching/cvoc/cvoc.html</a>.
-</div>
-<div id="ref-sussmann300YearsOptimal1997" class="csl-entry" role="listitem">
-Sussmann, H. J., and J. C. Willems. 1997. <span>“300 Years of Optimal Control: From the Brachystochrone to the Maximum Principle.”</span> <em>IEEE Control Systems</em> 17 (3): 32–44. <a href="https://doi.org/10.1109/37.588098">https://doi.org/10.1109/37.588098</a>.
-</div>
-</div></section></div></main> <!-- /main -->
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1073,8 +1041,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./discr_dir_mpc_economic.html" class="pagination-link" aria-label="Economic MPC">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Economic MPC</span>
+      <a href="./discr_dir_mpc_explicit.html" class="pagination-link" aria-label="Explicit MPC">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Explicit MPC</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
@@ -1091,7 +1059,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
