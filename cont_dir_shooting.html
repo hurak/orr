@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Shooting method for optimal control</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – Shooting and multiple shooting</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./cont_dir_multiple_shooting.html" rel="next">
-<link href="./cont_indir_time_optimal.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +80,9 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_dir_shooting.html">9. Continuous-time optimal control - direct approach via numerical optimization</a></li><li class="breadcrumb-item"><a href="./cont_dir_shooting.html">Shooting method for optimal control</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
+      B(E)3M35ORR – Optimal and Robust Control
+      </li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -149,7 +149,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./opt_theory_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References for optimization theory</span></a>
+ <span class="menu-text">References</span></a>
   </div>
 </li>
       </ul>
@@ -190,7 +190,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./opt_algo_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References for optimization algorithms</span></a>
+ <span class="menu-text">References</span></a>
   </div>
 </li>
       </ul>
@@ -231,7 +231,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./discr_dir_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References for direct approach to discrete-time optimal control</span></a>
+ <span class="menu-text">References</span></a>
   </div>
 </li>
       </ul>
@@ -272,7 +272,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./discr_indir_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References for indirect approach to discrete-time optimal control</span></a>
+ <span class="menu-text">References</span></a>
   </div>
 </li>
       </ul>
@@ -307,7 +307,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dynamic_programming_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References for dynamic programming approach to discrete-time optimal control</span></a>
+ <span class="menu-text">References</span></a>
   </div>
 </li>
       </ul>
@@ -388,8 +388,20 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cont_indir_numerical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Numerical methods for indirect methods</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_indir_trajectory_stabilization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Trajectory stabilization and neigboring extremals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./cont_indir_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References for indirect approach to continuous-time optimal control</span></a>
+ <span class="menu-text">References</span></a>
   </div>
 </li>
       </ul>
@@ -433,21 +445,24 @@ ul.task-list li input[type="checkbox"] {
       </div>
       <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./cont_dir_shooting.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Shooting method for optimal control</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./cont_dir_multiple_shooting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Multiple shooting method for optimal control</span></a>
-  </div>
-</li>
+ <span class="menu-text">cont_dir_shooting_amd_multiple.qmd</span>
+  </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_dir_collocation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Collocation methods for optimal control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_dir_software.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Software</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_dir_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
       </ul>
@@ -596,9 +611,9 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_dir_shooting.html">9. Continuous-time optimal control - direct approach via numerical optimization</a></li><li class="breadcrumb-item"><a href="./cont_dir_shooting.html">Shooting method for optimal control</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Shooting method for optimal control</h1>
+<h1 class="title">Shooting and multiple shooting</h1>
 </div>
 
 
@@ -615,6 +630,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>We have already seen that direct methods for discrete-time optimal control of discrete-time systems essentially just reshaped the problem data so that a nonlinear programming solver can accept them.</p>
 
 
 
@@ -711,7 +727,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/hurak\.github\.io\/orr\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -1039,18 +1055,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-      <a href="./cont_indir_time_optimal.html" class="pagination-link" aria-label="Time-optimal control">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Time-optimal control</span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="./cont_dir_multiple_shooting.html" class="pagination-link" aria-label="Multiple shooting method for optimal control">
-        <span class="nav-page-text">Multiple shooting method for optimal control</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
