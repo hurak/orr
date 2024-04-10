@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>B(E)3M35ORR – Optimal and Robust Control – Optimization problems</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./opt_theory_reformulations.html" rel="next">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_problems.html">1. Optimization – theory</a></li><li class="breadcrumb-item"><a href="./opt_theory_problems.html">Optimization problems</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">B(E)3M35ORR – Optimal and Robust Control</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">1. Optimization – theory</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./opt_theory_problems.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Optimization problems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./opt_theory_reformulations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Problem reformulations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./opt_theory_unconstrained.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Theory for unconstrained optimization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./opt_theory_constrained.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Theory for constrained optimization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./opt_theory_modellers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Optimization modelling languages</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./opt_theory_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">2. Optimization – algorithms</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./opt_algo_derivatives.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Computing derivatives</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./opt_algo_unconstrained.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Algorithms for unconstrained optimization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./opt_algo_constrained.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Algorithms for constrained optimization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./opt_algo_solvers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Numerical solvers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./opt_algo_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">3. Discrete-time optimal control – direct approach</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_dir_general.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">General finite-horizon nonlinear discrete-time optimal control as nonlinear program</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_dir_LQR.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Finite-horizon LQR-optimal control as QP</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_dir_mpc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model predictive control (MPC)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_dir_mpc_solvers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Numerical solvers for MPC</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_dir_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">4. Discrete-time optimal control – indirect approach</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_indir_general.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">General nonlinear discrete-time optimal control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_indir_LQR_fin_horizon.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Discrete-time LQR on a finite horizon</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_indir_LQR_inf_horizon.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Discrete-time LQR-optimal control on an infinite horizon</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_indir_DARE.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Discrete-time algebraic Riccati equation (DARE)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_indir_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">5. Discrete-time optimal control – dynamic programming</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dynamic programming and discrete-time optimal control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming_tabular.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tables as outcomes of dynamic programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming_LQR.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Solving LQR via dynamic programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">6. More on MPC</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_dir_mpc_stability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stability of MPC</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_dir_mpc_recursive_feasibility.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Recursive feasibility</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_dir_mpc_economic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Economic MPC</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_dir_mpc_explicit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Explicit MPC</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+ <span class="menu-text">7. Continuous-time optimal control - indirect approach via calculus of variations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_indir_calculus_of_variations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calculus of variations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_indir_via_calculus_of_variations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Indirect approach to optimal control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_indir_LQR_fin_horizon.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Indirect approach to LQR on a finite horizon</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_indir_LQR_inf_horizon.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Indirect approach to LQR on an infinite horizon</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_indir_CARE.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Continuous-time Riccati equation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_indir_numerical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Numerical methods for indirect methods</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_indir_trajectory_stabilization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Trajectory stabilization and neigboring extremals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_indir_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+ <span class="menu-text">8. Continuous-time optimal control - indirect approach via Pontryagin’s maximum principle</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_indir_Pontryagin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pontryagin’s maximum principle</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_indir_constrained.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Constrained optimal control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_indir_time_optimal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Time-optimal control</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true">
+ <span class="menu-text">9. Continuous-time optimal control - direct approach via numerical optimization</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+ <span class="menu-text">cont_dir_shooting_amd_multiple.qmd</span>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_dir_collocation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Collocation methods for optimal control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_dir_software.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Software</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_dir_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true">
+ <span class="menu-text">10. Some extensions: LQG, LTR, H2</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./stochastic_LQR.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stochastic LQR control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./LQG.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LQG control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./LTR.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Loop transfer recovery (LTR)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./H2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">H2-optimal control</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" aria-expanded="true">
+ <span class="menu-text">11. Uncertainty modelling and analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./uncertainty.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Uncertainty modelling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./robustness.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Robustness analysis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" aria-expanded="true">
+ <span class="menu-text">12. Robust control</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rocond_mixed_sensitivity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mixed sensitivity design</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rocond_H_infinity_control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hinfinity-optimal control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rocond_mu_synthesis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mu synthesis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" aria-expanded="true">
+ <span class="menu-text">13. Limits of performance</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./limits_of_performance_SISO.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Limits for SISO systems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./limits_of_performance_MIMO.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Limits for MIMO systems</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" aria-expanded="true">
+ <span class="menu-text">14. Model and controller order reduction</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reduction_order_model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model order reduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reduction_order_controller.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Controller order reduction</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#optimization-problem-formulation" id="toc-optimization-problem-formulation" class="nav-link active" data-scroll-target="#optimization-problem-formulation">Optimization problem formulation</a></li>
+  <li><a href="#properties-of-optimization-problems" id="toc-properties-of-optimization-problems" class="nav-link" data-scroll-target="#properties-of-optimization-problems">Properties of optimization problems</a></li>
+  <li><a href="#classes-of-optimization-problems" id="toc-classes-of-optimization-problems" class="nav-link" data-scroll-target="#classes-of-optimization-problems">Classes of optimization problems</a>
+  <ul class="collapse">
+  <li><a href="#linear-program-lp" id="toc-linear-program-lp" class="nav-link" data-scroll-target="#linear-program-lp">Linear program (LP)</a></li>
+  <li><a href="#quadratic-program-qp" id="toc-quadratic-program-qp" class="nav-link" data-scroll-target="#quadratic-program-qp">Quadratic program (QP)</a></li>
+  <li><a href="#conic-program-cp" id="toc-conic-program-cp" class="nav-link" data-scroll-target="#conic-program-cp">Conic program (CP)</a></li>
+  <li><a href="#geometric-program-gp" id="toc-geometric-program-gp" class="nav-link" data-scroll-target="#geometric-program-gp">Geometric program (GP)</a></li>
+  <li><a href="#nonlinear-program-nlp" id="toc-nonlinear-program-nlp" class="nav-link" data-scroll-target="#nonlinear-program-nlp">Nonlinear program (NLP)</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_problems.html">1. Optimization – theory</a></li><li class="breadcrumb-item"><a href="./opt_theory_problems.html">Optimization problems</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Optimization problems</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="optimization-problem-formulation" class="level2">
+<h2 class="anchored" data-anchor-id="optimization-problem-formulation">Optimization problem formulation</h2>
+<p>We formulate a general optimization problem (also a mathematical program) as <span class="math display">
+\begin{aligned}
+\operatorname*{minimize} \quad &amp; f(\bm x) \\
+\text{subject to} \quad &amp; \bm x \in \mathcal{X},
+\end{aligned}
+</span> where <span class="math inline">f</span> is a scalar function, <span class="math inline">\bm x</span> can be a scalar, a vector, a matrix or perhaps even a variable of yet another type, and <span class="math inline">\mathcal{X}</span> is a set of values that <span class="math inline">\bm x</span> can take, also called the feasible set.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The term “program” here has nothing to do with a computer program. Instead, it was used by the US military during the WWII to refer to plans or schedules in training and logistics.</p>
+</div>
+</div>
+<p>If maximization of the objective function <span class="math inline">f()</span> is desired, we can simply multiply the objective function by <span class="math inline">-1</span> and minimize the resulting function.</p>
+<p>Typically there are two types of constraints that can be imposed on the optimization variable <span class="math inline">\bm x</span>:</p>
+<ul>
+<li>explicit characterization of the set such as <span class="math inline">\bm x \in \mathbb{R}^n</span> or <span class="math inline">\bm x \in \mathbb{Z}^n</span>, possibly even a direction enumeration such as <span class="math inline">\bm x \in \{0,1\}^n</span> in the case of binary variables,</li>
+<li>implicit characterization of the set using equations and inequalities such as <span class="math inline">g_i(\bm x) \leq 0</span> and <span class="math inline">h_i(\bm x) = 0</span> for <span class="math inline">i = 1, \ldots, m</span> and <span class="math inline">j = 1, \ldots, p</span>.</li>
+</ul>
+<p>An example of a more structured and yet sufficiently general optimization problems over several real and integer variables is <span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{\bm x \in \mathbb{R}^{n_x}, \, \bm y \in \mathbb{Z}^{n_y}} \quad &amp; f(\bm x, \bm y) \\
+\text{subject to} \quad &amp; g_i(\bm x, \bm y) \leq 0, \quad i = 1, \ldots, m, \\
+&amp; h_j(\bm x, \bm y) = 0, \quad j = 1, \ldots, p.
+\end{aligned}
+</span></p>
+<p>Indeed, for named sets such as <span class="math inline">\mathbb R</span> or <span class="math inline">\mathbb Z</span>, it is common to place the set constraints directly underneath the word “minimize”. But it is just one convention, and these constraints could be listed into the “subject to” section as well.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Integer optimization not in this course
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In this course we are only going to consider optimization problems with real-valued variables. This decision does not suggest that optimization with integer variables is less relevant for optimal control, quite the opposite! It is just that the theory and algorithms for integer or mixed integer optimization are based on different principles than those for real variables. And they can hardly fit into a single course. Good news for the interested students is that a graduate course named <a href="https://rtime.ciirc.cvut.cz/~hanzalek/KO/">Combinatorial algorithms (B3B35KOA)</a> covering integer optimization in detail is offered by the Cybernetics and Robotics study program at CTU FEE. Applications of integer optimization to optimal control are part of the course on <a href="https://moodle.fel.cvut.cz/course/view.php?id=7973">Hybrid systems (B3B39HYS)</a>.</p>
+</div>
+</div>
+<p>The form of an optimization problem that we are going to use in our course most often than not is <span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{\bm x \in \mathbb{R}^n} \quad &amp; f(\bm x) \\
+\text{subject to} \quad &amp; g_i(\bm x) \leq 0, \quad i = 1, \ldots, m, \\
+&amp; h_i(\bm x) = 0, \quad i = 1, \ldots, p,
+\end{aligned}
+</span> which can also be written using vector-valued functions (reflected in the use of the bold face for their names) <span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{\bm x \in \mathbb{R}^n} \quad &amp; f(\bm x) \\
+\text{subject to} \quad &amp; \mathbf g(\bm x) \leq 0,\\
+&amp; \mathbf h(\bm x) = 0.
+\end{aligned}
+</span></p>
+</section>
+<section id="properties-of-optimization-problems" class="level2">
+<h2 class="anchored" data-anchor-id="properties-of-optimization-problems">Properties of optimization problems</h2>
+<p>It is now the presence/absence and the properties of individual components in the optimization problem defined above that characterize classes of optimization problems. In particular, we can identify the following properties:</p>
+<dl>
+<dt>Unconstrained vs constrained</dt>
+<dd>
+Practically relevant problems are almost always constrained. But still there are good reasons to study unconstrained problems too, as many theoretical results and algorithms for constrained problems are based on transformations to unconstrained problems.
+</dd>
+<dt>Linear vs nonlinear</dt>
+<dd>
+By linear problems we mean problems where the objective function and all the functions defining the constraints are linear (or actually affine) functions of the optimization variable <span class="math inline">\bm x</span>. Such problems constitute the simplest class of optimization problems, are very well understood, and there are efficient algorithms for solving them. In contrast, nonlinear problems are typically more difficult to solve (but see the discussion of the role of convexity below).
+</dd>
+<dt>Smooth vs nonsmooth</dt>
+<dd>
+Efficient algorithms for optimization over real variables benefit heavily from knowledge of the derivatives of the objective and constraint functions. If the functions are differentiable (aka smooth), we say that the whole optimization problem is smooth. Nonsmooth problems are typically a more difficult to analyze and solve (but again, see the discussion of the role of convexity below).
+</dd>
+<dt>Convex vs nonconvex</dt>
+<dd>
+If the objective function and the feasible set are convex (the latter holds when the functions defining the inequality constraints are convex and the functions defining the equality constrains are affine), the whole optimization problem is convex. Convex optimization problems are very well understood and there are efficient algorithms for solving them. In contrast, nonconvex problems are typically more difficult to solve. It turns out that convexity is a lot more important property than linearity and smoothness when it comes to solving optimization problems efficiently.
+</dd>
+</dl>
+</section>
+<section id="classes-of-optimization-problems" class="level2">
+<h2 class="anchored" data-anchor-id="classes-of-optimization-problems">Classes of optimization problems</h2>
+<p>Based on the properties discussed above, we can identify the following distinct classes of optimization problems:</p>
+<section id="linear-program-lp" class="level3">
+<h3 class="anchored" data-anchor-id="linear-program-lp">Linear program (LP)</h3>
+<p><span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{\bm x \in \mathbb{R}^n} \quad &amp; \mathbf c^\top \bm x \\
+\text{subject to} \quad &amp; \mathbf A_\mathrm{ineq}\bm x \leq \mathbf b_\mathrm{ineq},\\
+&amp; \mathbf A_\mathrm{eq}\bm x = \mathbf b_\mathrm{eq}.
+\end{aligned}
+</span></p>
+<p>An LP is obviously linear, hence it is also smooth and convex.</p>
+<p>Some theoretical results and numerical algorithms require a linear program in a specific form, called the <em>standard form</em>: <span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{\bm x \in \mathbb{R}^n} \quad &amp; \mathbf c^\top \bm x \\
+\text{subject to} \quad &amp; \mathbf A\bm x = \mathbf b,\\
+&amp; \bm x \geq \mathbf 0,
+\end{aligned}
+</span> where the inequality <span class="math inline">\bm x \geq \mathbf 0</span> is understood componentwise, that is, <span class="math inline">x_i \geq 0</span> for all <span class="math inline">i = 1, \ldots, n</span>.</p>
+</section>
+<section id="quadratic-program-qp" class="level3">
+<h3 class="anchored" data-anchor-id="quadratic-program-qp">Quadratic program (QP)</h3>
+<p><span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{\bm x \in \mathbb{R}^n} \quad &amp; \bm x^\top \mathbf Q \bm x +  \mathbf c^\top \bm x \\
+\text{subject to} \quad &amp; \mathbf A_\mathrm{ineq}\bm x \leq \mathbf b_\mathrm{ineq},\\
+&amp; \mathbf A_\mathrm{eq}\bm x = \mathbf b_\mathrm{eq}.
+\end{aligned}
+</span></p>
+<p>Even though the QP is nonlinear, it is smooth and if the matrix <span class="math inline">\mathbf Q</span> is positive semidefinite, it is convex. Its analysis and numerical solution are not much more difficult than those of an LP problem.</p>
+<section id="quadratically-constrained-quadratic-program-qcqp" class="level4">
+<h4 class="anchored" data-anchor-id="quadratically-constrained-quadratic-program-qcqp">Quadratically constrained quadratic program (QCQP)</h4>
+<p>It is worth emphasizing that for the standard QP the constraints are still given by a system of linear equations and inequalities. Sometimes we can encounter problems in which not only the cost function but also the functions defining the constraints are quadratic as in <span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{\bm x \in \mathbb{R}^n} \quad &amp; \bm x^\top \mathbf Q \bm x +  \mathbf c^\top \bm x \\
+\text{subject to} \quad &amp; \bm x^\top \mathbf A_i\bm x + \mathbf b_i \bm x + c_i \leq \mathbf 0, \quad i=1, \ldots, m.
+\end{aligned}
+</span></p>
+<p>A QCQP problem is convex if and only if the the constraints define a convex feasible set, which is the case when all the matrices <span class="math inline">\mathbf A_i</span> are positive semidefinite.</p>
+</section>
+</section>
+<section id="conic-program-cp" class="level3">
+<h3 class="anchored" data-anchor-id="conic-program-cp">Conic program (CP)</h3>
+<p>First, what is a cone? It is a set such that if something is in the cone, then a multiple of it by a nonnegative number is still in the set. We are going to restrict ourselves to <em>regular cones</em>, which are are pointed, closed and convex. An example of such regular cone in a plane is in <a href="#fig-cone" class="quarto-xref">Figure&nbsp;1</a> below.</p>
+<div id="fig-cone" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cone-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/cone.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cone-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Regular (pointed, convex, closed) cone in a plane
+</figcaption>
+</figure>
+</div>
+<p>Now, what is the point in using cones in optimization? Reformulation of nonlinear optimization problems using cones constitutes a systematic way to identify what these (conic) optimization problems have in common with linear programs, for which powerful theory and efficient algorithms exist.</p>
+<p>Note that an LP in the standard form can be written as <span class="math display">
+\begin{aligned}
+\operatorname*{minimize} &amp;\quad \mathbf c^\top \bm x\\
+\text{subject to} &amp;\quad \mathbf A\bm x = \mathbf b,\\
+&amp;\quad \bm x\in \mathbb{R}_+^n,
+\end{aligned}
+</span> where <span class="math inline">\mathbb R_+^n</span> is a positive orthant. Now, the positive orthant is a convex cone! We can then see the LP as an instance of a general conic optimization problem (conic program)</p>
+<p><span class="math display">
+\begin{aligned}
+\operatorname*{minimize} &amp;\quad \mathbf c^\top \bm x\\
+\text{subject to} &amp;\quad \mathbf A\bm x = \mathbf b,\\
+&amp;\quad \bm x\in \mathcal{K},
+\end{aligned}
+</span> where <span class="math inline">\mathcal{K}</span> is a cone in <span class="math inline">\mathbb R^n</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Inequality as belonging to a cone
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A fundamental idea unrolled here: the inequality <span class="math inline">\bm x\geq 0</span> can be interpreted as <span class="math inline">\bm x</span> belonging to a componentwise nonegative cone, that is <span class="math inline">\bm x \in \mathbb R_+^n</span>. What if some other cone <span class="math inline">\mathcal K</span> is considered? What would be the interpretation of the inequality then?</p>
+</div>
+</div>
+<p>Sometimes in order to emphasize that the inequality is induced by the cone <span class="math inline">\mathcal K</span>, we write it as <span class="math inline">\geq_\mathcal{K}</span>. Another convention – the one we actually adopt here – is to use another symbol for the inequality <span class="math inline">\succeq</span> to distinguish it from the componentwise meaning, assuming that the cone is understood from the context. We then interpret conic inequalities such as <span class="math display">
+\mathbf A_\mathrm{ineq}\bm x \succeq \mathbf b_\mathrm{ineq}
+</span> in the sense that <span class="math display">
+\mathbf A_\mathrm{ineq}\bm x - \mathbf b_\mathrm{ineq} \in \mathcal{K}.
+</span></p>
+<p>It is high time to explore some concrete cones (other than the positive orthant). We consider just two, but there are a few more, see the literature.</p>
+<section id="second-order-cone-program-socp" class="level4">
+<h4 class="anchored" data-anchor-id="second-order-cone-program-socp">Second-order cone program (SOCP)</h4>
+<p>The most immediate cone in <span class="math inline">\mathbb R^n</span> is the <em>second-order cone</em>, also called the <em>Lorentz cone</em> or even the <em>ice cream cone</em>. We explain it in <span class="math inline">\mathbb R^3</span> for the ease of visualization, but generalization to <span class="math inline">\mathbb R^n</span> is straightforward. The second-order cone in <span class="math inline">\mathbb R^3</span> is defined as <span class="math display">
+\mathcal{K}_\mathrm{SOC}^3 = \left\{ \bm x \in \mathbb R^3 \mid \sqrt{x_1^2 + x_2^2} \leq x_3 \right\}.
+</span></p>
+<p>and is visualized in <a href="#fig-soc-cone" class="quarto-xref">Figure&nbsp;2</a> below.</p>
+<div id="cell-fig-soc-cone" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div id="fig-soc-cone" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-soc-cone-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="opt_theory_problems_files/figure-html/fig-soc-cone-output-1.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-soc-cone-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: A second-order cone in 3D
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Which of the three axes plays the role of the axis of symmetry for the cone must be agreed beforhand. Singling this direction out, the SOC in <span class="math inline">\mathbb R^n</span> can also be formulated as <span class="math display">
+\mathcal{K}_\mathrm{SOC}^n = \left\{ (\bm x, t) \in \mathbb R^{n-1} \times \mathbb R \mid \|\bm x\|_2 \leq t \right\}.
+</span></p>
+<p>A second-order conic program in standard form is then <span class="math display">
+\begin{aligned}
+\operatorname*{minimize} &amp;\quad \mathbf c^\top \bm x\\
+\text{subject to} &amp;\quad \mathbf A\bm x = \mathbf b,\\
+&amp;\quad \bm x\in \mathcal{K}_\mathrm{SOC}^n,
+\end{aligned}
+</span></p>
+<p>which can be written explicitly as <span class="math display">
+\begin{aligned}
+\operatorname*{minimize} &amp;\quad \mathbf c^\top \bm x\\
+\text{subject to} &amp;\quad \mathbf A\bm x = \mathbf b,\\
+&amp;\quad x_1^2 + \cdots + x_{n-1}^2 - x_n^2 \leq 0.
+\end{aligned}
+</span></p>
+<p>A second-order conic program can also come in non-standard form such as <span class="math display">
+\begin{aligned}
+\operatorname*{minimize} &amp;\quad \mathbf c^\top \bm x\\
+\text{subject to} &amp;\quad \mathbf A_\mathrm{ineq}\bm x \succeq  \mathbf b_\mathrm{ineq}.
+\end{aligned}
+</span></p>
+<p>Assuming the data is structured as <span class="math display">
+\begin{bmatrix}
+\mathbf A\\
+\mathbf c^\top
+\end{bmatrix}
+\bm x \succeq
+\begin{bmatrix}
+\mathbf b\\
+d
+\end{bmatrix},
+</span> the inequality can be rewritten as <span class="math display">
+\begin{bmatrix}
+\mathbf A\\
+\mathbf c^\top
+\end{bmatrix}
+\bm x -
+\begin{bmatrix}
+\mathbf b\\
+d
+\end{bmatrix} \in \mathcal{K}_\mathrm{SOC}^n,
+</span> which finally gives <span class="math display">
+\|\mathbf A \bm x - \mathbf b\|_2 \leq \mathbf c^\top \bm x + d.
+</span></p>
+<p>To summarize, another form of a second-order cone program (SOCP) is</p>
+<p><span class="math display">
+\begin{aligned}
+\operatorname*{minimize} &amp;\quad \mathbf c^\top \bm x\\
+\text{subject to} &amp;\quad \mathbf A_\mathrm{eq}\bm x = \mathbf b_\mathrm{eq},\\
+&amp;\quad \|\mathbf A \bm x - \mathbf b\|_2 \leq \mathbf c^\top \bm x + d.
+\end{aligned}
+</span></p>
+<p>We can see that the SOCP contains both linear and quadratic constraints, hence it generalizes LP and QP, including convex QCQP. To see the latter, expand the square of <span class="math inline">\|\mathbf A \bm x - \mathbf b\|_2</span> into <span class="math inline">(\bm x^\top \mathbf A^\top  - \mathbf b^\top)(\mathbf A \bm x - \mathbf b) = \bm x^\top \mathbf A^\top \mathbf A \bm x + \ldots</span></p>
+</section>
+<section id="semidefinite-program-sdp" class="level4">
+<h4 class="anchored" data-anchor-id="semidefinite-program-sdp">Semidefinite program (SDP)</h4>
+<p>Another cone of great importance the control theory is the cone of positive semidefinite matrices. It is commonly denoted as <span class="math inline">\mathcal S_+^n</span> and is defined as <span class="math display">
+\mathcal S_+^n = \left\{ \bm X \in \mathbb R^{n \times n} \mid \bm X = \bm X^\top, \, \bm z^\top \bm X \bm z \geq 0\; \forall \bm z\in \mathbb R^n \right\},
+</span> and with this cone the inequality <span class="math inline">\mathbf X \succeq 0</span> is a common way to express that <span class="math inline">\mathbf X</span> is positive semidefinite.</p>
+<p>Unlike the previous classes of optimization problems, this one is formulated with matrix variables instead of vector ones. But nothing prevents us from collecting the components of a symmetric matrix into a vector and proceed with vectors as usual, if needed:</p>
+<p><span class="math display">
+\bm X = \begin{bmatrix} x_1 &amp; x_2 &amp; x_3 \\ x_2 &amp; x_4 &amp; x_5\\ x_3 &amp; x_5 &amp; x_6 \end{bmatrix},
+\quad
+\bm x = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_6 \end{bmatrix}.
+</span></p>
+<p>An optimization problem with matrix variables constrained to be in the cone of semidefinite matrices (or their vector representations) is called a semidefinite program (SDP). As usual, we start with the standard form, in which the cost function is linear and the optimization is subject to an affine constraint and a conic constraint. In the following, in place of the inner products of two vectors <span class="math inline">\mathbf c^\top x</span> we are going to use inner products of matrices defined as <span class="math display">
+\langle \mathbf C, \bm X\rangle = \operatorname{Tr} \mathbf C \bm X,
+</span> where <span class="math inline">\operatorname{Tr}</span> is a <em>trace</em> of a matrix defined as the sum of the diagonal elements.</p>
+<p>The SDP program in the standard form is then <span class="math display">
+\begin{aligned}
+\operatorname{minimize}_{\bm X} &amp;\quad \operatorname{Tr} \mathbf C \bm X\\
+\text{subject to} &amp;\quad \operatorname{Tr} \mathbf A_i \bm X = \mathbf b_i, \quad i=1, \ldots, m,\\
+&amp;\quad \bm X \in \mathcal S_+^n,
+\end{aligned}
+</span> where the latter constraint is more often than not written as <span class="math inline">\bm X \succeq 0</span>, understanding from the context that the cone of positive definite matrices is assumed.</p>
+</section>
+<section id="other-conic-programs" class="level4">
+<h4 class="anchored" data-anchor-id="other-conic-programs">Other conic programs</h4>
+<p>We are not going to cover them here, but we only enumerate a few other cones useful in optimization: rotated second-order cone, exponential cone, power cone, … A concise overview is in <span class="citation" data-cites="MOSEKModelingCookbook2024">(<a href="#ref-MOSEKModelingCookbook2024" role="doc-biblioref"><span>“<span>MOSEK Modeling Cookbook</span>”</span> 2024</a>)</span></p>
+</section>
+</section>
+<section id="geometric-program-gp" class="level3">
+<h3 class="anchored" data-anchor-id="geometric-program-gp">Geometric program (GP)</h3>
+</section>
+<section id="nonlinear-program-nlp" class="level3">
+<h3 class="anchored" data-anchor-id="nonlinear-program-nlp">Nonlinear program (NLP)</h3>
+<p>For completeness we include here once again the general nonlinear programming problem:</p>
+<p><span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{\bm x \in \mathbb{R}^n} \quad &amp; f(\bm x) \\
+\text{subject to} \quad &amp; \mathbf g(\bm x) \leq 0,\\
+&amp; \mathbf h(\bm x) = 0.
+\end{aligned}
+</span></p>
+<p>Smoothness of the problem can easily be determined based on the differentiability of the functions. Convexity can also be determined by inspecting the functions, but this is not necessarily easy. One way to check convexity of a function is to view it as a composition of simple functions and exploit the knowledge about convexity of these simple functions. See <span class="citation" data-cites="boydConvexOptimization2004">(<a href="#ref-boydConvexOptimization2004" role="doc-biblioref">Boyd and Vandenberghe 2004, sec. 3.2</a>)</span></p>
+
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-boydConvexOptimization2004" class="csl-entry" role="listitem">
+Boyd, Stephen, and Lieven Vandenberghe. 2004. <em>Convex <span>Optimization</span></em>. Seventh printing with corrections 2009. Cambridge, UK: Cambridge University Press. <a href="https://web.stanford.edu/~boyd/cvxbook/">https://web.stanford.edu/~boyd/cvxbook/</a>.
+</div>
+<div id="ref-MOSEKModelingCookbook2024" class="csl-entry" role="listitem">
+<span>“<span>MOSEK Modeling Cookbook</span>.”</span> 2024. Mosek ApS. <a href="https://docs.mosek.com/MOSEKModelingCookbook-a4paper.pdf">https://docs.mosek.com/MOSEKModelingCookbook-a4paper.pdf</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./opt_theory_reformulations.html" class="pagination-link" aria-label="Problem reformulations">
+        <span class="nav-page-text">Problem reformulations</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Copyright 2024, Zdeněk Hurák</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

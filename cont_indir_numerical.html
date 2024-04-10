@@ -508,8 +508,11 @@ window.Quarto = {
       </div>
       <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
- <span class="menu-text">cont_dir_shooting_amd_multiple.qmd</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="./cont_dir_shooting_and_multiple.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shooting and multiple shooting</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_dir_collocation.html" class="sidebar-item-text sidebar-link">
@@ -798,7 +801,7 @@ y_1(t_\mathrm{f}) &amp;= \mathrm y_\mathrm{f}.
 </section>
 <section id="multiple-shooting-method" class="level4">
 <h4 class="anchored" data-anchor-id="multiple-shooting-method">Multiple shooting method</h4>
-<p>…</p>
+<p>The key deficiency of the shooting method is that the only source of the error is the error in the boundary condition. This error then accumulates over the whole interval as the numerical integration proceeds. The multiple shooting method is a remedy for this. The idea is to divide the interval <span class="math inline">[t_\mathrm{i},t_\mathrm{f}]</span> into <span class="math inline">N</span> subintervals <span class="math inline">[t_k,t_{k+1}]</span> and to introduce the values of the state variable at the beginning of each subinterval as additional variables. Additional equations are then introduced that enforce the continuity of the state variable at the end of one subinterval and at the beginning of the next subinterval.</p>
 </section>
 </section>
 <section id="discretization-methods" class="level3">
@@ -883,15 +886,28 @@ y_1(t_\mathrm{f}) &amp;= \mathrm y_\mathrm{f}.
   \begin{aligned}
   f_{k1} &amp;= f(x_k,t_k)\\
   f_{k2} &amp;= f(x_k + h_k \frac{f_{k1}+f_{k2}}{2},t_k+h_k)\\
-  x_{k+1} &amp;= x_k + h_k \left(\frac{1}{2} f_{k1}+\frac{1}{2} f_{k2}\right)
-  \end{aligned}</span> But since the collocation points are identical with the nodes (grid/mesh points), we can relabel to <span class="math display">\begin{aligned}
+  x_{k+1} &amp;= x_k + h_k \left(\frac{1}{2} f_{k1}+\frac{1}{2} f_{k2}\right).
+  \end{aligned}
+</span></p>
+<p>But since the collocation points are identical with the nodes (grid/mesh points), we can relabel to <span class="math display">\begin{aligned}
   f_{k} &amp;= f(x_k,t_k)\\
   f_{k+1} &amp;= f(x_{k+1},t_{k+1})\\
-  x_{k+1} &amp;= x_k + h_k \left(\frac{1}{2} f_{k}+\frac{1}{2} f_{k+1}\right)
-  \end{aligned}</span> This possibility is a particular advantage of Lobatto and Radau methods, which contain both end points of the interval or just one of them among the collocation points. The two symbols <span class="math inline">f_k</span> and <span class="math inline">f_{k+1}</span> are really just shorthands for values of the function <span class="math inline">f</span> at the beginning and the end of the integration interval, so the first two equations of the triple above are not really equations to be solved but rather definitions. And we can assemble it all into just one equation <span class="math display">\boxed{
+  x_{k+1} &amp;= x_k + h_k \left(\frac{1}{2} f_{k}+\frac{1}{2} f_{k+1}\right).
+  \end{aligned}
+</span></p>
+<p>This possibility is a particular advantage of Lobatto and Radau methods, which contain both end points of the interval or just one of them among the collocation points. The two symbols <span class="math inline">f_k</span> and <span class="math inline">f_{k+1}</span> are really just shorthands for values of the function <span class="math inline">f</span> at the beginning and the end of the integration interval, so the first two equations of the triple above are not really equations to be solved but rather definitions. And we can assemble it all into just one equation <span class="math display">\boxed{
       x_{k+1} = x_k + h_k \frac{f(x_k,t_k)+f(x_{k+1},t_{k+1})}{2}.
       }
-      </span> The right hand side of the last equation explains the “trapezoidal” in the name. It can be viewed as a trapezoidal approximation to the integral in <span class="math display">x_{k+1} = x_k + \int_{t_k}^{t_{k+1}} f(x(t),t)\mathrm{d}t</span> as the integral is computed as an area of a trapezoid. When it comes to building a system of equations within transcription methods, we typically move all the terms just on one side to obtain the defect equations <span class="math display">x_{k+1} - x_k - h_k \left(\frac{1}{2} f(x_k,t_k)+\frac{1}{2} f(x_{k+1},t_{k+1})\right) = 0.</span> It is also one of Collocation methods. This we can tell because the method belongs to the family of Lobatto IIIA methods and these are known to be collocation methods. In agreement with the left column of the Buttcher tableau, the collocation points on the interval <span class="math inline">[t_k,t_{k+1}]</span> are just the two boundary points, that is, <span class="math inline">t_k</span> and <span class="math inline">t_{k+1}</span> . We then have in total three interpolation condition: one on the value at the beginning, two on the first derivatives at both ends. This means that the interpolating polynomial will be quadratic <span class="math display">p_k(t) = p_{k0} + p_{k1}(t-t_k) + p_{k2}(t-t_k)^2.</span> The first derivative of the polynomial is <span class="math display">\dot p_k(t) = p_{k1} + 2p_{k2}(t-t_k).</span> The first interpolation condition, the one on the value at the beginning of the interval, is <span class="math display">p_k(t_k) = \textcolor{red}{p_{k0} = x_k} \approx x(t_k).</span> The second interpolation condition, the one on the derivative at the beginning of the interval, the first collocation point, is <span class="math display">\dot p_k(t_k) = \textcolor{red}{p_{k1} = f(x_k,t_k)} \approx f(x(t_k),t_k).</span> The third interpolation condition, the one on the derivative at the second collocation point <span class="math display">\dot p_k(t_k+h_k) = \textcolor{red}{p_{k1} + 2p_{k2} h_k = f(x_{k+1},t_{k+1})} \approx f(x(t_{k+1}),t_{k+1}).</span> All the three conditions (emphasized in color above) can be written together as <span class="math display">
+</span></p>
+<p>The right hand side of the last equation explains the “trapezoidal” in the name. It can be viewed as a trapezoidal approximation to the integral in <span class="math display">x_{k+1} = x_k + \int_{t_k}^{t_{k+1}} f(x(t),t)\mathrm{d}t</span> as the integral is computed as an area of a trapezoid.</p>
+<p>When it comes to building a system of equations within transcription methods, we typically move all the terms just on one side to obtain the <em>defect equations</em> <span class="math display">x_{k+1} - x_k - h_k \left(\frac{1}{2} f(x_k,t_k)+\frac{1}{2} f(x_{k+1},t_{k+1})\right) = 0.</span></p>
+<p>Implicit trapezoidal method is also one of collocation methods (the method belongs to the family of Lobatto IIIA methods and these are known to be collocation methods).</p>
+<p>In agreement with the left column of the Buttcher tableau, the collocation points on the interval <span class="math inline">[t_k,t_{k+1}]</span> are just the two boundary points, that is, <span class="math inline">t_k</span> and <span class="math inline">t_{k+1}</span> . We then have in total three interpolation condition: one on the value at the beginning, two on the first derivatives at both ends. This means that the interpolating polynomial will be quadratic <span class="math display">p_k(t) = p_{k0} + p_{k1}(t-t_k) + p_{k2}(t-t_k)^2.</span></p>
+<p>The first derivative of the polynomial is <span class="math display">\dot p_k(t) = p_{k1} + 2p_{k2}(t-t_k).</span></p>
+<p>The first interpolation condition, the one on the value at the beginning of the interval, is <span class="math display">p_k(t_k) = \textcolor{red}{p_{k0} = x_k} \approx x(t_k).</span></p>
+<p>The second interpolation condition, the one on the derivative at the beginning of the interval, the first collocation point, is <span class="math display">\dot p_k(t_k) = \textcolor{red}{p_{k1} = f(x_k,t_k)} \approx f(x(t_k),t_k).</span></p>
+<p>The third interpolation condition, the one on the derivative at the second collocation point <span class="math display">\dot p_k(t_k+h_k) = \textcolor{red}{p_{k1} + 2p_{k2} h_k = f(x_{k+1},t_{k+1})} \approx f(x(t_{k+1}),t_{k+1}).</span></p>
+<p>All the three conditions (emphasized in color above) can be written together as <span class="math display">
       \begin{bmatrix}
       1 &amp; 0 &amp; 0\\
       0 &amp; 1 &amp; 0\\
@@ -903,8 +919,9 @@ y_1(t_\mathrm{f}) &amp;= \mathrm y_\mathrm{f}.
       =
       \begin{bmatrix}
       x_{k} \\ f(x_k,t_k) \\ f(x_{k+1},t_{k+1})
-      \end{bmatrix}
-      </span> Recall that our goal is to find the approximating polynomial, that is, we are after the vector with the coefficients of the polynomial <span class="math inline">p_k</span> . In order to get it, we need to solve the above linear equation. In other words, we need to invert the matrix. In this particular case the inversion of the matrix is particularly simple <span class="math display">
+      \end{bmatrix}.
+</span></p>
+<p>Recall that our goal is to find the approximating polynomial, that is, we are after the vector with the coefficients of the polynomial <span class="math inline">p_k</span> . In order to get it, we need to solve the above linear equation. In other words, we need to invert the matrix. In this particular case the inversion of the matrix is particularly simple <span class="math display">
       \begin{bmatrix}
       p_{k0} \\ p_{k1} \\ p_{k2}
       \end{bmatrix}
@@ -916,12 +933,13 @@ y_1(t_\mathrm{f}) &amp;= \mathrm y_\mathrm{f}.
       \end{bmatrix}
       \begin{bmatrix}
       x_{k} \\ f(x_k,t_k) \\ f(x_{k+1},t_{k+1})
-      \end{bmatrix}
-      </span> We can now write down the interpolating/approximating polynomial <span class="math display">p_k(t) = x_{k} + f(x_{k},t_{k})(t-t_k) +\left[-\frac{1}{2h_k}f(x_{k},t_{k}) + \frac{1}{2h_k}f(x_{k+1},t_{k+1})\right](t-t_k)^2,</span> but our primary motivation was to compute the (approximation of the) value of the solution at the end of the interval <span class="math display">x_{k+1} = p_k(t_k+h_k) = x_{k} + f(x_{k},t_{k})h_k +\left[-\frac{1}{2h_k}f(x_{k},t_{k}) + \frac{1}{2h_k}f(x_{k+1},t_{k+1})\right]h_k^2,</span> which can be simplified nearly upon inspection to <span class="math display">x_{k+1} = x_{k} + \frac{f(x_{k},t_{k}) + f(x_{k+1},t_{k+1})}{2} h_k,</span> but this is our good old friend, isn’t it? We have shown that the collocation method with a quadratic polynomial with the collocation points chosen at the beginning and the end of the interval coincides with the implicit trapezoidal method.</p>
+      \end{bmatrix}.
+</span></p>
+<p>We can now write down the interpolating/approximating polynomial <span class="math display">p_k(t) = x_{k} + f(x_{k},t_{k})(t-t_k) +\left[-\frac{1}{2h_k}f(x_{k},t_{k}) + \frac{1}{2h_k}f(x_{k+1},t_{k+1})\right](t-t_k)^2,</span> but our primary motivation was to compute the (approximation of the) value of the solution at the end of the interval <span class="math display">x_{k+1} = p_k(t_k+h_k) = x_{k} + f(x_{k},t_{k})h_k +\left[-\frac{1}{2h_k}f(x_{k},t_{k}) + \frac{1}{2h_k}f(x_{k+1},t_{k+1})\right]h_k^2,</span> which can be simplified nearly upon inspection to <span class="math display">x_{k+1} = x_{k} + \frac{f(x_{k},t_{k}) + f(x_{k+1},t_{k+1})}{2} h_k,</span> but this is our good old friend, isn’t it? We have shown that the collocation method with a quadratic polynomial with the collocation points chosen at the beginning and the end of the interval coincides with the implicit trapezoidal method.</p>
 </section>
 <section id="hermite-simpson-method" class="level5">
 <h5 class="anchored" data-anchor-id="hermite-simpson-method">Hermite-Simpson method</h5>
-<p>It belongs to the family of Lobatto III methods, namely it is a 3-stage <a href="[[Lobatto IIIA methods]]">Lobatto IIIA method</a> . Butcher tableau <span class="math display">
+<p>It belongs to the family of Lobatto III methods, namely it is a 3-stage Lobatto IIIA method. Butcher tableau <span class="math display">
   \begin{array}{ l | c c c c }
     0 &amp; 0 &amp;0 &amp; 0\\
     1/2 &amp; 5/24 &amp; 1/3 &amp; -1/24\\
@@ -929,18 +947,40 @@ y_1(t_\mathrm{f}) &amp;= \mathrm y_\mathrm{f}.
     \hline
       &amp; 1/6 &amp; 2/3 &amp; 1/6
   \end{array}
-  </span> Hermite-Simpson method can actually come in three forms (this is from <span class="citation" data-cites="bettsPracticalMethodsOptimal2020">Betts (<a href="#ref-bettsPracticalMethodsOptimal2020" role="doc-biblioref">2020</a>)</span>):</p>
+</span></p>
+<p>Hermite-Simpson method can actually come in three forms (this is from <span class="citation" data-cites="bettsPracticalMethodsOptimal2020">Betts (<a href="#ref-bettsPracticalMethodsOptimal2020" role="doc-biblioref">2020</a>)</span>):</p>
 <section id="primary-form" class="level6">
 <h6 class="anchored" data-anchor-id="primary-form">Primary form</h6>
-<p>There are two equations for the given integration interval <span class="math inline">[t_k,t_{k+1}]</span> <span class="math display">x_{k+1} = x_k + h_k \left(\frac{1}{6}f_k + \frac{2}{3}f_{k2} + \frac{1}{6}f_{k+1}\right),</span> <span class="math display">x_{k2} = x_k + h_k \left(\frac{5}{24}f_k + \frac{1}{3}f_{k2} - \frac{1}{24}f_{k+1}\right),</span> where the <span class="math inline">f</span> symbols are just shorthand notations for values of the function at a certain point <span class="math display">f_k = f(x_k,u(t_k),t_k),</span> <span class="math display">f_{k2} = f(x_{k2},u(t_{k2}),t_{k2}),</span> <span class="math display">f_{k+1} = f(x_{k+1},u(t_{k+1}),t_{k+1}),</span> and the off-grid time <span class="math inline">t_{k2}</span> is given by <span class="math display">t_{k2} = t_k + \frac{1}{2}h_k.</span> The first of the two equations can be recognized as Simpson’s rule for computing a definite integral. Note that while considering the right hand sides as functions of the control inputs, we also correctly express at which time (the collocation time) we consider the value of the control variable. Being this general allows considering general control inputs and not only piecewise constant control inputs. For example, if we consider piecewise linear control inputs, then <span class="math inline">u(t_{k2}) = \frac{u_k + u_{k+1}}{2}</span> . But if we stick to the (more common) piecewise constant controls, not surprisingly <span class="math inline">u(t_{k2}) = u_k</span> . Typically we format the equations as defect equations, that is, with zero on the right hand side <span class="math display">x_{k+1} - x_k - h_k \left(\frac{1}{6}f_k + \frac{2}{3}f_{k2} + \frac{1}{6}f_{k+1}\right) = 0,</span> <span class="math display">x_{k2} - x_k - h_k \left(\frac{5}{24}f_k + \frac{1}{3}f_{k2} - \frac{1}{24}f_{k+1}\right) = 0.</span> The optimization variables for every integration interval are <span class="math inline">x_k,u_k,x_{k2}, u_{k2}</span> .</p>
+<p>There are two equations for the given integration interval <span class="math inline">[t_k,t_{k+1}]</span> <span class="math display">x_{k+1} = x_k + h_k \left(\frac{1}{6}f_k + \frac{2}{3}f_{k2} + \frac{1}{6}f_{k+1}\right),</span> <span class="math display">x_{k2} = x_k + h_k \left(\frac{5}{24}f_k + \frac{1}{3}f_{k2} - \frac{1}{24}f_{k+1}\right),</span> where the <span class="math inline">f</span> symbols are just shorthand notations for values of the function at a certain point <span class="math display">f_k = f(x_k,u(t_k),t_k),</span> <span class="math display">f_{k2} = f(x_{k2},u(t_{k2}),t_{k2}),</span> <span class="math display">f_{k+1} = f(x_{k+1},u(t_{k+1}),t_{k+1}),</span> and the off-grid time <span class="math inline">t_{k2}</span> is given by <span class="math display">t_{k2} = t_k + \frac{1}{2}h_k.</span></p>
+<p>The first of the two equations can be recognized as Simpson’s rule for computing a definite integral. Note that while considering the right hand sides as functions of the control inputs, we also correctly express at which time (the collocation time) we consider the value of the control variable.</p>
+<p>Being this general allows considering general control inputs and not only piecewise constant control inputs. For example, if we consider piecewise linear control inputs, then <span class="math inline">u(t_{k2}) = \frac{u_k + u_{k+1}}{2}</span>. But if we stick to the (more common) piecewise constant controls, not surprisingly <span class="math inline">u(t_{k2}) = u_k</span>. Typically we format the equations as <em>defect equations</em>, that is, with zero on the right hand side <span class="math display">
+\begin{aligned}
+x_{k+1} - x_k - h_k \left(\frac{1}{6}f_k + \frac{2}{3}f_{k2} + \frac{1}{6}f_{k+1}\right) &amp;= 0,\\
+x_{k2} - x_k - h_k \left(\frac{5}{24}f_k + \frac{1}{3}f_{k2} - \frac{1}{24}f_{k+1}\right) &amp;= 0.
+\end{aligned}
+</span></p>
+<p>The optimization variables for every integration interval are <span class="math inline">x_k,u_k,x_{k2}, u_{k2}</span>.</p>
 </section>
 <section id="hermite-simpson-separated-hss-method" class="level6">
 <h6 class="anchored" data-anchor-id="hermite-simpson-separated-hss-method">Hermite-Simpson Separated (HSS) method</h6>
-<p>Alternatively, we can express <span class="math display">f_{k2}</span> in the first equation as a function of the remaining terms and then substitute to the second equation. This will transform the second equation such that only the terms indexed with <span class="math inline">k</span> and <span class="math inline">k+1</span> are present. <span class="math display">x_{k+1} - x_k - h_k \left(\frac{1}{6}f_k + \frac{2}{3}f_{k2} + \frac{1}{6}f_{k+1}\right) = 0,</span> <span class="math display">x_{k2} - \frac{x_k + x_{k+1}}{2} - \frac{h_k}{8} \left(f_k - f_{k+1}\right) = 0.</span> While we already know (from some paragraph above) that the first equation is Simpson’s rule, the second equation is an outcome of Hermite intepolation. Hence the name. The optimization variables for every integration interval are the same as before, that is, <span class="math inline">x_k,u_k,x_{k2}, u_{k2}</span> .</p>
+<p>Alternatively, we can express <span class="math inline">f_{k2}</span> in the first equation as a function of the remaining terms and then substitute to the second equation. This will transform the second equation such that only the terms indexed with <span class="math inline">k</span> and <span class="math inline">k+1</span> are present. <span class="math display">
+\begin{aligned}
+x_{k+1} - x_k - h_k \left(\frac{1}{6}f_k + \frac{2}{3}f_{k2} + \frac{1}{6}f_{k+1}\right) &amp;= 0,\\
+x_{k2} - \frac{x_k + x_{k+1}}{2} - \frac{h_k}{8} \left(f_k - f_{k+1}\right) &amp;= 0.
+\end{aligned}
+</span></p>
+<p>While we already know (from some paragraph above) that the first equation is Simpson’s rule, the second equation is an outcome of Hermite intepolation. Hence the name. The optimization variables for every integration interval are the same as before, that is, <span class="math inline">x_k,u_k,x_{k2}, u_{k2}</span> .</p>
 </section>
 <section id="hermite-simpson-condensed-hsc-method" class="level6">
 <h6 class="anchored" data-anchor-id="hermite-simpson-condensed-hsc-method">Hermite-Simpson Condensed (HSC) method</h6>
-<p>Yet some more simplification can be obtained from HSS. Namely, the second equation can be actually used to directly prescribe <span class="math inline">x_{k2}</span> <span class="math display">x_{k2} = \frac{x_k + x_{k+1}}{2} + \frac{h_k}{8} \left(f_k - f_{k+1}\right),</span> which is used in the first equation as an argument for the <span class="math inline">f()</span> function (represented by the <span class="math inline">f_{k2}</span> symbol), by which the second equation and the term <span class="math inline">x_{k2}</span> are eliminated from the set of defect equations. The optimization variables for every integration interval still need to contain <span class="math inline">u_{k2}</span> even though <span class="math inline">x_{k2}</span> was eliminated, because it is needed to parameterize <span class="math inline">f_{k2}</span> . That is, the optimization variables then are <span class="math inline">x_k,u_k, u_{k2}</span> . Reportedly (by Betts) this has been widely used and historically one of the first methods. When it comes to using it in optimal control, it turns out, however, that the sparsity pattern is better for the HSS. Thanks to the fact that the current method belongs to the family of Lobatto IIIA methods, it also qualifies as a <a href="[[Collocation methods]]">collocation method</a>, similarly as Implicit trapezoidal method does. The collocation points are dictated by the left column of the Buttcher table, that is, the collocation points for the integration interval <span class="math inline">[t_k,t_{k+1}]</span> are <span class="math inline">t_k</span> , <span class="math inline">\frac{t_k+t_{k+1}}{2}</span> , and <span class="math inline">t_{k+1}</span> . Considering three collocation conditions (interpolation conditions on the first derivative) and one interpolation condition on the value at the beginning of the interval, the polynomial approximating the solution on the k-th interval will be cubic <span class="math display">p_k(t) = p_{k0} + p_{k1}(t-t_k) + p_{k2}(t-t_k)^2+ p_{k3}(t-t_k)^3.</span> The first derivative of the polynomial is <span class="math display">\dot p_k(t) = p_{k1} + 2p_{k2}(t-t_k) + 3p_{k3}(t-t_k)^2.</span> The first interpolation condition, the one on the value at the beginning of the interval, is <span class="math display">p_k(t_k) = \textcolor{red}{p_{k0} = x_k} \approx x(t_k).</span> The second interpolation condition, the one on the derivative at the beginning of the interval, the first collocation point, is <span class="math display">\dot p_k(t_k) = \textcolor{red}{p_{k1} = f(x_k,t_k)} \approx f(x(t_k),t_k).</span> The third interpolation condition, the one on the derivative at the second collocation point – the one in the middle of the interval – is <span class="math display">\dot p_k\left(t_k+\frac{1}{2}h_k\right) = \textcolor{red}{p_{k1} + 2p_{k2} \frac{h_k}{2} + 3p_{k3} \left(\frac{h_k}{2}\right)^2 = f(x_{k2},t_{k2})} \approx f\left(x\left(t_{k}+\frac{h_k}{2}\right),t_{k}+\frac{h_k}{2}\right).</span> The color-emphasized part can be simplified to <span class="math display">\textcolor{red}{p_{k1} + p_{k2} h_k + \frac{3}{4}p_{k3} h_k^2 = f(x_{k2},t_{k2})}.</span> The fourth interpolation condition, the third collocation condition, that is, the one imposed at the end of the interval, is <span class="math display">\dot p_k(t_k+h_k) = \textcolor{red}{p_{k1} + 2p_{k2} h_k + 3p_{k3} h_k^2 = f(x_{k+1},t_{k+1})} \approx f(x(t_{k+1}),t_{k+1}).</span> All the four conditions (emphasized in color above) can be written together as <span class="math display">
+<p>Yet some more simplification can be obtained from HSS. Namely, the second equation can be actually used to directly prescribe <span class="math inline">x_{k2}</span> <span class="math display">x_{k2} = \frac{x_k + x_{k+1}}{2} + \frac{h_k}{8} \left(f_k - f_{k+1}\right),</span> which is used in the first equation as an argument for the <span class="math inline">f()</span> function (represented by the <span class="math inline">f_{k2}</span> symbol), by which the second equation and the term <span class="math inline">x_{k2}</span> are eliminated from the set of <em>defect equations</em>. The optimization variables for every integration interval still need to contain <span class="math inline">u_{k2}</span> even though <span class="math inline">x_{k2}</span> was eliminated, because it is needed to parameterize <span class="math inline">f_{k2}</span> . That is, the optimization variables then are <span class="math inline">x_k,u_k, u_{k2}</span> . Reportedly (by Betts) this has been widely used and historically one of the first methods. When it comes to using it in optimal control, it turns out, however, that the sparsity pattern is better for the HSS. Thanks to the fact that the current method belongs to the family of Lobatto IIIA methods, it also qualifies as a <a href="[[Collocation methods]]">collocation method</a>, similarly as Implicit trapezoidal method does. The collocation points are dictated by the left column of the Buttcher table, that is, the collocation points for the integration interval <span class="math inline">[t_k,t_{k+1}]</span> are <span class="math inline">t_k</span> , <span class="math inline">\frac{t_k+t_{k+1}}{2}</span> , and <span class="math inline">t_{k+1}</span> . Considering three collocation conditions (interpolation conditions on the first derivative) and one interpolation condition on the value at the beginning of the interval, the polynomial approximating the solution on the k-th interval will be cubic <span class="math display">p_k(t) = p_{k0} + p_{k1}(t-t_k) + p_{k2}(t-t_k)^2+ p_{k3}(t-t_k)^3.</span></p>
+<p>The first derivative of the polynomial is <span class="math display">\dot p_k(t) = p_{k1} + 2p_{k2}(t-t_k) + 3p_{k3}(t-t_k)^2.</span></p>
+<p>The first interpolation condition, the one on the value at the beginning of the interval, is <span class="math display">p_k(t_k) = \textcolor{red}{p_{k0} = x_k} \approx x(t_k).</span></p>
+<p>The second interpolation condition, the one on the derivative at the beginning of the interval, the first collocation point, is <span class="math display">\dot p_k(t_k) = \textcolor{red}{p_{k1} = f(x_k,t_k)} \approx f(x(t_k),t_k).</span></p>
+<p>The third interpolation condition, the one on the derivative at the second collocation point – the one in the middle of the interval – is <span class="math display">\dot p_k\left(t_k+\frac{1}{2}h_k\right) = \textcolor{red}{p_{k1} + 2p_{k2} \frac{h_k}{2} + 3p_{k3} \left(\frac{h_k}{2}\right)^2 = f(x_{k2},t_{k2})} \approx f\left(x\left(t_{k}+\frac{h_k}{2}\right),t_{k}+\frac{h_k}{2}\right).</span></p>
+<p>The color-emphasized part can be simplified to <span class="math display">\textcolor{red}{p_{k1} + p_{k2} h_k + \frac{3}{4}p_{k3} h_k^2 = f(x_{k2},t_{k2})}.</span></p>
+<p>The fourth interpolation condition, the third collocation condition, that is, the one imposed at the end of the interval, is <span class="math display">\dot p_k(t_k+h_k) = \textcolor{red}{p_{k1} + 2p_{k2} h_k + 3p_{k3} h_k^2 = f(x_{k+1},t_{k+1})} \approx f(x(t_{k+1}),t_{k+1}).</span></p>
+<p>All the four conditions (emphasized in color above) can be written together as <span class="math display">
       \begin{bmatrix}
       1 &amp; 0 &amp; 0 &amp; 0\\
       0 &amp; 1 &amp; 0 &amp; 0\\
@@ -952,9 +992,10 @@ y_1(t_\mathrm{f}) &amp;= \mathrm y_\mathrm{f}.
       \end{bmatrix}
       =
       \begin{bmatrix}
-      x_{k} \\ f(x_k,t_k) \\ f(x_{k2},t_{k2}) \\ f(x_{k+1},t_{k+1})
+      x_{k} \\ f(x_k,t_k) \\ f(x_{k2},t_{k2}) \\ f(x_{k+1},t_{k+1}).
       \end{bmatrix}
-      </span> Recall that our goal is to find the approximating polynomial, that is, we are after the vector with the coefficients of the polynomial <span class="math inline">p_k</span> . In order to get it, we need to solve the above linear equation. In other words, we need to invert the matrix. In this particular case the inverse matrix keeps the structure <span class="math display">
+</span></p>
+<p>Recall that our goal is to find the approximating polynomial, that is, we are after the vector with the coefficients of the polynomial <span class="math inline">p_k</span>. In order to get it, we need to solve the above linear equation. In other words, we need to invert the matrix. In this particular case the inverse matrix keeps the structure <span class="math display">
       \begin{bmatrix}
       p_{k0} \\ p_{k1} \\ p_{k2}\\ p_{k3}
       \end{bmatrix}
@@ -966,33 +1007,34 @@ y_1(t_\mathrm{f}) &amp;= \mathrm y_\mathrm{f}.
       0 &amp; \frac{2}{3h_k^2} &amp; -\frac{4}{3h_k^2} &amp; \frac{2}{3h_k^2}
       \end{bmatrix}
       \begin{bmatrix}
-      x_{k} \\ f(x_k,t_k) \\ f(x_{k2},t_{k2})\\ f(x_{k+1},t_{k+1})
+      x_{k} \\ f(x_k,t_k) \\ f(x_{k2},t_{k2})\\ f(x_{k+1},t_{k+1}).
       \end{bmatrix}.
-      </span> We can now write down the interpolating/approximating polynomial <span class="math display">
+</span></p>
+<p>We can now write down the interpolating/approximating polynomial <span class="math display">
       \begin{aligned}
       p_k(t) &amp;= x_{k} + f(x_{k},t_{k})(t-t_k) +\left[-\frac{3}{2h_k}f(x_{k},t_{k}) + \frac{2}{h_k}f(x_{k2},t_{k2}) -\frac{1}{2h_k}f(x_{k+1},t_{k+1}) \right](t-t_k)^2\\
       &amp; +\left[\frac{2}{3h_k^2}f(x_{k},t_{k}) - \frac{4}{3h_k^2}f(x_{k2},t_{k2}) +\frac{2}{3h_k^2}f(x_{k+1},t_{k+1}) \right](t-t_k)^3,
       \end{aligned}
-      </span> but our primary motivation was to compute the (approximation of the) value of the solution at the end of the interval <span class="math display">
+</span> but our primary motivation was to compute the (approximation of the) value of the solution at the end of the interval <span class="math display">
       \begin{aligned}
       x_{k+1} = p_k(t_k+h_k) &amp;= x_{k} + f(x_{k},t_{k})h_k +\left[-\frac{3}{2h_k}f(x_{k},t_{k}) + \frac{2}{h_k}f(x_{k2},t_{k2}) -\frac{1}{2h_k}f(x_{k+1},t_{k+1}) \right]h_k^2\\
       &amp; +\left[\frac{2}{3h_k^2}f(x_{k},t_{k}) - \frac{4}{3h_k^2}f(x_{k2},t_{k2}) +\frac{2}{3h_k^2}f(x_{k+1},t_{k+1}) \right]h_k^3,
       \end{aligned}
-      </span> which can be simplified to <span class="math display">
+</span> which can be simplified to <span class="math display">
       \begin{aligned}
       x_{k+1} &amp;= x_{k} + f(x_{k},t_{k})h_k +\left[-\frac{3}{2}f(x_{k},t_{k}) + \frac{2}{1}f(x_{k2},t_{k2}) -\frac{1}{2}f(x_{k+1},t_{k+1}) \right]h_k\\
       &amp; +\left[\frac{2}{3}f(x_{k},t_{k}) - \frac{4}{3}f(x_{k2},t_{k2}) +\frac{2}{3}f(x_{k+1},t_{k+1}) \right]h_k,
       \end{aligned}
-      </span> which further simplifies to <span class="math display">
+</span> which further simplifies to <span class="math display">
       x_{k+1}  = x_{k} + h_k\left[\frac{1}{6}f(x_{k},t_{k}) + \frac{2}{3}f(x_{k2},t_{k2}) + \frac{1}{6}f(x_{k+1},t_{k+1}) \right],
-      </span> which can be recognized as the Simpson integration that we have already seen in Implicit Runge-Kutta method described above. Obviously <span class="math inline">f_{k2}</span> needs to be further elaborated on, namely, <span class="math inline">x_{k2}</span> needs some prescription too. We know that it was introduced as an approximation to the solution <span class="math inline">x</span> in the middle of the interval. Since the value of the polynomial in the middle is such an approximation too, we can set <span class="math inline">x_{k2}</span> equal to the value of the polynomial in the middle. <span class="math display">
+</span> which can be recognized as the Simpson integration that we have already seen in Implicit Runge-Kutta method described above. Obviously <span class="math inline">f_{k2}</span> needs to be further elaborated on, namely, <span class="math inline">x_{k2}</span> needs some prescription too. We know that it was introduced as an approximation to the solution <span class="math inline">x</span> in the middle of the interval. Since the value of the polynomial in the middle is such an approximation too, we can set <span class="math inline">x_{k2}</span> equal to the value of the polynomial in the middle. <span class="math display">
       \begin{aligned}
       x_{k2} = p_k\left(t_k+\frac{1}{2}h_k\right) &amp;= x_{k} + f(x_{k},t_{k})\frac{h_k}{2} +\left[-\frac{3}{2h_k}f(x_{k},t_{k}) + \frac{2}{h_k}f(x_{k2},t_{k2}) -\frac{1}{2h_k}f(x_{k+1},t_{k+1}) \right]\left(\frac{h_k}{2}\right)^2\\
       &amp; +\left[\frac{2}{3h_k^2}f(x_{k},t_{k}) - \frac{4}{3h_k^2}f(x_{k2},t_{k2}) +\frac{2}{3h_k^2}f(x_{k+1},t_{k+1}) \right]\left(\frac{h_k}{2}\right)^3,
       \end{aligned}
-      </span> which without further ado simplifies to <span class="math display">
+</span> which without further ado simplifies to <span class="math display">
       x_{k2} = x_{k} + h_k\left( \frac{5}{24}f(x_{k},t_{k}) +\frac{1}{3}f(x_{k2},t_{k2}) -\frac{1}{24}f(x_{k+1},t_{k+1}) \right),
-      </span> which can be recognized as the other equation in the primary formulation of Implicit trapezoidal method described above.</p>
+</span> which can be recognized as the other equation in the primary formulation of Implicit trapezoidal method described above.</p>
 </section>
 </section>
 </section>
@@ -1002,7 +1044,7 @@ y_1(t_\mathrm{f}) &amp;= \mathrm y_\mathrm{f}.
 <p>When solving an ODE (system) <span class="math inline">\dot x(t) = f(x(t),t)</span>, the whole solution interval divided into a number of smalle intervals. Then on an interval <span class="math inline">[t_k,t_{k+1}]</span> of length <span class="math inline">h_k=t_{k+1}-t_k</span> the solution <span class="math inline">x(t)</span> is approximated by a polynomial of degree <span class="math inline">s</span></p>
 <p><span class="math display">p_k(t) = p_{k0} + p_{k1}(t-t_k) + p_{k2}(t-t_k)^2+\ldots + p_{ks}(t-t_k)^s.</span></p>
 <p>Typically the degree of the polynomial is low, say <span class="math inline">s=3</span> or so, certainly below 10. Coefficients must be chosen such that at time <span class="math inline">t_k</span> the k-th polynomial evaluates identically as the (k-1)-th polynomial. For the former the time <span class="math inline">t_k</span> is at the beginning of its interval, for the latter it is the end of its interval. That is, <span class="math display">\boxed{p_{k-1}(\underbrace{t_{k-1}+h_{k-1}}_{t_{k}}) = p_k(t_k).}</span></p>
-<p>Expanding, <span class="math display">p_{k-1,0} + p_{k-1,1}h_{k-1} + p_{k-1,2}h_{k-1}^2+\ldots + p_{k-1,s}h_{k-1}^s = p_{k0}</span> and at some special points, so-called collocation points <span class="math display">t_{kj} = t_k + h_k c_{j}, \quad j=1,\ldots, s</span> the polynomial satisfies the original differential equation <span class="math display">\boxed{\dot p_k(t_{kj}) = f(p_k(t_{kj}),t_{kj}), \quad j=1,\ldots, s.}</span></p>
+<p>Expanding, <span class="math display">p_{k-1,0} + p_{k-1,1}h_{k-1} + p_{k-1,2}h_{k-1}^2+\ldots + p_{k-1,s}h_{k-1}^s = p_{k0},</span> and at some special points, so-called collocation points <span class="math display">t_{kj} = t_k + h_k c_{j}, \quad j=1,\ldots, s,</span> the polynomial satisfies the original differential equation <span class="math display">\boxed{\dot p_k(t_{kj}) = f(p_k(t_{kj}),t_{kj}), \quad j=1,\ldots, s.}</span></p>
 <p>Expanding, <span class="math display">
 \begin{aligned}
 p_{k1} + &amp;2p_{k2}(t_{kj}-t_k)+\ldots + s p_{ks}(t_{kj}-t_k)^{s-1} = \\ &amp;f(p_{k0} + p_{k1}(t_{kj}-t_k) + p_{ks}(t_{kj}-t_k)^2 + \ldots + p_{ks}(t_{kj}-t_k)^s), \quad j=1,\ldots, s.
@@ -1026,7 +1068,7 @@ p_{k1} + &amp;2p_{k2}(t_{kj}-t_k)+\ldots + s p_{ks}(t_{kj}-t_k)^{s-1} = \\ &amp;
 </section>
 <section id="pseudospectral-collocation-methods" class="level3">
 <h3 class="anchored" data-anchor-id="pseudospectral-collocation-methods">Pseudospectral collocation methods</h3>
-<p>They only consider a single polynomial over the whole interval. The degree of such polynomial, in contrast with classical collocation methods, rather high, therefore also the number of collocation points is high.</p>
+<p>They only consider a single polynomial over the whole interval. The degree of such polynomial, in contrast with classical collocation methods, rather high, therefore also the number of collocation points is high, but their location is crucial.</p>
 
 
 
