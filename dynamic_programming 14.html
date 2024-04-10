@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Numerical methods for indirect approach</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – Dynamic programming and discrete-time optimal control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -50,8 +30,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./cont_indir_trajectory_stabilization.html" rel="next">
-<link href="./cont_indir_CARE.html" rel="prev">
+<link href="./dynamic_programming_tabular.html" rel="next">
+<link href="./discr_indir_references.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -145,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_numerical.html">Numerical methods for indirect approach</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dynamic_programming.html">5. Discrete-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./dynamic_programming.html">Dynamic programming and discrete-time optimal control</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -351,7 +331,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dynamic_programming.html" class="sidebar-item-text sidebar-link">
+  <a href="./dynamic_programming.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Dynamic programming and discrete-time optimal control</span></a>
   </div>
 </li>
@@ -451,7 +431,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_numerical.html" class="sidebar-item-text sidebar-link active">
+  <a href="./cont_indir_numerical.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Numerical methods for indirect approach</span></a>
   </div>
 </li>
@@ -508,11 +488,8 @@ window.Quarto = {
       </div>
       <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./cont_dir_shooting_and_multiple.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Shooting and multiple shooting</span></a>
-  </div>
-</li>
+ <span class="menu-text">cont_dir_shooting_amd_multiple.qmd</span>
+  </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_dir_collocation.html" class="sidebar-item-text sidebar-link">
@@ -676,13 +653,10 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#gradient-method-for-the-tp-bvp-dae-for-free-final-state" id="toc-gradient-method-for-the-tp-bvp-dae-for-free-final-state" class="nav-link active" data-scroll-target="#gradient-method-for-the-tp-bvp-dae-for-free-final-state">Gradient method for the TP-BVP DAE for free final state</a></li>
-  <li><a href="#methods-for-solving-tp-bvp-ode" id="toc-methods-for-solving-tp-bvp-ode" class="nav-link" data-scroll-target="#methods-for-solving-tp-bvp-ode">Methods for solving TP-BVP ODE</a>
+  <li><a href="#bellmans-principle-of-optimality-and-dynamic-programming" id="toc-bellmans-principle-of-optimality-and-dynamic-programming" class="nav-link active" data-scroll-target="#bellmans-principle-of-optimality-and-dynamic-programming">Bellman’s principle of optimality and dynamic programming</a></li>
+  <li><a href="#bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem" id="toc-bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem" class="nav-link" data-scroll-target="#bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem">Bellman’s principle of optimality applied to the discrete-time optimal control problem</a>
   <ul class="collapse">
-  <li><a href="#shooting-and-multiple-shooting-methods" id="toc-shooting-and-multiple-shooting-methods" class="nav-link" data-scroll-target="#shooting-and-multiple-shooting-methods">Shooting and multiple shooting methods</a></li>
-  <li><a href="#discretization-methods" id="toc-discretization-methods" class="nav-link" data-scroll-target="#discretization-methods">Discretization methods</a></li>
-  <li><a href="#collocation-methods" id="toc-collocation-methods" class="nav-link" data-scroll-target="#collocation-methods">Collocation methods</a></li>
-  <li><a href="#pseudospectral-collocation-methods" id="toc-pseudospectral-collocation-methods" class="nav-link" data-scroll-target="#pseudospectral-collocation-methods">Pseudospectral collocation methods</a></li>
+  <li><a href="#alternative-formulation-of-dynamic-programming-using-q-factors" id="toc-alternative-formulation-of-dynamic-programming-using-q-factors" class="nav-link" data-scroll-target="#alternative-formulation-of-dynamic-programming-using-q-factors">Alternative formulation of dynamic programming using Q-factors</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -690,9 +664,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_numerical.html">Numerical methods for indirect approach</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dynamic_programming.html">5. Discrete-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./dynamic_programming.html">Dynamic programming and discrete-time optimal control</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Numerical methods for indirect approach</h1>
+<h1 class="title">Dynamic programming and discrete-time optimal control</h1>
 </div>
 
 
@@ -709,379 +683,469 @@ window.Quarto = {
 </header>
 
 
-<p>The indirect approach to optimal control reformulates the optimal control problem as a system of differential and algebraic equations (DAE) with the values of some variables specified at both ends of the time interval – the two-point boundary value problem (TP–BVP). It is only in special cases that we are able to reformulate the TP–BVP as an initial value problem (IVP), the prominent example of which is the LQR problem and the associate differential Riccati equation solved backwards in time. However, generally we need to solve the TP–BVP DAE and the only way to do it is by numerical methods. Here we give some.</p>
-<section id="gradient-method-for-the-tp-bvp-dae-for-free-final-state" class="level2">
-<h2 class="anchored" data-anchor-id="gradient-method-for-the-tp-bvp-dae-for-free-final-state">Gradient method for the TP-BVP DAE for free final state</h2>
-<p>Recall that with the Hamiltonian defined as <span class="math inline">H(\bm x, \bm u, \bm \lambda) = L(\bm x, \bm u) + \bm \lambda^\top \mathbf f(\bm x, \bm u)</span>, the necessary conditions of optimality for the fixed final time and free final state are are given by the following system of differential and algebraic equations (DAE) <span class="math display">
-\begin{aligned}
-\dot{\bm{x}} &amp;= \nabla_{\bm\lambda} H(\bm x,\bm u,\bm \lambda) \\
-\dot{\bm{\lambda}} &amp;= -\nabla_{\bm x} H(\bm x,\bm u,\bm \lambda) \\
-\mathbf 0 &amp;= \nabla_{\bm u} H(\bm x,\bm u,\bm \lambda)\qquad (\text{or} \qquad \bm u^\star = \text{argmax } H(\bm x^\star,\bm u, \bm\lambda^\star),\quad \bm u \in\mathcal{U})\\
-\bm x(t_\mathrm{i}) &amp;=\mathbf x_\mathrm{i}\\
-\bm \lambda(t_\mathrm{f}) &amp;= \nabla\phi(\bm{x}(t_\mathrm{f})).
-\end{aligned}
-</span></p>
-<p>One idea to solve this is to guess at the trajectory <span class="math inline">\bm u(t)</span> on a grid of the time interval, use it to solve the state and costate equations, and then with all the three variables <span class="math inline">\bm x</span>, <span class="math inline">\bm u</span>, and <span class="math inline">\bm u</span> evaluate how much the stationarity equation is actually not satisfied. Based on the this, modify <span class="math inline">\bm u</span> and go for another iteration. Formally this is expressed as the algorithm:</p>
-<ol type="1">
-<li>Set some initial trajectory <span class="math inline">\bm u(t),\; t\in[t_\mathrm{i},t_\mathrm{f}]</span> on a grid of points in <span class="math inline">[t_\mathrm{i},t_\mathrm{f}]</span>.</li>
-<li>With the chosen <span class="math inline">\bm u(\cdot)</span> and the initial state <span class="math inline">\bm x(t_\mathrm{i})</span>, solve the state equation <span class="math display">
-\dot{\bm{x}} = \nabla_{\bm\lambda} H(\bm x,\bm u,\bm \lambda) = \mathbf f(\bm x, \bm u)
-</span> for <span class="math inline">\bm x(t)</span> using a solver for initial value problem ODE, that is, on a grid of <span class="math inline">t\in[t_\mathrm{i},t_\mathrm{f}]</span>.</li>
-<li>Having the control and state trajectories, <span class="math inline">\bm u(\cdot)</span> and <span class="math inline">\bm x(\cdot)</span>, solve the costate equation <span class="math display">
-\dot{\bm{\lambda}} = -\nabla_{\bm x} H(\bm x,\bm u,\bm \lambda)
-</span><br>
-for the costates <span class="math inline">\bm \lambda(t)</span>, starting at the final time <span class="math inline">t_\mathrm{f}</span>, invoking the boundary condition <span class="math inline">\bm \lambda(t_\mathrm{f}) = \nabla\phi(\bm{x}(t_\mathrm{f}))</span>.</li>
-<li>Evaluate <span class="math inline">\nabla_{\bm u} H(\bm x,\bm u,\bm \lambda)</span> for all <span class="math inline">t\in[t_\mathrm{i}, t_\mathrm{f}]</span>.</li>
-<li>If <span class="math inline">\nabla_{\bm u} H(\bm x,\bm u,\bm \lambda) \approx  \mathbf 0</span> for all <span class="math inline">t\in[t_\mathrm{i}, t_\mathrm{f}]</span>, quit, otherwise modify <span class="math inline">\bm u(\cdot)</span> and go to the step 2.</li>
-</ol>
-<p>The question is, of course, how to modify <span class="math inline">\bm u(t)</span> for all <span class="math inline">t \in [t_\mathrm{i}, t_\mathrm{f}]</span> in the step 4. Recall that the variation of the (augmented) cost functional is <span class="math display">
-\begin{aligned}
-\delta  J^\text{aug} &amp;= [\nabla \phi(\bm x(t_\mathrm{f})) - \bm\lambda(t_\mathrm{f})]^\top \delta \bm{x}(t_\mathrm{f})\\
-&amp; \qquad + \int_{t_\mathrm{i}}^{t_\mathrm{f}} [\dot{\bm{\lambda}} +\nabla_{\bm x} H(\bm x,\bm u,\bm \lambda)]^\top \delta \bm x(t)\mathrm{d}t + \int_{t_\mathrm{i}}^{t_\mathrm{f}} [\dot{\bm{x}} - \nabla_{\bm\lambda} H(\bm x,\bm u,\bm \lambda)]^\top \delta \bm\lambda(t)  \mathrm{d}t\\
-&amp; \qquad + \int_{t_\mathrm{i}}^{t_\mathrm{f}} [\nabla_{\bm u} H(\bm x,\bm u,\bm \lambda)]^\top \delta \bm u(t) \mathrm{d}t
-\end{aligned},
-</span> and for state and costate variables satisfying the state and costate equations this variation simplifies to <span class="math display">
-\delta  J^\text{aug} = \int_{t_\mathrm{i}}^{t_\mathrm{f}} [\nabla_{\bm u} H(\bm x,\bm u,\bm \lambda)]^\top \delta \bm u(t) \mathrm{d}t.
-</span></p>
-<p>Since our goal is to minimize <span class="math inline">J^\text{aug}</span>, we need to make <span class="math inline">\Delta  J^\text{aug}\leq0</span>. Provided the increment <span class="math display">
-\delta \mathbf u(t)=\mathbf u^{(i+1)}(t)-\mathbf u^{(i)}(t)
-</span> is small, we can consider the linear approximation <span class="math inline">\delta  J^\text{aug}</span> instead. We choose <span class="math display">
-\delta \bm u(t)  = -\alpha \nabla_{\bm u} H(\bm x,\bm u,\bm \lambda)
-</span> for <span class="math inline">\alpha&gt;0</span>, which means that the control trajectory in the next iteration is <span class="math display">
-\bm u^{(i+1)}(t)  = \bm u^{(i)}(t) -\alpha \nabla_{\bm u} H(\bm x,\bm u,\bm \lambda),
-</span> and the variation of the augmented cost funtion is<br>
-<span class="math display">
-\delta  J^\text{aug} = -\alpha\int_{t_\mathrm{i}}^{t_\mathrm{f}} [\nabla_{\bm u} H(\bm x,\bm u,\bm \lambda)]^2 \mathrm{d}t \leq 0,
-</span> and it is zero only for <span class="math inline">\nabla_{\bm u} H(t,\bm x,\bm u,\bm \lambda) = \mathbf 0</span> for all <span class="math inline">t\in[t_\mathrm{i}, t_\mathrm{f}]</span>.</p>
-</section>
-<section id="methods-for-solving-tp-bvp-ode" class="level2">
-<h2 class="anchored" data-anchor-id="methods-for-solving-tp-bvp-ode">Methods for solving TP-BVP ODE</h2>
-<p>Here we assume that from the stationarity equation <span class="math display">
-\mathbf 0 = \nabla_{\bm u} H(\bm x,\bm u,\bm \lambda)
-</span> we can express <span class="math inline">\bm u(t)</span> as a function of the the state and costate variables, <span class="math inline">\bm x(t)</span> and <span class="math inline">\bm \lambda(t)</span>, respectively. In fact, Pontryagin’s principles gives this expression as <span class="math inline">\bm u^\star(t) = \text{arg} \min_{\bm u(t) \in\mathcal{U}} H(\bm x^\star(t),\bm u(t), \bm\lambda^\star(t))</span>. And we substitute for <span class="math inline">\bm u(t)</span> into the state and costate equations. This way we eliminate <span class="math inline">\bm u(t)</span> from the system of DAEs and we are left with a system of ODEs for <span class="math inline">\bm x(t)</span> and <span class="math inline">\bm \lambda(t)</span> only. Formally, the resulting Hamiltonian is a different function as it is now a functio of two variables only.</p>
-<p><span class="math display">
-\begin{aligned}
-\dot{\bm{x}} &amp;= \nabla_{\bm\lambda} \mathcal H(\bm x,\bm \lambda) \\
-\dot{\bm{\lambda}} &amp;= -\nabla_{\bm x} \mathcal H(\bm x,\bm \lambda) \\
-\bm x(t_\mathrm{i}) &amp;=\mathbf x_\mathrm{i}\\
-\bm x(t_\mathrm{f}) &amp;= \mathbf x_\mathrm{f} \qquad \text{or} \qquad \bm \lambda(t_\mathrm{f}) = \nabla\phi(\bm{x}(t_\mathrm{f})).
-\end{aligned}
-</span></p>
-<p>Although we now have an ODE system, it is still a BVP. Strictly speaking, from now on, arbitrary reference on numerical solution of boundary value problems can be consulted to get some overview – we no longer need to restrict ourselves to the optimal control literature and software. On the other hand, the right sides are not quite arbitrary – these are Hamiltonian equations – and this property could and perhaps even should be exploited by the solution methods.</p>
-<p>The methods for solving general BVPs are generally divided into shooting and multiple shooting and collocation methods.</p>
-<section id="shooting-and-multiple-shooting-methods" class="level3">
-<h3 class="anchored" data-anchor-id="shooting-and-multiple-shooting-methods">Shooting and multiple shooting methods</h3>
-<p>Having made the diclaimer that boundary value problems constitute a topic indenendent of the optimal control theory, we start their investigation within a control-unrelated setup. We consider a system of two ordinary differential equations in two variables with the value of the first variable specified at both ends while the value of the other variable is left unspecified <span class="math display">
-\begin{aligned}
-\begin{bmatrix}
-  \dot y_1(t)\\
-  \dot y_2(t)
-\end{bmatrix}
-&amp;=
-\begin{bmatrix}
-f_1(\bm y,t)\\
-f_2(\bm y,t)
-\end{bmatrix}\\
-y_1(t_\mathrm{i}) &amp;= \mathrm y_{1\mathrm{i}},\\
-y_1(t_\mathrm{f}) &amp;= \mathrm y_{1\mathrm{f}}.
-\end{aligned}
-</span></p>
-<section id="shooting-method" class="level4">
-<h4 class="anchored" data-anchor-id="shooting-method">Shooting method</h4>
-<p>An idea for a solution method is this:</p>
-<ol type="1">
-<li>Guess at the missing (unspecified) value of <span class="math inline">y_2</span> at the initial time <span class="math inline">t_\mathrm{i}</span>,</li>
-<li>Use an IVP solver (for example <code>ode45</code> in Matlab) to find the values of both variables over the whole interval <span class="math inline">[t_\mathrm{i},t_\mathrm{f}]</span>.</li>
-<li>Compare the simulated value of the state variable <span class="math inline">y_1</span> at the final time <span class="math inline">t_\mathrm{f}</span> and compare it with the boundary value .</li>
-<li>Based on the error <span class="math inline">e = y_1(t_\mathrm{f})-\mathrm y_{1\mathrm{f}}</span>, update <span class="math inline">y_2(t_\mathrm{i})</span> and go back to step 2.</li>
-</ol>
-<p>How shall the update in the step 4 be realized? The value of <span class="math inline">y_1</span> at the final time <span class="math inline">t_\mathrm{f}</span> and therefore the error <span class="math inline">e</span> are functions of the value of <span class="math inline">y_2</span> at the initial time <span class="math inline">t_\mathrm{i}</span>, let’s label it <span class="math inline">y_{2\mathrm{i}}</span>. We can formally express this upon introducing a map <span class="math inline">F</span> such that <span class="math inline">e = F(y_{2\mathrm{i}})</span>. The problem now boils down to solving the nonlinear equation (in general a system of equations) <span class="math display">\boxed
-{F(y_{2\mathrm{i}}) = 0.}
-</span></p>
-<p>If Newton’s method is to be used for solving this equation, the derivatives of <span class="math inline">F</span> (formatted into a matrix) are needed. Most often than not, numerical solvers for IVP ODE have to be called in order to evaluate the function <span class="math inline">F</span>, in which case the derivatives cannot be determined analytically. Finite difference (FD) and algorithmic/automatic differentiation (AD) methods are available.</p>
-<p>By now the reason for calling this method <em>shooting</em> is perhaps obvious. Indeed, the analogy with <a href="http://www.matthewpeterkelly.com/tutorials/trajectoryOptimization/canon.html">aiming and shooting a cannon</a> is illustrative.</p>
-</section>
-<section id="multiple-shooting-method" class="level4">
-<h4 class="anchored" data-anchor-id="multiple-shooting-method">Multiple shooting method</h4>
-<p>The key deficiency of the shooting method is that the only source of the error is the error in the boundary condition. This error then accumulates over the whole interval as the numerical integration proceeds. The multiple shooting method is a remedy for this. The idea is to divide the interval <span class="math inline">[t_\mathrm{i},t_\mathrm{f}]</span> into <span class="math inline">N</span> subintervals <span class="math inline">[t_k,t_{k+1}]</span> and to introduce the values of the state variable at the beginning of each subinterval as additional variables. Additional equations are then introduced that enforce the continuity of the state variable at the end of one subinterval and at the beginning of the next subinterval.</p>
-</section>
-</section>
-<section id="discretization-methods" class="level3">
-<h3 class="anchored" data-anchor-id="discretization-methods">Discretization methods</h3>
-<p>Shooting methods take advantage of availability of solvers for IVP ODEs. These solvers produce discret(ized) trajectories, proceeding (integration) step by step, forward in time. But they do this in a way hidden from users. We just have to set the initial conditions (possibly through numerical optimization) and the solver does the rest.</p>
-<p>Alternatively, the formulas for the discrete-time updates are not evaluated one by one, step by step, running forward in time, but are assembled to form a system of equations, in general nolinear ones. Appropriate boundary conditions are then added to these nonlinear equations and the whole system is then solved numerically, yielding a discrete approximation of the trajectories satisfying the BVP.</p>
-<p>Since all those equatins are solved simultaneously (as a system of equations), there is no advantage in using <em>explicit methods</em> for solving ODEs, and <em>implicit methods</em> are used instead.</p>
-<p>It is now high time to recall some crucial results from the numerical methods for solving ODEs. First, we start with the popular single-step methods known as the Runge-Kutta (RK) methods.</p>
-<p>We consider the standard ODE <span class="math display">\dot x(t) = f(x(t),t).</span></p>
-<p>and we define the Butcher tableau as <span class="math display">
-  \begin{array}{ l | c c c c }
-    c_1 &amp; a_{11} &amp; a_{12} &amp; \ldots &amp; a_{1s}\\
-    c_2 &amp; a_{21} &amp; a_{22} &amp; \ldots &amp; a_{2s}\\
-    \vdots &amp; \vdots\\
-    c_s &amp; a_{s1} &amp; a_{s2} &amp; \ldots &amp; a_{ss}\\
-    \hline
-      &amp; b_{1} &amp; b_{2} &amp; \ldots &amp; b_{s}
-  \end{array}.
-</span> such that <span class="math display">c_i = \sum_{j=1}^s a_{ij},</span> and <span class="math display">1 = \sum_{j=1}^s b_{j}.</span></p>
-<p>Reffering to the particular Butcher table, a single step of the method is <span class="math display">
-  \begin{aligned}
-  f_{k1} &amp;= f(x_k + h_k \left(a_{11}f_{k1}+a_{12}f_{k2} + \ldots + a_{1s}f_{ks}),t_k+c_1h_k\right)\\
-  f_{k2} &amp;= f(x_k + h_k \left(a_{21}f_{k1}+a_{22}f_{k2} + \ldots + a_{2s}f_{ks}),t_k+c_2h_k\right)\\
-  \vdots\\
-  f_{ks} &amp;= f(x_k + h_k \left(a_{s1}f_{k1}+a_{s2}f_{k2} + \ldots + a_{ss}f_{ks}),t_k+c_sh_k\right)\\
-  x_{k+1} &amp;= x_k + h_k \left(b_1 f_{k1}+b_2f_{k2} + \ldots + b_sf_{ks}\right).
-  \end{aligned}
-</span></p>
-<p>If the matrix A is strictly lower triangular, that is, if <span class="math inline">a_{ij} = 0</span> for all <span class="math inline">i&lt;j</span> , the method belongs to <em>explicit Runge-Kutta methods</em>, otherwise it belongs to <em>implicit Runge-Kutta methods</em>.</p>
-<p>A prominent example of explicit RK methods is the 4-stage RK method (oftentimes referred to as RK4).</p>
-<section id="explicit-rk4-method" class="level5">
-<h5 class="anchored" data-anchor-id="explicit-rk4-method">Explicit RK4 method</h5>
-<p>The Buttcher table for the method is <span class="math display">
-      \begin{array}{ l | c c c c }
-        0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
-        1/2 &amp; 1/2 &amp; 0 &amp; 0 &amp; 0\\
-        1/2 &amp; 0 &amp; 1/2 &amp; 0 &amp; 0\\
-        1 &amp; 0 &amp; 0 &amp; 1 &amp; 0\\
-        \hline
-          &amp; 1/6 &amp; 1/3 &amp; 1/3 &amp; 1/6
-      \end{array}.
-</span></p>
-<p>Following the Butcher table, a single step of this method is <span class="math display">
-      \begin{aligned}
-      f_{k1} &amp;= f(x_k,t_k)\\
-      f_{k2} &amp;= f\left(x_k + \frac{h_k}{2}f_{k1},t_k+\frac{h_k}{2}\right)\\
-      f_{k3} &amp;= f\left(x_k + \frac{h_k}{2}f_{k2},t_k+\frac{h_k}{2}\right)\\
-      f_{k4} &amp;= f\left(x_k + h_k f_{k3},t_k+h_k\right)\\
-      x_{k+1} &amp;= x_k + h_k \left(\frac{1}{6} f_{k1}+\frac{1}{3}f_{k2} + \frac{1}{3}f_{k3} + \frac{1}{6}f_{k4}\right)
-      \end{aligned}.
-</span></p>
-<p>But as we have just mentions, explicit methods are not particularly useful for solving BVPs. We prefer implicit methods. One of the simplest is the implicit midpoint method.</p>
-</section>
-<section id="implicit-midpoint-method" class="level5">
-<h5 class="anchored" data-anchor-id="implicit-midpoint-method">Implicit midpoint method</h5>
-<p>The Butcher tableau is <span class="math display">
-  \begin{array}{ l | c r }
-    1/2 &amp; 1/2 \\
-    \hline
-      &amp; 1
-  \end{array}
-</span></p>
-<p>A single step is then <span class="math display">\begin{aligned}
-  f_{k1} &amp;= f(x_k+\frac{1}{2}f_{k1} h_k, t_k+\frac{1}{2}h_k)\\
-  x_{k+1} &amp;= x_k + h_k f_{k1}.
-  \end{aligned}</span></p>
-<p>But adding to the last equation <span class="math inline">x_k</span> we get <span class="math display">x_{k+1} + x_k = 2x_k + h_k f_{k1}.</span></p>
-<p>Dividing by two we get <span class="math display">\frac{1}{2}(x_{k+1} + x_k) = x_k + \frac{1}{2}h_k f_{k1}</span> and then it follows that <span class="math display">\boxed{x_{k+1} = x_k + h_k f\left(\frac{1}{2}(x_k+x_{k+1}),t_k+\frac{1}{2}h_k\right).}</span></p>
-<p>The right hand side of the last equation explains the “midpoint” in the name. It can be viewed as a rectangular approximation to the integral in <span class="math display">x_{k+1} = x_k + \int_{t_k}^{t_{k+1}} f(x(t),t)\mathrm{d}t</span> as the integral is computed as an area of a rectangle with the height determined by <span class="math inline">f()</span> evaluated in the middle point.</p>
-<p>Although we do not explain the details here, let’s just note that it is the simplest of the <em>collocation methods</em>. In particular it belongs to Gauss (also Gauss-Legandre) methods.</p>
-</section>
-<section id="implicit-trapezoidal-method" class="level5">
-<h5 class="anchored" data-anchor-id="implicit-trapezoidal-method">Implicit trapezoidal method</h5>
-<p>The method can be viewed both as a single-step (RK) method and a multi-step method. When viewed as an RK method, its Butcher table is <span class="math display">
-  \begin{array}{ l | c r }
-    0 &amp; 0 &amp; 0 \\
-    1 &amp; 1/2 &amp; 1/2 \\
-    \hline
-      &amp; 1/2 &amp; 1/2 \\
-  \end{array}
-  </span> Following the Butcher table, a single step of the method is then <span class="math display">
-  \begin{aligned}
-  f_{k1} &amp;= f(x_k,t_k)\\
-  f_{k2} &amp;= f(x_k + h_k \frac{f_{k1}+f_{k2}}{2},t_k+h_k)\\
-  x_{k+1} &amp;= x_k + h_k \left(\frac{1}{2} f_{k1}+\frac{1}{2} f_{k2}\right).
-  \end{aligned}
-</span></p>
-<p>But since the collocation points are identical with the nodes (grid/mesh points), we can relabel to <span class="math display">\begin{aligned}
-  f_{k} &amp;= f(x_k,t_k)\\
-  f_{k+1} &amp;= f(x_{k+1},t_{k+1})\\
-  x_{k+1} &amp;= x_k + h_k \left(\frac{1}{2} f_{k}+\frac{1}{2} f_{k+1}\right).
-  \end{aligned}
-</span></p>
-<p>This possibility is a particular advantage of Lobatto and Radau methods, which contain both end points of the interval or just one of them among the collocation points. The two symbols <span class="math inline">f_k</span> and <span class="math inline">f_{k+1}</span> are really just shorthands for values of the function <span class="math inline">f</span> at the beginning and the end of the integration interval, so the first two equations of the triple above are not really equations to be solved but rather definitions. And we can assemble it all into just one equation <span class="math display">\boxed{
-      x_{k+1} = x_k + h_k \frac{f(x_k,t_k)+f(x_{k+1},t_{k+1})}{2}.
-      }
-</span></p>
-<p>The right hand side of the last equation explains the “trapezoidal” in the name. It can be viewed as a trapezoidal approximation to the integral in <span class="math display">x_{k+1} = x_k + \int_{t_k}^{t_{k+1}} f(x(t),t)\mathrm{d}t</span> as the integral is computed as an area of a trapezoid.</p>
-<p>When it comes to building a system of equations within transcription methods, we typically move all the terms just on one side to obtain the <em>defect equations</em> <span class="math display">x_{k+1} - x_k - h_k \left(\frac{1}{2} f(x_k,t_k)+\frac{1}{2} f(x_{k+1},t_{k+1})\right) = 0.</span></p>
-<p>Implicit trapezoidal method is also one of collocation methods (the method belongs to the family of Lobatto IIIA methods and these are known to be collocation methods).</p>
-<p>In agreement with the left column of the Buttcher tableau, the collocation points on the interval <span class="math inline">[t_k,t_{k+1}]</span> are just the two boundary points, that is, <span class="math inline">t_k</span> and <span class="math inline">t_{k+1}</span> . We then have in total three interpolation condition: one on the value at the beginning, two on the first derivatives at both ends. This means that the interpolating polynomial will be quadratic <span class="math display">p_k(t) = p_{k0} + p_{k1}(t-t_k) + p_{k2}(t-t_k)^2.</span></p>
-<p>The first derivative of the polynomial is <span class="math display">\dot p_k(t) = p_{k1} + 2p_{k2}(t-t_k).</span></p>
-<p>The first interpolation condition, the one on the value at the beginning of the interval, is <span class="math display">p_k(t_k) = \textcolor{red}{p_{k0} = x_k} \approx x(t_k).</span></p>
-<p>The second interpolation condition, the one on the derivative at the beginning of the interval, the first collocation point, is <span class="math display">\dot p_k(t_k) = \textcolor{red}{p_{k1} = f(x_k,t_k)} \approx f(x(t_k),t_k).</span></p>
-<p>The third interpolation condition, the one on the derivative at the second collocation point <span class="math display">\dot p_k(t_k+h_k) = \textcolor{red}{p_{k1} + 2p_{k2} h_k = f(x_{k+1},t_{k+1})} \approx f(x(t_{k+1}),t_{k+1}).</span></p>
-<p>All the three conditions (emphasized in color above) can be written together as <span class="math display">
-      \begin{bmatrix}
-      1 &amp; 0 &amp; 0\\
-      0 &amp; 1 &amp; 0\\
-      0 &amp; 1 &amp; 2 h_k\\
-      \end{bmatrix}
-      \begin{bmatrix}
-      p_{k0} \\ p_{k1} \\ p_{k2}
-      \end{bmatrix}
-      =
-      \begin{bmatrix}
-      x_{k} \\ f(x_k,t_k) \\ f(x_{k+1},t_{k+1})
-      \end{bmatrix}.
-</span></p>
-<p>Recall that our goal is to find the approximating polynomial, that is, we are after the vector with the coefficients of the polynomial <span class="math inline">p_k</span> . In order to get it, we need to solve the above linear equation. In other words, we need to invert the matrix. In this particular case the inversion of the matrix is particularly simple <span class="math display">
-      \begin{bmatrix}
-      p_{k0} \\ p_{k1} \\ p_{k2}
-      \end{bmatrix}
-      =
-      \begin{bmatrix}
-      1 &amp; 0 &amp; 0\\
-      0 &amp; 1 &amp; 0\\
-      0 &amp; -\frac{1}{2h_k} &amp; \frac{1}{2h_k}\\
-      \end{bmatrix}
-      \begin{bmatrix}
-      x_{k} \\ f(x_k,t_k) \\ f(x_{k+1},t_{k+1})
-      \end{bmatrix}.
-</span></p>
-<p>We can now write down the interpolating/approximating polynomial <span class="math display">p_k(t) = x_{k} + f(x_{k},t_{k})(t-t_k) +\left[-\frac{1}{2h_k}f(x_{k},t_{k}) + \frac{1}{2h_k}f(x_{k+1},t_{k+1})\right](t-t_k)^2,</span> but our primary motivation was to compute the (approximation of the) value of the solution at the end of the interval <span class="math display">x_{k+1} = p_k(t_k+h_k) = x_{k} + f(x_{k},t_{k})h_k +\left[-\frac{1}{2h_k}f(x_{k},t_{k}) + \frac{1}{2h_k}f(x_{k+1},t_{k+1})\right]h_k^2,</span> which can be simplified nearly upon inspection to <span class="math display">x_{k+1} = x_{k} + \frac{f(x_{k},t_{k}) + f(x_{k+1},t_{k+1})}{2} h_k,</span> but this is our good old friend, isn’t it? We have shown that the collocation method with a quadratic polynomial with the collocation points chosen at the beginning and the end of the interval coincides with the implicit trapezoidal method.</p>
-</section>
-<section id="hermite-simpson-method" class="level5">
-<h5 class="anchored" data-anchor-id="hermite-simpson-method">Hermite-Simpson method</h5>
-<p>It belongs to the family of Lobatto III methods, namely it is a 3-stage Lobatto IIIA method. Butcher tableau <span class="math display">
-  \begin{array}{ l | c c c c }
-    0 &amp; 0 &amp;0 &amp; 0\\
-    1/2 &amp; 5/24 &amp; 1/3 &amp; -1/24\\
-    1 &amp; 1/6 &amp; 2/3 &amp; 1/6\\
-    \hline
-      &amp; 1/6 &amp; 2/3 &amp; 1/6
-  \end{array}
-</span></p>
-<p>Hermite-Simpson method can actually come in three forms (this is from <span class="citation" data-cites="bettsPracticalMethodsOptimal2020">Betts (<a href="#ref-bettsPracticalMethodsOptimal2020" role="doc-biblioref">2020</a>)</span>):</p>
-<section id="primary-form" class="level6">
-<h6 class="anchored" data-anchor-id="primary-form">Primary form</h6>
-<p>There are two equations for the given integration interval <span class="math inline">[t_k,t_{k+1}]</span> <span class="math display">x_{k+1} = x_k + h_k \left(\frac{1}{6}f_k + \frac{2}{3}f_{k2} + \frac{1}{6}f_{k+1}\right),</span> <span class="math display">x_{k2} = x_k + h_k \left(\frac{5}{24}f_k + \frac{1}{3}f_{k2} - \frac{1}{24}f_{k+1}\right),</span> where the <span class="math inline">f</span> symbols are just shorthand notations for values of the function at a certain point <span class="math display">f_k = f(x_k,u(t_k),t_k),</span> <span class="math display">f_{k2} = f(x_{k2},u(t_{k2}),t_{k2}),</span> <span class="math display">f_{k+1} = f(x_{k+1},u(t_{k+1}),t_{k+1}),</span> and the off-grid time <span class="math inline">t_{k2}</span> is given by <span class="math display">t_{k2} = t_k + \frac{1}{2}h_k.</span></p>
-<p>The first of the two equations can be recognized as Simpson’s rule for computing a definite integral. Note that while considering the right hand sides as functions of the control inputs, we also correctly express at which time (the collocation time) we consider the value of the control variable.</p>
-<p>Being this general allows considering general control inputs and not only piecewise constant control inputs. For example, if we consider piecewise linear control inputs, then <span class="math inline">u(t_{k2}) = \frac{u_k + u_{k+1}}{2}</span>. But if we stick to the (more common) piecewise constant controls, not surprisingly <span class="math inline">u(t_{k2}) = u_k</span>. Typically we format the equations as <em>defect equations</em>, that is, with zero on the right hand side <span class="math display">
-\begin{aligned}
-x_{k+1} - x_k - h_k \left(\frac{1}{6}f_k + \frac{2}{3}f_{k2} + \frac{1}{6}f_{k+1}\right) &amp;= 0,\\
-x_{k2} - x_k - h_k \left(\frac{5}{24}f_k + \frac{1}{3}f_{k2} - \frac{1}{24}f_{k+1}\right) &amp;= 0.
-\end{aligned}
-</span></p>
-<p>The optimization variables for every integration interval are <span class="math inline">x_k,u_k,x_{k2}, u_{k2}</span>.</p>
-</section>
-<section id="hermite-simpson-separated-hss-method" class="level6">
-<h6 class="anchored" data-anchor-id="hermite-simpson-separated-hss-method">Hermite-Simpson Separated (HSS) method</h6>
-<p>Alternatively, we can express <span class="math inline">f_{k2}</span> in the first equation as a function of the remaining terms and then substitute to the second equation. This will transform the second equation such that only the terms indexed with <span class="math inline">k</span> and <span class="math inline">k+1</span> are present. <span class="math display">
-\begin{aligned}
-x_{k+1} - x_k - h_k \left(\frac{1}{6}f_k + \frac{2}{3}f_{k2} + \frac{1}{6}f_{k+1}\right) &amp;= 0,\\
-x_{k2} - \frac{x_k + x_{k+1}}{2} - \frac{h_k}{8} \left(f_k - f_{k+1}\right) &amp;= 0.
-\end{aligned}
-</span></p>
-<p>While we already know (from some paragraph above) that the first equation is Simpson’s rule, the second equation is an outcome of Hermite intepolation. Hence the name. The optimization variables for every integration interval are the same as before, that is, <span class="math inline">x_k,u_k,x_{k2}, u_{k2}</span> .</p>
-</section>
-<section id="hermite-simpson-condensed-hsc-method" class="level6">
-<h6 class="anchored" data-anchor-id="hermite-simpson-condensed-hsc-method">Hermite-Simpson Condensed (HSC) method</h6>
-<p>Yet some more simplification can be obtained from HSS. Namely, the second equation can be actually used to directly prescribe <span class="math inline">x_{k2}</span> <span class="math display">x_{k2} = \frac{x_k + x_{k+1}}{2} + \frac{h_k}{8} \left(f_k - f_{k+1}\right),</span> which is used in the first equation as an argument for the <span class="math inline">f()</span> function (represented by the <span class="math inline">f_{k2}</span> symbol), by which the second equation and the term <span class="math inline">x_{k2}</span> are eliminated from the set of <em>defect equations</em>. The optimization variables for every integration interval still need to contain <span class="math inline">u_{k2}</span> even though <span class="math inline">x_{k2}</span> was eliminated, because it is needed to parameterize <span class="math inline">f_{k2}</span> . That is, the optimization variables then are <span class="math inline">x_k,u_k, u_{k2}</span> . Reportedly (by Betts) this has been widely used and historically one of the first methods. When it comes to using it in optimal control, it turns out, however, that the sparsity pattern is better for the HSS. Thanks to the fact that the current method belongs to the family of Lobatto IIIA methods, it also qualifies as a <a href="[[Collocation methods]]">collocation method</a>, similarly as Implicit trapezoidal method does. The collocation points are dictated by the left column of the Buttcher table, that is, the collocation points for the integration interval <span class="math inline">[t_k,t_{k+1}]</span> are <span class="math inline">t_k</span> , <span class="math inline">\frac{t_k+t_{k+1}}{2}</span> , and <span class="math inline">t_{k+1}</span> . Considering three collocation conditions (interpolation conditions on the first derivative) and one interpolation condition on the value at the beginning of the interval, the polynomial approximating the solution on the k-th interval will be cubic <span class="math display">p_k(t) = p_{k0} + p_{k1}(t-t_k) + p_{k2}(t-t_k)^2+ p_{k3}(t-t_k)^3.</span></p>
-<p>The first derivative of the polynomial is <span class="math display">\dot p_k(t) = p_{k1} + 2p_{k2}(t-t_k) + 3p_{k3}(t-t_k)^2.</span></p>
-<p>The first interpolation condition, the one on the value at the beginning of the interval, is <span class="math display">p_k(t_k) = \textcolor{red}{p_{k0} = x_k} \approx x(t_k).</span></p>
-<p>The second interpolation condition, the one on the derivative at the beginning of the interval, the first collocation point, is <span class="math display">\dot p_k(t_k) = \textcolor{red}{p_{k1} = f(x_k,t_k)} \approx f(x(t_k),t_k).</span></p>
-<p>The third interpolation condition, the one on the derivative at the second collocation point – the one in the middle of the interval – is <span class="math display">\dot p_k\left(t_k+\frac{1}{2}h_k\right) = \textcolor{red}{p_{k1} + 2p_{k2} \frac{h_k}{2} + 3p_{k3} \left(\frac{h_k}{2}\right)^2 = f(x_{k2},t_{k2})} \approx f\left(x\left(t_{k}+\frac{h_k}{2}\right),t_{k}+\frac{h_k}{2}\right).</span></p>
-<p>The color-emphasized part can be simplified to <span class="math display">\textcolor{red}{p_{k1} + p_{k2} h_k + \frac{3}{4}p_{k3} h_k^2 = f(x_{k2},t_{k2})}.</span></p>
-<p>The fourth interpolation condition, the third collocation condition, that is, the one imposed at the end of the interval, is <span class="math display">\dot p_k(t_k+h_k) = \textcolor{red}{p_{k1} + 2p_{k2} h_k + 3p_{k3} h_k^2 = f(x_{k+1},t_{k+1})} \approx f(x(t_{k+1}),t_{k+1}).</span></p>
-<p>All the four conditions (emphasized in color above) can be written together as <span class="math display">
-      \begin{bmatrix}
-      1 &amp; 0 &amp; 0 &amp; 0\\
-      0 &amp; 1 &amp; 0 &amp; 0\\
-      0 &amp; 1 &amp; h_k &amp; \frac{3}{4} h_k^2\\
-      0 &amp; 1 &amp; 2 h_k &amp; 3h_k^2\\
-      \end{bmatrix}
-      \begin{bmatrix}
-      p_{k0} \\ p_{k1} \\ p_{k2} \\p_{k3}
-      \end{bmatrix}
-      =
-      \begin{bmatrix}
-      x_{k} \\ f(x_k,t_k) \\ f(x_{k2},t_{k2}) \\ f(x_{k+1},t_{k+1}).
-      \end{bmatrix}
-</span></p>
-<p>Recall that our goal is to find the approximating polynomial, that is, we are after the vector with the coefficients of the polynomial <span class="math inline">p_k</span>. In order to get it, we need to solve the above linear equation. In other words, we need to invert the matrix. In this particular case the inverse matrix keeps the structure <span class="math display">
-      \begin{bmatrix}
-      p_{k0} \\ p_{k1} \\ p_{k2}\\ p_{k3}
-      \end{bmatrix}
-      =
-      \begin{bmatrix}
-      1 &amp; 0 &amp; 0 &amp; 0\\
-      0 &amp; 1 &amp; 0 &amp; 0\\
-      0 &amp; -\frac{3}{2h_k} &amp; \frac{2}{h_k} &amp; -\frac{1}{2h_k}\\
-      0 &amp; \frac{2}{3h_k^2} &amp; -\frac{4}{3h_k^2} &amp; \frac{2}{3h_k^2}
-      \end{bmatrix}
-      \begin{bmatrix}
-      x_{k} \\ f(x_k,t_k) \\ f(x_{k2},t_{k2})\\ f(x_{k+1},t_{k+1}).
-      \end{bmatrix}.
-</span></p>
-<p>We can now write down the interpolating/approximating polynomial <span class="math display">
-      \begin{aligned}
-      p_k(t) &amp;= x_{k} + f(x_{k},t_{k})(t-t_k) +\left[-\frac{3}{2h_k}f(x_{k},t_{k}) + \frac{2}{h_k}f(x_{k2},t_{k2}) -\frac{1}{2h_k}f(x_{k+1},t_{k+1}) \right](t-t_k)^2\\
-      &amp; +\left[\frac{2}{3h_k^2}f(x_{k},t_{k}) - \frac{4}{3h_k^2}f(x_{k2},t_{k2}) +\frac{2}{3h_k^2}f(x_{k+1},t_{k+1}) \right](t-t_k)^3,
-      \end{aligned}
-</span> but our primary motivation was to compute the (approximation of the) value of the solution at the end of the interval <span class="math display">
-      \begin{aligned}
-      x_{k+1} = p_k(t_k+h_k) &amp;= x_{k} + f(x_{k},t_{k})h_k +\left[-\frac{3}{2h_k}f(x_{k},t_{k}) + \frac{2}{h_k}f(x_{k2},t_{k2}) -\frac{1}{2h_k}f(x_{k+1},t_{k+1}) \right]h_k^2\\
-      &amp; +\left[\frac{2}{3h_k^2}f(x_{k},t_{k}) - \frac{4}{3h_k^2}f(x_{k2},t_{k2}) +\frac{2}{3h_k^2}f(x_{k+1},t_{k+1}) \right]h_k^3,
-      \end{aligned}
-</span> which can be simplified to <span class="math display">
-      \begin{aligned}
-      x_{k+1} &amp;= x_{k} + f(x_{k},t_{k})h_k +\left[-\frac{3}{2}f(x_{k},t_{k}) + \frac{2}{1}f(x_{k2},t_{k2}) -\frac{1}{2}f(x_{k+1},t_{k+1}) \right]h_k\\
-      &amp; +\left[\frac{2}{3}f(x_{k},t_{k}) - \frac{4}{3}f(x_{k2},t_{k2}) +\frac{2}{3}f(x_{k+1},t_{k+1}) \right]h_k,
-      \end{aligned}
-</span> which further simplifies to <span class="math display">
-      x_{k+1}  = x_{k} + h_k\left[\frac{1}{6}f(x_{k},t_{k}) + \frac{2}{3}f(x_{k2},t_{k2}) + \frac{1}{6}f(x_{k+1},t_{k+1}) \right],
-</span> which can be recognized as the Simpson integration that we have already seen in Implicit Runge-Kutta method described above. Obviously <span class="math inline">f_{k2}</span> needs to be further elaborated on, namely, <span class="math inline">x_{k2}</span> needs some prescription too. We know that it was introduced as an approximation to the solution <span class="math inline">x</span> in the middle of the interval. Since the value of the polynomial in the middle is such an approximation too, we can set <span class="math inline">x_{k2}</span> equal to the value of the polynomial in the middle. <span class="math display">
-      \begin{aligned}
-      x_{k2} = p_k\left(t_k+\frac{1}{2}h_k\right) &amp;= x_{k} + f(x_{k},t_{k})\frac{h_k}{2} +\left[-\frac{3}{2h_k}f(x_{k},t_{k}) + \frac{2}{h_k}f(x_{k2},t_{k2}) -\frac{1}{2h_k}f(x_{k+1},t_{k+1}) \right]\left(\frac{h_k}{2}\right)^2\\
-      &amp; +\left[\frac{2}{3h_k^2}f(x_{k},t_{k}) - \frac{4}{3h_k^2}f(x_{k2},t_{k2}) +\frac{2}{3h_k^2}f(x_{k+1},t_{k+1}) \right]\left(\frac{h_k}{2}\right)^3,
-      \end{aligned}
-</span> which without further ado simplifies to <span class="math display">
-      x_{k2} = x_{k} + h_k\left( \frac{5}{24}f(x_{k},t_{k}) +\frac{1}{3}f(x_{k2},t_{k2}) -\frac{1}{24}f(x_{k+1},t_{k+1}) \right),
-</span> which can be recognized as the other equation in the primary formulation of Implicit trapezoidal method described above.</p>
-</section>
-</section>
-</section>
-<section id="collocation-methods" class="level3">
-<h3 class="anchored" data-anchor-id="collocation-methods">Collocation methods</h3>
-<p>Collocation methods constitute a subset of discretization methods for solving ordinary differential equations, in particular BVP. They offer a new view.</p>
-<p>When solving an ODE (system) <span class="math inline">\dot x(t) = f(x(t),t)</span>, the whole solution interval divided into a number of smalle intervals. Then on an interval <span class="math inline">[t_k,t_{k+1}]</span> of length <span class="math inline">h_k=t_{k+1}-t_k</span> the solution <span class="math inline">x(t)</span> is approximated by a polynomial of degree <span class="math inline">s</span></p>
-<p><span class="math display">p_k(t) = p_{k0} + p_{k1}(t-t_k) + p_{k2}(t-t_k)^2+\ldots + p_{ks}(t-t_k)^s.</span></p>
-<p>Typically the degree of the polynomial is low, say <span class="math inline">s=3</span> or so, certainly below 10. Coefficients must be chosen such that at time <span class="math inline">t_k</span> the k-th polynomial evaluates identically as the (k-1)-th polynomial. For the former the time <span class="math inline">t_k</span> is at the beginning of its interval, for the latter it is the end of its interval. That is, <span class="math display">\boxed{p_{k-1}(\underbrace{t_{k-1}+h_{k-1}}_{t_{k}}) = p_k(t_k).}</span></p>
-<p>Expanding, <span class="math display">p_{k-1,0} + p_{k-1,1}h_{k-1} + p_{k-1,2}h_{k-1}^2+\ldots + p_{k-1,s}h_{k-1}^s = p_{k0},</span> and at some special points, so-called collocation points <span class="math display">t_{kj} = t_k + h_k c_{j}, \quad j=1,\ldots, s,</span> the polynomial satisfies the original differential equation <span class="math display">\boxed{\dot p_k(t_{kj}) = f(p_k(t_{kj}),t_{kj}), \quad j=1,\ldots, s.}</span></p>
-<p>Expanding, <span class="math display">
-\begin{aligned}
-p_{k1} + &amp;2p_{k2}(t_{kj}-t_k)+\ldots + s p_{ks}(t_{kj}-t_k)^{s-1} = \\ &amp;f(p_{k0} + p_{k1}(t_{kj}-t_k) + p_{ks}(t_{kj}-t_k)^2 + \ldots + p_{ks}(t_{kj}-t_k)^s), \quad j=1,\ldots, s.
-\end{aligned}
-</span></p>
-<p>Collocation methods are implicit Runge-Kutta methods. But not all IRK methods are collocation methods.</p>
-<p>Collocation points could be arbitrary (but distinct) but some clever options that maximize accuracy are already known.</p>
-<p>Based on the location of the collocation points, the collocation methods split into three families:</p>
-<ul>
-<li>Gauss or Gauss-Legendre methods – strictly inside the interval
-<ul>
-<li>The simplest collocation method is the Implicit midpoint method.</li>
-</ul></li>
-<li>Lobatto methods – include also both ends of the interval
-<ul>
-<li>The simplest collocation method is the Implicit trapezoidal method.</li>
-<li>Another common method is Hermite-Simpson method.</li>
-</ul></li>
-<li>Radau methods – include just one end of the interval.</li>
-</ul>
-</section>
-<section id="pseudospectral-collocation-methods" class="level3">
-<h3 class="anchored" data-anchor-id="pseudospectral-collocation-methods">Pseudospectral collocation methods</h3>
-<p>They only consider a single polynomial over the whole interval. The degree of such polynomial, in contrast with classical collocation methods, rather high, therefore also the number of collocation points is high, but their location is crucial.</p>
-
-
-
-</section>
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-bettsPracticalMethodsOptimal2020" class="csl-entry" role="listitem">
-Betts, John T. 2020. <em>Practical <span>Methods</span> for <span>Optimal Control Using Nonlinear Programming</span></em>. 3rd ed. Advances in <span>Design</span> and <span>Control</span>. <span>Society for Industrial and Applied Mathematics</span>. <a href="https://doi.org/10.1137/1.9781611976199">https://doi.org/10.1137/1.9781611976199</a>.
+<p>In the previous two chapters we explained direct and indirect approaches to discrete-time optimal control. While the former conveniently allows incorporating almost arbitrary constraints, it only provides a control trajectory (a finite sequence of values of the control variable); if feedback is needed, the optimization must be performed in every sampling period (thus implementing the concept of receding horizon or model predictive control, MPC). The latter, in contrast, can lead to a (state) feedback control law, but this only happens in special cases such as a regulation of a linear system minimizing a quadratic cost (LQR) while assuming no bound constraints on the the control or state variables; in the general case it leads to a two-point boundary value problem, which can only be solved numerically for trajectories.</p>
+<p>In this chapter we present yet another approach — dynamic programming DP. It also allows imposing constraints (in fact, even constraints such as integrality of variables, which are not compatible with our derivative-based optimization toolset exploited so far), and yet it directly leads to feedback controllers.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/7qRCZ9_wfYI?si=hLh9IPUoSin2VXoY" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p>While in the case of linear systems with a quadratic cost function, dynamic programming provides another route to the theoretical results that we already know — Riccati equation based solution to the LQR problem —, in the the case of general nonlinear dynamical systems with general cost functions, the feedback controllers come in the form of look-up tables. This format of a feedback controller gives some hint about disadvantages of DP, namely, both computation and then the use of these look-up tables do not scale well with the dimension of the state space (aka curse of dimensionality). Various approximation schemes exist — one promising branch is known as reinforcement learning.</p>
+<section id="bellmans-principle-of-optimality-and-dynamic-programming" class="level2">
+<h2 class="anchored" data-anchor-id="bellmans-principle-of-optimality-and-dynamic-programming">Bellman’s principle of optimality and dynamic programming</h2>
+<p>We start by considering the following example.</p>
+<div id="exm-trip-from-prague-to-ostrava" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1 (Reusing the plan for a trip from Prague to Ostrava)</strong></span> We are planning a car trip from Prague to Ostrava and you are searching for a route that minimizes the total time. Using the online planner we learn that the fastest route from Prague to Ostrava is — as bizarre as it sounds — via (actually around) Brno.</p>
+<iframe style="border:none" src="https://frame.mapy.cz/s/munotenatu" width="700" height="466" frameborder="0">
+</iframe>
+<p>Now, is it possible to reuse this plan for our friends from Brno who are also heading for Ostrava?</p>
+<iframe style="border:none" src="https://frame.mapy.cz/s/hasebevole" width="700" height="466" frameborder="0">
+</iframe>
+<p>The answer is yes, as the planner confirms. Surely did not even need the planner to answer such trivial question. And yet it demonstrates the key wisdom of the whole chapter — the Bellman’s principle of optimality —, which we now state formally.</p>
 </div>
-</div></section></div></main> <!-- /main -->
+<div id="thm-bellmans-principle-of-optimality" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1 (Bellman’s principle of optimality)</strong></span> An optimal policy has the property that whatever the initial state and initial decision are, the remaining decisions must constitute an optimal policy with regard to the state resulting from the first decision.</p>
+</div>
+<p>We now investigate this idea a bit more quantitatively using a simple computational example of finding a shortest path in a graph.</p>
+<div id="exm-shortest-path-in-a-graph" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2 (Shortest path in a graph)</strong></span> We consider a directional graph with nodes <code>A</code>, <code>B</code>, <code>C</code>, <code>D</code>, and <code>E</code> and edges with the prescribed lengths as in the figure below.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 432.00 431.93" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(0.981589 0.981589) rotate(0) translate(4 436.03)">
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-436.03 436.1,-436.03 436.1,4 -4,4"></polygon>
+<!-- A -->
+<g id="node1" class="node">
+<title>A</title>
+<ellipse fill="red" stroke="red" cx="22.1" cy="-216.26" rx="18.02" ry="18.02"></ellipse>
+<text text-anchor="middle" x="22.1" y="-212.06" font-family="Times,serif" font-size="14.00" fill="white">A</text>
+</g>
+<!-- B -->
+<g id="node2" class="node">
+<title>B</title>
+<ellipse fill="red" stroke="red" cx="119.1" cy="-291.26" rx="18" ry="18"></ellipse>
+<text text-anchor="middle" x="119.1" y="-287.06" font-family="Times,serif" font-size="14.00" fill="white">B</text>
+</g>
+<!-- A&#45;&gt;B -->
+<g id="edge1" class="edge">
+<title>A-&gt;B</title>
+<path fill="none" stroke="black" d="M36.71,-227.01C52.37,-239.37 78.29,-259.83 96.67,-274.34"></path>
+<polygon fill="black" stroke="black" points="94.5,-277.08 104.52,-280.53 98.84,-271.59 94.5,-277.08"></polygon>
+<text text-anchor="middle" x="70.1" y="-259.46" font-family="Times,serif" font-size="14.00">3</text>
+</g>
+<!-- D -->
+<g id="node3" class="node">
+<title>D</title>
+<ellipse fill="red" stroke="red" cx="119.1" cy="-141.26" rx="18.02" ry="18.02"></ellipse>
+<text text-anchor="middle" x="119.1" y="-137.06" font-family="Times,serif" font-size="14.00" fill="white">D</text>
+</g>
+<!-- A&#45;&gt;D -->
+<g id="edge2" class="edge">
+<title>A-&gt;D</title>
+<path fill="none" stroke="black" d="M36.71,-205.51C52.37,-193.15 78.29,-172.69 96.67,-158.18"></path>
+<polygon fill="black" stroke="black" points="98.84,-160.93 104.52,-151.99 94.5,-155.43 98.84,-160.93"></polygon>
+<text text-anchor="middle" x="70.1" y="-185.46" font-family="Times,serif" font-size="14.00">1</text>
+</g>
+<!-- C -->
+<g id="node4" class="node">
+<title>C</title>
+<ellipse fill="red" stroke="red" cx="216.1" cy="-382.26" rx="18" ry="18"></ellipse>
+<text text-anchor="middle" x="216.1" y="-378.06" font-family="Times,serif" font-size="14.00" fill="white">C</text>
+</g>
+<!-- B&#45;&gt;C -->
+<g id="edge3" class="edge">
+<title>B-&gt;C</title>
+<path fill="none" stroke="black" d="M132.91,-303.53C148.87,-318.81 176.3,-345.09 195.05,-363.05"></path>
+<polygon fill="black" stroke="black" points="192.85,-365.79 202.49,-370.18 197.69,-360.74 192.85,-365.79"></polygon>
+<text text-anchor="middle" x="167.1" y="-343.46" font-family="Times,serif" font-size="14.00">2</text>
+</g>
+<!-- E -->
+<g id="node5" class="node">
+<title>E</title>
+<ellipse fill="red" stroke="red" cx="216.1" cy="-216.26" rx="18" ry="18"></ellipse>
+<text text-anchor="middle" x="216.1" y="-212.06" font-family="Times,serif" font-size="14.00" fill="white">E</text>
+</g>
+<!-- B&#45;&gt;E -->
+<g id="edge4" class="edge">
+<title>B-&gt;E</title>
+<path fill="none" stroke="black" d="M133.71,-280.51C149.37,-268.15 175.29,-247.69 193.67,-233.18"></path>
+<polygon fill="black" stroke="black" points="195.84,-235.93 201.52,-226.99 191.5,-230.43 195.84,-235.93"></polygon>
+<text text-anchor="middle" x="167.1" y="-259.46" font-family="Times,serif" font-size="14.00">1</text>
+</g>
+<!-- D&#45;&gt;E -->
+<g id="edge5" class="edge">
+<title>D-&gt;E</title>
+<path fill="none" stroke="black" d="M133.71,-152.01C149.37,-164.37 175.29,-184.83 193.67,-199.34"></path>
+<polygon fill="black" stroke="black" points="191.5,-202.08 201.52,-205.53 195.84,-196.59 191.5,-202.08"></polygon>
+<text text-anchor="middle" x="167.1" y="-185.46" font-family="Times,serif" font-size="14.00">3</text>
+</g>
+<!-- G -->
+<g id="node6" class="node">
+<title>G</title>
+<ellipse fill="red" stroke="red" cx="216.1" cy="-50.26" rx="18.02" ry="18.02"></ellipse>
+<text text-anchor="middle" x="216.1" y="-46.06" font-family="Times,serif" font-size="14.00" fill="white">G</text>
+</g>
+<!-- D&#45;&gt;G -->
+<g id="edge6" class="edge">
+<title>D-&gt;G</title>
+<path fill="none" stroke="black" d="M132.91,-128.99C148.87,-113.71 176.3,-87.43 195.05,-69.47"></path>
+<polygon fill="black" stroke="black" points="197.69,-71.78 202.49,-62.34 192.85,-66.73 197.69,-71.78"></polygon>
+<text text-anchor="middle" x="167.1" y="-103.46" font-family="Times,serif" font-size="14.00">2</text>
+</g>
+<!-- F -->
+<g id="node7" class="node">
+<title>F</title>
+<ellipse fill="red" stroke="red" cx="313.1" cy="-291.26" rx="18" ry="18"></ellipse>
+<text text-anchor="middle" x="313.1" y="-287.06" font-family="Times,serif" font-size="14.00" fill="white">F</text>
+</g>
+<!-- C&#45;&gt;F -->
+<g id="edge7" class="edge">
+<title>C-&gt;F</title>
+<path fill="none" stroke="black" d="M229.91,-369.99C245.87,-354.71 273.3,-328.43 292.05,-310.47"></path>
+<polygon fill="black" stroke="black" points="294.69,-312.78 299.49,-303.34 289.85,-307.73 294.69,-312.78"></polygon>
+<text text-anchor="middle" x="264.1" y="-343.46" font-family="Times,serif" font-size="14.00">3</text>
+</g>
+<!-- E&#45;&gt;F -->
+<g id="edge8" class="edge">
+<title>E-&gt;F</title>
+<path fill="none" stroke="black" d="M230.71,-227.01C246.37,-239.37 272.29,-259.83 290.67,-274.34"></path>
+<polygon fill="black" stroke="black" points="288.5,-277.08 298.52,-280.53 292.84,-271.59 288.5,-277.08"></polygon>
+<text text-anchor="middle" x="264.1" y="-259.46" font-family="Times,serif" font-size="14.00">3</text>
+</g>
+<!-- H -->
+<g id="node8" class="node">
+<title>H</title>
+<ellipse fill="red" stroke="red" cx="313.1" cy="-141.26" rx="18.02" ry="18.02"></ellipse>
+<text text-anchor="middle" x="313.1" y="-137.06" font-family="Times,serif" font-size="14.00" fill="white">H</text>
+</g>
+<!-- E&#45;&gt;H -->
+<g id="edge9" class="edge">
+<title>E-&gt;H</title>
+<path fill="none" stroke="black" d="M230.71,-205.51C246.37,-193.15 272.29,-172.69 290.67,-158.18"></path>
+<polygon fill="black" stroke="black" points="292.84,-160.93 298.52,-151.99 288.5,-155.43 292.84,-160.93"></polygon>
+<text text-anchor="middle" x="264.1" y="-185.46" font-family="Times,serif" font-size="14.00">2</text>
+</g>
+<!-- G&#45;&gt;H -->
+<g id="edge10" class="edge">
+<title>G-&gt;H</title>
+<path fill="none" stroke="black" d="M229.91,-62.53C245.87,-77.81 273.3,-104.09 292.05,-122.05"></path>
+<polygon fill="black" stroke="black" points="289.85,-124.79 299.49,-129.18 294.69,-119.74 289.85,-124.79"></polygon>
+<text text-anchor="middle" x="264.1" y="-103.46" font-family="Times,serif" font-size="14.00">4</text>
+</g>
+<!-- I -->
+<g id="node9" class="node">
+<title>I</title>
+<ellipse fill="red" stroke="red" cx="410.1" cy="-216.26" rx="18" ry="18"></ellipse>
+<text text-anchor="middle" x="410.1" y="-212.06" font-family="Times,serif" font-size="14.00" fill="white">I</text>
+</g>
+<!-- F&#45;&gt;I -->
+<g id="edge11" class="edge">
+<title>F-&gt;I</title>
+<path fill="none" stroke="black" d="M327.71,-280.51C343.37,-268.15 369.29,-247.69 387.67,-233.18"></path>
+<polygon fill="black" stroke="black" points="389.84,-235.93 395.52,-226.99 385.5,-230.43 389.84,-235.93"></polygon>
+<text text-anchor="middle" x="361.1" y="-259.46" font-family="Times,serif" font-size="14.00">4</text>
+</g>
+<!-- H&#45;&gt;I -->
+<g id="edge12" class="edge">
+<title>H-&gt;I</title>
+<path fill="none" stroke="black" d="M327.71,-152.01C343.37,-164.37 369.29,-184.83 387.67,-199.34"></path>
+<polygon fill="black" stroke="black" points="385.5,-202.08 395.52,-205.53 389.84,-196.59 385.5,-202.08"></polygon>
+<text text-anchor="middle" x="361.1" y="-185.46" font-family="Times,serif" font-size="14.00">2</text>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>The task is now to find the shortest path from <code>A</code> to <code>I</code>. What are possible solution strategies? We can start enumerating all the possible paths and calculate their costs (by summing the costs of the participating edges). Needless to say, this strategy based on enumeration scales very badly with the growing number of nodes.</p>
+<p>Alternatively, we solve the problem using dynamic programming and relying on Bellman’s principle of optimality. Before we proceed, we need to define the concept of a <em>stage</em>. It is perhaps less common and natural when it comes to solving graph problems, but we introduce it with anticipation of discrete-time optimal control problems. By the <em>k</em>th stage we understand the node at which the <em>k</em>th decision needs to be made. In our case, starting at <code>A</code>, 4 decisions need to be made to reach the final node. But let’s agree that we also denote the final node as the stage, the 5th one, even if no decision is to be made here. The total number of stages is then N=5.</p>
+<p>The crucial attribute of the strategy based on dynamic programming is that we proceed <em>backwards</em>. We start at the very final <em>stage</em>. At this stage, there is just one node and there is nothing we can do, but note that it also makes sense to formulate problems with several possible nodes at the final stage, each with a different (terminal) costs — we will actually use once we switch to the optimal control setting. Now we proceed backwards to the last but one, that is, the <em>(N-1)</em>th stage.</p>
+<p>These are <code>F</code> and <code>H</code> nodes at this 4the stage. In these two nodes there is again no freedom as for the actions, but for each of them we can record their respective <em>cost to go</em>: 4 for the <code>F</code> node and 2 for the <code>H</code> node. These costs reflect how costly it is to reach the terminal node from them.</p>
+<p>Things are only getting interesting if we now proceed to the 3rd stage. We now have to consider three possible nodes: <code>C</code>, <code>E</code> and <code>G</code>. For the <code>C</code> and <code>G</code> nodes there is still just one action and we can only record their costs to go. The cost for the <code>C</code> node can be computed as the cost for the immediate transition from <code>C</code> to <code>F</code> plus the cost for the <code>F</code> node, which we recorded previously, that is, 3+4=7. We record the value of 7 with the <code>C</code> node. Similarly for the <code>G</code> node. For the <code>E</code> node there are two possible actions — two possible decisions to be made, two possible paths to choose from. Either to the left (or, actually, up in our orientation of the graph), which would bring us to the node <code>F</code>, or to the right (or down), which would bring us to the node <code>H</code>. We compute the costs to go for both decisions and choose the decision with a smaller cost. Here the cost of the decision to go to the left is composed of the cost of the transition to F plus the cost to go from <code>F</code>, that is, 3+4=7. The cost to go for the decision to go right is composed of the transition cost from <code>E</code> to <code>H</code> plus the cost to go from <code>H</code>, that is, 2+2=4. Obviously, the optimal decision is to go right, that is, to the node <code>H</code>. Here, on top of the value of the optimal (smallest) cost to go from the node we also record the optimal decision (go to the right/down). We do it by coloring the edge in blue.</p>
+<p>Note that in principle we should have highlighted the edges from <code>F</code> to <code>I</code>, from <code>C</code> to <code>F</code>, and from <code>G</code> to <code>H</code>. It was unnecessary here since there were the only possible edges emanating from these nodes.</p>
+<p>We proceed backwards to the 2nd stage, and we compute the costs to go for the nodes <code>B</code> and <code>D</code>. Again we record their optimal values and the actual optimal decisions.</p>
+<p>One last shift backwards and we are at the initial node A, for which we can do the same computation of the costs to go. Note that here coincidently both decisions have the same cost to go, hence both possible decisions/actions are optimal and we can just toss a coin.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 430.48 432.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(0.907893 0.907893) rotate(0) translate(4 471.83)">
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-471.83 470.16,-471.83 470.16,4 -4,4"></polygon>
+<!-- A -->
+<g id="node1" class="node">
+<title>A</title>
+<ellipse fill="red" stroke="red" cx="29.16" cy="-253.89" rx="29.33" ry="29.33"></ellipse>
+<text text-anchor="middle" x="29.16" y="-258.09" font-family="Times,serif" font-size="14.00" fill="white">A</text>
+<text text-anchor="middle" x="29.16" y="-241.29" font-family="Times,serif" font-size="14.00" fill="white">8</text>
+</g>
+<!-- B -->
+<g id="node2" class="node">
+<title>B</title>
+<ellipse fill="red" stroke="red" cx="131.16" cy="-339.89" rx="29.33" ry="29.33"></ellipse>
+<text text-anchor="middle" x="131.16" y="-344.09" font-family="Times,serif" font-size="14.00" fill="white">B</text>
+<text text-anchor="middle" x="131.16" y="-327.29" font-family="Times,serif" font-size="14.00" fill="white">5</text>
+</g>
+<!-- A&#45;&gt;B -->
+<g id="edge1" class="edge">
+<title>A-&gt;B</title>
+<path fill="none" stroke="blue" stroke-width="3" d="M52.35,-272.98C66.56,-285.2 85.16,-301.2 100.62,-314.49"></path>
+<polygon fill="blue" stroke="blue" stroke-width="3" points="98.51,-317.29 108.37,-321.16 103.07,-311.98 98.51,-317.29"></polygon>
+<text text-anchor="middle" x="80.16" y="-303.09" font-family="Times,serif" font-size="14.00">3</text>
+</g>
+<!-- D -->
+<g id="node3" class="node">
+<title>D</title>
+<ellipse fill="red" stroke="red" cx="131.16" cy="-169.89" rx="29.33" ry="29.33"></ellipse>
+<text text-anchor="middle" x="131.16" y="-174.09" font-family="Times,serif" font-size="14.00" fill="white">D</text>
+<text text-anchor="middle" x="131.16" y="-157.29" font-family="Times,serif" font-size="14.00" fill="white">7</text>
+</g>
+<!-- A&#45;&gt;D -->
+<g id="edge2" class="edge">
+<title>A-&gt;D</title>
+<path fill="none" stroke="blue" stroke-width="3" d="M52.35,-235.25C66.46,-223.4 84.91,-207.9 100.3,-194.98"></path>
+<polygon fill="blue" stroke="blue" stroke-width="3" points="102.62,-197.6 108.03,-188.48 98.12,-192.24 102.62,-197.6"></polygon>
+<text text-anchor="middle" x="80.16" y="-219.09" font-family="Times,serif" font-size="14.00">1</text>
+</g>
+<!-- C -->
+<g id="node4" class="node">
+<title>C</title>
+<ellipse fill="red" stroke="red" cx="233.16" cy="-402.89" rx="29.33" ry="29.33"></ellipse>
+<text text-anchor="middle" x="233.16" y="-407.09" font-family="Times,serif" font-size="14.00" fill="white">C</text>
+<text text-anchor="middle" x="233.16" y="-390.29" font-family="Times,serif" font-size="14.00" fill="white">7</text>
+</g>
+<!-- B&#45;&gt;C -->
+<g id="edge3" class="edge">
+<title>B-&gt;C</title>
+<path fill="none" stroke="black" d="M156.36,-355.15C169.17,-363.21 185.08,-373.23 199.01,-382.01"></path>
+<polygon fill="black" stroke="black" points="197.5,-385.2 207.83,-387.57 201.23,-379.27 197.5,-385.2"></polygon>
+<text text-anchor="middle" x="182.16" y="-377.09" font-family="Times,serif" font-size="14.00">2</text>
+</g>
+<!-- E -->
+<g id="node5" class="node">
+<title>E</title>
+<ellipse fill="red" stroke="red" cx="233.16" cy="-233.89" rx="29.33" ry="29.33"></ellipse>
+<text text-anchor="middle" x="233.16" y="-238.09" font-family="Times,serif" font-size="14.00" fill="white">E</text>
+<text text-anchor="middle" x="233.16" y="-221.29" font-family="Times,serif" font-size="14.00" fill="white">4</text>
+</g>
+<!-- B&#45;&gt;E -->
+<g id="edge4" class="edge">
+<title>B-&gt;E</title>
+<path fill="none" stroke="blue" stroke-width="3" d="M151.91,-318.95C167.25,-302.69 188.68,-279.98 205.53,-262.12"></path>
+<polygon fill="blue" stroke="blue" stroke-width="3" points="208.12,-264.47 212.44,-254.79 203.03,-259.67 208.12,-264.47"></polygon>
+<text text-anchor="middle" x="182.16" y="-294.09" font-family="Times,serif" font-size="14.00">1</text>
+</g>
+<!-- D&#45;&gt;E -->
+<g id="edge5" class="edge">
+<title>D-&gt;E</title>
+<path fill="none" stroke="blue" stroke-width="3" d="M156.36,-185.39C169.17,-193.58 185.08,-203.76 199.01,-212.68"></path>
+<polygon fill="blue" stroke="blue" stroke-width="3" points="197.52,-215.88 207.83,-218.32 201.29,-209.98 197.52,-215.88"></polygon>
+<text text-anchor="middle" x="182.16" y="-208.09" font-family="Times,serif" font-size="14.00">3</text>
+</g>
+<!-- G -->
+<g id="node6" class="node">
+<title>G</title>
+<ellipse fill="red" stroke="red" cx="233.16" cy="-64.89" rx="29.33" ry="29.33"></ellipse>
+<text text-anchor="middle" x="233.16" y="-69.09" font-family="Times,serif" font-size="14.00" fill="white">G</text>
+<text text-anchor="middle" x="233.16" y="-52.29" font-family="Times,serif" font-size="14.00" fill="white">6</text>
+</g>
+<!-- D&#45;&gt;G -->
+<g id="edge6" class="edge">
+<title>D-&gt;G</title>
+<path fill="none" stroke="black" d="M152.15,-148.9C167.28,-133.02 188.21,-111.03 204.88,-93.54"></path>
+<polygon fill="black" stroke="black" points="207.83,-95.51 212.19,-85.85 202.76,-90.68 207.83,-95.51"></polygon>
+<text text-anchor="middle" x="182.16" y="-125.09" font-family="Times,serif" font-size="14.00">2</text>
+</g>
+<!-- F -->
+<g id="node7" class="node">
+<title>F</title>
+<ellipse fill="red" stroke="red" cx="335.16" cy="-339.89" rx="29.33" ry="29.33"></ellipse>
+<text text-anchor="middle" x="335.16" y="-344.09" font-family="Times,serif" font-size="14.00" fill="white">F</text>
+<text text-anchor="middle" x="335.16" y="-327.29" font-family="Times,serif" font-size="14.00" fill="white">4</text>
+</g>
+<!-- C&#45;&gt;F -->
+<g id="edge7" class="edge">
+<title>C-&gt;F</title>
+<path fill="none" stroke="black" d="M258.36,-387.64C271.17,-379.58 287.08,-369.56 301.01,-360.78"></path>
+<polygon fill="black" stroke="black" points="303.23,-363.51 309.83,-355.22 299.5,-357.59 303.23,-363.51"></polygon>
+<text text-anchor="middle" x="284.16" y="-377.09" font-family="Times,serif" font-size="14.00">3</text>
+</g>
+<!-- E&#45;&gt;F -->
+<g id="edge8" class="edge">
+<title>E-&gt;F</title>
+<path fill="none" stroke="black" d="M253.91,-254.84C269.25,-271.1 290.68,-293.81 307.53,-311.67"></path>
+<polygon fill="black" stroke="black" points="305.03,-314.12 314.44,-319 310.12,-309.32 305.03,-314.12"></polygon>
+<text text-anchor="middle" x="284.16" y="-294.09" font-family="Times,serif" font-size="14.00">3</text>
+</g>
+<!-- H -->
+<g id="node8" class="node">
+<title>H</title>
+<ellipse fill="red" stroke="red" cx="335.16" cy="-169.89" rx="29.33" ry="29.33"></ellipse>
+<text text-anchor="middle" x="335.16" y="-174.09" font-family="Times,serif" font-size="14.00" fill="white">H</text>
+<text text-anchor="middle" x="335.16" y="-157.29" font-family="Times,serif" font-size="14.00" fill="white">2</text>
+</g>
+<!-- E&#45;&gt;H -->
+<g id="edge9" class="edge">
+<title>E-&gt;H</title>
+<path fill="none" stroke="blue" stroke-width="3" d="M258.36,-218.4C271.17,-210.21 287.08,-200.03 301.01,-191.11"></path>
+<polygon fill="blue" stroke="blue" stroke-width="3" points="303.29,-193.81 309.83,-185.47 299.52,-187.91 303.29,-193.81"></polygon>
+<text text-anchor="middle" x="284.16" y="-208.09" font-family="Times,serif" font-size="14.00">2</text>
+</g>
+<!-- G&#45;&gt;H -->
+<g id="edge10" class="edge">
+<title>G-&gt;H</title>
+<path fill="none" stroke="black" d="M254.15,-85.89C269.28,-101.77 290.21,-123.76 306.88,-141.25"></path>
+<polygon fill="black" stroke="black" points="304.76,-144.11 314.19,-148.94 309.83,-139.28 304.76,-144.11"></polygon>
+<text text-anchor="middle" x="284.16" y="-125.09" font-family="Times,serif" font-size="14.00">4</text>
+</g>
+<!-- I -->
+<g id="node9" class="node">
+<title>I</title>
+<ellipse fill="red" stroke="red" cx="437.16" cy="-253.89" rx="29.33" ry="29.33"></ellipse>
+<text text-anchor="middle" x="437.16" y="-258.09" font-family="Times,serif" font-size="14.00" fill="white">I</text>
+<text text-anchor="middle" x="437.16" y="-241.29" font-family="Times,serif" font-size="14.00" fill="white">0</text>
+</g>
+<!-- F&#45;&gt;I -->
+<g id="edge11" class="edge">
+<title>F-&gt;I</title>
+<path fill="none" stroke="black" d="M358.35,-320.81C372.56,-308.59 391.16,-292.59 406.62,-279.3"></path>
+<polygon fill="black" stroke="black" points="409.07,-281.81 414.37,-272.63 404.51,-276.5 409.07,-281.81"></polygon>
+<text text-anchor="middle" x="386.16" y="-303.09" font-family="Times,serif" font-size="14.00">4</text>
+</g>
+<!-- H&#45;&gt;I -->
+<g id="edge12" class="edge">
+<title>H-&gt;I</title>
+<path fill="none" stroke="blue" stroke-width="3" d="M358.35,-188.54C372.46,-200.39 390.91,-215.88 406.3,-228.81"></path>
+<polygon fill="blue" stroke="blue" stroke-width="3" points="404.12,-231.55 414.03,-235.3 408.62,-226.19 404.12,-231.55"></polygon>
+<text text-anchor="middle" x="386.16" y="-219.09" font-family="Times,serif" font-size="14.00">2</text>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Maybe it is not immediately clear from the graph, but when viewed as an itinerary for a trip, it provides a feedback controller. Even if for whichever reason we find ourselves out of the optimal path, we can always have a look at the graph — it will guide us along the path that is optimal from that given node. For example, if we happen to be in node <code>C</code>, we do have a plan. Well, here is misleadingly simple as there is no decision to be made, but you get the point.</p>
+</div>
+</section>
+<section id="bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem" class="level2">
+<h2 class="anchored" data-anchor-id="bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem">Bellman’s principle of optimality applied to the discrete-time optimal control problem</h2>
+<p>Let’s recapitulate here the problem of optimal control for a discrete-time system. In particular, we consider the system modelled by <span class="math display">
+\bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k),
+</span> defined on the discrete time interval <span class="math inline">[i,N]</span>, with the initial state <span class="math inline">\bm x_i</span> fixed (<span class="math inline">\bm x_i = \mathbf x_i</span>) We aim at minimizing the cost function <span class="math display">
+J_i^N\left(\bm x_i, \bm u_i, \bm u_{i+1}, \ldots, \bm u_{N-1}\right) = \phi(\bm x_N,N) + \sum_{k=i}^{N-1}L_k(\bm x_k,\bm u_k).
+</span></p>
+<p>Before we proceed, some comments on the notation are in order. Indeed, a well tuned and systematically used notation is instrumental in dynamic programming.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+We omit the final time from the notation for the cost function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>While the cost function does depend on the final time too, in most if not all our analyses we assume that it is fixed and understood from the context. Hence we will not explicitly indicate the dependence on the final time. We will write just <span class="math inline">J_i(\ldots)</span>. This may help reduce the notational clutter as we are going to need the upper index for something else soon.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+We omit the state trajectory from the notation for the cost function and leave just the initial state
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The cost function is clearly a function of the full sequence <span class="math inline">\bm x_i, \bm x_{i+1},\ldots, \bm x_N</span> of the state vectors too. In the previous chapters we handled it systematically (either by considering them as optimization variables in the simultaneous direct approach or by introducing Lagrange multipliers in the indirect approache). But here we want to emphasize the fact that starting with <span class="math inline">\bm x_{i+1}</span>, the whole state trajectory is uniquelly determined by the initial state <span class="math inline">\bm x_i</span> and the corresponding control trajectory <span class="math inline">\bm u_i, \bm u_{i+1},\ldots, \bm u_{N-1}</span>. Therefore, we write the cost function as a function of the initial state, the initial time (we already agreed above not to emphasize the final time), and the sequence of controls.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+We use the lower index to display dependence on time
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The dependence on the discrete time is reflected by the lower indices: not only in <span class="math inline">\bm x_k</span> and <span class="math inline">\bm u_k</span> but also in <span class="math inline">\mathbf f_k()</span>, <span class="math inline">L_k()</span> and <span class="math inline">J_k()</span>. We could perhaps write these as <span class="math inline">\mathbf f(\cdot,\cdot,k)</span>, <span class="math inline">L(\cdot,\cdot,k)</span> and <span class="math inline">J(\cdot,\cdot,k)</span> to better indicate that <span class="math inline">k</span> is really an argument for these functions, but we prefer making it compatible with the way we indicate the time dependence of <span class="math inline">\bm x_k</span> and <span class="math inline">\bm u_k</span>.</p>
+</div>
+</div>
+<p>Having introduced the cost function parameterized by the initial state, initial time and the full sequence of controls, we now introduce the <em>optimal cost function</em></p>
+<p><span id="eq-optimal_cost_function"><span class="math display">
+\boxed{
+    J^\star_i(\bm x_i) = \min_{\bm u_i,\ldots, \bm u_{N-1}} J_i\left(\bm x_i, \bm u_i, \bm u_{i+1}, \ldots, \bm u_{N-1}\right).}
+\tag{1}</span></span></p>
+<p>The sequence of controls in the above minimization may be subject to some constraints, but we do not indicate them here for the sake of notational simplicity.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Difference between the <span class="math inline">J_i</span> and <span class="math inline">J^\star_i</span> functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Understanding the difference is crucial. While the cost function <span class="math inline">J_i</span> depends on the (initial) state, the (initial) time and the sequence of controls applied over the whole interval, the optimal cost function <span class="math inline">J^\star_i</span> only depends on the (initial) state and the (initial) time.</p>
+</div>
+</div>
+<p>Assume now that we can find an optimal control sequence from any given state <span class="math inline">\bm x_{k+1}</span> at time <span class="math inline">k+1</span> on, i.e., we can find <span class="math inline">\bm u_{k+1}^\star,\bm u_{k+2}^\star,\ldots, \bm u_{N-1}^\star</span> yielding the optimal cost <span class="math inline">J_{k+1}^\star(\bm x_{k+1})</span>. We will soon show how to actually find it, but for the time being we just assume we can have it. We now show how it can be used to find the optimal cost <span class="math inline">J_k^\star(\bm x_k)</span> at state <span class="math inline">\bm x_k</span> and time <span class="math inline">k</span>.</p>
+<p>Let’s now consider the following strategy: with the system at state <span class="math inline">\bm x_k</span> and time <span class="math inline">k</span> we apply some control <span class="math inline">\bm u_k</span>, not necessarily an optimal one, which brings the system to the state <span class="math inline">\bm x_{k+1}</span> in the next time <span class="math inline">k+1</span>. But from then on we use the control sequence <span class="math inline">\bm u_{k+1}^\star,\bm u_{k+2}^\star,\ldots, \bm u_{N-1}^\star</span> that is optimal from <span class="math inline">\bm x_{k+1}</span>. The corresponding cost is <span id="eq-cost_of_the_all_but_one_optimal_controls"><span class="math display">
+L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1}).
+\tag{2}</span></span></p>
+<p>Bellman’s principle of optimality states that if we optimize the above expression over <span class="math inline">\bm u_k</span>, we get the optimal cost <span class="math inline">J_k^\star(\bm x_k)</span> at time <span class="math inline">k</span> <span id="eq-bellman_for_discrete_time_optimal_control"><span class="math display">
+\boxed{J_k^\star(\bm x_k) = \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1})\right).}
+\tag{3}</span></span></p>
+<p>Hence, at a given state <span class="math inline">\bm x_{k}</span> and time <span class="math inline">k</span>, the optimization is performed over only one (possibly vector) control <span class="math inline">\bm u_k</span> and not the whole trajectory as the definition of the optimal cost in <a href="#eq-optimal_cost_function" class="quarto-xref">Equation&nbsp;1</a> suggests! What a simplification!</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The minimization needs to be performed over the whole sum <span class="math inline">L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1})</span>, because <span class="math inline">\bm x_{k+1}</span> is a function of <span class="math inline">\bm u_k</span> (recall that <span class="math inline">\bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k)</span>). We can also write <a href="#eq-bellman_for_discrete_time_optimal_control" class="quarto-xref">Equation&nbsp;3</a> as <span class="math display">
+J_k^\star(\bm x_k) = \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\mathbf f_k(\bm x_k,\bm u_k))\right),
+</span> which makes it more apparent.</p>
+</div>
+</div>
+<p>Once we have the optimal cost function <span class="math inline">J^\star_{k}</span>, the optimal control <span class="math inline">\bm u_k^\star(x_k)</span> at a given time <span class="math inline">k</span> and state <span class="math inline">\bm x_k</span> is obtained by <span class="math display">
+\boxed{
+    \bm u_k^\star(\bm x_k) = \arg \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\mathbf f_k(\bm x_k,\bm u_k))\right).}
+</span></p>
+<section id="alternative-formulation-of-dynamic-programming-using-q-factors" class="level3">
+<h3 class="anchored" data-anchor-id="alternative-formulation-of-dynamic-programming-using-q-factors">Alternative formulation of dynamic programming using Q-factors</h3>
+<p>The cost function in <a href="#eq-cost_of_the_all_but_one_optimal_controls" class="quarto-xref">Equation&nbsp;2</a> is sometimes called <em>Q-factor</em> and we denote it <span class="math inline">Q_k(\bm x_k,\bm u_k)</span>. We write its definition here for convenience <span class="math display">
+Q^\star_k(\bm x_k,\bm u_k) = L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1}).
+</span></p>
+<p>The optimal cost function <span class="math inline">J_k^\star(\bm x_k)</span> can be recovered from the optimal Q-factor <span class="math inline">Q_k^\star(\bm x_k,\bm u_k)</span> by taking the minimum over <span class="math inline">\bm u_k</span> <span class="math display">
+J_k^\star(\bm x_k) = \min_{\bm u_k} Q_k^\star(\bm x_k,\bm u_k).
+</span></p>
+<p>Bellman’s principle of optimality can be then expressed using the optimal Q-factor as <span class="math display">
+\boxed{Q_k^\star(\bm x_k,\bm u_k) = L_k(\bm x_k,\bm u_k) + \min_{\bm u_{k+1}} Q_{k+1}^\star(\bm x_{k+1},\bm u_{k+1})}.
+</span></p>
+<p>Optimal control is then obtained from the optimal Q-factor as the minimizing control <span class="math display">
+\boxed{\bm u_k^\star(\bm x_k) = \arg \min_{\bm u_k} Q_k^\star(\bm x_k,\bm u_k).}
+</span></p>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1504,13 +1568,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cont_indir_CARE.html" class="pagination-link" aria-label="Continuous-time Riccati equation">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Continuous-time Riccati equation</span>
+      <a href="./discr_indir_references.html" class="pagination-link" aria-label="References">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">References</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cont_indir_trajectory_stabilization.html" class="pagination-link" aria-label="Trajectory stabilization and neigboring extremals">
-        <span class="nav-page-text">Trajectory stabilization and neigboring extremals</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./dynamic_programming_tabular.html" class="pagination-link" aria-label="Tables as outcomes of dynamic programming">
+        <span class="nav-page-text">Tables as outcomes of dynamic programming</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

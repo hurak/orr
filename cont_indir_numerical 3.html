@@ -782,8 +782,8 @@ for the costates <span class="math inline">\bm \lambda(t)</span>, starting at th
 f_1(\bm y,t)\\
 f_2(\bm y,t)
 \end{bmatrix}\\
-y_1(t_\mathrm{i}) &amp;= \mathrm y_{1\mathrm{i}},\\
-y_1(t_\mathrm{f}) &amp;= \mathrm y_{1\mathrm{f}}.
+y_1(t_\mathrm{i}) &amp;= \mathrm y_\mathrm{i},\\
+y_1(t_\mathrm{f}) &amp;= \mathrm y_\mathrm{f}.
 \end{aligned}
 </span></p>
 <section id="shooting-method" class="level4">
@@ -792,12 +792,10 @@ y_1(t_\mathrm{f}) &amp;= \mathrm y_{1\mathrm{f}}.
 <ol type="1">
 <li>Guess at the missing (unspecified) value of <span class="math inline">y_2</span> at the initial time <span class="math inline">t_\mathrm{i}</span>,</li>
 <li>Use an IVP solver (for example <code>ode45</code> in Matlab) to find the values of both variables over the whole interval <span class="math inline">[t_\mathrm{i},t_\mathrm{f}]</span>.</li>
-<li>Compare the simulated value of the state variable <span class="math inline">y_1</span> at the final time <span class="math inline">t_\mathrm{f}</span> and compare it with the boundary value .</li>
-<li>Based on the error <span class="math inline">e = y_1(t_\mathrm{f})-\mathrm y_{1\mathrm{f}}</span>, update <span class="math inline">y_2(t_\mathrm{i})</span> and go back to step 2.</li>
+<li>Compare the simulated value of the state variable <span class="math inline">y_2</span> at the final time <span class="math inline">t_\mathrm{i}</span> and compare it with the boundary value .</li>
+<li>Based on the error <span class="math inline">e = y_1(t_\mathrm{f})-\mathrm y_\mathrm{f}</span>, update <span class="math inline">x_2(t_\mathrm{i})</span> and go back to step 2.</li>
 </ol>
-<p>How shall the update in the step 4 be realized? The value of <span class="math inline">y_1</span> at the final time <span class="math inline">t_\mathrm{f}</span> and therefore the error <span class="math inline">e</span> are functions of the value of <span class="math inline">y_2</span> at the initial time <span class="math inline">t_\mathrm{i}</span>, let’s label it <span class="math inline">y_{2\mathrm{i}}</span>. We can formally express this upon introducing a map <span class="math inline">F</span> such that <span class="math inline">e = F(y_{2\mathrm{i}})</span>. The problem now boils down to solving the nonlinear equation (in general a system of equations) <span class="math display">\boxed
-{F(y_{2\mathrm{i}}) = 0.}
-</span></p>
+<p>How shall the update in the step 4 be realized? The value of <span class="math inline">y_1</span> at the final time <span class="math inline">t_\mathrm{f}</span> and therefore the error <span class="math inline">e</span> are functions of the value of <span class="math inline">y_1</span> at the initial time <span class="math inline">t_\mathrm{i}</span>. We can formally express this upon introducing a map <span class="math inline">F</span> such that <span class="math inline">e = F(\mathrm y_i)</span>. The problem now boils down to solving the nonlinear equation (in general a system of equations) <span class="math display">F(\mathrm y_i) = 0.</span></p>
 <p>If Newton’s method is to be used for solving this equation, the derivatives of <span class="math inline">F</span> (formatted into a matrix) are needed. Most often than not, numerical solvers for IVP ODE have to be called in order to evaluate the function <span class="math inline">F</span>, in which case the derivatives cannot be determined analytically. Finite difference (FD) and algorithmic/automatic differentiation (AD) methods are available.</p>
 <p>By now the reason for calling this method <em>shooting</em> is perhaps obvious. Indeed, the analogy with <a href="http://www.matthewpeterkelly.com/tutorials/trajectoryOptimization/canon.html">aiming and shooting a cannon</a> is illustrative.</p>
 </section>
@@ -1174,7 +1172,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/hurak\.github\.io\/orr\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

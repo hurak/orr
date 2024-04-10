@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Numerical methods for indirect approach</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – General nonlinear discrete-time optimal control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -50,8 +30,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./cont_indir_trajectory_stabilization.html" rel="next">
-<link href="./cont_indir_CARE.html" rel="prev">
+<link href="./discr_indir_LQR_fin_horizon.html" rel="next">
+<link href="./discr_dir_references.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -145,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_numerical.html">Numerical methods for indirect approach</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_indir_general.html">4. Discrete-time optimal control – indirect approach</a></li><li class="breadcrumb-item"><a href="./discr_indir_general.html">General nonlinear discrete-time optimal control</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -310,7 +290,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_indir_general.html" class="sidebar-item-text sidebar-link">
+  <a href="./discr_indir_general.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">General nonlinear discrete-time optimal control</span></a>
   </div>
 </li>
@@ -451,7 +431,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_numerical.html" class="sidebar-item-text sidebar-link active">
+  <a href="./cont_indir_numerical.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Numerical methods for indirect approach</span></a>
   </div>
 </li>
@@ -508,11 +488,8 @@ window.Quarto = {
       </div>
       <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./cont_dir_shooting_and_multiple.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Shooting and multiple shooting</span></a>
-  </div>
-</li>
+ <span class="menu-text">cont_dir_shooting_amd_multiple.qmd</span>
+  </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_dir_collocation.html" class="sidebar-item-text sidebar-link">
@@ -676,23 +653,19 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#gradient-method-for-the-tp-bvp-dae-for-free-final-state" id="toc-gradient-method-for-the-tp-bvp-dae-for-free-final-state" class="nav-link active" data-scroll-target="#gradient-method-for-the-tp-bvp-dae-for-free-final-state">Gradient method for the TP-BVP DAE for free final state</a></li>
-  <li><a href="#methods-for-solving-tp-bvp-ode" id="toc-methods-for-solving-tp-bvp-ode" class="nav-link" data-scroll-target="#methods-for-solving-tp-bvp-ode">Methods for solving TP-BVP ODE</a>
-  <ul class="collapse">
-  <li><a href="#shooting-and-multiple-shooting-methods" id="toc-shooting-and-multiple-shooting-methods" class="nav-link" data-scroll-target="#shooting-and-multiple-shooting-methods">Shooting and multiple shooting methods</a></li>
-  <li><a href="#discretization-methods" id="toc-discretization-methods" class="nav-link" data-scroll-target="#discretization-methods">Discretization methods</a></li>
-  <li><a href="#collocation-methods" id="toc-collocation-methods" class="nav-link" data-scroll-target="#collocation-methods">Collocation methods</a></li>
-  <li><a href="#pseudospectral-collocation-methods" id="toc-pseudospectral-collocation-methods" class="nav-link" data-scroll-target="#pseudospectral-collocation-methods">Pseudospectral collocation methods</a></li>
-  </ul></li>
+  <li><a href="#optimization-constrains-given-only-by-the-state-equations" id="toc-optimization-constrains-given-only-by-the-state-equations" class="nav-link active" data-scroll-target="#optimization-constrains-given-only-by-the-state-equations">Optimization constrains given only by the state equations</a></li>
+  <li><a href="#general-additive-cost-function" id="toc-general-additive-cost-function" class="nav-link" data-scroll-target="#general-additive-cost-function">General additive cost function</a></li>
+  <li><a href="#derivation-of-the-first-order-necessary-conditions-of-optimality" id="toc-derivation-of-the-first-order-necessary-conditions-of-optimality" class="nav-link" data-scroll-target="#derivation-of-the-first-order-necessary-conditions-of-optimality">Derivation of the first-order necessary conditions of optimality</a></li>
+  <li><a href="#necessary-conditions-of-optimality-as-two-point-boundary-value-problem-tp-bvp" id="toc-necessary-conditions-of-optimality-as-two-point-boundary-value-problem-tp-bvp" class="nav-link" data-scroll-target="#necessary-conditions-of-optimality-as-two-point-boundary-value-problem-tp-bvp">Necessary conditions of optimality as two-point boundary value problem (TP-BVP)</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_numerical.html">Numerical methods for indirect approach</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_indir_general.html">4. Discrete-time optimal control – indirect approach</a></li><li class="breadcrumb-item"><a href="./discr_indir_general.html">General nonlinear discrete-time optimal control</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Numerical methods for indirect approach</h1>
+<h1 class="title">General nonlinear discrete-time optimal control</h1>
 </div>
 
 
@@ -709,379 +682,191 @@ window.Quarto = {
 </header>
 
 
-<p>The indirect approach to optimal control reformulates the optimal control problem as a system of differential and algebraic equations (DAE) with the values of some variables specified at both ends of the time interval – the two-point boundary value problem (TP–BVP). It is only in special cases that we are able to reformulate the TP–BVP as an initial value problem (IVP), the prominent example of which is the LQR problem and the associate differential Riccati equation solved backwards in time. However, generally we need to solve the TP–BVP DAE and the only way to do it is by numerical methods. Here we give some.</p>
-<section id="gradient-method-for-the-tp-bvp-dae-for-free-final-state" class="level2">
-<h2 class="anchored" data-anchor-id="gradient-method-for-the-tp-bvp-dae-for-free-final-state">Gradient method for the TP-BVP DAE for free final state</h2>
-<p>Recall that with the Hamiltonian defined as <span class="math inline">H(\bm x, \bm u, \bm \lambda) = L(\bm x, \bm u) + \bm \lambda^\top \mathbf f(\bm x, \bm u)</span>, the necessary conditions of optimality for the fixed final time and free final state are are given by the following system of differential and algebraic equations (DAE) <span class="math display">
+<p>While in the previous chapter we formulated an optimal control problem (OCP) directly as a mathematical programming (general NLP or even QP) problem over the control (and possibly state) trajectories, in this chapter we introduce an alternative – <em>indirect</em> – approach. The essence of the approach is that we formulate first-order necessary conditions of optimality for the OCP in the form of equations, and then solve these. Although less straightforward to extend with additional constraints than the direct approach, the indirect approach also exhibits some advantages. In particular, in some cases (such as a quadratic cost and a linear system) it yields a feedback controller and not just a control trajetory.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/J14PTv9J6cs?si=cACBQb5BLcEck2-D" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<section id="optimization-constrains-given-only-by-the-state-equations" class="level2">
+<h2 class="anchored" data-anchor-id="optimization-constrains-given-only-by-the-state-equations">Optimization constrains given only by the state equations</h2>
+<p>As in the chapter on the direct approach, here we also start by considering a general nonlinear and possibly time-varying discrete-time dynamical system characterized by the state vector <span class="math inline">\bm x_k\in\mathbb R^n</span> whose evolution in discrete time <span class="math inline">k</span> is uniquely determined by the state equation <span class="math display">
+\bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k),
+</span> accompanied by the initial state (vector) <span class="math inline">\bm x_i\in\mathbb R^n</span> and a sequence of control inputs <span class="math inline">\bm u_i, \bm u_{i+1}, \ldots, \bm u_{k-1}</span>, where the control variable can also be a vector, that is, <span class="math inline">\bm u_k \in \mathbb R^m</span>.</p>
+<p>These state equations will constitute the only constraints of the optimization problem. Unlike in the direct approach, here in our introductory treatment we do not impose any inequality constraints such as bounds on the control inputs, because the theory to be presented is not able to handle them.</p>
+</section>
+<section id="general-additive-cost-function" class="level2">
+<h2 class="anchored" data-anchor-id="general-additive-cost-function">General additive cost function</h2>
+<p>For the above described dynamical system we want to find a control sequence <span class="math inline">\bm u_k</span> that minimizes a suitable optimization criterion over a finite horizon <span class="math inline">k\in[i,N]</span>. Namely, we will look for a control that minimizes a criterion of the following kind <span id="eq-general_nonlinear_optimal_control"><span class="math display">
+J_i^N(\underbrace{\bm x_{i+1}, \bm x_{i+2}, \ldots, \bm x_{N}}_{\bar{\bm x}}, \underbrace{\bm u_{i}, \ldots, \bm u_{N-1}}_{\bar{\bm u}};\bm x_i) = \phi(\bm x_N,N) + \sum_{k=i}^{N-1} L_k(\bm x_k,\bm u_k).
+\tag{1}</span></span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Regarding the notation <span class="math inline">J_i^N(\cdot)</span> for the cost, if the initial and final times are understood from the context, they do not have to be displayed. But we will soon need to indicate the initial time explicitly in our derivations.</p>
+</div>
+</div>
+<p>The property of the presented cost function that will turn out crucial in our subsequent work is that is <em>additive</em> over the time horizon. Although this restricts the class of cost functions a bit, it is still general enough to encompass a wide range of problems, such as minimizing the total (financial) cost to be paid, the total energy to be used, the total distance to be travelled, the cumulative error to be minimized, etc.</p>
+<p>Here is a list of a few popular cost functions.</p>
+<dl>
+<dt>Minimum-time (or time-optimal) problem</dt>
+<dd>
+Setting <span class="math inline">\phi=1</span> and <span class="math inline">L_k=1</span> gives <span class="math inline">J=N-i</span>, that is, the length of the time horizon, the duration of control. Altough in this course we do not introduce concepts and tools for optimization over integer variables, in this simple case of just a single integer variable even a simple search over the length of control interval will be computationally tractable. Furthermore, as we will see in one of the next chapters once we switch from discrete-time to continuous-time systems, this time-optimal control design problem will turn out tractable using the tools presented in this course.
+</dd>
+<dt>Minimum-fuel problem</dt>
+<dd>
+Setting <span class="math inline">\phi=0</span> and <span class="math inline">L_k=|u_k|</span>, which gives <span class="math inline">J=\sum_{k=i}^{N-1}|u_k|</span>.
+</dd>
+<dt>Minimum-energy problem</dt>
+<dd>
+Setting <span class="math inline">\phi=0</span> and <span class="math inline">L_k=\frac{1}{2} u_k^2</span>, which gives <span class="math inline">J=\frac{1}{2} \sum_{k=i}^{N-1} u_k^2</span>. It is fair to admit that this sum of squared inputs cannot always be interpretted as the energy – for instance, what if the control input is a degree of openning of a valve? Sum of angles over time can hardly be interpreted as energy. Instead, it should be interpretted in the mathematical way as the (squared) norm, that is, a “size” of the input. Note that the same objection can be given to the previous case of a minimum-fuel problem.
+</dd>
+<dt>Mixed quadratic problem (also LQ-optimal control problem)</dt>
+<dd>
+Setting <span class="math inline">\phi=\frac{1}{2}s_N x_N^2</span> and <span class="math inline">L_k=\frac{1}{2} (qx_k^2+ru_k^2),\, q,r\geq 0</span>, which gives <span class="math inline">J=\frac{1}{2}s_Nx_N^2+\frac{1}{2} \sum_{k=i}^{N-1} (r x_k^2+q u_k^2)</span>. Or in the case of vector state and control variables <span class="math inline">J=\frac{1}{2}\bm x_N^\top \mathbf S_N \bm x_N+\frac{1}{2} \sum_{k=i}^{N-1} (\bm x_k^\top \mathbf Q \bm x_k + \bm u_k^\top \mathbf R \bm u_k), \, \mathbf Q, \mathbf R \succeq 0</span>. This type of an optimization cost is particularly popular. Both for the mathematical reasons (we all now appreciate the nice properties of quadratic functions) and for practical engineering reasons as it allows us to capture a trade-off between the control performance (penalty on <span class="math inline">\bm x_k</span>) and control effort (penalty on <span class="math inline">\bm u_k</span>). Note also that the state at the terminal time <span class="math inline">N</span> is penalized separately just in order to allow another trade-off between the transient and terminal behavior. The cost function can also be modified to penalize deviation of the state from some nonzero desired (aka reference) state trajectory, that is <span class="math inline">J=\frac{1}{2}(\bm x_N - \bm x_N^\text{ref})^\top \mathbf S_N (\bm x_N - \bm x_N^\text{ref}) +\frac{1}{2} \sum_{k=i}^{N-1} \left((\bm x_k - \bm x_k^\text{ref})^\top \mathbf Q (\bm x_k - \bm x_k^\text{ref}) + \bm u_k^\top \mathbf R \bm u_k\right)</span>.
+</dd>
+</dl>
+<p>Note that in none of these cost function did we include <span class="math inline">\bm u_{N}</span> as an optimization variables as it has no influence over the interval <span class="math inline">[i,N]</span>.</p>
+<p>It is perhaps needless to emphasize that while in some other applications maximizing may seem more appropriate (such as maximizing the yield, bandwidth or robustness), we can always reformulate the maximization into minimization. Therefore in our course we alway formulate the optimal control problems as minimization problems.</p>
+</section>
+<section id="derivation-of-the-first-order-necessary-conditions-of-optimality" class="level2">
+<h2 class="anchored" data-anchor-id="derivation-of-the-first-order-necessary-conditions-of-optimality">Derivation of the first-order necessary conditions of optimality</h2>
+<p>Having formulated a finite-dimensional constrained nonlinear optimization problem, we avoid the temptation to call an NLP solver to solve it numerically and proceed instead with our own analysis of the problem. Let’s see how far we can get.</p>
+<p>By introducing Lagrange multipliers <span class="math inline">{\color{blue}\bm\lambda_k}</span> we turn the constrained problem into an unconstrained one. The new cost function (we use the prime to distinguish it from the original cost) is <span class="math display">
 \begin{aligned}
-\dot{\bm{x}} &amp;= \nabla_{\bm\lambda} H(\bm x,\bm u,\bm \lambda) \\
-\dot{\bm{\lambda}} &amp;= -\nabla_{\bm x} H(\bm x,\bm u,\bm \lambda) \\
-\mathbf 0 &amp;= \nabla_{\bm u} H(\bm x,\bm u,\bm \lambda)\qquad (\text{or} \qquad \bm u^\star = \text{argmax } H(\bm x^\star,\bm u, \bm\lambda^\star),\quad \bm u \in\mathcal{U})\\
-\bm x(t_\mathrm{i}) &amp;=\mathbf x_\mathrm{i}\\
-\bm \lambda(t_\mathrm{f}) &amp;= \nabla\phi(\bm{x}(t_\mathrm{f})).
+&amp; {J'}_i^N(\bm x_i, \ldots, \bm x_N, \bm u_i, \ldots, \bm u_{N-1},{\color{blue}\bm \lambda_i, \ldots, \bm \lambda_{N-1}}) \\
+&amp;\qquad\qquad\qquad = \phi(\bm x_N,N) + \sum_{k=i}^{N-1}\left[L_{k}(\bm x_k,\bm u_k)+\bm {\color{blue}\lambda^\top_{k}}\;\left[\mathbf f_k(\bm x_k,\bm u_k)-\bm x_{k+1}\right]\right].
 \end{aligned}
 </span></p>
-<p>One idea to solve this is to guess at the trajectory <span class="math inline">\bm u(t)</span> on a grid of the time interval, use it to solve the state and costate equations, and then with all the three variables <span class="math inline">\bm x</span>, <span class="math inline">\bm u</span>, and <span class="math inline">\bm u</span> evaluate how much the stationarity equation is actually not satisfied. Based on the this, modify <span class="math inline">\bm u</span> and go for another iteration. Formally this is expressed as the algorithm:</p>
-<ol type="1">
-<li>Set some initial trajectory <span class="math inline">\bm u(t),\; t\in[t_\mathrm{i},t_\mathrm{f}]</span> on a grid of points in <span class="math inline">[t_\mathrm{i},t_\mathrm{f}]</span>.</li>
-<li>With the chosen <span class="math inline">\bm u(\cdot)</span> and the initial state <span class="math inline">\bm x(t_\mathrm{i})</span>, solve the state equation <span class="math display">
-\dot{\bm{x}} = \nabla_{\bm\lambda} H(\bm x,\bm u,\bm \lambda) = \mathbf f(\bm x, \bm u)
-</span> for <span class="math inline">\bm x(t)</span> using a solver for initial value problem ODE, that is, on a grid of <span class="math inline">t\in[t_\mathrm{i},t_\mathrm{f}]</span>.</li>
-<li>Having the control and state trajectories, <span class="math inline">\bm u(\cdot)</span> and <span class="math inline">\bm x(\cdot)</span>, solve the costate equation <span class="math display">
-\dot{\bm{\lambda}} = -\nabla_{\bm x} H(\bm x,\bm u,\bm \lambda)
-</span><br>
-for the costates <span class="math inline">\bm \lambda(t)</span>, starting at the final time <span class="math inline">t_\mathrm{f}</span>, invoking the boundary condition <span class="math inline">\bm \lambda(t_\mathrm{f}) = \nabla\phi(\bm{x}(t_\mathrm{f}))</span>.</li>
-<li>Evaluate <span class="math inline">\nabla_{\bm u} H(\bm x,\bm u,\bm \lambda)</span> for all <span class="math inline">t\in[t_\mathrm{i}, t_\mathrm{f}]</span>.</li>
-<li>If <span class="math inline">\nabla_{\bm u} H(\bm x,\bm u,\bm \lambda) \approx  \mathbf 0</span> for all <span class="math inline">t\in[t_\mathrm{i}, t_\mathrm{f}]</span>, quit, otherwise modify <span class="math inline">\bm u(\cdot)</span> and go to the step 2.</li>
-</ol>
-<p>The question is, of course, how to modify <span class="math inline">\bm u(t)</span> for all <span class="math inline">t \in [t_\mathrm{i}, t_\mathrm{f}]</span> in the step 4. Recall that the variation of the (augmented) cost functional is <span class="math display">
+<p>From now on, in principle, we do not need any guidance here, do we? We are given an unconstrained optimization problem and its solution is just a few steps away. In particular, stationary point(s) must be found (and then we are going to argue if these qualify as minimizers or not). This calls for differentiating the above expression with respect to all the variables and setting these derivatives equal to zeros.</p>
+<p>Although the principles are clear, some hindsight might be shared here if compact formulas are to be found. First such advice is to rename the variable(s) <span class="math inline">{\color{blue}\boldsymbol \lambda_k}</span> to <span class="math inline">{\color{red}\boldsymbol \lambda_{k+1}}</span> <span class="math display">
 \begin{aligned}
-\delta  J^\text{aug} &amp;= [\nabla \phi(\bm x(t_\mathrm{f})) - \bm\lambda(t_\mathrm{f})]^\top \delta \bm{x}(t_\mathrm{f})\\
-&amp; \qquad + \int_{t_\mathrm{i}}^{t_\mathrm{f}} [\dot{\bm{\lambda}} +\nabla_{\bm x} H(\bm x,\bm u,\bm \lambda)]^\top \delta \bm x(t)\mathrm{d}t + \int_{t_\mathrm{i}}^{t_\mathrm{f}} [\dot{\bm{x}} - \nabla_{\bm\lambda} H(\bm x,\bm u,\bm \lambda)]^\top \delta \bm\lambda(t)  \mathrm{d}t\\
-&amp; \qquad + \int_{t_\mathrm{i}}^{t_\mathrm{f}} [\nabla_{\bm u} H(\bm x,\bm u,\bm \lambda)]^\top \delta \bm u(t) \mathrm{d}t
-\end{aligned},
-</span> and for state and costate variables satisfying the state and costate equations this variation simplifies to <span class="math display">
-\delta  J^\text{aug} = \int_{t_\mathrm{i}}^{t_\mathrm{f}} [\nabla_{\bm u} H(\bm x,\bm u,\bm \lambda)]^\top \delta \bm u(t) \mathrm{d}t.
+&amp; {J'}_i^N(\bm x_i, \ldots, \bm x_N, \bm u_i, \ldots, \bm u_{N-1},{\color{red}\bm \lambda_{i+1}, \ldots, \bm \lambda_{N}}) \\
+&amp; \qquad\qquad\qquad = \phi(N,\bm x_N) + \sum_{k=i}^{N-1}\left[L_{k}(\bm x_k,\bm u_k)+\boldsymbol {\color{red}\boldsymbol \lambda^\top_{k+1}}\; \left[\mathbf f_k(\bm x_k,\bm u_k)-\mathbf x_{k+1}\right]\right].
+\end{aligned}
 </span></p>
-<p>Since our goal is to minimize <span class="math inline">J^\text{aug}</span>, we need to make <span class="math inline">\Delta  J^\text{aug}\leq0</span>. Provided the increment <span class="math display">
-\delta \mathbf u(t)=\mathbf u^{(i+1)}(t)-\mathbf u^{(i)}(t)
-</span> is small, we can consider the linear approximation <span class="math inline">\delta  J^\text{aug}</span> instead. We choose <span class="math display">
-\delta \bm u(t)  = -\alpha \nabla_{\bm u} H(\bm x,\bm u,\bm \lambda)
-</span> for <span class="math inline">\alpha&gt;0</span>, which means that the control trajectory in the next iteration is <span class="math display">
-\bm u^{(i+1)}(t)  = \bm u^{(i)}(t) -\alpha \nabla_{\bm u} H(\bm x,\bm u,\bm \lambda),
-</span> and the variation of the augmented cost funtion is<br>
+<p>This is really just a notational decision but thanks to it our resulting formulas will enjoy some symmetry.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Maybe it would be more didactic to leave you to go on without this advice notation and only then to nudge you to figure out this remedy on your own. But admittedly this is not the kind of competence that we aim at in this course. Let’s spend time with more rewarding things.</p>
+</div>
+</div>
+<p>Another notational advice – but this one is more systematic and fundamental — is to make the above expression a bit shorter by introducing a new variable defined as <span class="math display">\boxed{H_k(\bm x_k,\bm u_k,\boldsymbol\lambda_{k+1}) = L_{k}(\bm x_k,\bm u_k)+\boldsymbol \lambda_{k+1}^\top \; \mathbf f_k(\bm x_k,\bm u_k).}
+</span></p>
+<p>We will call this new function <em>Hamiltonian</em>. Indeed, the choice of this name is motivated by the analogy with the equally named concept used in physics and theoretical mechanics, but we will only make more references to this analogy later in the course once we transition to continuous-time systems modelled by differential equations.</p>
+<p>Introducing the Hamiltonian reformulates the cost function (and we omit the explicit dependence on all its input arguments) as <span class="math display">
+{J'}_i^N = \phi(N,\bm x_N) + \sum_{k=i}^{N-1}\left[H_{k}(\bm x_k,\bm u_k,\boldsymbol\lambda_{k+1})-\boldsymbol\lambda^\top_{k+1}\;\mathbf x_{k+1}\right].
+</span></p>
+<p>The final polishing of the expression before starting to compute the derivatives consists in bringing together the terms that contain related variables: the state <span class="math inline">\bm x_N</span> at the final time, the state <span class="math inline">\bm x_i</span> at the initial time, and the states, controls and Lagrange multipliers in the transient period<br>
 <span class="math display">
-\delta  J^\text{aug} = -\alpha\int_{t_\mathrm{i}}^{t_\mathrm{f}} [\nabla_{\bm u} H(\bm x,\bm u,\bm \lambda)]^2 \mathrm{d}t \leq 0,
-</span> and it is zero only for <span class="math inline">\nabla_{\bm u} H(t,\bm x,\bm u,\bm \lambda) = \mathbf 0</span> for all <span class="math inline">t\in[t_\mathrm{i}, t_\mathrm{f}]</span>.</p>
-</section>
-<section id="methods-for-solving-tp-bvp-ode" class="level2">
-<h2 class="anchored" data-anchor-id="methods-for-solving-tp-bvp-ode">Methods for solving TP-BVP ODE</h2>
-<p>Here we assume that from the stationarity equation <span class="math display">
-\mathbf 0 = \nabla_{\bm u} H(\bm x,\bm u,\bm \lambda)
-</span> we can express <span class="math inline">\bm u(t)</span> as a function of the the state and costate variables, <span class="math inline">\bm x(t)</span> and <span class="math inline">\bm \lambda(t)</span>, respectively. In fact, Pontryagin’s principles gives this expression as <span class="math inline">\bm u^\star(t) = \text{arg} \min_{\bm u(t) \in\mathcal{U}} H(\bm x^\star(t),\bm u(t), \bm\lambda^\star(t))</span>. And we substitute for <span class="math inline">\bm u(t)</span> into the state and costate equations. This way we eliminate <span class="math inline">\bm u(t)</span> from the system of DAEs and we are left with a system of ODEs for <span class="math inline">\bm x(t)</span> and <span class="math inline">\bm \lambda(t)</span> only. Formally, the resulting Hamiltonian is a different function as it is now a functio of two variables only.</p>
-<p><span class="math display">
-\begin{aligned}
-\dot{\bm{x}} &amp;= \nabla_{\bm\lambda} \mathcal H(\bm x,\bm \lambda) \\
-\dot{\bm{\lambda}} &amp;= -\nabla_{\bm x} \mathcal H(\bm x,\bm \lambda) \\
-\bm x(t_\mathrm{i}) &amp;=\mathbf x_\mathrm{i}\\
-\bm x(t_\mathrm{f}) &amp;= \mathbf x_\mathrm{f} \qquad \text{or} \qquad \bm \lambda(t_\mathrm{f}) = \nabla\phi(\bm{x}(t_\mathrm{f})).
-\end{aligned}
+{J'}_i^N = \underbrace{\phi(N,\bm x_N) -\boldsymbol\lambda^\top_{N}\;\mathbf x_{N}}_\text{at terminal time} + \underbrace{H_i(\bm x_i,\mathbf u_i,\boldsymbol\lambda_{i+1})}_\text{at initial time} + \sum_{k=i+1}^{N-1}\left[H_{k}(\bm x_k,\bm u_k,\boldsymbol\lambda_{k+1})-\boldsymbol\lambda^\top_{k}\;\mathbf x_{k}\right].
 </span></p>
-<p>Although we now have an ODE system, it is still a BVP. Strictly speaking, from now on, arbitrary reference on numerical solution of boundary value problems can be consulted to get some overview – we no longer need to restrict ourselves to the optimal control literature and software. On the other hand, the right sides are not quite arbitrary – these are Hamiltonian equations – and this property could and perhaps even should be exploited by the solution methods.</p>
-<p>The methods for solving general BVPs are generally divided into shooting and multiple shooting and collocation methods.</p>
-<section id="shooting-and-multiple-shooting-methods" class="level3">
-<h3 class="anchored" data-anchor-id="shooting-and-multiple-shooting-methods">Shooting and multiple shooting methods</h3>
-<p>Having made the diclaimer that boundary value problems constitute a topic indenendent of the optimal control theory, we start their investigation within a control-unrelated setup. We consider a system of two ordinary differential equations in two variables with the value of the first variable specified at both ends while the value of the other variable is left unspecified <span class="math display">
-\begin{aligned}
-\begin{bmatrix}
-  \dot y_1(t)\\
-  \dot y_2(t)
-\end{bmatrix}
-&amp;=
-\begin{bmatrix}
-f_1(\bm y,t)\\
-f_2(\bm y,t)
-\end{bmatrix}\\
-y_1(t_\mathrm{i}) &amp;= \mathrm y_{1\mathrm{i}},\\
-y_1(t_\mathrm{f}) &amp;= \mathrm y_{1\mathrm{f}}.
-\end{aligned}
+<p>Although this step was not necessary, it will make things a bit more convenient once we start looking for the derivatives. And the time for it has just come.</p>
+<p>Recall now the recommended procedure for finding derivatives of functions of vectors – find the differential instead and identify the derivative in the result. The gradient is then (by convention) obtained as the transpose of the derivative. Following this derivative-identification procedure, we anticipate the differential of the augmented cost function in the following form <span class="math display">
+\begin{split}
+\text{d}{J'}_i^N &amp;= (\qquad)^\top \; \text{d}\bm x_N + (\qquad)^\top \; \text{d}\bm x_i \\&amp;+ \sum_{k=i+1}^{N-1}(\qquad)^\top \; \text{d}\bm x_k + \sum_{k=i}^{N-1}(\qquad)^\top \; \text{d}\bm u_k + \sum_{k=i+1}^{N}(\qquad)^\top \; \text{d}\boldsymbol \lambda_k.
+\end{split}
 </span></p>
-<section id="shooting-method" class="level4">
-<h4 class="anchored" data-anchor-id="shooting-method">Shooting method</h4>
-<p>An idea for a solution method is this:</p>
-<ol type="1">
-<li>Guess at the missing (unspecified) value of <span class="math inline">y_2</span> at the initial time <span class="math inline">t_\mathrm{i}</span>,</li>
-<li>Use an IVP solver (for example <code>ode45</code> in Matlab) to find the values of both variables over the whole interval <span class="math inline">[t_\mathrm{i},t_\mathrm{f}]</span>.</li>
-<li>Compare the simulated value of the state variable <span class="math inline">y_1</span> at the final time <span class="math inline">t_\mathrm{f}</span> and compare it with the boundary value .</li>
-<li>Based on the error <span class="math inline">e = y_1(t_\mathrm{f})-\mathrm y_{1\mathrm{f}}</span>, update <span class="math inline">y_2(t_\mathrm{i})</span> and go back to step 2.</li>
-</ol>
-<p>How shall the update in the step 4 be realized? The value of <span class="math inline">y_1</span> at the final time <span class="math inline">t_\mathrm{f}</span> and therefore the error <span class="math inline">e</span> are functions of the value of <span class="math inline">y_2</span> at the initial time <span class="math inline">t_\mathrm{i}</span>, let’s label it <span class="math inline">y_{2\mathrm{i}}</span>. We can formally express this upon introducing a map <span class="math inline">F</span> such that <span class="math inline">e = F(y_{2\mathrm{i}})</span>. The problem now boils down to solving the nonlinear equation (in general a system of equations) <span class="math display">\boxed
-{F(y_{2\mathrm{i}}) = 0.}
+<p>Identifying the gradients amounts to filling in the empty brackets. It straightforward if tedious (in particular the lower and upper bounds on the summation indices must be carefuly checked). The solution is <span class="math display">
+\begin{split}
+\text{d}{J'}_i^N &amp;= \left(\nabla_{\bm x_N}\phi-\lambda_N\right)^\top \; \text{d}\bm x_N + \left(\nabla_{\bm x_i}H_i\right)^\top \; \text{d}\bm x_i \\&amp;+ \sum_{k=i+1}^{N-1}\left(\nabla_{\bm x_k}H_k-\boldsymbol\lambda_k\right)^\top \; \text{d}\bm x_k + \sum_{k=i}^{N-1}\left(\nabla_{\bm u_k}H_k\right)^\top \; \text{d}\bm u_k + \sum_{k=i+1}^{N}\left(\nabla_{\boldsymbol \lambda_k}H_{k-1}-\bm x_k\right)^\top \; \text{d}\boldsymbol \lambda_k.
+\end{split}
 </span></p>
-<p>If Newton’s method is to be used for solving this equation, the derivatives of <span class="math inline">F</span> (formatted into a matrix) are needed. Most often than not, numerical solvers for IVP ODE have to be called in order to evaluate the function <span class="math inline">F</span>, in which case the derivatives cannot be determined analytically. Finite difference (FD) and algorithmic/automatic differentiation (AD) methods are available.</p>
-<p>By now the reason for calling this method <em>shooting</em> is perhaps obvious. Indeed, the analogy with <a href="http://www.matthewpeterkelly.com/tutorials/trajectoryOptimization/canon.html">aiming and shooting a cannon</a> is illustrative.</p>
-</section>
-<section id="multiple-shooting-method" class="level4">
-<h4 class="anchored" data-anchor-id="multiple-shooting-method">Multiple shooting method</h4>
-<p>The key deficiency of the shooting method is that the only source of the error is the error in the boundary condition. This error then accumulates over the whole interval as the numerical integration proceeds. The multiple shooting method is a remedy for this. The idea is to divide the interval <span class="math inline">[t_\mathrm{i},t_\mathrm{f}]</span> into <span class="math inline">N</span> subintervals <span class="math inline">[t_k,t_{k+1}]</span> and to introduce the values of the state variable at the beginning of each subinterval as additional variables. Additional equations are then introduced that enforce the continuity of the state variable at the end of one subinterval and at the beginning of the next subinterval.</p>
-</section>
-</section>
-<section id="discretization-methods" class="level3">
-<h3 class="anchored" data-anchor-id="discretization-methods">Discretization methods</h3>
-<p>Shooting methods take advantage of availability of solvers for IVP ODEs. These solvers produce discret(ized) trajectories, proceeding (integration) step by step, forward in time. But they do this in a way hidden from users. We just have to set the initial conditions (possibly through numerical optimization) and the solver does the rest.</p>
-<p>Alternatively, the formulas for the discrete-time updates are not evaluated one by one, step by step, running forward in time, but are assembled to form a system of equations, in general nolinear ones. Appropriate boundary conditions are then added to these nonlinear equations and the whole system is then solved numerically, yielding a discrete approximation of the trajectories satisfying the BVP.</p>
-<p>Since all those equatins are solved simultaneously (as a system of equations), there is no advantage in using <em>explicit methods</em> for solving ODEs, and <em>implicit methods</em> are used instead.</p>
-<p>It is now high time to recall some crucial results from the numerical methods for solving ODEs. First, we start with the popular single-step methods known as the Runge-Kutta (RK) methods.</p>
-<p>We consider the standard ODE <span class="math display">\dot x(t) = f(x(t),t).</span></p>
-<p>and we define the Butcher tableau as <span class="math display">
-  \begin{array}{ l | c c c c }
-    c_1 &amp; a_{11} &amp; a_{12} &amp; \ldots &amp; a_{1s}\\
-    c_2 &amp; a_{21} &amp; a_{22} &amp; \ldots &amp; a_{2s}\\
-    \vdots &amp; \vdots\\
-    c_s &amp; a_{s1} &amp; a_{s2} &amp; \ldots &amp; a_{ss}\\
-    \hline
-      &amp; b_{1} &amp; b_{2} &amp; \ldots &amp; b_{s}
-  \end{array}.
-</span> such that <span class="math display">c_i = \sum_{j=1}^s a_{ij},</span> and <span class="math display">1 = \sum_{j=1}^s b_{j}.</span></p>
-<p>Reffering to the particular Butcher table, a single step of the method is <span class="math display">
-  \begin{aligned}
-  f_{k1} &amp;= f(x_k + h_k \left(a_{11}f_{k1}+a_{12}f_{k2} + \ldots + a_{1s}f_{ks}),t_k+c_1h_k\right)\\
-  f_{k2} &amp;= f(x_k + h_k \left(a_{21}f_{k1}+a_{22}f_{k2} + \ldots + a_{2s}f_{ks}),t_k+c_2h_k\right)\\
-  \vdots\\
-  f_{ks} &amp;= f(x_k + h_k \left(a_{s1}f_{k1}+a_{s2}f_{k2} + \ldots + a_{ss}f_{ks}),t_k+c_sh_k\right)\\
-  x_{k+1} &amp;= x_k + h_k \left(b_1 f_{k1}+b_2f_{k2} + \ldots + b_sf_{ks}\right).
-  \end{aligned}
-</span></p>
-<p>If the matrix A is strictly lower triangular, that is, if <span class="math inline">a_{ij} = 0</span> for all <span class="math inline">i&lt;j</span> , the method belongs to <em>explicit Runge-Kutta methods</em>, otherwise it belongs to <em>implicit Runge-Kutta methods</em>.</p>
-<p>A prominent example of explicit RK methods is the 4-stage RK method (oftentimes referred to as RK4).</p>
-<section id="explicit-rk4-method" class="level5">
-<h5 class="anchored" data-anchor-id="explicit-rk4-method">Explicit RK4 method</h5>
-<p>The Buttcher table for the method is <span class="math display">
-      \begin{array}{ l | c c c c }
-        0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
-        1/2 &amp; 1/2 &amp; 0 &amp; 0 &amp; 0\\
-        1/2 &amp; 0 &amp; 1/2 &amp; 0 &amp; 0\\
-        1 &amp; 0 &amp; 0 &amp; 1 &amp; 0\\
-        \hline
-          &amp; 1/6 &amp; 1/3 &amp; 1/3 &amp; 1/6
-      \end{array}.
-</span></p>
-<p>Following the Butcher table, a single step of this method is <span class="math display">
-      \begin{aligned}
-      f_{k1} &amp;= f(x_k,t_k)\\
-      f_{k2} &amp;= f\left(x_k + \frac{h_k}{2}f_{k1},t_k+\frac{h_k}{2}\right)\\
-      f_{k3} &amp;= f\left(x_k + \frac{h_k}{2}f_{k2},t_k+\frac{h_k}{2}\right)\\
-      f_{k4} &amp;= f\left(x_k + h_k f_{k3},t_k+h_k\right)\\
-      x_{k+1} &amp;= x_k + h_k \left(\frac{1}{6} f_{k1}+\frac{1}{3}f_{k2} + \frac{1}{3}f_{k3} + \frac{1}{6}f_{k4}\right)
-      \end{aligned}.
-</span></p>
-<p>But as we have just mentions, explicit methods are not particularly useful for solving BVPs. We prefer implicit methods. One of the simplest is the implicit midpoint method.</p>
-</section>
-<section id="implicit-midpoint-method" class="level5">
-<h5 class="anchored" data-anchor-id="implicit-midpoint-method">Implicit midpoint method</h5>
-<p>The Butcher tableau is <span class="math display">
-  \begin{array}{ l | c r }
-    1/2 &amp; 1/2 \\
-    \hline
-      &amp; 1
-  \end{array}
-</span></p>
-<p>A single step is then <span class="math display">\begin{aligned}
-  f_{k1} &amp;= f(x_k+\frac{1}{2}f_{k1} h_k, t_k+\frac{1}{2}h_k)\\
-  x_{k+1} &amp;= x_k + h_k f_{k1}.
-  \end{aligned}</span></p>
-<p>But adding to the last equation <span class="math inline">x_k</span> we get <span class="math display">x_{k+1} + x_k = 2x_k + h_k f_{k1}.</span></p>
-<p>Dividing by two we get <span class="math display">\frac{1}{2}(x_{k+1} + x_k) = x_k + \frac{1}{2}h_k f_{k1}</span> and then it follows that <span class="math display">\boxed{x_{k+1} = x_k + h_k f\left(\frac{1}{2}(x_k+x_{k+1}),t_k+\frac{1}{2}h_k\right).}</span></p>
-<p>The right hand side of the last equation explains the “midpoint” in the name. It can be viewed as a rectangular approximation to the integral in <span class="math display">x_{k+1} = x_k + \int_{t_k}^{t_{k+1}} f(x(t),t)\mathrm{d}t</span> as the integral is computed as an area of a rectangle with the height determined by <span class="math inline">f()</span> evaluated in the middle point.</p>
-<p>Although we do not explain the details here, let’s just note that it is the simplest of the <em>collocation methods</em>. In particular it belongs to Gauss (also Gauss-Legandre) methods.</p>
-</section>
-<section id="implicit-trapezoidal-method" class="level5">
-<h5 class="anchored" data-anchor-id="implicit-trapezoidal-method">Implicit trapezoidal method</h5>
-<p>The method can be viewed both as a single-step (RK) method and a multi-step method. When viewed as an RK method, its Butcher table is <span class="math display">
-  \begin{array}{ l | c r }
-    0 &amp; 0 &amp; 0 \\
-    1 &amp; 1/2 &amp; 1/2 \\
-    \hline
-      &amp; 1/2 &amp; 1/2 \\
-  \end{array}
-  </span> Following the Butcher table, a single step of the method is then <span class="math display">
-  \begin{aligned}
-  f_{k1} &amp;= f(x_k,t_k)\\
-  f_{k2} &amp;= f(x_k + h_k \frac{f_{k1}+f_{k2}}{2},t_k+h_k)\\
-  x_{k+1} &amp;= x_k + h_k \left(\frac{1}{2} f_{k1}+\frac{1}{2} f_{k2}\right).
-  \end{aligned}
-</span></p>
-<p>But since the collocation points are identical with the nodes (grid/mesh points), we can relabel to <span class="math display">\begin{aligned}
-  f_{k} &amp;= f(x_k,t_k)\\
-  f_{k+1} &amp;= f(x_{k+1},t_{k+1})\\
-  x_{k+1} &amp;= x_k + h_k \left(\frac{1}{2} f_{k}+\frac{1}{2} f_{k+1}\right).
-  \end{aligned}
-</span></p>
-<p>This possibility is a particular advantage of Lobatto and Radau methods, which contain both end points of the interval or just one of them among the collocation points. The two symbols <span class="math inline">f_k</span> and <span class="math inline">f_{k+1}</span> are really just shorthands for values of the function <span class="math inline">f</span> at the beginning and the end of the integration interval, so the first two equations of the triple above are not really equations to be solved but rather definitions. And we can assemble it all into just one equation <span class="math display">\boxed{
-      x_{k+1} = x_k + h_k \frac{f(x_k,t_k)+f(x_{k+1},t_{k+1})}{2}.
-      }
-</span></p>
-<p>The right hand side of the last equation explains the “trapezoidal” in the name. It can be viewed as a trapezoidal approximation to the integral in <span class="math display">x_{k+1} = x_k + \int_{t_k}^{t_{k+1}} f(x(t),t)\mathrm{d}t</span> as the integral is computed as an area of a trapezoid.</p>
-<p>When it comes to building a system of equations within transcription methods, we typically move all the terms just on one side to obtain the <em>defect equations</em> <span class="math display">x_{k+1} - x_k - h_k \left(\frac{1}{2} f(x_k,t_k)+\frac{1}{2} f(x_{k+1},t_{k+1})\right) = 0.</span></p>
-<p>Implicit trapezoidal method is also one of collocation methods (the method belongs to the family of Lobatto IIIA methods and these are known to be collocation methods).</p>
-<p>In agreement with the left column of the Buttcher tableau, the collocation points on the interval <span class="math inline">[t_k,t_{k+1}]</span> are just the two boundary points, that is, <span class="math inline">t_k</span> and <span class="math inline">t_{k+1}</span> . We then have in total three interpolation condition: one on the value at the beginning, two on the first derivatives at both ends. This means that the interpolating polynomial will be quadratic <span class="math display">p_k(t) = p_{k0} + p_{k1}(t-t_k) + p_{k2}(t-t_k)^2.</span></p>
-<p>The first derivative of the polynomial is <span class="math display">\dot p_k(t) = p_{k1} + 2p_{k2}(t-t_k).</span></p>
-<p>The first interpolation condition, the one on the value at the beginning of the interval, is <span class="math display">p_k(t_k) = \textcolor{red}{p_{k0} = x_k} \approx x(t_k).</span></p>
-<p>The second interpolation condition, the one on the derivative at the beginning of the interval, the first collocation point, is <span class="math display">\dot p_k(t_k) = \textcolor{red}{p_{k1} = f(x_k,t_k)} \approx f(x(t_k),t_k).</span></p>
-<p>The third interpolation condition, the one on the derivative at the second collocation point <span class="math display">\dot p_k(t_k+h_k) = \textcolor{red}{p_{k1} + 2p_{k2} h_k = f(x_{k+1},t_{k+1})} \approx f(x(t_{k+1}),t_{k+1}).</span></p>
-<p>All the three conditions (emphasized in color above) can be written together as <span class="math display">
-      \begin{bmatrix}
-      1 &amp; 0 &amp; 0\\
-      0 &amp; 1 &amp; 0\\
-      0 &amp; 1 &amp; 2 h_k\\
-      \end{bmatrix}
-      \begin{bmatrix}
-      p_{k0} \\ p_{k1} \\ p_{k2}
-      \end{bmatrix}
-      =
-      \begin{bmatrix}
-      x_{k} \\ f(x_k,t_k) \\ f(x_{k+1},t_{k+1})
-      \end{bmatrix}.
-</span></p>
-<p>Recall that our goal is to find the approximating polynomial, that is, we are after the vector with the coefficients of the polynomial <span class="math inline">p_k</span> . In order to get it, we need to solve the above linear equation. In other words, we need to invert the matrix. In this particular case the inversion of the matrix is particularly simple <span class="math display">
-      \begin{bmatrix}
-      p_{k0} \\ p_{k1} \\ p_{k2}
-      \end{bmatrix}
-      =
-      \begin{bmatrix}
-      1 &amp; 0 &amp; 0\\
-      0 &amp; 1 &amp; 0\\
-      0 &amp; -\frac{1}{2h_k} &amp; \frac{1}{2h_k}\\
-      \end{bmatrix}
-      \begin{bmatrix}
-      x_{k} \\ f(x_k,t_k) \\ f(x_{k+1},t_{k+1})
-      \end{bmatrix}.
-</span></p>
-<p>We can now write down the interpolating/approximating polynomial <span class="math display">p_k(t) = x_{k} + f(x_{k},t_{k})(t-t_k) +\left[-\frac{1}{2h_k}f(x_{k},t_{k}) + \frac{1}{2h_k}f(x_{k+1},t_{k+1})\right](t-t_k)^2,</span> but our primary motivation was to compute the (approximation of the) value of the solution at the end of the interval <span class="math display">x_{k+1} = p_k(t_k+h_k) = x_{k} + f(x_{k},t_{k})h_k +\left[-\frac{1}{2h_k}f(x_{k},t_{k}) + \frac{1}{2h_k}f(x_{k+1},t_{k+1})\right]h_k^2,</span> which can be simplified nearly upon inspection to <span class="math display">x_{k+1} = x_{k} + \frac{f(x_{k},t_{k}) + f(x_{k+1},t_{k+1})}{2} h_k,</span> but this is our good old friend, isn’t it? We have shown that the collocation method with a quadratic polynomial with the collocation points chosen at the beginning and the end of the interval coincides with the implicit trapezoidal method.</p>
-</section>
-<section id="hermite-simpson-method" class="level5">
-<h5 class="anchored" data-anchor-id="hermite-simpson-method">Hermite-Simpson method</h5>
-<p>It belongs to the family of Lobatto III methods, namely it is a 3-stage Lobatto IIIA method. Butcher tableau <span class="math display">
-  \begin{array}{ l | c c c c }
-    0 &amp; 0 &amp;0 &amp; 0\\
-    1/2 &amp; 5/24 &amp; 1/3 &amp; -1/24\\
-    1 &amp; 1/6 &amp; 2/3 &amp; 1/6\\
-    \hline
-      &amp; 1/6 &amp; 2/3 &amp; 1/6
-  \end{array}
-</span></p>
-<p>Hermite-Simpson method can actually come in three forms (this is from <span class="citation" data-cites="bettsPracticalMethodsOptimal2020">Betts (<a href="#ref-bettsPracticalMethodsOptimal2020" role="doc-biblioref">2020</a>)</span>):</p>
-<section id="primary-form" class="level6">
-<h6 class="anchored" data-anchor-id="primary-form">Primary form</h6>
-<p>There are two equations for the given integration interval <span class="math inline">[t_k,t_{k+1}]</span> <span class="math display">x_{k+1} = x_k + h_k \left(\frac{1}{6}f_k + \frac{2}{3}f_{k2} + \frac{1}{6}f_{k+1}\right),</span> <span class="math display">x_{k2} = x_k + h_k \left(\frac{5}{24}f_k + \frac{1}{3}f_{k2} - \frac{1}{24}f_{k+1}\right),</span> where the <span class="math inline">f</span> symbols are just shorthand notations for values of the function at a certain point <span class="math display">f_k = f(x_k,u(t_k),t_k),</span> <span class="math display">f_{k2} = f(x_{k2},u(t_{k2}),t_{k2}),</span> <span class="math display">f_{k+1} = f(x_{k+1},u(t_{k+1}),t_{k+1}),</span> and the off-grid time <span class="math inline">t_{k2}</span> is given by <span class="math display">t_{k2} = t_k + \frac{1}{2}h_k.</span></p>
-<p>The first of the two equations can be recognized as Simpson’s rule for computing a definite integral. Note that while considering the right hand sides as functions of the control inputs, we also correctly express at which time (the collocation time) we consider the value of the control variable.</p>
-<p>Being this general allows considering general control inputs and not only piecewise constant control inputs. For example, if we consider piecewise linear control inputs, then <span class="math inline">u(t_{k2}) = \frac{u_k + u_{k+1}}{2}</span>. But if we stick to the (more common) piecewise constant controls, not surprisingly <span class="math inline">u(t_{k2}) = u_k</span>. Typically we format the equations as <em>defect equations</em>, that is, with zero on the right hand side <span class="math display">
-\begin{aligned}
-x_{k+1} - x_k - h_k \left(\frac{1}{6}f_k + \frac{2}{3}f_{k2} + \frac{1}{6}f_{k+1}\right) &amp;= 0,\\
-x_{k2} - x_k - h_k \left(\frac{5}{24}f_k + \frac{1}{3}f_{k2} - \frac{1}{24}f_{k+1}\right) &amp;= 0.
-\end{aligned}
-</span></p>
-<p>The optimization variables for every integration interval are <span class="math inline">x_k,u_k,x_{k2}, u_{k2}</span>.</p>
-</section>
-<section id="hermite-simpson-separated-hss-method" class="level6">
-<h6 class="anchored" data-anchor-id="hermite-simpson-separated-hss-method">Hermite-Simpson Separated (HSS) method</h6>
-<p>Alternatively, we can express <span class="math inline">f_{k2}</span> in the first equation as a function of the remaining terms and then substitute to the second equation. This will transform the second equation such that only the terms indexed with <span class="math inline">k</span> and <span class="math inline">k+1</span> are present. <span class="math display">
-\begin{aligned}
-x_{k+1} - x_k - h_k \left(\frac{1}{6}f_k + \frac{2}{3}f_{k2} + \frac{1}{6}f_{k+1}\right) &amp;= 0,\\
-x_{k2} - \frac{x_k + x_{k+1}}{2} - \frac{h_k}{8} \left(f_k - f_{k+1}\right) &amp;= 0.
-\end{aligned}
-</span></p>
-<p>While we already know (from some paragraph above) that the first equation is Simpson’s rule, the second equation is an outcome of Hermite intepolation. Hence the name. The optimization variables for every integration interval are the same as before, that is, <span class="math inline">x_k,u_k,x_{k2}, u_{k2}</span> .</p>
-</section>
-<section id="hermite-simpson-condensed-hsc-method" class="level6">
-<h6 class="anchored" data-anchor-id="hermite-simpson-condensed-hsc-method">Hermite-Simpson Condensed (HSC) method</h6>
-<p>Yet some more simplification can be obtained from HSS. Namely, the second equation can be actually used to directly prescribe <span class="math inline">x_{k2}</span> <span class="math display">x_{k2} = \frac{x_k + x_{k+1}}{2} + \frac{h_k}{8} \left(f_k - f_{k+1}\right),</span> which is used in the first equation as an argument for the <span class="math inline">f()</span> function (represented by the <span class="math inline">f_{k2}</span> symbol), by which the second equation and the term <span class="math inline">x_{k2}</span> are eliminated from the set of <em>defect equations</em>. The optimization variables for every integration interval still need to contain <span class="math inline">u_{k2}</span> even though <span class="math inline">x_{k2}</span> was eliminated, because it is needed to parameterize <span class="math inline">f_{k2}</span> . That is, the optimization variables then are <span class="math inline">x_k,u_k, u_{k2}</span> . Reportedly (by Betts) this has been widely used and historically one of the first methods. When it comes to using it in optimal control, it turns out, however, that the sparsity pattern is better for the HSS. Thanks to the fact that the current method belongs to the family of Lobatto IIIA methods, it also qualifies as a <a href="[[Collocation methods]]">collocation method</a>, similarly as Implicit trapezoidal method does. The collocation points are dictated by the left column of the Buttcher table, that is, the collocation points for the integration interval <span class="math inline">[t_k,t_{k+1}]</span> are <span class="math inline">t_k</span> , <span class="math inline">\frac{t_k+t_{k+1}}{2}</span> , and <span class="math inline">t_{k+1}</span> . Considering three collocation conditions (interpolation conditions on the first derivative) and one interpolation condition on the value at the beginning of the interval, the polynomial approximating the solution on the k-th interval will be cubic <span class="math display">p_k(t) = p_{k0} + p_{k1}(t-t_k) + p_{k2}(t-t_k)^2+ p_{k3}(t-t_k)^3.</span></p>
-<p>The first derivative of the polynomial is <span class="math display">\dot p_k(t) = p_{k1} + 2p_{k2}(t-t_k) + 3p_{k3}(t-t_k)^2.</span></p>
-<p>The first interpolation condition, the one on the value at the beginning of the interval, is <span class="math display">p_k(t_k) = \textcolor{red}{p_{k0} = x_k} \approx x(t_k).</span></p>
-<p>The second interpolation condition, the one on the derivative at the beginning of the interval, the first collocation point, is <span class="math display">\dot p_k(t_k) = \textcolor{red}{p_{k1} = f(x_k,t_k)} \approx f(x(t_k),t_k).</span></p>
-<p>The third interpolation condition, the one on the derivative at the second collocation point – the one in the middle of the interval – is <span class="math display">\dot p_k\left(t_k+\frac{1}{2}h_k\right) = \textcolor{red}{p_{k1} + 2p_{k2} \frac{h_k}{2} + 3p_{k3} \left(\frac{h_k}{2}\right)^2 = f(x_{k2},t_{k2})} \approx f\left(x\left(t_{k}+\frac{h_k}{2}\right),t_{k}+\frac{h_k}{2}\right).</span></p>
-<p>The color-emphasized part can be simplified to <span class="math display">\textcolor{red}{p_{k1} + p_{k2} h_k + \frac{3}{4}p_{k3} h_k^2 = f(x_{k2},t_{k2})}.</span></p>
-<p>The fourth interpolation condition, the third collocation condition, that is, the one imposed at the end of the interval, is <span class="math display">\dot p_k(t_k+h_k) = \textcolor{red}{p_{k1} + 2p_{k2} h_k + 3p_{k3} h_k^2 = f(x_{k+1},t_{k+1})} \approx f(x(t_{k+1}),t_{k+1}).</span></p>
-<p>All the four conditions (emphasized in color above) can be written together as <span class="math display">
-      \begin{bmatrix}
-      1 &amp; 0 &amp; 0 &amp; 0\\
-      0 &amp; 1 &amp; 0 &amp; 0\\
-      0 &amp; 1 &amp; h_k &amp; \frac{3}{4} h_k^2\\
-      0 &amp; 1 &amp; 2 h_k &amp; 3h_k^2\\
-      \end{bmatrix}
-      \begin{bmatrix}
-      p_{k0} \\ p_{k1} \\ p_{k2} \\p_{k3}
-      \end{bmatrix}
-      =
-      \begin{bmatrix}
-      x_{k} \\ f(x_k,t_k) \\ f(x_{k2},t_{k2}) \\ f(x_{k+1},t_{k+1}).
-      \end{bmatrix}
-</span></p>
-<p>Recall that our goal is to find the approximating polynomial, that is, we are after the vector with the coefficients of the polynomial <span class="math inline">p_k</span>. In order to get it, we need to solve the above linear equation. In other words, we need to invert the matrix. In this particular case the inverse matrix keeps the structure <span class="math display">
-      \begin{bmatrix}
-      p_{k0} \\ p_{k1} \\ p_{k2}\\ p_{k3}
-      \end{bmatrix}
-      =
-      \begin{bmatrix}
-      1 &amp; 0 &amp; 0 &amp; 0\\
-      0 &amp; 1 &amp; 0 &amp; 0\\
-      0 &amp; -\frac{3}{2h_k} &amp; \frac{2}{h_k} &amp; -\frac{1}{2h_k}\\
-      0 &amp; \frac{2}{3h_k^2} &amp; -\frac{4}{3h_k^2} &amp; \frac{2}{3h_k^2}
-      \end{bmatrix}
-      \begin{bmatrix}
-      x_{k} \\ f(x_k,t_k) \\ f(x_{k2},t_{k2})\\ f(x_{k+1},t_{k+1}).
-      \end{bmatrix}.
-</span></p>
-<p>We can now write down the interpolating/approximating polynomial <span class="math display">
-      \begin{aligned}
-      p_k(t) &amp;= x_{k} + f(x_{k},t_{k})(t-t_k) +\left[-\frac{3}{2h_k}f(x_{k},t_{k}) + \frac{2}{h_k}f(x_{k2},t_{k2}) -\frac{1}{2h_k}f(x_{k+1},t_{k+1}) \right](t-t_k)^2\\
-      &amp; +\left[\frac{2}{3h_k^2}f(x_{k},t_{k}) - \frac{4}{3h_k^2}f(x_{k2},t_{k2}) +\frac{2}{3h_k^2}f(x_{k+1},t_{k+1}) \right](t-t_k)^3,
-      \end{aligned}
-</span> but our primary motivation was to compute the (approximation of the) value of the solution at the end of the interval <span class="math display">
-      \begin{aligned}
-      x_{k+1} = p_k(t_k+h_k) &amp;= x_{k} + f(x_{k},t_{k})h_k +\left[-\frac{3}{2h_k}f(x_{k},t_{k}) + \frac{2}{h_k}f(x_{k2},t_{k2}) -\frac{1}{2h_k}f(x_{k+1},t_{k+1}) \right]h_k^2\\
-      &amp; +\left[\frac{2}{3h_k^2}f(x_{k},t_{k}) - \frac{4}{3h_k^2}f(x_{k2},t_{k2}) +\frac{2}{3h_k^2}f(x_{k+1},t_{k+1}) \right]h_k^3,
-      \end{aligned}
-</span> which can be simplified to <span class="math display">
-      \begin{aligned}
-      x_{k+1} &amp;= x_{k} + f(x_{k},t_{k})h_k +\left[-\frac{3}{2}f(x_{k},t_{k}) + \frac{2}{1}f(x_{k2},t_{k2}) -\frac{1}{2}f(x_{k+1},t_{k+1}) \right]h_k\\
-      &amp; +\left[\frac{2}{3}f(x_{k},t_{k}) - \frac{4}{3}f(x_{k2},t_{k2}) +\frac{2}{3}f(x_{k+1},t_{k+1}) \right]h_k,
-      \end{aligned}
-</span> which further simplifies to <span class="math display">
-      x_{k+1}  = x_{k} + h_k\left[\frac{1}{6}f(x_{k},t_{k}) + \frac{2}{3}f(x_{k2},t_{k2}) + \frac{1}{6}f(x_{k+1},t_{k+1}) \right],
-</span> which can be recognized as the Simpson integration that we have already seen in Implicit Runge-Kutta method described above. Obviously <span class="math inline">f_{k2}</span> needs to be further elaborated on, namely, <span class="math inline">x_{k2}</span> needs some prescription too. We know that it was introduced as an approximation to the solution <span class="math inline">x</span> in the middle of the interval. Since the value of the polynomial in the middle is such an approximation too, we can set <span class="math inline">x_{k2}</span> equal to the value of the polynomial in the middle. <span class="math display">
-      \begin{aligned}
-      x_{k2} = p_k\left(t_k+\frac{1}{2}h_k\right) &amp;= x_{k} + f(x_{k},t_{k})\frac{h_k}{2} +\left[-\frac{3}{2h_k}f(x_{k},t_{k}) + \frac{2}{h_k}f(x_{k2},t_{k2}) -\frac{1}{2h_k}f(x_{k+1},t_{k+1}) \right]\left(\frac{h_k}{2}\right)^2\\
-      &amp; +\left[\frac{2}{3h_k^2}f(x_{k},t_{k}) - \frac{4}{3h_k^2}f(x_{k2},t_{k2}) +\frac{2}{3h_k^2}f(x_{k+1},t_{k+1}) \right]\left(\frac{h_k}{2}\right)^3,
-      \end{aligned}
-</span> which without further ado simplifies to <span class="math display">
-      x_{k2} = x_{k} + h_k\left( \frac{5}{24}f(x_{k},t_{k}) +\frac{1}{3}f(x_{k2},t_{k2}) -\frac{1}{24}f(x_{k+1},t_{k+1}) \right),
-</span> which can be recognized as the other equation in the primary formulation of Implicit trapezoidal method described above.</p>
-</section>
-</section>
-</section>
-<section id="collocation-methods" class="level3">
-<h3 class="anchored" data-anchor-id="collocation-methods">Collocation methods</h3>
-<p>Collocation methods constitute a subset of discretization methods for solving ordinary differential equations, in particular BVP. They offer a new view.</p>
-<p>When solving an ODE (system) <span class="math inline">\dot x(t) = f(x(t),t)</span>, the whole solution interval divided into a number of smalle intervals. Then on an interval <span class="math inline">[t_k,t_{k+1}]</span> of length <span class="math inline">h_k=t_{k+1}-t_k</span> the solution <span class="math inline">x(t)</span> is approximated by a polynomial of degree <span class="math inline">s</span></p>
-<p><span class="math display">p_k(t) = p_{k0} + p_{k1}(t-t_k) + p_{k2}(t-t_k)^2+\ldots + p_{ks}(t-t_k)^s.</span></p>
-<p>Typically the degree of the polynomial is low, say <span class="math inline">s=3</span> or so, certainly below 10. Coefficients must be chosen such that at time <span class="math inline">t_k</span> the k-th polynomial evaluates identically as the (k-1)-th polynomial. For the former the time <span class="math inline">t_k</span> is at the beginning of its interval, for the latter it is the end of its interval. That is, <span class="math display">\boxed{p_{k-1}(\underbrace{t_{k-1}+h_{k-1}}_{t_{k}}) = p_k(t_k).}</span></p>
-<p>Expanding, <span class="math display">p_{k-1,0} + p_{k-1,1}h_{k-1} + p_{k-1,2}h_{k-1}^2+\ldots + p_{k-1,s}h_{k-1}^s = p_{k0},</span> and at some special points, so-called collocation points <span class="math display">t_{kj} = t_k + h_k c_{j}, \quad j=1,\ldots, s,</span> the polynomial satisfies the original differential equation <span class="math display">\boxed{\dot p_k(t_{kj}) = f(p_k(t_{kj}),t_{kj}), \quad j=1,\ldots, s.}</span></p>
-<p>Expanding, <span class="math display">
-\begin{aligned}
-p_{k1} + &amp;2p_{k2}(t_{kj}-t_k)+\ldots + s p_{ks}(t_{kj}-t_k)^{s-1} = \\ &amp;f(p_{k0} + p_{k1}(t_{kj}-t_k) + p_{ks}(t_{kj}-t_k)^2 + \ldots + p_{ks}(t_{kj}-t_k)^s), \quad j=1,\ldots, s.
-\end{aligned}
-</span></p>
-<p>Collocation methods are implicit Runge-Kutta methods. But not all IRK methods are collocation methods.</p>
-<p>Collocation points could be arbitrary (but distinct) but some clever options that maximize accuracy are already known.</p>
-<p>Based on the location of the collocation points, the collocation methods split into three families:</p>
+<p>The ultimate goal of this derivation was to find stationary points for the augmented cost function, that is, to find conditions under which <span class="math inline">\text{d}{J'}_i^N=0</span>. In typical optimization problems, the optimization is conducted with respect to all the participating variables, which means that the corresponding differentials may be arbitrary and the only way to guarantee that the total differential of <span class="math inline">J_i'</span> is zeros is to make the associated gradients (the contents of the brackets) equal to zero. There are two exceptions to this rule in our case, though:</p>
 <ul>
-<li>Gauss or Gauss-Legendre methods – strictly inside the interval
-<ul>
-<li>The simplest collocation method is the Implicit midpoint method.</li>
-</ul></li>
-<li>Lobatto methods – include also both ends of the interval
-<ul>
-<li>The simplest collocation method is the Implicit trapezoidal method.</li>
-<li>Another common method is Hermite-Simpson method.</li>
-</ul></li>
-<li>Radau methods – include just one end of the interval.</li>
+<li><p>The state at the initial time is typically fixed and not available for optimization. Then <span class="math inline">\text{d}\bm x_i=0</span> and the corresponding necessary condition is replaced by the statement that <span class="math inline">\bm x_i</span> is equal to some particular value, say, <span class="math inline">\bm x_i = \mathbf x^\text{init}</span>. We have already discussed this before. In fact, in these situations we might even prefer to reflect it by the notation <span class="math inline">J_i^N(\ldots;\bm x_i)</span>, which emphasizes that <span class="math inline">\bm x_i</span> is a parameter and not a variable. But in the solution below we do allow for the possibility that <span class="math inline">\bm x_i</span> is a variable too (hence <span class="math inline">\text{d}\bm x_i\neq 0</span>) for completeness.</p></li>
+<li><p>The state at the final time may also be given/fixed, in which case the corresponding condition is replaced by the statement that <span class="math inline">\bm x_N</span> is equal to some particular value, say, <span class="math inline">\bm x_N = \mathbf x^\text{ref}</span>. But if it is not the case, then the final state is also subject to optimization and the corresponding necessary condition of optimality is obtained by setting the content of the corresponding brackets to zero.</p></li>
 </ul>
 </section>
-<section id="pseudospectral-collocation-methods" class="level3">
-<h3 class="anchored" data-anchor-id="pseudospectral-collocation-methods">Pseudospectral collocation methods</h3>
-<p>They only consider a single polynomial over the whole interval. The degree of such polynomial, in contrast with classical collocation methods, rather high, therefore also the number of collocation points is high, but their location is crucial.</p>
-
-
-
-</section>
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-bettsPracticalMethodsOptimal2020" class="csl-entry" role="listitem">
-Betts, John T. 2020. <em>Practical <span>Methods</span> for <span>Optimal Control Using Nonlinear Programming</span></em>. 3rd ed. Advances in <span>Design</span> and <span>Control</span>. <span>Society for Industrial and Applied Mathematics</span>. <a href="https://doi.org/10.1137/1.9781611976199">https://doi.org/10.1137/1.9781611976199</a>.
+<section id="necessary-conditions-of-optimality-as-two-point-boundary-value-problem-tp-bvp" class="level2">
+<h2 class="anchored" data-anchor-id="necessary-conditions-of-optimality-as-two-point-boundary-value-problem-tp-bvp">Necessary conditions of optimality as two-point boundary value problem (TP-BVP)</h2>
+<p>The ultimate form of the first-order necessary conditions of optimality, which incorporates the special cases discussed above, is given by these equations <span class="math display">
+\boxed{
+\begin{aligned}
+\mathbf x_{k+1} &amp;= \nabla_{\boldsymbol\lambda_{k+1}}H_k, \;\;\; \color{gray}{k=i,\ldots, N-1},\\
+\boldsymbol\lambda_k &amp;= \nabla_{\bm x_k}H_k, \;\;\; \color{gray}{k=i+1,\ldots, N-1}\\
+0 &amp;=  \nabla_{\bm u_k}H_k, \;\;\; \color{gray}{k=i,\ldots, N-1}\\
+\color{blue}{0} &amp;= \color{blue}{\left(\nabla_{\bm x_N}\phi-\lambda_N\right)^\top \mathrm{d}\bm x_N},\\
+\color{blue}{0} &amp;= \color{blue}{\left(\nabla_{\bm x_i}H_i\right)^\top \mathrm{d}\bm x_i},
+\end{aligned}
+}
+</span> or more explicitly <span class="math display">
+\boxed{
+\begin{aligned}
+\mathbf x_{k+1} &amp;= \mathbf f_k(\bm x_k,\bm u_k), \;\;\; \color{gray}{k=i,\ldots, N-1},\\
+\boldsymbol\lambda_k &amp;= \nabla_{\bm x_k}\mathbf f_k\;\;   \boldsymbol\lambda_{\mathbf k+1}+\nabla_{\bm x_k}L_k, \;\;\; \color{gray}{k=i+1,\ldots, N-1}\\
+0 &amp;=  \nabla_{\bm u_k}\mathbf f_k\;\; \boldsymbol\lambda_{k+1}+\nabla_{u_k}L_k, \;\;\; \color{gray}{k=i,\ldots, N-1}\\
+\color{blue}{0} &amp;= \color{blue}{\left(\nabla_{\bm x_N}\phi-\lambda_N\right)^\top \mathrm{d}\bm x_N},\\
+\color{blue}{0} &amp;= \color{blue}{\left(\nabla_{\bm x_i}H_i\right)^\top \mathrm{d}\bm x_i}.
+\end{aligned}
+}
+</span></p>
+<p>Recall that since <span class="math inline">\mathbf f</span> is a vector function, <span class="math inline">\nabla \mathbf f</span> is not just a gradient but rather a matrix whose columns are gradients of the individual components of the vector <span class="math inline">\mathbf f</span> — it is a transpose of Jacobian.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-</div></section></div></main> <!-- /main -->
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The first three necessary conditions above can be made completely “symmetric” by running the second one from <span class="math inline">k=i</span> because the <span class="math inline">\boldsymbol\lambda_i</span> introduced this way does not influence the rest of the problem and we could easily live with one useless variable.</p>
+</div>
+</div>
+<p>We have just derived the (necessary) conditions of optimality in the form of five sets of (vector) equations:</p>
+<ul>
+<li>The first two are <em>recursive</em> (or <em>recurrent</em> or also just <em>discrete-time</em>) equations, which means that they introduce coupling between the variables evaluated at consecutive times. In fact, the former is just the standard state equation that gives the state at one time as a function of the state (and the control) at the previous time. The latter gives a prescription for the variable <span class="math inline">\bm \lambda_k</span> as a function of (among others) the same variable evaluated at the next (!) time, that is, <span class="math inline">\bm \lambda_{k+1}</span>. Although from the optimization perspective these variables play the role of Lagrange multipliers, we call them <em>co-state variables</em> in optimal control theory because of the way they relate to the state equations. The corresponding vector equation is called a <em>co-state equation</em>.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is a crucial property of the co-state equation that it dictates the evolution of the co-state variable backward in time.</p>
+</div>
+</div>
+<ul>
+<li><p>The third set of equations are just algebraic equations that relate the control inputs to the state and co-state variables. Sometimes it is called a <em>stationarity equation</em>.</p></li>
+<li><p>The last two are just single (vector) equations related to the end and the beginning of the time horizon. They are both stated in the general enough form that allows the corresponding states to be treated as either fixed or subject to optimization. In particular, if the final state is to be treated as free (subject to optimization), that is, <span class="math inline">\mathrm{d}\bm x_N</span> can be atritrary and the only way the corresponding equation can be satisfied is <span class="math inline">\nabla_{\bm x_N}\phi=\lambda_N</span>. If, on the other hand, the final state is to be treated as fixed, the the corresponding equation is just replaced by <span class="math inline">\bm x_N = \mathbf x^\text{ref}</span>. Similarly for the initial state. But as we have hinted a few times, most often than not the initial state will be regarded as fixed and not subject to optimization, in which case the corresponding equation is replaced by <span class="math inline">\bm x_i = \mathbf x^\text{init}</span>.</p></li>
+</ul>
+<p>To summarize, the equations that give the necessary conditions of optimality for a general nonlinear discrete-time optimal control problem form a <em>two-point boundary value problem</em> (TP-BVP). Values of some variables are specified at the initial time, values of some (maybe the same or some other) variables are defined at the final time. The equations prescribe the evolution of some variables forward in time while for some other variables the evolution backward in time is dictated.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is in contrast with the initial value problem (IVP) for state equations, for which we only specify the state at one end of the time horizon — the initial state — and then the state equation disctates the evolution of the (state) variable forward in time.</p>
+</div>
+</div>
+<p>Boundary value problems are notoriously difficult to solve. Typically we can only solve them numerically, in which case it is appropriate to ask if anything has been gained by this indirect procedure compared with the direct one. After all, we did not even incorporate the inequality constraints in the problem, which was a piece of case in the direct approach. But we will see that in some special cases the TP-BVP they can be solved analytically and the outcome is particularly useful and would never have been discovered, if only the direct approach had been followed. We elaborate on this in the next section.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1504,13 +1289,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cont_indir_CARE.html" class="pagination-link" aria-label="Continuous-time Riccati equation">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Continuous-time Riccati equation</span>
+      <a href="./discr_dir_references.html" class="pagination-link" aria-label="References">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">References</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cont_indir_trajectory_stabilization.html" class="pagination-link" aria-label="Trajectory stabilization and neigboring extremals">
-        <span class="nav-page-text">Trajectory stabilization and neigboring extremals</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./discr_indir_LQR_fin_horizon.html" class="pagination-link" aria-label="Discrete-time LQR on a finite horizon">
+        <span class="nav-page-text">Discrete-time LQR on a finite horizon</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
