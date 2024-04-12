@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.29">
+<meta name="generator" content="quarto-1.5.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Finite-horizon LQR-optimal control as QP</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – Shooting and multiple shooting</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -64,8 +30,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./discr_dir_mpc.html" rel="next">
-<link href="./discr_dir_general.html" rel="prev">
+<link href="./cont_dir_collocation.html" rel="next">
+<link href="./cont_indir_time_optimal.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -103,49 +69,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -159,7 +82,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_dir_general.html">3. Discrete-time optimal control – direct approach</a></li><li class="breadcrumb-item"><a href="./discr_dir_LQR.html">Finite-horizon LQR-optimal control as QP</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_dir_shooting_and_multiple.html">9. Continuous-time optimal control - direct approach via numerical optimization</a></li><li class="breadcrumb-item"><a href="./cont_dir_shooting_and_multiple.html">Shooting and multiple shooting</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -289,7 +212,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_dir_LQR.html" class="sidebar-item-text sidebar-link active">
+  <a href="./discr_dir_LQR.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Finite-horizon LQR-optimal control as QP</span></a>
   </div>
 </li>
@@ -523,7 +446,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_dir_shooting_and_multiple.html" class="sidebar-item-text sidebar-link">
+  <a href="./cont_dir_shooting_and_multiple.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Shooting and multiple shooting</span></a>
   </div>
 </li>
@@ -685,22 +608,15 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#simultaneous-sparse-formulation" id="toc-simultaneous-sparse-formulation" class="nav-link active" data-scroll-target="#simultaneous-sparse-formulation">Simultaneous (sparse) formulation</a></li>
-  <li><a href="#sequential-dense-formulation" id="toc-sequential-dense-formulation" class="nav-link" data-scroll-target="#sequential-dense-formulation">Sequential (dense) formulation</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_dir_general.html">3. Discrete-time optimal control – direct approach</a></li><li class="breadcrumb-item"><a href="./discr_dir_LQR.html">Finite-horizon LQR-optimal control as QP</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_dir_shooting_and_multiple.html">9. Continuous-time optimal control - direct approach via numerical optimization</a></li><li class="breadcrumb-item"><a href="./cont_dir_shooting_and_multiple.html">Shooting and multiple shooting</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Finite-horizon LQR-optimal control as QP</h1>
+<h1 class="title">Shooting and multiple shooting</h1>
 </div>
 
 
@@ -717,269 +633,15 @@ window.Quarto = {
 </header>
 
 
-<p>Here we specialize the general procedure from the previous section to the case of a linear system and a quadratic cost. we start by considering a simple problem of <em>regulation</em>, wherein the goal is to bring the system either exactly or approximately to zero final state, that is, <span class="math inline">\mathbf x^\text{ref}=\mathbf 0</span> and we want <span class="math inline">\bm x_N=\mathbf x^\text{ref}</span> or <span class="math inline">\bm x_N\approx\mathbf x^\text{ref}</span>, respectively. <span class="math display">
-\begin{aligned}
-\operatorname*{minimize}_{\mathbf u_0,\ldots, \mathbf u_{N-1}, \mathbf x_{0},\ldots, \mathbf x_N} &amp;\quad  \frac{1}{2} \bm x_N^\top \mathbf S \bm x_N + \frac{1}{2} \sum_{k=0}^{N-1} \left(\bm x_k^\top \mathbf Q \bm x_k + \bm u_k^\top \mathbf R \bm u_k \right)\\
-\text{subject to}   &amp;\quad \bm x_{k+1} = \mathbf A\bm x_k + \mathbf B\bm u_k,\quad k = 0, \ldots, N-1, \\
-                    &amp;\quad \bm x_0 = \mathbf x_0,\\
-                    &amp;\quad \bm x_N = \mathbf 0\;  (\text{or}\, \bm x_N \approx \mathbf 0).
-\end{aligned}
-</span></p>
-<p>Referring to the two options for the last constraint,</p>
+<p>We have already seen that direct methods for discrete-time optimal control problems essentially just regroup and reshape the problem data so that a nonlinear programming solver can accept them.</p>
+<p>In order to follow the same approach with continous-time optimal control problems, some kind of discretization is inevitable in order to formulate a nonlinear program. Depending of what is discretized and how, several groups of methods can be identified</p>
 <ul>
-<li>if the condition <span class="math inline">\bm x_N=\mathbf 0</span> on the final state is strictly enforced, the terminal state cost (the term <span class="math inline">\frac{1}{2} \bm x_N^\top \mathbf S \bm x_N</span> in the cost function) is redundant and can be removed;</li>
-<li>if the final state condition can be relaxed to <span class="math inline">\bm x_N\approx\mathbf 0</span>, it is by increasing the weight <span class="math inline">\mathbf S</span> in the terminal cost function <span class="math inline">\frac{1}{2} \bm x_N^\top \mathbf S \bm x_N</span> that <span class="math inline">\bm x_N</span> can be made arbitrarily close to <span class="math inline">\mathbf 0</span>.</li>
+<li>shooting and multiple shooting,</li>
+<li>collocation.</li>
 </ul>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>It is a standard dilemma in optimization, not only in optimal control, that if we want to satisfy some requirement, we can either strictly enforce it through constraints or we can seemingly relax it and set a cost to be paid for not satysfying it.</p>
-</div>
-</div>
-<section id="simultaneous-sparse-formulation" class="level3">
-<h3 class="anchored" data-anchor-id="simultaneous-sparse-formulation">Simultaneous (sparse) formulation</h3>
-<p>Below we rewrite the latter problem, that is, <span class="math inline">\bm x_N\approx\mathbf 0</span>, in the “unrolled” form, where we stack the state and control variables into “long” vectors <span class="math inline">\bar{\bm x}</span> and <span class="math inline">\bar{\bm u}</span>. Doing the same for the former is straightforward. <span class="math display">
-\begin{aligned}
-\operatorname*{minimize}_{\bar{\bm u},\bar{\bm x}} &amp; \frac{1}{2}\left(\begin{bmatrix} \bm x_1^\top &amp; \bm x_2^\top &amp; \ldots &amp; \bm x_N^\top \end{bmatrix}
-\underbrace{\begin{bmatrix}\mathbf Q &amp; &amp; &amp; \\ &amp; \mathbf Q &amp; &amp;\\ &amp; &amp;\ddots &amp; \\ &amp; &amp; &amp; \mathbf S \end{bmatrix}}_{\overline{\mathbf Q}}
-\underbrace{\begin{bmatrix} \bm x_1 \\ \bm x_2 \\ \vdots \\ \bm x_N \end{bmatrix}}_{\bar{\bm x}}\right.\\
-&amp;\qquad +\left.
-\begin{bmatrix} \bm u_0^\top &amp; \bm u_1^\top &amp; \ldots &amp; \bm u_{N-1}^\top \end{bmatrix}
-\underbrace{\begin{bmatrix}\mathbf R &amp; &amp; &amp; \\ &amp; \mathbf R &amp; &amp;\\ &amp; &amp;\ddots &amp; \\ &amp; &amp; &amp; \mathbf R \end{bmatrix}}_{\overline{\mathbf R}}
-\underbrace{\begin{bmatrix} \bm u_0 \\ \bm u_1 \\ \vdots \\ \bm u_{N-1} \end{bmatrix}}_{\bar{\bm u}}\right)
-+ \underbrace{\frac{1}{2}\mathbf x_0^\top \mathbf Q \mathbf x_0}_{\mathrm{constant}}
-\end{aligned}
-</span> subject to <span class="math display">
-\begin{bmatrix} \bm x_1 \\ \bm x_2 \\ \bm x_3\\ \vdots \\ \bm x_N \end{bmatrix} = \underbrace{\begin{bmatrix}\mathbf 0 &amp; &amp; &amp; &amp;\\\mathbf A &amp; \mathbf 0 &amp; &amp; &amp;\\ &amp;\mathbf A &amp;\mathbf 0 &amp; &amp; \\ &amp; &amp; &amp;\ddots &amp; \\&amp; &amp; &amp;\mathbf A &amp; \mathbf 0 \end{bmatrix}}_{\overline{\mathbf A}}
-\begin{bmatrix} \bm x_1 \\ \bm x_2 \\ \bm x_3\\ \vdots \\ \bm x_N \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf B &amp; &amp; &amp; &amp; \\ &amp; \mathbf B &amp; &amp; &amp; \\&amp; &amp;\mathbf B &amp; \\ &amp; &amp; &amp;\ddots \\ &amp; &amp; &amp; &amp; \mathbf B \end{bmatrix}}_{\overline{\mathbf B}}\begin{bmatrix} \bm u_0 \\ \bm u_1 \\ \bm u_2\\\vdots \\ \bm u_{N-1} \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf A\\\mathbf 0\\\mathbf 0\\\vdots\\\mathbf 0\end{bmatrix}}_{\overline{\mathbf A}_0}\mathbf x_0.   
-</span></p>
-<p>Note that the last term in the cost function can be discarded because it is constant.</p>
-<p>The terms with the <span class="math inline">\bar{\bm x}</span> vector can be combined and we get <span id="eq-linear_system_linear_constraints_matrix_format"><span class="math display">
-\begin{bmatrix} \mathbf 0 \\ \mathbf 0 \\ \mathbf 0\\ \vdots \\ \mathbf 0 \end{bmatrix} = \underbrace{\begin{bmatrix}-\mathbf I &amp; &amp; &amp; &amp;\\\mathbf A &amp; -\mathbf I &amp; &amp; &amp;\\ &amp;\mathbf A &amp;-\mathbf I &amp; &amp; \\ &amp; &amp; &amp;\ddots &amp; \\&amp; &amp; &amp;\mathbf A &amp; -\mathbf I \end{bmatrix}}_{\overline{\mathbf A} - \mathbf I}
-\begin{bmatrix} \mathbf x_1 \\ \mathbf x_2 \\ \mathbf x_3\\ \vdots \\ \mathbf x_N \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf B &amp; &amp; &amp; &amp; \\ &amp; \mathbf B &amp; &amp; &amp; \\&amp; &amp;\mathbf B &amp; \\ &amp; &amp; &amp;\ddots \\ &amp; &amp; &amp; &amp; \mathbf B \end{bmatrix}}_{\overline{\mathbf B}}\begin{bmatrix} \mathbf u_0 \\ \mathbf u_1 \\ \mathbf u_2\\\vdots \\ \mathbf u_{N-1} \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf A\\\mathbf 0\\\mathbf 0\\\vdots\\\mathbf 0\end{bmatrix}}_{\overline{\mathbf A}_0}\mathbf x_0.
-\tag{1}</span></span></p>
-<p>Upon stacking the two “long” vectors into <span class="math inline">\bar{\bm z}</span> we reformulate the optimization problem as <span class="math display">
-\operatorname*{minimize}_{\widetilde{\mathbf z}\in\mathbb{R}^{2N}}\quad \frac{1}{2}\underbrace{\begin{bmatrix}\bar{\bm x}^\top &amp;\bar{\bm u}^\top\end{bmatrix}}_{\bar{\bm z}^\top} \underbrace{\begin{bmatrix}\overline{\mathbf Q} &amp; \\ &amp; \overline{\mathbf R} \end{bmatrix}}_{\widetilde{\mathbf Q}}\underbrace{\begin{bmatrix}\bar{\bm x}\\\bar{\bm u}\end{bmatrix}}_{\bar{\bm z}}
-</span> subject to <span class="math display">
-\mathbf 0 = \underbrace{\begin{bmatrix}(\overline{\mathbf A}-\mathbf I) &amp; \overline{\mathbf B}\end{bmatrix}}_{\widetilde{\mathbf A}}\underbrace{\begin{bmatrix}\bar{\bm x}\\\bar{\bm u}\end{bmatrix}}_{\bar{\bm z}} + \underbrace{\overline{\mathbf A}_0 \mathbf x_0}_{\tilde{\mathbf b}}.
-</span></p>
-<p>To summarize, we have reformulated the optimal control problem as a linearly constrained quadratic program <span class="math display">
-\boxed{
-\begin{aligned}
-\underset{\bar{\bm z}\in\mathbb{R}^{2N}}{\text{minimize}} &amp;\quad \frac{1}{2}\bar{\bm z}^\top \widetilde{\mathbf Q} \bar{\bm z}\\
-\text{subject to} &amp;\quad \widetilde{\mathbf A} \bar{\bm z} + \tilde{\bm b} = \mathbf 0.
-\end{aligned}}
-</span></p>
-<div id="e422fbbe" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">direct_dlqr_simultaneous</span>(A,B,x₀,Q,R,S,N)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    Qbar <span class="op">=</span> <span class="fu">BlockArray</span>(<span class="fu">spzeros</span>(N<span class="op">*</span>n,N<span class="op">*</span>n),<span class="fu">repeat</span>([n],N),<span class="fu">repeat</span>([n],N))</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i<span class="op">=</span><span class="fl">1</span><span class="op">:</span>(N<span class="op">-</span><span class="fl">1</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        Qbar[<span class="fu">Block</span>(i,i)] <span class="op">=</span> Q</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    Qbar[<span class="fu">Block</span>(N,N)] <span class="op">=</span> S</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    Rbar <span class="op">=</span> <span class="fu">BlockArray</span>(<span class="fu">spzeros</span>(N<span class="op">*</span>m,N<span class="op">*</span>m),<span class="fu">repeat</span>([m],N),<span class="fu">repeat</span>([m],N))</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i<span class="op">=</span><span class="fl">1</span><span class="op">:</span>N</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        Rbar[<span class="fu">Block</span>(i,i)] <span class="op">=</span> R</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    Qtilde <span class="op">=</span> <span class="fu">blockdiag</span>(<span class="fu">sparse</span>(Qbar),<span class="fu">sparse</span>(Rbar))                               <span class="co"># The matrix defining the quadratic cost.</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    Bbar <span class="op">=</span> <span class="fu">BlockArray</span>(<span class="fu">spzeros</span>(N<span class="op">*</span>n,N<span class="op">*</span>m),<span class="fu">repeat</span>([n],N),<span class="fu">repeat</span>([m],N))</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i<span class="op">=</span><span class="fl">1</span><span class="op">:</span>N</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        Bbar[<span class="fu">Block</span>(i,i)] <span class="op">=</span> B</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    Abar <span class="op">=</span> <span class="fu">BlockArray</span>(<span class="fu">sparse</span>(<span class="op">-</span><span class="fl">1.0</span><span class="op">*</span>I,n<span class="op">*</span>N,n<span class="op">*</span>N),<span class="fu">repeat</span>([n],N),<span class="fu">repeat</span>([n],N))</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i<span class="op">=</span><span class="fl">2</span><span class="op">:</span>N</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        Abar[<span class="fu">Block</span>(i,(i<span class="op">-</span><span class="fl">1</span>))] <span class="op">=</span> A</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    Atilde <span class="op">=</span> <span class="fu">sparse</span>([Abar Bbar])                                                <span class="co"># The matrix defining the linear (affine) equation.</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    A0bar <span class="op">=</span> <span class="fu">spzeros</span>(n<span class="op">*</span>N,n)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    A0bar[<span class="fl">1</span><span class="op">:</span>n,<span class="fl">1</span><span class="op">:</span>n] <span class="op">=</span> A</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    btilde <span class="op">=</span> <span class="fu">A0bar*sparse</span>(x₀)                                                   <span class="co"># The constant offset for the linear (affine) equation.</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    K <span class="op">=</span> [Qtilde Atilde<span class="op">'</span>; Atilde <span class="fu">spzeros</span>(<span class="fu">size</span>(Atilde,<span class="fl">1</span>),<span class="fu">size</span>(Atilde,<span class="fl">1</span>))]         <span class="co"># Sparse KKT matrix.</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    F <span class="op">=</span> <span class="fu">qdldl</span>(K)                                                                <span class="co"># KKT matrix LDL factorization.</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    k <span class="op">=</span> [<span class="fu">spzeros</span>(<span class="fu">size</span>(Atilde,<span class="fl">1</span>)); <span class="op">-</span>btilde]                                      <span class="co"># Right hand side of the KKT system</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    xtildeλ <span class="op">=</span> <span class="fu">solve</span>(F,k)                                                        <span class="co"># Solving the KKT system using the factorization.</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    xopt <span class="op">=</span> <span class="fu">reshape</span>(xtildeλ[<span class="fl">1</span><span class="op">:</span>(n<span class="op">*</span>N)],(n,<span class="op">:</span>))</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    uopt <span class="op">=</span> <span class="fu">reshape</span>(xtildeλ[(n<span class="op">*</span>N<span class="op">+</span><span class="fl">1</span>)<span class="op">:</span>(n<span class="op">+</span>m)<span class="op">*</span>N<span class="op">+</span><span class="fl">1</span>],(m,<span class="op">:</span>))</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> xopt,uopt</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="fl">2</span>               <span class="co"># Number of state variables.</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> <span class="fl">1</span>               <span class="co"># Number of (control) input variables. </span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">rand</span>(n,n)       <span class="co"># State matrix.</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> <span class="fu">rand</span>(n,m)       <span class="co"># Input coupling matrix.</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>x₀ <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">3.0</span>]     <span class="co"># Initial state.</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="fl">10</span>              <span class="co"># Time horizon.</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">2.0</span>]      </span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">2.0</span>]</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> [<span class="fl">1.0</span>]</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>S <span class="op">=</span> <span class="fu">diagm</span>(<span class="fl">0</span><span class="op">=&gt;</span>s)     <span class="co"># Matrix defining the terminal state cost.</span></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> <span class="fu">diagm</span>(<span class="fl">0</span><span class="op">=&gt;</span>q)     <span class="co"># Matrix defining the running state dost.</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>R <span class="op">=</span> <span class="fu">diagm</span>(<span class="fl">0</span><span class="op">=&gt;</span>r)     <span class="co"># Matrix defining the cost of control.</span></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>uopts,xopts <span class="op">=</span> <span class="fu">direct_dlqr_simultaneous</span>(A,B,x₀,Q,R,S,N)</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">=</span> <span class="fu">plot</span>(<span class="fl">0</span><span class="op">:</span>(N<span class="op">-</span><span class="fl">1</span>),uopts,marker<span class="op">=:</span>diamond,label<span class="op">=</span><span class="st">"u"</span>,linetype<span class="op">=:</span>steppost)</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="fu">xlabel!</span>(<span class="st">"k"</span>)</span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="fu">ylabel!</span>(<span class="st">"u"</span>)</span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>p2 <span class="op">=</span> <span class="fu">plot</span>(<span class="fl">0</span><span class="op">:</span>N,<span class="fu">hcat</span>(x0,xopts)<span class="ch">',marker=:diamond,label=["x1" "x2"],linetype=:steppost)</span></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="fu">xlabel!</span>(<span class="st">"k"</span>)</span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="fu">ylabel!</span>(<span class="st">"x"</span>)</span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(p1,p2,layout<span class="op">=</span>(<span class="fl">2</span>,<span class="fl">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>This constrained optimization problem can still be solved without invoking a numerical solver for solving quadratic programs (QP). We do it by introducing a vector <span class="math inline">\boldsymbol\lambda</span> of Lagrange multipliers to form the Lagrangian function <span class="math display">
-\mathcal{L}(\bar{\bm z}, \boldsymbol \lambda) = \frac{1}{2}\bar{\bm z}^\top \widetilde{\mathbf Q} \bar{\bm z} + \boldsymbol\lambda^\top(\widetilde{\mathbf A} \bar{\bm z} + \tilde{\mathbf b}),
-</span> for which the gradients with respect to <span class="math inline">\bar{\bm z}</span> and <span class="math inline">\boldsymbol\lambda</span> are <span class="math display">
-\begin{aligned}
-\nabla_{\tilde{\bm{z}}} \mathcal{L}(\bar{\bm z}, \boldsymbol\lambda) &amp;= \widetilde{\mathbf Q}\bar{\bm z} + \tilde{\mathbf A}^\top\boldsymbol\lambda,\\
-\nabla_{\boldsymbol{\lambda}} \mathcal{L}(\tilde{\bm x}, \boldsymbol\lambda) &amp;=\widetilde{\mathbf A} \bar{\bm z} + \tilde{\mathbf b}.
-\end{aligned}
-</span></p>
-<p>Requiring that the overall gradient vanishes leads to the following KKT set of linear equations <span class="math display">
-\begin{bmatrix}
-  \widetilde{\mathbf Q} &amp; \widetilde{\mathbf A}^\top\\ \widetilde{\mathbf A} &amp; \mathbf 0
-\end{bmatrix}
-\begin{bmatrix}
-\bar{\bm z}\\\boldsymbol\lambda
-\end{bmatrix}
-=
-\begin{bmatrix}
-\mathbf 0\\ -\tilde{\mathbf b}
-\end{bmatrix}.
-</span></p>
-<p>Solving this could be accomplished by using some general solver for linear systems or by using some more tailored solver for symmetric indefinite systems (based on <a href="https://en.wikipedia.org/wiki/Cholesky_decomposition#LDL_decomposition">LDL factorization</a>, for example <a href="https://www.mathworks.com/help/matlab/ref/ldl.html">ldl</a> in Matlab).</p>
-<section id="adding-constraints-on-controls-and-states" class="level4">
-<h4 class="anchored" data-anchor-id="adding-constraints-on-controls-and-states">Adding constraints on controls and states</h4>
-<p>When solving a real optimal control problem, we may want to impose inequality constraints on <span class="math inline">\bm u_k</span> due to saturation of actuators. We may also want to add constraints on <span class="math inline">\bm x_k</span> as well, which may reflect some performance specifications. In both cases, the KKT system above would have to be augmented and we resort to some already finetuned numerical solver for quadratic programming (QP) instead.</p>
-</section>
-</section>
-<section id="sequential-dense-formulation" class="level3">
-<h3 class="anchored" data-anchor-id="sequential-dense-formulation">Sequential (dense) formulation</h3>
-<p>We can express <span class="math inline">\bar{\bm x}</span> as a function of <span class="math inline">\bar{\bm u}</span> and <span class="math inline">\mathbf x_0</span>. This can be done in a straightforward way using (<a href="#eq-linear_system_linear_constraints_matrix_format" class="quarto-xref">Equation&nbsp;1</a>), namely, <span class="math display">
-\bar{\bm x} = (\mathbf I-\overline{\mathbf A})^{-1}\overline{\mathbf B} \bm u + (\mathbf I-\overline{\mathbf A})^{-1} \overline{\mathbf A}_0 \mathbf x_0.
-</span></p>
-<p>However, instead of solving the sets of equations, we can do this substitution in a more insightful way. Write down the state equation for several discrete times <span class="math display">
-\begin{aligned}
-\bm x_1 &amp;= \mathbf A\mathbf x_0 + \mathbf B\bm u_0\\
-\bm x_2 &amp;= \mathbf A\mathbf x_0 + \mathbf B\bm u_0\\
-     &amp;= \mathbf A(\mathbf A\mathbf x_0 + \mathbf B\bm u_0)+ \mathbf B\bm u_0\\
-     &amp;= \mathbf A^2\mathbf x_0 + \mathbf A\mathbf B\bm u_0 + \mathbf B\bm u_0\\
-     &amp;\vdots\\
-\bm x_k &amp;= \mathbf A^k\mathbf x_0 + \mathbf A^{k-1}\mathbf B\bm u_0 +\mathbf A^{k-2}\mathbf B\bm u_1 +\ldots \mathbf B\bm u_{k-1}.
-\end{aligned}
-</span></p>
-<p>Rewriting into matrix-vector form (and extending the time <span class="math inline">k</span> up to the final time <span class="math inline">N</span>) <span class="math display">
-\begin{bmatrix}
-\bm x_1\\\bm x_2\\\vdots\\\bm x_N
-\end{bmatrix}
-=
-\underbrace{
-\begin{bmatrix}
-  \mathbf B &amp; &amp; &amp; \\
-  \mathbf A\mathbf B &amp; \mathbf B &amp; &amp; \\
-  \vdots &amp; &amp; \ddots &amp;\\
-  \mathbf A^{N-1}\mathbf B &amp; \mathbf A^{N-2}\mathbf B &amp; &amp; \mathbf B
-\end{bmatrix}}_{\widehat{\mathbf C}}
-  \begin{bmatrix}
-\bm u_0\\\bm u_1\\\vdots\\\bm u_{N-1}
-\end{bmatrix}
-+
-\underbrace{
-  \begin{bmatrix}
-\mathbf A\\\mathbf A^2\\\vdots\\\mathbf A^N
-\end{bmatrix}}_{\widehat{\mathbf A}}\mathbf x_0
-</span></p>
-<p>For convenience, let’s rewrite the compact relation between <span class="math inline">\bar{\bm x}</span> and <span class="math inline">\bar{\bm u}</span> and <span class="math inline">\mathbf x_0</span> <span id="eq-x_as_function_of_u_and_x0"><span class="math display">
-\bar{\bm x} = \widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \mathbf x_0.
-\tag{2}</span></span></p>
-<p>We can now substitute this into the original cost, which then becomes independent of <span class="math inline">\bar{\bm x}</span>, which we reflect by using a new name <span class="math inline">\tilde J</span> <span class="math display">
-\begin{aligned}
-\tilde J(\bar{\bm u};\mathbf x_0) &amp;= \frac{1}{2}(\widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \mathbf x_0)^\top\overline{\mathbf Q} (\widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \mathbf x_0) + \frac{1}{2}\bar{\bm u}^\top\overline{\mathbf R} \bar{\bm u} + \frac{1}{2}\mathbf x_0^\top\mathbf Q\mathbf x_0\\
-&amp;= \frac{1}{2}\bar{\bm u}^\top\widehat{\mathbf C}^\top \overline{\mathbf Q} \widehat{\mathbf C} \bar{\bm u} + \mathbf x_0^\top\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf C} \bar{\bm u} + \frac{1}{2} \mathbf x_0^\top\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf A} \mathbf x_0 + \frac{1}{2}\bar{\bm u}^\top\overline{\mathbf R} \bar{\bm u} + \frac{1}{2}\mathbf x_0^\top\mathbf Q\mathbf x_0\\
-&amp;= \frac{1}{2}\bar{\bm u}^\top(\widehat{\mathbf C}^\top \overline{\mathbf Q} \widehat{\mathbf C} + \overline{\mathbf R})\bar{\bm u} + \mathbf x_0^\top\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf C} \bar{\bm u} + \frac{1}{2} \mathbf x_0^\top(\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf A} + \mathbf Q)\mathbf x_0.
-\end{aligned}
-</span></p>
-<p>The last term (the one independent of <span class="math inline">\bar{\bm u}</span>) does not have an impact on the optimal <span class="math inline">\bar{\bm u}</span> and therefore it can be discarded, but such minor modification perhaps does no justify a new name for the cost function and we write it as <span class="math display">
-\tilde J(\bar{\bm u};\mathbf x_0) = \frac{1}{2}\bar{\bm u}^\top\underbrace{(\widehat{\mathbf C}^\top \overline{\mathbf Q} \widehat{\mathbf C} + \overline{\mathbf R})}_{\mathbf H}\bar{\bm u} +  \mathbf x_0^\top\underbrace{\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf C}}_{\mathbf F^\top} \bar{\bm u}.
-</span></p>
-<p>This cost is a function of <span class="math inline">\bar{\bm u}</span>, the initial state <span class="math inline">\mathbf x_0</span> is regarded as a fixed parameter. Its gradient is <span class="math display">
-\nabla \tilde J = \mathbf H\bar{\bm u}+\mathbf F\mathbf x_0.
-</span></p>
-<p>Setting it to zero leads to the following linear system of equations <span class="math display">
-\mathbf H\bar{\bm u}=-\mathbf F\mathbf x_0
-</span> that needs to be solved for <span class="math inline">\bar{\bm u}</span>. Formally, we write the solution as <span class="math display">
-\bar{\bm u} = -\mathbf H^{-1} \mathbf F \mathbf x_0.
-</span></p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Solving linear equations by direct computation of the matrix inverse is not a recommended practice. Use dedicated solvers of linear equations instead. For example, in Matlab use the backslash operator, which invokes the most suitable solver.</p>
-</div>
-</div>
-<section id="adding-the-constraints-on-controls" class="level4">
-<h4 class="anchored" data-anchor-id="adding-the-constraints-on-controls">Adding the constraints on controls</h4>
-<p>Adding constraints on <span class="math inline">\bar{\bm u}</span> is straightforward. It is just that instead of a linear system we will have a linear system with additional inequality constraints. Let’s get one <span class="math display">
-\begin{aligned}
-\operatorname*{minimize}_{\bar{\bm u}} &amp; \quad \frac{1}{2}\bar{\bm u}^T \mathbf H \bar{\bm u} + \mathbf x_0^T\mathbf F^T \bar{\bm u}\\
-\text{subject to} &amp;\quad \bar{\bm u} \leq \bar{\mathbf u}_\mathrm{max}\\
-               &amp;\quad \bar{\bm u} \geq \bar{\mathbf u}_\mathrm{min},
-\end{aligned}
-</span> which we can rewrite more explicitly (in the matrix-vector format) as <span class="math display">
-\begin{aligned}
-\operatorname*{minimize}_{\bar{\bm u}} &amp; \quad \frac{1}{2}\bar{\bm u}^T \mathbf H \bar{\bm u} + \mathbf x_0^T\mathbf F^T \bar{\bm u}\\
-\text{subject to} &amp; \begin{bmatrix}
-                  \mathbf{I}  &amp;    &amp;         &amp;    \\
-                    &amp; \mathbf{I}  &amp;         &amp;    \\
-                    &amp;    &amp; \ddots  &amp;    \\
-                    &amp;    &amp;         &amp;  \mathbf{I} \\
-                    -\mathbf{I}   &amp;   &amp;     &amp;    \\
-                    &amp; -\mathbf{I} &amp;         &amp;    \\
-                    &amp;    &amp; \ddots  &amp;    \\
-                    &amp;    &amp;         &amp;  -\mathbf{I}
-                 \end{bmatrix}
-                 \begin{bmatrix}
-                  \mathbf u_0 \\ \mathbf u_1 \\ \vdots \\ \mathbf u_{N-1}
-                 \end{bmatrix}
-                 \leq
-                 \begin{bmatrix}
-                  \mathbf u_\mathbf{max} \\ \mathbf u_\mathrm{max} \\ \vdots \\ \mathbf u_\mathrm{max}\\ -\mathbf u_\mathrm{min} \\ -\mathbf u_\mathrm{min} \\ \vdots \\ -\mathbf u_\mathrm{min}
-                 \end{bmatrix}.
-\end{aligned}
-</span></p>
-</section>
-<section id="adding-the-constraints-on-states" class="level4">
-<h4 class="anchored" data-anchor-id="adding-the-constraints-on-states">Adding the constraints on states</h4>
-<p>We might feel a little bit uneasy about loosing an immediate access to <span class="math inline">\bar{\bm x}</span>. But the game is not lost. We just need to express <span class="math inline">\bar{\bm x}</span> as a function of <span class="math inline">\bar{\bm u}</span> and <span class="math inline">\mathbf x_0</span> and impose the constraint on the result. But such expression is already available, see (<a href="#eq-x_as_function_of_u_and_x0" class="quarto-xref">Equation&nbsp;2</a>). Therefore, we can formulate the constraint, say, an upper bound on the state vector <span class="math display">
-\bm x_k \leq \mathbf x_\mathrm{max}
-</span> as <span class="math display">
-\bar{\mathbf x}_\mathrm{min} \leq \widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \mathbf x_0 \leq \bar{\mathbf x}_\mathrm{max},
-</span> where the the bars in <span class="math inline">\bar{\mathbf x}_\mathrm{min}</span> and <span class="math inline">\bar{\mathbf x}_\mathrm{max}</span> obviously indicates that these vectors were obtained by stacking the corresponding vectors for all times <span class="math inline">k=1,\ldots,N</span>.</p>
+<p>Unlike shooting methods used when following the indirect approach, here they are parameterized not not only by the initial state, but also by the (possibly long) vector of parameters of the whole control trajectory.</p>
 
 
-</section>
-</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1404,13 +1066,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./discr_dir_general.html" class="pagination-link" aria-label="General finite-horizon nonlinear discrete-time optimal control as nonlinear program">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">General finite-horizon nonlinear discrete-time optimal control as nonlinear program</span>
+      <a href="./cont_indir_time_optimal.html" class="pagination-link" aria-label="Time-optimal control">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Time-optimal control</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./discr_dir_mpc.html" class="pagination-link" aria-label="Model predictive control (MPC)">
-        <span class="nav-page-text">Model predictive control (MPC)</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cont_dir_collocation.html" class="pagination-link" aria-label="Collocation methods for optimal control">
+        <span class="nav-page-text">Collocation methods for optimal control</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1422,7 +1084,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
