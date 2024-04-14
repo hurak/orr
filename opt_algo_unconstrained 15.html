@@ -811,7 +811,7 @@ f(\bm x_k+\alpha_k\bm d_k) - f(\bm x_k) \leq \gamma \alpha_k \mathbf d^T \nabla 
 f(\bm x_k) - f(\bm x_k+\alpha_k\bm d_k) &lt; -\gamma \alpha_k \mathbf d^T \nabla f(\bm x_k)
 </span> sends the algorithm into another reduction of <span class="math inline">\alpha_k</span> by <span class="math inline">\alpha_k = \beta\alpha_k</span>. A reasonable choice for <span class="math inline">\beta</span> is <span class="math inline">0.5</span>, which corresponds to halving the step length upon failure to decrease sufficiently.</p>
 <p>The backtracking algorithm can be implemented as follows</p>
-<div id="7ed9fcb4" class="cell" data-execution_count="1">
+<div id="b6bbc7b4" class="cell" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">backtracking_line_search</span>(f, ∇fₖ, xₖ, dₖ; α₀<span class="op">=</span><span class="fl">1.0</span>, β<span class="op">=</span><span class="fl">0.5</span>, γ<span class="op">=</span><span class="fl">0.1</span>)</span>
@@ -843,7 +843,7 @@ f(\bm x_k) - f(\bm x_k+\alpha_k\bm d_k) &lt; -\gamma \alpha_k \mathbf d^T \nabla
 <p>Let’s now examine the behaviour of the method by applying it to minimization of a quadratic function. Well, for a quadratic function it is obviously an overkill, but we use it in the example because we can compute the step lenght exactly, which then helps the methods show its best.</p>
 <div id="exm-steepest-descent_quadratic_exact" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2</strong></span> &nbsp;</p>
-<div id="0ac4638b" class="cell" data-execution_count="2">
+<div id="58b103c7" class="cell" data-execution_count="2">
 <details open="" class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span>         <span class="co"># For dot() function.</span></span>
@@ -1070,7 +1070,7 @@ Figure&nbsp;1: Zigzagging of the steepest descent method for a quadratic functio
 <h4 class="anchored" data-anchor-id="gradient-method-converges-slowly-for-ill-conditioned-problems">Gradient method converges slowly for ill-conditioned problems</h4>
 <div id="exm-gradient-method-ill-conditioned" class="theorem example">
 <p><span class="theorem-title"><strong>Example 3</strong></span> Consider minimization of the following cost function <span class="math display">f(\bm x) = 1000x_1^2 + 40x_1x_2 + x_2^2.</span></p>
-<div id="327df816" class="cell" data-execution_count="4">
+<div id="a07e9199" class="cell" data-execution_count="4">
 <details open="" class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> [<span class="fl">1000</span> <span class="fl">20</span>; <span class="fl">20</span> <span class="fl">1</span>]</span>
@@ -1159,7 +1159,7 @@ i =  67   ||∇f(x)|| = 7.1068e-06   f(x) = 4.2071e-11</code></pre>
 \kappa(\mathbf A) = \frac{\sigma_{\max}(\mathbf A)}{\sigma_{\min}(\mathbf A)}.
 </span>\end{equation}$$</p>
 <p>Ideally this number should be around 1. In the example above it is</p>
-<div id="514ed8bd" class="cell" data-execution_count="5">
+<div id="e4ff4f84" class="cell" data-execution_count="5">
 <details open="" class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cond</span>(Q)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

@@ -1116,7 +1116,7 @@ s_k = a^2s_{k+1} - \frac{a^2b^2s_{k+1}^2}{b^2s_{k+1}+r} + q
 s_k = \frac{a^2rs_{k+1}}{b^2s_{k+1}+r} + q.
 </span></p>
 <p>Julia code and its outputs follow.</p>
-<div id="5cd04b32" class="cell" data-execution_count="1">
+<div id="a233083c" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">dre</span>(a,b,q,r,sN,N)</span>
@@ -1342,7 +1342,7 @@ s_k = \frac{a^2rs_{k+1}}{b^2s_{k+1}+r} + q.
 </div>
 </div>
 <p>Obviously the final state is not particularly close to zero, which is the desired final value. However, increasing the <span class="math inline">s_N</span> term we can bring the system arbitrarily close, as the next simulation confirms.</p>
-<div id="13bc07f6" class="cell" data-execution_count="2">
+<div id="4b91d399" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sN <span class="op">=</span> <span class="fl">10000</span>;</span>
@@ -1540,7 +1540,7 @@ s_k = \frac{a^2rs_{k+1}}{b^2s_{k+1}+r} + q.
 </div>
 </div>
 <p>Finally, we explore what changes if we make the time horizon longer.</p>
-<div id="8868eadd" class="cell" data-execution_count="3">
+<div id="a96de2a0" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="fl">100</span>;</span>
