@@ -37,7 +37,7 @@
     "href": "cont_numerical_direct.html#direct-transcription-methods",
     "title": "Numerical methods for direct approach",
     "section": "Direct transcription methods",
-    "text": "Direct transcription methods",
+    "text": "Direct transcription methods\nIn contrast with the direct shooting methods, here both the control and state trajectories are discretized.\n\nThe optimization is then done over the optimization variables that parameterize both the control trajectory and the state trajectory. In this regard the method resembles the simultaneous method of the direct approach to discrete-time optimal control.",
     "crumbs": [
       "9. Numerical methods for continuous-time optimal control - both indirect and direct approaches",
       "Numerical methods for direct approach"
@@ -48,7 +48,18 @@
     "href": "cont_numerical_direct.html#direct-collocation-methods",
     "title": "Numerical methods for direct approach",
     "section": "Direct collocation methods",
-    "text": "Direct collocation methods\nIn contrast with the direct shooting methods, here both the control and state trajectories are discretized.\n\nSince optimization is done over the optimization variables that parameterize both the control trajectory and the state trajectory, the method resembles the simultaneous method of the direct approach to discrete-time optimal control.",
+    "text": "Direct collocation methods\nSimilarly as in the direct transcription methods, both the control and state trajectories are discretized and the parameterization of this discretization enters the optimization.",
+    "crumbs": [
+      "9. Numerical methods for continuous-time optimal control - both indirect and direct approaches",
+      "Numerical methods for direct approach"
+    ]
+  },
+  {
+    "objectID": "cont_numerical_direct.html#minimumtime-optimal-control-in-direct-approach",
+    "href": "cont_numerical_direct.html#minimumtime-optimal-control-in-direct-approach",
+    "title": "Numerical methods for direct approach",
+    "section": "Minimum‐time optimal control in direct approach",
+    "text": "Minimum‐time optimal control in direct approach\nWhile the indirect approach to optimal control allows for relaxing the final time t_\\mathrm{f} (and possibly including it in the cost function), the direct approach does not seem to support it. The final time has to be finite and constant.\nHere we show one way to turn the final time is t_\\mathrm{f} into an optimization variable. We achieve it by augmenting the state equations with a new variable… guess what… t_\\mathrm{f} accompanied with the corresponding state equation \\dot t_\\mathrm{f} = 0.\nWe now introduce a new normalized time variable \\tau\\in [0,1] such that \n  t = \\tau t_\\mathrm{f}.\n\nThe differentials of time then relate correspondingly \n  \\mathrm{d} t = t_\\mathrm{f}\\mathrm{d}\\tau.\n\nThe original state equation \\frac{\\mathrm{d}x}{\\mathrm{d}t} = f(x) then modifies to \\boxed{\n  \\frac{\\mathrm{d}x}{\\mathrm{d}\\tau} = t_\\mathrm{f} f(x).}\n\nStrictly speaking this should be \\frac{\\mathrm{d}\\hat x}{\\mathrm{d}\\tau} = t_\\mathrm{f} f(\\hat x), reflecting that x(t) = x(t_\\mathrm{r} \\tau) = \\hat x(\\tau) . But the abuse of notation is perhaps acceptable.\nThe cost function will then include a term penalizing t_\\mathrm{f}. Or perhaps the whole cost function is just t_\\mathrm{f} .Or perhaps the final time does not even have to be penalized at all, it is just an optimization variable, it just adds a degree of freedom to the optimal control problem. Of course, in the latter case this is no longer a minimum-time problem, just a free-final time problem.\nIn direct transcription methods for optimal control, the number of discretization/integration (sub)intervals is fixed and not subject to optimization, otherwise the resulting NLP would have a varying size for a varying final time, which is not convenient. Instead, the length of the integration interval, or the discretization/sampling interval is varied hN = t_\\mathrm{f}.\nRecall that all (single-step) discretization methods can be interpreted as an approximate computation of the definite integral in x_{k+1} = x_k + \\int_{t_k}^{t_{k+1}} f(x(t),t)\\mathrm{d}t, which in s-stage Runge-Kutta methods with a fixed time step h always looks like x_{k+1} = x_k + h \\sum_{j=1}^s b_{j} f_{kj}.\nSince the length of the integration interval h is now an optimization variable, even a problem that is originally linear is now turned into a nonlinear one. Furthermore, we can see consistency between x_{k+1} = x_k + \\frac{t_\\mathrm{f}}{N} \\sum_{j=1}^s b_{j} f_{kj} and the above result for the continuous-time problem that does not consider discretization.",
     "crumbs": [
       "9. Numerical methods for continuous-time optimal control - both indirect and direct approaches",
       "Numerical methods for direct approach"

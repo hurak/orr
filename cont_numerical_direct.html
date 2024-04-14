@@ -654,6 +654,7 @@ window.Quarto = {
   <li><a href="#direct-multiple-shooting-methods" id="toc-direct-multiple-shooting-methods" class="nav-link" data-scroll-target="#direct-multiple-shooting-methods">Direct multiple shooting methods</a></li>
   <li><a href="#direct-transcription-methods" id="toc-direct-transcription-methods" class="nav-link" data-scroll-target="#direct-transcription-methods">Direct transcription methods</a></li>
   <li><a href="#direct-collocation-methods" id="toc-direct-collocation-methods" class="nav-link" data-scroll-target="#direct-collocation-methods">Direct collocation methods</a></li>
+  <li><a href="#minimumtime-optimal-control-in-direct-approach" id="toc-minimumtime-optimal-control-in-direct-approach" class="nav-link" data-scroll-target="#minimumtime-optimal-control-in-direct-approach">Minimum‐time optimal control in direct approach</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -702,13 +703,33 @@ window.Quarto = {
 </section>
 <section id="direct-transcription-methods" class="level2">
 <h2 class="anchored" data-anchor-id="direct-transcription-methods">Direct transcription methods</h2>
+<p>In contrast with the direct shooting methods, here both the control and state trajectories are discretized.</p>
 <p><img src="figures/direct_transcription.png" class="img-fluid" style="width:80.0%"></p>
+<p>The optimization is then done over the optimization variables that parameterize both the control trajectory and the state trajectory. In this regard the method resembles the simultaneous method of the direct approach to discrete-time optimal control.</p>
 </section>
 <section id="direct-collocation-methods" class="level2">
 <h2 class="anchored" data-anchor-id="direct-collocation-methods">Direct collocation methods</h2>
-<p>In contrast with the direct shooting methods, here both the control and state trajectories are discretized.</p>
+<p>Similarly as in the direct transcription methods, both the control and state trajectories are discretized and the parameterization of this discretization enters the optimization.</p>
 <p><img src="figures/direct_collocation.png" class="img-fluid" style="width:80.0%"></p>
-<p>Since optimization is done over the optimization variables that parameterize both the control trajectory and the state trajectory, the method resembles the simultaneous method of the direct approach to discrete-time optimal control.</p>
+</section>
+<section id="minimumtime-optimal-control-in-direct-approach" class="level2">
+<h2 class="anchored" data-anchor-id="minimumtime-optimal-control-in-direct-approach">Minimum‐time optimal control in direct approach</h2>
+<p>While the indirect approach to optimal control allows for relaxing the final time <span class="math inline">t_\mathrm{f}</span> (and possibly including it in the cost function), the direct approach does not seem to support it. The final time has to be finite and constant.</p>
+<p>Here we show one way to turn the final time is <span class="math inline">t_\mathrm{f}</span> into an optimization variable. We achieve it by augmenting the state equations with a new variable… guess what… <span class="math inline">t_\mathrm{f}</span> accompanied with the corresponding state equation <span class="math inline">\dot t_\mathrm{f} = 0</span>.</p>
+<p>We now introduce a new normalized time variable <span class="math inline">\tau\in [0,1]</span> such that <span class="math display">
+  t = \tau t_\mathrm{f}.
+</span></p>
+<p>The differentials of time then relate correspondingly <span class="math display">
+  \mathrm{d} t = t_\mathrm{f}\mathrm{d}\tau.
+</span></p>
+<p>The original state equation <span class="math inline">\frac{\mathrm{d}x}{\mathrm{d}t} = f(x)</span> then modifies to <span class="math display">\boxed{
+  \frac{\mathrm{d}x}{\mathrm{d}\tau} = t_\mathrm{f} f(x).}
+</span></p>
+<p>Strictly speaking this should be <span class="math inline">\frac{\mathrm{d}\hat x}{\mathrm{d}\tau} = t_\mathrm{f} f(\hat x)</span>, reflecting that <span class="math inline">x(t) = x(t_\mathrm{r} \tau) = \hat x(\tau)</span> . But the abuse of notation is perhaps acceptable.</p>
+<p>The cost function will then include a term penalizing <span class="math inline">t_\mathrm{f}</span>. Or perhaps the whole cost function is just <span class="math inline">t_\mathrm{f}</span> .Or perhaps the final time does not even have to be penalized at all, it is just an optimization variable, it just adds a degree of freedom to the optimal control problem. Of course, in the latter case this is no longer a minimum-time problem, just a free-final time problem.</p>
+<p>In direct transcription methods for optimal control, the number of discretization/integration (sub)intervals is fixed and not subject to optimization, otherwise the resulting NLP would have a varying size for a varying final time, which is not convenient. Instead, the length of the integration interval, or the discretization/sampling interval is varied <span class="math display">hN = t_\mathrm{f}.</span></p>
+<p>Recall that all (single-step) discretization methods can be interpreted as an approximate computation of the definite integral in <span class="math display">x_{k+1} = x_k + \int_{t_k}^{t_{k+1}} f(x(t),t)\mathrm{d}t,</span> which in s-stage Runge-Kutta methods with a fixed time step h always looks like <span class="math display">x_{k+1} = x_k + h \sum_{j=1}^s b_{j} f_{kj}.</span></p>
+<p>Since the length of the integration interval <span class="math inline">h</span> is now an optimization variable, even a problem that is originally linear is now turned into a nonlinear one. Furthermore, we can see consistency between <span class="math display">x_{k+1} = x_k + \frac{t_\mathrm{f}}{N} \sum_{j=1}^s b_{j} f_{kj}</span> and the above result for the continuous-time problem that does not consider discretization.</p>
 
 
 </section>
