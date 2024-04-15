@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Numerical methods for direct approach</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – Discrete-time LQR-optimal control on an infinite horizon</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./cont_numerical_software.html" rel="next">
-<link href="./cont_numerical_indirect.html" rel="prev">
+<link href="./discr_indir_DARE.html" rel="next">
+<link href="./discr_indir_LQR_fin_horizon.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -125,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_numerical_indirect.html">9. Numerical methods for continuous-time optimal control - both indirect and direct approaches</a></li><li class="breadcrumb-item"><a href="./cont_numerical_direct.html">Numerical methods for direct approach</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_indir_general.html">4. Discrete-time optimal control – indirect approach</a></li><li class="breadcrumb-item"><a href="./discr_indir_LQR_inf_horizon.html">Discrete-time LQR-optimal control on an infinite horizon</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -302,7 +302,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_indir_LQR_inf_horizon.html" class="sidebar-item-text sidebar-link">
+  <a href="./discr_indir_LQR_inf_horizon.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Discrete-time LQR-optimal control on an infinite horizon</span></a>
   </div>
 </li>
@@ -489,7 +489,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_numerical_direct.html" class="sidebar-item-text sidebar-link active">
+  <a href="./cont_numerical_direct.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Numerical methods for direct approach</span></a>
   </div>
 </li>
@@ -650,20 +650,21 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#direct-shooting-methods" id="toc-direct-shooting-methods" class="nav-link active" data-scroll-target="#direct-shooting-methods">Direct shooting methods</a></li>
-  <li><a href="#direct-multiple-shooting-methods" id="toc-direct-multiple-shooting-methods" class="nav-link" data-scroll-target="#direct-multiple-shooting-methods">Direct multiple shooting methods</a></li>
-  <li><a href="#direct-transcription-methods" id="toc-direct-transcription-methods" class="nav-link" data-scroll-target="#direct-transcription-methods">Direct transcription methods</a></li>
-  <li><a href="#direct-collocation-methods" id="toc-direct-collocation-methods" class="nav-link" data-scroll-target="#direct-collocation-methods">Direct collocation methods</a></li>
-  <li><a href="#minimumtime-optimal-control-in-direct-approach" id="toc-minimumtime-optimal-control-in-direct-approach" class="nav-link" data-scroll-target="#minimumtime-optimal-control-in-direct-approach">Minimum‐time optimal control in direct approach</a></li>
+  <li><a href="#why-the-infinite-time-horizon" id="toc-why-the-infinite-time-horizon" class="nav-link active" data-scroll-target="#why-the-infinite-time-horizon">Why the infinite time horizon?</a></li>
+  <li><a href="#steady-state-solution-to-discrete-time-riccati-equation" id="toc-steady-state-solution-to-discrete-time-riccati-equation" class="nav-link" data-scroll-target="#steady-state-solution-to-discrete-time-riccati-equation">Steady-state solution to discrete-time Riccati equation</a>
+  <ul class="collapse">
+  <li><a href="#notation" id="toc-notation" class="nav-link" data-scroll-target="#notation">Notation</a></li>
+  <li><a href="#how-to-compute-the-steady-state-solution-to-riccati-equation" id="toc-how-to-compute-the-steady-state-solution-to-riccati-equation" class="nav-link" data-scroll-target="#how-to-compute-the-steady-state-solution-to-riccati-equation">How to compute the steady-state solution to Riccati equation?</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_numerical_indirect.html">9. Numerical methods for continuous-time optimal control - both indirect and direct approaches</a></li><li class="breadcrumb-item"><a href="./cont_numerical_direct.html">Numerical methods for direct approach</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_indir_general.html">4. Discrete-time optimal control – indirect approach</a></li><li class="breadcrumb-item"><a href="./discr_indir_LQR_inf_horizon.html">Discrete-time LQR-optimal control on an infinite horizon</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Numerical methods for direct approach</h1>
+<h1 class="title">Discrete-time LQR-optimal control on an infinite horizon</h1>
 </div>
 
 
@@ -680,87 +681,81 @@ window.Quarto = {
 </header>
 
 
-<p>We have already seen that direct methods for discrete-time optimal control problems essentially just regroup and reshape the problem data so that a nonlinear programming solver can accept them. In order to follow the same approach with continous-time optimal control problems, some kind of discretization is inevitable in order to formulate a nonlinear program. Depending of what is discretized and how, several groups of methods can be identified</p>
+<p>In this section we are going to solve the LQR problem on the time horizon extended to infinity, that is, our goal is to find an infinite (vector) control sequence <span class="math inline">\bm u_0, \bm u_{1},\ldots, \bm u_{\infty}</span> that minimizes <span class="math display">
+J_0^\infty = \frac{1}{2}\sum_{k=0}^{\infty}\left[\bm x_k^\top \mathbf Q \bm x_k+\bm u_k^\top \mathbf R\bm u_k\right],
+</span> where, as before <span class="math inline">\mathbf Q = \mathbf Q^\top \succeq 0</span> and <span class="math inline">\mathbf R = \mathbf R^\top \succ 0</span> and the system is modelled by <span class="math display">
+\bm x_{k+1} = \mathbf A \bm x_{k} + \mathbf B \bm u_k, \qquad \bm x_0 = \mathbf x_0.
+</span></p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There is no penalty on the terminal state in the infinite time horizon LQR problem.</p>
+</div>
+</div>
+<section id="why-the-infinite-time-horizon" class="level2">
+<h2 class="anchored" data-anchor-id="why-the-infinite-time-horizon">Why the infinite time horizon?</h2>
+<p>The first question that must inevitably pop up is the one about the motivation for introducing the infinite time horizon:</p>
+<blockquote class="blockquote">
+<p>Does the introduction of an infinite time horizon reflect that we do not care about when the controller accomplishes the task?</p>
+</blockquote>
+<p>No, certainly not. The infinite time horizon is introduced to model the case when the system is expected to operate indefinitely. This is a common scenario in practice, for example, in the case of temperature control in a building.</p>
+<p>Similarly, the infinite time horizon can be used in the scenarios when the final time is not known and we leave it up to the controller to take as much time as it needs to reach the desired state. But even then we can still express our desire to reach the desired state as soon as possible by choosing the weights <span class="math inline">\mathbf Q</span> and <span class="math inline">\mathbf R</span> appropriately.</p>
+</section>
+<section id="steady-state-solution-to-discrete-time-riccati-equation" class="level2">
+<h2 class="anchored" data-anchor-id="steady-state-solution-to-discrete-time-riccati-equation">Steady-state solution to discrete-time Riccati equation</h2>
+<p>We have seen in the previous section that the solution to LQR problem with free final state and finite time horizon is given by a time-varying state feedback control law <span class="math inline">\bm u_k = \mathbf K_k \bm x_k</span>. The sequence of gains <span class="math inline">\mathbf K_k</span> for <span class="math inline">k=0,\ldots, N-1,</span> is given by the sequence of matrices <span class="math inline">\mathbf S_k</span> for <span class="math inline">k=0,\ldots, N</span>, which in turn is given as the solution to the (discrete-time) Riccati equation initialized by the penalty <span class="math inline">\mathbf S_N</span> and solved backwards in time. But we have also seen that, at least in our example, provided the time interval was long enough, the sequence <span class="math inline">\mathbf K_k</span> and <span class="math inline">\mathbf S_k</span> both converged to some steady state values as the time <span class="math inline">k</span> proceeded backwards towards the beginning of the time interval.</p>
+<p>While using these steady-state values instead of the full sequences lead to a suboptimal solution on a finite time horizon, it turns out that it actually gives the optimal solution on an infinite time horizon. Although our argument here may be viewed as rather hand-wavy, it is intuitive — there is no end to the time interval, hence the steady-state values are not given a chance to change “towards the end”, as we observed in the finite time horizon case.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Other approaches exist for solving the infinite time horizon LQR problem that do not make any reference to the finite time horizon problem, some of them are very elegant and concise, but here we intentionally stick to viewing it as the extension of the finite time horizon problem.</p>
+</div>
+</div>
+<section id="notation" class="level3">
+<h3 class="anchored" data-anchor-id="notation">Notation</h3>
+<p>Before we proceed with the discussion of how to find the steady-state values (the limits) of <span class="math inline">\mathbf S_k</span> and subsequently <span class="math inline">\mathbf K_k</span>, we must discuss the notation first. So, while icreasing the time horizon <span class="math inline">N</span> and the solution to the Riccati equation settles towards the beginning of the time interval. We can thenk pick the steady-state values right at the initial time <span class="math inline">k=0</span>, that is, <span class="math inline">\mathbf S_0</span> and <span class="math inline">\mathbf K_0</span>. But thanks to time invariance, we can also fix the final time to some (arbitrary) <span class="math inline">N</span> and strech the interval by moving its beginning toward <span class="math inline">-\infty</span>. The limits of the sequences <span class="math inline">\mathbf S_k</span> and <span class="math inline">\mathbf K_k</span> can be then considered at <span class="math inline">k</span> goes toward <span class="math inline">-\infty</span>. It seems appropriate to denote these limits as <span class="math inline">\mathbf S_{-\infty}</span> and <span class="math inline">\mathbf K_{-\infty}</span> then. Well, the fact is that the commonly accepted notation for the limits found in the literature is just <span class="math inline">\mathbf S_\infty</span> and <span class="math inline">\mathbf K_\infty</span> <span class="math display">
+\mathbf S_\infty \triangleq \lim_{k\rightarrow -\infty} \mathbf S_k, \qquad \mathbf K_\infty \triangleq \lim_{k\rightarrow -\infty} \mathbf K_k.
+</span></p>
+</section>
+<section id="how-to-compute-the-steady-state-solution-to-riccati-equation" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-compute-the-steady-state-solution-to-riccati-equation">How to compute the steady-state solution to Riccati equation?</h3>
+<p>Leaving aside for the moment the important question whether and under which conditions such a limit <span class="math inline">\mathbf S_\infty</span> exists, the immediate question is how to compute such limit. One straightforward strategy is to run the recurrent scheme (Riccati equation) and generate the sequence <span class="math inline">\mathbf S_{N}, \mathbf S_{N-1}, \mathbf S_{N-2}, \ldots</span> so long as there is a nonnegligible improvement, that is, once <span class="math inline">\mathbf S_{k}\approx\mathbf S_{k+1}</span>, stop iterating. That is certainly doable.</p>
+<p>There is, however, another idea. We apply the steady-state condition <span class="math display">
+\mathbf S_{\infty} = \mathbf S_k=\mathbf S_{k+1}
+</span> to the Riccati equation. The resulting equation <span class="math display">
+\mathbf S_{\infty}=\mathbf A^\text{T}\left[\mathbf S_{\infty}-\mathbf S_{\infty}\mathbf B(\mathbf B^\text{T}\mathbf S_{\infty}\mathbf B+\mathbf R)^{-1}\mathbf B^\text{T}\mathbf S_{\infty}\right]\mathbf A+\mathbf Q
+</span> is called <strong>discrete-time algebraic Riccati equation</strong> (DARE) and it is one of the most important equations in the field of computational control design.</p>
+<p>The equation may look quite “messy” and offers hardly any insight. Remember the good advice to shring the problem to the scalar size while studying similar matrix-vector expressions and striving to get some insight. Our DARE simplifies to <span class="math display">
+s_\infty = a^2s_\infty - \frac{a^2b^2s_\infty^2}{b^2s_\infty+r} + q
+</span></p>
+<p>Multiplying both sides by the denominator we get the equivalent quadratic (in <span class="math inline">s_\infty</span>) equation <span class="math display">
+b^2s_\infty^2 + (r - a^2b^2 - b^2q)s_\infty - qr = 0.
+</span></p>
+<p>Voilà! A scalar DARE is just a quadratic equation, for which the solutions can be found readily.</p>
+<p>There is a caveat here, though, reflected in using plural in “solutions” above. Quadratic equation can have two (or none) real solutions. But the sequence produced by original recursive Riccati equation is determined uniquely! What’s up? How are the solutions to ARE related to the limiting solution of recursive Riccati equation?</p>
+<p>Answering this question will keep us busy for most of this lecture. We will structure this broad question into several sub-questions</p>
 <ul>
-<li>direct shooting and direct multiple shooting,</li>
-<li>direct transcription (aka direct discretization),</li>
-<li>direct collocation.</li>
+<li>Under which conditions it is guaranteed that there exists a (bounded) limiting solution <span class="math inline">\mathbf S_\infty</span> to the recursive Riccati equation for all initial (actually final) values <span class="math inline">\mathbf S_N</span>?</li>
+<li>Under which conditions is the limit solution unique for arbitrary <span class="math inline">\mathbf S_N</span>?</li>
+<li>Under which conditions is it guaranteed that the time-invariant feedback gain <span class="math inline">\mathbf K_\infty</span> computed from <span class="math inline">\mathbf S_\infty</span> stabilizes the system (on the infinite control interval)?</li>
 </ul>
-<p>The core principles behind the methods are identical to those discussed in the previous section on numerical methods for indirect approaches, but the adjective “direct” suggests that there must be some modifications.</p>
-<section id="direct-shooting-methods" class="level2">
-<h2 class="anchored" data-anchor-id="direct-shooting-methods">Direct shooting methods</h2>
-<p>In contrast with the application of shooting methods to the TP-BVP originating from the indirect approach, here the variables through whose values we aim the fictitious cannon are not the initial co-state vector but the (possibly long) vector parameterizing the whole control trajectory.</p>
-<p>In the simplest – and fairly practical – case of a piecewise contstant control trajectory, which is motivated by the eventual discrete-time implementation using a zero-order hold (ZOH), the control trajectory is parameterized just by the sequence of values <span class="math inline">u_0, u_1, \ldots, u_{N-1}</span>.</p>
-<div id="fig-direct-shooting" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-direct-shooting-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/direct_shooting.png" class="img-fluid figure-img" style="width:80.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-direct-shooting-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Direct shooting – only the control trajectory is discretized and the parameters of this discretization serve as optimization variables
-</figcaption>
-</figure>
-</div>
-<p>The state trajectory <span class="math inline">x(t)</span> corresponding to the fixed initial state <span class="math inline">\mathrm x_\mathrm{i}</span> and the sequence of controls is obtained by using some IVP ODE numerical solver.</p>
-<p>For the chosen control trajectory and the simulated state trajectory, the cost function <span class="math inline">J(u(\cdot);x_\mathrm{i}) = \phi(x(t_\mathrm{f}),t_\mathrm{f}) + \int L(x,u) \mathrm d t</span> is then evaluated. This can also only be done numerically, typically using methods for numerical integration.</p>
-<p>Once the cost function is evaluated, numerical optimization solver is used to update the vector parameterizing the control trajectory so that the cost is reduced. For the new control trajectory, the state response is simulated, … and so on.</p>
-<p>Since optimization is only done over the optimization variables that parameterize the control trajectory, the method resembles the sequential method of the direct approach to discrete-time optimal control.</p>
-</section>
-<section id="direct-multiple-shooting-methods" class="level2">
-<h2 class="anchored" data-anchor-id="direct-multiple-shooting-methods">Direct multiple shooting methods</h2>
-<p>…</p>
-</section>
-<section id="direct-transcription-methods" class="level2">
-<h2 class="anchored" data-anchor-id="direct-transcription-methods">Direct transcription methods</h2>
-<p>In contrast with the direct shooting methods, here both the control and state trajectories are discretized. There is then no need for a numerical solver for IVP ODE.</p>
-<div id="fig-direct-transcription" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-direct-transcription-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/direct_transcription.png" class="img-fluid figure-img" style="width:80.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-direct-transcription-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Direct transcription/discretization – both the control and state trajectories are discretized and the resulting vectors of parameterers of this discretization serve as optimization variables
-</figcaption>
-</figure>
-</div>
-<p>The optimization is then done over the optimization variables that parameterize both the control trajectory and the state trajectory. In this regard the method resembles the simultaneous method of the direct approach to discrete-time optimal control.</p>
-</section>
-<section id="direct-collocation-methods" class="level2">
-<h2 class="anchored" data-anchor-id="direct-collocation-methods">Direct collocation methods</h2>
-<p>Similarly as in the direct transcription methods, both the control and state trajectories are discretized and the parameterization of this discretization enters the optimization.</p>
-<p>But here it is not just the values of the state and the control at the discretization points that are the optimization variables, but rather the coefficients of the polynomials that approximate the corresponding variables at the intermediate times between the discretization points.</p>
-<div id="fig-direct-collocation" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-direct-collocation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/direct_collocation.png" class="img-fluid figure-img" style="width:80.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-direct-collocation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Direct collocation – both the control and state trajectories are approximated by piecewise polynomials and parameters of these polynomials serve as optimization variables
-</figcaption>
-</figure>
-</div>
-<p>However, similarly as we have already seen while discussing the collocation methods for the indirect approach, every direct collocation methods is equivalent to some direct transcription method. For example, collocation with a quadratic polynomial and the collocation points at the beginning and end of the interval is equivalent to the implicit trapezoidal rule. Some people even say that the implicit trapezoidal method <em>is</em> a collocation method.</p>
-</section>
-<section id="minimumtime-optimal-control-in-direct-approach" class="level2">
-<h2 class="anchored" data-anchor-id="minimumtime-optimal-control-in-direct-approach">Minimum‐time optimal control in direct approach</h2>
-<p>While the indirect approach to optimal control allows for relaxing the final time <span class="math inline">t_\mathrm{f}</span> (and possibly including it in the cost function), the direct approach does not seem to support it. The final time has to be finite and constant.</p>
-<p>Here we show one way to turn the final time is <span class="math inline">t_\mathrm{f}</span> into an optimization variable. We achieve it by augmenting the state equations with a new variable… guess what… <span class="math inline">t_\mathrm{f}</span> accompanied with the corresponding state equation <span class="math inline">\dot t_\mathrm{f} = 0</span>.</p>
-<p>We now introduce a new normalized time variable <span class="math inline">\tau\in [0,1]</span> such that <span class="math display">
-  t = \tau t_\mathrm{f}.
-</span></p>
-<p>The differentials of time then relate correspondingly <span class="math display">
-  \mathrm{d} t = t_\mathrm{f}\mathrm{d}\tau.
-</span></p>
-<p>The original state equation <span class="math inline">\frac{\mathrm{d}x}{\mathrm{d}t} = f(x)</span> then modifies to <span class="math display">\boxed{
-  \frac{\mathrm{d}x}{\mathrm{d}\tau} = t_\mathrm{f} f(x).}
-</span></p>
-<p>Strictly speaking this should be <span class="math inline">\frac{\mathrm{d}\hat x}{\mathrm{d}\tau} = t_\mathrm{f} f(\hat x)</span>, reflecting that <span class="math inline">x(t) = x(t_\mathrm{r} \tau) = \hat x(\tau)</span> . But the abuse of notation is perhaps acceptable.</p>
-<p>The cost function will then include a term penalizing <span class="math inline">t_\mathrm{f}</span>. Or perhaps the whole cost function is just <span class="math inline">t_\mathrm{f}</span> .Or perhaps the final time does not even have to be penalized at all, it is just an optimization variable, it just adds a degree of freedom to the optimal control problem. Of course, in the latter case this is no longer a minimum-time problem, just a free-final time problem.</p>
-<p>In direct transcription methods for optimal control, the number of discretization/integration (sub)intervals is fixed and not subject to optimization, otherwise the resulting NLP would have a varying size for a varying final time, which is not convenient. Instead, the length of the integration interval, or the discretization/sampling interval is varied <span class="math display">hN = t_\mathrm{f}.</span></p>
-<p>Recall that all (single-step) discretization methods can be interpreted as an approximate computation of the definite integral in <span class="math display">x_{k+1} = x_k + \int_{t_k}^{t_{k+1}} f(x(t),t)\mathrm{d}t,</span> which in s-stage Runge-Kutta methods with a fixed time step h always looks like <span class="math display">x_{k+1} = x_k + h \sum_{j=1}^s b_{j} f_{kj}.</span></p>
-<p>Since the length of the integration interval <span class="math inline">h</span> is now an optimization variable, even a problem that is originally linear is now turned into a nonlinear one. Furthermore, we can see consistency between <span class="math display">x_{k+1} = x_k + \frac{t_\mathrm{f}}{N} \sum_{j=1}^s b_{j} f_{kj}</span> and the above result for the continuous-time problem that does not consider discretization.</p>
 
 
+</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
@@ -1186,13 +1181,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cont_numerical_indirect.html" class="pagination-link" aria-label="Numerical methods for indirect approach">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Numerical methods for indirect approach</span>
+      <a href="./discr_indir_LQR_fin_horizon.html" class="pagination-link" aria-label="Discrete-time LQR on a finite horizon">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Discrete-time LQR on a finite horizon</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cont_numerical_software.html" class="pagination-link" aria-label="Software">
-        <span class="nav-page-text">Software</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./discr_indir_DARE.html" class="pagination-link" aria-label="Discrete-time algebraic Riccati equation (DARE)">
+        <span class="nav-page-text">Discrete-time algebraic Riccati equation (DARE)</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

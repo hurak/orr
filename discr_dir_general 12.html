@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Numerical methods for direct approach</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – General finite-horizon nonlinear discrete-time optimal control as nonlinear program</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./cont_numerical_software.html" rel="next">
-<link href="./cont_numerical_indirect.html" rel="prev">
+<link href="./discr_dir_LQR.html" rel="next">
+<link href="./opt_algo_references.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -125,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_numerical_indirect.html">9. Numerical methods for continuous-time optimal control - both indirect and direct approaches</a></li><li class="breadcrumb-item"><a href="./cont_numerical_direct.html">Numerical methods for direct approach</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_dir_general.html">3. Discrete-time optimal control – direct approach</a></li><li class="breadcrumb-item"><a href="./discr_dir_general.html">General finite-horizon nonlinear discrete-time optimal control as nonlinear program</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -249,7 +249,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_dir_general.html" class="sidebar-item-text sidebar-link">
+  <a href="./discr_dir_general.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">General finite-horizon nonlinear discrete-time optimal control as nonlinear program</span></a>
   </div>
 </li>
@@ -489,7 +489,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_numerical_direct.html" class="sidebar-item-text sidebar-link active">
+  <a href="./cont_numerical_direct.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Numerical methods for direct approach</span></a>
   </div>
 </li>
@@ -645,25 +645,15 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#direct-shooting-methods" id="toc-direct-shooting-methods" class="nav-link active" data-scroll-target="#direct-shooting-methods">Direct shooting methods</a></li>
-  <li><a href="#direct-multiple-shooting-methods" id="toc-direct-multiple-shooting-methods" class="nav-link" data-scroll-target="#direct-multiple-shooting-methods">Direct multiple shooting methods</a></li>
-  <li><a href="#direct-transcription-methods" id="toc-direct-transcription-methods" class="nav-link" data-scroll-target="#direct-transcription-methods">Direct transcription methods</a></li>
-  <li><a href="#direct-collocation-methods" id="toc-direct-collocation-methods" class="nav-link" data-scroll-target="#direct-collocation-methods">Direct collocation methods</a></li>
-  <li><a href="#minimumtime-optimal-control-in-direct-approach" id="toc-minimumtime-optimal-control-in-direct-approach" class="nav-link" data-scroll-target="#minimumtime-optimal-control-in-direct-approach">Minimum‐time optimal control in direct approach</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_numerical_indirect.html">9. Numerical methods for continuous-time optimal control - both indirect and direct approaches</a></li><li class="breadcrumb-item"><a href="./cont_numerical_direct.html">Numerical methods for direct approach</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_dir_general.html">3. Discrete-time optimal control – direct approach</a></li><li class="breadcrumb-item"><a href="./discr_dir_general.html">General finite-horizon nonlinear discrete-time optimal control as nonlinear program</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Numerical methods for direct approach</h1>
+<h1 class="title">General finite-horizon nonlinear discrete-time optimal control as nonlinear program</h1>
 </div>
 
 
@@ -680,88 +670,90 @@ window.Quarto = {
 </header>
 
 
-<p>We have already seen that direct methods for discrete-time optimal control problems essentially just regroup and reshape the problem data so that a nonlinear programming solver can accept them. In order to follow the same approach with continous-time optimal control problems, some kind of discretization is inevitable in order to formulate a nonlinear program. Depending of what is discretized and how, several groups of methods can be identified</p>
+<p>In this section we formulate a finite-horizon optimal control problem (OCP) for a discrete-time dynamical system as a mathematical optimization (also mathematical programming) problem, which can then be solved numerically by a suitable solvers for nonlinear programming (NLP), or possibly quadratic programming (QP). The outcome of such numerical optimization is an optimal control trajectory (a sequence of controls), which is why this approach is called <em>direct</em> – we optimize directly over the trajectories.</p>
+<p>In the next chapter we then present an alternative – <em>indirect</em> – approach, wherein the conditions of optimality are formulated first. These come in the form of a set of equations, some of them recurrent/recursive, hence indirect approach amounts to solving such equations.</p>
+<p>But now back to the direct approaches. We will start with a general nonlinear discrete-time optimal control problem in this section and then specialize to the linear quadratic regulation (LQR) problem in the next section. Finally, since the computed control trajectory constitutes an open-loop control scheme, something must be done about it if feedback scheme is preferred – we introduce the concept of a <em>receding horizon control </em>(RHC), perhaps bettern known as <em>model predictive control </em>(MPC), that turns the direct approach into a feedback control scheme.</p>
+<p>We start by considering a nonlinear discrete-time system modelled by the state equation <span class="math display">
+\bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k),
+</span> where</p>
 <ul>
-<li>direct shooting and direct multiple shooting,</li>
-<li>direct transcription (aka direct discretization),</li>
-<li>direct collocation.</li>
+<li><span class="math inline">\bm x_k\in \mathbb R^n</span> is the state at the discrete time <span class="math inline">k\in \mathbb Z</span>,</li>
+<li><span class="math inline">\bm u_k\in \mathbb R^m</span> is the control at the discrete time <span class="math inline">k</span>,</li>
+<li><span class="math inline">\mathbf f_k: \mathbb{R}^n \times \mathbb{R}^m \times \mathbb Z \to \mathbb{R}^n</span> is a state transition function (in general not only nonlinear but also time-varying, with the convention that the dependence on <span class="math inline">k</span> is expressed through the lower index).</li>
 </ul>
-<p>The core principles behind the methods are identical to those discussed in the previous section on numerical methods for indirect approaches, but the adjective “direct” suggests that there must be some modifications.</p>
-<section id="direct-shooting-methods" class="level2">
-<h2 class="anchored" data-anchor-id="direct-shooting-methods">Direct shooting methods</h2>
-<p>In contrast with the application of shooting methods to the TP-BVP originating from the indirect approach, here the variables through whose values we aim the fictitious cannon are not the initial co-state vector but the (possibly long) vector parameterizing the whole control trajectory.</p>
-<p>In the simplest – and fairly practical – case of a piecewise contstant control trajectory, which is motivated by the eventual discrete-time implementation using a zero-order hold (ZOH), the control trajectory is parameterized just by the sequence of values <span class="math inline">u_0, u_1, \ldots, u_{N-1}</span>.</p>
-<div id="fig-direct-shooting" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-direct-shooting-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/direct_shooting.png" class="img-fluid figure-img" style="width:80.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-direct-shooting-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Direct shooting – only the control trajectory is discretized and the parameters of this discretization serve as optimization variables
-</figcaption>
-</figure>
-</div>
-<p>The state trajectory <span class="math inline">x(t)</span> corresponding to the fixed initial state <span class="math inline">\mathrm x_\mathrm{i}</span> and the sequence of controls is obtained by using some IVP ODE numerical solver.</p>
-<p>For the chosen control trajectory and the simulated state trajectory, the cost function <span class="math inline">J(u(\cdot);x_\mathrm{i}) = \phi(x(t_\mathrm{f}),t_\mathrm{f}) + \int L(x,u) \mathrm d t</span> is then evaluated. This can also only be done numerically, typically using methods for numerical integration.</p>
-<p>Once the cost function is evaluated, numerical optimization solver is used to update the vector parameterizing the control trajectory so that the cost is reduced. For the new control trajectory, the state response is simulated, … and so on.</p>
-<p>Since optimization is only done over the optimization variables that parameterize the control trajectory, the method resembles the sequential method of the direct approach to discrete-time optimal control.</p>
-</section>
-<section id="direct-multiple-shooting-methods" class="level2">
-<h2 class="anchored" data-anchor-id="direct-multiple-shooting-methods">Direct multiple shooting methods</h2>
-<p>…</p>
-</section>
-<section id="direct-transcription-methods" class="level2">
-<h2 class="anchored" data-anchor-id="direct-transcription-methods">Direct transcription methods</h2>
-<p>In contrast with the direct shooting methods, here both the control and state trajectories are discretized. There is then no need for a numerical solver for IVP ODE.</p>
-<div id="fig-direct-transcription" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-direct-transcription-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/direct_transcription.png" class="img-fluid figure-img" style="width:80.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-direct-transcription-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Direct transcription/discretization – both the control and state trajectories are discretized and the resulting vectors of parameterers of this discretization serve as optimization variables
-</figcaption>
-</figure>
-</div>
-<p>The optimization is then done over the optimization variables that parameterize both the control trajectory and the state trajectory. In this regard the method resembles the simultaneous method of the direct approach to discrete-time optimal control.</p>
-</section>
-<section id="direct-collocation-methods" class="level2">
-<h2 class="anchored" data-anchor-id="direct-collocation-methods">Direct collocation methods</h2>
-<p>Similarly as in the direct transcription methods, both the control and state trajectories are discretized and the parameterization of this discretization enters the optimization.</p>
-<p>But here it is not just the values of the state and the control at the discretization points that are the optimization variables, but rather the coefficients of the polynomials that approximate the corresponding variables at the intermediate times between the discretization points.</p>
-<div id="fig-direct-collocation" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-direct-collocation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/direct_collocation.png" class="img-fluid figure-img" style="width:80.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-direct-collocation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Direct collocation – both the control and state trajectories are approximated by piecewise polynomials and parameters of these polynomials serve as optimization variables
-</figcaption>
-</figure>
-</div>
-<p>However, similarly as we have already seen while discussing the collocation methods for the indirect approach, every direct collocation methods is equivalent to some direct transcription method. For example, collocation with a quadratic polynomial and the collocation points at the beginning and end of the interval is equivalent to the implicit trapezoidal rule. Some people even say that the implicit trapezoidal method <em>is</em> a collocation method.</p>
-</section>
-<section id="minimumtime-optimal-control-in-direct-approach" class="level2">
-<h2 class="anchored" data-anchor-id="minimumtime-optimal-control-in-direct-approach">Minimum‐time optimal control in direct approach</h2>
-<p>While the indirect approach to optimal control allows for relaxing the final time <span class="math inline">t_\mathrm{f}</span> (and possibly including it in the cost function), the direct approach does not seem to support it. The final time has to be finite and constant.</p>
-<p>Here we show one way to turn the final time is <span class="math inline">t_\mathrm{f}</span> into an optimization variable. We achieve it by augmenting the state equations with a new variable… guess what… <span class="math inline">t_\mathrm{f}</span> accompanied with the corresponding state equation <span class="math inline">\dot t_\mathrm{f} = 0</span>.</p>
-<p>We now introduce a new normalized time variable <span class="math inline">\tau\in [0,1]</span> such that <span class="math display">
-  t = \tau t_\mathrm{f}.
+<p>A general nonlinear discrete-time optimal control problem (OCP) is then formulated as <span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{\bm u_i,\ldots, \bm u_{N-1}, \bm x_{i},\ldots, \bm x_N}&amp;\quad \left(\phi(\bm x_N,N) + \sum_{k=i}^{N-1} L_k(\bm x_k,\bm u_k) \right)\\
+\text{subject to}  &amp;\quad \bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k),\quad k=i, \ldots, N-1,\\
+                    &amp;\quad \bm u_k \in \mathcal U_k,\quad k=i, \ldots, N-1,\\
+                    &amp;\quad \bm x_k \in \mathcal X_k,\quad k=i, \ldots, N,
+\end{aligned}
+</span> where</p>
+<ul>
+<li><span class="math inline">i</span> is the initial discrete time,</li>
+<li><span class="math inline">N</span> is the final discrete time,</li>
+<li><span class="math inline">\phi()</span> is a terminal cost function that penalizes the state at the final time,</li>
+<li><span class="math inline">L_k()</span> is a running (also stage) cost function,</li>
+<li>and <span class="math inline">\mathcal U_k</span> and <span class="math inline">\mathcal X_k</span> are sets of feasible controls and states – these sets are typically expressed using equations and inequalities. Should they be constant, the notation is just <span class="math inline">\mathcal U</span> and <span class="math inline">\mathcal X</span>.</li>
+</ul>
+<p>Oftentimes it is convenient to handle the constraints of the initial and final states separately: <span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{\bm u_i,\ldots, \bm u_{N-1}, \bm x_{i},\ldots, \bm x_N}&amp;\quad \left(\phi(\bm x_N,N) + \sum_{k=i}^{N-1} L_k(\bm x_k,\bm u_k) \right)\\
+\text{subject to}  &amp;\quad \bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k),\quad k=i, \ldots, N-1,\\
+                    &amp;\quad \bm u_k \in \mathcal U_k,\quad k=i, \ldots, N-1,\\
+                    &amp;\quad \bm x_k \in \mathcal X_k,\quad k=i+1, \ldots, N-1,\\
+                    &amp;\quad \bm x_i \in \mathcal X_\mathrm{init},\\
+                    &amp;\quad \bm x_N \in \mathcal X_\mathrm{final}.
+\end{aligned}
 </span></p>
-<p>The differentials of time then relate correspondingly <span class="math display">
-  \mathrm{d} t = t_\mathrm{f}\mathrm{d}\tau.
+<p>In particular, at the initial time just one particular state is often considered. At the final time, the state might be required to be equal to some given value, it might be required to be in some set defined through equations or inequalities, or it might be left unconstrained. Finally, the constraints on the control and states typically (but not always) come in the form of lower and upper bounds. The optimal control problem then specializes to <span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{\bm u_i,\ldots, \bm u_{N-1}, \bm x_{i},\ldots, \bm x_N}&amp;\quad \left(\phi(\bm x_N,N) + \sum_{k=i}^{N-1} L_k(\bm x_k,\bm u_k) \right)\\
+\text{subject to}  &amp;\quad \bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k),\quad k=i, \ldots, N-1,\\
+                    &amp;\quad \bm u_{\min} \leq \bm u_k \leq \bm u_{\max},\\
+                    &amp;\quad \bm x_{\min} \leq \bm x_k \leq \bm x_{\max},\\
+                    &amp;\quad\bm x_i = \mathbf x^\text{init},\\
+                    &amp;\quad \left(\bm x_N = \mathbf x^\text{ref}, \; \text{or} \; \mathbf h_\text{final}(\bm x_N) =  \mathbf 0, \text{or} \; \mathbf g_\text{final}(\bm x_N) \leq  \mathbf 0\right),                    
+\end{aligned}
+</span> where</p>
+<ul>
+<li><span class="math inline">\bm u_{\min}</span> and <span class="math inline">\bm u_{\max}</span> are lower and upper bounds on the control, respectively,</li>
+<li><span class="math inline">\bm x_{\min}</span> and <span class="math inline">\bm x_{\max}</span> are lower and upper bounds on the state, respectively,</li>
+<li><span class="math inline">\mathbf x^\text{init}</span> is a fixed initial state,</li>
+<li><span class="math inline">\mathbf x^\text{ref}</span> is a required (reference) final state,</li>
+<li>and the functions <span class="math inline">\mathbf g_\text{final}()</span> and <span class="math inline">\mathbf h_\text{final}()</span> can be used to define the constraint set for the final state.</li>
+</ul>
+<p>This optimal control problem is an instance of a general nonlinear programming (NLP) problem <span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{\bar{\bm x}\in\mathbb{R}^{n(N-i)},\bar{\bm u}\in\mathbb{R}^{m(N-i)}} &amp;\quad J(\bar{\bm x},\bar{\bm u})\\
+\text{subject to} &amp;\quad \mathbf h(\bar{\bm x},\bar{\bm u}) =0,\\
+&amp;\quad \mathbf g(\bar{\bm x},\bar{\bm u}) \leq \mathbf 0,
+\end{aligned}
+</span> where <span class="math inline">\bar{\bm u}</span> and <span class="math inline">\bar{\bm x}</span> are vectors obtained by stacking control and state vectors for individual times</p>
+<p><span class="math display">
+\begin{aligned}
+\bar{\bm u} &amp;= \operatorname*{vec}(\bm u_i,\ldots, \bm u_{N-1}) = \begin{bmatrix}\bm u_i\\ \bm u_{i+1}\\ \vdots \\ \bm u_{N-1} \end{bmatrix},\\
+\bar{\bm x} &amp;= \operatorname*{vec}(\bm x_{i+1},\ldots, \bm x_N) = \begin{bmatrix}\bm x_{i+1}\\ \bm x_{i+2}\\ \vdots \\ \bm x_{N} \end{bmatrix}.
+\end{aligned}
 </span></p>
-<p>The original state equation <span class="math inline">\frac{\mathrm{d}x}{\mathrm{d}t} = f(x)</span> then modifies to <span class="math display">\boxed{
-  \frac{\mathrm{d}x}{\mathrm{d}\tau} = t_\mathrm{f} f(x).}
-</span></p>
-<p>Strictly speaking this should be <span class="math inline">\frac{\mathrm{d}\hat x}{\mathrm{d}\tau} = t_\mathrm{f} f(\hat x)</span>, reflecting that <span class="math inline">x(t) = x(t_\mathrm{r} \tau) = \hat x(\tau)</span> . But the abuse of notation is perhaps acceptable.</p>
-<p>The cost function will then include a term penalizing <span class="math inline">t_\mathrm{f}</span>. Or perhaps the whole cost function is just <span class="math inline">t_\mathrm{f}</span> .Or perhaps the final time does not even have to be penalized at all, it is just an optimization variable, it just adds a degree of freedom to the optimal control problem. Of course, in the latter case this is no longer a minimum-time problem, just a free-final time problem.</p>
-<p>In direct transcription methods for optimal control, the number of discretization/integration (sub)intervals is fixed and not subject to optimization, otherwise the resulting NLP would have a varying size for a varying final time, which is not convenient. Instead, the length of the integration interval, or the discretization/sampling interval is varied <span class="math display">hN = t_\mathrm{f}.</span></p>
-<p>Recall that all (single-step) discretization methods can be interpreted as an approximate computation of the definite integral in <span class="math display">x_{k+1} = x_k + \int_{t_k}^{t_{k+1}} f(x(t),t)\mathrm{d}t,</span> which in s-stage Runge-Kutta methods with a fixed time step h always looks like <span class="math display">x_{k+1} = x_k + h \sum_{j=1}^s b_{j} f_{kj}.</span></p>
-<p>Since the length of the integration interval <span class="math inline">h</span> is now an optimization variable, even a problem that is originally linear is now turned into a nonlinear one. Furthermore, we can see consistency between <span class="math display">x_{k+1} = x_k + \frac{t_\mathrm{f}}{N} \sum_{j=1}^s b_{j} f_{kj}</span> and the above result for the continuous-time problem that does not consider discretization.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Althought there may be applications where it is desirable to optimize over the initial state <span class="math inline">\bm x_i</span> as well, mostly the initial state <span class="math inline">\bm x_i</span> is fixed, and it does not have to be considered as an optimization variable. This can be even emphasized through the notation <span class="math inline">J(\bar{\bm x},\bar{\bm u}; \bm x_i)</span>, where the semicolon separates the variables from (fixed) parameters.</li>
+<li>The last control that affects the state trajectory on the interval <span class="math inline">[i,N]</span> is <span class="math inline">\bm u_{N-1}</span>.</li>
+</ul>
+</div>
+</div>
 
 
-</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -856,7 +848,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/hurak\.github\.io\/orr\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -1186,13 +1178,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cont_numerical_indirect.html" class="pagination-link" aria-label="Numerical methods for indirect approach">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Numerical methods for indirect approach</span>
+      <a href="./opt_algo_references.html" class="pagination-link" aria-label="References">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">References</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cont_numerical_software.html" class="pagination-link" aria-label="Software">
-        <span class="nav-page-text">Software</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./discr_dir_LQR.html" class="pagination-link" aria-label="Finite-horizon LQR-optimal control as QP">
+        <span class="nav-page-text">Finite-horizon LQR-optimal control as QP</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1204,7 +1196,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

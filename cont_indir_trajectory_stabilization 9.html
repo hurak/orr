@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Numerical methods for direct approach</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – Trajectory stabilization and neigboring extremals</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./cont_numerical_software.html" rel="next">
-<link href="./cont_numerical_indirect.html" rel="prev">
+<link href="./cont_indir_references.html" rel="next">
+<link href="./cont_indir_CARE.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -125,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_numerical_indirect.html">9. Numerical methods for continuous-time optimal control - both indirect and direct approaches</a></li><li class="breadcrumb-item"><a href="./cont_numerical_direct.html">Numerical methods for direct approach</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_trajectory_stabilization.html">Trajectory stabilization and neigboring extremals</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -431,7 +431,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_trajectory_stabilization.html" class="sidebar-item-text sidebar-link">
+  <a href="./cont_indir_trajectory_stabilization.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Trajectory stabilization and neigboring extremals</span></a>
   </div>
 </li>
@@ -489,7 +489,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_numerical_direct.html" class="sidebar-item-text sidebar-link active">
+  <a href="./cont_numerical_direct.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Numerical methods for direct approach</span></a>
   </div>
 </li>
@@ -645,25 +645,15 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#direct-shooting-methods" id="toc-direct-shooting-methods" class="nav-link active" data-scroll-target="#direct-shooting-methods">Direct shooting methods</a></li>
-  <li><a href="#direct-multiple-shooting-methods" id="toc-direct-multiple-shooting-methods" class="nav-link" data-scroll-target="#direct-multiple-shooting-methods">Direct multiple shooting methods</a></li>
-  <li><a href="#direct-transcription-methods" id="toc-direct-transcription-methods" class="nav-link" data-scroll-target="#direct-transcription-methods">Direct transcription methods</a></li>
-  <li><a href="#direct-collocation-methods" id="toc-direct-collocation-methods" class="nav-link" data-scroll-target="#direct-collocation-methods">Direct collocation methods</a></li>
-  <li><a href="#minimumtime-optimal-control-in-direct-approach" id="toc-minimumtime-optimal-control-in-direct-approach" class="nav-link" data-scroll-target="#minimumtime-optimal-control-in-direct-approach">Minimum‐time optimal control in direct approach</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_numerical_indirect.html">9. Numerical methods for continuous-time optimal control - both indirect and direct approaches</a></li><li class="breadcrumb-item"><a href="./cont_numerical_direct.html">Numerical methods for direct approach</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_trajectory_stabilization.html">Trajectory stabilization and neigboring extremals</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Numerical methods for direct approach</h1>
+<h1 class="title">Trajectory stabilization and neigboring extremals</h1>
 </div>
 
 
@@ -680,88 +670,107 @@ window.Quarto = {
 </header>
 
 
-<p>We have already seen that direct methods for discrete-time optimal control problems essentially just regroup and reshape the problem data so that a nonlinear programming solver can accept them. In order to follow the same approach with continous-time optimal control problems, some kind of discretization is inevitable in order to formulate a nonlinear program. Depending of what is discretized and how, several groups of methods can be identified</p>
-<ul>
-<li>direct shooting and direct multiple shooting,</li>
-<li>direct transcription (aka direct discretization),</li>
-<li>direct collocation.</li>
-</ul>
-<p>The core principles behind the methods are identical to those discussed in the previous section on numerical methods for indirect approaches, but the adjective “direct” suggests that there must be some modifications.</p>
-<section id="direct-shooting-methods" class="level2">
-<h2 class="anchored" data-anchor-id="direct-shooting-methods">Direct shooting methods</h2>
-<p>In contrast with the application of shooting methods to the TP-BVP originating from the indirect approach, here the variables through whose values we aim the fictitious cannon are not the initial co-state vector but the (possibly long) vector parameterizing the whole control trajectory.</p>
-<p>In the simplest – and fairly practical – case of a piecewise contstant control trajectory, which is motivated by the eventual discrete-time implementation using a zero-order hold (ZOH), the control trajectory is parameterized just by the sequence of values <span class="math inline">u_0, u_1, \ldots, u_{N-1}</span>.</p>
-<div id="fig-direct-shooting" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-direct-shooting-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/direct_shooting.png" class="img-fluid figure-img" style="width:80.0%">
+<p>Indirect methods for optimal control reformulate the optimal control problem into a set of equtions – boundary value problems with differential and algebraic equations in the case of continuous-time systems – and by solving these (typically numerically) we obtain the optimal state and control trajectories. Practical usefullness of these is rather limited as such optimal control trajectory constitutes an open-loop control – there is certainly no need to advocate the importance of feedback in this advanced control course.</p>
+<p>One way to introduce feedback is to regard the computed optimal state trajectory <span class="math inline">\bm x^\star(t)</span> as a reference trajectory and design a feedback controller to track this reference. To our advantage, we already have the corresponding control trajectory <span class="math inline">\bm u^\star(t)</span> too, and theferore we can formulate such reference tracking problem as a problem of regulating the deviation <span class="math inline">\delta \bm x(t)</span> of the state from its reference by means of superposing a feedback control <span class="math inline">\delta \bm u(t)</span> onto the (open-loop) optimal control.</p>
+<p>While this problem – also known as the problem of <em>stabilization of a (reference) trajectory</em> – can be solved by basically any feedback control scheme, one elegant way is to linearize the system around the reference trajectory and formulate the problem as the LQR problem for a time-varying linear system.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-direct-shooting-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Direct shooting – only the control trajectory is discretized and the parameters of this discretization serve as optimization variables
-</figcaption>
-</figure>
+<div class="callout-title-container flex-fill">
+Linearization around a trajectory
 </div>
-<p>The state trajectory <span class="math inline">x(t)</span> corresponding to the fixed initial state <span class="math inline">\mathrm x_\mathrm{i}</span> and the sequence of controls is obtained by using some IVP ODE numerical solver.</p>
-<p>For the chosen control trajectory and the simulated state trajectory, the cost function <span class="math inline">J(u(\cdot);x_\mathrm{i}) = \phi(x(t_\mathrm{f}),t_\mathrm{f}) + \int L(x,u) \mathrm d t</span> is then evaluated. This can also only be done numerically, typically using methods for numerical integration.</p>
-<p>Once the cost function is evaluated, numerical optimization solver is used to update the vector parameterizing the control trajectory so that the cost is reduced. For the new control trajectory, the state response is simulated, … and so on.</p>
-<p>Since optimization is only done over the optimization variables that parameterize the control trajectory, the method resembles the sequential method of the direct approach to discrete-time optimal control.</p>
-</section>
-<section id="direct-multiple-shooting-methods" class="level2">
-<h2 class="anchored" data-anchor-id="direct-multiple-shooting-methods">Direct multiple shooting methods</h2>
-<p>…</p>
-</section>
-<section id="direct-transcription-methods" class="level2">
-<h2 class="anchored" data-anchor-id="direct-transcription-methods">Direct transcription methods</h2>
-<p>In contrast with the direct shooting methods, here both the control and state trajectories are discretized. There is then no need for a numerical solver for IVP ODE.</p>
-<div id="fig-direct-transcription" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-direct-transcription-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/direct_transcription.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-direct-transcription-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Direct transcription/discretization – both the control and state trajectories are discretized and the resulting vectors of parameterers of this discretization serve as optimization variables
-</figcaption>
-</figure>
+<div class="callout-body-container callout-body">
+<p>Don’t forget that when linearizing a nonlinear system <span class="math inline">\dot{\bm x} = \mathbf f(\bm x,\bm u)</span> around a point that is not equilibrium – and this inevitably happens when linearizing along the state trajectory <span class="math inline">\bm x^\star(t)</span> obtained from indirect approach to optimal control – the linearized system <span class="math inline">\frac{\mathrm d}{\mathrm d t} \delta \bm x= \mathbf A(t) \delta \bm x + \mathbf B(t) \delta \bm u</span> considers not only the state variables but also the control variables as increments <span class="math inline">\delta \bm x(t)</span> and <span class="math inline">\delta \bm u(t)</span> that must be added to the nominal values <span class="math inline">\bm x^\star(t)</span> and <span class="math inline">\bm u^\star(t)</span> of the state and control variables determining the operating point. That is, <span class="math inline">\bm x(t) = \bm x^\star(t) + \delta \bm x(t)</span> and <span class="math inline">\bm u(t) = \bm u^\star(t) + \delta \bm u(t)</span>.</p>
 </div>
-<p>The optimization is then done over the optimization variables that parameterize both the control trajectory and the state trajectory. In this regard the method resembles the simultaneous method of the direct approach to discrete-time optimal control.</p>
-</section>
-<section id="direct-collocation-methods" class="level2">
-<h2 class="anchored" data-anchor-id="direct-collocation-methods">Direct collocation methods</h2>
-<p>Similarly as in the direct transcription methods, both the control and state trajectories are discretized and the parameterization of this discretization enters the optimization.</p>
-<p>But here it is not just the values of the state and the control at the discretization points that are the optimization variables, but rather the coefficients of the polynomials that approximate the corresponding variables at the intermediate times between the discretization points.</p>
-<div id="fig-direct-collocation" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-direct-collocation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/direct_collocation.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-direct-collocation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Direct collocation – both the control and state trajectories are approximated by piecewise polynomials and parameters of these polynomials serve as optimization variables
-</figcaption>
-</figure>
+<p>Having decided on an LQR framework, we can now come up with the three matrices <span class="math inline">\mathbf Q</span>, <span class="math inline">\mathbf R</span> and <span class="math inline">\mathbf S</span> that set the quadratic cost function. Once this choice is made, we can just invoke the solver for continuous-time Riccati equation with the ultimate goal of finding the time-varying state feedback gain <span class="math inline">\mathbf K(t)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<p>However, similarly as we have already seen while discussing the collocation methods for the indirect approach, every direct collocation methods is equivalent to some direct transcription method. For example, collocation with a quadratic polynomial and the collocation points at the beginning and end of the interval is equivalent to the implicit trapezoidal rule. Some people even say that the implicit trapezoidal method <em>is</em> a collocation method.</p>
-</section>
-<section id="minimumtime-optimal-control-in-direct-approach" class="level2">
-<h2 class="anchored" data-anchor-id="minimumtime-optimal-control-in-direct-approach">Minimum‐time optimal control in direct approach</h2>
-<p>While the indirect approach to optimal control allows for relaxing the final time <span class="math inline">t_\mathrm{f}</span> (and possibly including it in the cost function), the direct approach does not seem to support it. The final time has to be finite and constant.</p>
-<p>Here we show one way to turn the final time is <span class="math inline">t_\mathrm{f}</span> into an optimization variable. We achieve it by augmenting the state equations with a new variable… guess what… <span class="math inline">t_\mathrm{f}</span> accompanied with the corresponding state equation <span class="math inline">\dot t_\mathrm{f} = 0</span>.</p>
-<p>We now introduce a new normalized time variable <span class="math inline">\tau\in [0,1]</span> such that <span class="math display">
-  t = \tau t_\mathrm{f}.
+<div class="callout-title-container flex-fill">
+LQR for trajectory stabilization cab be done in discrete time
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If discrete-time feedback control is eventually desired, which it mostly is, the whole LQR design for a time-varying linear system will have to be done using just periodically sampled state and control trajectories and applying recursive formulas for the discrete-time Riccati equation and state feedback gain.</p>
+</div>
+</div>
+<p>The three weighting matrices <span class="math inline">\mathbf Q</span>, <span class="math inline">\mathbf R</span> and <span class="math inline">\mathbf S</span>, if chosen arbitrarily, are not related to the original cost function that is minimized by the optimal state and control trajectories. The matrices just parameterize a new optimal control problem. It turns out, however, that there is a clever (and insightful) way of choosing these matrices so that the trajectory stabilization problem inherits the original cost function. In other words, even when the system fails to stay on the optimal trajectory perfectly, the LQR state-feedback controller will keep minimizing the same cost function when regulating the deviation from the optimal trajectory.</p>
+<p>Recall that using the conventional definition of Hamiltonian <span class="math inline">H(\bm x, \bm u, \bm \lambda) = L(\bm x, \bm u) + \bm \lambda^\top \mathbf f(\bm x, \bm u)</span>, in which we now assume time invariance of both the system and the cost function for notational simplicity, the necessary conditions of optimality are <span class="math display">
+\begin{aligned}
+\dot{\bm x} &amp;= \nabla_{\bm\lambda} H(\bm x,\bm u,\boldsymbol \lambda)  = \mathbf f(\bm x, \bm u), \\
+\dot{\bm \lambda} &amp;= -\nabla_{\bm x} H(\bm x,\bm u,\boldsymbol \lambda), \\
+\mathbf 0 &amp;= \nabla_{\bm u} H(\bm x,\bm u,\boldsymbol \lambda),\\
+\bm x(t_\mathrm{i})&amp;=\mathbf x_\mathrm{i},\\
+\bm x(t_\mathrm{f})&amp;=\mathbf x_\mathrm{f} \quad \text{or}\quad \bm \lambda(t_\mathrm{f})=\nabla\phi(\bm{x}(t_\mathrm{f})),
+\end{aligned}
+</span> where the option on the last line is selected based on whether the state at the final time is fixed or free.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The state at the final time can also be restricted by a linear equation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The conditions of optimality stated above correspond to one of the two standard situations, in which the state in the final time is either fixed to a single value or completely free. The conditions can also be modified to consider the more general situation, in which the state at the final time is restricted to lie on a manifold defined by an equality constraint <span class="math inline">\psi(\bm x(t_\mathrm{f})) = 0</span>.</p>
+</div>
+</div>
+<p>Let’s now consider some tiny perturbation to the initial state <span class="math inline">\bm x(t_\mathrm{i})</span> from its prescribed nominal value <span class="math inline">\mathbf x_\mathrm{i}</span>. It will give rise to deviations all all the variables in the above equations from their nominal – optimal – trajectories. Assuming the deviations are small, linear model suffices to describe them. In other words, what we are now after is linearization of the above equations</p>
+<p><span id="eq-perturbed-necessary-conditions-of-optimality"><span class="math display">
+\begin{aligned}
+\delta \dot{\bm x} &amp;= \nabla_{\bm x} \mathbf f \; \delta \bm x + \nabla_{\bm u} \mathbf f \; \delta \bm u, \\
+\delta \dot{\bm \lambda} &amp;= -\nabla^2_{\bm{xx}} H \; \delta \bm x -\nabla^2_{\bm{xu}} H \; \delta \bm u -\underbrace{\nabla^2_{\bm{x\lambda}} H}_{(\nabla_{\bm x} \mathbf f)^\top} \; \delta \bm \lambda, \\
+\mathbf 0 &amp;= \nabla^2_{\bm{ux}} H \; \delta \bm x + \nabla^2_{\bm{uu}} H \; \delta \bm u + \underbrace{\nabla^2_{\bm{u\lambda}} H}_{(\nabla_{\bm u} \mathbf f)^\top} \; \delta \bm \lambda,\\
+\delta \bm x(t_\mathrm{i}) &amp;= \text{specified},\\
+\delta \bm \lambda(t_\mathrm{f}) &amp;= \nabla^2_{\bm{xx}}\phi(\mathbf{x}(t_\mathrm{f}))\; \delta \bm x(t_\mathrm{f}).
+\end{aligned}
+\tag{1}</span></span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note on notation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s recall for convenience here that since <span class="math inline">\mathbf f(\bm x, \bm u)</span> is a vector function of a vector argument(s), <span class="math inline">\nabla_{\bm x} \mathbf f</span> is a matrix whose columns are gradients of individual components of <span class="math inline">\mathbf f</span>. Equivalently, <span class="math inline">(\nabla_{\bm x} \mathbf f)^\top</span> stands for the Jacobian of the function <span class="math inline">\mathbf f</span> with respect to <span class="math inline">\bm x</span>. Similarly, <span class="math inline">\nabla_{\bm{xx}} H</span> is the Hessian of <span class="math inline">\mathbf f</span> with respect to <span class="math inline">\bm x</span>. That is, it is a matrix composed of second derivatives. It is a symmetric matrix, hence no need to transpose it. Finally, the terms <span class="math inline">\nabla_{\bm{ux}} H</span> and <span class="math inline">\nabla_{\bm{xu}} H</span> are matrices containing mixed second derivatives.</p>
+</div>
+</div>
+<p>With hindsight we relabel the individual terms in <a href="#eq-perturbed-necessary-conditions-of-optimality" class="quarto-xref">Equation&nbsp;1</a> as <span class="math display">
+\begin{aligned}
+\mathbf A(t) &amp;\coloneqq (\nabla_{\bm x} \mathbf f)^\top\\
+\mathbf B(t) &amp;\coloneqq (\nabla_{\bm u} \mathbf f)^\top\\
+\mathbf Q(t) &amp;\coloneqq \nabla^2_{\bm{xx}} H\\
+\mathbf R(t) &amp;\coloneqq \nabla^2_{\bm{uu}} H\\
+\mathbf N(t) &amp;\coloneqq \nabla^2_{\bm{xu}} H\\
+\mathbf S_\mathrm{f} &amp;\coloneqq \nabla^2_{\bm{xx}}\phi(\mathbf{x}(t_\mathrm{f})).
+\end{aligned}
 </span></p>
-<p>The differentials of time then relate correspondingly <span class="math display">
-  \mathrm{d} t = t_\mathrm{f}\mathrm{d}\tau.
+<p>Let’s rewrite the perturbed necessary conditions of optimality using these new symbols</p>
+<p><span class="math display">
+\begin{aligned}
+\delta \dot{\bm x} &amp;= \mathbf A(t) \; \delta \bm x + \mathbf B(t) \; \delta \bm u, \\
+\delta \dot{\bm \lambda} &amp;= - \mathbf Q(t) \; \delta \bm x - \mathbf N(t) \; \delta \bm u - \mathbf A^\top (t)\; \delta \bm \lambda, \\
+\mathbf 0 &amp;= \mathbf N(t) \; \delta \bm x + \mathbf R(t) \; \delta \bm u + \mathbf B^\top (t) \; \delta \bm \lambda,\\
+\delta \bm x(t_\mathrm{i}) &amp;= \text{specified},\\
+\delta \bm \lambda(t_\mathrm{f}) &amp;= \mathbf S_\mathrm{f}    \; \delta \bm x(t_\mathrm{f}).
+\end{aligned}
 </span></p>
-<p>The original state equation <span class="math inline">\frac{\mathrm{d}x}{\mathrm{d}t} = f(x)</span> then modifies to <span class="math display">\boxed{
-  \frac{\mathrm{d}x}{\mathrm{d}\tau} = t_\mathrm{f} f(x).}
+<p>Assuming that <span class="math inline">\nabla^2_{\bm{uu}} H</span> is nonsingular, which can solve the third equation for <span class="math inline">\bm u</span> <span class="math display">
+\bm u = -\nabla^2_{\bm{uu}} H^{-1} \left( \nabla^2_{\bm{ux}} H \; \delta \bm x + (\nabla_{\bm u} \mathbf f)^\top \; \delta \bm \lambda\right ).
 </span></p>
-<p>Strictly speaking this should be <span class="math inline">\frac{\mathrm{d}\hat x}{\mathrm{d}\tau} = t_\mathrm{f} f(\hat x)</span>, reflecting that <span class="math inline">x(t) = x(t_\mathrm{r} \tau) = \hat x(\tau)</span> . But the abuse of notation is perhaps acceptable.</p>
-<p>The cost function will then include a term penalizing <span class="math inline">t_\mathrm{f}</span>. Or perhaps the whole cost function is just <span class="math inline">t_\mathrm{f}</span> .Or perhaps the final time does not even have to be penalized at all, it is just an optimization variable, it just adds a degree of freedom to the optimal control problem. Of course, in the latter case this is no longer a minimum-time problem, just a free-final time problem.</p>
-<p>In direct transcription methods for optimal control, the number of discretization/integration (sub)intervals is fixed and not subject to optimization, otherwise the resulting NLP would have a varying size for a varying final time, which is not convenient. Instead, the length of the integration interval, or the discretization/sampling interval is varied <span class="math display">hN = t_\mathrm{f}.</span></p>
-<p>Recall that all (single-step) discretization methods can be interpreted as an approximate computation of the definite integral in <span class="math display">x_{k+1} = x_k + \int_{t_k}^{t_{k+1}} f(x(t),t)\mathrm{d}t,</span> which in s-stage Runge-Kutta methods with a fixed time step h always looks like <span class="math display">x_{k+1} = x_k + h \sum_{j=1}^s b_{j} f_{kj}.</span></p>
-<p>Since the length of the integration interval <span class="math inline">h</span> is now an optimization variable, even a problem that is originally linear is now turned into a nonlinear one. Furthermore, we can see consistency between <span class="math display">x_{k+1} = x_k + \frac{t_\mathrm{f}}{N} \sum_{j=1}^s b_{j} f_{kj}</span> and the above result for the continuous-time problem that does not consider discretization.</p>
 
 
-</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1186,13 +1195,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cont_numerical_indirect.html" class="pagination-link" aria-label="Numerical methods for indirect approach">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Numerical methods for indirect approach</span>
+      <a href="./cont_indir_CARE.html" class="pagination-link" aria-label="Continuous-time Riccati equation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Continuous-time Riccati equation</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cont_numerical_software.html" class="pagination-link" aria-label="Software">
-        <span class="nav-page-text">Software</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cont_indir_references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1204,7 +1213,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

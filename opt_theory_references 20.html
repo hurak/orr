@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Numerical methods for direct approach</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – References</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -30,8 +50,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./cont_numerical_software.html" rel="next">
-<link href="./cont_numerical_indirect.html" rel="prev">
+<link href="./opt_algo_derivatives.html" rel="next">
+<link href="./opt_theory_modellers.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,49 +89,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -125,7 +102,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_numerical_indirect.html">9. Numerical methods for continuous-time optimal control - both indirect and direct approaches</a></li><li class="breadcrumb-item"><a href="./cont_numerical_direct.html">Numerical methods for direct approach</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_problems.html">1. Optimization – theory</a></li><li class="breadcrumb-item"><a href="./opt_theory_references.html">References</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -191,7 +168,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_theory_references.html" class="sidebar-item-text sidebar-link">
+  <a href="./opt_theory_references.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -489,7 +466,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_numerical_direct.html" class="sidebar-item-text sidebar-link active">
+  <a href="./cont_numerical_direct.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Numerical methods for direct approach</span></a>
   </div>
 </li>
@@ -645,25 +622,15 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#direct-shooting-methods" id="toc-direct-shooting-methods" class="nav-link active" data-scroll-target="#direct-shooting-methods">Direct shooting methods</a></li>
-  <li><a href="#direct-multiple-shooting-methods" id="toc-direct-multiple-shooting-methods" class="nav-link" data-scroll-target="#direct-multiple-shooting-methods">Direct multiple shooting methods</a></li>
-  <li><a href="#direct-transcription-methods" id="toc-direct-transcription-methods" class="nav-link" data-scroll-target="#direct-transcription-methods">Direct transcription methods</a></li>
-  <li><a href="#direct-collocation-methods" id="toc-direct-collocation-methods" class="nav-link" data-scroll-target="#direct-collocation-methods">Direct collocation methods</a></li>
-  <li><a href="#minimumtime-optimal-control-in-direct-approach" id="toc-minimumtime-optimal-control-in-direct-approach" class="nav-link" data-scroll-target="#minimumtime-optimal-control-in-direct-approach">Minimum‐time optimal control in direct approach</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_numerical_indirect.html">9. Numerical methods for continuous-time optimal control - both indirect and direct approaches</a></li><li class="breadcrumb-item"><a href="./cont_numerical_direct.html">Numerical methods for direct approach</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_problems.html">1. Optimization – theory</a></li><li class="breadcrumb-item"><a href="./opt_theory_references.html">References</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Numerical methods for direct approach</h1>
+<h1 class="title">References</h1>
 </div>
 
 
@@ -680,90 +647,50 @@ window.Quarto = {
 </header>
 
 
-<p>We have already seen that direct methods for discrete-time optimal control problems essentially just regroup and reshape the problem data so that a nonlinear programming solver can accept them. In order to follow the same approach with continous-time optimal control problems, some kind of discretization is inevitable in order to formulate a nonlinear program. Depending of what is discretized and how, several groups of methods can be identified</p>
-<ul>
-<li>direct shooting and direct multiple shooting,</li>
-<li>direct transcription (aka direct discretization),</li>
-<li>direct collocation.</li>
-</ul>
-<p>The core principles behind the methods are identical to those discussed in the previous section on numerical methods for indirect approaches, but the adjective “direct” suggests that there must be some modifications.</p>
-<section id="direct-shooting-methods" class="level2">
-<h2 class="anchored" data-anchor-id="direct-shooting-methods">Direct shooting methods</h2>
-<p>In contrast with the application of shooting methods to the TP-BVP originating from the indirect approach, here the variables through whose values we aim the fictitious cannon are not the initial co-state vector but the (possibly long) vector parameterizing the whole control trajectory.</p>
-<p>In the simplest – and fairly practical – case of a piecewise contstant control trajectory, which is motivated by the eventual discrete-time implementation using a zero-order hold (ZOH), the control trajectory is parameterized just by the sequence of values <span class="math inline">u_0, u_1, \ldots, u_{N-1}</span>.</p>
-<div id="fig-direct-shooting" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-direct-shooting-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/direct_shooting.png" class="img-fluid figure-img" style="width:80.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-direct-shooting-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Direct shooting – only the control trajectory is discretized and the parameters of this discretization serve as optimization variables
-</figcaption>
-</figure>
-</div>
-<p>The state trajectory <span class="math inline">x(t)</span> corresponding to the fixed initial state <span class="math inline">\mathrm x_\mathrm{i}</span> and the sequence of controls is obtained by using some IVP ODE numerical solver.</p>
-<p>For the chosen control trajectory and the simulated state trajectory, the cost function <span class="math inline">J(u(\cdot);x_\mathrm{i}) = \phi(x(t_\mathrm{f}),t_\mathrm{f}) + \int L(x,u) \mathrm d t</span> is then evaluated. This can also only be done numerically, typically using methods for numerical integration.</p>
-<p>Once the cost function is evaluated, numerical optimization solver is used to update the vector parameterizing the control trajectory so that the cost is reduced. For the new control trajectory, the state response is simulated, … and so on.</p>
-<p>Since optimization is only done over the optimization variables that parameterize the control trajectory, the method resembles the sequential method of the direct approach to discrete-time optimal control.</p>
-</section>
-<section id="direct-multiple-shooting-methods" class="level2">
-<h2 class="anchored" data-anchor-id="direct-multiple-shooting-methods">Direct multiple shooting methods</h2>
-<p>…</p>
-</section>
-<section id="direct-transcription-methods" class="level2">
-<h2 class="anchored" data-anchor-id="direct-transcription-methods">Direct transcription methods</h2>
-<p>In contrast with the direct shooting methods, here both the control and state trajectories are discretized. There is then no need for a numerical solver for IVP ODE.</p>
-<div id="fig-direct-transcription" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-direct-transcription-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/direct_transcription.png" class="img-fluid figure-img" style="width:80.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-direct-transcription-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Direct transcription/discretization – both the control and state trajectories are discretized and the resulting vectors of parameterers of this discretization serve as optimization variables
-</figcaption>
-</figure>
-</div>
-<p>The optimization is then done over the optimization variables that parameterize both the control trajectory and the state trajectory. In this regard the method resembles the simultaneous method of the direct approach to discrete-time optimal control.</p>
-</section>
-<section id="direct-collocation-methods" class="level2">
-<h2 class="anchored" data-anchor-id="direct-collocation-methods">Direct collocation methods</h2>
-<p>Similarly as in the direct transcription methods, both the control and state trajectories are discretized and the parameterization of this discretization enters the optimization.</p>
-<p>But here it is not just the values of the state and the control at the discretization points that are the optimization variables, but rather the coefficients of the polynomials that approximate the corresponding variables at the intermediate times between the discretization points.</p>
-<div id="fig-direct-collocation" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-direct-collocation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/direct_collocation.png" class="img-fluid figure-img" style="width:80.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-direct-collocation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Direct collocation – both the control and state trajectories are approximated by piecewise polynomials and parameters of these polynomials serve as optimization variables
-</figcaption>
-</figure>
-</div>
-<p>However, similarly as we have already seen while discussing the collocation methods for the indirect approach, every direct collocation methods is equivalent to some direct transcription method. For example, collocation with a quadratic polynomial and the collocation points at the beginning and end of the interval is equivalent to the implicit trapezoidal rule. Some people even say that the implicit trapezoidal method <em>is</em> a collocation method.</p>
-</section>
-<section id="minimumtime-optimal-control-in-direct-approach" class="level2">
-<h2 class="anchored" data-anchor-id="minimumtime-optimal-control-in-direct-approach">Minimum‐time optimal control in direct approach</h2>
-<p>While the indirect approach to optimal control allows for relaxing the final time <span class="math inline">t_\mathrm{f}</span> (and possibly including it in the cost function), the direct approach does not seem to support it. The final time has to be finite and constant.</p>
-<p>Here we show one way to turn the final time is <span class="math inline">t_\mathrm{f}</span> into an optimization variable. We achieve it by augmenting the state equations with a new variable… guess what… <span class="math inline">t_\mathrm{f}</span> accompanied with the corresponding state equation <span class="math inline">\dot t_\mathrm{f} = 0</span>.</p>
-<p>We now introduce a new normalized time variable <span class="math inline">\tau\in [0,1]</span> such that <span class="math display">
-  t = \tau t_\mathrm{f}.
-</span></p>
-<p>The differentials of time then relate correspondingly <span class="math display">
-  \mathrm{d} t = t_\mathrm{f}\mathrm{d}\tau.
-</span></p>
-<p>The original state equation <span class="math inline">\frac{\mathrm{d}x}{\mathrm{d}t} = f(x)</span> then modifies to <span class="math display">\boxed{
-  \frac{\mathrm{d}x}{\mathrm{d}\tau} = t_\mathrm{f} f(x).}
-</span></p>
-<p>Strictly speaking this should be <span class="math inline">\frac{\mathrm{d}\hat x}{\mathrm{d}\tau} = t_\mathrm{f} f(\hat x)</span>, reflecting that <span class="math inline">x(t) = x(t_\mathrm{r} \tau) = \hat x(\tau)</span> . But the abuse of notation is perhaps acceptable.</p>
-<p>The cost function will then include a term penalizing <span class="math inline">t_\mathrm{f}</span>. Or perhaps the whole cost function is just <span class="math inline">t_\mathrm{f}</span> .Or perhaps the final time does not even have to be penalized at all, it is just an optimization variable, it just adds a degree of freedom to the optimal control problem. Of course, in the latter case this is no longer a minimum-time problem, just a free-final time problem.</p>
-<p>In direct transcription methods for optimal control, the number of discretization/integration (sub)intervals is fixed and not subject to optimization, otherwise the resulting NLP would have a varying size for a varying final time, which is not convenient. Instead, the length of the integration interval, or the discretization/sampling interval is varied <span class="math display">hN = t_\mathrm{f}.</span></p>
-<p>Recall that all (single-step) discretization methods can be interpreted as an approximate computation of the definite integral in <span class="math display">x_{k+1} = x_k + \int_{t_k}^{t_{k+1}} f(x(t),t)\mathrm{d}t,</span> which in s-stage Runge-Kutta methods with a fixed time step h always looks like <span class="math display">x_{k+1} = x_k + h \sum_{j=1}^s b_{j} f_{kj}.</span></p>
-<p>Since the length of the integration interval <span class="math inline">h</span> is now an optimization variable, even a problem that is originally linear is now turned into a nonlinear one. Furthermore, we can see consistency between <span class="math display">x_{k+1} = x_k + \frac{t_\mathrm{f}}{N} \sum_{j=1}^s b_{j} f_{kj}</span> and the above result for the continuous-time problem that does not consider discretization.</p>
+<p>If a single reference book on nonlinear optimization is to be recommended, be it <span class="citation" data-cites="nocedalNumericalOptimization2006">(<a href="#ref-nocedalNumericalOptimization2006" role="doc-biblioref">Nocedal and Wright 2006</a>)</span> that sits on your book shelf.</p>
+<p>If one or two more can still fit, <span class="citation" data-cites="bertsekasNonlinearProgramming2016">(<a href="#ref-bertsekasNonlinearProgramming2016" role="doc-biblioref">Bertsekas 2016</a>)</span>, <span class="citation" data-cites="luenbergerLinearNonlinearProgramming2021">(<a href="#ref-luenbergerLinearNonlinearProgramming2021" role="doc-biblioref">Luenberger and Ye 2021</a>)</span> are classical comprehensive references on nonlinear programming (the latter covers linear programming too).</p>
+<p>While all the three books are only available for purchase, there is a wealth of resources are freely available online such as the notes <span class="citation" data-cites="grosNumericalOptimalControl2022">(<a href="#ref-grosNumericalOptimalControl2022" role="doc-biblioref">Gros and Diehl 2022</a>)</span> accompanying a <a href="https://www.syscop.de/teaching/ss2023/numerical-optimal-control">course on optimal control</a>, which do a decent job of introduction to a nonlinear programming, and beautifully typeset modern textbooks <span class="citation" data-cites="kochenderferAlgorithmsOptimization2019">(<a href="#ref-kochenderferAlgorithmsOptimization2019" role="doc-biblioref">Kochenderfer and Wheeler 2019</a>)</span> and <span class="citation" data-cites="martinsEngineeringDesignOptimization2022">(<a href="#ref-martinsEngineeringDesignOptimization2022" role="doc-biblioref">Martins and Ning 2022</a>)</span>, the former based on Julia language. Yet another high-quality textbook that is freely available online is <span class="citation" data-cites="bierlaireOptimizationPrinciplesAlgorithms2018">(<a href="#ref-bierlaireOptimizationPrinciplesAlgorithms2018" role="doc-biblioref">Bierlaire 2018</a>)</span>.</p>
+<p>When restricting to convex optimization, the bible of this field <span class="citation" data-cites="boydConvexOptimization2004">(<a href="#ref-boydConvexOptimization2004" role="doc-biblioref">Boyd and Vandenberghe 2004</a>)</span> is also freely available online. It is a <em>must-have</em> for everyone interested in optimization. Another textbook biased towards convex optimization is <span class="citation" data-cites="calafioreOptimizationModels2014">(<a href="#ref-calafioreOptimizationModels2014" role="doc-biblioref">Calafiore 2014</a>)</span>, which is freely accessible through <a href="https://inst.eecs.berkeley.edu/~ee127/sp21/livebook/">its web version</a>. Yet another advanced and treatment of convex optimization is <span class="citation" data-cites="ben-talLecturesModernConvex2023">(<a href="#ref-ben-talLecturesModernConvex2023" role="doc-biblioref">Ben-Tal and Nemirovski 2023</a>)</span>, which is also freely available online.</p>
+<p>Maybe a bit unexpected resources on theory are materials accompanying some optimization software. Partilarly recommendable is <span class="citation" data-cites="MOSEKModelingCookbook2024">(<a href="#ref-MOSEKModelingCookbook2024" role="doc-biblioref"><span>“<span>MOSEK Modeling Cookbook</span>”</span> 2024</a>)</span>, it is very useful even if you do not indend to use their software.</p>
 
 
-</section>
 
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-ben-talLecturesModernConvex2023" class="csl-entry" role="listitem">
+Ben-Tal, Aharon, and Arkadi Nemirovski. 2023. <span>“Lectures on <span>Modern Convex Optimization</span> - 2020/2021/2022/2023 <span>Analysis</span>, <span>Algorithms</span>, <span>Engineering Applications</span>.”</span> Lecture Notes. Technion &amp; Georgia Institute of Technology. <a href="https://www2.isye.gatech.edu/~nemirovs/LMCOLN2023Spring.pdf">https://www2.isye.gatech.edu/~nemirovs/LMCOLN2023Spring.pdf</a>.
+</div>
+<div id="ref-bertsekasNonlinearProgramming2016" class="csl-entry" role="listitem">
+Bertsekas, Dimitri. 2016. <em>Nonlinear <span>Programming</span></em>. 3rd ed. Belmont, Mass: Athena Scientific. <a href="http://www.athenasc.com/nonlinbook.html">http://www.athenasc.com/nonlinbook.html</a>.
+</div>
+<div id="ref-bierlaireOptimizationPrinciplesAlgorithms2018" class="csl-entry" role="listitem">
+Bierlaire, Michel. 2018. <em>Optimization: <span>Principles</span> and <span>Algorithms</span></em>. 2nd ed. Lausanne: EPFL Press. <a href="https://transp-or.epfl.ch/books/optimization/html/OptimizationPrinciplesAlgorithms2018.pdf">https://transp-or.epfl.ch/books/optimization/html/OptimizationPrinciplesAlgorithms2018.pdf</a>.
+</div>
+<div id="ref-boydConvexOptimization2004" class="csl-entry" role="listitem">
+Boyd, Stephen, and Lieven Vandenberghe. 2004. <em>Convex <span>Optimization</span></em>. Seventh printing with corrections 2009. Cambridge, UK: Cambridge University Press. <a href="https://web.stanford.edu/~boyd/cvxbook/">https://web.stanford.edu/~boyd/cvxbook/</a>.
+</div>
+<div id="ref-calafioreOptimizationModels2014" class="csl-entry" role="listitem">
+Calafiore, Giuseppe C. 2014. <em>Optimization <span>Models</span></em>. Cambridge, UK: Cambridge University Press. <a href="https://people.eecs.berkeley.edu/~elghaoui/optmodbook.html">https://people.eecs.berkeley.edu/~elghaoui/optmodbook.html</a>.
+</div>
+<div id="ref-grosNumericalOptimalControl2022" class="csl-entry" role="listitem">
+Gros, Sebastien, and Moritz Diehl. 2022. <span>“Numerical <span>Optimal Control</span> (<span>Draft</span>).”</span> Systems Control; Optimization Laboratory IMTEK, Faculty of Engineering, University of Freiburg. <a href="https://www.syscop.de/files/2020ss/NOC/book-NOCSE.pdf">https://www.syscop.de/files/2020ss/NOC/book-NOCSE.pdf</a>.
+</div>
+<div id="ref-kochenderferAlgorithmsOptimization2019" class="csl-entry" role="listitem">
+Kochenderfer, Mykel J., and Tim A. Wheeler. 2019. <em>Algorithms for <span>Optimization</span></em>. The MIT Press. <a href="https://algorithmsbook.com/optimization/">https://algorithmsbook.com/optimization/</a>.
+</div>
+<div id="ref-luenbergerLinearNonlinearProgramming2021" class="csl-entry" role="listitem">
+Luenberger, David G., and Yinyu Ye. 2021. <em>Linear and <span>Nonlinear Programming</span></em>. 5th ed. Vol. 228. International <span>Series</span> in <span>Operations Research</span> &amp; <span>Management Science</span>. Cham, Switzerland: Springer. <a href="https://doi.org/10.1007/978-3-030-85450-8">https://doi.org/10.1007/978-3-030-85450-8</a>.
+</div>
+<div id="ref-martinsEngineeringDesignOptimization2022" class="csl-entry" role="listitem">
+Martins, Joaquim R. R. A., and Andrew Ning. 2022. <em>Engineering <span>Design Optimization</span></em>. Cambridge ; New York, NY: Cambridge University Press. <a href="https://mdobook.github.io/">https://mdobook.github.io/</a>.
+</div>
+<div id="ref-MOSEKModelingCookbook2024" class="csl-entry" role="listitem">
+<span>“<span>MOSEK Modeling Cookbook</span>.”</span> 2024. Mosek ApS. <a href="https://docs.mosek.com/MOSEKModelingCookbook-a4paper.pdf">https://docs.mosek.com/MOSEKModelingCookbook-a4paper.pdf</a>.
+</div>
+<div id="ref-nocedalNumericalOptimization2006" class="csl-entry" role="listitem">
+Nocedal, Jorge, and Stephen Wright. 2006. <em>Numerical <span>Optimization</span></em>. 2nd ed. Springer <span>Series</span> in <span>Operations Research</span> and <span>Financial Engineering</span>. New York: Springer. <a href="https://doi.org/10.1007/978-0-387-40065-5">https://doi.org/10.1007/978-0-387-40065-5</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1186,13 +1113,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cont_numerical_indirect.html" class="pagination-link" aria-label="Numerical methods for indirect approach">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Numerical methods for indirect approach</span>
+      <a href="./opt_theory_modellers.html" class="pagination-link" aria-label="Optimization modelling languages">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Optimization modelling languages</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cont_numerical_software.html" class="pagination-link" aria-label="Software">
-        <span class="nav-page-text">Software</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./opt_algo_derivatives.html" class="pagination-link" aria-label="Computing derivatives">
+        <span class="nav-page-text">Computing derivatives</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1204,7 +1131,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
