@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.31">
+<meta name="generator" content="quarto-1.5.29">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Uncertainty (in) modelling</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – Discrete-time LQR-optimal control on an infinite horizon</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./roban_unstructured.html" rel="next">
-<link href="./ext_H2.html" rel="prev">
+<link href="./discr_indir_DARE.html" rel="next">
+<link href="./discr_indir_LQR_fin_horizon.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -125,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./roban_uncertainty.html">11. Uncertainty modelling and robustness analysis</a></li><li class="breadcrumb-item"><a href="./roban_uncertainty.html">Uncertainty (in) modelling</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_indir_general.html">4. Discrete-time optimal control – indirect approach</a></li><li class="breadcrumb-item"><a href="./discr_indir_LQR_inf_horizon.html">Discrete-time LQR-optimal control on an infinite horizon</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -302,7 +302,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_indir_LQR_inf_horizon.html" class="sidebar-item-text sidebar-link">
+  <a href="./discr_indir_LQR_inf_horizon.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Discrete-time LQR-optimal control on an infinite horizon</span></a>
   </div>
 </li>
@@ -518,25 +518,25 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ext_stochastic_LQR.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">LQR for stochastic systems</span></a>
+  <a href="./stochastic_LQR.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stochastic LQR control</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ext_LQG.html" class="sidebar-item-text sidebar-link">
+  <a href="./LQG.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">LQG control</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ext_LTR.html" class="sidebar-item-text sidebar-link">
+  <a href="./LTR.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Loop transfer recovery (LTR)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ext_H2.html" class="sidebar-item-text sidebar-link">
+  <a href="./H2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H2-optimal control</span></a>
   </div>
 </li>
@@ -545,7 +545,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" aria-expanded="true">
- <span class="menu-text">11. Uncertainty modelling and robustness analysis</span></a>
+ <span class="menu-text">11. Uncertainty modelling and analysis</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -553,32 +553,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./roban_uncertainty.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Uncertainty (in) modelling</span></a>
+  <a href="./uncertainty.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Uncertainty modelling</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./roban_unstructured.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Robustness analysis for unstructured uncertainty</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./roban_structured.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Robustness analysis for structured uncertainty</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./roban_software.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Software</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./roban_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
+  <a href="./robustness.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Robustness analysis</span></a>
   </div>
 </li>
       </ul>
@@ -608,18 +590,6 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./rocond_mu_synthesis.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Mu synthesis</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./rocond_software.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">rocond_software.html</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./rocond_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">rocond_references.html</span></a>
   </div>
 </li>
       </ul>
@@ -680,21 +650,11 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#origins-of-uncertainty-in-models" id="toc-origins-of-uncertainty-in-models" class="nav-link active" data-scroll-target="#origins-of-uncertainty-in-models">Origins of uncertainty in models?</a></li>
-  <li><a href="#models-of-uncertainty" id="toc-models-of-uncertainty" class="nav-link" data-scroll-target="#models-of-uncertainty">Models of uncertainty</a>
+  <li><a href="#why-the-infinite-time-horizon" id="toc-why-the-infinite-time-horizon" class="nav-link active" data-scroll-target="#why-the-infinite-time-horizon">Why the infinite time horizon?</a></li>
+  <li><a href="#steady-state-solution-to-discrete-time-riccati-equation" id="toc-steady-state-solution-to-discrete-time-riccati-equation" class="nav-link" data-scroll-target="#steady-state-solution-to-discrete-time-riccati-equation">Steady-state solution to discrete-time Riccati equation</a>
   <ul class="collapse">
-  <li><a href="#parametric-uncertainty" id="toc-parametric-uncertainty" class="nav-link" data-scroll-target="#parametric-uncertainty">Parametric uncertainty</a></li>
-  <li><a href="#unstructured-frequency-dependent-uncertainty" id="toc-unstructured-frequency-dependent-uncertainty" class="nav-link" data-scroll-target="#unstructured-frequency-dependent-uncertainty">Unstructured frequency-dependent uncertainty</a></li>
-  <li><a href="#structured-frequency-domain-uncertainty" id="toc-structured-frequency-domain-uncertainty" class="nav-link" data-scroll-target="#structured-frequency-domain-uncertainty">Structured frequency-domain uncertainty</a></li>
-  </ul></li>
-  <li><a href="#robustness-1" id="toc-robustness-1" class="nav-link" data-scroll-target="#robustness-1">Robustness</a>
-  <ul class="collapse">
-  <li><a href="#internal-stability" id="toc-internal-stability" class="nav-link" data-scroll-target="#internal-stability">Internal stability</a></li>
-  <li><a href="#robust-stability-for-a-multiplicative-uncertainty" id="toc-robust-stability-for-a-multiplicative-uncertainty" class="nav-link" data-scroll-target="#robust-stability-for-a-multiplicative-uncertainty">Robust stability for a multiplicative uncertainty</a></li>
-  <li><a href="#robust-stability-for-an-lft" id="toc-robust-stability-for-an-lft" class="nav-link" data-scroll-target="#robust-stability-for-an-lft">Robust stability for an LFT</a></li>
-  <li><a href="#nominal-performance" id="toc-nominal-performance" class="nav-link" data-scroll-target="#nominal-performance">Nominal performance</a></li>
-  <li><a href="#robust-performance-for-a-multiplicative-uncertainty" id="toc-robust-performance-for-a-multiplicative-uncertainty" class="nav-link" data-scroll-target="#robust-performance-for-a-multiplicative-uncertainty">Robust performance for a multiplicative uncertainty</a></li>
-  <li><a href="#robust-stability-for-a-structured-frequency-domain-uncertainty-mu-analysis" id="toc-robust-stability-for-a-structured-frequency-domain-uncertainty-mu-analysis" class="nav-link" data-scroll-target="#robust-stability-for-a-structured-frequency-domain-uncertainty-mu-analysis">Robust stability for a structured frequency-domain uncertainty – mu analysis</a></li>
+  <li><a href="#notation" id="toc-notation" class="nav-link" data-scroll-target="#notation">Notation</a></li>
+  <li><a href="#how-to-compute-the-steady-state-solution-to-riccati-equation" id="toc-how-to-compute-the-steady-state-solution-to-riccati-equation" class="nav-link" data-scroll-target="#how-to-compute-the-steady-state-solution-to-riccati-equation">How to compute the steady-state solution to Riccati equation?</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -702,9 +662,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./roban_uncertainty.html">11. Uncertainty modelling and robustness analysis</a></li><li class="breadcrumb-item"><a href="./roban_uncertainty.html">Uncertainty (in) modelling</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_indir_general.html">4. Discrete-time optimal control – indirect approach</a></li><li class="breadcrumb-item"><a href="./discr_indir_LQR_inf_horizon.html">Discrete-time LQR-optimal control on an infinite horizon</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Uncertainty (in) modelling</h1>
+<h1 class="title">Discrete-time LQR-optimal control on an infinite horizon</h1>
 </div>
 
 
@@ -721,213 +681,80 @@ window.Quarto = {
 </header>
 
 
-<p>Through this chapter we are stepping into the domain of robust control. We need to define a few keywords first.</p>
-<div id="def-uncertainty" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 1 (Uncertainty)</strong></span> Deviation of the mathematical model of the system from the real (mechanical, electrial, chemical, biological, …) system.</p>
+<p>In this section we are going to solve the LQR problem on the time horizon extended to infinity, that is, our goal is to find an infinite (vector) control sequence <span class="math inline">\bm u_0, \bm u_{1},\ldots, \bm u_{\infty}</span> that minimizes <span class="math display">
+J_0^\infty = \frac{1}{2}\sum_{k=0}^{\infty}\left[\bm x_k^\top \mathbf Q \bm x_k+\bm u_k^\top \mathbf R\bm u_k\right],
+</span> where, as before <span class="math inline">\mathbf Q = \mathbf Q^\top \succeq 0</span> and <span class="math inline">\mathbf R = \mathbf R^\top \succ 0</span> and the system is modelled by <span class="math display">
+\bm x_{k+1} = \mathbf A \bm x_{k} + \mathbf B \bm u_k, \qquad \bm x_0 = \mathbf x_0.
+</span></p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<div id="def-robustness" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2 (Robustness)</strong></span> Insensitivity of specified properties of the system to the uncertainty.</p>
+<div class="callout-title-container flex-fill">
+Important
 </div>
-<p>While these two terms are used in many other fields, here we are tailoring them to the discipline of control systems, in particular their model-based design.</p>
-<div id="def-robust-control" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Robust control)</strong></span> Not a single type of a control but rather a class of control design methods that aim to ensure robustness of the resulting control system. By convention, a robust controller is a fixed controller, typically designed for a nominal model. This is in contrast with an adaptive controller that adjusts itself in real time to the actual system.</p>
 </div>
-<section id="origins-of-uncertainty-in-models" class="level2">
-<h2 class="anchored" data-anchor-id="origins-of-uncertainty-in-models">Origins of uncertainty in models?</h2>
-<ul>
-<li>Physical parameters are not known exactly (say, they are known to be within ±10% or ±3σ interval around the nominal value).</li>
-<li>Even if the physical parameters are initially known with a high accuracy, they can evolve in time, unmeasured.</li>
-<li>There may be variations among the individual units of the same product.</li>
-<li>If a nonlinear system is planned to be operated around a given operating point, it can be linearized aroud that operating point, which gives a nominal linear model. If the system is then operated in a significantly different operating point, the corresponding linear model is different from the nominal one.</li>
-<li>Our understanding of the underlying physics (or chemistry or biology or …) is imperfect, hence our model is imperfect too. In fact, our understading can even be incorrect, in which case the model contains some discrepancies too. The imperfections of the model are typically observed at higher frequencies (referring to the frequency-domain modeling such as transfer functions).</li>
-<li>Even if we are able to eventually capture full dynamics of the system in a model, we may opt not to do so. We may want to keep the model simple, even if less accurate, because time invested into modelling is not for free.</li>
-<li>Even if we can get a high-fidelity model with a reasonable effort, we may still prefer using a simpler (and less accurate) model for a controller design. The reason is that very often the complexity of the model used for model-based control design is reflected by the complexity of the controller – and high-complexity controllers are not particularly appreciated in industry.</li>
-</ul>
+<div class="callout-body-container callout-body">
+<p>There is no penalty on the terminal state in the infinite time horizon LQR problem.</p>
+</div>
+</div>
+<section id="why-the-infinite-time-horizon" class="level2">
+<h2 class="anchored" data-anchor-id="why-the-infinite-time-horizon">Why the infinite time horizon?</h2>
+<p>The first question that must inevitably pop up is the one about the motivation for introducing the infinite time horizon:</p>
+<blockquote class="blockquote">
+<p>Does the introduction of an infinite time horizon reflect that we do not care about when the controller accomplishes the task?</p>
+</blockquote>
+<p>No, certainly not. The infinite time horizon is introduced to model the case when the system is expected to operate indefinitely. This is a common scenario in practice, for example, in the case of temperature control in a building.</p>
+<p>Similarly, the infinite time horizon can be used in the scenarios when the final time is not known and we leave it up to the controller to take as much time as it needs to reach the desired state. But even then we can still express our desire to reach the desired state as soon as possible by choosing the weights <span class="math inline">\mathbf Q</span> and <span class="math inline">\mathbf R</span> appropriately.</p>
 </section>
-<section id="models-of-uncertainty" class="level2">
-<h2 class="anchored" data-anchor-id="models-of-uncertainty">Models of uncertainty</h2>
-<p>There are several approaches to model the uncertainty (or, in other words, to characterize the uncertainty in the model). They all aim – in one way or another – to express that the controller has to deal no only with the single nominal system, for which it was designed, but a family of systems. Depending on the mathematical frameworks used for characterization of such a family, there are two major classes of approaches.</p>
-<ul>
-<li>Worst-case models of uncertainty</li>
-<li>Probabilistic models of uncertainty</li>
-</ul>
-<p>The former assumes sets of systems with no additional information about the structure of such sets. The latter imposes some probability structure on the set of systems – in other words, although in principle any member of the set possible, some may be more probable than the others. In this course we are focusing on the former, which is also the mainstream in the robust control literature, but note that the latter we already encountered while considering control for systems exposed to random disturbances, namely the LQG control. A possible viewpoint is that as a consequence of the random disturbance, the controller has to deal with a family of systems.</p>
-<p>Another classification of models of uncertainty is according to the actual quantity that is uncertain. We distinguish these two</p>
-<ul>
-<li>Parametric uncertainty</li>
-<li>Frequency-dependent (aka dynamical) uncertainty
-<ul>
-<li>Unstructured uncertainty</li>
-<li>Structured uncertainty</li>
-</ul></li>
-</ul>
-<section id="parametric-uncertainty" class="level3">
-<h3 class="anchored" data-anchor-id="parametric-uncertainty">Parametric uncertainty</h3>
-<p>This is obviously straightforward to state: some (real/physical) parameters are uncertain. The conceptually simplest way to characterize such uncertain parameters is by considering intervals instead of just single (nominal) values.</p>
-<div id="exm-pendulum-on-cart" class="theorem example">
-<p><span class="theorem-title"><strong>Example 1 (A pendulum on a cart)</strong></span> <span class="math display">
-\begin{aligned}
-{\color{red} m_\mathrm{l}} &amp; \in [m_\mathrm{l}^{-},m_\mathrm{l}^{+}],\\
-{\color{red} l} &amp; \in [l^{-}, l^{+}],
-\end{aligned}
-</span></p>
-<p><span class="math display">
-\dot{\bm x}(t) =
-\begin{bmatrix}
-0 &amp; 1 &amp; 0 &amp; 0\\
-0 &amp; 0 &amp; \frac{\textcolor{red}{m_\mathrm{l}}}{m_\mathrm{c}} g &amp; 0\\
-0 &amp; 0 &amp; 0 &amp; 1\\
-0 &amp; 0 &amp; -\frac{(\textcolor{red}{m_\mathrm{l}}+m_\mathrm{c})g}{m_\mathrm{c}\textcolor{red}{l}} &amp; 0
-\end{bmatrix}
-\bm x(t)
-+
-\begin{bmatrix}
-0\\
-\frac{1}{m_\mathrm{c}}\\
-0\\
--\frac{1}{m_\mathrm{c}\textcolor{red}{l}}
-\end{bmatrix}
-u(t).
-</span></p>
-</div>
-</section>
-<section id="unstructured-frequency-dependent-uncertainty" class="level3">
-<h3 class="anchored" data-anchor-id="unstructured-frequency-dependent-uncertainty">Unstructured frequency-dependent uncertainty</h3>
-<p>Not only some enumerated physical parameters but even the order of the system can be uncertain. In other words, there may be some phenomena exhibitted by the system that is not captured by the model at all. Possibly some lightly damped modes, possibly some time delay here and there. The system contains uncertain dynamics. In the linear case, all this can be expressed by regarding the magnitude and phase responses uncertain without mapping these to actual physical parameters.</p>
-<div id="fig-unstructured-uncertainty" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-unstructured-uncertainty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/unstructured_uncertainty.png" class="img-fluid figure-img" style="width:50.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-unstructured-uncertainty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: A whole subsystem is uncertain
-</figcaption>
-</figure>
-</div>
-<p>A popular model for the uncertain subsystem is that of a transfer function <span class="math inline">\Delta(s)</span>, about which we know only that it is stable and that its magnitude is bounded by 1 <span class="math display">\boxed
-{\sup_{\omega}|\Delta(j\omega)|\leq 1,\;\;\Delta \;\text{stable}. }
-</span></p>
-<p>But typically the uncertainty is higher at higher frequencies. This can be expressed by using some weighting function <span class="math inline">w(\omega)</span>.</p>
-<p>For later theoretical and computational purposes we approximate the weighting function using a low-order rational transfer function <span class="math inline">W(s)</span>. That is, <span class="math inline">W(j\omega)\approx w(\omega)</span> for <span class="math inline">\omega \in \mathbb R</span>, that is for <span class="math inline">s=j\omega</span> on the imaginary axis.</p>
-<p>The ultimate transfer function model of the uncertainty is then<br>
-<span class="math display">\boxed{
-W(s)\;\Delta(s),\quad \max_{\omega}|\Delta(j\omega)|\leq 1,\;\;\Delta\; \text{stable}. }
-</span></p>
-<section id="unstructured-frequency-dependent-uncertainty-mathcal-h_infty-norm-of-an-lti-system" class="level4">
-<h4 class="anchored" data-anchor-id="unstructured-frequency-dependent-uncertainty-mathcal-h_infty-norm-of-an-lti-system">Unstructured frequency-dependent uncertainty <span class="math inline">\mathcal H_\infty</span> norm of an LTI system</h4>
-<div id="def-hinf-norm-siso-system" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4 (<span class="math inline">\mathcal H_\infty</span> norm of a SISO LTI system)</strong></span> For a stable LTI system <span class="math inline">G</span> with a single input and single output, the <span class="math inline">\mathcal H_\infty</span> norm is defined as <span class="math display">
-\|G\|_{\infty} = \sup_{\omega\in\mathbb{R}}|G(j\omega)|.
-</span></p>
-</div>
-<p>Having just defined the <span class="math inline">\mathcal H_\infty</span> norm, the uncertainty model can be expressed compactly as <span class="math display">\boxed{
-W(s)\;\Delta(s),\quad \|\Delta(j\omega)\|\leq 1. }
-</span></p>
-<p>We do not even need to specify that <span class="math inline">\Delta</span> is stable, because the <span class="math inline">\mathcal H_\infty</span> norm is only defined for stable transfer functions.</p>
+<section id="steady-state-solution-to-discrete-time-riccati-equation" class="level2">
+<h2 class="anchored" data-anchor-id="steady-state-solution-to-discrete-time-riccati-equation">Steady-state solution to discrete-time Riccati equation</h2>
+<p>We have seen in the previous section that the solution to LQR problem with free final state and finite time horizon is given by a time-varying state feedback control law <span class="math inline">\bm u_k = \mathbf K_k \bm x_k</span>. The sequence of gains <span class="math inline">\mathbf K_k</span> for <span class="math inline">k=0,\ldots, N-1,</span> is given by the sequence of matrices <span class="math inline">\mathbf S_k</span> for <span class="math inline">k=0,\ldots, N</span>, which in turn is given as the solution to the (discrete-time) Riccati equation initialized by the penalty <span class="math inline">\mathbf S_N</span> and solved backwards in time. But we have also seen that, at least in our example, provided the time interval was long enough, the sequence <span class="math inline">\mathbf K_k</span> and <span class="math inline">\mathbf S_k</span> both converged to some steady state values as the time <span class="math inline">k</span> proceeded backwards towards the beginning of the time interval.</p>
+<p>While using these steady-state values instead of the full sequences lead to a suboptimal solution on a finite time horizon, it turns out that it actually gives the optimal solution on an infinite time horizon. Although our argument here may be viewed as rather hand-wavy, it is intuitive — there is no end to the time interval, hence the steady-state values are not given a chance to change “towards the end”, as we observed in the finite time horizon case.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="math inline">\mathcal H_\infty</span> as a space of functions
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><span class="math inline">\mathcal H_\infty</span> denotes a normed vector space of functions that are analytic in the closed extended right half plane (of the complex plane). In parlance of control systems, <span class="math inline">\mathcal H_\infty</span> is the space of proper and stable transfer functions. Poles on the imaginary axis are not alloweed. The functions do not need to be rational, but very often we do restrict ourselves to rational functions, in which case we typically write such space as <span class="math inline">\mathcal{RH}_\infty</span>.</p>
+<p>Other approaches exist for solving the infinite time horizon LQR problem that do not make any reference to the finite time horizon problem, some of them are very elegant and concise, but here we intentionally stick to viewing it as the extension of the finite time horizon problem.</p>
 </div>
 </div>
-<p>We now extend the concept of the <span class="math inline">\mathcal H_\infty</span> norm to MIMO systems. The extension is perhaps not quite intuitive – certainly it is not computed as the maximum of the norms of individual transfer functions, which may be the first guess.</p>
-<div id="def-hinf-norm-mimo-system" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5 (<span class="math inline">\mathcal H_\infty</span> norm of a MIMO LTI system)</strong></span> For a stable LTI system <span class="math inline">\mathbf G</span> with multiple inputs and/or multiple outputs, the <span class="math inline">\mathcal H_\infty</span> norm is defined as <span class="math display">
-\|\mathbf G\|_{\infty} = \sup_{\omega\in\mathbb{R}}\bar{\sigma}(\mathbf{G}(j\omega))
-</span> where <span class="math inline">\bar\sigma</span> is the largest singular value.</p>
-</div>
-<p>Here we include a short recap of singular values and singular value decomposition (SVD) of a matrix. Consider a matrix <span class="math inline">\mathbf M</span>, possibly a rectangular one. It can be decomposed as a product of three matrices <span class="math display">
-\mathbf M = \mathbf U
-\underbrace{
-\begin{bmatrix}
-\sigma_1 &amp; &amp; &amp; &amp;\\
-  &amp; \sigma_2 &amp; &amp; &amp;\\
-  &amp; &amp;\sigma_3 &amp; &amp;\\
-\\
-  &amp; &amp; &amp; &amp; \sigma_n\\
-\end{bmatrix}
-}_{\boldsymbol\Sigma}
-\mathbf V^{*}
-</span></p>
-<p><span class="math display">
-\mathbf V\mathbf V^*=\mathbf I=\mathbf V^*\mathbf V
-</span> <span class="math display">
-\mathbf U\mathbf U^*=\mathbf I=\mathbf U^*\mathbf U
-</span></p>
-<p><span class="math display">
-\sigma_i \in \mathbb R_+,  \forall i
-</span></p>
-<p><span class="math display">
-\bar \sigma = \sigma_1.
+<section id="notation" class="level3">
+<h3 class="anchored" data-anchor-id="notation">Notation</h3>
+<p>Before we proceed with the discussion of how to find the steady-state values (the limits) of <span class="math inline">\mathbf S_k</span> and subsequently <span class="math inline">\mathbf K_k</span>, we must discuss the notation first. So, while icreasing the time horizon <span class="math inline">N</span> and the solution to the Riccati equation settles towards the beginning of the time interval. We can thenk pick the steady-state values right at the initial time <span class="math inline">k=0</span>, that is, <span class="math inline">\mathbf S_0</span> and <span class="math inline">\mathbf K_0</span>. But thanks to time invariance, we can also fix the final time to some (arbitrary) <span class="math inline">N</span> and strech the interval by moving its beginning toward <span class="math inline">-\infty</span>. The limits of the sequences <span class="math inline">\mathbf S_k</span> and <span class="math inline">\mathbf K_k</span> can be then considered at <span class="math inline">k</span> goes toward <span class="math inline">-\infty</span>. It seems appropriate to denote these limits as <span class="math inline">\mathbf S_{-\infty}</span> and <span class="math inline">\mathbf K_{-\infty}</span> then. Well, the fact is that the commonly accepted notation for the limits found in the literature is just <span class="math inline">\mathbf S_\infty</span> and <span class="math inline">\mathbf K_\infty</span> <span class="math display">
+\mathbf S_\infty \triangleq \lim_{k\rightarrow -\infty} \mathbf S_k, \qquad \mathbf K_\infty \triangleq \lim_{k\rightarrow -\infty} \mathbf K_k.
 </span></p>
 </section>
-<section id="how-does-the-delta-block-enter-the-model-of-the-system" class="level4">
-<h4 class="anchored" data-anchor-id="how-does-the-delta-block-enter-the-model-of-the-system">How does the delta block enter the model of the system?</h4>
-<section id="additive" class="level5">
-<h5 class="anchored" data-anchor-id="additive">Additive</h5>
-</section>
-<section id="multiplicative" class="level5">
-<h5 class="anchored" data-anchor-id="multiplicative">Multiplicative</h5>
-</section>
-<section id="inverse-additive" class="level5">
-<h5 class="anchored" data-anchor-id="inverse-additive">Inverse additive</h5>
-</section>
-<section id="inverse-multiplicative" class="level5">
-<h5 class="anchored" data-anchor-id="inverse-multiplicative">Inverse multiplicative</h5>
-</section>
-<section id="linear-fractional-transformation-lft" class="level5">
-<h5 class="anchored" data-anchor-id="linear-fractional-transformation-lft">Linear fractional transformation (LFT)</h5>
-</section>
-</section>
-</section>
-<section id="structured-frequency-domain-uncertainty" class="level3">
-<h3 class="anchored" data-anchor-id="structured-frequency-domain-uncertainty">Structured frequency-domain uncertainty</h3>
-</section>
-</section>
-<section id="robustness-1" class="level2">
-<h2 class="anchored" data-anchor-id="robustness-1">Robustness</h2>
-<dl>
-<dt>Robust stability</dt>
-<dd>
-fdfd
-</dd>
-<dt>Robust performance</dt>
-<dd>
-fdfdfd
-</dd>
-</dl>
-<section id="internal-stability" class="level3">
-<h3 class="anchored" data-anchor-id="internal-stability">Internal stability</h3>
-</section>
-<section id="robust-stability-for-a-multiplicative-uncertainty" class="level3">
-<h3 class="anchored" data-anchor-id="robust-stability-for-a-multiplicative-uncertainty">Robust stability for a multiplicative uncertainty</h3>
-</section>
-<section id="robust-stability-for-an-lft" class="level3">
-<h3 class="anchored" data-anchor-id="robust-stability-for-an-lft">Robust stability for an LFT</h3>
-</section>
-<section id="nominal-performance" class="level3">
-<h3 class="anchored" data-anchor-id="nominal-performance">Nominal performance</h3>
-</section>
-<section id="robust-performance-for-a-multiplicative-uncertainty" class="level3">
-<h3 class="anchored" data-anchor-id="robust-performance-for-a-multiplicative-uncertainty">Robust performance for a multiplicative uncertainty</h3>
-</section>
-<section id="robust-stability-for-a-structured-frequency-domain-uncertainty-mu-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="robust-stability-for-a-structured-frequency-domain-uncertainty-mu-analysis">Robust stability for a structured frequency-domain uncertainty – mu analysis</h3>
-<section id="structured-singular-value-ssv-mu" class="level4">
-<h4 class="anchored" data-anchor-id="structured-singular-value-ssv-mu">Structured singular value (SSV, mu)</h4>
-</section>
-<section id="robust-performance-with-a-structured-uncertainty" class="level4">
-<h4 class="anchored" data-anchor-id="robust-performance-with-a-structured-uncertainty">Robust performance with a structured uncertainty</h4>
+<section id="how-to-compute-the-steady-state-solution-to-riccati-equation" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-compute-the-steady-state-solution-to-riccati-equation">How to compute the steady-state solution to Riccati equation?</h3>
+<p>Leaving aside for the moment the important question whether and under which conditions such a limit <span class="math inline">\mathbf S_\infty</span> exists, the immediate question is how to compute such limit. One straightforward strategy is to run the recurrent scheme (Riccati equation) and generate the sequence <span class="math inline">\mathbf S_{N}, \mathbf S_{N-1}, \mathbf S_{N-2}, \ldots</span> so long as there is a nonnegligible improvement, that is, once <span class="math inline">\mathbf S_{k}\approx\mathbf S_{k+1}</span>, stop iterating. That is certainly doable.</p>
+<p>There is, however, another idea. We apply the steady-state condition <span class="math display">
+\mathbf S_{\infty} = \mathbf S_k=\mathbf S_{k+1}
+</span> to the Riccati equation. The resulting equation <span class="math display">
+\mathbf S_{\infty}=\mathbf A^\text{T}\left[\mathbf S_{\infty}-\mathbf S_{\infty}\mathbf B(\mathbf B^\text{T}\mathbf S_{\infty}\mathbf B+\mathbf R)^{-1}\mathbf B^\text{T}\mathbf S_{\infty}\right]\mathbf A+\mathbf Q
+</span> is called <strong>discrete-time algebraic Riccati equation</strong> (DARE) and it is one of the most important equations in the field of computational control design.</p>
+<p>The equation may look quite “messy” and offers hardly any insight. Remember the good advice to shring the problem to the scalar size while studying similar matrix-vector expressions and striving to get some insight. Our DARE simplifies to <span class="math display">
+s_\infty = a^2s_\infty - \frac{a^2b^2s_\infty^2}{b^2s_\infty+r} + q
+</span></p>
+<p>Multiplying both sides by the denominator we get the equivalent quadratic (in <span class="math inline">s_\infty</span>) equation <span class="math display">
+b^2s_\infty^2 + (r - a^2b^2 - b^2q)s_\infty - qr = 0.
+</span></p>
+<p>Voilà! A scalar DARE is just a quadratic equation, for which the solutions can be found readily.</p>
+<p>There is a caveat here, though, reflected in using plural in “solutions” above. Quadratic equation can have two (or none) real solutions. But the sequence produced by original recursive Riccati equation is determined uniquely! What’s up? How are the solutions to ARE related to the limiting solution of recursive Riccati equation?</p>
+<p>Answering this question will keep us busy for most of this lecture. We will structure this broad question into several sub-questions</p>
+<ul>
+<li>Under which conditions it is guaranteed that there exists a (bounded) limiting solution <span class="math inline">\mathbf S_\infty</span> to the recursive Riccati equation for all initial (actually final) values <span class="math inline">\mathbf S_N</span>?</li>
+<li>Under which conditions is the limit solution unique for arbitrary <span class="math inline">\mathbf S_N</span>?</li>
+<li>Under which conditions is it guaranteed that the time-invariant feedback gain <span class="math inline">\mathbf K_\infty</span> computed from <span class="math inline">\mathbf S_\infty</span> stabilizes the system (on the infinite control interval)?</li>
+</ul>
 
 
-</section>
 </section>
 </section>
 
@@ -1354,13 +1181,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./ext_H2.html" class="pagination-link" aria-label="H2-optimal control">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">H2-optimal control</span>
+      <a href="./discr_indir_LQR_fin_horizon.html" class="pagination-link" aria-label="Discrete-time LQR on a finite horizon">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Discrete-time LQR on a finite horizon</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./roban_unstructured.html" class="pagination-link" aria-label="Robustness analysis for unstructured uncertainty">
-        <span class="nav-page-text">Robustness analysis for unstructured uncertainty</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./discr_indir_DARE.html" class="pagination-link" aria-label="Discrete-time algebraic Riccati equation (DARE)">
+        <span class="nav-page-text">Discrete-time algebraic Riccati equation (DARE)</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
