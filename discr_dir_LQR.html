@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.29">
+<meta name="generator" content="quarto-1.5.31">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -552,25 +552,25 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./stochastic_LQR.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Stochastic LQR control</span></a>
+  <a href="./ext_stochastic_LQR.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LQR for stochastic systems</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./LQG.html" class="sidebar-item-text sidebar-link">
+  <a href="./ext_LQG.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">LQG control</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./LTR.html" class="sidebar-item-text sidebar-link">
+  <a href="./ext_LTR.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Loop transfer recovery (LTR)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./H2.html" class="sidebar-item-text sidebar-link">
+  <a href="./ext_H2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H2-optimal control</span></a>
   </div>
 </li>
@@ -579,7 +579,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" aria-expanded="true">
- <span class="menu-text">11. Uncertainty modelling and analysis</span></a>
+ <span class="menu-text">11. Uncertainty modelling and robustness analysis</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -587,14 +587,32 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./uncertainty.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Uncertainty modelling</span></a>
+  <a href="./roban_uncertainty.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Uncertainty (in) modelling</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./robustness.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Robustness analysis</span></a>
+  <a href="./roban_unstructured.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Robustness analysis for unstructured uncertainty</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./roban_structured.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Robustness analysis for structured uncertainty</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./roban_software.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Software</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./roban_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
       </ul>
@@ -624,6 +642,18 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./rocond_mu_synthesis.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Mu synthesis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rocond_software.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">rocond_software.html</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rocond_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">rocond_references.html</span></a>
   </div>
 </li>
       </ul>
@@ -771,7 +801,7 @@ Tip
 \text{subject to} &amp;\quad \widetilde{\mathbf A} \bar{\bm z} + \tilde{\bm b} = \mathbf 0.
 \end{aligned}}
 </span></p>
-<div id="4ae057e8" class="cell">
+<div id="9007e27e" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">direct_dlqr_simultaneous</span>(A,B,x₀,Q,R,S,N)</span>
