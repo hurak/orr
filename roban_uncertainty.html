@@ -804,8 +804,8 @@ Figure&nbsp;1: A whole subsystem is uncertain
 <span class="math display">\boxed{
 W(s)\;\Delta(s),\quad \max_{\omega}|\Delta(j\omega)|\leq 1,\;\;\Delta\; \text{stable}. }
 </span></p>
-<section id="unstructured-frequency-dependent-uncertainty-mathcal-h_infty-norm-of-an-lti-system" class="level4">
-<h4 class="anchored" data-anchor-id="unstructured-frequency-dependent-uncertainty-mathcal-h_infty-norm-of-an-lti-system">Unstructured frequency-dependent uncertainty <span class="math inline">\mathcal H_\infty</span> norm of an LTI system</h4>
+<section id="mathcal-h_infty-norm-of-an-lti-system" class="level4">
+<h4 class="anchored" data-anchor-id="mathcal-h_infty-norm-of-an-lti-system"><span class="math inline">\mathcal H_\infty</span> norm of an LTI system</h4>
 <section id="h-infinity-norm-of-an-lti-system-interpreted-in-frequency-domain" class="level5">
 <h5 class="anchored" data-anchor-id="h-infinity-norm-of-an-lti-system-interpreted-in-frequency-domain">H-infinity norm of an LTI system interpreted in frequency domain</h5>
 <div id="def-hinf-norm-siso-system" class="theorem definition">
@@ -875,9 +875,21 @@ G:\;\mathcal{L}_2\rightarrow \mathcal{L}_2.
 <h4 class="anchored" data-anchor-id="how-does-the-delta-block-enter-the-model-of-the-system">How does the delta block enter the model of the system?</h4>
 <section id="additive" class="level5">
 <h5 class="anchored" data-anchor-id="additive">Additive</h5>
+<p><span class="math display">
+G(s) = \underbrace{G_0(s)}_{\mbox{nominal model}}+\underbrace{W(s)\Delta(s)}_{\mbox{additive uncertainty}}
+</span></p>
+<p><span class="math display">
+|G(j\omega)-G_0(j\omega)|&lt;|W(j\omega)|
+</span></p>
 </section>
 <section id="multiplicative" class="level5">
 <h5 class="anchored" data-anchor-id="multiplicative">Multiplicative</h5>
+<p><span class="math display">
+G(s) = (1+W(s)\Delta(s))G_0(s)
+</span></p>
+<p><span class="math display">
+\frac{|G(j\omega)-G_0(j\omega)|}{|G_0(j\omega)|}&lt;|W(j\omega)|
+</span></p>
 </section>
 <section id="inverse-additive" class="level5">
 <h5 class="anchored" data-anchor-id="inverse-additive">Inverse additive</h5>
@@ -887,13 +899,42 @@ G:\;\mathcal{L}_2\rightarrow \mathcal{L}_2.
 </section>
 <section id="linear-fractional-transformation-lft" class="level5">
 <h5 class="anchored" data-anchor-id="linear-fractional-transformation-lft">Linear fractional transformation (LFT)</h5>
+<p>For matrices <span class="math inline">\mathbf P</span> and <span class="math inline">\mathbf N</span> sized <span class="math inline">(n_1+n_2)\times(m_1+m_2)</span> and divided into blocks like <span class="math display">
+\mathbf P=
+\begin{bmatrix}
+\mathbf P_{11} &amp; \mathbf P_{12}\\
+\mathbf P_{21} &amp; \mathbf P_{22}
+\end{bmatrix},
+</span> and matrices <span class="math inline">\boldsymbol\Delta</span> a <span class="math inline">\mathbf K</span> sized <span class="math inline">m_1\times n_1</span> and <span class="math inline">m_2\times n_2</span>, the <em>lower</em> and the <em>upper LFT</em> are <span class="math display">
+\boxed{
+\mathcal{F}_\mathbf{l}(\mathbf P,\mathbf K) = \mathbf P_{11}+\mathbf P_{12}\mathbf K(\mathbf I-\mathbf P_{22}\mathbf K)^{-1}\mathbf P_{21}},
+</span> and <span class="math display">
+\boxed{
+\mathcal{F}_\mathbf{u}(\mathbf N,\boldsymbol\Delta) = \mathbf N_{22}+\mathbf N_{21}\boldsymbol\Delta(\mathbf I-\mathbf N_{11}\boldsymbol\Delta)^{-1}\mathbf N_{12}},
+</span> respectively.</p>
 </section>
 </section>
 </section>
 <section id="structured-frequency-domain-uncertainty" class="level3">
 <h3 class="anchored" data-anchor-id="structured-frequency-domain-uncertainty">Structured frequency-domain uncertainty</h3>
+<p>In the <span class="math inline">\mathbf M\boldsymbol \Delta</span> configuration, we now consider that <span class="math inline">\boldsymbol \Delta</span> has some structure. Typically it is block-diagonal as in <span class="math display">
+\boldsymbol\Delta =
+\begin{bmatrix}
+\Delta_1&amp; 0 &amp; \ldots &amp; 0\\
+0 &amp; \Delta_2 &amp; \ldots &amp; 0\\
+\vdots\\
+0 &amp; 0 &amp; \ldots &amp; \boldsymbol\Delta_n
+\end{bmatrix},
+</span> with each block satisfying the usual condition <span class="math display">
+\|\Delta_i\|_{\infty}\leq 1, \; i=1,\ldots, n.
+</span></p>
+<p>The deltas on the diagonal can be scalars or matrices.</p>
+<section id="structured-singular-value-ssv-mu-mu" class="level4">
+<h4 class="anchored" data-anchor-id="structured-singular-value-ssv-mu-mu">Structured singular value (SSV, <span class="math inline">\mu</span>, mu)</h4>
+<p>With this structured uncertainty, how does the small gain theorem look like?</p>
 
 
+</section>
 </section>
 </section>
 
