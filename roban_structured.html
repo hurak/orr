@@ -69,6 +69,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -632,8 +675,16 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#structured-singular-value-ssv-mu-mu" id="toc-structured-singular-value-ssv-mu-mu" class="nav-link active" data-scroll-target="#structured-singular-value-ssv-mu-mu">Structured singular value (SSV, <span class="math inline">\mu</span>, mu)</a></li>
+  <li><a href="#robust-stability-with-a-structured-uncertainty" id="toc-robust-stability-with-a-structured-uncertainty" class="nav-link" data-scroll-target="#robust-stability-with-a-structured-uncertainty">Robust stability with a structured uncertainty</a></li>
+  <li><a href="#robust-performance-with-a-structured-uncertainty" id="toc-robust-performance-with-a-structured-uncertainty" class="nav-link" data-scroll-target="#robust-performance-with-a-structured-uncertainty">Robust performance with a structured uncertainty</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -657,8 +708,30 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>We get started with the concept of a structured singular value.</p>
+<section id="structured-singular-value-ssv-mu-mu" class="level2">
+<h2 class="anchored" data-anchor-id="structured-singular-value-ssv-mu-mu">Structured singular value (SSV, <span class="math inline">\mu</span>, mu)</h2>
+<p>In the <span class="math inline">\mathbf M\boldsymbol \Delta</span> configuration, we now consider that <span class="math inline">\boldsymbol \Delta</span> has some structure. Typically it is block-diagonal as in <span class="math display">
+\boldsymbol\Delta =
+\begin{bmatrix}
+\Delta_1&amp; 0 &amp; \ldots &amp; 0\\
+0 &amp; \Delta_2 &amp; \ldots &amp; 0\\
+\vdots\\
+0 &amp; 0 &amp; \ldots &amp; \boldsymbol\Delta_n
+\end{bmatrix},
+</span> with each block satisfying the usual condition <span class="math display">
+\|\Delta_i\|_{\infty}\leq 1, \; i=1,\ldots, n.
+</span></p>
+<p>The deltas on the diagonal can be scalars or matrices.</p>
+</section>
+<section id="robust-stability-with-a-structured-uncertainty" class="level2">
+<h2 class="anchored" data-anchor-id="robust-stability-with-a-structured-uncertainty">Robust stability with a structured uncertainty</h2>
+</section>
+<section id="robust-performance-with-a-structured-uncertainty" class="level2">
+<h2 class="anchored" data-anchor-id="robust-performance-with-a-structured-uncertainty">Robust performance with a structured uncertainty</h2>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1101,7 +1174,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

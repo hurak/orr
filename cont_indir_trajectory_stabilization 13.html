@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Robustness analysis for unstructured uncertainty</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – Trajectory stabilization and neigboring extremals</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./roban_structured.html" rel="next">
-<link href="./roban_uncertainty.html" rel="prev">
+<link href="./cont_indir_references.html" rel="next">
+<link href="./cont_indir_CARE.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -125,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./roban_uncertainty.html">11. Uncertainty modelling and robustness analysis</a></li><li class="breadcrumb-item"><a href="./roban_unstructured.html">Robustness analysis for unstructured uncertainty</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_trajectory_stabilization.html">Trajectory stabilization and neigboring extremals</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -431,7 +431,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_trajectory_stabilization.html" class="sidebar-item-text sidebar-link">
+  <a href="./cont_indir_trajectory_stabilization.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Trajectory stabilization and neigboring extremals</span></a>
   </div>
 </li>
@@ -559,7 +559,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./roban_unstructured.html" class="sidebar-item-text sidebar-link active">
+  <a href="./roban_unstructured.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Robustness analysis for unstructured uncertainty</span></a>
   </div>
 </li>
@@ -675,25 +675,15 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#internal-stability" id="toc-internal-stability" class="nav-link active" data-scroll-target="#internal-stability">Internal stability</a></li>
-  <li><a href="#robust-stability-for-a-multiplicative-uncertainty" id="toc-robust-stability-for-a-multiplicative-uncertainty" class="nav-link" data-scroll-target="#robust-stability-for-a-multiplicative-uncertainty">Robust stability for a multiplicative uncertainty</a></li>
-  <li><a href="#robust-stability-for-an-lft" id="toc-robust-stability-for-an-lft" class="nav-link" data-scroll-target="#robust-stability-for-an-lft">Robust stability for an LFT</a></li>
-  <li><a href="#nominal-performance" id="toc-nominal-performance" class="nav-link" data-scroll-target="#nominal-performance">Nominal performance</a></li>
-  <li><a href="#robust-performance-for-a-multiplicative-uncertainty" id="toc-robust-performance-for-a-multiplicative-uncertainty" class="nav-link" data-scroll-target="#robust-performance-for-a-multiplicative-uncertainty">Robust performance for a multiplicative uncertainty</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./roban_uncertainty.html">11. Uncertainty modelling and robustness analysis</a></li><li class="breadcrumb-item"><a href="./roban_unstructured.html">Robustness analysis for unstructured uncertainty</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_trajectory_stabilization.html">Trajectory stabilization and neigboring extremals</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Robustness analysis for unstructured uncertainty</h1>
+<h1 class="title">Trajectory stabilization and neigboring extremals</h1>
 </div>
 
 
@@ -710,62 +700,107 @@ window.Quarto = {
 </header>
 
 
-<p>When we introduced the concept of robustness, we only vaguely hinted that it is always related to some property of interest. Now comes the time to specify these two properties:</p>
-<div id="def-robust-stability" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 1 (Robust stability)</strong></span> Guaranteed stability of the closed feedback loop with a given controller for all admissible (=considered apriori) deviations of the model from the reality.</p>
+<p>Indirect methods for optimal control reformulate the optimal control problem into a set of equtions – boundary value problems with differential and algebraic equations in the case of continuous-time systems – and by solving these (typically numerically) we obtain the optimal state and control trajectories. Practical usefullness of these is rather limited as such optimal control trajectory constitutes an open-loop control – there is certainly no need to advocate the importance of feedback in this advanced control course.</p>
+<p>One way to introduce feedback is to regard the computed optimal state trajectory <span class="math inline">\bm x^\star(t)</span> as a reference trajectory and design a feedback controller to track this reference. To our advantage, we already have the corresponding control trajectory <span class="math inline">\bm u^\star(t)</span> too, and theferore we can formulate such reference tracking problem as a problem of regulating the deviation <span class="math inline">\delta \bm x(t)</span> of the state from its reference by means of superposing a feedback control <span class="math inline">\delta \bm u(t)</span> onto the (open-loop) optimal control.</p>
+<p>While this problem – also known as the problem of <em>stabilization of a (reference) trajectory</em> – can be solved by basically any feedback control scheme, one elegant way is to linearize the system around the reference trajectory and formulate the problem as the LQR problem for a time-varying linear system.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<div id="def-robust-performance" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2 (Robust performance)</strong></span> Robustness of some performance characteristics such as steady-state regulation error, attenuation of some specified disturbance, insensitivity to measurement noise, fast response, ….</p>
+<div class="callout-title-container flex-fill">
+Linearization around a trajectory
 </div>
-<section id="internal-stability" class="level3">
-<h3 class="anchored" data-anchor-id="internal-stability">Internal stability</h3>
-<p>Before we start discussing robust stability, we spend a few moments discussing the type of stability for which we want consider robustness.</p>
-</section>
-<section id="robust-stability-for-a-multiplicative-uncertainty" class="level3">
-<h3 class="anchored" data-anchor-id="robust-stability-for-a-multiplicative-uncertainty">Robust stability for a multiplicative uncertainty</h3>
-<p><span class="math display">
-|T(j\omega)| &lt; 1/|W(j\omega)|, \;\; \forall \omega,
+</div>
+<div class="callout-body-container callout-body">
+<p>Don’t forget that when linearizing a nonlinear system <span class="math inline">\dot{\bm x} = \mathbf f(\bm x,\bm u)</span> around a point that is not equilibrium – and this inevitably happens when linearizing along the state trajectory <span class="math inline">\bm x^\star(t)</span> obtained from indirect approach to optimal control – the linearized system <span class="math inline">\frac{\mathrm d}{\mathrm d t} \delta \bm x= \mathbf A(t) \delta \bm x + \mathbf B(t) \delta \bm u</span> considers not only the state variables but also the control variables as increments <span class="math inline">\delta \bm x(t)</span> and <span class="math inline">\delta \bm u(t)</span> that must be added to the nominal values <span class="math inline">\bm x^\star(t)</span> and <span class="math inline">\bm u^\star(t)</span> of the state and control variables determining the operating point. That is, <span class="math inline">\bm x(t) = \bm x^\star(t) + \delta \bm x(t)</span> and <span class="math inline">\bm u(t) = \bm u^\star(t) + \delta \bm u(t)</span>.</p>
+</div>
+</div>
+<p>Having decided on an LQR framework, we can now come up with the three matrices <span class="math inline">\mathbf Q</span>, <span class="math inline">\mathbf R</span> and <span class="math inline">\mathbf S</span> that set the quadratic cost function. Once this choice is made, we can just invoke the solver for continuous-time Riccati equation with the ultimate goal of finding the time-varying state feedback gain <span class="math inline">\mathbf K(t)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+LQR for trajectory stabilization cab be done in discrete time
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If discrete-time feedback control is eventually desired, which it mostly is, the whole LQR design for a time-varying linear system will have to be done using just periodically sampled state and control trajectories and applying recursive formulas for the discrete-time Riccati equation and state feedback gain.</p>
+</div>
+</div>
+<p>The three weighting matrices <span class="math inline">\mathbf Q</span>, <span class="math inline">\mathbf R</span> and <span class="math inline">\mathbf S</span>, if chosen arbitrarily, are not related to the original cost function that is minimized by the optimal state and control trajectories. The matrices just parameterize a new optimal control problem. It turns out, however, that there is a clever (and insightful) way of choosing these matrices so that the trajectory stabilization problem inherits the original cost function. In other words, even when the system fails to stay on the optimal trajectory perfectly, the LQR state-feedback controller will keep minimizing the same cost function when regulating the deviation from the optimal trajectory.</p>
+<p>Recall that using the conventional definition of Hamiltonian <span class="math inline">H(\bm x, \bm u, \bm \lambda) = L(\bm x, \bm u) + \bm \lambda^\top \mathbf f(\bm x, \bm u)</span>, in which we now assume time invariance of both the system and the cost function for notational simplicity, the necessary conditions of optimality are <span class="math display">
+\begin{aligned}
+\dot{\bm x} &amp;= \nabla_{\bm\lambda} H(\bm x,\bm u,\boldsymbol \lambda)  = \mathbf f(\bm x, \bm u), \\
+\dot{\bm \lambda} &amp;= -\nabla_{\bm x} H(\bm x,\bm u,\boldsymbol \lambda), \\
+\mathbf 0 &amp;= \nabla_{\bm u} H(\bm x,\bm u,\boldsymbol \lambda),\\
+\bm x(t_\mathrm{i})&amp;=\mathbf x_\mathrm{i},\\
+\bm x(t_\mathrm{f})&amp;=\mathbf x_\mathrm{f} \quad \text{or}\quad \bm \lambda(t_\mathrm{f})=\nabla\phi(\bm{x}(t_\mathrm{f})),
+\end{aligned}
+</span> where the option on the last line is selected based on whether the state at the final time is fixed or free.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The state at the final time can also be restricted by a linear equation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The conditions of optimality stated above correspond to one of the two standard situations, in which the state in the final time is either fixed to a single value or completely free. The conditions can also be modified to consider the more general situation, in which the state at the final time is restricted to lie on a manifold defined by an equality constraint <span class="math inline">\psi(\bm x(t_\mathrm{f})) = 0</span>.</p>
+</div>
+</div>
+<p>Let’s now consider some tiny perturbation to the initial state <span class="math inline">\bm x(t_\mathrm{i})</span> from its prescribed nominal value <span class="math inline">\mathbf x_\mathrm{i}</span>. It will give rise to deviations all all the variables in the above equations from their nominal – optimal – trajectories. Assuming the deviations are small, linear model suffices to describe them. In other words, what we are now after is linearization of the above equations</p>
+<p><span id="eq-perturbed-necessary-conditions-of-optimality"><span class="math display">
+\begin{aligned}
+\delta \dot{\bm x} &amp;= \nabla_{\bm x} \mathbf f \; \delta \bm x + \nabla_{\bm u} \mathbf f \; \delta \bm u, \\
+\delta \dot{\bm \lambda} &amp;= -\nabla^2_{\bm{xx}} H \; \delta \bm x -\nabla^2_{\bm{xu}} H \; \delta \bm u -\underbrace{\nabla^2_{\bm{x\lambda}} H}_{(\nabla_{\bm x} \mathbf f)^\top} \; \delta \bm \lambda, \\
+\mathbf 0 &amp;= \nabla^2_{\bm{ux}} H \; \delta \bm x + \nabla^2_{\bm{uu}} H \; \delta \bm u + \underbrace{\nabla^2_{\bm{u\lambda}} H}_{(\nabla_{\bm u} \mathbf f)^\top} \; \delta \bm \lambda,\\
+\delta \bm x(t_\mathrm{i}) &amp;= \text{specified},\\
+\delta \bm \lambda(t_\mathrm{f}) &amp;= \nabla^2_{\bm{xx}}\phi(\mathbf{x}(t_\mathrm{f}))\; \delta \bm x(t_\mathrm{f}).
+\end{aligned}
+\tag{1}</span></span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note on notation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s recall for convenience here that since <span class="math inline">\mathbf f(\bm x, \bm u)</span> is a vector function of a vector argument(s), <span class="math inline">\nabla_{\bm x} \mathbf f</span> is a matrix whose columns are gradients of individual components of <span class="math inline">\mathbf f</span>. Equivalently, <span class="math inline">(\nabla_{\bm x} \mathbf f)^\top</span> stands for the Jacobian of the function <span class="math inline">\mathbf f</span> with respect to <span class="math inline">\bm x</span>. Similarly, <span class="math inline">\nabla_{\bm{xx}} H</span> is the Hessian of <span class="math inline">\mathbf f</span> with respect to <span class="math inline">\bm x</span>. That is, it is a matrix composed of second derivatives. It is a symmetric matrix, hence no need to transpose it. Finally, the terms <span class="math inline">\nabla_{\bm{ux}} H</span> and <span class="math inline">\nabla_{\bm{xu}} H</span> are matrices containing mixed second derivatives.</p>
+</div>
+</div>
+<p>With hindsight we relabel the individual terms in <a href="#eq-perturbed-necessary-conditions-of-optimality" class="quarto-xref">Equation&nbsp;1</a> as <span class="math display">
+\begin{aligned}
+\mathbf A(t) &amp;\coloneqq (\nabla_{\bm x} \mathbf f)^\top\\
+\mathbf B(t) &amp;\coloneqq (\nabla_{\bm u} \mathbf f)^\top\\
+\mathbf Q(t) &amp;\coloneqq \nabla^2_{\bm{xx}} H\\
+\mathbf R(t) &amp;\coloneqq \nabla^2_{\bm{uu}} H\\
+\mathbf N(t) &amp;\coloneqq \nabla^2_{\bm{xu}} H\\
+\mathbf S_\mathrm{f} &amp;\coloneqq \nabla^2_{\bm{xx}}\phi(\mathbf{x}(t_\mathrm{f})).
+\end{aligned}
 </span></p>
+<p>Let’s rewrite the perturbed necessary conditions of optimality using these new symbols</p>
 <p><span class="math display">
-\|WT\|_{\infty}\leq 1
+\begin{aligned}
+\delta \dot{\bm x} &amp;= \mathbf A(t) \; \delta \bm x + \mathbf B(t) \; \delta \bm u, \\
+\delta \dot{\bm \lambda} &amp;= - \mathbf Q(t) \; \delta \bm x - \mathbf N(t) \; \delta \bm u - \mathbf A^\top (t)\; \delta \bm \lambda, \\
+\mathbf 0 &amp;= \mathbf N(t) \; \delta \bm x + \mathbf R(t) \; \delta \bm u + \mathbf B^\top (t) \; \delta \bm \lambda,\\
+\delta \bm x(t_\mathrm{i}) &amp;= \text{specified},\\
+\delta \bm \lambda(t_\mathrm{f}) &amp;= \mathbf S_\mathrm{f}    \; \delta \bm x(t_\mathrm{f}).
+\end{aligned}
 </span></p>
-</section>
-<section id="robust-stability-for-an-lft" class="level3">
-<h3 class="anchored" data-anchor-id="robust-stability-for-an-lft">Robust stability for an LFT</h3>
-<p><span class="math display">
-|M(j\omega)|&lt;1,\;\;\forall \omega,
-</span></p>
-<p><span class="math display">
-\|M\|_{\infty}&lt;1.
-</span></p>
-</section>
-<section id="nominal-performance" class="level3">
-<h3 class="anchored" data-anchor-id="nominal-performance">Nominal performance</h3>
-<p><span class="math display">
-|S_0(j\omega)| &lt; 1/|W_p(j\omega)|,\;\;\forall \omega,
-</span></p>
-<p><span class="math display">
-\|W_pS_0\|_{\infty}&lt;1.
-</span></p>
-</section>
-<section id="robust-performance-for-a-multiplicative-uncertainty" class="level3">
-<h3 class="anchored" data-anchor-id="robust-performance-for-a-multiplicative-uncertainty">Robust performance for a multiplicative uncertainty</h3>
-<p><span class="math display">
-\boxed{
-|W_p(j\omega)S(j\omega)| + |W(j\omega)T(j\omega)| &lt; 1\;\;\forall \omega.}
-</span></p>
-<p><span class="math display">
-\left\|
-\begin{bmatrix}
-W_pS\\
-WT
-\end{bmatrix}
-\right\|_{\infty}
-&lt;\frac{1}{\sqrt{2}}.
+<p>Assuming that <span class="math inline">\nabla^2_{\bm{uu}} H</span> is nonsingular, which can solve the third equation for <span class="math inline">\bm u</span> <span class="math display">
+\bm u = -\nabla^2_{\bm{uu}} H^{-1} \left( \nabla^2_{\bm{ux}} H \; \delta \bm x + (\nabla_{\bm u} \mathbf f)^\top \; \delta \bm \lambda\right ).
 </span></p>
 
 
-</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1190,13 +1225,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./roban_uncertainty.html" class="pagination-link" aria-label="Uncertainty (in) modelling">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Uncertainty (in) modelling</span>
+      <a href="./cont_indir_CARE.html" class="pagination-link" aria-label="Continuous-time Riccati equation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Continuous-time Riccati equation</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./roban_structured.html" class="pagination-link" aria-label="Robustness analysis for structured uncertainty">
-        <span class="nav-page-text">Robustness analysis for structured uncertainty</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cont_indir_references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1208,7 +1243,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

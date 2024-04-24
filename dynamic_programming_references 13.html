@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Robustness analysis for unstructured uncertainty</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – References</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -30,8 +50,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./roban_structured.html" rel="next">
-<link href="./roban_uncertainty.html" rel="prev">
+<link href="./discr_dir_mpc_stability.html" rel="next">
+<link href="./dynamic_programming_LQR.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,49 +89,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -125,7 +102,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./roban_uncertainty.html">11. Uncertainty modelling and robustness analysis</a></li><li class="breadcrumb-item"><a href="./roban_unstructured.html">Robustness analysis for unstructured uncertainty</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dynamic_programming.html">5. Discrete-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./dynamic_programming_references.html">References</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -349,7 +326,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dynamic_programming_references.html" class="sidebar-item-text sidebar-link">
+  <a href="./dynamic_programming_references.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -559,7 +536,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./roban_unstructured.html" class="sidebar-item-text sidebar-link active">
+  <a href="./roban_unstructured.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Robustness analysis for unstructured uncertainty</span></a>
   </div>
 </li>
@@ -675,25 +652,15 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#internal-stability" id="toc-internal-stability" class="nav-link active" data-scroll-target="#internal-stability">Internal stability</a></li>
-  <li><a href="#robust-stability-for-a-multiplicative-uncertainty" id="toc-robust-stability-for-a-multiplicative-uncertainty" class="nav-link" data-scroll-target="#robust-stability-for-a-multiplicative-uncertainty">Robust stability for a multiplicative uncertainty</a></li>
-  <li><a href="#robust-stability-for-an-lft" id="toc-robust-stability-for-an-lft" class="nav-link" data-scroll-target="#robust-stability-for-an-lft">Robust stability for an LFT</a></li>
-  <li><a href="#nominal-performance" id="toc-nominal-performance" class="nav-link" data-scroll-target="#nominal-performance">Nominal performance</a></li>
-  <li><a href="#robust-performance-for-a-multiplicative-uncertainty" id="toc-robust-performance-for-a-multiplicative-uncertainty" class="nav-link" data-scroll-target="#robust-performance-for-a-multiplicative-uncertainty">Robust performance for a multiplicative uncertainty</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./roban_uncertainty.html">11. Uncertainty modelling and robustness analysis</a></li><li class="breadcrumb-item"><a href="./roban_unstructured.html">Robustness analysis for unstructured uncertainty</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dynamic_programming.html">5. Discrete-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./dynamic_programming_references.html">References</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Robustness analysis for unstructured uncertainty</h1>
+<h1 class="title">References</h1>
 </div>
 
 
@@ -710,64 +677,42 @@ window.Quarto = {
 </header>
 
 
-<p>When we introduced the concept of robustness, we only vaguely hinted that it is always related to some property of interest. Now comes the time to specify these two properties:</p>
-<div id="def-robust-stability" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 1 (Robust stability)</strong></span> Guaranteed stability of the closed feedback loop with a given controller for all admissible (=considered apriori) deviations of the model from the reality.</p>
+<p>Dynamic programming (DP) is a fairly powerful and yet general framework that finds its use in many disciplines. Optimal control is not the only one. But in this overview of the literature we deliberately focus on the DP references with optimal control flavour.</p>
+<p>Our introductory treatment was based almost exclusively on the (also just introductory) Chapter 6 in <span class="citation" data-cites="lewisOptimalControl2012">(<a href="#ref-lewisOptimalControl2012" role="doc-biblioref">Lewis, Vrabie, and Syrmo 2012</a>)</span>. Electronic version of the book is freely available on the author’s webpage.</p>
+<p>Comparable introduction is provided in <span class="citation" data-cites="kirkOptimalControlTheory2004">(<a href="#ref-kirkOptimalControlTheory2004" role="doc-biblioref">Kirk 2004</a>)</span>. Although it does not appear to be legally available for free in an electronic form, its reprint by a low-cost publisher makes it an affordable (and recommendable) classic reference. Another classic <span class="citation" data-cites="andersonOptimalControlLinear2007">(<a href="#ref-andersonOptimalControlLinear2007" role="doc-biblioref">Anderson and Moore 2007</a>)</span> actually uses dynamic programming as the key technique to derive all those LQ-optimal regulation and tracking results. A few copies of this book are available in the faculty library at NTK. The authors also made an electronic version available for free on their website.</p>
+<p>Fairly comprehensive treatment of control-oriented DP is in the two-volume monograph <span class="citation" data-cites="bertsekasDynamicProgrammingOptimal2017">(<a href="#ref-bertsekasDynamicProgrammingOptimal2017" role="doc-biblioref">Bertsekas 2017</a>)</span> and <span class="citation" data-cites="bertsekasDynamicProgrammingOptimal2012">(<a href="#ref-bertsekasDynamicProgrammingOptimal2012" role="doc-biblioref">Bertsekas 2012</a>)</span>. It is not available online for free, but the <a href="http://www.athenasc.com/dpbook.html">book webpage</a> contains links to other supporting materials including lecture notes. Furthermore, the latest book by the same author <span class="citation" data-cites="bertsekasCourseReinforcementLearning2023">(<a href="#ref-bertsekasCourseReinforcementLearning2023" role="doc-biblioref">Bertsekas 2023</a>)</span>, which is available for free download, contains a decent introduction to dynamic programming.</p>
+<p>Having just referenced a book on <em>reinforcement learning</em> (RL), indeed, this popular concept — or at least some of its flavours — is closely related to dynamic programming. In fact, it offers a way to overcome some of the limitations of dynamic programming. In our introductory lecture we are not covering RL, but an interested student can take advantage of availability of high-quality resources such as the the <a href="https://www.mit.edu/~dimitrib/RLbook.html">RL-related books and other resources by D. Bertsekas</a>) and another recommendable introduction to RL from control systems perspective <span class="citation" data-cites="meynControlSystemsReinforcement2022">(<a href="#ref-meynControlSystemsReinforcement2022" role="doc-biblioref">Meyn 2022</a>)</span>, which is also available for free download.</p>
+<p>The book <span class="citation" data-cites="suttonReinforcementLearningIntroduction2018">(<a href="#ref-suttonReinforcementLearningIntroduction2018" role="doc-biblioref">Sutton and Barto 2018</a>)</span> often regarded as the bible of RL is nice (and freely available for download) but may be rather difficult to read for a control engineer because of major differences in terminology.</p>
+
+
+
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-andersonOptimalControlLinear2007" class="csl-entry" role="listitem">
+Anderson, Brian D. O., and John B. Moore. 2007. <em>Optimal <span>Control</span>: <span>Linear Quadratic Methods</span></em>. Reprint of the 1989 edition. Dover Publications. <a href="http://users.cecs.anu.edu.au/~john/papers/BOOK/B03.PDF">http://users.cecs.anu.edu.au/~john/papers/BOOK/B03.PDF</a>.
 </div>
-<div id="def-robust-performance" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2 (Robust performance)</strong></span> Robustness of some performance characteristics such as steady-state regulation error, attenuation of some specified disturbance, insensitivity to measurement noise, fast response, ….</p>
+<div id="ref-bertsekasDynamicProgrammingOptimal2012" class="csl-entry" role="listitem">
+Bertsekas, Dimitri P. 2012. <em>Dynamic <span>Programming</span> and <span>Optimal Control</span></em>. 4th ed. Vol. II. Belmont, Massachusetts: Athena Scientific. <a href="http://athenasc.com/dpbook.html">http://athenasc.com/dpbook.html</a>.
 </div>
-<section id="internal-stability" class="level3">
-<h3 class="anchored" data-anchor-id="internal-stability">Internal stability</h3>
-<p>Before we start discussing robust stability, we spend a few moments discussing the type of stability for which we want consider robustness.</p>
-</section>
-<section id="robust-stability-for-a-multiplicative-uncertainty" class="level3">
-<h3 class="anchored" data-anchor-id="robust-stability-for-a-multiplicative-uncertainty">Robust stability for a multiplicative uncertainty</h3>
-<p><span class="math display">
-|T(j\omega)| &lt; 1/|W(j\omega)|, \;\; \forall \omega,
-</span></p>
-<p><span class="math display">
-\|WT\|_{\infty}\leq 1
-</span></p>
-</section>
-<section id="robust-stability-for-an-lft" class="level3">
-<h3 class="anchored" data-anchor-id="robust-stability-for-an-lft">Robust stability for an LFT</h3>
-<p><span class="math display">
-|M(j\omega)|&lt;1,\;\;\forall \omega,
-</span></p>
-<p><span class="math display">
-\|M\|_{\infty}&lt;1.
-</span></p>
-</section>
-<section id="nominal-performance" class="level3">
-<h3 class="anchored" data-anchor-id="nominal-performance">Nominal performance</h3>
-<p><span class="math display">
-|S_0(j\omega)| &lt; 1/|W_p(j\omega)|,\;\;\forall \omega,
-</span></p>
-<p><span class="math display">
-\|W_pS_0\|_{\infty}&lt;1.
-</span></p>
-</section>
-<section id="robust-performance-for-a-multiplicative-uncertainty" class="level3">
-<h3 class="anchored" data-anchor-id="robust-performance-for-a-multiplicative-uncertainty">Robust performance for a multiplicative uncertainty</h3>
-<p><span class="math display">
-\boxed{
-|W_p(j\omega)S(j\omega)| + |W(j\omega)T(j\omega)| &lt; 1\;\;\forall \omega.}
-</span></p>
-<p><span class="math display">
-\left\|
-\begin{bmatrix}
-W_pS\\
-WT
-\end{bmatrix}
-\right\|_{\infty}
-&lt;\frac{1}{\sqrt{2}}.
-</span></p>
-
-
-</section>
-
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<div id="ref-bertsekasDynamicProgrammingOptimal2017" class="csl-entry" role="listitem">
+———. 2017. <em>Dynamic <span>Programming</span> and <span>Optimal Control</span></em>. 4th ed. Vol. I. Belmont, Massachusetts: Athena Scientific. <a href="http://athenasc.com/dpbook.html">http://athenasc.com/dpbook.html</a>.
+</div>
+<div id="ref-bertsekasCourseReinforcementLearning2023" class="csl-entry" role="listitem">
+———. 2023. <em>A <span>Course</span> in <span>Reinforcement Learning</span></em>. Belmont, Massachusetts: Athena Scientific. <a href="https://web.mit.edu/dimitrib/www/RLCOURSECOMPLETE.pdf">https://web.mit.edu/dimitrib/www/RLCOURSECOMPLETE.pdf</a>.
+</div>
+<div id="ref-kirkOptimalControlTheory2004" class="csl-entry" role="listitem">
+Kirk, Donald E. 2004. <em>Optimal <span>Control Theory</span>: <span>An Introduction</span></em>. Reprint of the 1970 edition. Dover Publications.
+</div>
+<div id="ref-lewisOptimalControl2012" class="csl-entry" role="listitem">
+Lewis, Frank L., Draguna Vrabie, and Vassilis L. Syrmo. 2012. <em>Optimal <span>Control</span></em>. 3rd ed. John Wiley &amp; Sons. <a href="https://lewisgroup.uta.edu/FL%20books/Lewis%20optimal%20control%203rd%20edition%202012.pdf">https://lewisgroup.uta.edu/FL%20books/Lewis%20optimal%20control%203rd%20edition%202012.pdf</a>.
+</div>
+<div id="ref-meynControlSystemsReinforcement2022" class="csl-entry" role="listitem">
+Meyn, Sean. 2022. <em>Control <span>Systems</span> and <span>Reinforcement Learning</span></em>. Cambridge University Press. <a href="https://meyn.ece.ufl.edu/control-systems-and-reinforcement-learning/">https://meyn.ece.ufl.edu/control-systems-and-reinforcement-learning/</a>.
+</div>
+<div id="ref-suttonReinforcementLearningIntroduction2018" class="csl-entry" role="listitem">
+Sutton, Richard S., and Andrew G. Barto. 2018. <em>Reinforcement <span>Learning</span>: <span>An Introduction</span></em>. 2nd ed. Cambridge, Massachusetts: A Bradford Book. <a href="http://incompleteideas.net/book/the-book-2nd.html">http://incompleteideas.net/book/the-book-2nd.html</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1190,13 +1135,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./roban_uncertainty.html" class="pagination-link" aria-label="Uncertainty (in) modelling">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Uncertainty (in) modelling</span>
+      <a href="./dynamic_programming_LQR.html" class="pagination-link" aria-label="Solving LQR via dynamic programming">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Solving LQR via dynamic programming</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./roban_structured.html" class="pagination-link" aria-label="Robustness analysis for structured uncertainty">
-        <span class="nav-page-text">Robustness analysis for structured uncertainty</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./discr_dir_mpc_stability.html" class="pagination-link" aria-label="Stability of MPC">
+        <span class="nav-page-text">Stability of MPC</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1208,7 +1153,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

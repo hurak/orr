@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Robustness analysis for unstructured uncertainty</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – Problem reformulations</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./roban_structured.html" rel="next">
-<link href="./roban_uncertainty.html" rel="prev">
+<link href="./opt_theory_unconstrained.html" rel="next">
+<link href="./opt_theory_problems.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -125,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./roban_uncertainty.html">11. Uncertainty modelling and robustness analysis</a></li><li class="breadcrumb-item"><a href="./roban_unstructured.html">Robustness analysis for unstructured uncertainty</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_problems.html">1. Optimization – theory</a></li><li class="breadcrumb-item"><a href="./opt_theory_reformulations.html">Problem reformulations</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -167,7 +167,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_theory_reformulations.html" class="sidebar-item-text sidebar-link">
+  <a href="./opt_theory_reformulations.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Problem reformulations</span></a>
   </div>
 </li>
@@ -559,7 +559,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./roban_unstructured.html" class="sidebar-item-text sidebar-link active">
+  <a href="./roban_unstructured.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Robustness analysis for unstructured uncertainty</span></a>
   </div>
 </li>
@@ -680,20 +680,22 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#internal-stability" id="toc-internal-stability" class="nav-link active" data-scroll-target="#internal-stability">Internal stability</a></li>
-  <li><a href="#robust-stability-for-a-multiplicative-uncertainty" id="toc-robust-stability-for-a-multiplicative-uncertainty" class="nav-link" data-scroll-target="#robust-stability-for-a-multiplicative-uncertainty">Robust stability for a multiplicative uncertainty</a></li>
-  <li><a href="#robust-stability-for-an-lft" id="toc-robust-stability-for-an-lft" class="nav-link" data-scroll-target="#robust-stability-for-an-lft">Robust stability for an LFT</a></li>
-  <li><a href="#nominal-performance" id="toc-nominal-performance" class="nav-link" data-scroll-target="#nominal-performance">Nominal performance</a></li>
-  <li><a href="#robust-performance-for-a-multiplicative-uncertainty" id="toc-robust-performance-for-a-multiplicative-uncertainty" class="nav-link" data-scroll-target="#robust-performance-for-a-multiplicative-uncertainty">Robust performance for a multiplicative uncertainty</a></li>
+  <li><a href="#maximization-into-minimization" id="toc-maximization-into-minimization" class="nav-link active" data-scroll-target="#maximization-into-minimization">Maximization into minimization</a></li>
+  <li><a href="#equality-into-inequality-constraints" id="toc-equality-into-inequality-constraints" class="nav-link" data-scroll-target="#equality-into-inequality-constraints">Equality into inequality constraints</a></li>
+  <li><a href="#inequality-into-sort-of-equality-constraints" id="toc-inequality-into-sort-of-equality-constraints" class="nav-link" data-scroll-target="#inequality-into-sort-of-equality-constraints">Inequality into “sort-of” equality constraints</a></li>
+  <li><a href="#linear-cost-function-always-possible" id="toc-linear-cost-function-always-possible" class="nav-link" data-scroll-target="#linear-cost-function-always-possible">Linear cost function always possible</a></li>
+  <li><a href="#absolute-value" id="toc-absolute-value" class="nav-link" data-scroll-target="#absolute-value">Absolute value</a></li>
+  <li><a href="#piecewise-linear" id="toc-piecewise-linear" class="nav-link" data-scroll-target="#piecewise-linear">Piecewise linear</a></li>
+  <li><a href="#quadratic" id="toc-quadratic" class="nav-link" data-scroll-target="#quadratic">Quadratic</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./roban_uncertainty.html">11. Uncertainty modelling and robustness analysis</a></li><li class="breadcrumb-item"><a href="./roban_unstructured.html">Robustness analysis for unstructured uncertainty</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_problems.html">1. Optimization – theory</a></li><li class="breadcrumb-item"><a href="./opt_theory_reformulations.html">Problem reformulations</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Robustness analysis for unstructured uncertainty</h1>
+<h1 class="title">Problem reformulations</h1>
 </div>
 
 
@@ -710,59 +712,74 @@ window.Quarto = {
 </header>
 
 
-<p>When we introduced the concept of robustness, we only vaguely hinted that it is always related to some property of interest. Now comes the time to specify these two properties:</p>
-<div id="def-robust-stability" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 1 (Robust stability)</strong></span> Guaranteed stability of the closed feedback loop with a given controller for all admissible (=considered apriori) deviations of the model from the reality.</p>
-</div>
-<div id="def-robust-performance" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2 (Robust performance)</strong></span> Robustness of some performance characteristics such as steady-state regulation error, attenuation of some specified disturbance, insensitivity to measurement noise, fast response, ….</p>
-</div>
-<section id="internal-stability" class="level3">
-<h3 class="anchored" data-anchor-id="internal-stability">Internal stability</h3>
-<p>Before we start discussing robust stability, we spend a few moments discussing the type of stability for which we want consider robustness.</p>
+<section id="maximization-into-minimization" class="level2">
+<h2 class="anchored" data-anchor-id="maximization-into-minimization">Maximization into minimization</h2>
+<p>Given a function <span class="math inline">f(\bm x)</span>, we can maximize it by minimizing <span class="math inline">-f(\bm x)</span>.</p>
 </section>
-<section id="robust-stability-for-a-multiplicative-uncertainty" class="level3">
-<h3 class="anchored" data-anchor-id="robust-stability-for-a-multiplicative-uncertainty">Robust stability for a multiplicative uncertainty</h3>
+<section id="equality-into-inequality-constraints" class="level2">
+<h2 class="anchored" data-anchor-id="equality-into-inequality-constraints">Equality into inequality constraints</h2>
+<p>As a matter of fact, we could declare as the most general format of an NLP problem the one with only inequality constraints. This is because we can always transform an equality constraint into two inequality constraints. Given an equality constraint <span class="math inline">h(\bm x) = 0</span>, we can write it as <span class="math inline">h(\bm x) \leq 0</span> and <span class="math inline">-h(\bm x) \leq 0</span>, that is,</p>
 <p><span class="math display">
-|T(j\omega)| &lt; 1/|W(j\omega)|, \;\; \forall \omega,
+\underbrace{\begin{bmatrix}
+h(\bm x) \\
+-h(\bm x)
+\end{bmatrix}}_{\mathbf g(\bm x)} \leq \mathbf 0.
 </span></p>
-<p><span class="math display">
-\|WT\|_{\infty}\leq 1
-</span></p>
+<p>On the other hand, it may be useful to keep the equality constraints explicit in the problem formulation for the benefit of theoretical analysis, numerical methods and convenience of the user/modeller.</p>
 </section>
-<section id="robust-stability-for-an-lft" class="level3">
-<h3 class="anchored" data-anchor-id="robust-stability-for-an-lft">Robust stability for an LFT</h3>
+<section id="inequality-into-sort-of-equality-constraints" class="level2">
+<h2 class="anchored" data-anchor-id="inequality-into-sort-of-equality-constraints">Inequality into “sort-of” equality constraints</h2>
+<p>Consider the inequality constraint <span class="math inline">g(\bm x) \leq 0</span>. By introducing a <em>slack variable</em> <span class="math inline">s</span> and imposing the nonnegativity condition, we can turn the inequality into the equality <span class="math inline">g(\bm x) + s = 0</span>. Well, we have not completely discarded an inequality because now we have <span class="math inline">s \geq 0</span>. But this new problem may be better suited for some theoretical analysis or numerical methods.</p>
+<p>It is also possible to express the nonnegativity constraint implicitly by considering an unrestricted variable <span class="math inline">s</span> and using it within the inequality through its square <span class="math inline">s^2</span>:</p>
 <p><span class="math display">
-|M(j\omega)|&lt;1,\;\;\forall \omega,
-</span></p>
-<p><span class="math display">
-\|M\|_{\infty}&lt;1.
+g(\bm x) + s^2 = 0.
 </span></p>
 </section>
-<section id="nominal-performance" class="level3">
-<h3 class="anchored" data-anchor-id="nominal-performance">Nominal performance</h3>
-<p><span class="math display">
-|S_0(j\omega)| &lt; 1/|W_p(j\omega)|,\;\;\forall \omega,
-</span></p>
-<p><span class="math display">
-\|W_pS_0\|_{\infty}&lt;1.
+<section id="linear-cost-function-always-possible" class="level2">
+<h2 class="anchored" data-anchor-id="linear-cost-function-always-possible">Linear cost function always possible</h2>
+<p>Given a cost function <span class="math inline">f(\bm x)</span> to be minimized, we can always upper-bound it by a new variable <span class="math inline">\gamma</span> accompanied by a new constraint <span class="math inline">f(\bm x) \leq \gamma</span> and then minimize just <span class="math inline">\gamma</span> <span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{\bm{x}\in\mathbb R^n, \gamma\in\mathbb R} &amp; \quad \gamma \\
+\text{subject to} &amp; \quad f(\bm x) \leq \gamma.
+\end{aligned}
 </span></p>
 </section>
-<section id="robust-performance-for-a-multiplicative-uncertainty" class="level3">
-<h3 class="anchored" data-anchor-id="robust-performance-for-a-multiplicative-uncertainty">Robust performance for a multiplicative uncertainty</h3>
-<p><span class="math display">
-\boxed{
-|W_p(j\omega)S(j\omega)| + |W(j\omega)T(j\omega)| &lt; 1\;\;\forall \omega.}
+<section id="absolute-value" class="level2">
+<h2 class="anchored" data-anchor-id="absolute-value">Absolute value</h2>
+<p>Consider an optimization problem in which the cost function contains the absolute value of a variable <span class="math display">
+\begin{aligned}
+\operatorname*{minimize} &amp;\quad \sum_i c_i|x_i|\\
+\text{subject to} &amp;\quad \mathbf A \bm x \geq \mathbf b.
+\end{aligned}
 </span></p>
+<p>We also impose the restriction that all the coefficients <span class="math inline">c_i</span> are nonnegative. The cost function is then a sum of piecewise linear convex function, which can be shown to be convex.</p>
+<p>The trouble with the absolute value function is that it is not linear, it is not even smooth. And yet, as we will see below, this optimization with the absolute value can be reformulated as a linear program.</p>
+<p>One possible reformulation introduces two new nonnegative (vector) variables <span class="math inline">\bm x^+\geq 0</span> and <span class="math inline">\bm x^-\geq 0</span> and with which the original variables can be expressed as <span class="math inline">x_i = x_i^+ - x_i^-, \; i=1, \ldots, n</span>. The cost function can then be written as <span class="math inline">\sum c_i|x_i| = \sum_i c_i (x_i^+ + x_i^-)</span>.</p>
+<p>This may look surprising (and incorrect) at first, but we argue that at an optimum, <span class="math inline">x_i^+</span> or <span class="math inline">x_i^-</span> must be zero. Otherwise we could subtract (in case <span class="math inline">c_i&gt;0</span>) the same amount from/to both, which would not change the satisfaction of the constraints (this modification cancels in <span class="math inline">x_i = x_i^+ - x_i^-</span>), and the cost would be further reduced.</p>
+<p>The LP in the standard form then changes to</p>
 <p><span class="math display">
-\left\|
-\begin{bmatrix}
-W_pS\\
-WT
-\end{bmatrix}
-\right\|_{\infty}
-&lt;\frac{1}{\sqrt{2}}.
+\begin{aligned}
+\operatorname*{minimize}_{\bm x^+\in \mathbb R^n, \bm x^-\in \mathbb R^n} &amp;\quad \mathbf c^\top (\bm x^+ + \bm x^-)\\
+\text{subject to} &amp;\quad \mathbf A \bm x^+ - \mathbf A \bm x^- \geq \mathbf b,\\
+&amp;\quad \bm x^+ \geq \mathbf 0,\\
+&amp;\quad \bm x^- \geq \mathbf 0.
+\end{aligned}
 </span></p>
+<p>Another possibility is to exploit the reformulation of <span class="math inline">z_i = |x_i|</span> as <span class="math inline">x_i\leq z</span> and <span class="math inline">-x_i\leq z</span>. The original problem then transforms into</p>
+<p><span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{\bm z\in \mathbb R^n, \bm x\in \mathbb R^n} &amp;\quad \mathbf c^\top \bm z\\
+\text{subject to} &amp;\quad \mathbf A \bm x \geq \mathbf b,\\
+&amp;\qquad \bm x \leq \bm z,\\
+&amp;\quad -\bm x \leq \bm z.
+\end{aligned}
+</span></p>
+</section>
+<section id="piecewise-linear" class="level2">
+<h2 class="anchored" data-anchor-id="piecewise-linear">Piecewise linear</h2>
+</section>
+<section id="quadratic" class="level2">
+<h2 class="anchored" data-anchor-id="quadratic">Quadratic</h2>
 
 
 </section>
@@ -1190,13 +1207,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./roban_uncertainty.html" class="pagination-link" aria-label="Uncertainty (in) modelling">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Uncertainty (in) modelling</span>
+      <a href="./opt_theory_problems.html" class="pagination-link" aria-label="Optimization problems">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Optimization problems</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./roban_structured.html" class="pagination-link" aria-label="Robustness analysis for structured uncertainty">
-        <span class="nav-page-text">Robustness analysis for structured uncertainty</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./opt_theory_unconstrained.html" class="pagination-link" aria-label="Theory for unconstrained optimization">
+        <span class="nav-page-text">Theory for unconstrained optimization</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

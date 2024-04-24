@@ -687,15 +687,6 @@ window.Quarto = {
   <li><a href="#unstructured-frequency-dependent-uncertainty" id="toc-unstructured-frequency-dependent-uncertainty" class="nav-link" data-scroll-target="#unstructured-frequency-dependent-uncertainty">Unstructured frequency-dependent uncertainty</a></li>
   <li><a href="#structured-frequency-domain-uncertainty" id="toc-structured-frequency-domain-uncertainty" class="nav-link" data-scroll-target="#structured-frequency-domain-uncertainty">Structured frequency-domain uncertainty</a></li>
   </ul></li>
-  <li><a href="#robustness-1" id="toc-robustness-1" class="nav-link" data-scroll-target="#robustness-1">Robustness</a>
-  <ul class="collapse">
-  <li><a href="#internal-stability" id="toc-internal-stability" class="nav-link" data-scroll-target="#internal-stability">Internal stability</a></li>
-  <li><a href="#robust-stability-for-a-multiplicative-uncertainty" id="toc-robust-stability-for-a-multiplicative-uncertainty" class="nav-link" data-scroll-target="#robust-stability-for-a-multiplicative-uncertainty">Robust stability for a multiplicative uncertainty</a></li>
-  <li><a href="#robust-stability-for-an-lft" id="toc-robust-stability-for-an-lft" class="nav-link" data-scroll-target="#robust-stability-for-an-lft">Robust stability for an LFT</a></li>
-  <li><a href="#nominal-performance" id="toc-nominal-performance" class="nav-link" data-scroll-target="#nominal-performance">Nominal performance</a></li>
-  <li><a href="#robust-performance-for-a-multiplicative-uncertainty" id="toc-robust-performance-for-a-multiplicative-uncertainty" class="nav-link" data-scroll-target="#robust-performance-for-a-multiplicative-uncertainty">Robust performance for a multiplicative uncertainty</a></li>
-  <li><a href="#robust-stability-for-a-structured-frequency-domain-uncertainty-mu-analysis" id="toc-robust-stability-for-a-structured-frequency-domain-uncertainty-mu-analysis" class="nav-link" data-scroll-target="#robust-stability-for-a-structured-frequency-domain-uncertainty-mu-analysis">Robust stability for a structured frequency-domain uncertainty – mu analysis</a></li>
-  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -815,6 +806,8 @@ W(s)\;\Delta(s),\quad \max_{\omega}|\Delta(j\omega)|\leq 1,\;\;\Delta\; \text{st
 </span></p>
 <section id="unstructured-frequency-dependent-uncertainty-mathcal-h_infty-norm-of-an-lti-system" class="level4">
 <h4 class="anchored" data-anchor-id="unstructured-frequency-dependent-uncertainty-mathcal-h_infty-norm-of-an-lti-system">Unstructured frequency-dependent uncertainty <span class="math inline">\mathcal H_\infty</span> norm of an LTI system</h4>
+<section id="h-infinity-norm-of-an-lti-system-interpreted-in-frequency-domain" class="level5">
+<h5 class="anchored" data-anchor-id="h-infinity-norm-of-an-lti-system-interpreted-in-frequency-domain">H-infinity norm of an LTI system interpreted in frequency domain</h5>
 <div id="def-hinf-norm-siso-system" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 4 (<span class="math inline">\mathcal H_\infty</span> norm of a SISO LTI system)</strong></span> For a stable LTI system <span class="math inline">G</span> with a single input and single output, the <span class="math inline">\mathcal H_\infty</span> norm is defined as <span class="math display">
 \|G\|_{\infty} = \sup_{\omega\in\mathbb{R}}|G(j\omega)|.
@@ -854,19 +847,29 @@ W(s)\;\Delta(s),\quad \|\Delta(j\omega)\|\leq 1. }
   &amp; &amp; &amp; &amp; \sigma_n\\
 \end{bmatrix}
 }_{\boldsymbol\Sigma}
-\mathbf V^{*}
+\mathbf V^{*}.
 </span></p>
-<p><span class="math display">
+<p>The two square matrices <span class="math inline">\mathbf V</span> and <span class="math inline">\mathbf U</span> are unitary, that is, <span class="math display">
 \mathbf V\mathbf V^*=\mathbf I=\mathbf V^*\mathbf V
-</span> <span class="math display">
-\mathbf U\mathbf U^*=\mathbf I=\mathbf U^*\mathbf U
+</span> and <span class="math display">
+\mathbf U\mathbf U^*=\mathbf I=\mathbf U^*\mathbf U.
 </span></p>
-<p><span class="math display">
-\sigma_i \in \mathbb R_+,  \forall i
+<p>The nonnegative diagonal entries <span class="math inline">\sigma_i \in \mathbb R_+, \forall i</span> of the (possibly rectangular) matrix <span class="math inline">\Sigma</span> are called <em>singular values</em>. Commonly they are ordered in a nonincreasing order, that is <span class="math display">
+\sigma_1\geq \sigma_2\geq \sigma_3\geq \ldots \geq \sigma_n.
 </span></p>
-<p><span class="math display">
-\bar \sigma = \sigma_1.
+<p>It is also a common notation to denote the largest singular value as <span class="math inline">\bar \sigma</span>, that is, <span class="math inline">\bar \sigma \coloneqq \sigma_1</span>.</p>
+</section>
+<section id="mathcalh_infty-norm-of-an-lti-system-interpreted-in-time-domain" class="level5">
+<h5 class="anchored" data-anchor-id="mathcalh_infty-norm-of-an-lti-system-interpreted-in-time-domain"><span class="math inline">\mathcal{H}_{\infty}</span> norm of an LTI system interpreted in time domain</h5>
+<p>We can also view the dynamical system <span class="math inline">G</span> with inputs and outputs as an operator mapping from some chosen space of functions to another space of functions. A popular model for these spaces are the spaces of square-integrable functions, denoted as <span class="math inline">\mathcal{L}_2</span>, and sometimes interpreted as <em>bounded-energy</em> signals <span class="math display">
+G:\;\mathcal{L}_2\rightarrow \mathcal{L}_2.
 </span></p>
+<p>It is a powerful fact that the <span class="math inline">\mathcal{H}_{\infty}</span> norm of the system is then defined as the induced norm of the corresponding operator <span class="math display">\boxed{
+\|G(s)\|_{\infty} = \sup_{u(t)\in\mathcal{L}_2\setminus 0}\frac{\|y(t)\|_2}{\|u(t)\|_2}}.
+</span></p>
+<p>With the energy interpretation of the input and output variables, this system norm can also be interpreted as the worst-case <em>energy gain</em> of the system.</p>
+<p>Scaling necessary to get any useful info from MIMO models! See Skogestad’s book, section 1.4, pages 5–8. </p>
+</section>
 </section>
 <section id="how-does-the-delta-block-enter-the-model-of-the-system" class="level4">
 <h4 class="anchored" data-anchor-id="how-does-the-delta-block-enter-the-model-of-the-system">How does the delta block enter the model of the system?</h4>
@@ -889,45 +892,8 @@ W(s)\;\Delta(s),\quad \|\Delta(j\omega)\|\leq 1. }
 </section>
 <section id="structured-frequency-domain-uncertainty" class="level3">
 <h3 class="anchored" data-anchor-id="structured-frequency-domain-uncertainty">Structured frequency-domain uncertainty</h3>
-</section>
-</section>
-<section id="robustness-1" class="level2">
-<h2 class="anchored" data-anchor-id="robustness-1">Robustness</h2>
-<dl>
-<dt>Robust stability</dt>
-<dd>
-fdfd
-</dd>
-<dt>Robust performance</dt>
-<dd>
-fdfdfd
-</dd>
-</dl>
-<section id="internal-stability" class="level3">
-<h3 class="anchored" data-anchor-id="internal-stability">Internal stability</h3>
-</section>
-<section id="robust-stability-for-a-multiplicative-uncertainty" class="level3">
-<h3 class="anchored" data-anchor-id="robust-stability-for-a-multiplicative-uncertainty">Robust stability for a multiplicative uncertainty</h3>
-</section>
-<section id="robust-stability-for-an-lft" class="level3">
-<h3 class="anchored" data-anchor-id="robust-stability-for-an-lft">Robust stability for an LFT</h3>
-</section>
-<section id="nominal-performance" class="level3">
-<h3 class="anchored" data-anchor-id="nominal-performance">Nominal performance</h3>
-</section>
-<section id="robust-performance-for-a-multiplicative-uncertainty" class="level3">
-<h3 class="anchored" data-anchor-id="robust-performance-for-a-multiplicative-uncertainty">Robust performance for a multiplicative uncertainty</h3>
-</section>
-<section id="robust-stability-for-a-structured-frequency-domain-uncertainty-mu-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="robust-stability-for-a-structured-frequency-domain-uncertainty-mu-analysis">Robust stability for a structured frequency-domain uncertainty – mu analysis</h3>
-<section id="structured-singular-value-ssv-mu" class="level4">
-<h4 class="anchored" data-anchor-id="structured-singular-value-ssv-mu">Structured singular value (SSV, mu)</h4>
-</section>
-<section id="robust-performance-with-a-structured-uncertainty" class="level4">
-<h4 class="anchored" data-anchor-id="robust-performance-with-a-structured-uncertainty">Robust performance with a structured uncertainty</h4>
 
 
-</section>
 </section>
 </section>
 
