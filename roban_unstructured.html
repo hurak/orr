@@ -613,13 +613,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rocond_software.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">rocond_software.html</span></a>
+ <span class="menu-text">Software</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rocond_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">rocond_references.html</span></a>
+ <span class="menu-text">References</span></a>
   </div>
 </li>
       </ul>
@@ -754,15 +754,16 @@ window.Quarto = {
 \boxed{
 |W_p(j\omega)S(j\omega)| + |W(j\omega)T(j\omega)| &lt; 1\;\;\forall \omega.}
 </span></p>
-<p><span class="math display">
+<p>In the SISO case, this is equivalent to <span class="math display">
 \left\|
 \begin{bmatrix}
 W_pS\\
 WT
 \end{bmatrix}
 \right\|_{\infty}
-&lt;\frac{1}{\sqrt{2}}.
-</span></p>
+&lt;\frac{1}{\sqrt{2}},
+</span> where the augmented closed-loop system <span class="math inline">\begin{bmatrix} W_pS\\ WT \end{bmatrix}</span> is called <em>mixed sensitivity function</em>.</p>
+<p>In the MIMO case we do not have a useful upper bound, but at least we have received a hint that it may be useful to minimize the <span class="math inline">\mathcal H_\infty</span> norm of the mixed sensitivity function. This observation will directly lead to a control design method.</p>
 
 
 </section>

@@ -613,13 +613,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rocond_software.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">rocond_software.html</span></a>
+ <span class="menu-text">Software</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rocond_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">rocond_references.html</span></a>
+ <span class="menu-text">References</span></a>
   </div>
 </li>
       </ul>
@@ -799,7 +799,7 @@ Figure&nbsp;1: A whole subsystem is uncertain
 {\sup_{\omega}|\Delta(j\omega)|\leq 1,\;\;\Delta \;\text{stable}. }
 </span></p>
 <p>But typically the uncertainty is higher at higher frequencies. This can be expressed by using some weighting function <span class="math inline">w(\omega)</span>.</p>
-<p>For later theoretical and computational purposes we approximate the weighting function using a low-order rational transfer function <span class="math inline">W(s)</span>. That is, <span class="math inline">W(j\omega)\approx w(\omega)</span> for <span class="math inline">\omega \in \mathbb R</span>, that is for <span class="math inline">s=j\omega</span> on the imaginary axis.</p>
+<p>For later theoretical and computational purposes we approximate the real weighting function using a low-order rational stable transfer function <span class="math inline">W(s)</span>. That is, <span class="math inline">W(j\omega)\approx w(\omega)</span> for <span class="math inline">\omega \in \mathbb R</span>, that is for <span class="math inline">s=j\omega</span> on the imaginary axis.</p>
 <p>The ultimate transfer function model of the uncertainty is then<br>
 <span class="math display">\boxed{
 W(s)\;\Delta(s),\quad \max_{\omega}|\Delta(j\omega)|\leq 1,\;\;\Delta\; \text{stable}. }
@@ -816,7 +816,6 @@ W(s)\;\Delta(s),\quad \max_{\omega}|\Delta(j\omega)|\leq 1,\;\;\Delta\; \text{st
 <p>Having just defined the <span class="math inline">\mathcal H_\infty</span> norm, the uncertainty model can be expressed compactly as <span class="math display">\boxed{
 W(s)\;\Delta(s),\quad \|\Delta(j\omega)\|\leq 1. }
 </span></p>
-<p>We do not even need to specify that <span class="math inline">\Delta</span> is stable, because the <span class="math inline">\mathcal H_\infty</span> norm is only defined for stable transfer functions.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -827,7 +826,7 @@ W(s)\;\Delta(s),\quad \|\Delta(j\omega)\|\leq 1. }
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><span class="math inline">\mathcal H_\infty</span> denotes a normed vector space of functions that are analytic in the closed extended right half plane (of the complex plane). In parlance of control systems, <span class="math inline">\mathcal H_\infty</span> is the space of proper and stable transfer functions. Poles on the imaginary axis are not alloweed. The functions do not need to be rational, but very often we do restrict ourselves to rational functions, in which case we typically write such space as <span class="math inline">\mathcal{RH}_\infty</span>.</p>
+<p><span class="math inline">\mathcal H_\infty</span> denotes a normed vector space of functions that are analytic in the closed extended right half plane (of the complex plane). In parlance of control systems, <span class="math inline">\mathcal H_\infty</span> is the space of proper and stable transfer functions. Poles on the imaginary axis are not allowed. The functions do not need to be rational, but very often we do restrict ourselves to rational functions, in which case we typically write such space as <span class="math inline">\mathcal{RH}_\infty</span>.</p>
 </div>
 </div>
 <p>We now extend the concept of the <span class="math inline">\mathcal H_\infty</span> norm to MIMO systems. The extension is perhaps not quite intuitive – certainly it is not computed as the maximum of the norms of individual transfer functions, which may be the first guess.</p>
