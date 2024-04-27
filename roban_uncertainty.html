@@ -788,7 +788,7 @@ u(t).
 <div id="fig-unstructured-uncertainty" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-unstructured-uncertainty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/unstructured_uncertainty.png" class="img-fluid figure-img" style="width:50.0%">
+<img src="figures/unstructured_uncertainty.png" class="img-fluid figure-img" style="width:40.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-unstructured-uncertainty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: A whole subsystem is uncertain
@@ -870,53 +870,147 @@ G:\;\mathcal{L}_2\rightarrow \mathcal{L}_2.
 <p>Scaling necessary to get any useful info from MIMO models! See Skogestad’s book, section 1.4, pages 5–8. </p>
 </section>
 </section>
-<section id="how-does-the-delta-block-enter-the-model-of-the-system" class="level4">
-<h4 class="anchored" data-anchor-id="how-does-the-delta-block-enter-the-model-of-the-system">How does the delta block enter the model of the system?</h4>
-<section id="additive" class="level5">
-<h5 class="anchored" data-anchor-id="additive">Additive</h5>
-<p><span class="math display">
-G(s) = \underbrace{G_0(s)}_{\mbox{nominal model}}+\underbrace{W(s)\Delta(s)}_{\mbox{additive uncertainty}}
+<section id="how-does-the-uncertainty-enter-the-model-of-the-system" class="level4">
+<h4 class="anchored" data-anchor-id="how-does-the-uncertainty-enter-the-model-of-the-system">How does the uncertainty enter the model of the system?</h4>
+<section id="additive-uncertainty" class="level5">
+<h5 class="anchored" data-anchor-id="additive-uncertainty">Additive uncertainty</h5>
+<p>The transfer function of an uncertain system can be written as a sum of a nominal system and an uncertainty <span class="math display">
+G(s) = \underbrace{G_0(s)}_{\text{nominal model}}+\underbrace{W(s)\Delta(s)}_{\text{additive uncertainty}}.
 </span></p>
-<p><span class="math display">
-|G(j\omega)-G_0(j\omega)|&lt;|W(j\omega)|
+<p>The block diagram interpretation is in</p>
+<div id="fig-additive-uncertainty" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-additive-uncertainty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/additive_uncertainty.png" class="img-fluid figure-img" style="width:40.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-additive-uncertainty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Additive uncertainty
+</figcaption>
+</figure>
+</div>
+<p>The magnitude frequency response of the weighting filter <span class="math inline">W(s)</span> then serves as an upper bound on the absolute error in the magnitude frequency responses <span class="math display">
+|G(j\omega)-G_0(j\omega)|&lt;|W(j\omega)|\quad \forall \omega\in\mathbb R.
 </span></p>
 </section>
-<section id="multiplicative" class="level5">
-<h5 class="anchored" data-anchor-id="multiplicative">Multiplicative</h5>
+<section id="multiplicative-uncertainty" class="level5">
+<h5 class="anchored" data-anchor-id="multiplicative-uncertainty">Multiplicative uncertainty</h5>
 <p><span class="math display">
-G(s) = (1+W(s)\Delta(s))G_0(s)
+G(s) = (1+W(s)\Delta(s))\,G_0(s).
 </span></p>
+<p>The block diagram interpretation is in</p>
+<div id="fig-multiplicative-uncertainty" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-multiplicative-uncertainty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/multiplicative_uncertainty.png" class="img-fluid figure-img" style="width:55.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-multiplicative-uncertainty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Multiplicative uncertainty
+</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+For SISO transfer functions no need to bother about the order of terms in the products
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sice we are considering SISO transfer functions, the order of terms in the products is not important. We will have to be more alert to the order of terms when we move to MIMO systems.</p>
+</div>
+</div>
+<p>The magnitude frequency response of the weighting filter <span class="math inline">W(s)</span> then serves as an upper bound on the relative error in the magnitude frequency responses <span class="math display">\boxed
+{\frac{|G(j\omega)-G_0(j\omega)|}{|G_0(j\omega)|}&lt;|W(j\omega)|\quad \forall \omega\in\mathbb R.}
+</span></p>
+<div id="exm-uncertain-first-order-system" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2 (Uncertain first-order delayed system)</strong></span> We consider a first-order system with a delay described by <span class="math display">
+G(s) = \frac{k}{T s+1}e^{-\theta s}, \qquad 2\leq k,\tau,\theta,\leq 3.
+</span></p>
+</div>
 <p><span class="math display">
-\frac{|G(j\omega)-G_0(j\omega)|}{|G_0(j\omega)|}&lt;|W(j\omega)|
-</span></p>
+\boxed{
+W(s) = \frac{\tau s+r_0}{(\tau/r_{\infty})s+1}}
+</span> where <span class="math inline">r_0</span> is uncertainty at steady state, <span class="math inline">1/\tau</span> is the frequency, where the relative uncertainty reaches 100%, <span class="math inline">r_{\infty}</span> is relative uncertainty at high frequencies, often <span class="math inline">r_{\infty}\geq 2</span>.</p>
 </section>
-<section id="inverse-additive" class="level5">
-<h5 class="anchored" data-anchor-id="inverse-additive">Inverse additive</h5>
+<section id="inverse-additive-uncertainty" class="level5">
+<h5 class="anchored" data-anchor-id="inverse-additive-uncertainty">Inverse additive uncertainty</h5>
+<p>…</p>
 </section>
-<section id="inverse-multiplicative" class="level5">
-<h5 class="anchored" data-anchor-id="inverse-multiplicative">Inverse multiplicative</h5>
+<section id="inverse-multiplicative-uncertainty" class="level5">
+<h5 class="anchored" data-anchor-id="inverse-multiplicative-uncertainty">Inverse multiplicative uncertainty</h5>
+<p>…</p>
 </section>
 <section id="linear-fractional-transformation-lft" class="level5">
 <h5 class="anchored" data-anchor-id="linear-fractional-transformation-lft">Linear fractional transformation (LFT)</h5>
-<p>For matrices <span class="math inline">\mathbf P</span> and <span class="math inline">\mathbf N</span> sized <span class="math inline">(n_1+n_2)\times(m_1+m_2)</span> and divided into blocks like <span class="math display">
+<p>For a matrix <span class="math inline">\mathbf P</span> sized <span class="math inline">(n_1+n_2)\times(m_1+m_2)</span> and divided into blocks like <span class="math display">
 \mathbf P=
 \begin{bmatrix}
 \mathbf P_{11} &amp; \mathbf P_{12}\\
 \mathbf P_{21} &amp; \mathbf P_{22}
 \end{bmatrix},
-</span> and matrices <span class="math inline">\boldsymbol\Delta</span> a <span class="math inline">\mathbf K</span> sized <span class="math inline">m_1\times n_1</span> and <span class="math inline">m_2\times n_2</span>, the <em>lower</em> and the <em>upper LFT</em> are <span class="math display">
+</span> and a matrix <span class="math inline">\mathbf K</span> sized <span class="math inline">m_2\times n_2</span>, the <em>lower LFT</em> of <span class="math inline">\mathbf P</span> with respect to <span class="math inline">\mathbf K</span> is <span class="math display">
 \boxed{
-\mathcal{F}_\mathbf{l}(\mathbf P,\mathbf K) = \mathbf P_{11}+\mathbf P_{12}\mathbf K(\mathbf I-\mathbf P_{22}\mathbf K)^{-1}\mathbf P_{21}},
-</span> and <span class="math display">
+\mathcal{F}_\mathbf{l}(\mathbf P,\mathbf K) = \mathbf P_{11}+\mathbf P_{12}\mathbf K(\mathbf I-\mathbf P_{22}\mathbf K)^{-1}\mathbf P_{21}}.
+</span></p>
+<p>It can be viewed as a feedback interconnection of the plant <span class="math inline">\mathbf P</span> and the controller <span class="math inline">\mathbf K</span>, in which not all plant inputs are used as control inputs and not all plant outputs are measured, as depicted in <a href="#fig-lower-LFT" class="quarto-xref">Figure&nbsp;4</a></p>
+<div id="fig-lower-LFT" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lower-LFT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/lower_LFT.png" class="img-fluid figure-img" style="width:30.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lower-LFT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Lower LFT of <span class="math inline">\mathbf P</span> with respect to <span class="math inline">\mathbf K</span>
+</figcaption>
+</figure>
+</div>
+<p>Similarly, for a matrix <span class="math inline">\mathbf N</span> sized <span class="math inline">(n_1+n_2)\times(m_1+m_2)</span> and a matrix <span class="math inline">\boldsymbol\Delta</span> sized <span class="math inline">m_1\times n_1</span>, the <em>upper LFT</em> of <span class="math inline">\mathbf N</span> with respect to <span class="math inline">\mathbf K</span> is <span class="math display">
 \boxed{
-\mathcal{F}_\mathbf{u}(\mathbf N,\boldsymbol\Delta) = \mathbf N_{22}+\mathbf N_{21}\boldsymbol\Delta(\mathbf I-\mathbf N_{11}\boldsymbol\Delta)^{-1}\mathbf N_{12}},
-</span> respectively.</p>
+\mathcal{F}_\mathbf{u}(\mathbf N,\boldsymbol\Delta) = \mathbf N_{22}+\mathbf N_{21}\boldsymbol\Delta(\mathbf I-\mathbf N_{11}\boldsymbol\Delta)^{-1}\mathbf N_{12}}.
+</span></p>
+<p>It can be viewed as a feedback interconnection of the nominal plant <span class="math inline">\mathbf N</span> and the uncertainty block <span class="math inline">\boldsymbol\Delta</span>, as depicted in <a href="#fig-upper-LFT" class="quarto-xref">Figure&nbsp;5</a></p>
+<div id="fig-upper-LFT" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-upper-LFT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/upper_LFT.png" class="img-fluid figure-img" style="width:30.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-upper-LFT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Upper LFT of <span class="math inline">\mathbf N</span> with respect to <span class="math inline">\boldsymbol \Delta</span>
+</figcaption>
+</figure>
+</div>
+<p>Here we already anticipated MIMO uncertainty blocks. One motivation for them is explained in the very next section on structured uncertainties, another one is appearing once we start formulating robust performance within the same analytical framework as robust stability.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Which is lower and which is upper is a matter of convention, but a useful one
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Our usage of the lower LFT for a feedback interconnection of a (generalized) plant and a controller and the upper LFT for a feedback interconnection of a nominal system and and uncertainty is completely arbitrary. We could easily use the lower LFT for the uncertainty. But it is a convenient convention to adhere to. The more so that it allows for the combination of both as in the diagram <a href="#fig-lower-upper-LFT" class="quarto-xref">Figure&nbsp;6</a> below, which corresponds to composition of the two LFTs.</p>
+<div id="fig-lower-upper-LFT" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lower-upper-LFT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/lower_upper_LFT.png" class="img-fluid figure-img" style="width:30.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lower-upper-LFT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Combination of the lower and upper LFT
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 </section>
 </section>
 <section id="structured-frequency-domain-uncertainty" class="level3">
 <h3 class="anchored" data-anchor-id="structured-frequency-domain-uncertainty">Structured frequency-domain uncertainty</h3>
-<p>In the <span class="math inline">\mathbf M\boldsymbol \Delta</span> configuration, we now consider that <span class="math inline">\boldsymbol \Delta</span> has some structure. Typically it is block-diagonal as in <span class="math display">
+<p>Not just a single <span class="math inline">\Delta(s)</span> but several <span class="math inline">\Delta_i(s)</span>, <span class="math inline">i=1,\ldots,n</span> are considered. Some of them scalar-valued, some of them matrix-valued.</p>
+<p>In the upper LFT, all the individual <span class="math inline">\Delta_i</span>s are collected into a single overall <span class="math inline">\boldsymbol \Delta</span>, which then exhibits some structure. Typically it is block-diagonal as in <span class="math display">
 \boldsymbol\Delta =
 \begin{bmatrix}
 \Delta_1&amp; 0 &amp; \ldots &amp; 0\\
@@ -924,10 +1018,9 @@ G(s) = (1+W(s)\Delta(s))G_0(s)
 \vdots\\
 0 &amp; 0 &amp; \ldots &amp; \boldsymbol\Delta_n
 \end{bmatrix},
-</span> with each block satisfying the usual condition <span class="math display">
+</span> with each block (including the MIMO blocks) satisfying the usual condition <span class="math display">
 \|\Delta_i\|_{\infty}\leq 1, \; i=1,\ldots, n.
 </span></p>
-<p>The deltas on the diagonal can be scalars or matrices.</p>
 <section id="structured-singular-value-ssv-mu-mu" class="level4">
 <h4 class="anchored" data-anchor-id="structured-singular-value-ssv-mu-mu">Structured singular value (SSV, <span class="math inline">\mu</span>, mu)</h4>
 <p>With this structured uncertainty, how does the small gain theorem look like?</p>
