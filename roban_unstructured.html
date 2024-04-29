@@ -719,25 +719,71 @@ window.Quarto = {
 </div>
 <section id="internal-stability" class="level3">
 <h3 class="anchored" data-anchor-id="internal-stability">Internal stability</h3>
-<p>Before we start discussing robust stability, we spend a few moments discussing the type of stability for which we want consider robustness.</p>
+<p>Before we start discussing robust stability, we need to discuss one fine issue related to stability of a nominal system. We do it through the following example.</p>
+<div id="exm-internal-stability" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1 (Internal stability)</strong></span> Consider the following feedback system with a nominal plant <span class="math inline">G(s)</span> and a nominal controller <span class="math inline">K(s)</span>.</p>
+<div id="fig-internal-stability" class="quarto-figure quarto-figure-center quarto-float anchored" width="60%">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-internal-stability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/internal_stability.png" id="fig-internal-stability" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-internal-stability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</figcaption>
+</figure>
+</div>
+<p>The question is: is this closed-loop system stable? We determine stability by looking at the denominator of <em>a</em> closed-loop transfer function. But which one? There are several. Perhaps the most immediate one is the transfer function from the reference <span class="math inline">r</span> to the plant output <span class="math inline">y</span>. With the open-loop transfer function <span class="math inline">L(s) = G(s)K(s) = \frac{s-1}{s+1} \frac{k(s+1)}{s(s-1)} = \frac{k}{s}</span>, the closed-loop transfer function is <span class="math display">
+T(s) = \frac{\frac{k}{s}}{1+\frac{k}{s}} = \frac{k}{s+k},  
+</span> which is perfectly stable. But note that for practical purposes, all possible closed-loop transfer functions must be stable. How about the one from the output disturbance <span class="math inline">d</span> to the plant output <span class="math inline">y</span>? <span class="math display">
+S(s) = \frac{1}{1+\frac{k}{s}} = \frac{s}{s+k},
+</span> which is stable too. Isn’t this a signal that we can stop worrying? Not yet. Consider now the closed-loop transfer function from the reference <span class="math inline">r</span> to the control <span class="math inline">u</span>. The closed-loop transfer function is <span class="math display">
+K(s)S(s) = \frac{\frac{k(s+1)}{s(s-1)}}{1+\frac{k}{s}} = \frac{k(s+1)}{{\color{red}(s-1)}(s+k)}.
+</span></p>
+<p>Oops! This closed-loop transfer function is not stable. Obviously the culprit here is our cancelling the zero in the RHP with an unstable pole in the controller. But let’s emphasize that the trouble is not in imperfectness of this cancellation due to numerical errors. The trouble is in the very cancelling the zero in the RHP by the controller. Identical problem would arise if an unstable pole of the plant is cancelled by the RHP zero of the controller as we can see by modifying the assignment accordingly.</p>
+</div>
+<p>The example taught (or perhaps reminded) us that in order to guarantee stability of <em>all</em> closed-loop transfer functions, no cancellation of poles and zeros in the right half plane is allowed. The resulting closed-loop system is then called <em>internally stable</em>. Checking just (arbitrary) one closed-loop transfer function for stability is then enough to conclude that all of them are stable too.</p>
 </section>
 <section id="robust-stability-for-a-multiplicative-uncertainty" class="level3">
 <h3 class="anchored" data-anchor-id="robust-stability-for-a-multiplicative-uncertainty">Robust stability for a multiplicative uncertainty</h3>
-<p><span class="math display">
-|T(j\omega)| &lt; 1/|W(j\omega)|, \;\; \forall \omega,
+<p>We consider a feedback system with a plant <span class="math inline">G(s)</span> and a controller <span class="math inline">K(s)</span>, where the uncertainty in the plant modelled as multiplicative uncertainty, that is, <span class="math inline">G(s) = (1+W(s)\Delta(s))\,G_0(s)</span>.</p>
+<p>The technique for analyzing closed-loop stability is based on Nyquist criterion. Instead of analyzing the Nyquist plot for the nominal plant <span class="math inline">G_0(s)</span>, we analyze the Nyquist plot for the uncertain plant <span class="math inline">G(s)</span>. The corresponding open-loop transfer function is <span class="math display">
+L(s) = G(s)K(s) = (1+W(s)\Delta(s))\,G_0(s)K(s) = L_0(s) + W(s)L_0(s)\Delta(s).
 </span></p>
+<p>When trying to figure out the conditions, under which this family of Nyquist curves avoids the point -1, it is useful to interpret the last equation at a given frequency <span class="math inline">\omega</span> as a disc with the center at <span class="math inline">L_0(j\omega)</span> and the radius <span class="math inline">W(j\omega)L_0(j\omega)</span>. To see this, note that <span class="math inline">\Delta(j\omega)</span> represents a complex number with a magnitude up to one, and with an arbitrary angle.</p>
+<div id="fig-robust-stability" class="quarto-figure quarto-figure-center quarto-float anchored" width="50%">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-robust-stability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/nyquist_robust_stability.png" id="fig-robust-stability" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-robust-stability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</figcaption>
+</figure>
+</div>
+<p>The geometric formulation of the condition is then that the distance from -1 to the nominal Nyquist plot of <span class="math inline">L_0(j\omega)</span> is greater than the radius <span class="math inline">W(j\omega)L_0(j\omega)</span> of the disc centered at the nominal Nyquist curve With the distance from the point -1 to the nominal Nyquist plot of <span class="math inline">L_0(s)</span> evaluated at a particular frequency <span class="math inline">\omega</span> a <span class="math inline">|-1-L_0(j\omega)| = |1+L_0(j\omega)|</span>, the condition can be written as</p>
 <p><span class="math display">
-\|WT\|_{\infty}\leq 1
+|W(j\omega)L_0(j\omega)| &lt; |1+L_0(j\omega)|, \;\forall \omega.
 </span></p>
+<p>Dividing both sides by <span class="math inline">1+L_0(j\omega)</span> we get <span class="math display">
+\frac{W(j\omega)L_0(j\omega)}{1+L_0(j\omega)} &lt; 1, \;\forall \omega.
+</span></p>
+<p>But recalling the definition of the <em>complementary sensitivity function</em>, and dividing both sides by <span class="math inline">W</span>, we can rewrite the condition as <span class="math display">\boxed
+{|T_0(j\omega)| &lt; 1/|W(j\omega)|, \;\; \forall \omega.}
+</span></p>
+<p>This condition has clear interpretation in terms of the magnitude of the complementary sensitivity function – it must be smaller than the reciprocal of the magnitude of the uncertainty weight at all frequencies.</p>
+<p>Finally, we can also invoke the definition of the <span class="math inline">\mathcal H_\infty</span> norm and reformulate the condition as <span class="math display">\boxed
+{\|WT\|_{\infty}&lt; 1.}
+</span></p>
+<p>To appreciate usefulness of the this format of the robust stability condition beyond mere notational compactness, we mention that <span class="math inline">\mathcal H_\infty</span> norm of an LTI system can be reliably computed. Robust stability can then be then checked by computing a single number.</p>
+<p>In fact, it is even better than that – there are methods for computing a feedback controller that minimizise the <span class="math inline">\mathcal H_\infty</span> norm of a specified closed-loop transfer function, which suggests an optimization-based approach to design of robustly stabilizing controllers. We are going to build on this in the next chapter. But let’s stick to the analysis for now.</p>
 </section>
 <section id="robust-stability-for-an-lft" class="level3">
 <h3 class="anchored" data-anchor-id="robust-stability-for-an-lft">Robust stability for an LFT</h3>
 <p><span class="math display">
-|M(j\omega)|&lt;1,\;\;\forall \omega,
+|\mathbf M(j\omega)|&lt;1,\;\;\forall \omega,
 </span></p>
 <p><span class="math display">
-\|M\|_{\infty}&lt;1.
+\|\mathbf M\|_{\infty}&lt;1.
 </span></p>
+<p>Recall that <span class="math inline">\mathbf M</span> is just a short notation for the <span class="math inline">\mathbf N_{11}</span> block of <span class="math inline">\mathbf N</span>.</p>
 </section>
 <section id="nominal-performance" class="level3">
 <h3 class="anchored" data-anchor-id="nominal-performance">Nominal performance</h3>

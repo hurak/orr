@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Optimization modelling languages</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – Mu synthesis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -64,8 +30,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./opt_theory_references.html" rel="next">
-<link href="./opt_theory_constrained.html" rel="prev">
+<link href="./rocond_software.html" rel="next">
+<link href="./rocond_H_infinity_control.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -103,49 +69,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -159,7 +82,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_problems.html">1. Optimization – theory</a></li><li class="breadcrumb-item"><a href="./opt_theory_modellers.html">Optimization modelling languages</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rocond_mixed_sensitivity.html">12. Robust control</a></li><li class="breadcrumb-item"><a href="./rocond_mu_synthesis.html">Mu synthesis</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -219,7 +142,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_theory_modellers.html" class="sidebar-item-text sidebar-link active">
+  <a href="./opt_theory_modellers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Optimization modelling languages</span></a>
   </div>
 </li>
@@ -640,7 +563,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rocond_mu_synthesis.html" class="sidebar-item-text sidebar-link">
+  <a href="./rocond_mu_synthesis.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Mu synthesis</span></a>
   </div>
 </li>
@@ -709,26 +632,15 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#why-optimization-modelling-languages" id="toc-why-optimization-modelling-languages" class="nav-link active" data-scroll-target="#why-optimization-modelling-languages">Why optimization modelling languages?</a></li>
-  <li><a href="#why-not-optimization-modelling-languages" id="toc-why-not-optimization-modelling-languages" class="nav-link" data-scroll-target="#why-not-optimization-modelling-languages">Why not optimization modelling languages?</a></li>
-  <li><a href="#language-independent-optimization-modelling-languages" id="toc-language-independent-optimization-modelling-languages" class="nav-link" data-scroll-target="#language-independent-optimization-modelling-languages">Language-independent optimization modelling languages</a></li>
-  <li><a href="#optimization-modelling-in-julia" id="toc-optimization-modelling-in-julia" class="nav-link" data-scroll-target="#optimization-modelling-in-julia">Optimization modelling in Julia</a></li>
-  <li><a href="#optimization-modelling-in-matlab" id="toc-optimization-modelling-in-matlab" class="nav-link" data-scroll-target="#optimization-modelling-in-matlab">Optimization modelling in Matlab</a></li>
-  <li><a href="#optimization-modelling-in-python" id="toc-optimization-modelling-in-python" class="nav-link" data-scroll-target="#optimization-modelling-in-python">Optimization modelling in Python</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_problems.html">1. Optimization – theory</a></li><li class="breadcrumb-item"><a href="./opt_theory_modellers.html">Optimization modelling languages</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rocond_mixed_sensitivity.html">12. Robust control</a></li><li class="breadcrumb-item"><a href="./rocond_mu_synthesis.html">Mu synthesis</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Optimization modelling languages</h1>
+<h1 class="title">Mu synthesis</h1>
 </div>
 
 
@@ -745,221 +657,8 @@ window.Quarto = {
 </header>
 
 
-<section id="why-optimization-modelling-languages" class="level2">
-<h2 class="anchored" data-anchor-id="why-optimization-modelling-languages">Why optimization modelling languages?</h2>
-<p>Realistically complex optimization problems cannot be solved with just a pen and a paper – computer programs (often called <em>optimization solvers</em>) are needed to solve them. And now comes the challenge: as various solvers for even the same class of problems differ in the algorithms they implement, so do their interfaces – every solver expects the inputs (the data defining the optimization problem) in a specific format. This makes it difficult to switch between solvers, as the problem data has to be reformatted every time.</p>
-<div id="exm-data-formatting" class="theorem example">
-<p><span class="theorem-title"><strong>Example 1 (Data formatting for different solvers)</strong></span> Consider the following optimization problem: <span class="math display">
-\begin{aligned}
-  \operatorname*{minimize}_{\bm x \in \mathbb R^2} &amp; \quad \frac{1}{2} \bm x^\top \begin{bmatrix}4 &amp; 1\\ 1 &amp; 2 \end{bmatrix} \bm x + \begin{bmatrix}1 \\ 1\end{bmatrix}^\top \bm x \\
-  \text{subject to} &amp; \quad \begin{bmatrix}1 \\ 0 \\ 0\end{bmatrix} \leq \begin{bmatrix} 1 &amp; 1\\ 1 &amp; 0\\ 0 &amp; 1\end{bmatrix} \bm x \leq  \begin{bmatrix}1 \\ 0.7 \\ 0.7\end{bmatrix}
-\end{aligned}
-</span></p>
-<p>There are dozens of solvers that can be used to solve this problem. Here we demonstrate a usage of these two: <a href="https://osqp.org">OSQP</a> and <a href="https://oxfordcontrol.github.io/COSMO.jl/stable/">COSMO.jl</a>. And we are going to call the solvers in Julia (using the the wrappers <a href="https://github.com/osqp/OSQP.jl">OSQP.jl</a> for the former). First, we start with OSQP (in fact, this is their example):</p>
-<div id="6e97c8cc" class="cell">
-<details open="" class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">OSQP</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SparseArrays</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the problem data and build the problem description</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">4.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">2.0</span>])</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">1.0</span>]</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">0.0</span>; <span class="fl">0.0</span> <span class="fl">1.0</span>])</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.0</span>; <span class="fl">0.0</span>]</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.7</span>; <span class="fl">0.7</span>]</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>problem_OSQP <span class="op">=</span> OSQP.<span class="fu">Model</span>()</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>OSQP.<span class="fu">setup!</span>(problem_OSQP; P<span class="op">=</span>P, q<span class="op">=</span>q, A<span class="op">=</span>A, l<span class="op">=</span>l, u<span class="op">=</span>u, alpha<span class="op">=</span><span class="fl">1</span>, verbose<span class="op">=</span><span class="cn">false</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the optimization problem and show the results</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>results_OSQP <span class="op">=</span> OSQP.<span class="fu">solve!</span>(problem_OSQP)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>results_OSQP.x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>Now we do the same with COSMO. First, we must take into account that COSMO cannot accept two-sided inequalities, so we have to reformulate the problem so that the constraints are only in the form of <span class="math inline">\mathbf A\bm x + b \geq \bm 0</span>: <span class="math display">
-\begin{aligned}
-  \operatorname*{minimize}_{\bm x \in \mathbb R^2} &amp; \quad \frac{1}{2} \bm x^\top \begin{bmatrix}4 &amp; 1\\ 1 &amp; 2 \end{bmatrix} \bm x + \begin{bmatrix}1 \\ 1\end{bmatrix}^\top \bm x \\
-  \text{subject to} &amp; \quad \begin{bmatrix} -1 &amp; -1\\ -1 &amp; 0\\ 0 &amp; -1\\ 1 &amp; 1\\ 1 &amp; 0\\ 0 &amp; 1\end{bmatrix}\bm x + \begin{bmatrix}1 \\ 0.7 \\ 0.7 \\ -1 \\ 0 \\ 0\end{bmatrix} \geq  \mathbf 0.
-\end{aligned}
-</span></p>
-<div id="dc00338f" class="cell">
-<details open="" class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">COSMO</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SparseArrays</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the problem data and build the problem description</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">4.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">2.0</span>])</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">1.0</span>]</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">0.0</span>; <span class="fl">0.0</span> <span class="fl">1.0</span>])</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.0</span>; <span class="fl">0.0</span>]</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.7</span>; <span class="fl">0.7</span>]</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>Aa <span class="op">=</span> [<span class="op">-</span>A; A]</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>ba <span class="op">=</span> [u; <span class="op">-</span>l]</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>problem_COSMO <span class="op">=</span> COSMO.<span class="fu">Model</span>()</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>constraint <span class="op">=</span> COSMO.<span class="fu">Constraint</span>(Aa, ba, COSMO.Nonnegatives)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>settings <span class="op">=</span> COSMO.<span class="fu">Settings</span>(verbose<span class="op">=</span><span class="cn">false</span>)</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">assemble!</span>(problem_COSMO, P, q, constraint, settings <span class="op">=</span> settings)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the optimization problem and show the results</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>results_COSMO <span class="op">=</span> COSMO.<span class="fu">optimize!</span>(problem_COSMO)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>results_COSMO.x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>Although the two solvers are solving the same problem, the data has to be formatted differently for each of them (and the difference in syntax is not negligible either).</p>
-<p>What if we could formulate the same problem without considering the pecualiarities of each solver? It turns out that it is possible. In Julia we can use <a href="https://jump.dev/JuMP.jl/stable/">JuMP.jl</a>:</p>
-<div id="0e50afb1" class="cell">
-<details open="" class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">JuMP</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SparseArrays</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">OSQP</span>, <span class="bu">COSMO</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the problem data and build the problem description</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">4.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">2.0</span>])</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">1.0</span>]</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">0.0</span>; <span class="fl">0.0</span> <span class="fl">1.0</span>])</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.0</span>; <span class="fl">0.0</span>]</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.7</span>; <span class="fl">0.7</span>]</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>model_JuMP <span class="op">=</span> <span class="fu">Model</span>()</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="pp">@variable</span>(model_JuMP, x[<span class="fl">1</span><span class="op">:</span><span class="fl">2</span>])</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="pp">@objective</span>(model_JuMP, Min, <span class="fl">0.5</span><span class="op">*</span>x<span class="op">'*</span>P<span class="op">*</span>x <span class="op">+</span> q<span class="op">'*</span>x)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(model_JuMP, A<span class="op">*</span>x <span class="op">.&lt;=</span> u)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(model_JuMP, A<span class="op">*</span>x <span class="op">.&gt;=</span> l)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the optimization problem using OSQP and show the results</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="fu">set_silent</span>(model_JuMP)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="fu">set_optimizer</span>(model_JuMP, OSQP.Optimizer)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="fu">optimize!</span>(model_JuMP)</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="fu">termination_status</span>(model_JuMP)</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>x_OSQP <span class="op">=</span> <span class="fu">value</span>.(x)</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Now solve the problem using COSMO and show the results</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="fu">set_optimizer</span>(model_JuMP, COSMO.Optimizer)</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="fu">optimize!</span>(model_JuMP)</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="fu">termination_status</span>(model_JuMP)</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>x_COSMO <span class="op">=</span> <span class="fu">value</span>.(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</div>
-<p>Notice how the optimization problem is defined just once in the last code and then different solvers can be chosen to solve it. The code represents an instance of a so-called <em>optimization modelling language (OML)</em>, or actually its major class called <em>algebraic modelling language (AML)</em>.</p>
-<p>The key motivation for using an OML/AML is to separate the process of formulating the problem from the process of solving it (using a particular solver). Furthermore, such solver-independent problem description (called optimization model) better mimics the way we formulate these problems using a pen and a paper, making it (perhaps) a bit more convenient to write our own and read someone else’s models.</p>
-</section>
-<section id="why-not-optimization-modelling-languages" class="level2">
-<h2 class="anchored" data-anchor-id="why-not-optimization-modelling-languages">Why not optimization modelling languages?</h2>
-<p>As a matter of fact, some optimization experts even keep avoiding OML/AML altogether. For example, if a company pays for a (not really cheap) license of <a href="https://www.gurobi.com/solutions/gurobi-optimizer/">Gurobi Optimizer</a> – a powerful optimization library for (MI)LP/QP/QCQP –, it may be the case that for a particular very large-scale optimization problem their optimization specialist will have hard time to find a third-party solver of comparable performance. If then <a href="https://www.gurobi.com/documentation/current/refman/py_python_api_overview.html">its Python API</a> makes definition of optimization problems convenient too (see the code below), maybe there is little regret that such problem definitions cannot be reused with a third-party solver. The more so that since it is tailored to Gurobi solver, it will offer control over the finest details.</p>
-<div id="9da300e9" class="cell">
-<details open="" class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="bu">gurobipy</span> as gp</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="bu">numpy</span> as np</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the data for the model</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> np.<span class="fu">array</span>([[<span class="fl">4.0</span>, <span class="fl">1.0</span>], [<span class="fl">1.0</span>, <span class="fl">2.0</span>]])</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> np.<span class="fu">array</span>([<span class="fl">1.0</span>, <span class="fl">1.0</span>])</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.<span class="fu">array</span>([[<span class="fl">1.0</span>, <span class="fl">1.0</span>], [<span class="fl">1.0</span>, <span class="fl">0.0</span>], [<span class="fl">0.0</span>, <span class="fl">1.0</span>]])</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> np.<span class="fu">array</span>([<span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>])</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> np.<span class="fu">array</span>([<span class="fl">1.0</span>, <span class="fl">0.7</span>, <span class="fl">0.7</span>])</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new model</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> gp.<span class="fu">Model</span>(<span class="st">"qp"</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a vector variable</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> m.<span class="fu">addMVar</span>((<span class="fl">2</span>,))</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the objective</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>obj <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="fu">*</span>(x<span class="pp">@P@x</span> <span class="op">+</span> q<span class="pp">@x</span>)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>m.<span class="fu">setObjective</span>(obj)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the constraints</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>m.<span class="fu">addConstr</span>(A<span class="pp">@x</span> <span class="op">&gt;=</span> l, <span class="st">"c1"</span>)</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>m.<span class="fu">addConstr</span>(A<span class="pp">@x</span> <span class="op">&lt;=</span> u, <span class="st">"c2"</span>)</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the solver</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>m.<span class="fu">optimize</span>()</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> v <span class="kw">in</span> m.<span class="fu">getVars</span>()<span class="op">:</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(f<span class="st">"{v.VarName} {v.X:g}"</span>)</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f<span class="st">"Obj: {m.ObjVal:g}"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>Similar and yet different is the story of the <a href="https://www.ibm.com/products/ilog-cplex-optimization-studio/cplex-optimizer">IBM ILOG CPLEX</a>, another top-notch solvers addressing the same problems as Gurobi. They do have their own modeling language called <a href="https://www.ibm.com/docs/en/icos/22.1.1?topic=opl-optimization-programming-language">Optimization Modelling Language (OPL)</a>, but it is also only interfacing with their solver(s). We can only guess that their motivation for developing their own optimization modelling language was that at the time of its developments (in 1990s) Python was still in pre-2.0 stage and formulating optimization problems in programming languages like C/C++ or Fortran was nowhere close to being convenient. Gurobi, in turn, started in 2008, when Python was already a popular language.</p>
-</section>
-<section id="language-independent-optimization-modelling-languages" class="level2">
-<h2 class="anchored" data-anchor-id="language-independent-optimization-modelling-languages">Language-independent optimization modelling languages</h2>
-<p>Optimization/algebraic modelling languages were originally developed outside programming languages, essentially as standalone tools. Examples are <a href="https://ampl.com/learn/ampl-book/">AMPL</a>, <a href="https://www.gams.com/latest/docs/UG_MAIN.html#UG_Language_Environment">GAMS</a>, and, say, <a href="https://en.wikibooks.org/wiki/GLPK/GMPL_(MathProg)">GLPK/GMPL (MathProg)</a>. We listed these main names here since they can be bumped across (they are still actively developed), but we are not going to discuss them in our course any further. The reason is that there are now alternatives that are implemented as packages/toolboxes in programming languages such as Julia, Matlab, and Python, which offer a more fluent workflow – a user can use the same programming language to acquire the data, preprocess them, formulate the optimization problem, configure and call a solver, and finally do some postprocessing including a visualization and whatever reporting, all without leaving the language of their choice.</p>
-</section>
-<section id="optimization-modelling-in-julia" class="level2">
-<h2 class="anchored" data-anchor-id="optimization-modelling-in-julia">Optimization modelling in Julia</h2>
-<p>My obvious (personal) bias towards Julia programming language is partly due to the terrific support for optimization modelling in Julia:</p>
-<ul>
-<li><p><a href="https://jump.dev">JuMP.jl</a> not only constitutes one of the flagship packages of the Julia ecosystem but it is on par with the state of the art optimization modelling languages. Furthermore, being a free and open source software, it enjoys a vibrant community of developers and users. They even meet annually at JuMP-dev conference (<a href="https://jump.dev/meetings/jumpdev2023/">in 2023 in Boston, MA</a>).</p></li>
-<li><p><a href="https://jump.dev/Convex.jl">Convex.jl</a> is an implementation of the concept of <a href="https://fenchel.stanford.edu/home">Disciplined Convex Programming (DCP)</a> in Julia (below we also list its implementations in Matlab and Python). Even though it is now registered as a part of the JuMP.jl project, it is still a separate concept. Interesting, convenient, but it seems to be in a maintanence mode now.</p></li>
-</ul>
-<div id="3746f9c5" class="cell">
-<details open="" class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Convex</span>, <span class="bu">SCS</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the problem data and build the problem description</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> [<span class="fl">4.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">2.0</span>]</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">1.0</span>]</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">0.0</span>; <span class="fl">0.0</span> <span class="fl">1.0</span>]</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>]</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">0.7</span>, <span class="fl">0.7</span>]</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a vector variable of size n</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fu">Variable</span>(<span class="fl">2</span>)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the objective </span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>objective <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="fu">*quadform</span>(x,P) <span class="op">+</span> <span class="fu">dot</span>(q,x)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the constraints</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>constraints <span class="op">=</span> [l <span class="op">&lt;=</span> A<span class="op">*</span>x, A<span class="op">*</span>x <span class="op">&lt;=</span> u]</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the overal description of the optimization problem</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>problem <span class="op">=</span> <span class="fu">minimize</span>(objective, constraints)</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the problem</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="fu">solve!</span>(problem, SCS.Optimizer; silent_solver <span class="op">=</span> <span class="cn">true</span>)</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the status of the problem</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>problem.status <span class="co"># :Optimal, :Infeasible, :Unbounded etc.</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the optimum value</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>problem.optval</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the optimal x</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>x.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="optimization-modelling-in-matlab" class="level2">
-<h2 class="anchored" data-anchor-id="optimization-modelling-in-matlab">Optimization modelling in Matlab</h2>
-<p>Popularity of Matlab as a language and an ecosystem for control-related computations is undeniable. Therefore, let’s have a look at what is available for modelling optimization problems in Matlab:</p>
-<ul>
-<li><p><a href="https://www.mathworks.com/help/optim/index.html?s_tid=CRUX_lftnav">Optimization Toolbox for Matlab</a> is one of the commercial toolboxes produced by Matlab and Simulink creators. Since the R2017b release the toolbox supports <a href="https://www.mathworks.com/help/optim/ug/problem-based-workflow.html">Problem-based optimization workflow</a> (besides the more traditional <a href="https://www.mathworks.com/help/optim/optimization-problem-setup-solver-based.html">Solver-based optimization workflow</a> supported since the beginning), which can be regarded as a kind of an optimization/algebraic modelling language, albeit restricted to their own solvers.</p></li>
-<li><p><a href="https://yalmip.github.io">Yalmip</a> started as <em>Yet Another LMI Parser</em> quite some time ago (which reveals its control theoretic roots), but these days it serves as fairly complete algebraic modelling language (within Matlab), interfacing to perhaps any optimization solver, both commercial and free&amp;open-source. It is free and open-source. Is is still actively developed and maintained and it abounds with tutorials and examples.</p></li>
-<li><p><a href="http://cvxr.com/cvx/">CVX</a> is a Matlab counterpart of Convex.jl (or the other way around, if you like, since it has been here longer). The name stipulates that it only allows convex optimization probles (unlike Yalmip) – it follows the <a href="https://fenchel.stanford.edu/home">Disciplined Convex Programming (DCP)</a> paradigm. Unfortunately, the development seems to have stalled – the last update is from 2020.</p></li>
-</ul>
-</section>
-<section id="optimization-modelling-in-python" class="level2">
-<h2 class="anchored" data-anchor-id="optimization-modelling-in-python">Optimization modelling in Python</h2>
-<p>Python is a very popular language for scientific computing. Although it is arguable if it is actually suitable for implementation of numerical algoritms, when it comes to building optimization models, it does its job fairly well (and the numerical solvers it calls can be developed in different language). Several packages implementing OML/AML are available:</p>
-<ul>
-<li><p><a href="https://www.cvxpy.org">cvxpy</a> is yet another instantiation of <a href="https://fenchel.stanford.edu/home">Disciplined Convex Programming</a> that we alredy mention when introducing Convex.jl and CVX. And it turns out that this one exhibits the greatest momentum. The team of developers seems to be have exceeded a critical mass, hence the tools seems like a safe bet already.</p></li>
-<li><p><a href="http://www.pyomo.org">Pyomo</a> is a popular open-source optimization modelling language within Python.</p></li>
-<li><p><a href="https://github.com/APMonitor/">APMonitor</a> and <a href="https://gekko.readthedocs.io/en/latest/">GEKKO</a> are relatively young projects, primarily motivated by applications of machine learning and optimization in chemical process engineering.</p></li>
-</ul>
 
 
-</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1384,13 +1083,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./opt_theory_constrained.html" class="pagination-link" aria-label="Theory for constrained optimization">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Theory for constrained optimization</span>
+      <a href="./rocond_H_infinity_control.html" class="pagination-link" aria-label="Hinfinity-optimal control">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Hinfinity-optimal control</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./opt_theory_references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./rocond_software.html" class="pagination-link" aria-label="Software">
+        <span class="nav-page-text">Software</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1402,7 +1101,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
