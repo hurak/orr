@@ -1,0 +1,29 @@
+---
+title: "Tables as outcomes of dynamic programming"
+bibliography: 
+    - ref_optimal_control.bib
+    - ref_reinforcement_learning_and_dynamic_programming.bib
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+execute:
+    enabled: false
+    warning: false
+jupyter: julia-1.10
+---
+
+Based on what we have seen so far, it turns out that the key to solving the discrete-time optimal control problem is to find some... functions. Either the optimal cost function $J_k^\star(\bm x_k)$ or the optimal Q-factor $Q_k^\star(\bm x_k,\bm u_k)$. Once we have them, we can easily find the optimal control $\bm u_k^\star(\bm x_k)$. The question however is how to find these functions. We have seen some recursions for both of them, but it is not clear how to turn these into practical algorithms. We do it here.
+
+We are going to solve @eq-bellman_for_discrete_time_optimal_control backwards in (discrete) time at a *grid of states*. Indeed, gridding the state space is the key technique in dynamic programming, because DP assumes a finite state space. If it is not finite, we must grid it.
+
+We start with the final time $N$. We evaluate the terminal cost function $\phi(\bm x_N)$ at a grid of states, which directly yields the optimal costs $J_N^\star(\bm x_N)$. 
+
+We then proceed to the time $N-1$. Evaluating the optimal cost function $J^\star_{N-1}$ at each grid point in the state space calls for some optimization, namely 
+$$
+\min_{u_{N-1}} \left(L_{N-1}(\bm x_{N-1},\bm u_{N-1}) + J_{N}^\star(\mathbf f_{N-1}(\bm x_{N-1}, \bm u_{N-1}))\right).
+$$
+
+We save the optimal costs and the corresponding controls at the given grid points (giving two arrays of values), decrement the time to $N-2$, and repeat. All the way down to the initial time $i$.
+
+Let's summarize that as an outcome of this whole procedure we have two tables – one for the optimal cost, the other for the optimal control.

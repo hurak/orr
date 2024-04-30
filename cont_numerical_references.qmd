@@ -1,0 +1,21 @@
+---
+title: "References"
+bibliography: 
+    - ref_numerical_optimal_control.bib
+    - ref_optimal_control.bib
+    - ref_model_predictive_control.bib
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+execute:
+    enabled: false
+    warning: false
+jupyter: julia-1.10
+---
+
+The indirect approach to the continuous-time optimal control problem (OCP) formulates the necessary conditions of optimality as a two-point boundary value problem (TP-BVP), which generally requires *numerical methods*. The direct approach to the continuous-time OCP relies heavily on numerical methods too, namely the methods for solving nonlinear programs (NLP) and methods for solving ordinary differential equations (ODE). Numerical methods for both approaches share a lot of common principles and tools, and these are collectively presented in the literature as called *numerical optimal control*. A recommendable (and freely online available) introduction to these methods is [@grosNumericalOptimalControl2022]. Shorter version of this is in chapter 8 of [@rawlingsModelPredictiveControl2017], which is also available online. A more comprehensive treatment is in [@bettsPracticalMethodsOptimal2020]. 
+
+Some survey papers such as [@raoSurveyNumericalMethods2009] and [@vonstrykDirectIndirectMethods1992] can also be useful, although now primarily as historical accounts. Similarly with the classics [@kirkOptimalControlTheory2004] and [@brysonAppliedOptimalControl1975], which cover the indirect approach only. 
+
+Another name under which the numerical methods for the direct approach are presented is trajectory optimization. There are quite a few tutorials and surveys such as [@kellyIntroductionTrajectoryOptimization2017] and [@kellyTranscriptionMethodsTrajectory2017].

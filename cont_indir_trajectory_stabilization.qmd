@@ -1,0 +1,98 @@
+---
+title: "Trajectory stabilization and neigboring extremals"
+bibliography: 
+    - ref_optimal_control.bib
+    - ref_calculus_variations.bib
+    - ref_calculus_variations_optimal_control.bib
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+execute:
+    enabled: false
+    warning: false
+jupyter: julia-1.10
+---
+
+Indirect methods for optimal control reformulate the optimal control problem into a set of equtions – boundary value problems with differential and algebraic equations in the case of continuous-time systems – and by solving these (typically numerically) we obtain the optimal state and control trajectories. Practical usefullness of these is rather limited as such optimal control trajectory constitutes an open-loop control – there is certainly no need to advocate the importance of feedback in this advanced control course. 
+
+One way to introduce feedback is to regard the computed optimal state trajectory $\bm x^\star(t)$ as a reference trajectory and design a feedback controller to track this reference. To our advantage, we already have the corresponding control trajectory $\bm u^\star(t)$ too, and theferore we can formulate such reference tracking problem as a problem of regulating the deviation $\delta \bm x(t)$ of the state from its reference by means of superposing a feedback control $\delta \bm u(t)$ onto the (open-loop) optimal control. 
+
+While this problem – also known as the problem of *stabilization of a (reference) trajectory* – can be solved by basically any feedback control scheme, one elegant way is to linearize the system around the reference trajectory and formulate the problem as the LQR problem for a time-varying linear system. 
+
+::: {.callout-important}
+## Linearization around a trajectory
+Don't forget that when linearizing a nonlinear system $\dot{\bm x} = \mathbf f(\bm x,\bm u)$ around a point that is not equilibrium – and this inevitably happens when linearizing along the state trajectory $\bm x^\star(t)$ obtained from indirect approach to optimal control – the linearized system $\frac{\mathrm d}{\mathrm d t} \delta \bm x= \mathbf A(t) \delta \bm x + \mathbf B(t) \delta \bm u$ considers not only the state variables but also the control variables as increments $\delta \bm x(t)$ and $\delta \bm u(t)$ that must be added to the nominal values $\bm x^\star(t)$  and $\bm u^\star(t)$ of the state and control variables determining the operating point. That is, $\bm x(t) = \bm x^\star(t) + \delta \bm x(t)$ and $\bm u(t) = \bm u^\star(t) + \delta \bm u(t)$.
+:::
+
+Having decided on an LQR framework, we can now come up with the three matrices $\mathbf Q$, $\mathbf R$ and $\mathbf S$ that set the quadratic cost function. Once this choice is made, we can just invoke the solver for continuous-time Riccati equation with the ultimate goal of finding the time-varying state feedback gain $\mathbf K(t)$. 
+
+::: {.callout-note}
+## LQR for trajectory stabilization cab be done in discrete time
+If discrete-time feedback control is eventually desired, which it mostly is, the whole LQR design for a time-varying linear system will have to be done using just periodically sampled state and control trajectories and applying recursive formulas for the discrete-time Riccati equation and state feedback gain.
+:::
+
+The three weighting matrices $\mathbf Q$, $\mathbf R$ and $\mathbf S$, if chosen arbitrarily, are not related to the original cost function that is minimized by the optimal state and control trajectories. The matrices just parameterize a new optimal control problem. It turns out, however, that there is a clever (and insightful) way of choosing these matrices so that the trajectory stabilization problem inherits the original cost function. In other words, even when the system fails to stay on the optimal trajectory perfectly, the LQR state-feedback controller will keep minimizing the same cost function when regulating the deviation from the optimal trajectory. 
+
+Recall that using the conventional definition of Hamiltonian $H(\bm x, \bm u, \bm \lambda) = L(\bm x, \bm u) + \bm \lambda^\top \mathbf f(\bm x, \bm u)$, in which we now assume time invariance of both the system and the cost function for notational simplicity, the necessary conditions of optimality are
+$$
+\begin{aligned}
+\dot{\bm x} &= \nabla_{\bm\lambda} H(\bm x,\bm u,\boldsymbol \lambda)  = \mathbf f(\bm x, \bm u), \\
+\dot{\bm \lambda} &= -\nabla_{\bm x} H(\bm x,\bm u,\boldsymbol \lambda), \\
+\mathbf 0 &= \nabla_{\bm u} H(\bm x,\bm u,\boldsymbol \lambda),\\
+\bm x(t_\mathrm{i})&=\mathbf x_\mathrm{i},\\
+\bm x(t_\mathrm{f})&=\mathbf x_\mathrm{f} \quad \text{or}\quad \bm \lambda(t_\mathrm{f})=\nabla\phi(\bm{x}(t_\mathrm{f})), 
+\end{aligned}
+$$
+where the option on the last line is selected based on whether the state at the final time is fixed or free.
+
+::: {.callout-note}
+## The state at the final time can also be restricted by a linear equation 
+The conditions of optimality stated above correspond to one of the two standard situations, in which the state in the final time is either fixed to a single value or completely free. The conditions can also be modified to consider the more general situation, in which the state at the final time is restricted to lie on a manifold defined by an equality constraint $\psi(\bm x(t_\mathrm{f})) = 0$.
+:::
+
+Let's now consider some tiny perturbation to the initial state $\bm x(t_\mathrm{i})$ from its prescribed nominal value $\mathbf x_\mathrm{i}$. It will give rise to deviations all all the variables in the above equations from their nominal – optimal – trajectories. Assuming the deviations are small, linear model suffices to describe them. In other words, what we are now after is linearization of the above equations
+
+$$
+\begin{aligned}
+\delta \dot{\bm x} &= \nabla_{\bm x} \mathbf f \; \delta \bm x + \nabla_{\bm u} \mathbf f \; \delta \bm u, \\
+\delta \dot{\bm \lambda} &= -\nabla^2_{\bm{xx}} H \; \delta \bm x -\nabla^2_{\bm{xu}} H \; \delta \bm u -\underbrace{\nabla^2_{\bm{x\lambda}} H}_{(\nabla_{\bm x} \mathbf f)^\top} \; \delta \bm \lambda, \\
+\mathbf 0 &= \nabla^2_{\bm{ux}} H \; \delta \bm x + \nabla^2_{\bm{uu}} H \; \delta \bm u + \underbrace{\nabla^2_{\bm{u\lambda}} H}_{(\nabla_{\bm u} \mathbf f)^\top} \; \delta \bm \lambda,\\
+\delta \bm x(t_\mathrm{i}) &= \text{specified},\\
+\delta \bm \lambda(t_\mathrm{f}) &= \nabla^2_{\bm{xx}}\phi(\mathbf{x}(t_\mathrm{f}))\; \delta \bm x(t_\mathrm{f}). 
+\end{aligned}
+$${#eq-perturbed-necessary-conditions-of-optimality}
+
+::: {.callout-note}
+## Note on notation
+Let's recall for convenience here that since $\mathbf f(\bm x, \bm u)$ is a vector function of a vector argument(s), $\nabla_{\bm x} \mathbf f$ is a matrix whose columns are gradients of individual components of $\mathbf f$. Equivalently, $(\nabla_{\bm x} \mathbf f)^\top$ stands for the Jacobian of the function $\mathbf f$ with respect to $\bm x$. Similarly, $\nabla_{\bm{xx}} H$ is the Hessian of $\mathbf f$ with respect to $\bm x$. That is, it is a matrix composed of second derivatives. It is a symmetric matrix, hence no need to transpose it. Finally, the terms $\nabla_{\bm{ux}} H$ and $\nabla_{\bm{xu}} H$ are matrices containing mixed second derivatives. 
+:::
+
+With hindsight we relabel the individual terms in @eq-perturbed-necessary-conditions-of-optimality as 
+$$
+\begin{aligned}
+\mathbf A(t) &\coloneqq (\nabla_{\bm x} \mathbf f)^\top\\
+\mathbf B(t) &\coloneqq (\nabla_{\bm u} \mathbf f)^\top\\
+\mathbf Q(t) &\coloneqq \nabla^2_{\bm{xx}} H\\
+\mathbf R(t) &\coloneqq \nabla^2_{\bm{uu}} H\\
+\mathbf N(t) &\coloneqq \nabla^2_{\bm{xu}} H\\
+\mathbf S_\mathrm{f} &\coloneqq \nabla^2_{\bm{xx}}\phi(\mathbf{x}(t_\mathrm{f})).
+\end{aligned}
+$$
+
+Let's rewrite the perturbed necessary conditions of optimality using these new symbols
+
+$$
+\begin{aligned}
+\delta \dot{\bm x} &= \mathbf A(t) \; \delta \bm x + \mathbf B(t) \; \delta \bm u, \\
+\delta \dot{\bm \lambda} &= - \mathbf Q(t) \; \delta \bm x - \mathbf N(t) \; \delta \bm u - \mathbf A^\top (t)\; \delta \bm \lambda, \\
+\mathbf 0 &= \mathbf N(t) \; \delta \bm x + \mathbf R(t) \; \delta \bm u + \mathbf B^\top (t) \; \delta \bm \lambda,\\
+\delta \bm x(t_\mathrm{i}) &= \text{specified},\\
+\delta \bm \lambda(t_\mathrm{f}) &= \mathbf S_\mathrm{f}    \; \delta \bm x(t_\mathrm{f}). 
+\end{aligned}
+$$
+
+Assuming that $\nabla^2_{\bm{uu}} H$ is nonsingular, which can solve the third equation for $\bm u$
+$$
+\bm u = -\nabla^2_{\bm{uu}} H^{-1} \left( \nabla^2_{\bm{ux}} H \; \delta \bm x + (\nabla_{\bm u} \mathbf f)^\top \; \delta \bm \lambda\right ).
+$$

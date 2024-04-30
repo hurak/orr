@@ -1,7 +1,8 @@
 ---
-title: "Optimal control via dynamic programming"
+title: "Dynamic programming and discrete-time optimal control"
 bibliography: 
     - ref_optimal_control.bib
+    - ref_reinforcement_learning_and_dynamic_programming.bib
 format:
     html:
         html-math-method: katex
@@ -15,6 +16,8 @@ jupyter: julia-1.10
 In the previous two chapters we explained direct and indirect approaches to discrete-time optimal control. While the former conveniently allows incorporating almost arbitrary constraints, it only provides a control trajectory (a finite sequence of values of the control variable); if feedback is needed, the optimization must be performed in every sampling period (thus implementing the concept of receding horizon or model predictive control, MPC). The latter, in contrast, can lead to a (state) feedback control law, but this only happens in special cases such as a regulation of a linear system minimizing a quadratic cost (LQR) while assuming no bound constraints on the the control or state variables; in the general case it leads to a two-point boundary value problem, which can only be solved numerically for trajectories.
 
 In this chapter we present yet another approach — dynamic programming DP. It also allows imposing constraints (in fact, even constraints such as integrality of variables, which are not compatible with our derivative-based optimization toolset exploited so far), and yet it directly leads to feedback controllers. 
+
+{{< video https://www.youtube.com/embed/7qRCZ9_wfYI?si=hLh9IPUoSin2VXoY >}}
 
 While in the case of linear systems with a quadratic cost function, dynamic programming provides another route to the theoretical results that we already know — Riccati equation based solution to the LQR problem —, in the the case of general nonlinear dynamical systems with general cost functions, the feedback controllers come in the form of look-up tables. This format of a feedback controller gives some hint about disadvantages of DP, namely, both computation and then the use of these look-up tables do not scale well with the dimension of the state space (aka curse of dimensionality). Various approximation schemes exist — one promising branch is known as reinforcement learning. 
 
@@ -129,7 +132,7 @@ $$
 J_i^N\left(\bm x_i, \bm u_i, \bm u_{i+1}, \ldots, \bm u_{N-1}\right) = \phi(\bm x_N,N) + \sum_{k=i}^{N-1}L_k(\bm x_k,\bm u_k).
 $$
 
-Some comments on the notation are in order. Indeed, a well tuned and systematically used notation can help here a lot. 
+Before we proceed, some comments on the notation are in order. Indeed, a well tuned and systematically used notation is instrumental in dynamic programming. 
 
 ::: {.callout-note}
 ## We omit the final time from the notation for the cost function
@@ -138,51 +141,75 @@ While the cost function does depend on the final time too, in most if not all ou
 
 ::: {.callout-note}
 ## We omit the state trajectory from the notation for the cost function and leave just the initial state
-The cost function is clearly a function of the full sequence $\bm x_i, \bm x_{i+1},\ldots, \bm x_N$ of the state vectors too. In the previous chapters we handled it systematically (either by considering them as optimization variables in the simultaneous direct approach or by introducing Lagrange multipliers in the indirect approache). But here we want to emphasize the fact that starting with $\mathbf x_{i+1}$, the whole state trajectory is uniquelly determined by the initial state $\mathbf x_i$ and the corresponding control trajectory $\bm u_i, \bm u_{i+1},\ldots, \bm u_{N-1}$. Therefore, we write the cost function as a function of the initial state, the initial time (we already agreed above not to emphasize the final time), and the sequence of controls.
+The cost function is clearly a function of the full sequence $\bm x_i, \bm x_{i+1},\ldots, \bm x_N$ of the state vectors too. In the previous chapters we handled it systematically (either by considering them as optimization variables in the simultaneous direct approach or by introducing Lagrange multipliers in the indirect approache). But here we want to emphasize the fact that starting with $\bm x_{i+1}$, the whole state trajectory is uniquelly determined by the initial state $\bm x_i$ and the corresponding control trajectory $\bm u_i, \bm u_{i+1},\ldots, \bm u_{N-1}$. Therefore, we write the cost function as a function of the initial state, the initial time (we already agreed above not to emphasize the final time), and the sequence of controls.
 :::
 
 ::: {.callout-note}
-The dependence on the discrete time is reflected by the lower indices: not only in $\bm x_k$ and $\bm u_k$ but also in $\mathbf f_k()$, $L_k()$ and $J_k()$. We could perhaps write these as $\mathbf f(\cdot,\cdot,k)$, $L(\cdot,\cdot,k)$ and $J(\cdot,\cdot,k)$ to better indicate that $k$ is really an argument for these functions, but we prefer making it compatible with the way we indicate the time dependence of $\mathbf x_k$ and $\mathbf u_k$.
+# We use the lower index to display dependence on time
+The dependence on the discrete time is reflected by the lower indices: not only in $\bm x_k$ and $\bm u_k$ but also in $\mathbf f_k()$, $L_k()$ and $J_k()$. We could perhaps write these as $\mathbf f(\cdot,\cdot,k)$, $L(\cdot,\cdot,k)$ and $J(\cdot,\cdot,k)$ to better indicate that $k$ is really an argument for these functions, but we prefer making it compatible with the way we indicate the time dependence of $\bm x_k$ and $\bm u_k$.
 :::
 
 Having introduced the cost function parameterized by the initial state, initial time and the full sequence of controls, we now introduce the *optimal cost function*
 
 $$
 \boxed{ 
-    J^\star_i(\bm x_i) = \min_{\bm u_i,\ldots, \bm u_{N-1}} J_i\left(\mathbf x_i, \bm u_i, \bm u_{i+1}, \ldots, \bm u_{N-1}\right).}
-$$
+    J^\star_i(\bm x_i) = \min_{\bm u_i,\ldots, \bm u_{N-1}} J_i\left(\bm x_i, \bm u_i, \bm u_{i+1}, \ldots, \bm u_{N-1}\right).}
+$${#eq-optimal_cost_function}
 
+The sequence of controls in the above minimization may be subject to some constraints, but we do not indicate them here for the sake of notational simplicity.
 
 ::: {.callout-important}
 ## Difference between the $J_i$ and $J^\star_i$ functions
 Understanding the difference is crucial. While the cost function $J_i$ depends on the (initial) state, the (initial) time and the sequence of controls applied over the whole interval, the optimal cost function $J^\star_i$ only depends on the (initial) state and the (initial) time.
 :::
 
-Assume now that we have already found an optimal control sequence from any given state $\bm x_{k+1}$ at time $k+1$ on, i.e., we already have $\bm u_{k+1},\bm u_{k+2},\ldots, \bm u_{N-1}$ yielding the optimal cost $J_{k+1}^\star(\bm x_{k+1})$. Don't ask me where we get such optimal sequence, right now we just assume we have it. We will soon show how to actually find it.
+Assume now that we can find an optimal control sequence from any given state $\bm x_{k+1}$ at time $k+1$ on, i.e., we can find $\bm u_{k+1}^\star,\bm u_{k+2}^\star,\ldots, \bm u_{N-1}^\star$ yielding the optimal cost $J_{k+1}^\star(\bm x_{k+1})$. We will soon show how to actually find it, but for the time being we just assume we can have it. We now show how it can be used to find the optimal cost $J_k^\star(\bm x_k)$ at state $\bm x_k$ and time $k$.
 
-Now, if we apply arbitrary (not necessarily optimal) control $\bm u_k$ at a given state $\bm x_{k}$ at time $k$, the cost is
+Let's now consider the following strategy: with the system at state $\bm x_k$ and time $k$ we apply some control $\bm u_k$, not necessarily an optimal one, which brings the system to the state $\bm x_{k+1}$ in the next time $k+1$. But from then on we use the control sequence $\bm u_{k+1}^\star,\bm u_{k+2}^\star,\ldots, \bm u_{N-1}^\star$ that is optimal from $\bm x_{k+1}$. The corresponding cost is
 $$
-J_k(\bm x_k,\bm u_k, {\color{blue}\bm u_{k+1}, \ldots, \bm u_{N-1}}) = L_k(\bm x_k,\bm u_k) + {\color{blue}J_{k+1}^\star(\bm x_{k+1})}.
-$$
+L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1}).
+$${#eq-cost_of_the_all_but_one_optimal_controls}
 
-I highlighted the (sub)sequence of controls on the left hand side starting with $\mathbf u_{k+1}$ to emphasize that these were already fixed by the assumed availability of the optimal cost function $J^*_{k+1}$.
-
-According to Bellman, the optimal cost from time $k$ on (the cost to go) is
+Bellman's principle of optimality states that if we optimize the above expression over $\bm u_k$, we get the optimal cost $J_k^\star(\bm x_k)$ at time $k$
 $$
-\boxed{J_k^\star(\mathbf x_k) = \min_{\mathbf u_k}\left(L_k(\mathbf x_k,\mathbf u_k) + J_{k+1}^\star(\mathbf x_{k+1})\right).}
+\boxed{J_k^\star(\bm x_k) = \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1})\right).}
 $${#eq-bellman_for_discrete_time_optimal_control}
 
-Hence, at a given state $\bm x_{k}$ and time $k$, the optimization is performed over only one control $\bm u_k$ and not the whole sequence! What a simplification! 
+Hence, at a given state $\bm x_{k}$ and time $k$, the optimization is performed over only one (possibly vector) control $\bm u_k$ and not the whole trajectory as the definition of the optimal cost in @eq-optimal_cost_function suggests! What a simplification!
 
-What we have got in @eq-bellman_for_discrete_time_optimal_control is a recursion scheme. Is initialized at $k=N-1$ (because $k+1=N$) by invoking $J^*_N(\bm x_N) = \phi(\bm x_N)$ and it proceeds backwards in time. 
-
-Let's emphasize here that the minimization needs to be performed over the whole sum $L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1})$ because $\bm x_{k+1}$ is a function of $\bm u_k$ (recall that $\bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k)$). We could have written @eq-bellman_for_discrete_time_optimal_control perhaps as
+::: {.callout-important}
+The minimization needs to be performed over the whole sum $L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1})$, because $\bm x_{k+1}$ is a function of $\bm u_k$ (recall that $\bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k)$). We can also write @eq-bellman_for_discrete_time_optimal_control as
 $$
-\boxed{J_k^\star(\bm x_k) = \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\mathbf f_k(\bm x_k,\bm u_k))\right).}
+J_k^\star(\bm x_k) = \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\mathbf f_k(\bm x_k,\bm u_k))\right),
+$$
+which makes it more apparent.
+:::
+
+Once we have the optimal cost function $J^\star_{k}$, the optimal control $\bm u_k^\star(x_k)$ at a given time $k$ and state $\bm x_k$ is obtained by 
+$$
+\boxed{
+    \bm u_k^\star(\bm x_k) = \arg \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\mathbf f_k(\bm x_k,\bm u_k))\right).}
 $$
 
-We will now show how to actually apply this result to solve an optimal control problem.
+### Alternative formulation of dynamic programming using Q-factors
 
-## Dynamic programming as a numerical algorithm for solving the discrete-time optimal control problem
+The cost function in @eq-cost_of_the_all_but_one_optimal_controls is sometimes called *Q-factor* and we denote it $Q_k(\bm x_k,\bm u_k)$. We write its definition here for convenience
+$$
+Q^\star_k(\bm x_k,\bm u_k) = L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1}).
+$$
 
-... to be continued ...
+The optimal cost function $J_k^\star(\bm x_k)$ can be recovered from the optimal Q-factor $Q_k^\star(\bm x_k,\bm u_k)$ by taking the minimum over $\bm u_k$
+$$
+J_k^\star(\bm x_k) = \min_{\bm u_k} Q_k^\star(\bm x_k,\bm u_k).
+$$
+
+Bellman's principle of optimality can be then expressed using the optimal Q-factor as
+$$
+\boxed{Q_k^\star(\bm x_k,\bm u_k) = L_k(\bm x_k,\bm u_k) + \min_{\bm u_{k+1}} Q_{k+1}^\star(\bm x_{k+1},\bm u_{k+1})}.
+$$
+
+Optimal control is then obtained from the optimal Q-factor as the minimizing control
+$$
+\boxed{\bm u_k^\star(\bm x_k) = \arg \min_{\bm u_k} Q_k^\star(\bm x_k,\bm u_k).}
+$$
+

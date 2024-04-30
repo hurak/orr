@@ -1,0 +1,183 @@
+---
+title: "Robustness analysis for unstructured uncertainty"
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+execute:
+    enabled: false
+jupyter: julia-1.10
+---
+
+When we introduced the concept of robustness, we only vaguely hinted that it is always related to some property of interest. Now comes the time to specify these two properties:
+
+::: {#def-robust-stability}
+## Robust stability
+Guaranteed stability of the closed feedback loop with a given controller for all admissible (=considered apriori) deviations of the model from the reality.
+:::
+
+::: {#def-robust-performance}
+## Robust performance
+Robustness of some performance characteristics such as steady-state regulation error, attenuation of some specified disturbance, insensitivity to measurement noise, fast response, ....
+:::
+
+### Internal stability
+
+Before we start discussing robust stability, we need to discuss one fine issue related to stability of a nominal system. We do it through the following example.
+
+::: {#exm-internal-stability}
+## Internal stability
+Consider the following feedback system with a nominal plant $G(s)$ and a nominal controller $K(s)$.
+
+![](figures/internal_stability.png){#fig-internal-stability width=60%}
+
+The question is: is this closed-loop system stable? We determine stability by looking at the denominator of *a* closed-loop transfer function. But which one? There are several. Perhaps the most immediate one is the transfer function from the reference $r$ to the plant output $y$. With the open-loop transfer function $L(s) = G(s)K(s) = \frac{s-1}{s+1} \frac{k(s+1)}{s(s-1)} = \frac{k}{s}$, the closed-loop transfer function is
+$$
+T(s) = \frac{\frac{k}{s}}{1+\frac{k}{s}} = \frac{k}{s+k},  
+$$
+which is perfectly stable. But note that for practical purposes, all possible closed-loop transfer functions must be stable. How about the one from the output disturbance $d$ to the plant output $y$? 
+$$
+S(s) = \frac{1}{1+\frac{k}{s}} = \frac{s}{s+k},
+$$
+which is stable too. Isn't this a signal that we can stop worrying? Not yet. Consider now the closed-loop transfer function from the reference $r$ to the control $u$. The closed-loop transfer function is
+$$
+K(s)S(s) = \frac{\frac{k(s+1)}{s(s-1)}}{1+\frac{k}{s}} = \frac{k(s+1)}{{\color{red}(s-1)}(s+k)}.
+$$
+
+Oops! This closed-loop transfer function is not stable. Obviously the culprit here is our cancelling the zero in the RHP with an unstable pole in the controller. But let's emphasize that the trouble is not in imperfectness of this cancellation due to numerical errors. The trouble is in the very cancelling the zero in the RHP by the controller. Identical problem would arise if an unstable pole of the plant is cancelled by the RHP zero of the controller as we can see by modifying the assignment accordingly. 
+:::
+
+The example taught (or perhaps reminded) us that in order to guarantee stability of *all* closed-loop transfer functions, no cancellation of poles and zeros in the right half plane is allowed. The resulting closed-loop system is then called *internally stable*. Checking just (arbitrary) one closed-loop transfer function for stability is then enough to conclude that all of them are stable too.
+
+
+### Robust stability for a multiplicative uncertainty
+
+We consider a feedback system with a plant $G(s)$ and a controller $K(s)$, where the uncertainty in the plant modelled as multiplicative uncertainty, that is, $G(s) = (1+W(s)\Delta(s))\,G_0(s)$.
+
+The technique for analyzing closed-loop stability is based on Nyquist criterion. Instead of analyzing the Nyquist plot for the nominal plant $G_0(s)$, we analyze the Nyquist plot for the uncertain plant $G(s)$. The corresponding open-loop transfer function is 
+$$
+L(s) = G(s)K(s) = (1+W(s)\Delta(s))\,G_0(s)K(s) = L_0(s) + W(s)L_0(s)\Delta(s).
+$$ 
+
+When trying to figure out the conditions, under which this family of Nyquist curves avoids the point -1, it is useful to interpret the last equation at a given frequency $\omega$ as a disc with the center at $L_0(j\omega)$ and the radius $W(j\omega)L_0(j\omega)$. To see this, note that $\Delta(j\omega)$ represents a complex number with a magnitude up to one, and with an arbitrary angle. 
+
+![Robust stability for multiplicative uncertainty](figures/nyquist_robust_stability.png){#fig-robust-stability width=50%}
+
+The geometric formulation of the condition is then that the distance from -1 to the nominal Nyquist plot of $L_0(j\omega)$ is greater than the radius $W(j\omega)L_0(j\omega)$ of the disc centered at the nominal Nyquist curve With the distance from the point -1 to the nominal Nyquist plot of $L_0(s)$ evaluated at a particular frequency $\omega$ a $|-1-L_0(j\omega)| = |1+L_0(j\omega)|$, the condition can be written as
+
+$$
+|W(j\omega)L_0(j\omega)| < |1+L_0(j\omega)|, \;\forall \omega.
+$$
+
+Dividing both sides by $1+L_0(j\omega)$ we get
+$$
+\frac{W(j\omega)L_0(j\omega)}{1+L_0(j\omega)} < 1, \;\forall \omega.
+$$
+
+But recalling the definition of the *complementary sensitivity function*, and dividing both sides by $W$, we can rewrite the condition as 
+$$\boxed
+{|T_0(j\omega)| < 1/|W(j\omega)|, \;\; \forall \omega.}
+$$
+
+This condition has clear interpretation in terms of the magnitude of the complementary sensitivity function – it must be smaller than the reciprocal of the magnitude of the uncertainty weight at all frequencies. 
+
+Finally, we can also invoke the definition of the $\mathcal H_\infty$ norm and reformulate the condition as
+$$\boxed
+{\|WT\|_{\infty}< 1.}
+$$
+
+To appreciate usefulness of the this format of the robust stability condition beyond mere notational compactness, we mention that $\mathcal H_\infty$ norm of an LTI system can be reliably computed. Robust stability can then be then checked by computing a single number. 
+
+In fact, it is even better than that – there are methods for computing a feedback controller that minimizise the $\mathcal H_\infty$ norm of a specified closed-loop transfer function, which suggests an optimization-based approach to design of robustly stabilizing controllers. We are going to build on this in the next chapter. But let's stick to the analysis for now.
+
+### Robust stability for an LFT – small gain theorem
+
+We consider the upper LFT as in @fig-upper-LFT-with-blocks. 
+
+![Upper LFT with the $\mathbf N$ term corresponding to the nominal closed-loop system structured into blocks](figures/upper_LFT_with_blocks.png){#fig-upper-LFT-with-blocks width=30%}
+
+The term corresponding to the nominal closed-loop system is structured into blocks. It is only the $N_{11}$ block that captures the interaction with the uncertainty in the model. For convenience we rename this block as
+$$
+M \coloneqq N_{11}.
+$$
+
+The open-loop transfer function is then $M \Delta$. Following the same Nyquist criterion based reasoning as before, that is, asking for the conditions under which this open-loop transfer function does not touch the point -1, while the $\Delta$ term can introduce an arbitrary phase, we arrive at the robust stability condition for the LFT as 
+$$\boxed
+{|M(j\omega)|<1,\;\;\forall \omega.}
+$$
+
+Once again, invoking the definition of the $\mathcal H_\infty$ norm, we can rewrite the condition compactly as
+$$\boxed
+{\|M\|_{\infty}<1.}
+$$
+
+Once again, the formulation as an inequality over all frequencies can be useful for visualization and interpretation, while the inequality with the $\mathcal H_\infty$ norm can be used for computation and optimization. 
+
+This condition of robust stability belongs to the most fundamental results in control theory. It is known as the *small gain theorem*.
+
+::: {.callout-note}
+## Small gain theorem works for MIMO too 
+Small gain theorem works for a MIMO uncertainty $\boldsymbol \Delta$ and a block $\mathbf N_{11}$ (or $\mathbf M$) too
+$$
+\|\mathbf M\|_{\infty}<1.
+$$
+
+But we discuss in the next section that it is typically too conservative as the $\boldsymbol \Delta$ block has typically some structure (block diagonal) and it should be exploited. More on this in the section dedicated to structured uncertainty.
+:::
+
+### Nominal performance
+
+Having discussed stability (and its robustness), it is now time to turn to performance (and its robustness). Performance can mean difference things for different people, and it can be specified in a number of ways, but we would like to formulate performance requirements in the same frequency domain setting as we did for (robust) stability. Namely, we would like to specify the performance requirements in terms of the frequency response of some closed-loop transfer function. The sensitivity function seems to be a natural choice for this purpose. It turns out that by imposing upper bound constraints on $|S(\omega)|$ (actually $|S_0(\omega)|$ as we now focus on the nominal case with no uncertainty) we can specify a number of performance requirements:
+
+- Up to which frequency the feedback controller attenuates the disturbance, that is, the bandwidth $\omega_\mathrm{BW}$ of the system.
+- How much the feedback controller attenuates the disturbances over the bandwidth.
+- How does it behave at very low frequencies, that is, how well it regulates the steady-state error.
+- What is the maximum amplification of the disturbance, that is, the resonance peak.
+
+These four types of performance requirements can be pointed at in @fig-performance-through-sensitivity-function below.
+
+![Performance specifications through the shape of the magnitude frequency response of the sensitivity function](figures/performance_through_sensitivity_function.png){#fig-performance-through-sensitivity-function width=50%}
+
+But these requirements can also be compactly expressed throug the performance weighting filter $W_\mathrm{p}(s)$ as
+$$\boxed
+{|S_0(j\omega)| < 1/|W_\mathrm{p}(j\omega)|,\;\;\forall \omega,}
+$${#eq-nominal-performance-frequencywise}
+
+where $S_0 = \frac{1}{1+L_0}$ is the sensitivity function of the nominal closed-loop system.
+which can again be compactly written as
+$$\boxed
+{\|W_\mathrm{p}S_0\|_{\infty}<1.}
+$$
+
+It lends some insight if we visualize this condition in the complex plane. First, recall that $S_0 = \frac{1}{1+L_0}$. @eq-nominal-performance-frequencywise then translates to
+$$
+|W_\mathrm{p}(j\omega)|<|1+L_0(j\omega)|\;\;\forall \omega,
+$$
+which can be visualized as in
+
+![Nominal performance condition](figures/nyquist_nominal_performance.png){#fig-nyquist-nominal-performance width=50%}
+
+### Robust performance for a multiplicative uncertainty
+
+So far we have the condition of robust stability and the condition of nominal performance. Simultaneous satisfaction of both gives... just robust stability and nominal performance. Robust performance obviously needs a stricter condition.
+
+![Robust performance condition](figures/nyquist_robust_performance.png){#fig-nyquist-robust-performance width=50%}
+
+$$
+\boxed{
+|W_\mathrm{p}(j\omega)S_0(j\omega)| + |W(j\omega)T_0(j\omega)| < 1\;\;\forall \omega.}
+$$
+
+In the SISO case, this is equivalent to
+$$\boxed
+{\left\|
+\begin{bmatrix}
+W_\mathrm{p}S_0\\
+WT_0
+\end{bmatrix}
+\right\|_{\infty}
+<\frac{1}{\sqrt{2}},}
+$$
+where the augmented closed-loop system $\begin{bmatrix} W_\mathrm{p}S\\ WT_0 \end{bmatrix}$ is called *mixed sensitivity function*.
+
+In the MIMO case we do not have a useful upper bound, but at least we have received a hint that it may be useful to minimize the $\mathcal H_\infty$ norm of the mixed sensitivity function. This observation will directly lead to a control design method.

@@ -1,0 +1,24 @@
+---
+title: "References"
+bibliography:
+    - ref_control_theory_general.bib
+    - ref_robust_control.bib
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+execute:
+    enabled: false
+jupyter: julia-1.10
+---
+
+Even when restricted to control systems, the concept of robustness is quite broad and can be approached from many different angles. In our course we are restricting the focus to the approaches formulated in frequency domain. The main reference for this part of the course is the book [@skogestadMultivariableFeedbackControl2005]. The concepts and techniques introduced in our lecture are covered in Chapters 7 and 8 (up to 8.5) of the book. What we typically do not cover in the lecture is the topic of structured uncertainties and their analysis using structured singular value (SSV, 𝜇). These are treated in the section 8.6 through 8.11 of the book. Although the book is not freely available online (only the first three pages are downloadable on the authors' web page), it is available in a decent number of copies in [the university library](https://aleph.cvut.cz/F?func=direct&doc_number=000664179&local_base=DUPL&format=999). 
+
+::: {.callout-warning}
+## Get the second edition of Skogestad's book
+In case you are interested in getting the book in one way or another (perhaps even by purchasing it), make sure you get the second edition published 2005. The book contains some useful snippets of Matlab code and the first edition relies on some ancient version of Matlab toolboxes, which makes it useless these days.
+:::
+
+The topic of modeling uncertainty in frequency domain using weighting filters plugged into additive or multiplicative structures is fairly classical now and as such can be found in numerous textbooks on robust control such as [@doyleFeedbackControlTheory2009],  [@zhouRobustOptimalControl1995], [@dullerudCourseRobustControl2000], [@sanchez-penaRobustSystemsTheory1998]. Although these are fine texts, frankly speaking they offer nearly no guidance for applying the highly advanced concepts to practical problems – they mostly focus on building up the theoretical framework. In this regard, Skogestad's book is truly unique. 
+
+There are some newer texts that appear to be a bit more on the application side such as [@lavretskyRobustAdaptiveControl2024], [@yedavalliRobustControlUncertain2014] or [@guRobustControlDesign2013], but I am not familiar them, to be honest. 

@@ -1,0 +1,96 @@
+---
+title: "Numerical methods for direct approach"
+bibliography: 
+    - ref_numerical_optimal_control.bib
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+execute:
+    enabled: false
+    warning: false
+jupyter: julia-1.10
+---
+
+We have already seen that direct methods for discrete-time optimal control problems essentially just regroup and reshape the problem data so that a nonlinear programming solver can accept them. In order to follow the same approach with continous-time optimal control problems, some kind of discretization is inevitable in order to formulate a nonlinear program. Depending of what is discretized and how, several groups of methods can be identified
+
+- direct shooting and direct multiple shooting,
+- direct transcription (aka direct discretization),
+- direct collocation.
+
+The core principles behind the methods are identical to those discussed in the previous section on numerical methods for indirect approaches, but the adjective "direct" suggests that there must be some modifications.
+
+## Direct shooting methods
+
+In contrast with the application of shooting methods to the TP-BVP originating from the indirect approach, here the variables through whose values we aim the fictitious cannon are not the initial co-state vector but the (possibly long) vector parameterizing the whole control trajectory.
+
+In the simplest – and fairly practical – case of a piecewise contstant control trajectory, which is motivated by the eventual discrete-time implementation using a zero-order hold (ZOH), the control trajectory is parameterized just by the sequence of values $u_0, u_1, \ldots, u_{N-1}$.
+
+![Direct shooting – only the control trajectory is discretized and the parameters of this discretization serve as optimization variables](figures/direct_shooting.png){width=80% #fig-direct-shooting}
+
+The state trajectory $x(t)$ corresponding to the fixed initial state $\mathrm x_\mathrm{i}$ and the sequence of controls is obtained by using some IVP ODE numerical solver. 
+
+For the chosen control trajectory and the simulated state trajectory, the cost function $J(u(\cdot);x_\mathrm{i}) = \phi(x(t_\mathrm{f}),t_\mathrm{f}) + \int L(x,u) \mathrm d t$ is then evaluated. This can also only be done numerically, typically using methods for numerical integration.
+
+Once the cost function is evaluated, numerical optimization solver is used to update the vector parameterizing the control trajectory so that the cost is reduced. For the new control trajectory, the state response is simulated, ... and so on.
+
+Since optimization is only done over the optimization variables that parameterize the control trajectory, the method resembles the sequential method of the direct approach to discrete-time optimal control. 
+
+## Direct multiple shooting methods
+
+...
+
+## Direct transcription methods
+
+In contrast with the direct shooting methods, here both the control and state trajectories are discretized. There is then no need for a numerical solver for IVP ODE.
+
+![Direct transcription/discretization – both the control and state trajectories are discretized and the resulting vectors of parameterers of this discretization serve as optimization variables](figures/direct_transcription.png){width=80% #fig-direct-transcription}
+
+The optimization is then done over the optimization variables that parameterize both the control trajectory and the state trajectory. In this regard the methods resemble the simultaneous method of the direct approach to discrete-time optimal control.
+
+## Direct collocation methods
+
+Similarly as in the direct transcription methods, both the control and state trajectories are discretized and the parameterization of this discretization enters the optimization. 
+
+But here it is not just the values of the state and the control variables at the discretization points that are the optimization variables, but rather the coefficients of the polynomials that approximate the corresponding variables at the intermediate times between the discretization points. 
+
+![Direct collocation – both the control and state trajectories are approximated by piecewise polynomials and parameters of these polynomials serve as optimization variables](figures/direct_collocation.png){width=80% #fig-direct-collocation}
+
+However, similarly as we have already seen while discussing the collocation methods for the indirect approach, every direct collocation methods is equivalent to some direct transcription method. For example, collocation with a quadratic polynomial and the collocation points at the beginning and end of the interval is equivalent to the implicit trapezoidal rule. Some people even say that the implicit trapezoidal method *is* a collocation method.
+
+## Minimum‐time optimal control in direct approach
+
+While the indirect approach to optimal control allows for relaxing the final time $t_\mathrm{f}$ (and possibly including it in the cost function), the direct approach does not seem to support it. The final time has to be finite and constant.
+
+Here we show one way to turn the final time is $t_\mathrm{f}$ into an optimization variable. We achieve it by augmenting the state equations with a new variable... guess what... $t_\mathrm{f}$ accompanied with the corresponding state equation $\dot t_\mathrm{f} = 0$.
+
+We now introduce a new normalized time variable $\tau\in [0,1]$ such that
+$$
+  t = \tau t_\mathrm{f}.
+$$ 
+
+The differentials of time then relate correspondingly
+$$
+  \mathrm{d} t = t_\mathrm{f}\mathrm{d}\tau.
+$$ 
+
+The original state equation $\frac{\mathrm{d}x}{\mathrm{d}t} = f(x)$ then modifies to 
+$$\boxed{
+  \frac{\mathrm{d}x}{\mathrm{d}\tau} = t_\mathrm{f} f(x).}
+$$ 
+
+Strictly speaking this should be $\frac{\mathrm{d}\hat x}{\mathrm{d}\tau} = t_\mathrm{f} f(\hat x)$, reflecting that $x(t) = x(t_\mathrm{r} \tau) = \hat x(\tau)$ . But the abuse of notation is perhaps acceptable.
+
+The cost function will then include a term penalizing $t_\mathrm{f}$. Or perhaps the whole cost function is just $t_\mathrm{f}$ .Or perhaps the final time does not even have to be penalized at all, it is just an optimization variable, it just adds a degree of freedom to the optimal control problem. Of course, in the latter case this is no longer a minimum-time problem, just a free-final time problem.
+
+In direct transcription methods for optimal control, the number of discretization/integration (sub)intervals is fixed and not subject to optimization, otherwise the resulting NLP would have a varying size for a varying final time, which is not convenient. Instead, the length of the integration interval, or the discretization/sampling interval is varied
+$$hN = t_\mathrm{f}.$$ 
+
+Recall that all (single-step) discretization methods can be interpreted as an approximate computation of the definite integral in
+$$x_{k+1} = x_k + \int_{t_k}^{t_{k+1}} f(x(t),t)\mathrm{d}t,$$ 
+which in s-stage Runge-Kutta methods with a fixed time step h always looks like
+$$x_{k+1} = x_k + h \sum_{j=1}^s b_{j} f_{kj}.$$ 
+
+Since the length of the integration interval $h$ is now an optimization variable, even a problem that is originally linear is now turned into a nonlinear one. Furthermore, we can see consistency between
+$$x_{k+1} = x_k + \frac{t_\mathrm{f}}{N} \sum_{j=1}^s b_{j} f_{kj}$$ 
+and the above result for the continuous-time problem that does not consider discretization.
