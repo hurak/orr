@@ -749,12 +749,13 @@ K(s)S(s) = \frac{\frac{k(s+1)}{s(s-1)}}{1+\frac{k}{s}} = \frac{k(s+1)}{{\color{r
 L(s) = G(s)K(s) = (1+W(s)\Delta(s))\,G_0(s)K(s) = L_0(s) + W(s)L_0(s)\Delta(s).
 </span></p>
 <p>When trying to figure out the conditions, under which this family of Nyquist curves avoids the point -1, it is useful to interpret the last equation at a given frequency <span class="math inline">\omega</span> as a disc with the center at <span class="math inline">L_0(j\omega)</span> and the radius <span class="math inline">W(j\omega)L_0(j\omega)</span>. To see this, note that <span class="math inline">\Delta(j\omega)</span> represents a complex number with a magnitude up to one, and with an arbitrary angle.</p>
-<div id="fig-robust-stability" class="quarto-figure quarto-figure-center quarto-float anchored" width="50%">
+<div id="fig-robust-stability" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-robust-stability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/nyquist_robust_stability.png" id="fig-robust-stability" class="img-fluid figure-img" style="width:50.0%">
+<img src="figures/nyquist_robust_stability.png" class="img-fluid figure-img" style="width:50.0%">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-robust-stability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-robust-stability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Robust stability for multiplicative uncertainty
 </figcaption>
 </figure>
 </div>
@@ -818,29 +819,70 @@ Small gain theorem works for MIMO too
 </section>
 <section id="nominal-performance" class="level3">
 <h3 class="anchored" data-anchor-id="nominal-performance">Nominal performance</h3>
-<p>Having discussed stability (and its robustness), it is now time to turn to performance (and its robustness). Performance can mean difference things for different people, and it can be specified in a number of ways, but we would like to formulate performance requirements in the same frequency domain setting as we did for (robust) stability. Namely, we would like to specify the performance requirements in terms of the frequency response of some closed-loop transfer function. The sensitivity function seems to be a natural choice for this purpose.</p>
-<p><span class="math display">
-|S_0(j\omega)| &lt; 1/|W_p(j\omega)|,\;\;\forall \omega,
+<p>Having discussed stability (and its robustness), it is now time to turn to performance (and its robustness). Performance can mean difference things for different people, and it can be specified in a number of ways, but we would like to formulate performance requirements in the same frequency domain setting as we did for (robust) stability. Namely, we would like to specify the performance requirements in terms of the frequency response of some closed-loop transfer function. The sensitivity function seems to be a natural choice for this purpose. It turns out that by imposing upper bound constraints on <span class="math inline">|S(\omega)|</span> (actually <span class="math inline">|S_0(\omega)|</span> as we now focus on the nominal case with no uncertainty) we can specify a number of performance requirements:</p>
+<ul>
+<li>Up to which frequency the feedback controller attenuates the disturbance, that is, the bandwidth <span class="math inline">\omega_\mathrm{BW}</span> of the system.</li>
+<li>How much the feedback controller attenuates the disturbances over the bandwidth.</li>
+<li>How does it behave at very low frequencies, that is, how well it regulates the steady-state error.</li>
+<li>What is the maximum amplification of the disturbance, that is, the resonance peak.</li>
+</ul>
+<p>These four types of performance requirements can be pointed at in <a href="#fig-performance-through-sensitivity-function" class="quarto-xref">Figure&nbsp;4</a> below.</p>
+<div id="fig-performance-through-sensitivity-function" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-performance-through-sensitivity-function-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/performance_through_sensitivity_function.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-performance-through-sensitivity-function-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Performance specifications through the shape of the magnitude frequency response of the sensitivity function
+</figcaption>
+</figure>
+</div>
+<p>But these requirements can also be compactly expressed throug the performance weighting filter <span class="math inline">W_\mathrm{p}(s)</span> as <span id="eq-nominal-performance-frequencywise"><span class="math display">\boxed
+{|S_0(j\omega)| &lt; 1/|W_\mathrm{p}(j\omega)|,\;\;\forall \omega,}
+\tag{1}</span></span></p>
+<p>where <span class="math inline">S_0 = \frac{1}{1+L_0}</span> is the sensitivity function of the nominal closed-loop system. which can again be compactly written as <span class="math display">\boxed
+{\|W_\mathrm{p}S_0\|_{\infty}&lt;1.}
 </span></p>
-<p><span class="math display">
-\|W_pS_0\|_{\infty}&lt;1.
-</span></p>
+<p>It lends some insight if we visualize this condition in the complex plane. First, recall that <span class="math inline">S_0 = \frac{1}{1+L_0}</span>. <a href="#eq-nominal-performance-frequencywise" class="quarto-xref">Equation&nbsp;1</a> then translates to <span class="math display">
+|W_\mathrm{p}(j\omega)|&lt;|1+L_0(j\omega)|\;\;\forall \omega,
+</span> which can be visualized as in</p>
+<div id="fig-nyquist-nominal-performance" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-nyquist-nominal-performance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/nyquist_nominal_performance.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nyquist-nominal-performance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Nominal performance condition
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="robust-performance-for-a-multiplicative-uncertainty" class="level3">
 <h3 class="anchored" data-anchor-id="robust-performance-for-a-multiplicative-uncertainty">Robust performance for a multiplicative uncertainty</h3>
+<p>So far we have the condition of robust stability and the condition of nominal performance. Simultaneous satisfaction of both gives… just robust stability and nominal performance. Robust performance obviously needs a stricter condition.</p>
+<div id="fig-nyquist-robust-performance" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-nyquist-robust-performance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/nyquist_robust_performance.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nyquist-robust-performance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Robust performance condition
+</figcaption>
+</figure>
+</div>
 <p><span class="math display">
 \boxed{
-|W_p(j\omega)S(j\omega)| + |W(j\omega)T(j\omega)| &lt; 1\;\;\forall \omega.}
+|W_\mathrm{p}(j\omega)S_0(j\omega)| + |W(j\omega)T_0(j\omega)| &lt; 1\;\;\forall \omega.}
 </span></p>
-<p>In the SISO case, this is equivalent to <span class="math display">
-\left\|
+<p>In the SISO case, this is equivalent to <span class="math display">\boxed
+{\left\|
 \begin{bmatrix}
-W_pS\\
-WT
+W_\mathrm{p}S_0\\
+WT_0
 \end{bmatrix}
 \right\|_{\infty}
-&lt;\frac{1}{\sqrt{2}},
-</span> where the augmented closed-loop system <span class="math inline">\begin{bmatrix} W_pS\\ WT \end{bmatrix}</span> is called <em>mixed sensitivity function</em>.</p>
+&lt;\frac{1}{\sqrt{2}},}
+</span> where the augmented closed-loop system <span class="math inline">\begin{bmatrix} W_\mathrm{p}S\\ WT_0 \end{bmatrix}</span> is called <em>mixed sensitivity function</em>.</p>
 <p>In the MIMO case we do not have a useful upper bound, but at least we have received a hint that it may be useful to minimize the <span class="math inline">\mathcal H_\infty</span> norm of the mixed sensitivity function. This observation will directly lead to a control design method.</p>
 
 
