@@ -682,7 +682,7 @@ window.Quarto = {
   <ul>
   <li><a href="#internal-stability" id="toc-internal-stability" class="nav-link active" data-scroll-target="#internal-stability">Internal stability</a></li>
   <li><a href="#robust-stability-for-a-multiplicative-uncertainty" id="toc-robust-stability-for-a-multiplicative-uncertainty" class="nav-link" data-scroll-target="#robust-stability-for-a-multiplicative-uncertainty">Robust stability for a multiplicative uncertainty</a></li>
-  <li><a href="#robust-stability-for-an-lft" id="toc-robust-stability-for-an-lft" class="nav-link" data-scroll-target="#robust-stability-for-an-lft">Robust stability for an LFT</a></li>
+  <li><a href="#robust-stability-for-an-lft-small-gain-theorem" id="toc-robust-stability-for-an-lft-small-gain-theorem" class="nav-link" data-scroll-target="#robust-stability-for-an-lft-small-gain-theorem">Robust stability for an LFT – small gain theorem</a></li>
   <li><a href="#nominal-performance" id="toc-nominal-performance" class="nav-link" data-scroll-target="#nominal-performance">Nominal performance</a></li>
   <li><a href="#robust-performance-for-a-multiplicative-uncertainty" id="toc-robust-performance-for-a-multiplicative-uncertainty" class="nav-link" data-scroll-target="#robust-performance-for-a-multiplicative-uncertainty">Robust performance for a multiplicative uncertainty</a></li>
   </ul>
@@ -775,18 +775,34 @@ L(s) = G(s)K(s) = (1+W(s)\Delta(s))\,G_0(s)K(s) = L_0(s) + W(s)L_0(s)\Delta(s).
 <p>To appreciate usefulness of the this format of the robust stability condition beyond mere notational compactness, we mention that <span class="math inline">\mathcal H_\infty</span> norm of an LTI system can be reliably computed. Robust stability can then be then checked by computing a single number.</p>
 <p>In fact, it is even better than that – there are methods for computing a feedback controller that minimizise the <span class="math inline">\mathcal H_\infty</span> norm of a specified closed-loop transfer function, which suggests an optimization-based approach to design of robustly stabilizing controllers. We are going to build on this in the next chapter. But let’s stick to the analysis for now.</p>
 </section>
-<section id="robust-stability-for-an-lft" class="level3">
-<h3 class="anchored" data-anchor-id="robust-stability-for-an-lft">Robust stability for an LFT</h3>
-<p><span class="math display">
-|\mathbf M(j\omega)|&lt;1,\;\;\forall \omega,
+<section id="robust-stability-for-an-lft-small-gain-theorem" class="level3">
+<h3 class="anchored" data-anchor-id="robust-stability-for-an-lft-small-gain-theorem">Robust stability for an LFT – small gain theorem</h3>
+<p>We consider the upper LFT as in <a href="#fig-upper-LFT-with-blocks" class="quarto-xref">Figure&nbsp;3</a>.</p>
+<div id="fig-upper-LFT-with-blocks" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-upper-LFT-with-blocks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/upper_LFT_with_blocks.png" class="img-fluid figure-img" style="width:30.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-upper-LFT-with-blocks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Upper LFT with the <span class="math inline">\mathbf N</span> term corresponding to the nominal closed-loop system structured into blocks
+</figcaption>
+</figure>
+</div>
+<p>The <span class="math inline">\mathbf N</span> term corresponding to the nominal closed-loop system is structured into blocks. It is only the <span class="math inline">\mathbf N_{11}</span> block that captures the interaction with the uncertainty in the model. For convenience we rename this block as <span class="math display">
+\mathbf M \coloneqq \mathbf N_{11}.
 </span></p>
-<p><span class="math display">
-\|\mathbf M\|_{\infty}&lt;1.
+<p>The open-loop transfer function is then <span class="math inline">\mathbf M \boldsymbol \Delta</span>. Following the same Nyquist criterion based reasoning as before, that is, asking for the conditions under which this open-loop transfer function does not touch the point -1, while the <span class="math inline">\Delta</span> term can introduce an arbitrary phase, we arrive at the robust stability condition for the LFT as <span class="math display">\boxed
+{|\mathbf M(j\omega)|&lt;1,\;\;\forall \omega.}
 </span></p>
-<p>Recall that <span class="math inline">\mathbf M</span> is just a short notation for the <span class="math inline">\mathbf N_{11}</span> block of <span class="math inline">\mathbf N</span>.</p>
+<p>Once again, invoking the definition of the <span class="math inline">\mathcal H_\infty</span> norm, we can rewrite the condition compactly as <span class="math display">\boxed
+{\|\mathbf M\|_{\infty}&lt;1.}
+</span></p>
+<p>Once again, the formulation in frequency domain can be useful for visualization and interpretation, while the <span class="math inline">\mathcal H_\infty</span> norm can be used for computation and optimization.</p>
+<p>This condition of robust stability belongs to the most fundamental results in control theory. It is known as the <em>small gain theorem</em>.</p>
 </section>
 <section id="nominal-performance" class="level3">
 <h3 class="anchored" data-anchor-id="nominal-performance">Nominal performance</h3>
+<p>Having discussed stability (and its robustness), it is now time to turn to performance (and its robustness). Performance can mean difference things for different people, but we would like to formulate performance requirements in the same frequency domain setting as we did for (robust) stability.</p>
 <p><span class="math display">
 |S_0(j\omega)| &lt; 1/|W_p(j\omega)|,\;\;\forall \omega,
 </span></p>
