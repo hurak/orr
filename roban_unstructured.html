@@ -788,21 +788,37 @@ Figure&nbsp;3: Upper LFT with the <span class="math inline">\mathbf N</span> ter
 </figcaption>
 </figure>
 </div>
-<p>The <span class="math inline">\mathbf N</span> term corresponding to the nominal closed-loop system is structured into blocks. It is only the <span class="math inline">\mathbf N_{11}</span> block that captures the interaction with the uncertainty in the model. For convenience we rename this block as <span class="math display">
-\mathbf M \coloneqq \mathbf N_{11}.
+<p>The term corresponding to the nominal closed-loop system is structured into blocks. It is only the <span class="math inline">N_{11}</span> block that captures the interaction with the uncertainty in the model. For convenience we rename this block as <span class="math display">
+M \coloneqq N_{11}.
 </span></p>
-<p>The open-loop transfer function is then <span class="math inline">\mathbf M \boldsymbol \Delta</span>. Following the same Nyquist criterion based reasoning as before, that is, asking for the conditions under which this open-loop transfer function does not touch the point -1, while the <span class="math inline">\Delta</span> term can introduce an arbitrary phase, we arrive at the robust stability condition for the LFT as <span class="math display">\boxed
-{|\mathbf M(j\omega)|&lt;1,\;\;\forall \omega.}
+<p>The open-loop transfer function is then <span class="math inline">M \Delta</span>. Following the same Nyquist criterion based reasoning as before, that is, asking for the conditions under which this open-loop transfer function does not touch the point -1, while the <span class="math inline">\Delta</span> term can introduce an arbitrary phase, we arrive at the robust stability condition for the LFT as <span class="math display">\boxed
+{|M(j\omega)|&lt;1,\;\;\forall \omega.}
 </span></p>
 <p>Once again, invoking the definition of the <span class="math inline">\mathcal H_\infty</span> norm, we can rewrite the condition compactly as <span class="math display">\boxed
-{\|\mathbf M\|_{\infty}&lt;1.}
+{\|M\|_{\infty}&lt;1.}
 </span></p>
-<p>Once again, the formulation in frequency domain can be useful for visualization and interpretation, while the <span class="math inline">\mathcal H_\infty</span> norm can be used for computation and optimization.</p>
+<p>Once again, the formulation as an inequality over all frequencies can be useful for visualization and interpretation, while the inequality with the <span class="math inline">\mathcal H_\infty</span> norm can be used for computation and optimization.</p>
 <p>This condition of robust stability belongs to the most fundamental results in control theory. It is known as the <em>small gain theorem</em>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Small gain theorem works for MIMO too
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Small gain theorem works for a MIMO uncertainty <span class="math inline">\boldsymbol \Delta</span> and a block <span class="math inline">\mathbf N_{11}</span> (or <span class="math inline">\mathbf M</span>) too <span class="math display">
+\|\mathbf M\|_{\infty}&lt;1.
+</span></p>
+<p>But we discuss in the next section that it is typically too conservative as the <span class="math inline">\boldsymbol \Delta</span> block has typically some structure (block diagonal) and it should be exploited. More on this in the section dedicated to structured uncertainty.</p>
+</div>
+</div>
 </section>
 <section id="nominal-performance" class="level3">
 <h3 class="anchored" data-anchor-id="nominal-performance">Nominal performance</h3>
-<p>Having discussed stability (and its robustness), it is now time to turn to performance (and its robustness). Performance can mean difference things for different people, but we would like to formulate performance requirements in the same frequency domain setting as we did for (robust) stability.</p>
+<p>Having discussed stability (and its robustness), it is now time to turn to performance (and its robustness). Performance can mean difference things for different people, and it can be specified in a number of ways, but we would like to formulate performance requirements in the same frequency domain setting as we did for (robust) stability. Namely, we would like to specify the performance requirements in terms of the frequency response of some closed-loop transfer function. The sensitivity function seems to be a natural choice for this purpose.</p>
 <p><span class="math display">
 |S_0(j\omega)| &lt; 1/|W_p(j\omega)|,\;\;\forall \omega,
 </span></p>
