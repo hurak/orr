@@ -69,6 +69,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -632,8 +675,17 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#mixed-sensitivity-problem-reformulated-as-the-standard-mathcalh_infty-optimization-problem" id="toc-mixed-sensitivity-problem-reformulated-as-the-standard-mathcalh_infty-optimization-problem" class="nav-link active" data-scroll-target="#mixed-sensitivity-problem-reformulated-as-the-standard-mathcalh_infty-optimization-problem">Mixed-sensitivity problem reformulated as the standard <span class="math inline">\mathcal{H}_\infty</span> optimization problem</a></li>
+  <li><a href="#signal-based-mathcalh_infty-optimal-control-problem" id="toc-signal-based-mathcalh_infty-optimal-control-problem" class="nav-link" data-scroll-target="#signal-based-mathcalh_infty-optimal-control-problem">Signal-based <span class="math inline">\mathcal{H}_\infty</span>-optimal control problem</a></li>
+  <li><a href="#what-is-behind-the-mathcalh_infty-solver" id="toc-what-is-behind-the-mathcalh_infty-solver" class="nav-link" data-scroll-target="#what-is-behind-the-mathcalh_infty-solver">What is behind the <span class="math inline">\mathcal{H}_\infty</span> solver?</a></li>
+  <li><a href="#structure-of-the-mathcalh_infty-optimal-controller" id="toc-structure-of-the-mathcalh_infty-optimal-controller" class="nav-link" data-scroll-target="#structure-of-the-mathcalh_infty-optimal-controller">Structure of the <span class="math inline">\mathcal{H}_\infty</span>-optimal controller</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -657,8 +709,69 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>Here we formulate the general problem of <span class="math inline">\mathcal{H}_\infty</span>-optimal control. There are two motivations for this. First, it gives the general framework within which we can <strong>formulate and solve the mixed-sensitivity problem</strong> defined in the frequency domain that we discused previously. Second, it allows us to consider <strong>exploit the time-domain (or signal)</strong> interpretation of the <span class="math inline">\mathcal{H}_\infty</span> norm of a system to formulate a new class of problems that can be solved with these optimization tools. For the latter, recall that <span class="math display">
+\|\mathbf G\|_{\infty} = \sup_{u\in\mathcal{L}_{2}\backslash \emptyset}\frac{\|\bm y\|_2}{\|\bm u\|_2},
+</span> in which we allow for vector input and output signals, hence MIMO systems, from the very beginning.</p>
+<p>Now, for particular control requirements, we build the generalized plant <span class="math inline">\mathbf P</span> such that after forming the feedback interconnection with the controller <span class="math inline">\mathbf K</span> as in <a href="#fig-lower-LFT-with-named-variables" class="quarto-xref">Figure&nbsp;1</a></p>
+<div id="fig-lower-LFT-with-named-variables" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lower-LFT-with-named-variables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/lower_LFT_with_named_variables.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lower-LFT-with-named-variables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Lower LFT of the generalized plant and the controller
+</figcaption>
+</figure>
+</div>
+<p>it makes sense require the stabilizing controller to minimize the amplification of the exogenous inputs (disturbances, references, noises) into the regulated outputs. We want to make the regulated outputs as insensitive as possible to the exogenous inputs and to quantify the sizes of the inputs and outputs, we use the <span class="math inline">\mathcal L_2</span> norm.</p>
+<p>But then what we have is really the standard <span class="math inline">\mathcal{H}_\infty</span> optimization problem <span class="math display">\boxed
+{\operatorname*{minimize}_{\mathbf K \text{ stabilizing}}\|\mathcal{F}_{\mathrm l}(\mathbf P,\mathbf K)\|_{\infty}.}
+</span></p>
+<p>Numerical solvers <a href="./rocond_software.html">exist</a> in various software environments.</p>
+<section id="mixed-sensitivity-problem-reformulated-as-the-standard-mathcalh_infty-optimization-problem" class="level3">
+<h3 class="anchored" data-anchor-id="mixed-sensitivity-problem-reformulated-as-the-standard-mathcalh_infty-optimization-problem">Mixed-sensitivity problem reformulated as the standard <span class="math inline">\mathcal{H}_\infty</span> optimization problem</h3>
+<p>We now show how the mixed-sensitivity problem discussed previously can be reformulated within as the standard <span class="math inline">\mathcal{H}_\infty</span> optimization problem. We consider the full mixed-sensitivity problem for a SISO plant</p>
+<p><span class="math display">
+\operatorname*{minimize}_{K \text{ stabilizing}}  
+\left\|
+\begin{bmatrix}
+W_1S\\W_2KS\\W_3T
+\end{bmatrix}
+\right\|_{\infty},
+</span> which obviously considers a closed-loop system with one input and three outputs. With only one exogenous input, we must choose its role. Say, the only exogenous input is the reference signal. The closed-loop system for which the norm is minimized is in the following block diagram <a href="#fig-mixed-sensitivity-as-standard-H-infinity" class="quarto-xref">Figure&nbsp;2</a>.</p>
+<div id="fig-mixed-sensitivity-as-standard-H-infinity" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mixed-sensitivity-as-standard-H-infinity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/mixed_sensitivity_as_standard_H_infinity.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mixed-sensitivity-as-standard-H-infinity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Mixed-sensitivity problem interpreted as the standard <span class="math inline">\mathcal{H}_\infty</span> optimization problem
+</figcaption>
+</figure>
+</div>
+<p>The matrix transfer function for generalized plant <span class="math inline">\mathbf P</span> has two inputs and four outputs and it can then be written as <span class="math display">
+\mathbf P = \left[\begin{array}{c|c}
+W_1 &amp; -W_1G\\
+0 &amp; W_2\\
+0 &amp; W_3G\\
+\hline
+1 &amp; -G
+\end{array}\right].
+</span></p>
+<p>This plant <span class="math inline">\mathbf P</span> (most often than not its state space realization) is then used as the input argument to the solver for the <span class="math inline">\mathcal{H}_\infty</span> optimization problem. In fact, we must also tell the solver how the inputs and outputs are structured. In this case, the solver must know that of the two inputs, only the second one can be used by the controller, and of the four outputs, only the fourth one is measured.</p>
+</section>
+<section id="signal-based-mathcalh_infty-optimal-control-problem" class="level3">
+<h3 class="anchored" data-anchor-id="signal-based-mathcalh_infty-optimal-control-problem">Signal-based <span class="math inline">\mathcal{H}_\infty</span>-optimal control problem</h3>
+<p>Being able to solve the <span class="math inline">\mathcal{H}_\infty</span> optimization problem, indeed we do not have to restrict ourselves to the generalized plants <span class="math inline">\mathbf P</span> that correspond to the mixed-sensitivity problem. We can consider any plant <span class="math inline">\mathbf P</span>, for which the problem makes sense. For example, if we want to consider not only references but also disturbances, and possibly even noises, there is no way to formulate this within the mixed-sensitivity framework. But we can still formulate this as the standard <span class="math inline">\mathcal{H}_\infty</span> optimal control problem.</p>
+</section>
+<section id="what-is-behind-the-mathcalh_infty-solver" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-behind-the-mathcalh_infty-solver">What is behind the <span class="math inline">\mathcal{H}_\infty</span> solver?</h3>
+</section>
+<section id="structure-of-the-mathcalh_infty-optimal-controller" class="level3">
+<h3 class="anchored" data-anchor-id="structure-of-the-mathcalh_infty-optimal-controller">Structure of the <span class="math inline">\mathcal{H}_\infty</span>-optimal controller</h3>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1101,7 +1214,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – References</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – Robustness analysis for unstructured uncertainty</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -50,8 +30,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./rocond_mixed_sensitivity.html" rel="next">
-<link href="./roban_software.html" rel="prev">
+<link href="./roban_structured.html" rel="next">
+<link href="./roban_uncertainty.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -89,6 +69,49 @@ div.csl-indent {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -102,7 +125,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./roban_uncertainty.html">11. Uncertainty modelling and robustness analysis</a></li><li class="breadcrumb-item"><a href="./roban_references.html">References</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./roban_uncertainty.html">11. Uncertainty modelling and robustness analysis</a></li><li class="breadcrumb-item"><a href="./roban_unstructured.html">Robustness analysis for unstructured uncertainty</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -536,7 +559,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./roban_unstructured.html" class="sidebar-item-text sidebar-link">
+  <a href="./roban_unstructured.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Robustness analysis for unstructured uncertainty</span></a>
   </div>
 </li>
@@ -554,7 +577,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./roban_references.html" class="sidebar-item-text sidebar-link active">
+  <a href="./roban_references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -652,15 +675,25 @@ div.csl-indent {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#internal-stability" id="toc-internal-stability" class="nav-link active" data-scroll-target="#internal-stability">Internal stability</a></li>
+  <li><a href="#robust-stability-for-a-multiplicative-uncertainty" id="toc-robust-stability-for-a-multiplicative-uncertainty" class="nav-link" data-scroll-target="#robust-stability-for-a-multiplicative-uncertainty">Robust stability for a multiplicative uncertainty</a></li>
+  <li><a href="#robust-stability-for-an-lft-small-gain-theorem" id="toc-robust-stability-for-an-lft-small-gain-theorem" class="nav-link" data-scroll-target="#robust-stability-for-an-lft-small-gain-theorem">Robust stability for an LFT – small gain theorem</a></li>
+  <li><a href="#nominal-performance" id="toc-nominal-performance" class="nav-link" data-scroll-target="#nominal-performance">Nominal performance</a></li>
+  <li><a href="#robust-performance-for-a-multiplicative-uncertainty" id="toc-robust-performance-for-a-multiplicative-uncertainty" class="nav-link" data-scroll-target="#robust-performance-for-a-multiplicative-uncertainty">Robust performance for a multiplicative uncertainty</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./roban_uncertainty.html">11. Uncertainty modelling and robustness analysis</a></li><li class="breadcrumb-item"><a href="./roban_references.html">References</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./roban_uncertainty.html">11. Uncertainty modelling and robustness analysis</a></li><li class="breadcrumb-item"><a href="./roban_unstructured.html">Robustness analysis for unstructured uncertainty</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">References</h1>
+<h1 class="title">Robustness analysis for unstructured uncertainty</h1>
 </div>
 
 
@@ -677,54 +710,185 @@ div.csl-indent {
 </header>
 
 
-<p>Even when restricted to control systems, the concept of robustness is quite broad and can be approached from many different angles. In our course we are restricting the focus to the approaches formulated in frequency domain. The main reference for this part of the course is the book <span class="citation" data-cites="skogestadMultivariableFeedbackControl2005">(<a href="#ref-skogestadMultivariableFeedbackControl2005" role="doc-biblioref">Skogestad and Postlethwaite 2005</a>)</span>. The concepts and techniques introduced in our lecture are covered in Chapters 7 and 8 (up to 8.5) of the book.</p>
-<p>What we typically do not cover in the lecture, but only due to time constraints, is the topic of structured uncertainties and their analysis using structured singular value (SSV, 𝜇). These are treated in the section 8.6 through 8.11 of the book. It is warmly recommended to have a look at it.</p>
-<p>Although the book is not freely available online (only the first three pages are downloadable on the authors’ web page), it is available in a decent number of copies in <a href="https://aleph.cvut.cz/F?func=direct&amp;doc_number=000664179&amp;local_base=DUPL&amp;format=999">the university library</a>.</p>
-<div class="callout callout-style-default callout-warning callout-titled">
+<p>When we introduced the concept of robustness, we only vaguely hinted that it is always related to some property of interest. Now comes the time to specify these two properties:</p>
+<div id="def-robust-stability" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1 (Robust stability)</strong></span> Guaranteed stability of the closed feedback loop with a given controller for all admissible (=considered apriori) deviations of the model from the reality.</p>
+</div>
+<div id="def-robust-performance" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2 (Robust performance)</strong></span> Robustness of some performance characteristics such as steady-state regulation error, attenuation of some specified disturbance, insensitivity to measurement noise, fast response, ….</p>
+</div>
+<section id="internal-stability" class="level3">
+<h3 class="anchored" data-anchor-id="internal-stability">Internal stability</h3>
+<p>Before we start discussing robust stability, we need to discuss one fine issue related to stability of a nominal system. We do it through the following example.</p>
+<div id="exm-internal-stability" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1 (Internal stability)</strong></span> Consider the following feedback system with a nominal plant <span class="math inline">G(s)</span> and a nominal controller <span class="math inline">K(s)</span>.</p>
+<div id="fig-internal-stability" class="quarto-figure quarto-figure-center quarto-float anchored" width="60%">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-internal-stability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/internal_stability.png" id="fig-internal-stability" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-internal-stability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</figcaption>
+</figure>
+</div>
+<p>The question is: is this closed-loop system stable? We determine stability by looking at the denominator of <em>a</em> closed-loop transfer function. But which one? There are several. Perhaps the most immediate one is the transfer function from the reference <span class="math inline">r</span> to the plant output <span class="math inline">y</span>. With the open-loop transfer function <span class="math inline">L(s) = G(s)K(s) = \frac{s-1}{s+1} \frac{k(s+1)}{s(s-1)} = \frac{k}{s}</span>, the closed-loop transfer function is <span class="math display">
+T(s) = \frac{\frac{k}{s}}{1+\frac{k}{s}} = \frac{k}{s+k},  
+</span> which is perfectly stable. But note that for practical purposes, all possible closed-loop transfer functions must be stable. How about the one from the output disturbance <span class="math inline">d</span> to the plant output <span class="math inline">y</span>? <span class="math display">
+S(s) = \frac{1}{1+\frac{k}{s}} = \frac{s}{s+k},
+</span> which is stable too. Isn’t this a signal that we can stop worrying? Not yet. Consider now the closed-loop transfer function from the reference <span class="math inline">r</span> to the control <span class="math inline">u</span>. The closed-loop transfer function is <span class="math display">
+K(s)S(s) = \frac{\frac{k(s+1)}{s(s-1)}}{1+\frac{k}{s}} = \frac{k(s+1)}{{\color{red}(s-1)}(s+k)}.
+</span></p>
+<p>Oops! This closed-loop transfer function is not stable. Obviously the culprit here is our cancelling the zero in the RHP with an unstable pole in the controller. But let’s emphasize that the trouble is not in imperfectness of this cancellation due to numerical errors. The trouble is in the very cancelling the zero in the RHP by the controller. Identical problem would arise if an unstable pole of the plant is cancelled by the RHP zero of the controller as we can see by modifying the assignment accordingly.</p>
+</div>
+<p>The example taught (or perhaps reminded) us that in order to guarantee stability of <em>all</em> closed-loop transfer functions, no cancellation of poles and zeros in the right half plane is allowed. The resulting closed-loop system is then called <em>internally stable</em>. Checking just (arbitrary) one closed-loop transfer function for stability is then enough to conclude that all of them are stable too.</p>
+</section>
+<section id="robust-stability-for-a-multiplicative-uncertainty" class="level3">
+<h3 class="anchored" data-anchor-id="robust-stability-for-a-multiplicative-uncertainty">Robust stability for a multiplicative uncertainty</h3>
+<p>We consider a feedback system with a plant <span class="math inline">G(s)</span> and a controller <span class="math inline">K(s)</span>, where the uncertainty in the plant modelled as multiplicative uncertainty, that is, <span class="math inline">G(s) = (1+W(s)\Delta(s))\,G_0(s)</span>.</p>
+<p>The technique for analyzing closed-loop stability is based on Nyquist criterion. Instead of analyzing the Nyquist plot for the nominal plant <span class="math inline">G_0(s)</span>, we analyze the Nyquist plot for the uncertain plant <span class="math inline">G(s)</span>. The corresponding open-loop transfer function is <span class="math display">
+L(s) = G(s)K(s) = (1+W(s)\Delta(s))\,G_0(s)K(s) = L_0(s) + W(s)L_0(s)\Delta(s).
+</span></p>
+<p>When trying to figure out the conditions, under which this family of Nyquist curves avoids the point -1, it is useful to interpret the last equation at a given frequency <span class="math inline">\omega</span> as a disc with the center at <span class="math inline">L_0(j\omega)</span> and the radius <span class="math inline">W(j\omega)L_0(j\omega)</span>. To see this, note that <span class="math inline">\Delta(j\omega)</span> represents a complex number with a magnitude up to one, and with an arbitrary angle.</p>
+<div id="fig-robust-stability" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-robust-stability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/nyquist_robust_stability.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-robust-stability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Robust stability for multiplicative uncertainty
+</figcaption>
+</figure>
+</div>
+<p>The geometric formulation of the condition is then that the distance from -1 to the nominal Nyquist plot of <span class="math inline">L_0(j\omega)</span> is greater than the radius <span class="math inline">W(j\omega)L_0(j\omega)</span> of the disc centered at the nominal Nyquist curve With the distance from the point -1 to the nominal Nyquist plot of <span class="math inline">L_0(s)</span> evaluated at a particular frequency <span class="math inline">\omega</span> a <span class="math inline">|-1-L_0(j\omega)| = |1+L_0(j\omega)|</span>, the condition can be written as</p>
+<p><span class="math display">
+|W(j\omega)L_0(j\omega)| &lt; |1+L_0(j\omega)|, \;\forall \omega.
+</span></p>
+<p>Dividing both sides by <span class="math inline">1+L_0(j\omega)</span> we get <span class="math display">
+\frac{W(j\omega)L_0(j\omega)}{1+L_0(j\omega)} &lt; 1, \;\forall \omega.
+</span></p>
+<p>But recalling the definition of the <em>complementary sensitivity function</em>, and dividing both sides by <span class="math inline">W</span>, we can rewrite the condition as <span class="math display">\boxed
+{|T_0(j\omega)| &lt; 1/|W(j\omega)|, \;\; \forall \omega.}
+</span></p>
+<p>This condition has clear interpretation in terms of the magnitude of the complementary sensitivity function – it must be smaller than the reciprocal of the magnitude of the uncertainty weight at all frequencies.</p>
+<p>Finally, we can also invoke the definition of the <span class="math inline">\mathcal H_\infty</span> norm and reformulate the condition as <span class="math display">\boxed
+{\|WT\|_{\infty}&lt; 1.}
+</span></p>
+<p>To appreciate usefulness of the this format of the robust stability condition beyond mere notational compactness, we mention that <span class="math inline">\mathcal H_\infty</span> norm of an LTI system can be reliably computed. Robust stability can then be then checked by computing a single number.</p>
+<p>In fact, it is even better than that – there are methods for computing a feedback controller that minimizise the <span class="math inline">\mathcal H_\infty</span> norm of a specified closed-loop transfer function, which suggests an optimization-based approach to design of robustly stabilizing controllers. We are going to build on this in the next chapter. But let’s stick to the analysis for now.</p>
+</section>
+<section id="robust-stability-for-an-lft-small-gain-theorem" class="level3">
+<h3 class="anchored" data-anchor-id="robust-stability-for-an-lft-small-gain-theorem">Robust stability for an LFT – small gain theorem</h3>
+<p>We consider the upper LFT as in <a href="#fig-upper-LFT-with-blocks" class="quarto-xref">Figure&nbsp;3</a>.</p>
+<div id="fig-upper-LFT-with-blocks" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-upper-LFT-with-blocks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/upper_LFT_with_blocks.png" class="img-fluid figure-img" style="width:30.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-upper-LFT-with-blocks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Upper LFT with the <span class="math inline">\mathbf N</span> term corresponding to the nominal closed-loop system structured into blocks
+</figcaption>
+</figure>
+</div>
+<p>The term corresponding to the nominal closed-loop system is structured into blocks. It is only the <span class="math inline">N_{11}</span> block that captures the interaction with the uncertainty in the model. For convenience we rename this block as <span class="math display">
+M \coloneqq N_{11}.
+</span></p>
+<p>The open-loop transfer function is then <span class="math inline">M \Delta</span>. Following the same Nyquist criterion based reasoning as before, that is, asking for the conditions under which this open-loop transfer function does not touch the point -1, while the <span class="math inline">\Delta</span> term can introduce an arbitrary phase, we arrive at the robust stability condition for the LFT as <span class="math display">\boxed
+{|M(j\omega)|&lt;1,\;\;\forall \omega.}
+</span></p>
+<p>Once again, invoking the definition of the <span class="math inline">\mathcal H_\infty</span> norm, we can rewrite the condition compactly as <span class="math display">\boxed
+{\|M\|_{\infty}&lt;1.}
+</span></p>
+<p>Once again, the formulation as an inequality over all frequencies can be useful for visualization and interpretation, while the inequality with the <span class="math inline">\mathcal H_\infty</span> norm can be used for computation and optimization.</p>
+<p>This condition of robust stability belongs to the most fundamental results in control theory. It is known as the <em>small gain theorem</em>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Get the second edition of Skogestad’s book
+Small gain theorem works for MIMO too
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In case you are interested in getting the book in one way or another (perhaps even by purchasing it), make sure you get the second edition published 2005. The book contains some useful snippets of Matlab code and the first edition relies on some ancient version of Matlab toolboxes, which makes it useless these days.</p>
+<p>Small gain theorem works for a MIMO uncertainty <span class="math inline">\boldsymbol \Delta</span> and a block <span class="math inline">\mathbf N_{11}</span> (or <span class="math inline">\mathbf M</span>) too <span class="math display">
+\|\mathbf M\|_{\infty}&lt;1.
+</span></p>
+<p>But we discuss in the next section that it is typically too conservative as the <span class="math inline">\boldsymbol \Delta</span> block has typically some structure (block diagonal) and it should be exploited. More on this in the section dedicated to structured uncertainty.</p>
 </div>
 </div>
-<p>The topic of modeling uncertainty in frequency domain using weighting filters plugged into additive or multiplicative structures is fairly classical now and as such can be found in numerous textbooks on robust control such as <span class="citation" data-cites="doyleFeedbackControlTheory2009">(<a href="#ref-doyleFeedbackControlTheory2009" role="doc-biblioref">Doyle, Francis, and Tannenbaum 2009</a>)</span>, <span class="citation" data-cites="zhouRobustOptimalControl1995">(<a href="#ref-zhouRobustOptimalControl1995" role="doc-biblioref">Zhou, Doyle, and Glover 1995</a>)</span>, <span class="citation" data-cites="dullerudCourseRobustControl2000">(<a href="#ref-dullerudCourseRobustControl2000" role="doc-biblioref">Dullerud and Paganini 2000</a>)</span>, <span class="citation" data-cites="sanchez-penaRobustSystemsTheory1998">(<a href="#ref-sanchez-penaRobustSystemsTheory1998" role="doc-biblioref">Sánchez-Peña and Sznaier 1998</a>)</span>. Although these are fine texts, frankly speaking they offer nearly no guidance for applying the highly advanced concepts to practical problems – they mostly focus on building up the theoretical framework. In this regard, Skogestad’s book is truly unique.</p>
-<p>There are some newer texts that appear to be a bit more on the application side such as <span class="citation" data-cites="lavretskyRobustAdaptiveControl2024">(<a href="#ref-lavretskyRobustAdaptiveControl2024" role="doc-biblioref">Lavretsky and Wise 2024</a>)</span>, <span class="citation" data-cites="yedavalliRobustControlUncertain2014">(<a href="#ref-yedavalliRobustControlUncertain2014" role="doc-biblioref">Yedavalli 2014</a>)</span> or <span class="citation" data-cites="guRobustControlDesign2013">(<a href="#ref-guRobustControlDesign2013" role="doc-biblioref">Gu, Petkov, and Konstantinov 2013</a>)</span>, but I am not familiar them, to be honest.</p>
+</section>
+<section id="nominal-performance" class="level3">
+<h3 class="anchored" data-anchor-id="nominal-performance">Nominal performance</h3>
+<p>Having discussed stability (and its robustness), it is now time to turn to performance (and its robustness). Performance can mean difference things for different people, and it can be specified in a number of ways, but we would like to formulate performance requirements in the same frequency domain setting as we did for (robust) stability. Namely, we would like to specify the performance requirements in terms of the frequency response of some closed-loop transfer function. The sensitivity function seems to be a natural choice for this purpose. It turns out that by imposing upper bound constraints on <span class="math inline">|S(\omega)|</span> (actually <span class="math inline">|S_0(\omega)|</span> as we now focus on the nominal case with no uncertainty) we can specify a number of performance requirements:</p>
+<ul>
+<li>Up to which frequency the feedback controller attenuates the disturbance, that is, the bandwidth <span class="math inline">\omega_\mathrm{BW}</span> of the system.</li>
+<li>How much the feedback controller attenuates the disturbances over the bandwidth.</li>
+<li>How does it behave at very low frequencies, that is, how well it regulates the steady-state error.</li>
+<li>What is the maximum amplification of the disturbance, that is, the resonance peak.</li>
+</ul>
+<p>These four types of performance requirements can be pointed at in <a href="#fig-performance-through-sensitivity-function" class="quarto-xref">Figure&nbsp;4</a> below.</p>
+<div id="fig-performance-through-sensitivity-function" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-performance-through-sensitivity-function-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/performance_through_sensitivity_function.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-performance-through-sensitivity-function-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Performance specifications through the shape of the magnitude frequency response of the sensitivity function
+</figcaption>
+</figure>
+</div>
+<p>But these requirements can also be compactly expressed throug the performance weighting filter <span class="math inline">W_\mathrm{p}(s)</span> as <span id="eq-nominal-performance-frequencywise"><span class="math display">\boxed
+{|S_0(j\omega)| &lt; 1/|W_\mathrm{p}(j\omega)|,\;\;\forall \omega,}
+\tag{1}</span></span></p>
+<p>where <span class="math inline">S_0 = \frac{1}{1+L_0}</span> is the sensitivity function of the nominal closed-loop system. which can again be compactly written as <span class="math display">\boxed
+{\|W_\mathrm{p}S_0\|_{\infty}&lt;1.}
+</span></p>
+<p>It lends some insight if we visualize this condition in the complex plane. First, recall that <span class="math inline">S_0 = \frac{1}{1+L_0}</span>. <a href="#eq-nominal-performance-frequencywise" class="quarto-xref">Equation&nbsp;1</a> then translates to <span class="math display">
+|W_\mathrm{p}(j\omega)|&lt;|1+L_0(j\omega)|\;\;\forall \omega,
+</span> which can be visualized as in</p>
+<div id="fig-nyquist-nominal-performance" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-nyquist-nominal-performance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/nyquist_nominal_performance.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nyquist-nominal-performance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Nominal performance condition
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="robust-performance-for-a-multiplicative-uncertainty" class="level3">
+<h3 class="anchored" data-anchor-id="robust-performance-for-a-multiplicative-uncertainty">Robust performance for a multiplicative uncertainty</h3>
+<p>So far we have the condition of robust stability and the condition of nominal performance. Simultaneous satisfaction of both gives… just robust stability and nominal performance. Robust performance obviously needs a stricter condition.</p>
+<div id="fig-nyquist-robust-performance" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-nyquist-robust-performance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/nyquist_robust_performance.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nyquist-robust-performance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Robust performance condition
+</figcaption>
+</figure>
+</div>
+<p><span class="math display">
+\boxed{
+|W_\mathrm{p}(j\omega)S_0(j\omega)| + |W(j\omega)T_0(j\omega)| &lt; 1\;\;\forall \omega.}
+</span></p>
+<p>In the SISO case, this is equivalent to <span class="math display">\boxed
+{\left\|
+\begin{bmatrix}
+W_\mathrm{p}S_0\\
+WT_0
+\end{bmatrix}
+\right\|_{\infty}
+&lt;\frac{1}{\sqrt{2}},}
+</span> where the augmented closed-loop system <span class="math inline">\begin{bmatrix} W_\mathrm{p}S\\ WT_0 \end{bmatrix}</span> is called <em>mixed sensitivity function</em>.</p>
+<p>In the MIMO case we do not have a useful upper bound, but at least we have received a hint that it may be useful to minimize the <span class="math inline">\mathcal H_\infty</span> norm of the mixed sensitivity function. This observation will directly lead to a control design method.</p>
 
 
+</section>
 
-
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-doyleFeedbackControlTheory2009" class="csl-entry" role="listitem">
-Doyle, John C., Bruce A. Francis, and Allen R. Tannenbaum. 2009. <em>Feedback <span>Control Theory</span></em>. Reprint of the 1990 edition by Macmillan Publishing. Dover Publications. <a href="https://www.control.utoronto.ca/people/profs/francis/dft.pdf">https://www.control.utoronto.ca/people/profs/francis/dft.pdf</a>.
-</div>
-<div id="ref-dullerudCourseRobustControl2000" class="csl-entry" role="listitem">
-Dullerud, Geir E., and Fernando Paganini. 2000. <em>A <span>Course</span> in <span>Robust Control Theory</span>: <span>A Convex Approach</span></em>. Texts in <span>Applied Mathematics</span>. New York: Springer-Verlag. <a href="https://doi.org/10.1007/978-1-4757-3290-0">https://doi.org/10.1007/978-1-4757-3290-0</a>.
-</div>
-<div id="ref-guRobustControlDesign2013" class="csl-entry" role="listitem">
-Gu, Da-Wei, Petko H. Petkov, and Mihail M. Konstantinov. 2013. <em>Robust <span>Control Design</span> with <span>MATLAB</span><span></span></em>. 2nd ed. Advanced <span>Textbooks</span> in <span>Control</span> and <span>Signal Processing</span>. New York: Springer. <a href="https://doi.org/10.1007/978-1-4471-4682-7">https://doi.org/10.1007/978-1-4471-4682-7</a>.
-</div>
-<div id="ref-lavretskyRobustAdaptiveControl2024" class="csl-entry" role="listitem">
-Lavretsky, Eugene, and Kevin Wise. 2024. <em>Robust and <span>Adaptive Control</span>: <span>With Aerospace Applications</span></em>. 2nd ed. Advanced <span>Textbooks</span> in <span>Control</span> and <span>Signal Processing</span> (<span>C</span>&amp;<span>SP</span>). Cham: Springer. <a href="https://doi.org/10.1007/978-3-031-38314-4">https://doi.org/10.1007/978-3-031-38314-4</a>.
-</div>
-<div id="ref-sanchez-penaRobustSystemsTheory1998" class="csl-entry" role="listitem">
-Sánchez-Peña, Ricardo S., and Mario Sznaier. 1998. <em>Robust <span>Systems Theory</span> and <span>Applications</span></em>. 1st ed. Wiley-Interscience.
-</div>
-<div id="ref-skogestadMultivariableFeedbackControl2005" class="csl-entry" role="listitem">
-Skogestad, Sigurd, and Ian Postlethwaite. 2005. <em>Multivariable <span>Feedback Control</span>: <span>Analysis</span> and <span>Design</span></em>. 2nd ed. Wiley. <a href="https://folk.ntnu.no/skoge/book/">https://folk.ntnu.no/skoge/book/</a>.
-</div>
-<div id="ref-yedavalliRobustControlUncertain2014" class="csl-entry" role="listitem">
-Yedavalli, Rama K. 2014. <em>Robust <span>Control</span> of <span>Uncertain Dynamic Systems</span>: <span>A Linear State Space Approach</span></em>. New York: Springer. <a href="https://doi.org/10.1007/978-1-4614-9132-3">https://doi.org/10.1007/978-1-4614-9132-3</a>.
-</div>
-<div id="ref-zhouRobustOptimalControl1995" class="csl-entry" role="listitem">
-Zhou, Kemin, John C. Doyle, and Keith Glover. 1995. <em>Robust and <span>Optimal Control</span></em>. 1st ed. Prentice Hall.
-</div>
-</div></section></div></main> <!-- /main -->
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -817,7 +981,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/hurak\.github\.io\/orr\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -1147,13 +1311,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./roban_software.html" class="pagination-link" aria-label="Software">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Software</span>
+      <a href="./roban_uncertainty.html" class="pagination-link" aria-label="Uncertainty (in) modelling">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Uncertainty (in) modelling</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./rocond_mixed_sensitivity.html" class="pagination-link" aria-label="Mixed sensitivity design">
-        <span class="nav-page-text">Mixed sensitivity design</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./roban_structured.html" class="pagination-link" aria-label="Robustness analysis for structured uncertainty">
+        <span class="nav-page-text">Robustness analysis for structured uncertainty</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1165,7 +1329,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

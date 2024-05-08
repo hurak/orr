@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.32">
+<meta name="generator" content="quarto-1.5.31">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – References</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – Theory for constrained optimization</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -50,8 +30,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./rocond_mixed_sensitivity.html" rel="next">
-<link href="./roban_software.html" rel="prev">
+<link href="./opt_theory_modellers.html" rel="next">
+<link href="./opt_theory_unconstrained.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -89,6 +69,49 @@ div.csl-indent {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -99,13 +122,13 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./roban_uncertainty.html">11. Uncertainty modelling and robustness analysis</a></li><li class="breadcrumb-item"><a href="./roban_references.html">References</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_problems.html">1. Optimization – theory</a></li><li class="breadcrumb-item"><a href="./opt_theory_constrained.html">Theory for constrained optimization</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -129,9 +152,9 @@ div.csl-indent {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
  <span class="menu-text">1. Optimization – theory</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -156,7 +179,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_theory_constrained.html" class="sidebar-item-text sidebar-link">
+  <a href="./opt_theory_constrained.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Theory for constrained optimization</span></a>
   </div>
 </li>
@@ -176,9 +199,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
  <span class="menu-text">2. Optimization – algorithms</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -217,9 +240,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
  <span class="menu-text">3. Discrete-time optimal control – direct approach</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -258,9 +281,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
  <span class="menu-text">4. Discrete-time optimal control – indirect approach</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -299,9 +322,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
  <span class="menu-text">5. Discrete-time optimal control – dynamic programming</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -334,9 +357,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
  <span class="menu-text">6. More on MPC</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -369,9 +392,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
  <span class="menu-text">7. Continuous-time optimal control - indirect approach via calculus of variations</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -422,9 +445,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
  <span class="menu-text">8. Continuous-time optimal control - indirect approach via Pontryagin’s maximum principle</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -451,9 +474,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true">
  <span class="menu-text">9. Numerical methods for continuous-time optimal control - both indirect and direct approaches</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -486,9 +509,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true">
  <span class="menu-text">10. Some extensions: LQG, LTR, H2</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -521,9 +544,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" aria-expanded="true">
  <span class="menu-text">11. Uncertainty modelling and robustness analysis</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -554,7 +577,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./roban_references.html" class="sidebar-item-text sidebar-link active">
+  <a href="./roban_references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -562,9 +585,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" aria-expanded="true">
  <span class="menu-text">12. Robust control</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -603,9 +626,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" aria-expanded="true">
  <span class="menu-text">13. Limits of performance</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -626,9 +649,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" aria-expanded="true">
  <span class="menu-text">14. Model and controller order reduction</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -652,15 +675,35 @@ div.csl-indent {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#equality-constraints" id="toc-equality-constraints" class="nav-link active" data-scroll-target="#equality-constraints">Equality constraints</a>
+  <ul class="collapse">
+  <li><a href="#lagrange-multipliers-and-lagrangian-function" id="toc-lagrange-multipliers-and-lagrangian-function" class="nav-link" data-scroll-target="#lagrange-multipliers-and-lagrangian-function">Lagrange multipliers and Lagrangian function</a></li>
+  <li><a href="#first-order-necessary-condition-of-optimality" id="toc-first-order-necessary-condition-of-optimality" class="nav-link" data-scroll-target="#first-order-necessary-condition-of-optimality">First-order necessary condition of optimality</a></li>
+  <li><a href="#second-order-sufficient-conditions" id="toc-second-order-sufficient-conditions" class="nav-link" data-scroll-target="#second-order-sufficient-conditions">Second-order sufficient conditions</a></li>
+  </ul></li>
+  <li><a href="#inequality-constraints" id="toc-inequality-constraints" class="nav-link" data-scroll-target="#inequality-constraints">Inequality constraints</a>
+  <ul class="collapse">
+  <li><a href="#first-order-necessary-condition-of-optimality-1" id="toc-first-order-necessary-condition-of-optimality-1" class="nav-link" data-scroll-target="#first-order-necessary-condition-of-optimality-1">First-order necessary condition of optimality</a></li>
+  </ul></li>
+  <li><a href="#equality-and-inequality-constraints" id="toc-equality-and-inequality-constraints" class="nav-link" data-scroll-target="#equality-and-inequality-constraints">Equality and inequality constraints</a>
+  <ul class="collapse">
+  <li><a href="#first-order-necessary-condition-of-optimality-2" id="toc-first-order-necessary-condition-of-optimality-2" class="nav-link" data-scroll-target="#first-order-necessary-condition-of-optimality-2">First-order necessary condition of optimality</a></li>
+  </ul></li>
+  <li><a href="#duality" id="toc-duality" class="nav-link" data-scroll-target="#duality">Duality</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./roban_uncertainty.html">11. Uncertainty modelling and robustness analysis</a></li><li class="breadcrumb-item"><a href="./roban_references.html">References</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_problems.html">1. Optimization – theory</a></li><li class="breadcrumb-item"><a href="./opt_theory_constrained.html">Theory for constrained optimization</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">References</h1>
+<h1 class="title">Theory for constrained optimization</h1>
 </div>
 
 
@@ -677,54 +720,155 @@ div.csl-indent {
 </header>
 
 
-<p>Even when restricted to control systems, the concept of robustness is quite broad and can be approached from many different angles. In our course we are restricting the focus to the approaches formulated in frequency domain. The main reference for this part of the course is the book <span class="citation" data-cites="skogestadMultivariableFeedbackControl2005">(<a href="#ref-skogestadMultivariableFeedbackControl2005" role="doc-biblioref">Skogestad and Postlethwaite 2005</a>)</span>. The concepts and techniques introduced in our lecture are covered in Chapters 7 and 8 (up to 8.5) of the book.</p>
-<p>What we typically do not cover in the lecture, but only due to time constraints, is the topic of structured uncertainties and their analysis using structured singular value (SSV, 𝜇). These are treated in the section 8.6 through 8.11 of the book. It is warmly recommended to have a look at it.</p>
-<p>Although the book is not freely available online (only the first three pages are downloadable on the authors’ web page), it is available in a decent number of copies in <a href="https://aleph.cvut.cz/F?func=direct&amp;doc_number=000664179&amp;local_base=DUPL&amp;format=999">the university library</a>.</p>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<section id="equality-constraints" class="level2">
+<h2 class="anchored" data-anchor-id="equality-constraints">Equality constraints</h2>
+<section id="lagrange-multipliers-and-lagrangian-function" class="level3">
+<h3 class="anchored" data-anchor-id="lagrange-multipliers-and-lagrangian-function">Lagrange multipliers and Lagrangian function</h3>
+<p>We consider the following optimization problem with equality constraints <span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{\bm x\in\mathbb{R}^n} &amp;\quad f(\bm x)\\
+\text{subject to} &amp;\quad \mathbf h(\bm x) = \mathbf 0,
+\end{aligned}
+</span> where <span class="math inline">\mathbf h(\bm x) \in \mathbb R^m</span> defines a set of <span class="math inline">m</span> equations <span class="math display">
+\begin{aligned}
+h_1(\bm x) &amp;= 0\\
+h_2(\bm x) &amp;= 0\\
+\vdots\\
+h_m(\bm x) &amp;= 0.
+\end{aligned}
+</span></p>
+<p>Augmenting the original cost function <span class="math inline">f</span> with the constraint functions <span class="math inline">h_i</span> scaled by Lagrange variables <span class="math inline">\lambda_i</span> gives the Lagrangian function <span class="math display">
+\mathcal{L}(\bm x,\boldsymbol\lambda) \coloneqq f(\bm x) + \sum_{i=1}^m \lambda_i h_i(\bm x) = f(\bm x) + \boldsymbol \lambda^\top \mathbf h(\bm x).
+</span></p>
+</section>
+<section id="first-order-necessary-condition-of-optimality" class="level3">
+<h3 class="anchored" data-anchor-id="first-order-necessary-condition-of-optimality">First-order necessary condition of optimality</h3>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/QjLcsCnMoRo?si=FvEz39x6MsX3_xpI" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p>The first-order necessary condition of optimality is <span class="math display">
+\nabla \mathcal{L}(\bm x,\boldsymbol\lambda) = \mathbf 0,
+</span> which amounts to two (generally vector) equations <span class="math display">
+\boxed{
+\begin{aligned}
+\nabla f(\bm x) + \sum_{i=1}^m \lambda_i \nabla h_i(\bm x) &amp;= \mathbf 0\\
+\mathbf{h}(\bm x) &amp;= \mathbf 0.
+\end{aligned}}
+</span></p>
+<p>Defining a matrix <span class="math inline">\nabla \mathbf h(\bm x) \in \mathbb R^{n\times m}</span> as horizontally stacked gradients of the constraint functions <span class="math display">
+\nabla \mathbf h(\bm x) \coloneqq \begin{bmatrix}
+                                 \nabla h_1(\bm x) &amp;&amp; \nabla h_2(\bm x) &amp;&amp; \ldots &amp;&amp; \nabla h_m(\bm x)
+                            \end{bmatrix},
+</span> in fact, a transpose of the Jacobian matrix, the necessary condition can be rewritten in a vector form as <span class="math display">\boxed
+{\begin{aligned}
+\nabla f(\bm x) + \nabla \mathbf h(\bm x)\boldsymbol \lambda &amp;= \mathbf 0\\
+\mathbf{h}(\bm x) &amp;= \mathbf 0.
+\end{aligned}}
+</span></p>
+<p>Beware of the nonregularity issue! The <span class="math inline">(\nabla \mathbf h(\bm x))^\mathrm T</span> is regular at a given <span class="math inline">\bm x</span> (the <span class="math inline">\bm x</span> is a regular point) if it has a full column rank. Rank-deficiency reveals a defect in formulation.</p>
+<div id="exm-equality_constrained_qp" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1 (Equality-constrained quadratic program)</strong></span> <span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{\bm x \in \mathbb{R}^n} &amp;\quad \frac{1}{2}\bm{x}^\top\mathbf{Q}\bm{x} + \mathbf{r}^\top\bm{x}\\
+\text{subject to} &amp;\quad \mathbf A \bm x + \mathbf b = \mathbf 0.
+\end{aligned}
+</span></p>
+<p>The first-order necessary condition of optimality is</p>
+<p><span class="math display">
+\begin{bmatrix}
+  \mathbf Q &amp; \mathbf A^\top\\\mathbf A &amp; \mathbf 0
+\end{bmatrix}
+\begin{bmatrix}
+  \bm x \\ \boldsymbol \lambda
+\end{bmatrix}
+=
+\begin{bmatrix}
+  -\mathbf r\\\mathbf b
+\end{bmatrix}.
+</span></p>
 </div>
-<div class="callout-title-container flex-fill">
-Get the second edition of Skogestad’s book
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>In case you are interested in getting the book in one way or another (perhaps even by purchasing it), make sure you get the second edition published 2005. The book contains some useful snippets of Matlab code and the first edition relies on some ancient version of Matlab toolboxes, which makes it useless these days.</p>
-</div>
-</div>
-<p>The topic of modeling uncertainty in frequency domain using weighting filters plugged into additive or multiplicative structures is fairly classical now and as such can be found in numerous textbooks on robust control such as <span class="citation" data-cites="doyleFeedbackControlTheory2009">(<a href="#ref-doyleFeedbackControlTheory2009" role="doc-biblioref">Doyle, Francis, and Tannenbaum 2009</a>)</span>, <span class="citation" data-cites="zhouRobustOptimalControl1995">(<a href="#ref-zhouRobustOptimalControl1995" role="doc-biblioref">Zhou, Doyle, and Glover 1995</a>)</span>, <span class="citation" data-cites="dullerudCourseRobustControl2000">(<a href="#ref-dullerudCourseRobustControl2000" role="doc-biblioref">Dullerud and Paganini 2000</a>)</span>, <span class="citation" data-cites="sanchez-penaRobustSystemsTheory1998">(<a href="#ref-sanchez-penaRobustSystemsTheory1998" role="doc-biblioref">Sánchez-Peña and Sznaier 1998</a>)</span>. Although these are fine texts, frankly speaking they offer nearly no guidance for applying the highly advanced concepts to practical problems – they mostly focus on building up the theoretical framework. In this regard, Skogestad’s book is truly unique.</p>
-<p>There are some newer texts that appear to be a bit more on the application side such as <span class="citation" data-cites="lavretskyRobustAdaptiveControl2024">(<a href="#ref-lavretskyRobustAdaptiveControl2024" role="doc-biblioref">Lavretsky and Wise 2024</a>)</span>, <span class="citation" data-cites="yedavalliRobustControlUncertain2014">(<a href="#ref-yedavalliRobustControlUncertain2014" role="doc-biblioref">Yedavalli 2014</a>)</span> or <span class="citation" data-cites="guRobustControlDesign2013">(<a href="#ref-guRobustControlDesign2013" role="doc-biblioref">Gu, Petkov, and Konstantinov 2013</a>)</span>, but I am not familiar them, to be honest.</p>
+</section>
+<section id="second-order-sufficient-conditions" class="level3">
+<h3 class="anchored" data-anchor-id="second-order-sufficient-conditions">Second-order sufficient conditions</h3>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/c0MoCHBYlCU?si=2jJlfRF8mfWHDKcS" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p>Using the unconstrained Hessian <span class="math inline">\nabla^2_{\mathbf{x}\bm{x}} \mathcal{L}(\bm x,\boldsymbol \lambda)</span> is too conservative. Instead, use projected Hessian</p>
+<p><span class="math display">
+\mathbf{Z}^\mathrm{T}\;\nabla^2_{\bm{x}\bm{x}} \mathcal{L}(\bm x,\boldsymbol \lambda)\;\mathbf Z &gt; 0,
+</span> where <span class="math inline">\mathbf Z</span> is an (orthonormal) basis of the nullspace of the Jacobian <span class="math inline">(\nabla \mathbf h(\bm x))^\top</span>.</p>
+</section>
+</section>
+<section id="inequality-constraints" class="level2">
+<h2 class="anchored" data-anchor-id="inequality-constraints">Inequality constraints</h2>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/BwqaNf__6Tc?si=oqhOZK4P7BHlpd6V" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p><span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{\bm x\in\mathbb{R}^n} &amp;\quad f(\bm x)\\
+\text{subject to} &amp;\quad \mathbf g(\bm x) \leq \mathbf 0,
+\end{aligned}
+</span> where <span class="math inline">\mathbf g(\bm x) \in \mathbb R^p</span> defines a set of <span class="math inline">p</span> inequalities.</p>
+<section id="first-order-necessary-condition-of-optimality-1" class="level3">
+<h3 class="anchored" data-anchor-id="first-order-necessary-condition-of-optimality-1">First-order necessary condition of optimality</h3>
+<p>Karush-Kuhn-Tucker (KKT) conditions of optimality are then composed of these four (sets of) conditions <span class="math display">
+\begin{aligned}
+\nabla f(\bm x) + \sum_{i=1}^p \mu_i \nabla g_i(\bm x) &amp;= \mathbf 0,\\
+\mathbf{g}(\bm{x}) &amp;\leq \mathbf 0,\\
+\mu_i g_i(\bm x) &amp;= 0,\quad i = 1,2,\ldots, m\\
+\mu_i &amp;\geq 0,\quad   i = 1,2,\ldots, m.
+\end{aligned}
+</span></p>
+</section>
+</section>
+<section id="equality-and-inequality-constraints" class="level2">
+<h2 class="anchored" data-anchor-id="equality-and-inequality-constraints">Equality and inequality constraints</h2>
+<p><span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{\bm x\in\mathbb{R}^n} &amp;\quad f(\bm x)\\
+\text{subject to} &amp;\quad \mathbf h(\bm x) = \mathbf 0,\\
+                    &amp;\quad \mathbf g(\bm x) \leq \mathbf 0.
+\end{aligned}
+</span></p>
+<section id="first-order-necessary-condition-of-optimality-2" class="level3">
+<h3 class="anchored" data-anchor-id="first-order-necessary-condition-of-optimality-2">First-order necessary condition of optimality</h3>
+<p>The KKT conditions</p>
+<p><span class="math display">
+\begin{aligned}
+\nabla f(\bm x) + \sum_{i=1}^m \lambda_i \nabla h_i(\bm x) + \sum_{i=1}^p \mu_i \nabla g_i(\bm x) &amp;= \mathbf 0\\
+\mathbf{h}(\mathbf{x}) &amp;= \mathbf 0\\
+\mathbf{g}(\mathbf{x}) &amp;\leq \mathbf 0\\
+\mu_i g_i(\bm x) &amp;= 0,\quad i = 1,\ldots, m\\
+\mu_i &amp;\geq 0,\quad   i = 1,\ldots, m.
+\end{aligned}
+</span></p>
+</section>
+</section>
+<section id="duality" class="level2">
+<h2 class="anchored" data-anchor-id="duality">Duality</h2>
+<p>Duality theory offers another view of the original optimization problem by bringing in another but related one.</p>
+<p>Corresponding to the general optimization problem <span class="math display">
+  \begin{aligned}
+  \operatorname*{minimize}\;&amp;f(\bm x)\\
+  \text{subject to}\; &amp; \mathbf g(\bm x)\leq \mathbf 0\\
+  &amp; \mathbf h(\bm x) = \mathbf 0,
+  \end{aligned}
+</span></p>
+<p>we form the <em>Lagrangian</em> function <span class="math display">\mathcal L(\bm x,\bm \lambda,\bm \mu) = f(\bm x) + \bm \lambda^\top \mathbf h(\bm x) + \bm \mu^\top \mathbf g(\bm x)</span></p>
+<p>For any (fixed) values of <span class="math inline">(\bm \lambda,\bm \mu)</span> such that <span class="math inline">\bm \mu\geq 0</span>, we define the <em>Lagrange dual function</em> through the following unconstrained optimization problem <span class="math display">
+q(\bm\lambda,\bm\mu) = \inf_{\bm x}\mathcal L(\bm x,\bm \lambda,\bm \mu).
+</span></p>
+<p>Obviously, it is alway possible to pick a feasible solution <span class="math inline">\bm x</span>, in which case the value of the Lagrangian and the original function coincide, and so the result of this minimization is no worse (larger) than the minimum for the original optimization problem. It can thus serve as a lower bound <span class="math display">q(\bm \lambda,\bm \mu) \leq f(\bm x^\star).</span></p>
+<p>This result is called <em>weak duality</em>. A natural idea is to find the values of <span class="math inline">\bm \lambda</span> and <span class="math inline">\bm \mu</span> such that this lower bound is tightest, that is, <span class="math display">
+\begin{aligned}
+  \operatorname*{maximize}_{\bm\lambda, \bm\mu}\; &amp; q(\bm\lambda,\bm\mu)\\
+  \text{subject to}\;&amp; \bm\mu \geq \mathbf 0.
+\end{aligned}
+</span></p>
+<p>Under some circumstances the result can be tight, which leads to <em>strong duality</em>, which means that the minimum of the original (primal) problem and the maximum of the dual problem coincide. <span class="math display">
+q(\bm \lambda^\star,\bm \mu^\star) = f(\bm x^\star).
+</span></p>
+<p>This related dual optimization problem can have some advantages for development of both theory and algorithms.</p>
 
 
+</section>
 
-
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-doyleFeedbackControlTheory2009" class="csl-entry" role="listitem">
-Doyle, John C., Bruce A. Francis, and Allen R. Tannenbaum. 2009. <em>Feedback <span>Control Theory</span></em>. Reprint of the 1990 edition by Macmillan Publishing. Dover Publications. <a href="https://www.control.utoronto.ca/people/profs/francis/dft.pdf">https://www.control.utoronto.ca/people/profs/francis/dft.pdf</a>.
-</div>
-<div id="ref-dullerudCourseRobustControl2000" class="csl-entry" role="listitem">
-Dullerud, Geir E., and Fernando Paganini. 2000. <em>A <span>Course</span> in <span>Robust Control Theory</span>: <span>A Convex Approach</span></em>. Texts in <span>Applied Mathematics</span>. New York: Springer-Verlag. <a href="https://doi.org/10.1007/978-1-4757-3290-0">https://doi.org/10.1007/978-1-4757-3290-0</a>.
-</div>
-<div id="ref-guRobustControlDesign2013" class="csl-entry" role="listitem">
-Gu, Da-Wei, Petko H. Petkov, and Mihail M. Konstantinov. 2013. <em>Robust <span>Control Design</span> with <span>MATLAB</span><span></span></em>. 2nd ed. Advanced <span>Textbooks</span> in <span>Control</span> and <span>Signal Processing</span>. New York: Springer. <a href="https://doi.org/10.1007/978-1-4471-4682-7">https://doi.org/10.1007/978-1-4471-4682-7</a>.
-</div>
-<div id="ref-lavretskyRobustAdaptiveControl2024" class="csl-entry" role="listitem">
-Lavretsky, Eugene, and Kevin Wise. 2024. <em>Robust and <span>Adaptive Control</span>: <span>With Aerospace Applications</span></em>. 2nd ed. Advanced <span>Textbooks</span> in <span>Control</span> and <span>Signal Processing</span> (<span>C</span>&amp;<span>SP</span>). Cham: Springer. <a href="https://doi.org/10.1007/978-3-031-38314-4">https://doi.org/10.1007/978-3-031-38314-4</a>.
-</div>
-<div id="ref-sanchez-penaRobustSystemsTheory1998" class="csl-entry" role="listitem">
-Sánchez-Peña, Ricardo S., and Mario Sznaier. 1998. <em>Robust <span>Systems Theory</span> and <span>Applications</span></em>. 1st ed. Wiley-Interscience.
-</div>
-<div id="ref-skogestadMultivariableFeedbackControl2005" class="csl-entry" role="listitem">
-Skogestad, Sigurd, and Ian Postlethwaite. 2005. <em>Multivariable <span>Feedback Control</span>: <span>Analysis</span> and <span>Design</span></em>. 2nd ed. Wiley. <a href="https://folk.ntnu.no/skoge/book/">https://folk.ntnu.no/skoge/book/</a>.
-</div>
-<div id="ref-yedavalliRobustControlUncertain2014" class="csl-entry" role="listitem">
-Yedavalli, Rama K. 2014. <em>Robust <span>Control</span> of <span>Uncertain Dynamic Systems</span>: <span>A Linear State Space Approach</span></em>. New York: Springer. <a href="https://doi.org/10.1007/978-1-4614-9132-3">https://doi.org/10.1007/978-1-4614-9132-3</a>.
-</div>
-<div id="ref-zhouRobustOptimalControl1995" class="csl-entry" role="listitem">
-Zhou, Kemin, John C. Doyle, and Keith Glover. 1995. <em>Robust and <span>Optimal Control</span></em>. 1st ed. Prentice Hall.
-</div>
-</div></section></div></main> <!-- /main -->
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1147,13 +1291,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./roban_software.html" class="pagination-link" aria-label="Software">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Software</span>
+      <a href="./opt_theory_unconstrained.html" class="pagination-link" aria-label="Theory for unconstrained optimization">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Theory for unconstrained optimization</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./rocond_mixed_sensitivity.html" class="pagination-link" aria-label="Mixed sensitivity design">
-        <span class="nav-page-text">Mixed sensitivity design</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./opt_theory_modellers.html" class="pagination-link" aria-label="Optimization modelling languages">
+        <span class="nav-page-text">Optimization modelling languages</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1165,7 +1309,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

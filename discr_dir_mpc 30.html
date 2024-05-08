@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.32">
+<meta name="generator" content="quarto-1.5.31">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – References</title>
+<title>B(E)3M35ORR – Optimal and Robust Control – Model predictive control (MPC)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -50,8 +50,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./rocond_mixed_sensitivity.html" rel="next">
-<link href="./roban_software.html" rel="prev">
+<link href="./discr_dir_mpc_solvers.html" rel="next">
+<link href="./discr_dir_LQR.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -99,13 +99,13 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./roban_uncertainty.html">11. Uncertainty modelling and robustness analysis</a></li><li class="breadcrumb-item"><a href="./roban_references.html">References</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_dir_general.html">3. Discrete-time optimal control – direct approach</a></li><li class="breadcrumb-item"><a href="./discr_dir_mpc.html">Model predictive control (MPC)</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -129,9 +129,9 @@ div.csl-indent {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
  <span class="menu-text">1. Optimization – theory</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -176,9 +176,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
  <span class="menu-text">2. Optimization – algorithms</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -217,9 +217,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
  <span class="menu-text">3. Discrete-time optimal control – direct approach</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -238,7 +238,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_dir_mpc.html" class="sidebar-item-text sidebar-link">
+  <a href="./discr_dir_mpc.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Model predictive control (MPC)</span></a>
   </div>
 </li>
@@ -258,9 +258,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
  <span class="menu-text">4. Discrete-time optimal control – indirect approach</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -299,9 +299,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
  <span class="menu-text">5. Discrete-time optimal control – dynamic programming</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -334,9 +334,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
  <span class="menu-text">6. More on MPC</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -369,9 +369,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
  <span class="menu-text">7. Continuous-time optimal control - indirect approach via calculus of variations</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -422,9 +422,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
  <span class="menu-text">8. Continuous-time optimal control - indirect approach via Pontryagin’s maximum principle</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -451,9 +451,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true">
  <span class="menu-text">9. Numerical methods for continuous-time optimal control - both indirect and direct approaches</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -486,9 +486,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true">
  <span class="menu-text">10. Some extensions: LQG, LTR, H2</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -521,9 +521,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" aria-expanded="true">
  <span class="menu-text">11. Uncertainty modelling and robustness analysis</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -554,7 +554,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./roban_references.html" class="sidebar-item-text sidebar-link active">
+  <a href="./roban_references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -562,9 +562,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" aria-expanded="true">
  <span class="menu-text">12. Robust control</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -603,9 +603,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" aria-expanded="true">
  <span class="menu-text">13. Limits of performance</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -626,9 +626,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" aria-expanded="true">
  <span class="menu-text">14. Model and controller order reduction</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -652,15 +652,26 @@ div.csl-indent {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#deficiencies-of-precomputed-open-loop-optimal-control" id="toc-deficiencies-of-precomputed-open-loop-optimal-control" class="nav-link active" data-scroll-target="#deficiencies-of-precomputed-open-loop-optimal-control">Deficiencies of precomputed (open-loop) optimal control</a></li>
+  <li><a href="#model-predictive-control-mpc-as-a-way-to-turn-open-loop-control-into-feedback-control" id="toc-model-predictive-control-mpc-as-a-way-to-turn-open-loop-control-into-feedback-control" class="nav-link" data-scroll-target="#model-predictive-control-mpc-as-a-way-to-turn-open-loop-control-into-feedback-control">Model predictive control (MPC) as a way to turn open-loop control into feedback control</a></li>
+  <li><a href="#linear-vs-nonlinear-mpc" id="toc-linear-vs-nonlinear-mpc" class="nav-link" data-scroll-target="#linear-vs-nonlinear-mpc">Linear vs nonlinear MPC</a></li>
+  <li><a href="#prediction-horizon-vs-control" id="toc-prediction-horizon-vs-control" class="nav-link" data-scroll-target="#prediction-horizon-vs-control">Prediction horizon vs control</a></li>
+  <li><a href="#hard-constraints-vs-soft-constraints" id="toc-hard-constraints-vs-soft-constraints" class="nav-link" data-scroll-target="#hard-constraints-vs-soft-constraints">Hard constraints vs soft constraints</a></li>
+  <li><a href="#literature" id="toc-literature" class="nav-link" data-scroll-target="#literature">Literature</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./roban_uncertainty.html">11. Uncertainty modelling and robustness analysis</a></li><li class="breadcrumb-item"><a href="./roban_references.html">References</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_dir_general.html">3. Discrete-time optimal control – direct approach</a></li><li class="breadcrumb-item"><a href="./discr_dir_mpc.html">Model predictive control (MPC)</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">References</h1>
+<h1 class="title">Model predictive control (MPC)</h1>
 </div>
 
 
@@ -677,52 +688,65 @@ div.csl-indent {
 </header>
 
 
-<p>Even when restricted to control systems, the concept of robustness is quite broad and can be approached from many different angles. In our course we are restricting the focus to the approaches formulated in frequency domain. The main reference for this part of the course is the book <span class="citation" data-cites="skogestadMultivariableFeedbackControl2005">(<a href="#ref-skogestadMultivariableFeedbackControl2005" role="doc-biblioref">Skogestad and Postlethwaite 2005</a>)</span>. The concepts and techniques introduced in our lecture are covered in Chapters 7 and 8 (up to 8.5) of the book.</p>
-<p>What we typically do not cover in the lecture, but only due to time constraints, is the topic of structured uncertainties and their analysis using structured singular value (SSV, 𝜇). These are treated in the section 8.6 through 8.11 of the book. It is warmly recommended to have a look at it.</p>
-<p>Although the book is not freely available online (only the first three pages are downloadable on the authors’ web page), it is available in a decent number of copies in <a href="https://aleph.cvut.cz/F?func=direct&amp;doc_number=000664179&amp;local_base=DUPL&amp;format=999">the university library</a>.</p>
-<div class="callout callout-style-default callout-warning callout-titled">
+<section id="deficiencies-of-precomputed-open-loop-optimal-control" class="level2">
+<h2 class="anchored" data-anchor-id="deficiencies-of-precomputed-open-loop-optimal-control">Deficiencies of precomputed (open-loop) optimal control</h2>
+<p>In the previous section we learnt how to compute an optimal control sequence on a finite time horizon using numerical methods for solving nonlinear programs (NLP), and quadratic programs (QP) in particular. There are two major deficiencies of such approach:</p>
+<ul>
+<li><p>The control sequence was computed under the assumption that the mathematical model is perfectly accurate. As soon as the reality deviates from the model, either because of some unmodelled dynamics or because of the presence of (external) disturbances, the performance of the system will deteriorate. We need a way to turn the presented open-loop (also feedforward) control scheme into a feedback one.</p></li>
+<li><p>The control sequence was computed for a finite time horizon. It is commonly required to consider an infinite time horizon, which is not possible with the presented approach based on solving finite-dimensional mathematical programs.</p></li>
+</ul>
+<p>There are several ways to address these issues. Here we introduced one of them. It is knowns are Model Predictive Control (MPC), or also Receding Horizon Control (RHC). Some more are presented in the next two sections (one based on indirect approach, another one based on dynamic programming).</p>
+</section>
+<section id="model-predictive-control-mpc-as-a-way-to-turn-open-loop-control-into-feedback-control" class="level2">
+<h2 class="anchored" data-anchor-id="model-predictive-control-mpc-as-a-way-to-turn-open-loop-control-into-feedback-control">Model predictive control (MPC) as a way to turn open-loop control into feedback control</h2>
+<p>The idea is to compute an optimal control sequence on a finite time horizon using the material presented in the previous section, apply only the first control action to the system, and then repeat the procedure upon shifting the time horizon by one time step.</p>
+<p>Although this name “model predictive control” is commonly used in the control community, the other – perhaps a bit less popular – name “receding horizon control” is equally descriptive, if not even a bit more.</p>
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Get the second edition of Skogestad’s book
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In case you are interested in getting the book in one way or another (perhaps even by purchasing it), make sure you get the second edition published 2005. The book contains some useful snippets of Matlab code and the first edition relies on some ancient version of Matlab toolboxes, which makes it useless these days.</p>
+<p>It may take a few moments to digest the idea, but it is actually quite natural. As a matter of fact, this is the way most of us control our lifes every day. We plan our actions on a finite time horizon, and while building this plan we use our understanding (model) of the world. We then perform the first action from our plan, observe the impact of our action and possibly a change in the environment, and update our plan accordingly on a new (shifted) time horizon. We repeat this procedure over and over again. It is crucial that the prediction horizon must be long enough so that the full impact of our actions can be observed.</p>
 </div>
 </div>
-<p>The topic of modeling uncertainty in frequency domain using weighting filters plugged into additive or multiplicative structures is fairly classical now and as such can be found in numerous textbooks on robust control such as <span class="citation" data-cites="doyleFeedbackControlTheory2009">(<a href="#ref-doyleFeedbackControlTheory2009" role="doc-biblioref">Doyle, Francis, and Tannenbaum 2009</a>)</span>, <span class="citation" data-cites="zhouRobustOptimalControl1995">(<a href="#ref-zhouRobustOptimalControl1995" role="doc-biblioref">Zhou, Doyle, and Glover 1995</a>)</span>, <span class="citation" data-cites="dullerudCourseRobustControl2000">(<a href="#ref-dullerudCourseRobustControl2000" role="doc-biblioref">Dullerud and Paganini 2000</a>)</span>, <span class="citation" data-cites="sanchez-penaRobustSystemsTheory1998">(<a href="#ref-sanchez-penaRobustSystemsTheory1998" role="doc-biblioref">Sánchez-Peña and Sznaier 1998</a>)</span>. Although these are fine texts, frankly speaking they offer nearly no guidance for applying the highly advanced concepts to practical problems – they mostly focus on building up the theoretical framework. In this regard, Skogestad’s book is truly unique.</p>
-<p>There are some newer texts that appear to be a bit more on the application side such as <span class="citation" data-cites="lavretskyRobustAdaptiveControl2024">(<a href="#ref-lavretskyRobustAdaptiveControl2024" role="doc-biblioref">Lavretsky and Wise 2024</a>)</span>, <span class="citation" data-cites="yedavalliRobustControlUncertain2014">(<a href="#ref-yedavalliRobustControlUncertain2014" role="doc-biblioref">Yedavalli 2014</a>)</span> or <span class="citation" data-cites="guRobustControlDesign2013">(<a href="#ref-guRobustControlDesign2013" role="doc-biblioref">Gu, Petkov, and Konstantinov 2013</a>)</span>, but I am not familiar them, to be honest.</p>
+</section>
+<section id="linear-vs-nonlinear-mpc" class="level2">
+<h2 class="anchored" data-anchor-id="linear-vs-nonlinear-mpc">Linear vs nonlinear MPC</h2>
+<p>x</p>
+</section>
+<section id="prediction-horizon-vs-control" class="level2">
+<h2 class="anchored" data-anchor-id="prediction-horizon-vs-control">Prediction horizon vs control</h2>
+<p>x</p>
+</section>
+<section id="hard-constraints-vs-soft-constraints" class="level2">
+<h2 class="anchored" data-anchor-id="hard-constraints-vs-soft-constraints">Hard constraints vs soft constraints</h2>
+<p>x</p>
+</section>
+<section id="literature" class="level2">
+<h2 class="anchored" data-anchor-id="literature">Literature</h2>
+<p><span class="citation" data-cites="rawlingsModelPredictiveControl2017">(<a href="#ref-rawlingsModelPredictiveControl2017" role="doc-biblioref">Rawlings, Mayne, and Diehl 2017</a>)</span>, <span class="citation" data-cites="borrelliPredictiveControlLinear2017">(<a href="#ref-borrelliPredictiveControlLinear2017" role="doc-biblioref">Borrelli, Bemporad, and Morari 2017</a>)</span>, <span class="citation" data-cites="grosNumericalOptimalControl2022">(<a href="#ref-grosNumericalOptimalControl2022" role="doc-biblioref">Gros and Diehl 2022</a>)</span> <span class="citation" data-cites="bemporadModelPredictiveControl2021a">(<a href="#ref-bemporadModelPredictiveControl2021a" role="doc-biblioref">Bemporad 2021</a>)</span></p>
 
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-doyleFeedbackControlTheory2009" class="csl-entry" role="listitem">
-Doyle, John C., Bruce A. Francis, and Allen R. Tannenbaum. 2009. <em>Feedback <span>Control Theory</span></em>. Reprint of the 1990 edition by Macmillan Publishing. Dover Publications. <a href="https://www.control.utoronto.ca/people/profs/francis/dft.pdf">https://www.control.utoronto.ca/people/profs/francis/dft.pdf</a>.
+<div id="ref-bemporadModelPredictiveControl2021a" class="csl-entry" role="listitem">
+Bemporad, Alberto. 2021. <span>“Model Predictive Control.”</span> Lecture Slides. <a href="http://cse.lab.imtlucca.it/~bemporad/teaching/mpc/imt/1-linear_mpc.pdf">http://cse.lab.imtlucca.it/~bemporad/teaching/mpc/imt/1-linear_mpc.pdf</a>.
 </div>
-<div id="ref-dullerudCourseRobustControl2000" class="csl-entry" role="listitem">
-Dullerud, Geir E., and Fernando Paganini. 2000. <em>A <span>Course</span> in <span>Robust Control Theory</span>: <span>A Convex Approach</span></em>. Texts in <span>Applied Mathematics</span>. New York: Springer-Verlag. <a href="https://doi.org/10.1007/978-1-4757-3290-0">https://doi.org/10.1007/978-1-4757-3290-0</a>.
+<div id="ref-borrelliPredictiveControlLinear2017" class="csl-entry" role="listitem">
+Borrelli, Francesco, Alberto Bemporad, and Manfred Morari. 2017. <em>Predictive <span>Control</span> for <span>Linear</span> and <span>Hybrid Systems</span></em>. <span>Cambridge, New York</span>: <span>Cambridge University Press</span>. <a href="http://cse.lab.imtlucca.it/~bemporad/publications/papers/BBMbook.pdf">http://cse.lab.imtlucca.it/~bemporad/publications/papers/BBMbook.pdf</a>.
 </div>
-<div id="ref-guRobustControlDesign2013" class="csl-entry" role="listitem">
-Gu, Da-Wei, Petko H. Petkov, and Mihail M. Konstantinov. 2013. <em>Robust <span>Control Design</span> with <span>MATLAB</span><span></span></em>. 2nd ed. Advanced <span>Textbooks</span> in <span>Control</span> and <span>Signal Processing</span>. New York: Springer. <a href="https://doi.org/10.1007/978-1-4471-4682-7">https://doi.org/10.1007/978-1-4471-4682-7</a>.
+<div id="ref-grosNumericalOptimalControl2022" class="csl-entry" role="listitem">
+Gros, Sebastien, and Moritz Diehl. 2022. <span>“Numerical <span>Optimal Control</span> (<span>Draft</span>).”</span> Systems Control; Optimization Laboratory IMTEK, Faculty of Engineering, University of Freiburg. <a href="https://www.syscop.de/files/2020ss/NOC/book-NOCSE.pdf">https://www.syscop.de/files/2020ss/NOC/book-NOCSE.pdf</a>.
 </div>
-<div id="ref-lavretskyRobustAdaptiveControl2024" class="csl-entry" role="listitem">
-Lavretsky, Eugene, and Kevin Wise. 2024. <em>Robust and <span>Adaptive Control</span>: <span>With Aerospace Applications</span></em>. 2nd ed. Advanced <span>Textbooks</span> in <span>Control</span> and <span>Signal Processing</span> (<span>C</span>&amp;<span>SP</span>). Cham: Springer. <a href="https://doi.org/10.1007/978-3-031-38314-4">https://doi.org/10.1007/978-3-031-38314-4</a>.
-</div>
-<div id="ref-sanchez-penaRobustSystemsTheory1998" class="csl-entry" role="listitem">
-Sánchez-Peña, Ricardo S., and Mario Sznaier. 1998. <em>Robust <span>Systems Theory</span> and <span>Applications</span></em>. 1st ed. Wiley-Interscience.
-</div>
-<div id="ref-skogestadMultivariableFeedbackControl2005" class="csl-entry" role="listitem">
-Skogestad, Sigurd, and Ian Postlethwaite. 2005. <em>Multivariable <span>Feedback Control</span>: <span>Analysis</span> and <span>Design</span></em>. 2nd ed. Wiley. <a href="https://folk.ntnu.no/skoge/book/">https://folk.ntnu.no/skoge/book/</a>.
-</div>
-<div id="ref-yedavalliRobustControlUncertain2014" class="csl-entry" role="listitem">
-Yedavalli, Rama K. 2014. <em>Robust <span>Control</span> of <span>Uncertain Dynamic Systems</span>: <span>A Linear State Space Approach</span></em>. New York: Springer. <a href="https://doi.org/10.1007/978-1-4614-9132-3">https://doi.org/10.1007/978-1-4614-9132-3</a>.
-</div>
-<div id="ref-zhouRobustOptimalControl1995" class="csl-entry" role="listitem">
-Zhou, Kemin, John C. Doyle, and Keith Glover. 1995. <em>Robust and <span>Optimal Control</span></em>. 1st ed. Prentice Hall.
+<div id="ref-rawlingsModelPredictiveControl2017" class="csl-entry" role="listitem">
+Rawlings, James B., David Q. Mayne, and Moritz M. Diehl. 2017. <em>Model <span>Predictive Control</span>: <span>Theory</span>, <span>Computation</span>, and <span>Design</span></em>. 2nd ed. <span>Madison, Wisconsin</span>: <span>Nob Hill Publishing, LLC</span>. <a href="http://www.nobhillpublishing.com/mpc-paperback/index-mpc.html">http://www.nobhillpublishing.com/mpc-paperback/index-mpc.html</a>.
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1147,13 +1171,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./roban_software.html" class="pagination-link" aria-label="Software">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Software</span>
+      <a href="./discr_dir_LQR.html" class="pagination-link" aria-label="Finite-horizon LQR-optimal control as QP">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Finite-horizon LQR-optimal control as QP</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./rocond_mixed_sensitivity.html" class="pagination-link" aria-label="Mixed sensitivity design">
-        <span class="nav-page-text">Mixed sensitivity design</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./discr_dir_mpc_solvers.html" class="pagination-link" aria-label="Numerical solvers for MPC">
+        <span class="nav-page-text">Numerical solvers for MPC</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1165,7 +1189,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
