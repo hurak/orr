@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.32">
+<meta name="generator" content="quarto-1.6.1">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Robustness analysis for unstructured uncertainty</title>
+<title>Robustness analysis for unstructured uncertainty – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,7 +69,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -84,7 +84,7 @@ ul.task-list li input[type="checkbox"] {
    });
 }}});
   </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -250,13 +250,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./discr_dir_general.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">General finite-horizon nonlinear discrete-time optimal control as nonlinear program</span></a>
+ <span class="menu-text">General finite-horizon nonlinear discrete-time optimal control as a nonlinear program</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./discr_dir_LQR.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Finite-horizon LQR-optimal control as QP</span></a>
+ <span class="menu-text">Finite-horizon LQR-optimal control as a QP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -401,6 +401,12 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cont_indir_overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview of continuous-time optimal control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./cont_indir_calculus_of_variations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Calculus of variations</span></a>
   </div>
@@ -510,12 +516,41 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text">10. Some extensions: LQG, LTR, H2</span></a>
+ <span class="menu-text">9.X. Continuous-time optimal control – dynamic programming</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_dp_HJB.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dynamic programming for continuous-time optimal control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_dp_LQR.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Using HJB equation to solve the continuous-time LQR problem</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_dp_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">10. Some extensions: LQG, LTR, H2</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ext_stochastic_LQR.html" class="sidebar-item-text sidebar-link">
@@ -544,13 +579,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
  <span class="menu-text">11. Uncertainty modelling and robustness analysis</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./roban_uncertainty.html" class="sidebar-item-text sidebar-link">
@@ -585,13 +620,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
  <span class="menu-text">12. Robust control</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rocond_mixed_sensitivity.html" class="sidebar-item-text sidebar-link">
@@ -626,36 +661,42 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
- <span class="menu-text">13. Limits of performance</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true">
+ <span class="menu-text">13. Limitations of achievable performance</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./limits_of_performance_SISO.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Limits for SISO systems</span></a>
+  <a href="./limitations_SISO.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Limitations for SISO systems</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./limits_of_performance_MIMO.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Limits for MIMO systems</span></a>
+  <a href="./limitations_MIMO.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Limitations for MIMO systems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./limitations_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="true">
  <span class="menu-text">14. Model and controller order reduction</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./reduction_order_model.html" class="sidebar-item-text sidebar-link">
@@ -666,6 +707,18 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./reduction_order_controller.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Controller order reduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reduction_order_benchmarks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Benchmarks</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reduction_order_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
       </ul>
@@ -722,7 +775,7 @@ window.Quarto = {
 <p>Before we start discussing robust stability, we need to discuss one fine issue related to stability of a nominal system. We do it through the following example.</p>
 <div id="exm-internal-stability" class="theorem example">
 <p><span class="theorem-title"><strong>Example 1 (Internal stability)</strong></span> Consider the following feedback system with a nominal plant <span class="math inline">G(s)</span> and a nominal controller <span class="math inline">K(s)</span>.</p>
-<div id="fig-internal-stability" class="quarto-figure quarto-figure-center quarto-float anchored" width="60%">
+<div id="fig-internal-stability" class="quarto-float quarto-figure quarto-figure-center anchored" width="60%">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-internal-stability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/internal_stability.png" id="fig-internal-stability" class="img-fluid figure-img" style="width:60.0%">
@@ -749,7 +802,7 @@ K(s)S(s) = \frac{\frac{k(s+1)}{s(s-1)}}{1+\frac{k}{s}} = \frac{k(s+1)}{{\color{r
 L(s) = G(s)K(s) = (1+W(s)\Delta(s))\,G_0(s)K(s) = L_0(s) + W(s)L_0(s)\Delta(s).
 </span></p>
 <p>When trying to figure out the conditions, under which this family of Nyquist curves avoids the point -1, it is useful to interpret the last equation at a given frequency <span class="math inline">\omega</span> as a disc with the center at <span class="math inline">L_0(j\omega)</span> and the radius <span class="math inline">W(j\omega)L_0(j\omega)</span>. To see this, note that <span class="math inline">\Delta(j\omega)</span> represents a complex number with a magnitude up to one, and with an arbitrary angle.</p>
-<div id="fig-robust-stability" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-robust-stability" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-robust-stability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/nyquist_robust_stability.png" class="img-fluid figure-img" style="width:50.0%">
@@ -779,7 +832,7 @@ Figure&nbsp;2: Robust stability for multiplicative uncertainty
 <section id="robust-stability-for-an-lft-small-gain-theorem" class="level3">
 <h3 class="anchored" data-anchor-id="robust-stability-for-an-lft-small-gain-theorem">Robust stability for an LFT – small gain theorem</h3>
 <p>We consider the upper LFT as in <a href="#fig-upper-LFT-with-blocks" class="quarto-xref">Figure&nbsp;3</a>.</p>
-<div id="fig-upper-LFT-with-blocks" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-upper-LFT-with-blocks" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-upper-LFT-with-blocks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/upper_LFT_with_blocks.png" class="img-fluid figure-img" style="width:30.0%">
@@ -827,7 +880,7 @@ Small gain theorem works for MIMO too
 <li>What is the maximum amplification of the disturbance, that is, the resonance peak.</li>
 </ul>
 <p>These four types of performance requirements can be pointed at in <a href="#fig-performance-through-sensitivity-function" class="quarto-xref">Figure&nbsp;4</a> below.</p>
-<div id="fig-performance-through-sensitivity-function" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-performance-through-sensitivity-function" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-performance-through-sensitivity-function-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/performance_through_sensitivity_function.png" class="img-fluid figure-img" style="width:50.0%">
@@ -846,7 +899,7 @@ Figure&nbsp;4: Performance specifications through the shape of the magnitude fre
 <p>It lends some insight if we visualize this condition in the complex plane. First, recall that <span class="math inline">S_0 = \frac{1}{1+L_0}</span>. <a href="#eq-nominal-performance-frequencywise" class="quarto-xref">Equation&nbsp;1</a> then translates to <span class="math display">
 |W_\mathrm{p}(j\omega)|&lt;|1+L_0(j\omega)|\;\;\forall \omega,
 </span> which can be visualized as in</p>
-<div id="fig-nyquist-nominal-performance" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-nyquist-nominal-performance" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-nyquist-nominal-performance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/nyquist_nominal_performance.png" class="img-fluid figure-img" style="width:50.0%">
@@ -860,7 +913,7 @@ Figure&nbsp;5: Nominal performance condition
 <section id="robust-performance-for-a-multiplicative-uncertainty" class="level3">
 <h3 class="anchored" data-anchor-id="robust-performance-for-a-multiplicative-uncertainty">Robust performance for a multiplicative uncertainty</h3>
 <p>So far we have the condition of robust stability and the condition of nominal performance. Simultaneous satisfaction of both gives… just robust stability and nominal performance. Robust performance obviously needs a stricter condition.</p>
-<div id="fig-nyquist-robust-performance" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-nyquist-robust-performance" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-nyquist-robust-performance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/nyquist_robust_performance.png" class="img-fluid figure-img" style="width:50.0%">
