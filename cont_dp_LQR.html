@@ -779,23 +779,35 @@ J^\star(\bm x(t_\mathrm{f}),t_\mathrm{f}) = \frac{1}{2}\bm x^\top (t_\mathrm{f})
 <p>We can now proceed by assuming that the optimal cost function is quadratic in <span class="math inline">\bm x</span> for all other times <span class="math inline">t</span>, that is, there must exist a symmetric matrix function <span class="math inline">\mathbf S(t)</span> such that <span class="math display">
 J^\star(\bm x(t),t) = \frac{1}{2}\bm x^\top (t)\mathbf S(t)\bm x(t).
 </span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Recall that we did something similar when making a <em>sweep</em> assumption to derive a Riccati equation following the indirect approach – we just make an inspired guess and see if it works. Here the inspiration comes from the observation made elsewhere, that the optimal cost function in the LQR problem is quadratic in <span class="math inline">\bm x</span>.</p>
-<p>We now aim at substituting this into the HJB equation. Observe that <span class="math inline">\frac{\partial J^\star}{\partial t}=\bm x^\top(t) \dot{\mathbf{S}}(t) \bm x(t)</span> and <span class="math inline">\nabla_{\bm x} J^\star = \bm S \bm x</span>. Upon substitution to the HJB equation, we get</p>
+</div>
+</div>
+<p>We now aim at substituting this into the HJB equation. Observe that <span class="math inline">\frac{\partial J^\star}{\partial t}=\bm x^\top(t) \dot{\mathbf{S}}(t) \bm x(t)</span> and <span class="math inline">\nabla_{\bm x} J^\star = \mathbf S \bm x</span>. Upon substitution to the HJB equation, we get</p>
 <p><span class="math display">
--\bm x^\top \dot{\mathbf{S}} \bm x = \frac{1}{2}\bm x^\top \mathbf Q \bm x + \bm x^\top \bm S \mathbf A\bm x - \frac{1}{2}\bm x^\top \bm S \mathbf B\mathbf R^{-1}\mathbf B^\top \bm S \bm x.
+-\bm x^\top \dot{\mathbf{S}} \bm x = \frac{1}{2}\bm x^\top \mathbf Q \bm x + \bm x^\top \mathbf S \mathbf A\bm x - \frac{1}{2}\bm x^\top \mathbf S \mathbf B\mathbf R^{-1}\mathbf B^\top \mathbf S \bm x.
 </span></p>
 <p>This can be reformatted as <span class="math display">
--\bm x^\top \dot{\mathbf{S}} \bm x = \frac{1}{2} \bm x^\top \left[\mathbf Q + 2 \bm S \mathbf A - \bm S \mathbf B\mathbf R^{-1}\mathbf B^\top \bm S \right ] \bm x.
+-\bm x^\top \dot{\mathbf{S}} \bm x = \frac{1}{2} \bm x^\top \left[\mathbf Q + 2 \mathbf S \mathbf A - \mathbf S \mathbf B\mathbf R^{-1}\mathbf B^\top \mathbf S \right ] \bm x.
 </span></p>
 <p>Notice that the middle matrix in the square brackets is not symmetric. Symmetrizing it (with no effect on the resulting value of the quadratic form) we get</p>
 <p><span class="math display">
--\bm x^\top \dot{\mathbf{S}} \bm x = \frac{1}{2} \bm x^\top \left[\mathbf Q + \bm S \mathbf A + \mathbf A^\top \bm S  - \bm S \mathbf B\mathbf R^{-1}\mathbf B^\top \bm S \right ] \bm x.
+-\bm x^\top \dot{\mathbf{S}} \bm x = \frac{1}{2} \bm x^\top \left[\mathbf Q + \mathbf S \mathbf A + \mathbf A^\top \mathbf S  - \mathbf S \mathbf B\mathbf R^{-1}\mathbf B^\top \mathbf S \right ] \bm x.
 </span></p>
-<p>Finally, since the above single (scalar) equation should hold for all <span class="math inline">\bm x(t)</span>, the matrix equation must hold too, and we get the familiar differential Riccati equation <span class="math display">
--\dot{\mathbf S}(t) = \mathbf A^\top \mathbf S(t) + \mathbf S(t)\mathbf A - \mathbf S(t)\mathbf B\mathbf R^{-1}\mathbf B^\top \mathbf S(t) + \mathbf Q.
+<p>Finally, since the above single (scalar) equation should hold for all <span class="math inline">\bm x(t)</span>, the matrix equation must hold too, and we get the familiar differential Riccati equation <span class="math display">\boxed
+{-\dot{\mathbf S}(t) = \mathbf A^\top \mathbf S(t) + \mathbf S(t)\mathbf A - \mathbf S(t)\mathbf B\mathbf R^{-1}\mathbf B^\top \mathbf S(t) + \mathbf Q.}
 </span></p>
-<p>We also get the optimal control <span class="math display">
-\bm u^\star(t) = - \underbrace{\mathbf R^{-1}\mathbf B^\top \mathbf S(t)}_{\bm K(t)}\bm x(t).
+<p>We also get the optimal control <span class="math display">\boxed
+{\bm u^\star(t) = - \underbrace{\mathbf R^{-1}\mathbf B^\top \mathbf S(t)}_{\bm K(t)}\bm x(t).}
 </span></p>
 <p>We have just rederived the continuous-time LQR problem using the HJB equation (previously we did it by massaging the two-point boundary value problem that followed as the necessary condition of optimality from the techniques of calculus of variations).</p>
 <p>Note that we have also just seen the equivalence between a first-order linear PDE and first-order nonlinear ODE.</p>

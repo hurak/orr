@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.1">
+<meta name="generator" content="quarto-1.6.0">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Optimization modelling languages – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>Dynamic programming and discrete-time optimal control – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -64,8 +30,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./opt_theory_references.html" rel="next">
-<link href="./opt_theory_constrained.html" rel="prev">
+<link href="./dynamic_programming_tabular.html" rel="next">
+<link href="./discr_indir_references.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -159,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_problems.html">1. Optimization – theory</a></li><li class="breadcrumb-item"><a href="./opt_theory_modellers.html">Optimization modelling languages</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dynamic_programming.html">5. Discrete-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./dynamic_programming.html">Dynamic programming and discrete-time optimal control</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -219,7 +185,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_theory_modellers.html" class="sidebar-item-text sidebar-link active">
+  <a href="./opt_theory_modellers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Optimization modelling languages</span></a>
   </div>
 </li>
@@ -365,7 +331,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dynamic_programming.html" class="sidebar-item-text sidebar-link">
+  <a href="./dynamic_programming.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Dynamic programming and discrete-time optimal control</span></a>
   </div>
 </li>
@@ -767,21 +733,20 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#why-optimization-modelling-languages" id="toc-why-optimization-modelling-languages" class="nav-link active" data-scroll-target="#why-optimization-modelling-languages">Why optimization modelling languages?</a></li>
-  <li><a href="#why-not-optimization-modelling-languages" id="toc-why-not-optimization-modelling-languages" class="nav-link" data-scroll-target="#why-not-optimization-modelling-languages">Why not optimization modelling languages?</a></li>
-  <li><a href="#language-independent-optimization-modelling-languages" id="toc-language-independent-optimization-modelling-languages" class="nav-link" data-scroll-target="#language-independent-optimization-modelling-languages">Language-independent optimization modelling languages</a></li>
-  <li><a href="#optimization-modelling-in-julia" id="toc-optimization-modelling-in-julia" class="nav-link" data-scroll-target="#optimization-modelling-in-julia">Optimization modelling in Julia</a></li>
-  <li><a href="#optimization-modelling-in-matlab" id="toc-optimization-modelling-in-matlab" class="nav-link" data-scroll-target="#optimization-modelling-in-matlab">Optimization modelling in Matlab</a></li>
-  <li><a href="#optimization-modelling-in-python" id="toc-optimization-modelling-in-python" class="nav-link" data-scroll-target="#optimization-modelling-in-python">Optimization modelling in Python</a></li>
+  <li><a href="#bellmans-principle-of-optimality-and-dynamic-programming" id="toc-bellmans-principle-of-optimality-and-dynamic-programming" class="nav-link active" data-scroll-target="#bellmans-principle-of-optimality-and-dynamic-programming">Bellman’s principle of optimality and dynamic programming</a></li>
+  <li><a href="#bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem" id="toc-bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem" class="nav-link" data-scroll-target="#bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem">Bellman’s principle of optimality applied to the discrete-time optimal control problem</a>
+  <ul class="collapse">
+  <li><a href="#alternative-formulation-of-dynamic-programming-using-q-factors" id="toc-alternative-formulation-of-dynamic-programming-using-q-factors" class="nav-link" data-scroll-target="#alternative-formulation-of-dynamic-programming-using-q-factors">Alternative formulation of dynamic programming using Q-factors</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_problems.html">1. Optimization – theory</a></li><li class="breadcrumb-item"><a href="./opt_theory_modellers.html">Optimization modelling languages</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dynamic_programming.html">5. Discrete-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./dynamic_programming.html">Dynamic programming and discrete-time optimal control</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Optimization modelling languages</h1>
+<h1 class="title">Dynamic programming and discrete-time optimal control</h1>
 </div>
 
 
@@ -798,220 +763,466 @@ window.Quarto = {
 </header>
 
 
-<section id="why-optimization-modelling-languages" class="level2">
-<h2 class="anchored" data-anchor-id="why-optimization-modelling-languages">Why optimization modelling languages?</h2>
-<p>Realistically complex optimization problems cannot be solved with just a pen and a paper – computer programs (often called <em>optimization solvers</em>) are needed to solve them. And now comes the challenge: as various solvers for even the same class of problems differ in the algorithms they implement, so do their interfaces – every solver expects the inputs (the data defining the optimization problem) in a specific format. This makes it difficult to switch between solvers, as the problem data has to be reformatted every time.</p>
-<div id="exm-data-formatting" class="theorem example">
-<p><span class="theorem-title"><strong>Example 1 (Data formatting for different solvers)</strong></span> Consider the following optimization problem: <span class="math display">
-\begin{aligned}
-  \operatorname*{minimize}_{\bm x \in \mathbb R^2} &amp; \quad \frac{1}{2} \bm x^\top \begin{bmatrix}4 &amp; 1\\ 1 &amp; 2 \end{bmatrix} \bm x + \begin{bmatrix}1 \\ 1\end{bmatrix}^\top \bm x \\
-  \text{subject to} &amp; \quad \begin{bmatrix}1 \\ 0 \\ 0\end{bmatrix} \leq \begin{bmatrix} 1 &amp; 1\\ 1 &amp; 0\\ 0 &amp; 1\end{bmatrix} \bm x \leq  \begin{bmatrix}1 \\ 0.7 \\ 0.7\end{bmatrix}
-\end{aligned}
+<p>In the previous two chapters we explained direct and indirect approaches to discrete-time optimal control. While the former conveniently allows incorporating almost arbitrary constraints, it only provides a control trajectory (a finite sequence of values of the control variable); if feedback is needed, the optimization must be performed in every sampling period (thus implementing the concept of receding horizon or model predictive control, MPC). The latter, in contrast, can lead to a (state) feedback control law, but this only happens in special cases such as a regulation of a linear system minimizing a quadratic cost (LQR) while assuming no bound constraints on the the control or state variables; in the general case it leads to a two-point boundary value problem, which can only be solved numerically for trajectories.</p>
+<p>In this chapter we present yet another approach — dynamic programming DP. It also allows imposing constraints (in fact, even constraints such as integrality of variables, which are not compatible with our derivative-based optimization toolset exploited so far), and yet it directly leads to feedback controllers.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/7qRCZ9_wfYI?si=hLh9IPUoSin2VXoY" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p>While in the case of linear systems with a quadratic cost function, dynamic programming provides another route to the theoretical results that we already know — Riccati equation based solution to the LQR problem —, in the the case of general nonlinear dynamical systems with general cost functions, the feedback controllers come in the form of look-up tables. This format of a feedback controller gives some hint about disadvantages of DP, namely, both computation and then the use of these look-up tables do not scale well with the dimension of the state space (aka curse of dimensionality). Various approximation schemes exist — one promising branch is known as reinforcement learning.</p>
+<section id="bellmans-principle-of-optimality-and-dynamic-programming" class="level2">
+<h2 class="anchored" data-anchor-id="bellmans-principle-of-optimality-and-dynamic-programming">Bellman’s principle of optimality and dynamic programming</h2>
+<p>We start by considering the following example.</p>
+<div id="exm-trip-from-prague-to-ostrava" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1 (Reusing the plan for a trip from Prague to Ostrava)</strong></span> We are planning a car trip from Prague to Ostrava and you are searching for a route that minimizes the total time. Using the online planner we learn that the fastest route from Prague to Ostrava is — as bizarre as it sounds — via (actually around) Brno.</p>
+<iframe style="border:none" src="https://frame.mapy.cz/s/munotenatu" width="700" height="466" frameborder="0">
+</iframe>
+<p>Now, is it possible to reuse this plan for our friends from Brno who are also heading for Ostrava?</p>
+<iframe style="border:none" src="https://frame.mapy.cz/s/hasebevole" width="700" height="466" frameborder="0">
+</iframe>
+<p>The answer is yes, as the planner confirms. Surely did not even need the planner to answer such trivial question. And yet it demonstrates the key wisdom of the whole chapter — the Bellman’s principle of optimality —, which we now state formally.</p>
+</div>
+<div id="thm-bellmans-principle-of-optimality" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1 (Bellman’s principle of optimality)</strong></span> An optimal policy has the property that whatever the initial state and initial decision are, the remaining decisions must constitute an optimal policy with regard to the state resulting from the first decision.</p>
+</div>
+<p>We now investigate this idea a bit more quantitatively using a simple computational example of finding a shortest path in a graph.</p>
+<div id="exm-shortest-path-in-a-graph" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2 (Shortest path in a graph)</strong></span> We consider a directional graph with nodes <code>A</code>, <code>B</code>, <code>C</code>, <code>D</code>, and <code>E</code> and edges with the prescribed lengths as in the figure below.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 432.00 431.93" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(0.981589 0.981589) rotate(0) translate(4 436.03)">
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-436.03 436.1,-436.03 436.1,4 -4,4"></polygon>
+<!-- A -->
+<g id="node1" class="node">
+<title>A</title>
+<ellipse fill="red" stroke="red" cx="22.1" cy="-216.26" rx="18.02" ry="18.02"></ellipse>
+<text text-anchor="middle" x="22.1" y="-212.06" font-family="Times,serif" font-size="14.00" fill="white">A</text>
+</g>
+<!-- B -->
+<g id="node2" class="node">
+<title>B</title>
+<ellipse fill="red" stroke="red" cx="119.1" cy="-291.26" rx="18" ry="18"></ellipse>
+<text text-anchor="middle" x="119.1" y="-287.06" font-family="Times,serif" font-size="14.00" fill="white">B</text>
+</g>
+<!-- A&#45;&gt;B -->
+<g id="edge1" class="edge">
+<title>A-&gt;B</title>
+<path fill="none" stroke="black" d="M36.71,-227.01C52.37,-239.37 78.29,-259.83 96.67,-274.34"></path>
+<polygon fill="black" stroke="black" points="94.5,-277.08 104.52,-280.53 98.84,-271.59 94.5,-277.08"></polygon>
+<text text-anchor="middle" x="70.1" y="-259.46" font-family="Times,serif" font-size="14.00">3</text>
+</g>
+<!-- D -->
+<g id="node3" class="node">
+<title>D</title>
+<ellipse fill="red" stroke="red" cx="119.1" cy="-141.26" rx="18.02" ry="18.02"></ellipse>
+<text text-anchor="middle" x="119.1" y="-137.06" font-family="Times,serif" font-size="14.00" fill="white">D</text>
+</g>
+<!-- A&#45;&gt;D -->
+<g id="edge2" class="edge">
+<title>A-&gt;D</title>
+<path fill="none" stroke="black" d="M36.71,-205.51C52.37,-193.15 78.29,-172.69 96.67,-158.18"></path>
+<polygon fill="black" stroke="black" points="98.84,-160.93 104.52,-151.99 94.5,-155.43 98.84,-160.93"></polygon>
+<text text-anchor="middle" x="70.1" y="-185.46" font-family="Times,serif" font-size="14.00">1</text>
+</g>
+<!-- C -->
+<g id="node4" class="node">
+<title>C</title>
+<ellipse fill="red" stroke="red" cx="216.1" cy="-382.26" rx="18" ry="18"></ellipse>
+<text text-anchor="middle" x="216.1" y="-378.06" font-family="Times,serif" font-size="14.00" fill="white">C</text>
+</g>
+<!-- B&#45;&gt;C -->
+<g id="edge3" class="edge">
+<title>B-&gt;C</title>
+<path fill="none" stroke="black" d="M132.91,-303.53C148.87,-318.81 176.3,-345.09 195.05,-363.05"></path>
+<polygon fill="black" stroke="black" points="192.85,-365.79 202.49,-370.18 197.69,-360.74 192.85,-365.79"></polygon>
+<text text-anchor="middle" x="167.1" y="-343.46" font-family="Times,serif" font-size="14.00">2</text>
+</g>
+<!-- E -->
+<g id="node5" class="node">
+<title>E</title>
+<ellipse fill="red" stroke="red" cx="216.1" cy="-216.26" rx="18" ry="18"></ellipse>
+<text text-anchor="middle" x="216.1" y="-212.06" font-family="Times,serif" font-size="14.00" fill="white">E</text>
+</g>
+<!-- B&#45;&gt;E -->
+<g id="edge4" class="edge">
+<title>B-&gt;E</title>
+<path fill="none" stroke="black" d="M133.71,-280.51C149.37,-268.15 175.29,-247.69 193.67,-233.18"></path>
+<polygon fill="black" stroke="black" points="195.84,-235.93 201.52,-226.99 191.5,-230.43 195.84,-235.93"></polygon>
+<text text-anchor="middle" x="167.1" y="-259.46" font-family="Times,serif" font-size="14.00">1</text>
+</g>
+<!-- D&#45;&gt;E -->
+<g id="edge5" class="edge">
+<title>D-&gt;E</title>
+<path fill="none" stroke="black" d="M133.71,-152.01C149.37,-164.37 175.29,-184.83 193.67,-199.34"></path>
+<polygon fill="black" stroke="black" points="191.5,-202.08 201.52,-205.53 195.84,-196.59 191.5,-202.08"></polygon>
+<text text-anchor="middle" x="167.1" y="-185.46" font-family="Times,serif" font-size="14.00">3</text>
+</g>
+<!-- G -->
+<g id="node6" class="node">
+<title>G</title>
+<ellipse fill="red" stroke="red" cx="216.1" cy="-50.26" rx="18.02" ry="18.02"></ellipse>
+<text text-anchor="middle" x="216.1" y="-46.06" font-family="Times,serif" font-size="14.00" fill="white">G</text>
+</g>
+<!-- D&#45;&gt;G -->
+<g id="edge6" class="edge">
+<title>D-&gt;G</title>
+<path fill="none" stroke="black" d="M132.91,-128.99C148.87,-113.71 176.3,-87.43 195.05,-69.47"></path>
+<polygon fill="black" stroke="black" points="197.69,-71.78 202.49,-62.34 192.85,-66.73 197.69,-71.78"></polygon>
+<text text-anchor="middle" x="167.1" y="-103.46" font-family="Times,serif" font-size="14.00">2</text>
+</g>
+<!-- F -->
+<g id="node7" class="node">
+<title>F</title>
+<ellipse fill="red" stroke="red" cx="313.1" cy="-291.26" rx="18" ry="18"></ellipse>
+<text text-anchor="middle" x="313.1" y="-287.06" font-family="Times,serif" font-size="14.00" fill="white">F</text>
+</g>
+<!-- C&#45;&gt;F -->
+<g id="edge7" class="edge">
+<title>C-&gt;F</title>
+<path fill="none" stroke="black" d="M229.91,-369.99C245.87,-354.71 273.3,-328.43 292.05,-310.47"></path>
+<polygon fill="black" stroke="black" points="294.69,-312.78 299.49,-303.34 289.85,-307.73 294.69,-312.78"></polygon>
+<text text-anchor="middle" x="264.1" y="-343.46" font-family="Times,serif" font-size="14.00">3</text>
+</g>
+<!-- E&#45;&gt;F -->
+<g id="edge8" class="edge">
+<title>E-&gt;F</title>
+<path fill="none" stroke="black" d="M230.71,-227.01C246.37,-239.37 272.29,-259.83 290.67,-274.34"></path>
+<polygon fill="black" stroke="black" points="288.5,-277.08 298.52,-280.53 292.84,-271.59 288.5,-277.08"></polygon>
+<text text-anchor="middle" x="264.1" y="-259.46" font-family="Times,serif" font-size="14.00">3</text>
+</g>
+<!-- H -->
+<g id="node8" class="node">
+<title>H</title>
+<ellipse fill="red" stroke="red" cx="313.1" cy="-141.26" rx="18.02" ry="18.02"></ellipse>
+<text text-anchor="middle" x="313.1" y="-137.06" font-family="Times,serif" font-size="14.00" fill="white">H</text>
+</g>
+<!-- E&#45;&gt;H -->
+<g id="edge9" class="edge">
+<title>E-&gt;H</title>
+<path fill="none" stroke="black" d="M230.71,-205.51C246.37,-193.15 272.29,-172.69 290.67,-158.18"></path>
+<polygon fill="black" stroke="black" points="292.84,-160.93 298.52,-151.99 288.5,-155.43 292.84,-160.93"></polygon>
+<text text-anchor="middle" x="264.1" y="-185.46" font-family="Times,serif" font-size="14.00">2</text>
+</g>
+<!-- G&#45;&gt;H -->
+<g id="edge10" class="edge">
+<title>G-&gt;H</title>
+<path fill="none" stroke="black" d="M229.91,-62.53C245.87,-77.81 273.3,-104.09 292.05,-122.05"></path>
+<polygon fill="black" stroke="black" points="289.85,-124.79 299.49,-129.18 294.69,-119.74 289.85,-124.79"></polygon>
+<text text-anchor="middle" x="264.1" y="-103.46" font-family="Times,serif" font-size="14.00">4</text>
+</g>
+<!-- I -->
+<g id="node9" class="node">
+<title>I</title>
+<ellipse fill="red" stroke="red" cx="410.1" cy="-216.26" rx="18" ry="18"></ellipse>
+<text text-anchor="middle" x="410.1" y="-212.06" font-family="Times,serif" font-size="14.00" fill="white">I</text>
+</g>
+<!-- F&#45;&gt;I -->
+<g id="edge11" class="edge">
+<title>F-&gt;I</title>
+<path fill="none" stroke="black" d="M327.71,-280.51C343.37,-268.15 369.29,-247.69 387.67,-233.18"></path>
+<polygon fill="black" stroke="black" points="389.84,-235.93 395.52,-226.99 385.5,-230.43 389.84,-235.93"></polygon>
+<text text-anchor="middle" x="361.1" y="-259.46" font-family="Times,serif" font-size="14.00">4</text>
+</g>
+<!-- H&#45;&gt;I -->
+<g id="edge12" class="edge">
+<title>H-&gt;I</title>
+<path fill="none" stroke="black" d="M327.71,-152.01C343.37,-164.37 369.29,-184.83 387.67,-199.34"></path>
+<polygon fill="black" stroke="black" points="385.5,-202.08 395.52,-205.53 389.84,-196.59 385.5,-202.08"></polygon>
+<text text-anchor="middle" x="361.1" y="-185.46" font-family="Times,serif" font-size="14.00">2</text>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>The task is now to find the shortest path from <code>A</code> to <code>I</code>. What are possible solution strategies? We can start enumerating all the possible paths and calculate their costs (by summing the costs of the participating edges). Needless to say, this strategy based on enumeration scales very badly with the growing number of nodes.</p>
+<p>Alternatively, we solve the problem using dynamic programming and relying on Bellman’s principle of optimality. Before we proceed, we need to define the concept of a <em>stage</em>. It is perhaps less common and natural when it comes to solving graph problems, but we introduce it with anticipation of discrete-time optimal control problems. By the <em>k</em>th stage we understand the node at which the <em>k</em>th decision needs to be made. In our case, starting at <code>A</code>, 4 decisions need to be made to reach the final node. But let’s agree that we also denote the final node as the stage, the 5th one, even if no decision is to be made here. The total number of stages is then N=5.</p>
+<p>The crucial attribute of the strategy based on dynamic programming is that we proceed <em>backwards</em>. We start at the very final <em>stage</em>. At this stage, there is just one node and there is nothing we can do, but note that it also makes sense to formulate problems with several possible nodes at the final stage, each with a different (terminal) costs — we will actually use once we switch to the optimal control setting. Now we proceed backwards to the last but one, that is, the <em>(N-1)</em>th stage.</p>
+<p>These are <code>F</code> and <code>H</code> nodes at this 4the stage. In these two nodes there is again no freedom as for the actions, but for each of them we can record their respective <em>cost to go</em>: 4 for the <code>F</code> node and 2 for the <code>H</code> node. These costs reflect how costly it is to reach the terminal node from them.</p>
+<p>Things are only getting interesting if we now proceed to the 3rd stage. We now have to consider three possible nodes: <code>C</code>, <code>E</code> and <code>G</code>. For the <code>C</code> and <code>G</code> nodes there is still just one action and we can only record their costs to go. The cost for the <code>C</code> node can be computed as the cost for the immediate transition from <code>C</code> to <code>F</code> plus the cost for the <code>F</code> node, which we recorded previously, that is, 3+4=7. We record the value of 7 with the <code>C</code> node. Similarly for the <code>G</code> node. For the <code>E</code> node there are two possible actions — two possible decisions to be made, two possible paths to choose from. Either to the left (or, actually, up in our orientation of the graph), which would bring us to the node <code>F</code>, or to the right (or down), which would bring us to the node <code>H</code>. We compute the costs to go for both decisions and choose the decision with a smaller cost. Here the cost of the decision to go to the left is composed of the cost of the transition to F plus the cost to go from <code>F</code>, that is, 3+4=7. The cost to go for the decision to go right is composed of the transition cost from <code>E</code> to <code>H</code> plus the cost to go from <code>H</code>, that is, 2+2=4. Obviously, the optimal decision is to go right, that is, to the node <code>H</code>. Here, on top of the value of the optimal (smallest) cost to go from the node we also record the optimal decision (go to the right/down). We do it by coloring the edge in blue.</p>
+<p>Note that in principle we should have highlighted the edges from <code>F</code> to <code>I</code>, from <code>C</code> to <code>F</code>, and from <code>G</code> to <code>H</code>. It was unnecessary here since there were the only possible edges emanating from these nodes.</p>
+<p>We proceed backwards to the 2nd stage, and we compute the costs to go for the nodes <code>B</code> and <code>D</code>. Again we record their optimal values and the actual optimal decisions.</p>
+<p>One last shift backwards and we are at the initial node A, for which we can do the same computation of the costs to go. Note that here coincidently both decisions have the same cost to go, hence both possible decisions/actions are optimal and we can just toss a coin.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 430.48 432.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(0.907893 0.907893) rotate(0) translate(4 471.83)">
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-471.83 470.16,-471.83 470.16,4 -4,4"></polygon>
+<!-- A -->
+<g id="node1" class="node">
+<title>A</title>
+<ellipse fill="red" stroke="red" cx="29.16" cy="-253.89" rx="29.33" ry="29.33"></ellipse>
+<text text-anchor="middle" x="29.16" y="-258.09" font-family="Times,serif" font-size="14.00" fill="white">A</text>
+<text text-anchor="middle" x="29.16" y="-241.29" font-family="Times,serif" font-size="14.00" fill="white">8</text>
+</g>
+<!-- B -->
+<g id="node2" class="node">
+<title>B</title>
+<ellipse fill="red" stroke="red" cx="131.16" cy="-339.89" rx="29.33" ry="29.33"></ellipse>
+<text text-anchor="middle" x="131.16" y="-344.09" font-family="Times,serif" font-size="14.00" fill="white">B</text>
+<text text-anchor="middle" x="131.16" y="-327.29" font-family="Times,serif" font-size="14.00" fill="white">5</text>
+</g>
+<!-- A&#45;&gt;B -->
+<g id="edge1" class="edge">
+<title>A-&gt;B</title>
+<path fill="none" stroke="blue" stroke-width="3" d="M52.35,-272.98C66.56,-285.2 85.16,-301.2 100.62,-314.49"></path>
+<polygon fill="blue" stroke="blue" stroke-width="3" points="98.51,-317.29 108.37,-321.16 103.07,-311.98 98.51,-317.29"></polygon>
+<text text-anchor="middle" x="80.16" y="-303.09" font-family="Times,serif" font-size="14.00">3</text>
+</g>
+<!-- D -->
+<g id="node3" class="node">
+<title>D</title>
+<ellipse fill="red" stroke="red" cx="131.16" cy="-169.89" rx="29.33" ry="29.33"></ellipse>
+<text text-anchor="middle" x="131.16" y="-174.09" font-family="Times,serif" font-size="14.00" fill="white">D</text>
+<text text-anchor="middle" x="131.16" y="-157.29" font-family="Times,serif" font-size="14.00" fill="white">7</text>
+</g>
+<!-- A&#45;&gt;D -->
+<g id="edge2" class="edge">
+<title>A-&gt;D</title>
+<path fill="none" stroke="blue" stroke-width="3" d="M52.35,-235.25C66.46,-223.4 84.91,-207.9 100.3,-194.98"></path>
+<polygon fill="blue" stroke="blue" stroke-width="3" points="102.62,-197.6 108.03,-188.48 98.12,-192.24 102.62,-197.6"></polygon>
+<text text-anchor="middle" x="80.16" y="-219.09" font-family="Times,serif" font-size="14.00">1</text>
+</g>
+<!-- C -->
+<g id="node4" class="node">
+<title>C</title>
+<ellipse fill="red" stroke="red" cx="233.16" cy="-402.89" rx="29.33" ry="29.33"></ellipse>
+<text text-anchor="middle" x="233.16" y="-407.09" font-family="Times,serif" font-size="14.00" fill="white">C</text>
+<text text-anchor="middle" x="233.16" y="-390.29" font-family="Times,serif" font-size="14.00" fill="white">7</text>
+</g>
+<!-- B&#45;&gt;C -->
+<g id="edge3" class="edge">
+<title>B-&gt;C</title>
+<path fill="none" stroke="black" d="M156.36,-355.15C169.17,-363.21 185.08,-373.23 199.01,-382.01"></path>
+<polygon fill="black" stroke="black" points="197.5,-385.2 207.83,-387.57 201.23,-379.27 197.5,-385.2"></polygon>
+<text text-anchor="middle" x="182.16" y="-377.09" font-family="Times,serif" font-size="14.00">2</text>
+</g>
+<!-- E -->
+<g id="node5" class="node">
+<title>E</title>
+<ellipse fill="red" stroke="red" cx="233.16" cy="-233.89" rx="29.33" ry="29.33"></ellipse>
+<text text-anchor="middle" x="233.16" y="-238.09" font-family="Times,serif" font-size="14.00" fill="white">E</text>
+<text text-anchor="middle" x="233.16" y="-221.29" font-family="Times,serif" font-size="14.00" fill="white">4</text>
+</g>
+<!-- B&#45;&gt;E -->
+<g id="edge4" class="edge">
+<title>B-&gt;E</title>
+<path fill="none" stroke="blue" stroke-width="3" d="M151.91,-318.95C167.25,-302.69 188.68,-279.98 205.53,-262.12"></path>
+<polygon fill="blue" stroke="blue" stroke-width="3" points="208.12,-264.47 212.44,-254.79 203.03,-259.67 208.12,-264.47"></polygon>
+<text text-anchor="middle" x="182.16" y="-294.09" font-family="Times,serif" font-size="14.00">1</text>
+</g>
+<!-- D&#45;&gt;E -->
+<g id="edge5" class="edge">
+<title>D-&gt;E</title>
+<path fill="none" stroke="blue" stroke-width="3" d="M156.36,-185.39C169.17,-193.58 185.08,-203.76 199.01,-212.68"></path>
+<polygon fill="blue" stroke="blue" stroke-width="3" points="197.52,-215.88 207.83,-218.32 201.29,-209.98 197.52,-215.88"></polygon>
+<text text-anchor="middle" x="182.16" y="-208.09" font-family="Times,serif" font-size="14.00">3</text>
+</g>
+<!-- G -->
+<g id="node6" class="node">
+<title>G</title>
+<ellipse fill="red" stroke="red" cx="233.16" cy="-64.89" rx="29.33" ry="29.33"></ellipse>
+<text text-anchor="middle" x="233.16" y="-69.09" font-family="Times,serif" font-size="14.00" fill="white">G</text>
+<text text-anchor="middle" x="233.16" y="-52.29" font-family="Times,serif" font-size="14.00" fill="white">6</text>
+</g>
+<!-- D&#45;&gt;G -->
+<g id="edge6" class="edge">
+<title>D-&gt;G</title>
+<path fill="none" stroke="black" d="M152.15,-148.9C167.28,-133.02 188.21,-111.03 204.88,-93.54"></path>
+<polygon fill="black" stroke="black" points="207.83,-95.51 212.19,-85.85 202.76,-90.68 207.83,-95.51"></polygon>
+<text text-anchor="middle" x="182.16" y="-125.09" font-family="Times,serif" font-size="14.00">2</text>
+</g>
+<!-- F -->
+<g id="node7" class="node">
+<title>F</title>
+<ellipse fill="red" stroke="red" cx="335.16" cy="-339.89" rx="29.33" ry="29.33"></ellipse>
+<text text-anchor="middle" x="335.16" y="-344.09" font-family="Times,serif" font-size="14.00" fill="white">F</text>
+<text text-anchor="middle" x="335.16" y="-327.29" font-family="Times,serif" font-size="14.00" fill="white">4</text>
+</g>
+<!-- C&#45;&gt;F -->
+<g id="edge7" class="edge">
+<title>C-&gt;F</title>
+<path fill="none" stroke="black" d="M258.36,-387.64C271.17,-379.58 287.08,-369.56 301.01,-360.78"></path>
+<polygon fill="black" stroke="black" points="303.23,-363.51 309.83,-355.22 299.5,-357.59 303.23,-363.51"></polygon>
+<text text-anchor="middle" x="284.16" y="-377.09" font-family="Times,serif" font-size="14.00">3</text>
+</g>
+<!-- E&#45;&gt;F -->
+<g id="edge8" class="edge">
+<title>E-&gt;F</title>
+<path fill="none" stroke="black" d="M253.91,-254.84C269.25,-271.1 290.68,-293.81 307.53,-311.67"></path>
+<polygon fill="black" stroke="black" points="305.03,-314.12 314.44,-319 310.12,-309.32 305.03,-314.12"></polygon>
+<text text-anchor="middle" x="284.16" y="-294.09" font-family="Times,serif" font-size="14.00">3</text>
+</g>
+<!-- H -->
+<g id="node8" class="node">
+<title>H</title>
+<ellipse fill="red" stroke="red" cx="335.16" cy="-169.89" rx="29.33" ry="29.33"></ellipse>
+<text text-anchor="middle" x="335.16" y="-174.09" font-family="Times,serif" font-size="14.00" fill="white">H</text>
+<text text-anchor="middle" x="335.16" y="-157.29" font-family="Times,serif" font-size="14.00" fill="white">2</text>
+</g>
+<!-- E&#45;&gt;H -->
+<g id="edge9" class="edge">
+<title>E-&gt;H</title>
+<path fill="none" stroke="blue" stroke-width="3" d="M258.36,-218.4C271.17,-210.21 287.08,-200.03 301.01,-191.11"></path>
+<polygon fill="blue" stroke="blue" stroke-width="3" points="303.29,-193.81 309.83,-185.47 299.52,-187.91 303.29,-193.81"></polygon>
+<text text-anchor="middle" x="284.16" y="-208.09" font-family="Times,serif" font-size="14.00">2</text>
+</g>
+<!-- G&#45;&gt;H -->
+<g id="edge10" class="edge">
+<title>G-&gt;H</title>
+<path fill="none" stroke="black" d="M254.15,-85.89C269.28,-101.77 290.21,-123.76 306.88,-141.25"></path>
+<polygon fill="black" stroke="black" points="304.76,-144.11 314.19,-148.94 309.83,-139.28 304.76,-144.11"></polygon>
+<text text-anchor="middle" x="284.16" y="-125.09" font-family="Times,serif" font-size="14.00">4</text>
+</g>
+<!-- I -->
+<g id="node9" class="node">
+<title>I</title>
+<ellipse fill="red" stroke="red" cx="437.16" cy="-253.89" rx="29.33" ry="29.33"></ellipse>
+<text text-anchor="middle" x="437.16" y="-258.09" font-family="Times,serif" font-size="14.00" fill="white">I</text>
+<text text-anchor="middle" x="437.16" y="-241.29" font-family="Times,serif" font-size="14.00" fill="white">0</text>
+</g>
+<!-- F&#45;&gt;I -->
+<g id="edge11" class="edge">
+<title>F-&gt;I</title>
+<path fill="none" stroke="black" d="M358.35,-320.81C372.56,-308.59 391.16,-292.59 406.62,-279.3"></path>
+<polygon fill="black" stroke="black" points="409.07,-281.81 414.37,-272.63 404.51,-276.5 409.07,-281.81"></polygon>
+<text text-anchor="middle" x="386.16" y="-303.09" font-family="Times,serif" font-size="14.00">4</text>
+</g>
+<!-- H&#45;&gt;I -->
+<g id="edge12" class="edge">
+<title>H-&gt;I</title>
+<path fill="none" stroke="blue" stroke-width="3" d="M358.35,-188.54C372.46,-200.39 390.91,-215.88 406.3,-228.81"></path>
+<polygon fill="blue" stroke="blue" stroke-width="3" points="404.12,-231.55 414.03,-235.3 408.62,-226.19 404.12,-231.55"></polygon>
+<text text-anchor="middle" x="386.16" y="-219.09" font-family="Times,serif" font-size="14.00">2</text>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Maybe it is not immediately clear from the graph, but when viewed as an itinerary for a trip, it provides a feedback controller. Even if for whichever reason we find ourselves out of the optimal path, we can always have a look at the graph — it will guide us along the path that is optimal from that given node. For example, if we happen to be in node <code>C</code>, we do have a plan. Well, here is misleadingly simple as there is no decision to be made, but you get the point.</p>
+</div>
+</section>
+<section id="bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem" class="level2">
+<h2 class="anchored" data-anchor-id="bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem">Bellman’s principle of optimality applied to the discrete-time optimal control problem</h2>
+<p>Let’s recapitulate here the problem of optimal control for a discrete-time system. In particular, we consider the system modelled by <span class="math display">
+\bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k),
+</span> defined on the discrete time interval <span class="math inline">[i,N]</span>, with the initial state <span class="math inline">\bm x_i</span> fixed (<span class="math inline">\bm x_i = \mathbf x_i</span>) We aim at minimizing the cost function <span class="math display">
+J_i^N\left(\bm x_i, \bm u_i, \bm u_{i+1}, \ldots, \bm u_{N-1}\right) = \phi(\bm x_N,N) + \sum_{k=i}^{N-1}L_k(\bm x_k,\bm u_k).
 </span></p>
-<p>There are dozens of solvers that can be used to solve this problem. Here we demonstrate a usage of these two: <a href="https://osqp.org">OSQP</a> and <a href="https://oxfordcontrol.github.io/COSMO.jl/stable/">COSMO.jl</a>. And we are going to call the solvers in Julia (using the the wrappers <a href="https://github.com/osqp/OSQP.jl">OSQP.jl</a> for the former). First, we start with OSQP (in fact, this is their example):</p>
-<div id="35c918f6" class="cell">
-<details open="" class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">OSQP</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SparseArrays</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the problem data and build the problem description</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">4.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">2.0</span>])</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">1.0</span>]</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">0.0</span>; <span class="fl">0.0</span> <span class="fl">1.0</span>])</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.0</span>; <span class="fl">0.0</span>]</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.7</span>; <span class="fl">0.7</span>]</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>problem_OSQP <span class="op">=</span> OSQP.<span class="fu">Model</span>()</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>OSQP.<span class="fu">setup!</span>(problem_OSQP; P<span class="op">=</span>P, q<span class="op">=</span>q, A<span class="op">=</span>A, l<span class="op">=</span>l, u<span class="op">=</span>u, alpha<span class="op">=</span><span class="fl">1</span>, verbose<span class="op">=</span><span class="cn">false</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the optimization problem and show the results</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>results_OSQP <span class="op">=</span> OSQP.<span class="fu">solve!</span>(problem_OSQP)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>results_OSQP.x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<p>Before we proceed, some comments on the notation are in order. Indeed, a well tuned and systematically used notation is instrumental in dynamic programming.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<p>Now we do the same with COSMO. First, we must take into account that COSMO cannot accept two-sided inequalities, so we have to reformulate the problem so that the constraints are only in the form of <span class="math inline">\mathbf A\bm x + b \geq \bm 0</span>: <span class="math display">
-\begin{aligned}
-  \operatorname*{minimize}_{\bm x \in \mathbb R^2} &amp; \quad \frac{1}{2} \bm x^\top \begin{bmatrix}4 &amp; 1\\ 1 &amp; 2 \end{bmatrix} \bm x + \begin{bmatrix}1 \\ 1\end{bmatrix}^\top \bm x \\
-  \text{subject to} &amp; \quad \begin{bmatrix} -1 &amp; -1\\ -1 &amp; 0\\ 0 &amp; -1\\ 1 &amp; 1\\ 1 &amp; 0\\ 0 &amp; 1\end{bmatrix}\bm x + \begin{bmatrix}1 \\ 0.7 \\ 0.7 \\ -1 \\ 0 \\ 0\end{bmatrix} \geq  \mathbf 0.
-\end{aligned}
+<div class="callout-title-container flex-fill">
+We omit the final time from the notation for the cost function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>While the cost function does depend on the final time too, in most if not all our analyses we assume that it is fixed and understood from the context. Hence we will not explicitly indicate the dependence on the final time. We will write just <span class="math inline">J_i(\ldots)</span>. This may help reduce the notational clutter as we are going to need the upper index for something else soon.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+We omit the state trajectory from the notation for the cost function and leave just the initial state
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The cost function is clearly a function of the full sequence <span class="math inline">\bm x_i, \bm x_{i+1},\ldots, \bm x_N</span> of the state vectors too. In the previous chapters we handled it systematically (either by considering them as optimization variables in the simultaneous direct approach or by introducing Lagrange multipliers in the indirect approache). But here we want to emphasize the fact that starting with <span class="math inline">\bm x_{i+1}</span>, the whole state trajectory is uniquelly determined by the initial state <span class="math inline">\bm x_i</span> and the corresponding control trajectory <span class="math inline">\bm u_i, \bm u_{i+1},\ldots, \bm u_{N-1}</span>. Therefore, we write the cost function as a function of the initial state, the initial time (we already agreed above not to emphasize the final time), and the sequence of controls.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+We use the lower index to display dependence on time
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The dependence on the discrete time is reflected by the lower indices: not only in <span class="math inline">\bm x_k</span> and <span class="math inline">\bm u_k</span> but also in <span class="math inline">\mathbf f_k()</span>, <span class="math inline">L_k()</span> and <span class="math inline">J_k()</span>. We could perhaps write these as <span class="math inline">\mathbf f(\cdot,\cdot,k)</span>, <span class="math inline">L(\cdot,\cdot,k)</span> and <span class="math inline">J(\cdot,\cdot,k)</span> to better indicate that <span class="math inline">k</span> is really an argument for these functions, but we prefer making it compatible with the way we indicate the time dependence of <span class="math inline">\bm x_k</span> and <span class="math inline">\bm u_k</span>.</p>
+</div>
+</div>
+<p>Having introduced the cost function parameterized by the initial state, initial time and the full sequence of controls, we now introduce the <em>optimal cost function</em></p>
+<p><span id="eq-optimal_cost_function"><span class="math display">
+\boxed{
+    J^\star_i(\bm x_i) = \min_{\bm u_i,\ldots, \bm u_{N-1}} J_i\left(\bm x_i, \bm u_i, \bm u_{i+1}, \ldots, \bm u_{N-1}\right).}
+\tag{1}</span></span></p>
+<p>The sequence of controls in the above minimization may be subject to some constraints, but we do not indicate them here for the sake of notational simplicity.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Difference between the <span class="math inline">J_i</span> and <span class="math inline">J^\star_i</span> functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Understanding the difference is crucial. While the cost function <span class="math inline">J_i</span> depends on the (initial) state, the (initial) time and the sequence of controls applied over the whole interval, the optimal cost function <span class="math inline">J^\star_i</span> only depends on the (initial) state and the (initial) time.</p>
+</div>
+</div>
+<p>Assume now that we can find an optimal control sequence from any given state <span class="math inline">\bm x_{k+1}</span> at time <span class="math inline">k+1</span> on, i.e., we can find <span class="math inline">\bm u_{k+1}^\star,\bm u_{k+2}^\star,\ldots, \bm u_{N-1}^\star</span> yielding the optimal cost <span class="math inline">J_{k+1}^\star(\bm x_{k+1})</span>. We will soon show how to actually find it, but for the time being we just assume we can have it. We now show how it can be used to find the optimal cost <span class="math inline">J_k^\star(\bm x_k)</span> at state <span class="math inline">\bm x_k</span> and time <span class="math inline">k</span>.</p>
+<p>Let’s now consider the following strategy: with the system at state <span class="math inline">\bm x_k</span> and time <span class="math inline">k</span> we apply some control <span class="math inline">\bm u_k</span>, not necessarily an optimal one, which brings the system to the state <span class="math inline">\bm x_{k+1}</span> in the next time <span class="math inline">k+1</span>. But from then on we use the control sequence <span class="math inline">\bm u_{k+1}^\star,\bm u_{k+2}^\star,\ldots, \bm u_{N-1}^\star</span> that is optimal from <span class="math inline">\bm x_{k+1}</span>. The corresponding cost is <span id="eq-cost_of_the_all_but_one_optimal_controls"><span class="math display">
+L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1}).
+\tag{2}</span></span></p>
+<p>Bellman’s principle of optimality states that if we optimize the above expression over <span class="math inline">\bm u_k</span>, we get the optimal cost <span class="math inline">J_k^\star(\bm x_k)</span> at time <span class="math inline">k</span> <span id="eq-bellman_for_discrete_time_optimal_control"><span class="math display">
+\boxed{J_k^\star(\bm x_k) = \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1})\right).}
+\tag{3}</span></span></p>
+<p>Hence, at a given state <span class="math inline">\bm x_{k}</span> and time <span class="math inline">k</span>, the optimization is performed over only one (possibly vector) control <span class="math inline">\bm u_k</span> and not the whole trajectory as the definition of the optimal cost in <a href="#eq-optimal_cost_function" class="quarto-xref">Equation&nbsp;1</a> suggests! What a simplification!</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The minimization needs to be performed over the whole sum <span class="math inline">L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1})</span>, because <span class="math inline">\bm x_{k+1}</span> is a function of <span class="math inline">\bm u_k</span> (recall that <span class="math inline">\bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k)</span>). We can also write <a href="#eq-bellman_for_discrete_time_optimal_control" class="quarto-xref">Equation&nbsp;3</a> as <span class="math display">
+J_k^\star(\bm x_k) = \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\mathbf f_k(\bm x_k,\bm u_k))\right),
+</span> which makes it more apparent.</p>
+</div>
+</div>
+<p>Once we have the optimal cost function <span class="math inline">J^\star_{k}</span>, the optimal control <span class="math inline">\bm u_k^\star(x_k)</span> at a given time <span class="math inline">k</span> and state <span class="math inline">\bm x_k</span> is obtained by <span class="math display">
+\boxed{
+    \bm u_k^\star(\bm x_k) = \arg \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\mathbf f_k(\bm x_k,\bm u_k))\right).}
 </span></p>
-<div id="f08613f7" class="cell">
-<details open="" class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">COSMO</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SparseArrays</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the problem data and build the problem description</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">4.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">2.0</span>])</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">1.0</span>]</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">0.0</span>; <span class="fl">0.0</span> <span class="fl">1.0</span>])</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.0</span>; <span class="fl">0.0</span>]</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.7</span>; <span class="fl">0.7</span>]</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>Aa <span class="op">=</span> [<span class="op">-</span>A; A]</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>ba <span class="op">=</span> [u; <span class="op">-</span>l]</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>problem_COSMO <span class="op">=</span> COSMO.<span class="fu">Model</span>()</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>constraint <span class="op">=</span> COSMO.<span class="fu">Constraint</span>(Aa, ba, COSMO.Nonnegatives)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>settings <span class="op">=</span> COSMO.<span class="fu">Settings</span>(verbose<span class="op">=</span><span class="cn">false</span>)</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">assemble!</span>(problem_COSMO, P, q, constraint, settings <span class="op">=</span> settings)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the optimization problem and show the results</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>results_COSMO <span class="op">=</span> COSMO.<span class="fu">optimize!</span>(problem_COSMO)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>results_COSMO.x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>Although the two solvers are solving the same problem, the data has to be formatted differently for each of them (and the difference in syntax is not negligible either).</p>
-<p>What if we could formulate the same problem without considering the pecualiarities of each solver? It turns out that it is possible. In Julia we can use <a href="https://jump.dev/JuMP.jl/stable/">JuMP.jl</a>:</p>
-<div id="6721394e" class="cell">
-<details open="" class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">JuMP</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SparseArrays</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">OSQP</span>, <span class="bu">COSMO</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the problem data and build the problem description</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">4.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">2.0</span>])</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">1.0</span>]</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">0.0</span>; <span class="fl">0.0</span> <span class="fl">1.0</span>])</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.0</span>; <span class="fl">0.0</span>]</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.7</span>; <span class="fl">0.7</span>]</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>model_JuMP <span class="op">=</span> <span class="fu">Model</span>()</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="pp">@variable</span>(model_JuMP, x[<span class="fl">1</span><span class="op">:</span><span class="fl">2</span>])</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="pp">@objective</span>(model_JuMP, Min, <span class="fl">0.5</span><span class="op">*</span>x<span class="op">'*</span>P<span class="op">*</span>x <span class="op">+</span> q<span class="op">'*</span>x)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(model_JuMP, A<span class="op">*</span>x <span class="op">.&lt;=</span> u)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(model_JuMP, A<span class="op">*</span>x <span class="op">.&gt;=</span> l)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the optimization problem using OSQP and show the results</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="fu">set_silent</span>(model_JuMP)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="fu">set_optimizer</span>(model_JuMP, OSQP.Optimizer)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="fu">optimize!</span>(model_JuMP)</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="fu">termination_status</span>(model_JuMP)</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>x_OSQP <span class="op">=</span> <span class="fu">value</span>.(x)</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Now solve the problem using COSMO and show the results</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="fu">set_optimizer</span>(model_JuMP, COSMO.Optimizer)</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="fu">optimize!</span>(model_JuMP)</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="fu">termination_status</span>(model_JuMP)</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>x_COSMO <span class="op">=</span> <span class="fu">value</span>.(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</div>
-<p>Notice how the optimization problem is defined just once in the last code and then different solvers can be chosen to solve it. The code represents an instance of a so-called <em>optimization modelling language (OML)</em>, or actually its major class called <em>algebraic modelling language (AML)</em>.</p>
-<p>The key motivation for using an OML/AML is to separate the process of formulating the problem from the process of solving it (using a particular solver). Furthermore, such solver-independent problem description (called optimization model) better mimics the way we formulate these problems using a pen and a paper, making it (perhaps) a bit more convenient to write our own and read someone else’s models.</p>
-</section>
-<section id="why-not-optimization-modelling-languages" class="level2">
-<h2 class="anchored" data-anchor-id="why-not-optimization-modelling-languages">Why not optimization modelling languages?</h2>
-<p>As a matter of fact, some optimization experts even keep avoiding OML/AML altogether. For example, if a company pays for a (not really cheap) license of <a href="https://www.gurobi.com/solutions/gurobi-optimizer/">Gurobi Optimizer</a> – a powerful optimization library for (MI)LP/QP/QCQP –, it may be the case that for a particular very large-scale optimization problem their optimization specialist will have hard time to find a third-party solver of comparable performance. If then <a href="https://www.gurobi.com/documentation/current/refman/py_python_api_overview.html">its Python API</a> makes definition of optimization problems convenient too (see the code below), maybe there is little regret that such problem definitions cannot be reused with a third-party solver. The more so that since it is tailored to Gurobi solver, it will offer control over the finest details.</p>
-<div id="c87ea916" class="cell">
-<details open="" class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="bu">gurobipy</span> as gp</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="bu">numpy</span> as np</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the data for the model</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> np.<span class="fu">array</span>([[<span class="fl">4.0</span>, <span class="fl">1.0</span>], [<span class="fl">1.0</span>, <span class="fl">2.0</span>]])</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> np.<span class="fu">array</span>([<span class="fl">1.0</span>, <span class="fl">1.0</span>])</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.<span class="fu">array</span>([[<span class="fl">1.0</span>, <span class="fl">1.0</span>], [<span class="fl">1.0</span>, <span class="fl">0.0</span>], [<span class="fl">0.0</span>, <span class="fl">1.0</span>]])</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> np.<span class="fu">array</span>([<span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>])</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> np.<span class="fu">array</span>([<span class="fl">1.0</span>, <span class="fl">0.7</span>, <span class="fl">0.7</span>])</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new model</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> gp.<span class="fu">Model</span>(<span class="st">"qp"</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a vector variable</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> m.<span class="fu">addMVar</span>((<span class="fl">2</span>,))</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the objective</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>obj <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="fu">*</span>(x<span class="pp">@P@x</span> <span class="op">+</span> q<span class="pp">@x</span>)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>m.<span class="fu">setObjective</span>(obj)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the constraints</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>m.<span class="fu">addConstr</span>(A<span class="pp">@x</span> <span class="op">&gt;=</span> l, <span class="st">"c1"</span>)</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>m.<span class="fu">addConstr</span>(A<span class="pp">@x</span> <span class="op">&lt;=</span> u, <span class="st">"c2"</span>)</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the solver</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>m.<span class="fu">optimize</span>()</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> v <span class="kw">in</span> m.<span class="fu">getVars</span>()<span class="op">:</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(f<span class="st">"{v.VarName} {v.X:g}"</span>)</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f<span class="st">"Obj: {m.ObjVal:g}"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>Similar and yet different is the story of the <a href="https://www.ibm.com/products/ilog-cplex-optimization-studio/cplex-optimizer">IBM ILOG CPLEX</a>, another top-notch solvers addressing the same problems as Gurobi. They do have their own modeling language called <a href="https://www.ibm.com/docs/en/icos/22.1.1?topic=opl-optimization-programming-language">Optimization Modelling Language (OPL)</a>, but it is also only interfacing with their solver(s). We can only guess that their motivation for developing their own optimization modelling language was that at the time of its developments (in 1990s) Python was still in pre-2.0 stage and formulating optimization problems in programming languages like C/C++ or Fortran was nowhere close to being convenient. Gurobi, in turn, started in 2008, when Python was already a popular language.</p>
-</section>
-<section id="language-independent-optimization-modelling-languages" class="level2">
-<h2 class="anchored" data-anchor-id="language-independent-optimization-modelling-languages">Language-independent optimization modelling languages</h2>
-<p>Optimization/algebraic modelling languages were originally developed outside programming languages, essentially as standalone tools. Examples are <a href="https://ampl.com/learn/ampl-book/">AMPL</a>, <a href="https://www.gams.com/latest/docs/UG_MAIN.html#UG_Language_Environment">GAMS</a>, and, say, <a href="https://en.wikibooks.org/wiki/GLPK/GMPL_(MathProg)">GLPK/GMPL (MathProg)</a>. We listed these main names here since they can be bumped across (they are still actively developed), but we are not going to discuss them in our course any further. The reason is that there are now alternatives that are implemented as packages/toolboxes in programming languages such as Julia, Matlab, and Python, which offer a more fluent workflow – a user can use the same programming language to acquire the data, preprocess them, formulate the optimization problem, configure and call a solver, and finally do some postprocessing including a visualization and whatever reporting, all without leaving the language of their choice.</p>
-</section>
-<section id="optimization-modelling-in-julia" class="level2">
-<h2 class="anchored" data-anchor-id="optimization-modelling-in-julia">Optimization modelling in Julia</h2>
-<p>My obvious (personal) bias towards Julia programming language is partly due to the terrific support for optimization modelling in Julia:</p>
-<ul>
-<li><p><a href="https://jump.dev">JuMP.jl</a> not only constitutes one of the flagship packages of the Julia ecosystem but it is on par with the state of the art optimization modelling languages. Furthermore, being a free and open source software, it enjoys a vibrant community of developers and users. They even meet annually at JuMP-dev conference (<a href="https://jump.dev/meetings/jumpdev2023/">in 2023 in Boston, MA</a>).</p></li>
-<li><p><a href="https://jump.dev/Convex.jl">Convex.jl</a> is an implementation of the concept of <a href="https://fenchel.stanford.edu/home">Disciplined Convex Programming (DCP)</a> in Julia (below we also list its implementations in Matlab and Python). Even though it is now registered as a part of the JuMP.jl project, it is still a separate concept. Interesting, convenient, but it seems to be in a maintanence mode now.</p></li>
-</ul>
-<div id="830525f3" class="cell">
-<details open="" class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Convex</span>, <span class="bu">SCS</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the problem data and build the problem description</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> [<span class="fl">4.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">2.0</span>]</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">1.0</span>]</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">0.0</span>; <span class="fl">0.0</span> <span class="fl">1.0</span>]</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>]</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">0.7</span>, <span class="fl">0.7</span>]</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a vector variable of size n</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fu">Variable</span>(<span class="fl">2</span>)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the objective </span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>objective <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="fu">*quadform</span>(x,P) <span class="op">+</span> <span class="fu">dot</span>(q,x)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the constraints</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>constraints <span class="op">=</span> [l <span class="op">&lt;=</span> A<span class="op">*</span>x, A<span class="op">*</span>x <span class="op">&lt;=</span> u]</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the overal description of the optimization problem</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>problem <span class="op">=</span> <span class="fu">minimize</span>(objective, constraints)</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the problem</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="fu">solve!</span>(problem, SCS.Optimizer; silent_solver <span class="op">=</span> <span class="cn">true</span>)</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the status of the problem</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>problem.status <span class="co"># :Optimal, :Infeasible, :Unbounded etc.</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the optimum value</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>problem.optval</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the optimal x</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>x.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="optimization-modelling-in-matlab" class="level2">
-<h2 class="anchored" data-anchor-id="optimization-modelling-in-matlab">Optimization modelling in Matlab</h2>
-<p>Popularity of Matlab as a language and an ecosystem for control-related computations is undeniable. Therefore, let’s have a look at what is available for modelling optimization problems in Matlab:</p>
-<ul>
-<li><p><a href="https://www.mathworks.com/help/optim/index.html?s_tid=CRUX_lftnav">Optimization Toolbox for Matlab</a> is one of the commercial toolboxes produced by Matlab and Simulink creators. Since the R2017b release the toolbox supports <a href="https://www.mathworks.com/help/optim/ug/problem-based-workflow.html">Problem-based optimization workflow</a> (besides the more traditional <a href="https://www.mathworks.com/help/optim/optimization-problem-setup-solver-based.html">Solver-based optimization workflow</a> supported since the beginning), which can be regarded as a kind of an optimization/algebraic modelling language, albeit restricted to their own solvers.</p></li>
-<li><p><a href="https://yalmip.github.io">Yalmip</a> started as <em>Yet Another LMI Parser</em> quite some time ago (which reveals its control theoretic roots), but these days it serves as fairly complete algebraic modelling language (within Matlab), interfacing to perhaps any optimization solver, both commercial and free&amp;open-source. It is free and open-source. Is is still actively developed and maintained and it abounds with tutorials and examples.</p></li>
-<li><p><a href="http://cvxr.com/cvx/">CVX</a> is a Matlab counterpart of Convex.jl (or the other way around, if you like, since it has been here longer). The name stipulates that it only allows convex optimization probles (unlike Yalmip) – it follows the <a href="https://fenchel.stanford.edu/home">Disciplined Convex Programming (DCP)</a> paradigm. Unfortunately, the development seems to have stalled – the last update is from 2020.</p></li>
-</ul>
-</section>
-<section id="optimization-modelling-in-python" class="level2">
-<h2 class="anchored" data-anchor-id="optimization-modelling-in-python">Optimization modelling in Python</h2>
-<p>Python is a very popular language for scientific computing. Although it is arguable if it is actually suitable for implementation of numerical algoritms, when it comes to building optimization models, it does its job fairly well (and the numerical solvers it calls can be developed in different language). Several packages implementing OML/AML are available:</p>
-<ul>
-<li><p><a href="https://www.cvxpy.org">cvxpy</a> is yet another instantiation of <a href="https://fenchel.stanford.edu/home">Disciplined Convex Programming</a> that we alredy mention when introducing Convex.jl and CVX. And it turns out that this one exhibits the greatest momentum. The team of developers seems to be have exceeded a critical mass, hence the tools seems like a safe bet already.</p></li>
-<li><p><a href="http://www.pyomo.org">Pyomo</a> is a popular open-source optimization modelling language within Python.</p></li>
-<li><p><a href="https://github.com/APMonitor/">APMonitor</a> and <a href="https://gekko.readthedocs.io/en/latest/">GEKKO</a> are relatively young projects, primarily motivated by applications of machine learning and optimization in chemical process engineering.</p></li>
-</ul>
+<section id="alternative-formulation-of-dynamic-programming-using-q-factors" class="level3">
+<h3 class="anchored" data-anchor-id="alternative-formulation-of-dynamic-programming-using-q-factors">Alternative formulation of dynamic programming using Q-factors</h3>
+<p>The cost function in <a href="#eq-cost_of_the_all_but_one_optimal_controls" class="quarto-xref">Equation&nbsp;2</a> is sometimes called <em>Q-factor</em> and we denote it <span class="math inline">Q_k(\bm x_k,\bm u_k)</span>. We write its definition here for convenience <span class="math display">
+Q^\star_k(\bm x_k,\bm u_k) = L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1}).
+</span></p>
+<p>The optimal cost function <span class="math inline">J_k^\star(\bm x_k)</span> can be recovered from the optimal Q-factor <span class="math inline">Q_k^\star(\bm x_k,\bm u_k)</span> by taking the minimum over <span class="math inline">\bm u_k</span> <span class="math display">
+J_k^\star(\bm x_k) = \min_{\bm u_k} Q_k^\star(\bm x_k,\bm u_k).
+</span></p>
+<p>Bellman’s principle of optimality can be then expressed using the optimal Q-factor as <span class="math display">
+\boxed{Q_k^\star(\bm x_k,\bm u_k) = L_k(\bm x_k,\bm u_k) + \min_{\bm u_{k+1}} Q_{k+1}^\star(\bm x_{k+1},\bm u_{k+1})}.
+</span></p>
+<p>Optimal control is then obtained from the optimal Q-factor as the minimizing control <span class="math display">
+\boxed{\bm u_k^\star(\bm x_k) = \arg \min_{\bm u_k} Q_k^\star(\bm x_k,\bm u_k).}
+</span></p>
 
 
+</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
@@ -1437,13 +1648,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./opt_theory_constrained.html" class="pagination-link" aria-label="Theory for constrained optimization">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Theory for constrained optimization</span>
+      <a href="./discr_indir_references.html" class="pagination-link" aria-label="References">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">References</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./opt_theory_references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./dynamic_programming_tabular.html" class="pagination-link" aria-label="Tables as outcomes of dynamic programming">
+        <span class="nav-page-text">Tables as outcomes of dynamic programming</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
