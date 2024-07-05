@@ -10,10 +10,11 @@ format:
         html-math-method: katex
         code-fold: show
         code-summary: "Show the code"
-execute:
-    enabled: true
-    warning: false
-jupyter: julia-1.10
+#execute:
+#    enabled: false
+#    warning: false
+#jupyter: julia-1.10
+engine: julia
 ---
 
 The indirect approach to optimal control reformulates the optimal control problem as a system of differential and algebraic equations (DAE) with the values of some variables specified at both ends of the time interval – the two-point boundary value problem (TP–BVP). It is only in special cases that we are able to reformulate the TP–BVP as an initial value problem (IVP), the prominent example of which is the LQR problem and the associate differential Riccati equation solved backwards in time. However, generally we need to solve the TP–BVP DAE and the only way to do it is by numerical methods. Here we give some.

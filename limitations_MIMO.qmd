@@ -1,0 +1,79 @@
+---
+title: "Limitations for MIMO systems"
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+execute:
+    enabled: false
+jupyter: julia-1.10
+---
+
+Multiple-input-multiple-output (MIMO) systems are subject to limitations of the same origin as single-input-single-output (SISO) systems: unstable poles, "unstable" zeros, delays, disturbances, saturation, etc. However, the vector character of inputs and outputs introduces both opportunities to mitigate those limitations, and... new limitations.
+
+## Directions in MIMO systems
+
+With vector inputs and vector outputs, the input-output model of an LTI MIMO system is a *matrix* (of transfer functions). As such, it can be characterized not only by various scalar quantities (like poles, zeros, etc.), but also by the associated *directions* in the input and output spaces.
+
+::: {#exm-mimo-zeros-directions}
+Consider the transfer function matrix (or matrix of transfer functions)
+$$
+G(s) = \frac{1}{(0.2s+1)(s+1)}\begin{bmatrix}1 & 1\\ 1+2s& 2\end{bmatrix}.
+$$
+
+Recall that a complex number $z\in\mathbb C$ is a zero of $G$ if the rank of $G(z)$ is less than the rank  of $G(s)$ for most $s$. While reliable numerical algorithms for computing zeros of MIMO systems work with state-space realizations, in this simple case we can easily verify that there is only one zero $z=1/2$.
+
+
+
+Zeros in the RHP only exhibit themselves in some directions.
+
+:::
+
+## Conditioning of MIMO systems
+
+$$\boxed{
+\gamma (G) = \frac{\bar{\sigma}(G)}{\underline{\sigma}(G)}
+}
+$$
+
+- Ill-conditioned for $\gamma>10$
+- But depends on scaling!
+
+Therefore minimized conditioning number
+$$\boxed{
+\gamma^\star(G) = \min_{D_1, D_2}\gamma(D_1GD_2)
+}
+$$
+but difficult do compute (=upper bound on $\mu$)
+
+RGA can be used to give a reasonable estimate.
+
+## Relative gain array (RGA)
+
+Relative Gain Array (RGA) as an indicator of difficulties with control
+$$\boxed{\Lambda(G) = G \circ (G^{-1})^T}$$
+
+- independent of scaling,
+- sum of elements in rows and columns is 1,
+- sum of absolute values of elements of RGA is very close to the minimized sensitivity number $\gamma^\star$, hence a system with large RGA entries is always ill-conditioned (but system with large $\gamma$ can have small RGA),
+- RGA for a triangular system is an identity matrix,
+- relative uncertainty of an element of a transfer function matrix equal to (negative) inverse of the corresponding RGA entry makes the system singular.
+
+## Functional controllability
+
+## Interpolation conditions for MIMO systems
+
+## Bandwidth limitations due to unstable poles and zeros
+
+## Limits given by presence of disturbance and/or reference
+
+## Disturbance rejection by a plant with RHP zero
+
+## Limits given by the input constraints (saturation)
+
+## Limits given by uncertainty in the model: in open loop
+
+### In open loop
+
+### In closed loop
+

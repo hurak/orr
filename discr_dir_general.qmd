@@ -1,5 +1,5 @@
 ---
-title: "General finite-horizon nonlinear discrete-time optimal control as nonlinear program"
+title: "General finite-horizon nonlinear discrete-time optimal control as a nonlinear program"
 format:
     html:
         html-math-method: katex
@@ -10,7 +10,27 @@ jupyter: julia-1.10
 ---
 In this section we formulate a finite-horizon optimal control problem (OCP) for a discrete-time dynamical system as a mathematical optimization (also mathematical programming) problem, which can then be solved numerically by a suitable solvers for nonlinear programming (NLP), or possibly quadratic programming (QP). The outcome of such numerical optimization is an optimal control trajectory (a sequence of controls), which is why this approach is called *direct* – we optimize directly over the trajectories.
 
-In the next chapter we then present an alternative – *indirect* – approach, wherein the conditions of optimality are formulated first. These come in the form of a set of equations, some of them recurrent/recursive, hence indirect approach amounts to solving such equations. 
+In the following chapter we then present an alternative – *indirect* – approach, wherein the conditions of optimality are formulated first. These come in the form of a set of equations, some of them recurrent/recursive, some just algebraic. The indirect approach amounts to solving such equations. 
+
+And then in another chapter we present the third approach – *dynamic programming*. 
+
+The three approaches form the backbone of the theory of optimal control for discrete-time systems, but later we are going to recognize the same triplet in the context of continuous-time systems.
+
+```{dot}
+//| label: fig-discrete-direct-indirect-dp
+//| fig-cap: "Three approaches to discrete-time optimal control"
+digraph G {
+    bgcolor = "transparent";
+    node [shape = box];
+    discrete_time_optimal_control [label="Approaches to discrete-time optimal control"];
+    direct_approach [label="Direct approach"];
+    indirect_approach [label="Indirect approach"];
+    dynamic_programming [label="Dynamic programming"];
+    discrete_time_optimal_control -> direct_approach;
+    discrete_time_optimal_control -> indirect_approach;
+    discrete_time_optimal_control -> dynamic_programming
+}
+```
 
 But now back to the direct approaches. We will start with a general nonlinear discrete-time optimal control problem in this section and then specialize to the linear quadratic regulation (LQR) problem in the next section. Finally, since the computed control trajectory constitutes an open-loop control scheme, something must be done about it if feedback scheme is preferred – we introduce the concept of a *receding horizon control *(RHC), perhaps bettern known as *model predictive control *(MPC), that turns the direct approach into a feedback control scheme.
 
@@ -66,6 +86,7 @@ $$
 $$
 where 
 
+- the inequalities should be interpreted componentwise,
 - $\bm u_{\min}$ and $\bm u_{\max}$ are lower and upper bounds on the control, respectively, 
 - $\bm x_{\min}$ and $\bm x_{\max}$ are lower and upper bounds on the state, respectively, 
 - $\mathbf x^\text{init}$ is a fixed initial state,

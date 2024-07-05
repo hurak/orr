@@ -8,3 +8,58 @@ execute:
     enabled: false
 jupyter: julia-1.10
 ---
+
+Here we formulate the general problem of $\mathcal{H}_\infty$-optimal control. There are two motivations for this. First, it gives the general framework within which we can **formulate and solve the mixed-sensitivity problem** defined in the frequency domain that we discused previously. Second, it allows us to consider **exploit the time-domain (or signal)** interpretation of the $\mathcal{H}_\infty$ norm of a system to formulate a new class of problems that can be solved with these optimization tools. For the latter, recall that
+$$
+\|\mathbf G\|_{\infty} = \sup_{u\in\mathcal{L}_{2}\backslash \emptyset}\frac{\|\bm y\|_2}{\|\bm u\|_2}, 
+$$
+in which we allow for vector input and output signals, hence MIMO systems, from the very beginning. 
+
+Now, for particular control requirements, we build the generalized plant $\mathbf P$ such that after forming the feedback interconnection with the controller $\mathbf K$ as in @fig-lower-LFT-with-named-variables
+
+![Lower LFT of the generalized plant and the controller](figures/lower_LFT_with_named_variables.png){width=50% #fig-lower-LFT-with-named-variables}
+
+it makes sense require the stabilizing controller to minimize the amplification of the exogenous inputs (disturbances, references, noises) into the regulated outputs. We want to make the regulated outputs as insensitive as possible to the exogenous inputs and to quantify the sizes of the inputs and outputs, we use the $\mathcal L_2$ norm. 
+
+But then what we have is really the standard $\mathcal{H}_\infty$ optimization problem
+$$\boxed
+{\operatorname*{minimize}_{\mathbf K \text{ stabilizing}}\|\mathcal{F}_{\mathrm l}(\mathbf P,\mathbf K)\|_{\infty}.}
+$$
+
+Numerical solvers [exist](rocond_software.qmd) in various software environments.
+
+### Mixed-sensitivity problem reformulated as the standard $\mathcal{H}_\infty$ optimization problem
+We now show how the mixed-sensitivity problem discussed previously can be reformulated within as the standard $\mathcal{H}_\infty$ optimization problem. We consider the full mixed-sensitivity problem for a SISO plant
+
+$$
+\operatorname*{minimize}_{K \text{ stabilizing}}  
+\left\|
+\begin{bmatrix}
+W_1S\\W_2KS\\W_3T
+\end{bmatrix}
+\right\|_{\infty},
+$$
+which obviously considers a closed-loop system with one input and three outputs. With only one exogenous input, we must choose its role. Say, the only exogenous input is the reference signal. The closed-loop system for which the norm is minimized is in the following block diagram @fig-mixed-sensitivity-as-standard-H-infinity.
+
+![Mixed-sensitivity problem interpreted as the standard $\mathcal{H}_\infty$ optimization problem](figures/mixed_sensitivity_as_standard_H_infinity.png){width=50% #fig-mixed-sensitivity-as-standard-H-infinity}
+
+The matrix transfer function for generalized plant $\mathbf P$ has two inputs and four outputs and it can then be written as
+$$
+\mathbf P = \left[\begin{array}{c|c}
+W_1 & -W_1G\\
+0 & W_2\\
+0 & W_3G\\
+\hline
+1 & -G
+\end{array}\right].
+$$
+
+A state space realization of this plant $\mathbf P$ is then used as the input argument to the solver for the $\mathcal{H}_\infty$ optimization problem. In fact, we must also tell the solver how the inputs and outputs are structured. In this case, the solver must know that of the two inputs, only the second one can be used by the controller, and of the four outputs, only the fourth one is measured.
+
+### Signal-based $\mathcal{H}_\infty$-optimal control problem
+
+Being able to solve the $\mathcal{H}_\infty$ optimization problem, indeed we do not have to restrict ourselves to the generalized plants $\mathbf P$ that correspond to the mixed-sensitivity problem. We can consider any plant $\mathbf P$, for which the problem makes sense. For example, if we want to consider not only references but also disturbances, and possibly even noises, there is no way to formulate this within the mixed-sensitivity framework. But we can still formulate this as the standard $\mathcal{H}_\infty$ optimal control problem.
+
+### What is behind the $\mathcal{H}_\infty$ solver?
+
+### Structure of the $\mathcal{H}_\infty$-optimal controller

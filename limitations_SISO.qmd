@@ -1,0 +1,212 @@
+---
+title: "Limitations for SISO systems"
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+execute:
+    enabled: false
+jupyter: julia-1.10
+---
+
+For a given system, there may be some inherent limitations of achievable performance. However hard we try to design/tune a feedback controller, certain closed-loop performance indicators such as bandwidth, steady-state accuracy, or resonant peaks may have inherent limits. We are going to explore these. The motivation is that once we know what is achievable, we do not have to waste time by trying to achieve the impossible.
+
+At first it may look confusing that we are only formulating this problem of learning the limits towards the end of our course, since one view of the whole optimal control theory is that is that it provides a systematic methodology for learning what is possible to achieve. Shall we need to know the shortest possible time in which the drone can be brought from one position and orientation to another, we just formulate the minimum-time optimal control problem and solve it. Even if at the end of the day we intend to use a different controller – perhaps one supplied commercially with a fixed structure like a PID controller – at least we can assess the suboptimality of such controller by comparing its performance with the optimal one. 
+
+::: {.callout-important}
+## Optimal control theory may help reveal the limits
+Indeed, this is certainly a fair and practical motivation for studying even those parts of optimal control theory that do not provide very practical controllers, such as the $\mu$ synthesis returning controllers of rather high order even for low-order plants. 
+:::
+
+In this section we are going to restrict ourselves to SISO systems. Then in the next section we will extend the results to MIMO systems.
+
+
+$$
+S+T = 1
+$$
+
+## Clarification of the definition of bandwidth
+
+## Interpolation conditions of internal stability
+
+Consider that the plant modelled by the transfer function $G(s)$ has a zero in the right half-plane (RHP), that is,
+
+$$
+G(z) = 0, \; z\in \text{RHP}.
+$$
+
+It can be shown that the closed-loop transfer functions $S(s)$ and $t(s)$ satisfy the interpolation conditions
+$$\boxed{
+S(z)=1,\;\;\;T(z)=0
+}
+$$
+
+::: {.proof}
+
+Showing this is straightforward and insightful: since no unstable pole-zero cancellation is allowed if internal stability is to be guaranteed, the open-loop transfer function $L=KG$ must inherit the RHP zero of $G$, that is, 
+
+$$
+L(z) = K(z)G(z) = 0, \; z\in \text{RHP}.
+$$
+
+But then the sensitivity function $S=1/(1+L)$ must satisfy
+$$
+S(z) = \frac{1}{1+L(z)} = 1.
+$$
+
+Consequently, the complementary sensitivity function $T=1-S$ must satisfy the interpolation condition $T(z)=0$.
+:::
+
+Similarly, assuming that the plant transfer function $G(s)$ has a pole in the RHP, that is,
+
+$$
+G(p) = \infty, \; p\in \text{RHP}, 
+$$
+which can also be formulated in a cleaner way (avoiding the infinity in the definition) as
+$$
+\frac{1}{G(p)} = 0, \; p\in \text{RHP}, 
+$$
+the closed-loop transfer functions $S(s)$ and $T(s)$ satisfy the interpolation conditions
+$$\boxed
+{T(p) = 1,\;\;\;S(p) = 0.}
+$$
+
+The interpolation conditions that we have just derived constitute the basis on which we are going to derive the limitations of achievable closed-loop magnitude frequency responses. But we need one more technical results before we can proceed. Most probably you have already encountered it in some course on complex analysis - *maximum modulus principle*. We state this result in the jargon of control theory.
+
+
+::: {#thm-max-modulus}
+## Maximum modulus principle
+
+For a stable transfer function $F(s)$, that is, for a function with no pole in the closed right half-plane (RHP) it holds that   
+$$
+\sup_{\omega}|F(j\omega)|\geq |F(s_0)|\;\;\; \forall s_0\in \text{RHP}.
+$$
+
+This can also be expressed compactly as
+$$
+\|F(s)\|_\infty \geq |F(s_0)|\;\;\; \forall s_0\in \text{RHP}.
+$$
+:::
+
+Now instead of some general $F(s)$ we consider the weighted sensitivity function $W_\mathrm{p}(s)S(s)$. And the complex number $s$ in the RHP equals to a zero $z$ of the plant transfer function $G(s)$, that is, $G(z)=0, \; z\in\mathbb C, \; \Re(z)\geq 0$. Then the maximum modulus principle together with the interpolation condition $S(z)=1$ implies that
+
+$$
+\|W_\mathrm{p}S\|_{\infty}\geq |W_\mathrm{p}(z)|.
+$$
+
+Similar result holds for the weighted complementary sensitivity function $W(s)T(s)$ and an unstable pole $p$ of the plant transfer function $G(s)$, when combining the maximum modulus principle with the interpolation condition $T(p)=1$
+
+$$
+\|WT\|_{\infty}\geq |W(p)|.
+$$
+
+These two simple results can be further generalized to the situations in which the plant transfer function $G(s)$ has multiple zeros and poles in the RHP. Namely, if $G(s)$ has $N_p$ unstable poles $p_i$ and $N_z$ unstable zeros $z_j$,
+
+$$
+\|W_\mathrm{p}S\|_{\infty}\geq c_{1j}|W_\mathrm{p}(z_j)|, \;\;\;c_{1j}=\prod_{i=1}^{N_p}\frac{|z_j+\bar{p}_i|}{|z_j-p_i|}\geq 1,
+$$
+$$
+\|WT\|_{\infty}\geq c_{2i}|W(p_i)|, \;\;\;c_{2i}=\prod_{j=1}^{N_z}\frac{|\bar{z}_j+p_i|}{|z_j-p_i|}\geq 1.
+$$
+
+As a special case, consider the no-weight cases $W_\mathrm{p}(s)=1$ and $W(s)=1$ with just a single unstable pole and zero. Then the limitations on the achievable closed-loop magnitude frequency responses can be formulated as
+$$
+\|S\|_{\infty} > c, \;\; \|T\|_{\infty} > c, \;\;\;c=\frac{|z+p|}{|z-p|}. 
+$$
+
+::: {#exm-single-unstable-zero-single-unstable-pole}
+For $G(s) = \frac{s-4}{(s-1)(0.1s+1)}$, the limitations are
+$$
+\|S\|_{\infty}>1.67, \quad \|T\|_{\infty}>1.67.
+$$
+:::
+
+## Limitations of the achievable bandwidth due to zeros in the right half-plane
+
+There are now two requirements on the weighted sensitivity function that must be reconciled. First, the performance requirements
+$$
+|S(j\omega)|<\frac{1}{|W_\mathrm{p}(j\omega)|}\;\;\forall\omega\;\;\;\Longleftrightarrow \|W_\mathrm{p}S\|_{\infty}<1
+$$
+and second, the just derived consequence of the interpolation condition
+$$
+\|W_\mathrm{p}S\|_{\infty}\geq |W_\mathrm{p}(z)|. 
+$$
+
+The only way to satisfy both is to guarantee that 
+$$
+|W_\mathrm{p}(z)|<1.
+$$
+
+Now, consider the popular first-order weight
+$$
+W_\mathrm{p}(z)=\frac{s/M+\omega_\mathrm{B}}{s+\omega_\mathrm{B} A}.
+$$
+
+For one real zero in the RHP, the inequality $|W_\mathrm{p}(z)|<1$ can be written as
+$$
+\omega_\mathrm{B}(1-A) < z\left(1-\frac{1}{M}\right).
+$$ 
+
+Setting $A=0$ a $M=2$, the upper bound on the bandwidth follows 
+
+$$\boxed
+{\omega_\mathrm{B}<0.5z.}
+$$
+
+For complex conjugate pair
+$$
+\omega_\mathrm{B}=|z|\sqrt{1-\frac{1}{M^2}}
+$$
+$M=2$: $\omega_\mathrm{B}<0.86|z|$.
+
+## Limitation of the achievable bandwidth due to poles in the right half-plane
+
+Using
+$$
+|T(j\omega)|<\frac{1}{|W(j\omega)|}\;\;\;\forall\omega\;\;\;\Longleftrightarrow \|WT\|_{\infty}<1
+$$
+and the interpolation condition $\|WT\|_{\infty}\geq |W(p)|$:
+$$
+|W(p)|<1
+$$
+With weight 
+$$
+W(s)= \frac{s}{\omega_{BT}^*}+\frac{1}{M_T} 
+$$
+we get a lower bound on the bandwidth
+$$
+\omega_{BT}^* > p\frac{M_T}{M_T-1}
+$$
+$M_T=2$: {\color{red}$\omega_{BT}^*>2p$}\\ 
+For complex conjugate pair: $\omega_{BT}^*>1.15|p|$.
+
+## Limitations due to time delay
+
+Consider the problem of designing a feedback controller for reference tracking. An ideal closed-loop transfer function $T(s)$ from the reference to the output satisfies $T(s)=1$. If the plant has a time delay, the best achievable closed-loop transfer function $T(s)$ is given by 
+$$
+T(s) = e^{-\theta s},
+$$
+that is, the reference is perfectly tracked, albeit with some delay. The best achievable sensitivity function $S(s)$ is then given by
+$$
+S(s) = 1-e^{-\theta s}.
+$$
+
+In order to make the analysis simpler, we approximate the sensitivity function by the first-order Taylor expansion
+$$
+S(s) \approx \theta s,
+$$
+from which we can see that the magnitude frequency response of the sensitivity function is approximated by a linear function of frequency. Unit gain is achieved at about 
+
+$$
+\omega_{c}=1/\theta.
+$$ 
+From this approximation, we can see that the bandwidth of the system is limited by the time delay $\theta$ as
+
+$$\boxed{
+\omega_c < \frac{1}{\theta}.
+}
+$$
+
+## Limitations due presence of disturbance
+
+## Limitations due to saturation of actuators

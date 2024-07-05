@@ -52,6 +52,7 @@ website:
           - discr_dir_mpc_explicit.qmd
       - section: "7. Continuous-time optimal control - indirect approach via calculus of variations"
         contents:
+          - cont_indir_overview.qmd
           - cont_indir_calculus_of_variations.qmd
           - cont_indir_via_calculus_of_variations.qmd
           - cont_indir_LQR_fin_horizon.qmd
@@ -70,6 +71,12 @@ website:
           - cont_numerical_direct.qmd
           - cont_numerical_software.qmd
           - cont_numerical_references.qmd
+      - section: "9.X. Continuous-time optimal control – dynamic programming"
+        contents:
+          - cont_dp_HJB.qmd
+          - cont_dp_LQR.qmd
+          - cont_dp_DDP.qmd
+          - cont_dp_references.qmd        
       - section: "10. Some extensions: LQG, LTR, H2"
         contents:
           - ext_stochastic_LQR.qmd
@@ -90,14 +97,17 @@ website:
           - rocond_mu_synthesis.qmd
           - rocond_software.qmd 
           - rocond_references.qmd   
-      - section: "13. Limits of performance"
+      - section: "13. Limitations of achievable performance"
         contents:
-          - limits_of_performance_SISO.qmd
-          - limits_of_performance_MIMO.qmd    
+          - limitations_SISO.qmd
+          - limitations_MIMO.qmd    
+          - limitations_references.qmd    
       - section: "14. Model and controller order reduction"
         contents:
           - reduction_order_model.qmd
           - reduction_order_controller.qmd
+          - reduction_order_benchmarks.qmd
+          - reduction_order_references.qmd
   repo-url: https://github.com/hurak/orr
   repo-actions: [issue]       
   back-to-top-navigation: true

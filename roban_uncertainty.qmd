@@ -4,8 +4,9 @@ format:
     html:
         html-math-method: katex
         code-fold: true
+        code-summary: "Show the code"
 execute:
-    enabled: false
+    enabled: true
 jupyter: julia-1.10
 ---
 
@@ -118,6 +119,11 @@ For a stable LTI system $G$ with a single input and single output, the $\mathcal
 $$
 \|G\|_{\infty} = \sup_{\omega\in\mathbb{R}}|G(j\omega)|.
 $$
+:::
+
+::: {.callout-note}
+## Why supremum and not maximum?
+Supremum is uses in the definition because it is not guaranteed that the peak value of the magnitude frequency response is attained at a single frequency. Consider an example of a first-order system $G(s) = \frac{s}{Ts+1}$. The peak gain of $1/T$ is not attained at a single finite frequency.
 :::
 
 Having just defined the $\mathcal H_\infty$ norm, the uncertainty model can be expressed compactly as
@@ -235,13 +241,113 @@ $$
 G(s) = \frac{k}{T s+1}e^{-\theta s}, \qquad 2\leq k,\tau,\theta,\leq 3.
 $$
 
-:::
+We now need to choose the nominal model $G_0(s)$ and then the uncertainty weighting filter $W(s)$. The nominal model corresponds to the nominal values of the parameters, therefore we must choose these. There is no single correct way to do this. Perhaps the most intuitive way is to choose the nominal values as the average of the bounds. But we can also choose the nominal values in a way that makes the nominal system simple. For example, for this system with a delay, we can even choose the nominal value of the delay as zero, which makes the nominal system a first-order system without delay, hence simple enough for application of some basic linear control system design methods. Of course, the price to pay is that the resulting model of an uncertain system, which is actually a set of systems, contains even models of a plant that were not prescribed. 
 
+``` {julia}
+using ControlSystems
+using Plots
+
+function uncertain_first_order_delayed()
+    kmin = 2; kmax = 3; 
+    θmin = 2; θmax = 3; 
+    Tmin = 2; Tmax = 3;
+
+    k₀ = (kmin+kmax)/2; 
+    θ₀ = (θmin+θmax)/2;
+    θ₀ = 0 
+    T₀ = (Tmin+Tmax)/2;
+
+    G₀ = tf(k₀,[T₀, 1])*delay(θ₀)  
+
+    ω = exp10.(range(-2, 2, length=50))
+    G₀ω = freqresp(G₀,ω)
+    G₀ω = vec(G₀ω)
+
+    EEω_db = [];
+    for k in range(kmin,kmax,length=10)
+        for θ in range(θmin,θmax,length=10)
+            for T in range(Tmin,Tmax,length=10)
+                G = tf(k,[T, 1])*delay(θ)  
+                Gω = freqresp(G,ω)
+                Gω = vec(Gω)            
+                Eω = abs.(Gω-G₀ω)./abs.(G₀ω)
+                Eω_db = 20 * log10.(Eω)
+                push!(EEω_db,Eω_db)
+            end
+        end
+    end
+
+    plot(ω,EEω_db,xscale=:log10,label="",ylims=(-40,20))
+    xlabel!("Frequency [rad/s]")
+    ylabel!("Relative error [dB]")
+end
+uncertain_first_order_delayed()
+```
+
+Now we need to find some upper bound on the relative error. Simplicity is a virtue here too, hence we are looking for a rational filter of very low order, say 1 or 2. Speaking of the first-order filter, one useful way to format it is
 $$
 \boxed{
 W(s) = \frac{\tau s+r_0}{(\tau/r_{\infty})s+1}}
 $$
 where $r_0$ is uncertainty at steady state, $1/\tau$ is the frequency, where the relative uncertainty reaches 100\%, $r_{\infty}$ is relative uncertainty at high frequencies, often $r_{\infty}\geq 2$.
+
+For our example, the parameters of the filter are in the code below and the frequency response follows.
+``` {julia}
+using ControlSystems
+using Plots
+
+function uncertain_first_order_delayed_with_weights()
+    kmin = 2; kmax = 3; 
+    θmin = 2; θmax = 3; 
+    Tmin = 2; Tmax = 3;
+
+    k₀ = (kmin+kmax)/2; 
+    θ₀ = (θmin+θmax)/2;
+    θ₀ = 0 
+    T₀ = (Tmin+Tmax)/2;
+
+    G₀ = tf(k₀,[T₀, 1])*delay(θ₀)  
+
+    ω = exp10.(range(-2, 2, length=50))
+    G₀ω = freqresp(G₀,ω)
+    G₀ω = vec(G₀ω)
+
+    EEω_db = [];
+    for k in range(kmin,kmax,length=10)
+        for θ in range(θmin,θmax,length=10)
+            for T in range(Tmin,Tmax,length=10)
+                G = tf(k,[T, 1])*delay(θ)  
+                Gω = freqresp(G,ω)
+                Gω = vec(Gω)            
+                Eω = abs.(Gω-G₀ω)./abs.(G₀ω)
+                Eω_db = 20 * log10.(Eω)
+                push!(EEω_db,Eω_db)
+            end
+        end
+    end
+
+    plot(ω,EEω_db,xscale=:log10,label="",ylims=(-40,20))
+    xlabel!("Frequency [rad/s]")
+    ylabel!("Relative error [dB]")
+
+    τ = 1/0.25
+    r₀ = 0.2
+    r∞ = 10^(8/20)
+    W = tf([τ, r₀],[τ/r∞, 1])
+    magW, phaseW = bode(W,ω)
+    plot!(ω,20*log10.(vec(magW)),xscale=:log10,lw=3,color=:red,label="W")
+
+    # W2 = W*tf([1, 1.6, 1],[1, 1.4, 1]); 
+    # magW2, phaseW2 = bode(W2,ω)
+    # plot!(ω,20*log10.(vec(magW2)),xscale=:log10,lw=3,color=:blue,label="W₂")
+end
+uncertain_first_order_delayed_with_weights()
+```
+
+Obviously the filter does not capture the family of systems perfectly. It is now up to the control engineer to decide if this is a problem. If yes, if the control design should be really robust against all uncertainties in the considered set, some more complex (higher-order) filter is needed to described the uncertainty more accurately. The source code shows (in commented lines) one particular candidate, but in general the whole problem boils down to designing a stable filter with a prescribed magnitude frequency response. 
+:::
+
+
 
 
 ##### Inverse additive uncertainty

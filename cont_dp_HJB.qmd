@@ -1,0 +1,78 @@
+---
+title: "Dynamic programming for continuous-time optimal control"
+bibliography: 
+    - ref_optimal_control.bib
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+execute:
+    enabled: false
+    warning: false
+jupyter: julia-1.10
+---
+
+In the previous sections we investigated both direct and indirect approaches to the optimal control problem. Similarly as in the discrete-time case, complementing the two approaches is the dynamic programming. Indeed, the key Bellmans's idea, which we previously formulated in discrete time, can be extended to continuous time as well.
+
+We consider the continuous-time system
+$$
+\dot{\bm{x}} = \mathbf f(\bm{x},\bm{u},t)
+$$
+with the cost function
+$$
+J(\bm x(t_\mathrm{i}), \bm u(\cdot), t_\mathrm{i}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}) + \int_{t_\mathrm{i}}^{t_\mathrm{f}}L(\bm x(t),\bm u(t),t)\, \mathrm d t.
+$$
+
+Optionally we can also consider constraints on the state at the final time (be it a particular value or some set of values)
+$$
+\psi(\bm x(t_\mathrm{f}),t_\mathrm{f})=0.
+$$
+
+We now consider an arbitrary time $t$ and split the (remaining) time interval $[t,t_\mathrm{f}]$ into two parts $[t,t+\Delta t]$ and $[t+\Delta t,t_\mathrm{f}]$ , and structure the cost function accordingly
+$$
+J(\bm x(t),\bm u(\cdot),t) = \int_{t}^{t+\Delta t} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + \underbrace{\int_{t+\Delta t}^{t_\mathrm{f}} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + \phi(\bm x(t_\mathrm{f}),t_\mathrm{f})}_{J(\bm x(t+\Delta t), \bm u(t+\Delta t), t+\Delta t)}.
+$$
+
+Bellman's principle of optimality gives
+$$
+J^\star(\bm x(t),t) = \min_{\bm u(\tau),\;t\leq\tau\leq t+\Delta t} \left[\int_{t}^{t+\Delta t} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + J^\star(\bm x+\Delta \bm x, t+\Delta t)\right].
+$$
+
+We now perform Taylor series expansion of $J^\star(\bm x+\Delta \bm x, t+\Delta t)$ about $(\bm x,t)$
+$$
+J^\star(\bm x,t) = \min_{\bm u(\tau),\;t\leq\tau\leq t+\Delta t} \left[L\Delta t + J^\star(\bm x,t) + (\nabla_{\bm x} J^\star)^\top \Delta \bm x + \frac{\partial J^\star}{\partial t}\Delta t + \mathcal{O}((\Delta t)^2)\right].
+$$
+
+Using
+$$
+\Delta \bm x = \bm f(\bm x,\bm u,t)\Delta t
+$$
+and noting that $J^\star$ and $J_t^\star$ are independent of $\bm u(\tau),\;t\leq\tau\leq t+\Delta t$, we get
+$$
+\cancel{J^\star (\bm x,t)} = \cancel{J^\star (\bm x,t)} + \frac{\partial J^\star }{\partial t}\Delta t + \min_{\bm u(\tau),\;t\leq\tau\leq t+\Delta t}\left[L\Delta t + (\nabla_{\bm x} J^\star )^\top f\Delta t\right].
+$$
+
+Assuming $\Delta t\rightarrow 0$ leads to the celebrated *Hamilton-Jacobi-Bellman (HJB) equation*
+$$\boxed{
+-\frac{\partial {\color{blue}J^\star (\bm x(t),t)}}{\partial t} = \min_{\bm u(t)}\left[L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} {\color{blue} J^\star (\bm x(t),t)})^\top \bm f(\bm x(t),\bm u(t),t)\right].}
+$$
+
+This is obviously a partial differential equation (PDE) for the optimal cost function $J^\star(\bm x,t)$. 
+
+And since this is a differential equation, boundary value(s) must be specified to determine a unique solution. In particular, since the equation is first-order with respect to both time and state, specifying the value of the optimal cost function at the final state and the final time is enough. With the general final-state constraints we have introduced above, the boundary value condition reads 
+$$
+J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}),\qquad \text{on the hypersurface } \psi(\bm x(t_\mathrm{f}),t_\mathrm{f}) = 0. 
+$$
+
+Note that this includes as special cases the fixed-final-state and free-final-state cases.
+
+## HJB and Hamiltonian
+
+Recall the definition of Hamiltonian $H(\bm x,\bm u,\bm \lambda,t) = L(\bm x,\bm u,t) + \boldsymbol{\lambda}^\top \mathbf f(\bm x,\bm u,t)$. The HJB equation can also be written as
+$$\boxed
+{-\frac{\partial J^\star (\bm x(t),t)}{\partial t} = \min_{\bm u(t)}H(\bm x(t),\bm u(t),\nabla_{\bm x} J^\star (\bm x(t),t),t).}
+$$
+
+What we have just derived is one of the most profound results in optimal control – Hamiltonian must be minimized by the optimal control. We will exploit it next for some derivations. 
+
+Recall also that we have already encountered a similar results that made statements about the necessary maximization (or minimization) of the Hamiltonian with respect to the control – the celebrated Pontryagin's principle of maximum (or minimum).

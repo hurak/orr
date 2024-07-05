@@ -11,3 +11,23 @@ execute:
     enabled: false
 jupyter: julia-1.10
 ---
+
+## Matlab 
+
+### Robust Control Toolbox
+
+- [mixsyn](https://www.mathworks.com/help/robust/ref/dynamicsystem.mixsyn.html): control design by minimnizing the $\mathcal{H}_\infty$ norm the the mixed-sensitivity function.
+
+- [hinfsyn](https://www.mathworks.com/help/robust/ref/dynamicsystem.hinfsyn.html): control design by minimizing the $\mathcal{H}_\infty$ norm of a closed-loop transfer function formulated using an LFT.
+
+- [ncfsyn](https://www.mathworks.com/help/robust/ref/lti.ncfsyn.html): another control design based on $\mathcal{H}_\infty$ optimization, but this one considers a different uncertainty model not covered in our course. Although this uncertainty model does not have as intuitive an interpretation as the multiplicative uncertainty model use in mixed sensitivity synthesis, it captures a broad class of uncertainties. Furtheremore, the resulting controller enjoys the same decomposition into a state feedback and an observer as the popular LQG controller, which can be an advantage from an implementation viewpoint. Highly recommended method. 
+
+- [musyn](https://www.mathworks.com/help/robust/ref/uss.musyn.html): similar general setup as the hinfsyn method, but it considers a structure in the $\Delta$ term. It is regarded by some as the culmination of the $\mathcal{H}_\infty$ control design methods. The disadvantage is that it is the most computationaly intensive of the methods we covered, and the resulting controller is typically of rather high order.
+
+## Julia
+
+- [RobustAndOptimalControl.jl](https://juliacontrol.github.io/RobustAndOptimalControl.jl/stable/)
+
+## Python
+
+- [Python Control Systems Library](https://python-control.readthedocs.io/en/latest/index.html)

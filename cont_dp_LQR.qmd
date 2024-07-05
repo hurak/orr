@@ -1,0 +1,102 @@
+---
+title: "Using HJB equation to solve the continuous-time LQR problem"
+bibliography: 
+    - ref_optimal_control.bib
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+execute:
+    enabled: false
+    warning: false
+jupyter: julia-1.10
+---
+
+As we have already discussed a couple of times, in the LQR problem we consider a linear time invariant (LTI) system modelled by
+$$
+\dot{\bm x}(t) = \mathbf A\bm x(t) + \mathbf B\bm u(t),
+$$
+and the quadratic cost function
+$$
+J(\bm x(t_\mathrm{i}),\bm u(\cdot), t_\mathrm{i}) = \frac{1}{2}\bm x^\top(t_\mathrm{f})\mathbf S_\mathrm{f}\bm x(t_\mathrm{f}) + \frac{1}{2}\int_{t_\mathrm{i}}^{t_\mathrm{f}}\left(\bm x^\top \mathbf Q\bm x + \bm u^\top \mathbf R \bm u\right)\mathrm{d}t.
+$$
+
+The Hamiltonian is
+$$
+H(\bm x,\bm u,\bm \lambda) = \frac{1}{2}\left(\bm x^\top \mathbf Q\bm x + \bm u^\top \mathbf R \bm u\right) + \boldsymbol{\lambda}^\top \left(\mathbf A\bm x + \mathbf B\bm u\right).
+$$
+
+According to the HJB equation our goal is to minimize $H$ at a given time $t$, which enforces the condition on its gradient 
+$$
+\mathbf 0 = \nabla_{\bm u} H = \mathbf R\bm u + \mathbf B^\top \boldsymbol\lambda,
+$$
+from which it follows that the optimal control must necessarily satisfy 
+$$
+\bm u^\star = -\mathbf R^{-1} \mathbf B^\top \boldsymbol\lambda.
+$$
+
+Since the Hessian of the Hamiltonian is positive definite by our assumption on positive definiteness of $\mathbf R$
+$$
+\nabla_{\bm u \bm u}^2 \mathbf H = \mathbf R > 0,
+$$
+Hamiltonian is really minimized by the above choice of $\bm u^\star$.
+
+The minimized Hamiltonian is
+$$
+\min_{\bm u(t)}H(\bm x, \bm u, \bm \lambda) = \frac{1}{2}\bm x^\top \mathbf Q \bm x + \boldsymbol\lambda^\top \mathbf A \bm x - \frac{1}{2}\boldsymbol\lambda^\top \mathbf B\mathbf R^{-1}\mathbf B^\top \boldsymbol\lambda
+$$
+
+Setting $\boldsymbol\lambda = \nabla_{\bm x} J^\star$, the HJB equation is
+$$\boxed
+{-\frac{\partial J^\star}{\partial t} = \frac{1}{2}\bm x^\top \mathbf Q \bm x + (\nabla_{\bm x} J^\star)^\top \mathbf A\bm x - \frac{1}{2}(\nabla_{\bm x} J^\star)^\top \mathbf B\mathbf R^{-1}\mathbf B^\top \nabla_{\bm x} J^\star,}
+$$
+and the boundary condition is
+$$
+J^\star(\bm x(t_\mathrm{f}),t_\mathrm{f}) = \frac{1}{2}\bm x^\top (t_\mathrm{f})\mathbf S_\mathrm{f}\bm x(t_\mathrm{f}).
+$$
+
+We can now proceed by assuming that the optimal cost function is quadratic in $\bm x$ for all other times $t$, that is, there must exist a symmetric matrix function $\mathbf S(t)$ such that
+$$
+J^\star(\bm x(t),t) = \frac{1}{2}\bm x^\top (t)\mathbf S(t)\bm x(t).
+$$
+
+:::{.callout-note}
+Recall that we did something similar when making a *sweep* assumption to derive a Riccati equation following the indirect approach – we just make an inspired guess and see if it works. Here the inspiration comes from the observation made elsewhere, that the optimal cost function in the LQR problem is quadratic in $\bm x$.
+:::
+
+We now aim at substituting this into the HJB equation. Observe that $\frac{\partial J^\star}{\partial t}=\bm x^\top(t) \dot{\mathbf{S}}(t) \bm x(t)$ and $\nabla_{\bm x} J^\star = \mathbf S \bm x$. Upon substitution to the HJB equation, we get
+
+$$
+-\bm x^\top \dot{\mathbf{S}} \bm x = \frac{1}{2}\bm x^\top \mathbf Q \bm x + \bm x^\top \mathbf S \mathbf A\bm x - \frac{1}{2}\bm x^\top \mathbf S \mathbf B\mathbf R^{-1}\mathbf B^\top \mathbf S \bm x.
+$$
+
+This can be reformatted as
+$$
+-\bm x^\top \dot{\mathbf{S}} \bm x = \frac{1}{2} \bm x^\top \left[\mathbf Q + 2 \mathbf S \mathbf A - \mathbf S \mathbf B\mathbf R^{-1}\mathbf B^\top \mathbf S \right ] \bm x.
+$$
+
+Notice that the middle matrix in the square brackets is not symmetric. Symmetrizing it (with no effect on the resulting value of the quadratic form) we get
+
+$$
+-\bm x^\top \dot{\mathbf{S}} \bm x = \frac{1}{2} \bm x^\top \left[\mathbf Q + \mathbf S \mathbf A + \mathbf A^\top \mathbf S  - \mathbf S \mathbf B\mathbf R^{-1}\mathbf B^\top \mathbf S \right ] \bm x.
+$$
+
+Finally, since the above single (scalar) equation should hold for all $\bm x(t)$, the matrix equation must hold too, and we get the familiar differential Riccati equation for the matrix variable $\mathbf S(t)$
+$$\boxed
+{-\dot{\mathbf S}(t) = \mathbf A^\top \mathbf S(t) + \mathbf S(t)\mathbf A - \mathbf S(t)\mathbf B\mathbf R^{-1}\mathbf B^\top \mathbf S(t) + \mathbf Q}
+$$
+initialized at the final time $t_\mathrm{f}$ by $\mathbf S(t_\mathrm{f}) = \mathbf S_\mathrm{f}$.
+
+Having obtained $\mathbf S(t)$, we can get the optimal control by substituting it into 
+$$\boxed
+{
+\begin{aligned}
+    \bm u^\star(t) &= - \mathbf R^{-1}\mathbf B^\top \nabla_{\bm x} J^\star(\bm x(t),t) \\
+                   &= - \underbrace{\mathbf R^{-1}\mathbf B^\top \mathbf S(t)}_{\bm K(t)}\bm x(t).
+\end{aligned}
+}
+$$
+
+We have just rederived the continuous-time LQR problem using the HJB equation (previously we did it by massaging the two-point boundary value problem that followed as the necessary condition of optimality from the techniques of calculus of variations).
+
+Note that we have also just seen the equivalence between a first-order linear PDE and first-order nonlinear ODE. 
