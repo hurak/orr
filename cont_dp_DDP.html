@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Software – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>Differential dynamic programming (DDP) – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./rocond_references.html" rel="next">
-<link href="./rocond_mu_synthesis.html" rel="prev">
+<link href="./cont_dp_references.html" rel="next">
+<link href="./cont_dp_LQR.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,49 +69,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -125,7 +82,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rocond_mixed_sensitivity.html">12. Robust control</a></li><li class="breadcrumb-item"><a href="./rocond_software.html">Software</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">9.X. Continuous-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./cont_dp_DDP.html">Differential dynamic programming (DDP)</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -536,7 +493,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_dp_DDP.html" class="sidebar-item-text sidebar-link">
+  <a href="./cont_dp_DDP.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Differential dynamic programming (DDP)</span></a>
   </div>
 </li>
@@ -653,7 +610,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rocond_software.html" class="sidebar-item-text sidebar-link active">
+  <a href="./rocond_software.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Software</span></a>
   </div>
 </li>
@@ -734,26 +691,15 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#matlab" id="toc-matlab" class="nav-link active" data-scroll-target="#matlab">Matlab</a>
-  <ul class="collapse">
-  <li><a href="#robust-control-toolbox" id="toc-robust-control-toolbox" class="nav-link" data-scroll-target="#robust-control-toolbox">Robust Control Toolbox</a></li>
-  </ul></li>
-  <li><a href="#julia" id="toc-julia" class="nav-link" data-scroll-target="#julia">Julia</a></li>
-  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python">Python</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rocond_mixed_sensitivity.html">12. Robust control</a></li><li class="breadcrumb-item"><a href="./rocond_software.html">Software</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">9.X. Continuous-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./cont_dp_DDP.html">Differential dynamic programming (DDP)</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Software</h1>
+<h1 class="title">Differential dynamic programming (DDP)</h1>
 </div>
 
 
@@ -770,32 +716,9 @@ window.Quarto = {
 </header>
 
 
-<section id="matlab" class="level2">
-<h2 class="anchored" data-anchor-id="matlab">Matlab</h2>
-<section id="robust-control-toolbox" class="level3">
-<h3 class="anchored" data-anchor-id="robust-control-toolbox">Robust Control Toolbox</h3>
-<ul>
-<li><p><a href="https://www.mathworks.com/help/robust/ref/dynamicsystem.mixsyn.html">mixsyn</a>: control design by minimnizing the <span class="math inline">\mathcal{H}_\infty</span> norm the the mixed-sensitivity function.</p></li>
-<li><p><a href="https://www.mathworks.com/help/robust/ref/dynamicsystem.hinfsyn.html">hinfsyn</a>: control design by minimizing the <span class="math inline">\mathcal{H}_\infty</span> norm of a closed-loop transfer function formulated using an LFT.</p></li>
-<li><p><a href="https://www.mathworks.com/help/robust/ref/lti.ncfsyn.html">ncfsyn</a>: another control design based on <span class="math inline">\mathcal{H}_\infty</span> optimization, but this one considers a different uncertainty model not covered in our course. Although this uncertainty model does not have as intuitive an interpretation as the multiplicative uncertainty model use in mixed sensitivity synthesis, it captures a broad class of uncertainties. Furtheremore, the resulting controller enjoys the same decomposition into a state feedback and an observer as the popular LQG controller, which can be an advantage from an implementation viewpoint. Highly recommended method.</p></li>
-<li><p><a href="https://www.mathworks.com/help/robust/ref/uss.musyn.html">musyn</a>: similar general setup as the hinfsyn method, but it considers a structure in the <span class="math inline">\Delta</span> term. It is regarded by some as the culmination of the <span class="math inline">\mathcal{H}_\infty</span> control design methods. The disadvantage is that it is the most computationaly intensive of the methods we covered, and the resulting controller is typically of rather high order.</p></li>
-</ul>
-</section>
-</section>
-<section id="julia" class="level2">
-<h2 class="anchored" data-anchor-id="julia">Julia</h2>
-<ul>
-<li><a href="https://juliacontrol.github.io/RobustAndOptimalControl.jl/stable/">RobustAndOptimalControl.jl</a></li>
-</ul>
-</section>
-<section id="python" class="level2">
-<h2 class="anchored" data-anchor-id="python">Python</h2>
-<ul>
-<li><a href="https://python-control.readthedocs.io/en/latest/index.html">Python Control Systems Library</a></li>
-</ul>
+<p>blabla</p>
 
 
-</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1220,12 +1143,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./rocond_mu_synthesis.html" class="pagination-link" aria-label="Mu synthesis">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Mu synthesis</span>
+      <a href="./cont_dp_LQR.html" class="pagination-link" aria-label="Using HJB equation to solve the continuous-time LQR problem">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Using HJB equation to solve the continuous-time LQR problem</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./rocond_references.html" class="pagination-link" aria-label="References">
+      <a href="./cont_dp_references.html" class="pagination-link" aria-label="References">
         <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1238,7 +1161,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

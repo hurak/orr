@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./cont_dp_references.html" rel="next">
+<link href="./cont_dp_DDP.html" rel="next">
 <link href="./cont_dp_HJB.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -536,6 +536,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cont_dp_DDP.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Differential dynamic programming (DDP)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./cont_dp_references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -753,14 +759,15 @@ window.Quarto = {
 </header>
 
 
-<p>As we have already discussed a couple of times, in the LQR problem wwe consider a linear (and time invariant) system modelled by <span class="math display">
-\dot{\bm x}(t) = \mathbf A\bm x(t) + \mathbf B\bm u(t)
+<p>As we have already discussed a couple of times, in the LQR problem we consider a linear time invariant (LTI) system modelled by <span class="math display">
+\dot{\bm x}(t) = \mathbf A\bm x(t) + \mathbf B\bm u(t),
 </span> and the quadratic cost function <span class="math display">
 J(\bm x(t_\mathrm{i}),\bm u(\cdot), t_\mathrm{i}) = \frac{1}{2}\bm x^\top(t_\mathrm{f})\mathbf S_\mathrm{f}\bm x(t_\mathrm{f}) + \frac{1}{2}\int_{t_\mathrm{i}}^{t_\mathrm{f}}\left(\bm x^\top \mathbf Q\bm x + \bm u^\top \mathbf R \bm u\right)\mathrm{d}t.
 </span></p>
 <p>The Hamiltonian is <span class="math display">
-H(\bm x,\bm u,\bm \lambda) = \frac{1}{2}\left(\bm x^\top \mathbf Q\bm x + \bm u^\top \mathbf R \bm u\right) + \boldsymbol{\lambda}^\top \left(\mathbf A\bm x + \mathbf B\bm u\right)
-</span> and according to the HJB equation our goal is to minimize <span class="math inline">H</span> at a given time <span class="math inline">t</span>, which enforces the condition on its gradient <span class="math display">
+H(\bm x,\bm u,\bm \lambda) = \frac{1}{2}\left(\bm x^\top \mathbf Q\bm x + \bm u^\top \mathbf R \bm u\right) + \boldsymbol{\lambda}^\top \left(\mathbf A\bm x + \mathbf B\bm u\right).
+</span></p>
+<p>According to the HJB equation our goal is to minimize <span class="math inline">H</span> at a given time <span class="math inline">t</span>, which enforces the condition on its gradient <span class="math display">
 \mathbf 0 = \nabla_{\bm u} H = \mathbf R\bm u + \mathbf B^\top \boldsymbol\lambda,
 </span> from which it follows that the optimal control must necessarily satisfy <span class="math display">
 \bm u^\star = -\mathbf R^{-1} \mathbf B^\top \boldsymbol\lambda.
@@ -771,7 +778,7 @@ H(\bm x,\bm u,\bm \lambda) = \frac{1}{2}\left(\bm x^\top \mathbf Q\bm x + \bm u^
 <p>The minimized Hamiltonian is <span class="math display">
 \min_{\bm u(t)}H(\bm x, \bm u, \bm \lambda) = \frac{1}{2}\bm x^\top \mathbf Q \bm x + \boldsymbol\lambda^\top \mathbf A \bm x - \frac{1}{2}\boldsymbol\lambda^\top \mathbf B\mathbf R^{-1}\mathbf B^\top \boldsymbol\lambda
 </span></p>
-<p>Setting <span class="math inline">\boldsymbol\lambda = (\nabla_{\bm x} J^\star)^\top</span>, the HJB equation is <span class="math display">\boxed
+<p>Setting <span class="math inline">\boldsymbol\lambda = \nabla_{\bm x} J^\star</span>, the HJB equation is <span class="math display">\boxed
 {-\frac{\partial J^\star}{\partial t} = \frac{1}{2}\bm x^\top \mathbf Q \bm x + (\nabla_{\bm x} J^\star)^\top \mathbf A\bm x - \frac{1}{2}(\nabla_{\bm x} J^\star)^\top \mathbf B\mathbf R^{-1}\mathbf B^\top \nabla_{\bm x} J^\star,}
 </span> and the boundary condition is <span class="math display">
 J^\star(\bm x(t_\mathrm{f}),t_\mathrm{f}) = \frac{1}{2}\bm x^\top (t_\mathrm{f})\mathbf S_\mathrm{f}\bm x(t_\mathrm{f}).
@@ -803,11 +810,16 @@ Note
 <p><span class="math display">
 -\bm x^\top \dot{\mathbf{S}} \bm x = \frac{1}{2} \bm x^\top \left[\mathbf Q + \mathbf S \mathbf A + \mathbf A^\top \mathbf S  - \mathbf S \mathbf B\mathbf R^{-1}\mathbf B^\top \mathbf S \right ] \bm x.
 </span></p>
-<p>Finally, since the above single (scalar) equation should hold for all <span class="math inline">\bm x(t)</span>, the matrix equation must hold too, and we get the familiar differential Riccati equation <span class="math display">\boxed
-{-\dot{\mathbf S}(t) = \mathbf A^\top \mathbf S(t) + \mathbf S(t)\mathbf A - \mathbf S(t)\mathbf B\mathbf R^{-1}\mathbf B^\top \mathbf S(t) + \mathbf Q.}
-</span></p>
-<p>We also get the optimal control <span class="math display">\boxed
-{\bm u^\star(t) = - \underbrace{\mathbf R^{-1}\mathbf B^\top \mathbf S(t)}_{\bm K(t)}\bm x(t).}
+<p>Finally, since the above single (scalar) equation should hold for all <span class="math inline">\bm x(t)</span>, the matrix equation must hold too, and we get the familiar differential Riccati equation for the matrix variable <span class="math inline">\mathbf S(t)</span> <span class="math display">\boxed
+{-\dot{\mathbf S}(t) = \mathbf A^\top \mathbf S(t) + \mathbf S(t)\mathbf A - \mathbf S(t)\mathbf B\mathbf R^{-1}\mathbf B^\top \mathbf S(t) + \mathbf Q}
+</span> initialized at the final time <span class="math inline">t_\mathrm{f}</span> by <span class="math inline">\mathbf S(t_\mathrm{f}) = \mathbf S_\mathrm{f}</span>.</p>
+<p>Having obtained <span class="math inline">\mathbf S(t)</span>, we can get the optimal control by substituting it into <span class="math display">\boxed
+{
+\begin{aligned}
+    \bm u^\star(t) &amp;= - \mathbf R^{-1}\mathbf B^\top \nabla_{\bm x} J^\star(\bm x(t),t) \\
+                   &amp;= - \underbrace{\mathbf R^{-1}\mathbf B^\top \mathbf S(t)}_{\bm K(t)}\bm x(t).
+\end{aligned}
+}
 </span></p>
 <p>We have just rederived the continuous-time LQR problem using the HJB equation (previously we did it by massaging the two-point boundary value problem that followed as the necessary condition of optimality from the techniques of calculus of variations).</p>
 <p>Note that we have also just seen the equivalence between a first-order linear PDE and first-order nonlinear ODE.</p>
@@ -1242,8 +1254,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cont_dp_references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cont_dp_DDP.html" class="pagination-link" aria-label="Differential dynamic programming (DDP)">
+        <span class="nav-page-text">Differential dynamic programming (DDP)</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
