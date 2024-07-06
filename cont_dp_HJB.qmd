@@ -28,6 +28,8 @@ $$
 \psi(\bm x(t_\mathrm{f}),t_\mathrm{f})=0.
 $$
 
+## Hamilton-Jacobi-Bellman (HJB) equation
+
 We now consider an arbitrary time $t$ and split the (remaining) time interval $[t,t_\mathrm{f}]$ into two parts $[t,t+\Delta t]$ and $[t+\Delta t,t_\mathrm{f}]$ , and structure the cost function accordingly
 $$
 J(\bm x(t),\bm u(\cdot),t) = \int_{t}^{t+\Delta t} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + \underbrace{\int_{t+\Delta t}^{t_\mathrm{f}} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + \phi(\bm x(t_\mathrm{f}),t_\mathrm{f})}_{J(\bm x(t+\Delta t), \bm u(t+\Delta t), t+\Delta t)}.
@@ -66,7 +68,7 @@ $$
 
 Note that this includes as special cases the fixed-final-state and free-final-state cases.
 
-## HJB and Hamiltonian
+## HJB equation and Hamiltonian
 
 Recall the definition of Hamiltonian $H(\bm x,\bm u,\bm \lambda,t) = L(\bm x,\bm u,t) + \boldsymbol{\lambda}^\top \mathbf f(\bm x,\bm u,t)$. The HJB equation can also be written as
 $$\boxed
