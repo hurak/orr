@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Dynamic programming for continuous-time optimal control – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>Overview of continuous-time optimal control – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./cont_dp_LQR.html" rel="next">
-<link href="./cont_numerical_references.html" rel="prev">
+<link href="./cont_indir_calculus_of_variations.html" rel="next">
+<link href="./discr_dir_mpc_explicit.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -125,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">9.X. Continuous-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">Dynamic programming for continuous-time optimal control</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_overview.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_overview.html">Overview of continuous-time optimal control</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -401,7 +401,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_overview.html" class="sidebar-item-text sidebar-link">
+  <a href="./cont_indir_overview.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Overview of continuous-time optimal control</span></a>
   </div>
 </li>
@@ -524,7 +524,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_dp_HJB.html" class="sidebar-item-text sidebar-link active">
+  <a href="./cont_dp_HJB.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Dynamic programming for continuous-time optimal control</span></a>
   </div>
 </li>
@@ -535,11 +535,8 @@ window.Quarto = {
   </div>
 </li>
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./cont_dp_DDP.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Differential dynamic programming (DDP)</span></a>
-  </div>
-</li>
+ <span class="menu-text">cont_dp_DDP.qmd</span>
+  </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_dp_references.html" class="sidebar-item-text sidebar-link">
@@ -739,23 +736,18 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#hamilton-jacobi-bellman-hjb-equation" id="toc-hamilton-jacobi-bellman-hjb-equation" class="nav-link active" data-scroll-target="#hamilton-jacobi-bellman-hjb-equation">Hamilton-Jacobi-Bellman (HJB) equation</a>
-  <ul class="collapse">
-  <li><a href="#boundary-conditions-for-the-hjb-equation" id="toc-boundary-conditions-for-the-hjb-equation" class="nav-link" data-scroll-target="#boundary-conditions-for-the-hjb-equation">Boundary conditions for the HJB equation</a></li>
-  <li><a href="#optimal-control-using-the-optimal-cost--to-go-function" id="toc-optimal-control-using-the-optimal-cost--to-go-function" class="nav-link" data-scroll-target="#optimal-control-using-the-optimal-cost--to-go-function">Optimal control using the optimal cost (-to-go) function</a></li>
-  </ul></li>
-  <li><a href="#hjb-equation-formulated-using-a-hamiltonian" id="toc-hjb-equation-formulated-using-a-hamiltonian" class="nav-link" data-scroll-target="#hjb-equation-formulated-using-a-hamiltonian">HJB equation formulated using a Hamiltonian</a></li>
-  <li><a href="#hjb-equation-vs-pontryagins-principle-of-maximum-minimum" id="toc-hjb-equation-vs-pontryagins-principle-of-maximum-minimum" class="nav-link" data-scroll-target="#hjb-equation-vs-pontryagins-principle-of-maximum-minimum">HJB equation vs Pontryagin’s principle of maximum (minimum)</a></li>
-  <li><a href="#hjb-equation-for-an-infinite-time-horizon" id="toc-hjb-equation-for-an-infinite-time-horizon" class="nav-link" data-scroll-target="#hjb-equation-for-an-infinite-time-horizon">HJB equation for an infinite time horizon</a></li>
+  <li><a href="#continuous-time-optimal-control-problem" id="toc-continuous-time-optimal-control-problem" class="nav-link active" data-scroll-target="#continuous-time-optimal-control-problem">Continuous-time optimal control problem</a></li>
+  <li><a href="#why-continuous-time-optimal-control" id="toc-why-continuous-time-optimal-control" class="nav-link" data-scroll-target="#why-continuous-time-optimal-control">Why continuous-time optimal control?</a></li>
+  <li><a href="#approaches-to-continuous-time-optimal-control" id="toc-approaches-to-continuous-time-optimal-control" class="nav-link" data-scroll-target="#approaches-to-continuous-time-optimal-control">Approaches to continuous-time optimal control</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">9.X. Continuous-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">Dynamic programming for continuous-time optimal control</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_overview.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_overview.html">Overview of continuous-time optimal control</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Dynamic programming for continuous-time optimal control</h1>
+<h1 class="title">Overview of continuous-time optimal control</h1>
 </div>
 
 
@@ -772,81 +764,167 @@ window.Quarto = {
 </header>
 
 
-<p>In the previous sections we investigated both direct and indirect approaches to the optimal control problem. Similarly as in the discrete-time case, complementing the two approaches is the dynamic programming. Indeed, the key Bellmans’s idea, which we previously formulated in discrete time, can be extended to continuous time as well.</p>
-<p>We consider the continuous-time system <span class="math display">
-\dot{\bm{x}} = \mathbf f(\bm{x},\bm{u},t)
-</span> with the cost function <span class="math display">
-J(\bm x(t_\mathrm{i}), \bm u(\cdot), t_\mathrm{i}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}) + \int_{t_\mathrm{i}}^{t_\mathrm{f}}L(\bm x(t),\bm u(t),t)\, \mathrm d t.
+<p>Through this chapter we are entering into the realm of continuous-time optimal control – we are going to consider dynamical systems that evolve in continuous time, and we are going to search for control that also evolves in continuous time.</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Continuous-time or just continuous?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sometimes (and actually very often) we can encounter the terms <em>continuous systems</em> and <em>continuous control</em>. We find the terminology rather unfortunate because it is not clear what the adjective <em>continuous</em> refers to. For example, it might (incorrectly) suggest that the control is a continuous function of time (or state), when we only mean that it is the time that evolves continuously; the control can be discontinuous as a function of time and/or state. That is why in our course we prefer the more explicit term <em>continuous-time</em> instead of just <em>continuous</em>.</p>
+</div>
+</div>
+<section id="continuous-time-optimal-control-problem" class="level2">
+<h2 class="anchored" data-anchor-id="continuous-time-optimal-control-problem">Continuous-time optimal control problem</h2>
+<p>We start by considering a nonlinear continuous-time system modelled by the state equation <span class="math display">
+\dot{\bm{x}}(t) = \mathbf f(\bm x(t),\bm u(t), t),
+</span> where</p>
+<ul>
+<li><span class="math inline">\bm x(t) \in \mathbb R^n</span> is the state vector at the continuous time <span class="math inline">t\in \mathbb R</span>,</li>
+<li><span class="math inline">\bm u(t) \in \mathbb R^m</span> is the control vector at the continuous time <span class="math inline">t</span>,</li>
+<li><span class="math inline">\mathbf f: \mathbb{R}^n \times \mathbb{R}^m \times \mathbb R \to \mathbb{R}^n</span> is the state transition function (in general not only nonlinear but also time-varying).</li>
+</ul>
+<p>A general nonlinear continuous-time optimal control problem (OCP) is then formulated as <span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{\bm u(\cdot), \bm x(\cdot)}&amp;\quad \left(\phi(\bm x(t_\mathrm{f}),t_\mathrm{f}) + \int_{t_\mathrm{i}}^{t_\mathrm{f}} L(\bm x(t),\bm u(t),t) \; \mathrm{d}t \right)\\
+\text{subject to}  &amp;\quad \dot {\bm{x}}(t) = \mathbf f(\bm x(t),\bm u(t)),\quad t \in [t_\mathrm{i},t_\mathrm{f}],\\
+                    &amp;\quad \bm u(t) \in \mathcal U(t),\\
+                    &amp;\quad \bm x(t) \in \mathcal X(t),
+\end{aligned}
+</span> where</p>
+<ul>
+<li><span class="math inline">t_\mathrm{i}</span> is the initial continuous time,</li>
+<li><span class="math inline">t_\mathrm{f}</span> is the final continuous time,</li>
+<li><span class="math inline">\phi()</span> is a terminal cost function that penalizes the state at the final time (and possibly the final time too if it is regarded as an optimization variable),</li>
+<li><span class="math inline">L()</span> is a running (also stage) cost function,</li>
+<li>and <span class="math inline">\mathcal U(t)</span> and <span class="math inline">\mathcal X(t)</span> are (possibly time-dependent) sets of feasible controls and states – these sets are typically expressed using equations and inequalities. Should they be constant (not changing in time), the notation is just <span class="math inline">\mathcal U</span> and <span class="math inline">\mathcal X</span>.</li>
+</ul>
+<p>Oftentimes it is convenient to handle the constraints of the initial and final states separately: <span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{\bm u(\cdot), \bm x(\cdot)}&amp;\quad \left(\phi(\bm x(t_\mathrm{f}),t_\mathrm{f}) + \int_{t_\mathrm{i}}^{t_\mathrm{f}} L(\bm x(t),\bm u(t),t) \; \mathrm{d}t \right)\\
+\text{subject to}  &amp;\quad \dot {\bm{x}}(t) = \mathbf f(\bm x(t),\bm u(t)),\quad t \in [t_\mathrm{i},t_\mathrm{f}],\\
+                    &amp;\quad \bm u(t) \in \mathcal U(t),\\
+                    &amp;\quad \bm x(t) \in \mathcal X(t),\\
+                    &amp;\quad \bm x(t_\mathrm{i}) \in \mathcal X_\mathrm{init},\\
+                    &amp;\quad \bm x(t_\mathrm{f}) \in \mathcal X_\mathrm{final}.
+\end{aligned}
 </span></p>
-<p>The final time can be fixed to a particular value <span class="math inline">t_\mathrm{f}</span>, in which case the state at the final time <span class="math inline">\bm x(t_\mathrm{f})</span> is either free (unspecified but penalized through <span class="math inline">\phi(\bm x(t_\mathrm{f}))</span>), or it is fixed (specified and not penalized, that is, <span class="math inline">\bm x(t_\mathrm{f}) = \mathbf x^\mathrm{ref}</span>).</p>
-<p>The final time can also be free (regarded as an optimization variable itself), in which case general constraints on the state at the final time can be expressed as <span class="math display">
-\psi(\bm x(t_\mathrm{f}),t_\mathrm{f})=0
-</span> or possibly even using an inequality, which we will not consider here.</p>
-<p>The final time can also be considered infinity, that is, <span class="math inline">t_\mathrm{f}=\infty</span>, but we will handle this situation later separately.</p>
-<section id="hamilton-jacobi-bellman-hjb-equation" class="level2">
-<h2 class="anchored" data-anchor-id="hamilton-jacobi-bellman-hjb-equation">Hamilton-Jacobi-Bellman (HJB) equation</h2>
-<p>We now consider an arbitrary time <span class="math inline">t</span> and split the (remaining) time interval <span class="math inline">[t,t_\mathrm{f}]</span> into two parts <span class="math inline">[t,t+\Delta t]</span> and <span class="math inline">[t+\Delta t,t_\mathrm{f}]</span> , and structure the cost function accordingly <span class="math display">
-J(\bm x(t),\bm u(\cdot),t) = \int_{t}^{t+\Delta t} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + \underbrace{\int_{t+\Delta t}^{t_\mathrm{f}} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + \phi(\bm x(t_\mathrm{f}),t_\mathrm{f})}_{J(\bm x(t+\Delta t), \bm u(t+\Delta t), t+\Delta t)}.
-</span></p>
-<p>Bellman’s principle of optimality gives <span class="math display">
-J^\star(\bm x(t),t) = \min_{\bm u(\tau),\;t\leq\tau\leq t+\Delta t} \left[\int_{t}^{t+\Delta t} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + J^\star(\bm x+\Delta \bm x, t+\Delta t)\right].
-</span></p>
-<p>We now perform Taylor series expansion of <span class="math inline">J^\star(\bm x+\Delta \bm x, t+\Delta t)</span> about <span class="math inline">(\bm x,t)</span> <span class="math display">
-J^\star(\bm x,t) = \min_{\bm u(\tau),\;t\leq\tau\leq t+\Delta t} \left[L\Delta t + J^\star(\bm x,t) + (\nabla_{\bm x} J^\star)^\top \Delta \bm x + \frac{\partial J^\star}{\partial t}\Delta t + \mathcal{O}((\Delta t)^2)\right].
-</span></p>
-<p>Using <span class="math display">
-\Delta \bm x = \bm f(\bm x,\bm u,t)\Delta t
-</span> and noting that <span class="math inline">J^\star</span> and <span class="math inline">J_t^\star</span> are independent of <span class="math inline">\bm u(\tau),\;t\leq\tau\leq t+\Delta t</span>, we get <span class="math display">
-\cancel{J^\star (\bm x,t)} = \cancel{J^\star (\bm x,t)} + \frac{\partial J^\star }{\partial t}\Delta t + \min_{\bm u(\tau),\;t\leq\tau\leq t+\Delta t}\left[L\Delta t + (\nabla_{\bm x} J^\star )^\top f\Delta t\right].
-</span></p>
-<p>Assuming <span class="math inline">\Delta t\rightarrow 0</span> leads to the celebrated <em>Hamilton-Jacobi-Bellman (HJB) equation</em> <span class="math display">\boxed{
--\frac{\partial {\color{blue}J^\star (\bm x(t),t)}}{\partial t} = \min_{\bm u(t)}\left[L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} {\color{blue} J^\star (\bm x(t),t)})^\top \bm f(\bm x(t),\bm u(t),t)\right].}
-</span></p>
-<p>This is obviously a partial differential equation (PDE) for the optimal cost function <span class="math inline">J^\star(\bm x,t)</span>.</p>
-<section id="boundary-conditions-for-the-hjb-equation" class="level3">
-<h3 class="anchored" data-anchor-id="boundary-conditions-for-the-hjb-equation">Boundary conditions for the HJB equation</h3>
-<p>Since the HJB equation is a differential equation, initial/boundary value(s) must be specified to determine a unique solution. In particular, since the equation is first-order with respect to both time and state, specifying the value of the optimal cost function at the final state and the final time is enough.</p>
-<p>For a fixed-final-time, free-final-state, the optimal cost at the final time is <span class="math display">
-J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}).
-</span></p>
-<p>For a fixed-final-time, fixed-final-state, since the component of the cost function corresponding to the terminal state is zero, the optimal cost at the final time is zero as well <span class="math display">
-J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = 0.
-</span></p>
-<p>With the general final-state constraints introduced above, the boundary value condition reads <span class="math display">
-J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}),\qquad \text{on the hypersurface } \psi(\bm x(t_\mathrm{f}),t_\mathrm{f}) = 0.
-</span></p>
+<p>In particular, at the initial time just one particular state is often considered. At the final time, the state might be required to be equal to some given value, it might be required to be in some set defined through equations or inequalities, or it might be left unconstrained. Finally, the constraints on the control and states typically (but not always) come in the form of lower and upper bounds. The optimal control problem then specializes to <span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{\bm u(\cdot), \bm x(\cdot)}&amp;\quad \left(\phi(\bm x(t_\mathrm{f}),t_\mathrm{f}) + \int_{t_\mathrm{i}}^{t_\mathrm{f}} L(\bm x(t),\bm u(t),t) \; \mathrm{d}t \right)\\
+\text{subject to}  &amp;\quad \dot {\bm{x}}(t) = \mathbf f(\bm x(t),\bm u(t)),\quad t \in [t_\mathrm{i},t_\mathrm{f}],\\
+                    &amp;\quad \bm u_{\min} \leq \bm u(t) \leq \bm u_{\max},\\
+                    &amp;\quad \bm x_{\min} \leq \bm x(t) \leq \bm x_{\max},\\
+                    &amp;\quad \bm x(t_\mathrm{i}) = \mathbf x^\text{init},\\
+                    &amp;\quad \left(\bm x(t_\mathrm{f}) = \mathbf x^\text{ref}, \; \text{or} \; \mathbf h_\text{final}(\bm x(t_\mathrm{f})) =  \mathbf 0, \text{or} \; \mathbf g_\text{final}(\bm x(t_\mathrm{f})) \leq  \mathbf 0\right),
+\end{aligned}
+</span> where</p>
+<ul>
+<li>the inequalities should be interpreted componentwise,</li>
+<li><span class="math inline">\bm u_{\min}</span> and <span class="math inline">\bm u_{\max}</span> are lower and upper bounds on the control, respectively,</li>
+<li><span class="math inline">\bm x_{\min}</span> and <span class="math inline">\bm x_{\max}</span> are lower and upper bounds on the state, respectively,</li>
+<li><span class="math inline">\mathbf x^\text{init}</span> is a fixed initial state,</li>
+<li><span class="math inline">\mathbf x^\text{ref}</span> is a required (reference) final state,</li>
+<li>and the functions <span class="math inline">\mathbf g_\text{final}()</span> and <span class="math inline">\mathbf h_\text{final}()</span> can be used to define the constraint set for the final state.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Classification of optimal control problems: Bolza, Mayer, and Lagrange problems
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The cost function in the above defined optimal control problem contains both the cost incurred at the final time and the cumulative cost (the integral of the running cost) incurred over the whole interval. An optimal control problem with this general cost function is called <em>Bolza problem</em> in the literature. If the cost function only penalizes the final state and the final time, the problem is called <em>Mayer problem</em>. If the cost function only penalizes the cumulative cost, the problem is called <em>Lagrange problem</em>.</p>
+</div>
+</div>
 </section>
-<section id="optimal-control-using-the-optimal-cost--to-go-function" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-control-using-the-optimal-cost--to-go-function">Optimal control using the optimal cost (-to-go) function</h3>
-<p>Assume now that the solution <span class="math inline">J^\star (\bm x(t),t)</span> to the HJB equation is available. We can then find the optimal control by the minimization <span class="math display">\boxed
-{\bm u^\star(t) = \arg\min_{\bm u(t)}\left[L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} J^\star (\bm x(t),t))^\top \bm f(\bm x(t),\bm u(t),t)\right].}
-</span></p>
-<p>For convenience, the minimized function is often labelled as <span class="math display">
-Q(\bm x(t),\bm u(t),t) = L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} J^\star (\bm x(t),t))^\top \bm f(\bm x(t),\bm u(t),t)
-</span> and called just <em>Q-function</em>. The optimal control is then <span class="math display">
-\bm u^\star(t) = \arg\min_{\bm u(t)} Q(\bm x(t),\bm u(t),t).
-</span></p>
+<section id="why-continuous-time-optimal-control" class="level2">
+<h2 class="anchored" data-anchor-id="why-continuous-time-optimal-control">Why continuous-time optimal control?</h2>
+<p>Why are we interested in continuous-time optimal control when at the end of the day most if not all controllers are implemented using computers and hence in discrete time? There are several reasons:</p>
+<ul>
+<li><p>The theory for continuous-time optimal control is highly mature and represents a pinnacle of human ingenuity. It would be a pity to ignore it. It is also much richer than the theory for discrete-time optimal control. For example, when considering the time-optimal control, we can differentiate the cost function with respect to the final time because it is a continuous (real) variable.</p></li>
+<li><p>Although the theoretical concepts needed for continuous-time optimal control are more advanced (integrals and derivatives instead of sums and differences, function spaces instead of spaces of sequences, calculus of variations instead of differential calculus), the results are often simpler than in the discrete-time case – the resulting formulas just look neater and more compact.</p></li>
+<li><p>We will see later that methods for solving general continuous-time optimal control problems must use some kind of (temporal)discretization. Isn’t it then enough to study discretization and discrete-time optimal control separately? It will turn out that discretization can be regarded as a part of the solution process.</p></li>
+</ul>
 </section>
-</section>
-<section id="hjb-equation-formulated-using-a-hamiltonian" class="level2">
-<h2 class="anchored" data-anchor-id="hjb-equation-formulated-using-a-hamiltonian">HJB equation formulated using a Hamiltonian</h2>
-<p>Recall the definition of Hamiltonian <span class="math inline">H(\bm x,\bm u,\bm \lambda,t) = L(\bm x,\bm u,t) + \boldsymbol{\lambda}^\top \mathbf f(\bm x,\bm u,t)</span>. The HJB equation can also be written as <span class="math display">\boxed
-{-\frac{\partial J^\star (\bm x(t),t)}{\partial t} = \min_{\bm u(t)}H(\bm x(t),\bm u(t),\nabla_{\bm x} J^\star (\bm x(t),t),t).}
-</span></p>
-<p>What we have just derived is one of the most profound results in optimal control – Hamiltonian must be minimized by the optimal control. We will exploit it next as a tool for deriving some theoretical results.</p>
-</section>
-<section id="hjb-equation-vs-pontryagins-principle-of-maximum-minimum" class="level2">
-<h2 class="anchored" data-anchor-id="hjb-equation-vs-pontryagins-principle-of-maximum-minimum">HJB equation vs Pontryagin’s principle of maximum (minimum)</h2>
-<p>Recall also that we have already encountered a similar results that made statements about the necessary maximization (or minimization) of the Hamiltonian with respect to the control – the celebrated Pontryagin’s principle of maximum (or minimum). Are these two related? Equivalent?</p>
-</section>
-<section id="hjb-equation-for-an-infinite-time-horizon" class="level2">
-<h2 class="anchored" data-anchor-id="hjb-equation-for-an-infinite-time-horizon">HJB equation for an infinite time horizon</h2>
-<p>When both the system and the cost function are time-invariant, and the final time is infinite, that is, <span class="math inline">t_\mathrm{f}=\infty</span>, the optimal cost function <span class="math inline">J^\star()</span> must necessarily be independent of time, that is, it’s partial derivative with respect to time is zero, that is, <span class="math inline">\frac{\partial J^\star (\bm x(t),t)}{\partial t} = 0</span>. The HJB equation then simplifies to</p>
-<p><span class="math display">\boxed{
-0 = \min_{\bm u(t)}\left[L(\bm x(t),\bm u(t))+(\nabla_{\bm x} {J^\star (\bm x(t),t)})^\top \bm f(\bm x(t),\bm u(t))\right],}
-</span> or, using a Hamiltonian <span class="math display">\boxed
-{0 = \min_{\bm u(t)}H(\bm x(t),\bm u(t),\nabla_{\bm x} J^\star (\bm x(t))).}
-</span></p>
+<section id="approaches-to-continuous-time-optimal-control" class="level2">
+<h2 class="anchored" data-anchor-id="approaches-to-continuous-time-optimal-control">Approaches to continuous-time optimal control</h2>
+<p>There are essentially the same three approaches to continuous-time optimal control as we have seen when studying discrete-time optimal control:</p>
+<ul>
+<li>indirect approaches,</li>
+<li>direct approaches,</li>
+<li>dynamic programming.</li>
+</ul>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-continuous-direct-indirect-dp" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-continuous-direct-indirect-dp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 410.68 116.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
+<title>G</title>
+<!-- discrete_time_optimal_control -->
+<g id="node1" class="node">
+<title>discrete_time_optimal_control</title>
+<polygon fill="none" stroke="black" points="325.83,-108 44.5,-108 44.5,-72 325.83,-72 325.83,-108"></polygon>
+<text text-anchor="middle" x="185.17" y="-85.8" font-family="Times,serif" font-size="14.00">Approaches to continuous-time optimal control</text>
+</g>
+<!-- direct_approach -->
+<g id="node2" class="node">
+<title>direct_approach</title>
+<polygon fill="none" stroke="black" points="114.5,-36 -0.17,-36 -0.17,0 114.5,0 114.5,-36"></polygon>
+<text text-anchor="middle" x="57.17" y="-13.8" font-family="Times,serif" font-size="14.00">Indirect approach</text>
+</g>
+<!-- discrete_time_optimal_control&#45;&gt;direct_approach -->
+<g id="edge2" class="edge">
+<title>discrete_time_optimal_control-&gt;direct_approach</title>
+<path fill="none" stroke="black" d="M153.86,-71.88C136.96,-62.64 115.92,-51.13 97.78,-41.21"></path>
+<polygon fill="black" stroke="black" points="99.05,-37.92 88.6,-36.19 95.69,-44.06 99.05,-37.92"></polygon>
+</g>
+<!-- indirect_approach -->
+<g id="node3" class="node">
+<title>indirect_approach</title>
+<polygon fill="none" stroke="black" points="237.95,-36 132.38,-36 132.38,0 237.95,0 237.95,-36"></polygon>
+<text text-anchor="middle" x="185.17" y="-13.8" font-family="Times,serif" font-size="14.00">Direct approach</text>
+</g>
+<!-- discrete_time_optimal_control&#45;&gt;indirect_approach -->
+<g id="edge1" class="edge">
+<title>discrete_time_optimal_control-&gt;indirect_approach</title>
+<path fill="none" stroke="black" d="M185.17,-71.7C185.17,-63.98 185.17,-54.71 185.17,-46.11"></path>
+<polygon fill="black" stroke="black" points="188.67,-46.1 185.17,-36.1 181.67,-46.1 188.67,-46.1"></polygon>
+</g>
+<!-- dynamic_programming -->
+<g id="node4" class="node">
+<title>dynamic_programming</title>
+<polygon fill="none" stroke="black" points="402.69,-36 255.64,-36 255.64,0 402.69,0 402.69,-36"></polygon>
+<text text-anchor="middle" x="329.17" y="-13.8" font-family="Times,serif" font-size="14.00">Dynamic programming</text>
+</g>
+<!-- discrete_time_optimal_control&#45;&gt;dynamic_programming -->
+<g id="edge3" class="edge">
+<title>discrete_time_optimal_control-&gt;dynamic_programming</title>
+<path fill="none" stroke="black" d="M220.39,-71.88C239.74,-62.47 263.94,-50.71 284.59,-40.67"></path>
+<polygon fill="black" stroke="black" points="286.34,-43.71 293.81,-36.19 283.28,-37.41 286.34,-43.71"></polygon>
+</g>
+</g>
+</svg>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-continuous-direct-indirect-dp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Three approaches to continuous-time optimal control
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In this chapter we start with the indirect approach. But first we need to introduce the framework of calculus of variations, which is what we do in the next section.</p>
 
 
 </section>
@@ -944,7 +1022,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/hurak\.github\.io\/orr\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -1274,13 +1352,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cont_numerical_references.html" class="pagination-link" aria-label="References">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">References</span>
+      <a href="./discr_dir_mpc_explicit.html" class="pagination-link" aria-label="Explicit MPC">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Explicit MPC</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cont_dp_LQR.html" class="pagination-link" aria-label="Using HJB equation to solve the continuous-time LQR problem">
-        <span class="nav-page-text">Using HJB equation to solve the continuous-time LQR problem</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cont_indir_calculus_of_variations.html" class="pagination-link" aria-label="Calculus of variations">
+        <span class="nav-page-text">Calculus of variations</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

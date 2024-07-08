@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Dynamic programming for continuous-time optimal control – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>Using HJB equation to solve the continuous-time LQR problem – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./cont_dp_LQR.html" rel="next">
-<link href="./cont_numerical_references.html" rel="prev">
+<link href="./cont_dp_DDP.html" rel="next">
+<link href="./cont_dp_HJB.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -125,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">9.X. Continuous-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">Dynamic programming for continuous-time optimal control</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">9.X. Continuous-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./cont_dp_LQR.html">Using HJB equation to solve the continuous-time LQR problem</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -524,13 +524,13 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_dp_HJB.html" class="sidebar-item-text sidebar-link active">
+  <a href="./cont_dp_HJB.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Dynamic programming for continuous-time optimal control</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_dp_LQR.html" class="sidebar-item-text sidebar-link">
+  <a href="./cont_dp_LQR.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Using HJB equation to solve the continuous-time LQR problem</span></a>
   </div>
 </li>
@@ -734,28 +734,15 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#hamilton-jacobi-bellman-hjb-equation" id="toc-hamilton-jacobi-bellman-hjb-equation" class="nav-link active" data-scroll-target="#hamilton-jacobi-bellman-hjb-equation">Hamilton-Jacobi-Bellman (HJB) equation</a>
-  <ul class="collapse">
-  <li><a href="#boundary-conditions-for-the-hjb-equation" id="toc-boundary-conditions-for-the-hjb-equation" class="nav-link" data-scroll-target="#boundary-conditions-for-the-hjb-equation">Boundary conditions for the HJB equation</a></li>
-  <li><a href="#optimal-control-using-the-optimal-cost--to-go-function" id="toc-optimal-control-using-the-optimal-cost--to-go-function" class="nav-link" data-scroll-target="#optimal-control-using-the-optimal-cost--to-go-function">Optimal control using the optimal cost (-to-go) function</a></li>
-  </ul></li>
-  <li><a href="#hjb-equation-formulated-using-a-hamiltonian" id="toc-hjb-equation-formulated-using-a-hamiltonian" class="nav-link" data-scroll-target="#hjb-equation-formulated-using-a-hamiltonian">HJB equation formulated using a Hamiltonian</a></li>
-  <li><a href="#hjb-equation-vs-pontryagins-principle-of-maximum-minimum" id="toc-hjb-equation-vs-pontryagins-principle-of-maximum-minimum" class="nav-link" data-scroll-target="#hjb-equation-vs-pontryagins-principle-of-maximum-minimum">HJB equation vs Pontryagin’s principle of maximum (minimum)</a></li>
-  <li><a href="#hjb-equation-for-an-infinite-time-horizon" id="toc-hjb-equation-for-an-infinite-time-horizon" class="nav-link" data-scroll-target="#hjb-equation-for-an-infinite-time-horizon">HJB equation for an infinite time horizon</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">9.X. Continuous-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">Dynamic programming for continuous-time optimal control</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">9.X. Continuous-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./cont_dp_LQR.html">Using HJB equation to solve the continuous-time LQR problem</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Dynamic programming for continuous-time optimal control</h1>
+<h1 class="title">Using HJB equation to solve the continuous-time LQR problem</h1>
 </div>
 
 
@@ -772,84 +759,72 @@ window.Quarto = {
 </header>
 
 
-<p>In the previous sections we investigated both direct and indirect approaches to the optimal control problem. Similarly as in the discrete-time case, complementing the two approaches is the dynamic programming. Indeed, the key Bellmans’s idea, which we previously formulated in discrete time, can be extended to continuous time as well.</p>
-<p>We consider the continuous-time system <span class="math display">
-\dot{\bm{x}} = \mathbf f(\bm{x},\bm{u},t)
-</span> with the cost function <span class="math display">
-J(\bm x(t_\mathrm{i}), \bm u(\cdot), t_\mathrm{i}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}) + \int_{t_\mathrm{i}}^{t_\mathrm{f}}L(\bm x(t),\bm u(t),t)\, \mathrm d t.
+<p>As we have already discussed a couple of times, in the LQR problem we consider a linear time invariant (LTI) system modelled by <span class="math display">
+\dot{\bm x}(t) = \mathbf A\bm x(t) + \mathbf B\bm u(t),
+</span> and the quadratic cost function <span class="math display">
+J(\bm x(t_\mathrm{i}),\bm u(\cdot), t_\mathrm{i}) = \frac{1}{2}\bm x^\top(t_\mathrm{f})\mathbf S_\mathrm{f}\bm x(t_\mathrm{f}) + \frac{1}{2}\int_{t_\mathrm{i}}^{t_\mathrm{f}}\left(\bm x^\top \mathbf Q\bm x + \bm u^\top \mathbf R \bm u\right)\mathrm{d}t.
 </span></p>
-<p>The final time can be fixed to a particular value <span class="math inline">t_\mathrm{f}</span>, in which case the state at the final time <span class="math inline">\bm x(t_\mathrm{f})</span> is either free (unspecified but penalized through <span class="math inline">\phi(\bm x(t_\mathrm{f}))</span>), or it is fixed (specified and not penalized, that is, <span class="math inline">\bm x(t_\mathrm{f}) = \mathbf x^\mathrm{ref}</span>).</p>
-<p>The final time can also be free (regarded as an optimization variable itself), in which case general constraints on the state at the final time can be expressed as <span class="math display">
-\psi(\bm x(t_\mathrm{f}),t_\mathrm{f})=0
-</span> or possibly even using an inequality, which we will not consider here.</p>
-<p>The final time can also be considered infinity, that is, <span class="math inline">t_\mathrm{f}=\infty</span>, but we will handle this situation later separately.</p>
-<section id="hamilton-jacobi-bellman-hjb-equation" class="level2">
-<h2 class="anchored" data-anchor-id="hamilton-jacobi-bellman-hjb-equation">Hamilton-Jacobi-Bellman (HJB) equation</h2>
-<p>We now consider an arbitrary time <span class="math inline">t</span> and split the (remaining) time interval <span class="math inline">[t,t_\mathrm{f}]</span> into two parts <span class="math inline">[t,t+\Delta t]</span> and <span class="math inline">[t+\Delta t,t_\mathrm{f}]</span> , and structure the cost function accordingly <span class="math display">
-J(\bm x(t),\bm u(\cdot),t) = \int_{t}^{t+\Delta t} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + \underbrace{\int_{t+\Delta t}^{t_\mathrm{f}} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + \phi(\bm x(t_\mathrm{f}),t_\mathrm{f})}_{J(\bm x(t+\Delta t), \bm u(t+\Delta t), t+\Delta t)}.
+<p>The Hamiltonian is <span class="math display">
+H(\bm x,\bm u,\bm \lambda) = \frac{1}{2}\left(\bm x^\top \mathbf Q\bm x + \bm u^\top \mathbf R \bm u\right) + \boldsymbol{\lambda}^\top \left(\mathbf A\bm x + \mathbf B\bm u\right).
 </span></p>
-<p>Bellman’s principle of optimality gives <span class="math display">
-J^\star(\bm x(t),t) = \min_{\bm u(\tau),\;t\leq\tau\leq t+\Delta t} \left[\int_{t}^{t+\Delta t} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + J^\star(\bm x+\Delta \bm x, t+\Delta t)\right].
+<p>According to the HJB equation our goal is to minimize <span class="math inline">H</span> at a given time <span class="math inline">t</span>, which enforces the condition on its gradient <span class="math display">
+\mathbf 0 = \nabla_{\bm u} H = \mathbf R\bm u + \mathbf B^\top \boldsymbol\lambda,
+</span> from which it follows that the optimal control must necessarily satisfy <span class="math display">
+\bm u^\star = -\mathbf R^{-1} \mathbf B^\top \boldsymbol\lambda.
 </span></p>
-<p>We now perform Taylor series expansion of <span class="math inline">J^\star(\bm x+\Delta \bm x, t+\Delta t)</span> about <span class="math inline">(\bm x,t)</span> <span class="math display">
-J^\star(\bm x,t) = \min_{\bm u(\tau),\;t\leq\tau\leq t+\Delta t} \left[L\Delta t + J^\star(\bm x,t) + (\nabla_{\bm x} J^\star)^\top \Delta \bm x + \frac{\partial J^\star}{\partial t}\Delta t + \mathcal{O}((\Delta t)^2)\right].
+<p>Since the Hessian of the Hamiltonian is positive definite by our assumption on positive definiteness of <span class="math inline">\mathbf R</span> <span class="math display">
+\nabla_{\bm u \bm u}^2 \mathbf H = \mathbf R &gt; 0,
+</span> Hamiltonian is really minimized by the above choice of <span class="math inline">\bm u^\star</span>.</p>
+<p>The minimized Hamiltonian is <span class="math display">
+\min_{\bm u(t)}H(\bm x, \bm u, \bm \lambda) = \frac{1}{2}\bm x^\top \mathbf Q \bm x + \boldsymbol\lambda^\top \mathbf A \bm x - \frac{1}{2}\boldsymbol\lambda^\top \mathbf B\mathbf R^{-1}\mathbf B^\top \boldsymbol\lambda
 </span></p>
-<p>Using <span class="math display">
-\Delta \bm x = \bm f(\bm x,\bm u,t)\Delta t
-</span> and noting that <span class="math inline">J^\star</span> and <span class="math inline">J_t^\star</span> are independent of <span class="math inline">\bm u(\tau),\;t\leq\tau\leq t+\Delta t</span>, we get <span class="math display">
-\cancel{J^\star (\bm x,t)} = \cancel{J^\star (\bm x,t)} + \frac{\partial J^\star }{\partial t}\Delta t + \min_{\bm u(\tau),\;t\leq\tau\leq t+\Delta t}\left[L\Delta t + (\nabla_{\bm x} J^\star )^\top f\Delta t\right].
+<p>Setting <span class="math inline">\boldsymbol\lambda = \nabla_{\bm x} J^\star</span>, the HJB equation is <span class="math display">\boxed
+{-\frac{\partial J^\star}{\partial t} = \frac{1}{2}\bm x^\top \mathbf Q \bm x + (\nabla_{\bm x} J^\star)^\top \mathbf A\bm x - \frac{1}{2}(\nabla_{\bm x} J^\star)^\top \mathbf B\mathbf R^{-1}\mathbf B^\top \nabla_{\bm x} J^\star,}
+</span> and the boundary condition is <span class="math display">
+J^\star(\bm x(t_\mathrm{f}),t_\mathrm{f}) = \frac{1}{2}\bm x^\top (t_\mathrm{f})\mathbf S_\mathrm{f}\bm x(t_\mathrm{f}).
 </span></p>
-<p>Assuming <span class="math inline">\Delta t\rightarrow 0</span> leads to the celebrated <em>Hamilton-Jacobi-Bellman (HJB) equation</em> <span class="math display">\boxed{
--\frac{\partial {\color{blue}J^\star (\bm x(t),t)}}{\partial t} = \min_{\bm u(t)}\left[L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} {\color{blue} J^\star (\bm x(t),t)})^\top \bm f(\bm x(t),\bm u(t),t)\right].}
+<p>We can now proceed by assuming that the optimal cost function is quadratic in <span class="math inline">\bm x</span> for all other times <span class="math inline">t</span>, that is, there must exist a symmetric matrix function <span class="math inline">\mathbf S(t)</span> such that <span class="math display">
+J^\star(\bm x(t),t) = \frac{1}{2}\bm x^\top (t)\mathbf S(t)\bm x(t).
 </span></p>
-<p>This is obviously a partial differential equation (PDE) for the optimal cost function <span class="math inline">J^\star(\bm x,t)</span>.</p>
-<section id="boundary-conditions-for-the-hjb-equation" class="level3">
-<h3 class="anchored" data-anchor-id="boundary-conditions-for-the-hjb-equation">Boundary conditions for the HJB equation</h3>
-<p>Since the HJB equation is a differential equation, initial/boundary value(s) must be specified to determine a unique solution. In particular, since the equation is first-order with respect to both time and state, specifying the value of the optimal cost function at the final state and the final time is enough.</p>
-<p>For a fixed-final-time, free-final-state, the optimal cost at the final time is <span class="math display">
-J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}).
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Recall that we did something similar when making a <em>sweep</em> assumption to derive a Riccati equation following the indirect approach – we just make an inspired guess and see if it works. Here the inspiration comes from the observation made elsewhere, that the optimal cost function in the LQR problem is quadratic in <span class="math inline">\bm x</span>.</p>
+</div>
+</div>
+<p>We now aim at substituting this into the HJB equation. Observe that <span class="math inline">\frac{\partial J^\star}{\partial t}=\bm x^\top(t) \dot{\mathbf{S}}(t) \bm x(t)</span> and <span class="math inline">\nabla_{\bm x} J^\star = \mathbf S \bm x</span>. Upon substitution to the HJB equation, we get</p>
+<p><span class="math display">
+-\bm x^\top \dot{\mathbf{S}} \bm x = \frac{1}{2}\bm x^\top \mathbf Q \bm x + \bm x^\top \mathbf S \mathbf A\bm x - \frac{1}{2}\bm x^\top \mathbf S \mathbf B\mathbf R^{-1}\mathbf B^\top \mathbf S \bm x.
 </span></p>
-<p>For a fixed-final-time, fixed-final-state, since the component of the cost function corresponding to the terminal state is zero, the optimal cost at the final time is zero as well <span class="math display">
-J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = 0.
+<p>This can be reformatted as <span class="math display">
+-\bm x^\top \dot{\mathbf{S}} \bm x = \frac{1}{2} \bm x^\top \left[\mathbf Q + 2 \mathbf S \mathbf A - \mathbf S \mathbf B\mathbf R^{-1}\mathbf B^\top \mathbf S \right ] \bm x.
 </span></p>
-<p>With the general final-state constraints introduced above, the boundary value condition reads <span class="math display">
-J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}),\qquad \text{on the hypersurface } \psi(\bm x(t_\mathrm{f}),t_\mathrm{f}) = 0.
+<p>Notice that the middle matrix in the square brackets is not symmetric. Symmetrizing it (with no effect on the resulting value of the quadratic form) we get</p>
+<p><span class="math display">
+-\bm x^\top \dot{\mathbf{S}} \bm x = \frac{1}{2} \bm x^\top \left[\mathbf Q + \mathbf S \mathbf A + \mathbf A^\top \mathbf S  - \mathbf S \mathbf B\mathbf R^{-1}\mathbf B^\top \mathbf S \right ] \bm x.
 </span></p>
-</section>
-<section id="optimal-control-using-the-optimal-cost--to-go-function" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-control-using-the-optimal-cost--to-go-function">Optimal control using the optimal cost (-to-go) function</h3>
-<p>Assume now that the solution <span class="math inline">J^\star (\bm x(t),t)</span> to the HJB equation is available. We can then find the optimal control by the minimization <span class="math display">\boxed
-{\bm u^\star(t) = \arg\min_{\bm u(t)}\left[L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} J^\star (\bm x(t),t))^\top \bm f(\bm x(t),\bm u(t),t)\right].}
+<p>Finally, since the above single (scalar) equation should hold for all <span class="math inline">\bm x(t)</span>, the matrix equation must hold too, and we get the familiar differential Riccati equation for the matrix variable <span class="math inline">\mathbf S(t)</span> <span class="math display">\boxed
+{-\dot{\mathbf S}(t) = \mathbf A^\top \mathbf S(t) + \mathbf S(t)\mathbf A - \mathbf S(t)\mathbf B\mathbf R^{-1}\mathbf B^\top \mathbf S(t) + \mathbf Q}
+</span> initialized at the final time <span class="math inline">t_\mathrm{f}</span> by <span class="math inline">\mathbf S(t_\mathrm{f}) = \mathbf S_\mathrm{f}</span>.</p>
+<p>Having obtained <span class="math inline">\mathbf S(t)</span>, we can get the optimal control by substituting it into <span class="math display">\boxed
+{
+\begin{aligned}
+    \bm u^\star(t) &amp;= - \mathbf R^{-1}\mathbf B^\top \nabla_{\bm x} J^\star(\bm x(t),t) \\
+                   &amp;= - \underbrace{\mathbf R^{-1}\mathbf B^\top \mathbf S(t)}_{\bm K(t)}\bm x(t).
+\end{aligned}
+}
 </span></p>
-<p>For convenience, the minimized function is often labelled as <span class="math display">
-Q(\bm x(t),\bm u(t),t) = L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} J^\star (\bm x(t),t))^\top \bm f(\bm x(t),\bm u(t),t)
-</span> and called just <em>Q-function</em>. The optimal control is then <span class="math display">
-\bm u^\star(t) = \arg\min_{\bm u(t)} Q(\bm x(t),\bm u(t),t).
-</span></p>
-</section>
-</section>
-<section id="hjb-equation-formulated-using-a-hamiltonian" class="level2">
-<h2 class="anchored" data-anchor-id="hjb-equation-formulated-using-a-hamiltonian">HJB equation formulated using a Hamiltonian</h2>
-<p>Recall the definition of Hamiltonian <span class="math inline">H(\bm x,\bm u,\bm \lambda,t) = L(\bm x,\bm u,t) + \boldsymbol{\lambda}^\top \mathbf f(\bm x,\bm u,t)</span>. The HJB equation can also be written as <span class="math display">\boxed
-{-\frac{\partial J^\star (\bm x(t),t)}{\partial t} = \min_{\bm u(t)}H(\bm x(t),\bm u(t),\nabla_{\bm x} J^\star (\bm x(t),t),t).}
-</span></p>
-<p>What we have just derived is one of the most profound results in optimal control – Hamiltonian must be minimized by the optimal control. We will exploit it next as a tool for deriving some theoretical results.</p>
-</section>
-<section id="hjb-equation-vs-pontryagins-principle-of-maximum-minimum" class="level2">
-<h2 class="anchored" data-anchor-id="hjb-equation-vs-pontryagins-principle-of-maximum-minimum">HJB equation vs Pontryagin’s principle of maximum (minimum)</h2>
-<p>Recall also that we have already encountered a similar results that made statements about the necessary maximization (or minimization) of the Hamiltonian with respect to the control – the celebrated Pontryagin’s principle of maximum (or minimum). Are these two related? Equivalent?</p>
-</section>
-<section id="hjb-equation-for-an-infinite-time-horizon" class="level2">
-<h2 class="anchored" data-anchor-id="hjb-equation-for-an-infinite-time-horizon">HJB equation for an infinite time horizon</h2>
-<p>When both the system and the cost function are time-invariant, and the final time is infinite, that is, <span class="math inline">t_\mathrm{f}=\infty</span>, the optimal cost function <span class="math inline">J^\star()</span> must necessarily be independent of time, that is, it’s partial derivative with respect to time is zero, that is, <span class="math inline">\frac{\partial J^\star (\bm x(t),t)}{\partial t} = 0</span>. The HJB equation then simplifies to</p>
-<p><span class="math display">\boxed{
-0 = \min_{\bm u(t)}\left[L(\bm x(t),\bm u(t))+(\nabla_{\bm x} {J^\star (\bm x(t),t)})^\top \bm f(\bm x(t),\bm u(t))\right],}
-</span> or, using a Hamiltonian <span class="math display">\boxed
-{0 = \min_{\bm u(t)}H(\bm x(t),\bm u(t),\nabla_{\bm x} J^\star (\bm x(t))).}
-</span></p>
+<p>We have just rederived the continuous-time LQR problem using the HJB equation (previously we did it by massaging the two-point boundary value problem that followed as the necessary condition of optimality from the techniques of calculus of variations).</p>
+<p>Note that we have also just seen the equivalence between a first-order linear PDE and first-order nonlinear ODE.</p>
 
 
-</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1274,13 +1249,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cont_numerical_references.html" class="pagination-link" aria-label="References">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">References</span>
+      <a href="./cont_dp_HJB.html" class="pagination-link" aria-label="Dynamic programming for continuous-time optimal control">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Dynamic programming for continuous-time optimal control</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cont_dp_LQR.html" class="pagination-link" aria-label="Using HJB equation to solve the continuous-time LQR problem">
-        <span class="nav-page-text">Using HJB equation to solve the continuous-time LQR problem</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cont_dp_DDP.html" class="pagination-link" aria-label="Differential dynamic programming (DDP)">
+        <span class="nav-page-text">Differential dynamic programming (DDP)</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1292,7 +1267,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Dynamic programming for continuous-time optimal control – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>Hinfinity-optimal control – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./cont_dp_LQR.html" rel="next">
-<link href="./cont_numerical_references.html" rel="prev">
+<link href="./rocond_mu_synthesis.html" rel="next">
+<link href="./rocond_mixed_sensitivity.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -125,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">9.X. Continuous-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">Dynamic programming for continuous-time optimal control</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rocond_mixed_sensitivity.html">12. Robust control</a></li><li class="breadcrumb-item"><a href="./rocond_H_infinity_control.html">Hinfinity-optimal control</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -524,7 +524,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_dp_HJB.html" class="sidebar-item-text sidebar-link active">
+  <a href="./cont_dp_HJB.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Dynamic programming for continuous-time optimal control</span></a>
   </div>
 </li>
@@ -641,7 +641,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rocond_H_infinity_control.html" class="sidebar-item-text sidebar-link">
+  <a href="./rocond_H_infinity_control.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Hinfinity-optimal control</span></a>
   </div>
 </li>
@@ -739,23 +739,19 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#hamilton-jacobi-bellman-hjb-equation" id="toc-hamilton-jacobi-bellman-hjb-equation" class="nav-link active" data-scroll-target="#hamilton-jacobi-bellman-hjb-equation">Hamilton-Jacobi-Bellman (HJB) equation</a>
-  <ul class="collapse">
-  <li><a href="#boundary-conditions-for-the-hjb-equation" id="toc-boundary-conditions-for-the-hjb-equation" class="nav-link" data-scroll-target="#boundary-conditions-for-the-hjb-equation">Boundary conditions for the HJB equation</a></li>
-  <li><a href="#optimal-control-using-the-optimal-cost--to-go-function" id="toc-optimal-control-using-the-optimal-cost--to-go-function" class="nav-link" data-scroll-target="#optimal-control-using-the-optimal-cost--to-go-function">Optimal control using the optimal cost (-to-go) function</a></li>
-  </ul></li>
-  <li><a href="#hjb-equation-formulated-using-a-hamiltonian" id="toc-hjb-equation-formulated-using-a-hamiltonian" class="nav-link" data-scroll-target="#hjb-equation-formulated-using-a-hamiltonian">HJB equation formulated using a Hamiltonian</a></li>
-  <li><a href="#hjb-equation-vs-pontryagins-principle-of-maximum-minimum" id="toc-hjb-equation-vs-pontryagins-principle-of-maximum-minimum" class="nav-link" data-scroll-target="#hjb-equation-vs-pontryagins-principle-of-maximum-minimum">HJB equation vs Pontryagin’s principle of maximum (minimum)</a></li>
-  <li><a href="#hjb-equation-for-an-infinite-time-horizon" id="toc-hjb-equation-for-an-infinite-time-horizon" class="nav-link" data-scroll-target="#hjb-equation-for-an-infinite-time-horizon">HJB equation for an infinite time horizon</a></li>
+  <li><a href="#mixed-sensitivity-problem-reformulated-as-the-standard-mathcalh_infty-optimization-problem" id="toc-mixed-sensitivity-problem-reformulated-as-the-standard-mathcalh_infty-optimization-problem" class="nav-link active" data-scroll-target="#mixed-sensitivity-problem-reformulated-as-the-standard-mathcalh_infty-optimization-problem">Mixed-sensitivity problem reformulated as the standard <span class="math inline">\mathcal{H}_\infty</span> optimization problem</a></li>
+  <li><a href="#signal-based-mathcalh_infty-optimal-control-problem" id="toc-signal-based-mathcalh_infty-optimal-control-problem" class="nav-link" data-scroll-target="#signal-based-mathcalh_infty-optimal-control-problem">Signal-based <span class="math inline">\mathcal{H}_\infty</span>-optimal control problem</a></li>
+  <li><a href="#what-is-behind-the-mathcalh_infty-solver" id="toc-what-is-behind-the-mathcalh_infty-solver" class="nav-link" data-scroll-target="#what-is-behind-the-mathcalh_infty-solver">What is behind the <span class="math inline">\mathcal{H}_\infty</span> solver?</a></li>
+  <li><a href="#structure-of-the-mathcalh_infty-optimal-controller" id="toc-structure-of-the-mathcalh_infty-optimal-controller" class="nav-link" data-scroll-target="#structure-of-the-mathcalh_infty-optimal-controller">Structure of the <span class="math inline">\mathcal{H}_\infty</span>-optimal controller</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">9.X. Continuous-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">Dynamic programming for continuous-time optimal control</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rocond_mixed_sensitivity.html">12. Robust control</a></li><li class="breadcrumb-item"><a href="./rocond_H_infinity_control.html">Hinfinity-optimal control</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Dynamic programming for continuous-time optimal control</h1>
+<h1 class="title">Hinfinity-optimal control</h1>
 </div>
 
 
@@ -772,81 +768,66 @@ window.Quarto = {
 </header>
 
 
-<p>In the previous sections we investigated both direct and indirect approaches to the optimal control problem. Similarly as in the discrete-time case, complementing the two approaches is the dynamic programming. Indeed, the key Bellmans’s idea, which we previously formulated in discrete time, can be extended to continuous time as well.</p>
-<p>We consider the continuous-time system <span class="math display">
-\dot{\bm{x}} = \mathbf f(\bm{x},\bm{u},t)
-</span> with the cost function <span class="math display">
-J(\bm x(t_\mathrm{i}), \bm u(\cdot), t_\mathrm{i}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}) + \int_{t_\mathrm{i}}^{t_\mathrm{f}}L(\bm x(t),\bm u(t),t)\, \mathrm d t.
+<p>Here we formulate the general problem of <span class="math inline">\mathcal{H}_\infty</span>-optimal control. There are two motivations for this. First, it gives the general framework within which we can <strong>formulate and solve the mixed-sensitivity problem</strong> defined in the frequency domain that we discused previously. Second, it allows us to consider <strong>exploit the time-domain (or signal)</strong> interpretation of the <span class="math inline">\mathcal{H}_\infty</span> norm of a system to formulate a new class of problems that can be solved with these optimization tools. For the latter, recall that <span class="math display">
+\|\mathbf G\|_{\infty} = \sup_{u\in\mathcal{L}_{2}\backslash \emptyset}\frac{\|\bm y\|_2}{\|\bm u\|_2},
+</span> in which we allow for vector input and output signals, hence MIMO systems, from the very beginning.</p>
+<p>Now, for particular control requirements, we build the generalized plant <span class="math inline">\mathbf P</span> such that after forming the feedback interconnection with the controller <span class="math inline">\mathbf K</span> as in <a href="#fig-lower-LFT-with-named-variables" class="quarto-xref">Figure&nbsp;1</a></p>
+<div id="fig-lower-LFT-with-named-variables" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lower-LFT-with-named-variables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/lower_LFT_with_named_variables.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lower-LFT-with-named-variables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Lower LFT of the generalized plant and the controller
+</figcaption>
+</figure>
+</div>
+<p>it makes sense require the stabilizing controller to minimize the amplification of the exogenous inputs (disturbances, references, noises) into the regulated outputs. We want to make the regulated outputs as insensitive as possible to the exogenous inputs and to quantify the sizes of the inputs and outputs, we use the <span class="math inline">\mathcal L_2</span> norm.</p>
+<p>But then what we have is really the standard <span class="math inline">\mathcal{H}_\infty</span> optimization problem <span class="math display">\boxed
+{\operatorname*{minimize}_{\mathbf K \text{ stabilizing}}\|\mathcal{F}_{\mathrm l}(\mathbf P,\mathbf K)\|_{\infty}.}
 </span></p>
-<p>The final time can be fixed to a particular value <span class="math inline">t_\mathrm{f}</span>, in which case the state at the final time <span class="math inline">\bm x(t_\mathrm{f})</span> is either free (unspecified but penalized through <span class="math inline">\phi(\bm x(t_\mathrm{f}))</span>), or it is fixed (specified and not penalized, that is, <span class="math inline">\bm x(t_\mathrm{f}) = \mathbf x^\mathrm{ref}</span>).</p>
-<p>The final time can also be free (regarded as an optimization variable itself), in which case general constraints on the state at the final time can be expressed as <span class="math display">
-\psi(\bm x(t_\mathrm{f}),t_\mathrm{f})=0
-</span> or possibly even using an inequality, which we will not consider here.</p>
-<p>The final time can also be considered infinity, that is, <span class="math inline">t_\mathrm{f}=\infty</span>, but we will handle this situation later separately.</p>
-<section id="hamilton-jacobi-bellman-hjb-equation" class="level2">
-<h2 class="anchored" data-anchor-id="hamilton-jacobi-bellman-hjb-equation">Hamilton-Jacobi-Bellman (HJB) equation</h2>
-<p>We now consider an arbitrary time <span class="math inline">t</span> and split the (remaining) time interval <span class="math inline">[t,t_\mathrm{f}]</span> into two parts <span class="math inline">[t,t+\Delta t]</span> and <span class="math inline">[t+\Delta t,t_\mathrm{f}]</span> , and structure the cost function accordingly <span class="math display">
-J(\bm x(t),\bm u(\cdot),t) = \int_{t}^{t+\Delta t} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + \underbrace{\int_{t+\Delta t}^{t_\mathrm{f}} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + \phi(\bm x(t_\mathrm{f}),t_\mathrm{f})}_{J(\bm x(t+\Delta t), \bm u(t+\Delta t), t+\Delta t)}.
+<p>Numerical solvers <a href="./rocond_software.html">exist</a> in various software environments.</p>
+<section id="mixed-sensitivity-problem-reformulated-as-the-standard-mathcalh_infty-optimization-problem" class="level3">
+<h3 class="anchored" data-anchor-id="mixed-sensitivity-problem-reformulated-as-the-standard-mathcalh_infty-optimization-problem">Mixed-sensitivity problem reformulated as the standard <span class="math inline">\mathcal{H}_\infty</span> optimization problem</h3>
+<p>We now show how the mixed-sensitivity problem discussed previously can be reformulated within as the standard <span class="math inline">\mathcal{H}_\infty</span> optimization problem. We consider the full mixed-sensitivity problem for a SISO plant</p>
+<p><span class="math display">
+\operatorname*{minimize}_{K \text{ stabilizing}}  
+\left\|
+\begin{bmatrix}
+W_1S\\W_2KS\\W_3T
+\end{bmatrix}
+\right\|_{\infty},
+</span> which obviously considers a closed-loop system with one input and three outputs. With only one exogenous input, we must choose its role. Say, the only exogenous input is the reference signal. The closed-loop system for which the norm is minimized is in the following block diagram <a href="#fig-mixed-sensitivity-as-standard-H-infinity" class="quarto-xref">Figure&nbsp;2</a>.</p>
+<div id="fig-mixed-sensitivity-as-standard-H-infinity" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mixed-sensitivity-as-standard-H-infinity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/mixed_sensitivity_as_standard_H_infinity.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mixed-sensitivity-as-standard-H-infinity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Mixed-sensitivity problem interpreted as the standard <span class="math inline">\mathcal{H}_\infty</span> optimization problem
+</figcaption>
+</figure>
+</div>
+<p>The matrix transfer function for generalized plant <span class="math inline">\mathbf P</span> has two inputs and four outputs and it can then be written as <span class="math display">
+\mathbf P = \left[\begin{array}{c|c}
+W_1 &amp; -W_1G\\
+0 &amp; W_2\\
+0 &amp; W_3G\\
+\hline
+1 &amp; -G
+\end{array}\right].
 </span></p>
-<p>Bellman’s principle of optimality gives <span class="math display">
-J^\star(\bm x(t),t) = \min_{\bm u(\tau),\;t\leq\tau\leq t+\Delta t} \left[\int_{t}^{t+\Delta t} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + J^\star(\bm x+\Delta \bm x, t+\Delta t)\right].
-</span></p>
-<p>We now perform Taylor series expansion of <span class="math inline">J^\star(\bm x+\Delta \bm x, t+\Delta t)</span> about <span class="math inline">(\bm x,t)</span> <span class="math display">
-J^\star(\bm x,t) = \min_{\bm u(\tau),\;t\leq\tau\leq t+\Delta t} \left[L\Delta t + J^\star(\bm x,t) + (\nabla_{\bm x} J^\star)^\top \Delta \bm x + \frac{\partial J^\star}{\partial t}\Delta t + \mathcal{O}((\Delta t)^2)\right].
-</span></p>
-<p>Using <span class="math display">
-\Delta \bm x = \bm f(\bm x,\bm u,t)\Delta t
-</span> and noting that <span class="math inline">J^\star</span> and <span class="math inline">J_t^\star</span> are independent of <span class="math inline">\bm u(\tau),\;t\leq\tau\leq t+\Delta t</span>, we get <span class="math display">
-\cancel{J^\star (\bm x,t)} = \cancel{J^\star (\bm x,t)} + \frac{\partial J^\star }{\partial t}\Delta t + \min_{\bm u(\tau),\;t\leq\tau\leq t+\Delta t}\left[L\Delta t + (\nabla_{\bm x} J^\star )^\top f\Delta t\right].
-</span></p>
-<p>Assuming <span class="math inline">\Delta t\rightarrow 0</span> leads to the celebrated <em>Hamilton-Jacobi-Bellman (HJB) equation</em> <span class="math display">\boxed{
--\frac{\partial {\color{blue}J^\star (\bm x(t),t)}}{\partial t} = \min_{\bm u(t)}\left[L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} {\color{blue} J^\star (\bm x(t),t)})^\top \bm f(\bm x(t),\bm u(t),t)\right].}
-</span></p>
-<p>This is obviously a partial differential equation (PDE) for the optimal cost function <span class="math inline">J^\star(\bm x,t)</span>.</p>
-<section id="boundary-conditions-for-the-hjb-equation" class="level3">
-<h3 class="anchored" data-anchor-id="boundary-conditions-for-the-hjb-equation">Boundary conditions for the HJB equation</h3>
-<p>Since the HJB equation is a differential equation, initial/boundary value(s) must be specified to determine a unique solution. In particular, since the equation is first-order with respect to both time and state, specifying the value of the optimal cost function at the final state and the final time is enough.</p>
-<p>For a fixed-final-time, free-final-state, the optimal cost at the final time is <span class="math display">
-J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}).
-</span></p>
-<p>For a fixed-final-time, fixed-final-state, since the component of the cost function corresponding to the terminal state is zero, the optimal cost at the final time is zero as well <span class="math display">
-J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = 0.
-</span></p>
-<p>With the general final-state constraints introduced above, the boundary value condition reads <span class="math display">
-J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}),\qquad \text{on the hypersurface } \psi(\bm x(t_\mathrm{f}),t_\mathrm{f}) = 0.
-</span></p>
+<p>A state space realization of this plant <span class="math inline">\mathbf P</span> is then used as the input argument to the solver for the <span class="math inline">\mathcal{H}_\infty</span> optimization problem. In fact, we must also tell the solver how the inputs and outputs are structured. In this case, the solver must know that of the two inputs, only the second one can be used by the controller, and of the four outputs, only the fourth one is measured.</p>
 </section>
-<section id="optimal-control-using-the-optimal-cost--to-go-function" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-control-using-the-optimal-cost--to-go-function">Optimal control using the optimal cost (-to-go) function</h3>
-<p>Assume now that the solution <span class="math inline">J^\star (\bm x(t),t)</span> to the HJB equation is available. We can then find the optimal control by the minimization <span class="math display">\boxed
-{\bm u^\star(t) = \arg\min_{\bm u(t)}\left[L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} J^\star (\bm x(t),t))^\top \bm f(\bm x(t),\bm u(t),t)\right].}
-</span></p>
-<p>For convenience, the minimized function is often labelled as <span class="math display">
-Q(\bm x(t),\bm u(t),t) = L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} J^\star (\bm x(t),t))^\top \bm f(\bm x(t),\bm u(t),t)
-</span> and called just <em>Q-function</em>. The optimal control is then <span class="math display">
-\bm u^\star(t) = \arg\min_{\bm u(t)} Q(\bm x(t),\bm u(t),t).
-</span></p>
+<section id="signal-based-mathcalh_infty-optimal-control-problem" class="level3">
+<h3 class="anchored" data-anchor-id="signal-based-mathcalh_infty-optimal-control-problem">Signal-based <span class="math inline">\mathcal{H}_\infty</span>-optimal control problem</h3>
+<p>Being able to solve the <span class="math inline">\mathcal{H}_\infty</span> optimization problem, indeed we do not have to restrict ourselves to the generalized plants <span class="math inline">\mathbf P</span> that correspond to the mixed-sensitivity problem. We can consider any plant <span class="math inline">\mathbf P</span>, for which the problem makes sense. For example, if we want to consider not only references but also disturbances, and possibly even noises, there is no way to formulate this within the mixed-sensitivity framework. But we can still formulate this as the standard <span class="math inline">\mathcal{H}_\infty</span> optimal control problem.</p>
 </section>
+<section id="what-is-behind-the-mathcalh_infty-solver" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-behind-the-mathcalh_infty-solver">What is behind the <span class="math inline">\mathcal{H}_\infty</span> solver?</h3>
 </section>
-<section id="hjb-equation-formulated-using-a-hamiltonian" class="level2">
-<h2 class="anchored" data-anchor-id="hjb-equation-formulated-using-a-hamiltonian">HJB equation formulated using a Hamiltonian</h2>
-<p>Recall the definition of Hamiltonian <span class="math inline">H(\bm x,\bm u,\bm \lambda,t) = L(\bm x,\bm u,t) + \boldsymbol{\lambda}^\top \mathbf f(\bm x,\bm u,t)</span>. The HJB equation can also be written as <span class="math display">\boxed
-{-\frac{\partial J^\star (\bm x(t),t)}{\partial t} = \min_{\bm u(t)}H(\bm x(t),\bm u(t),\nabla_{\bm x} J^\star (\bm x(t),t),t).}
-</span></p>
-<p>What we have just derived is one of the most profound results in optimal control – Hamiltonian must be minimized by the optimal control. We will exploit it next as a tool for deriving some theoretical results.</p>
-</section>
-<section id="hjb-equation-vs-pontryagins-principle-of-maximum-minimum" class="level2">
-<h2 class="anchored" data-anchor-id="hjb-equation-vs-pontryagins-principle-of-maximum-minimum">HJB equation vs Pontryagin’s principle of maximum (minimum)</h2>
-<p>Recall also that we have already encountered a similar results that made statements about the necessary maximization (or minimization) of the Hamiltonian with respect to the control – the celebrated Pontryagin’s principle of maximum (or minimum). Are these two related? Equivalent?</p>
-</section>
-<section id="hjb-equation-for-an-infinite-time-horizon" class="level2">
-<h2 class="anchored" data-anchor-id="hjb-equation-for-an-infinite-time-horizon">HJB equation for an infinite time horizon</h2>
-<p>When both the system and the cost function are time-invariant, and the final time is infinite, that is, <span class="math inline">t_\mathrm{f}=\infty</span>, the optimal cost function <span class="math inline">J^\star()</span> must necessarily be independent of time, that is, it’s partial derivative with respect to time is zero, that is, <span class="math inline">\frac{\partial J^\star (\bm x(t),t)}{\partial t} = 0</span>. The HJB equation then simplifies to</p>
-<p><span class="math display">\boxed{
-0 = \min_{\bm u(t)}\left[L(\bm x(t),\bm u(t))+(\nabla_{\bm x} {J^\star (\bm x(t),t)})^\top \bm f(\bm x(t),\bm u(t))\right],}
-</span> or, using a Hamiltonian <span class="math display">\boxed
-{0 = \min_{\bm u(t)}H(\bm x(t),\bm u(t),\nabla_{\bm x} J^\star (\bm x(t))).}
-</span></p>
+<section id="structure-of-the-mathcalh_infty-optimal-controller" class="level3">
+<h3 class="anchored" data-anchor-id="structure-of-the-mathcalh_infty-optimal-controller">Structure of the <span class="math inline">\mathcal{H}_\infty</span>-optimal controller</h3>
 
 
 </section>
@@ -1274,13 +1255,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cont_numerical_references.html" class="pagination-link" aria-label="References">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">References</span>
+      <a href="./rocond_mixed_sensitivity.html" class="pagination-link" aria-label="Mixed sensitivity design">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Mixed sensitivity design</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cont_dp_LQR.html" class="pagination-link" aria-label="Using HJB equation to solve the continuous-time LQR problem">
-        <span class="nav-page-text">Using HJB equation to solve the continuous-time LQR problem</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./rocond_mu_synthesis.html" class="pagination-link" aria-label="Mu synthesis">
+        <span class="nav-page-text">Mu synthesis</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

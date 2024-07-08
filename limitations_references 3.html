@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Dynamic programming for continuous-time optimal control – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>References – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -30,8 +50,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./cont_dp_LQR.html" rel="next">
-<link href="./cont_numerical_references.html" rel="prev">
+<link href="./reduction_order_model.html" rel="next">
+<link href="./limitations_MIMO.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,49 +89,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -125,7 +102,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">9.X. Continuous-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">Dynamic programming for continuous-time optimal control</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./limitations_SISO.html">13. Limitations of achievable performance</a></li><li class="breadcrumb-item"><a href="./limitations_references.html">References</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -524,7 +501,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_dp_HJB.html" class="sidebar-item-text sidebar-link active">
+  <a href="./cont_dp_HJB.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Dynamic programming for continuous-time optimal control</span></a>
   </div>
 </li>
@@ -688,7 +665,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./limitations_references.html" class="sidebar-item-text sidebar-link">
+  <a href="./limitations_references.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -734,28 +711,15 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#hamilton-jacobi-bellman-hjb-equation" id="toc-hamilton-jacobi-bellman-hjb-equation" class="nav-link active" data-scroll-target="#hamilton-jacobi-bellman-hjb-equation">Hamilton-Jacobi-Bellman (HJB) equation</a>
-  <ul class="collapse">
-  <li><a href="#boundary-conditions-for-the-hjb-equation" id="toc-boundary-conditions-for-the-hjb-equation" class="nav-link" data-scroll-target="#boundary-conditions-for-the-hjb-equation">Boundary conditions for the HJB equation</a></li>
-  <li><a href="#optimal-control-using-the-optimal-cost--to-go-function" id="toc-optimal-control-using-the-optimal-cost--to-go-function" class="nav-link" data-scroll-target="#optimal-control-using-the-optimal-cost--to-go-function">Optimal control using the optimal cost (-to-go) function</a></li>
-  </ul></li>
-  <li><a href="#hjb-equation-formulated-using-a-hamiltonian" id="toc-hjb-equation-formulated-using-a-hamiltonian" class="nav-link" data-scroll-target="#hjb-equation-formulated-using-a-hamiltonian">HJB equation formulated using a Hamiltonian</a></li>
-  <li><a href="#hjb-equation-vs-pontryagins-principle-of-maximum-minimum" id="toc-hjb-equation-vs-pontryagins-principle-of-maximum-minimum" class="nav-link" data-scroll-target="#hjb-equation-vs-pontryagins-principle-of-maximum-minimum">HJB equation vs Pontryagin’s principle of maximum (minimum)</a></li>
-  <li><a href="#hjb-equation-for-an-infinite-time-horizon" id="toc-hjb-equation-for-an-infinite-time-horizon" class="nav-link" data-scroll-target="#hjb-equation-for-an-infinite-time-horizon">HJB equation for an infinite time horizon</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">9.X. Continuous-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">Dynamic programming for continuous-time optimal control</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./limitations_SISO.html">13. Limitations of achievable performance</a></li><li class="breadcrumb-item"><a href="./limitations_references.html">References</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Dynamic programming for continuous-time optimal control</h1>
+<h1 class="title">References</h1>
 </div>
 
 
@@ -772,86 +736,28 @@ window.Quarto = {
 </header>
 
 
-<p>In the previous sections we investigated both direct and indirect approaches to the optimal control problem. Similarly as in the discrete-time case, complementing the two approaches is the dynamic programming. Indeed, the key Bellmans’s idea, which we previously formulated in discrete time, can be extended to continuous time as well.</p>
-<p>We consider the continuous-time system <span class="math display">
-\dot{\bm{x}} = \mathbf f(\bm{x},\bm{u},t)
-</span> with the cost function <span class="math display">
-J(\bm x(t_\mathrm{i}), \bm u(\cdot), t_\mathrm{i}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}) + \int_{t_\mathrm{i}}^{t_\mathrm{f}}L(\bm x(t),\bm u(t),t)\, \mathrm d t.
-</span></p>
-<p>The final time can be fixed to a particular value <span class="math inline">t_\mathrm{f}</span>, in which case the state at the final time <span class="math inline">\bm x(t_\mathrm{f})</span> is either free (unspecified but penalized through <span class="math inline">\phi(\bm x(t_\mathrm{f}))</span>), or it is fixed (specified and not penalized, that is, <span class="math inline">\bm x(t_\mathrm{f}) = \mathbf x^\mathrm{ref}</span>).</p>
-<p>The final time can also be free (regarded as an optimization variable itself), in which case general constraints on the state at the final time can be expressed as <span class="math display">
-\psi(\bm x(t_\mathrm{f}),t_\mathrm{f})=0
-</span> or possibly even using an inequality, which we will not consider here.</p>
-<p>The final time can also be considered infinity, that is, <span class="math inline">t_\mathrm{f}=\infty</span>, but we will handle this situation later separately.</p>
-<section id="hamilton-jacobi-bellman-hjb-equation" class="level2">
-<h2 class="anchored" data-anchor-id="hamilton-jacobi-bellman-hjb-equation">Hamilton-Jacobi-Bellman (HJB) equation</h2>
-<p>We now consider an arbitrary time <span class="math inline">t</span> and split the (remaining) time interval <span class="math inline">[t,t_\mathrm{f}]</span> into two parts <span class="math inline">[t,t+\Delta t]</span> and <span class="math inline">[t+\Delta t,t_\mathrm{f}]</span> , and structure the cost function accordingly <span class="math display">
-J(\bm x(t),\bm u(\cdot),t) = \int_{t}^{t+\Delta t} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + \underbrace{\int_{t+\Delta t}^{t_\mathrm{f}} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + \phi(\bm x(t_\mathrm{f}),t_\mathrm{f})}_{J(\bm x(t+\Delta t), \bm u(t+\Delta t), t+\Delta t)}.
-</span></p>
-<p>Bellman’s principle of optimality gives <span class="math display">
-J^\star(\bm x(t),t) = \min_{\bm u(\tau),\;t\leq\tau\leq t+\Delta t} \left[\int_{t}^{t+\Delta t} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + J^\star(\bm x+\Delta \bm x, t+\Delta t)\right].
-</span></p>
-<p>We now perform Taylor series expansion of <span class="math inline">J^\star(\bm x+\Delta \bm x, t+\Delta t)</span> about <span class="math inline">(\bm x,t)</span> <span class="math display">
-J^\star(\bm x,t) = \min_{\bm u(\tau),\;t\leq\tau\leq t+\Delta t} \left[L\Delta t + J^\star(\bm x,t) + (\nabla_{\bm x} J^\star)^\top \Delta \bm x + \frac{\partial J^\star}{\partial t}\Delta t + \mathcal{O}((\Delta t)^2)\right].
-</span></p>
-<p>Using <span class="math display">
-\Delta \bm x = \bm f(\bm x,\bm u,t)\Delta t
-</span> and noting that <span class="math inline">J^\star</span> and <span class="math inline">J_t^\star</span> are independent of <span class="math inline">\bm u(\tau),\;t\leq\tau\leq t+\Delta t</span>, we get <span class="math display">
-\cancel{J^\star (\bm x,t)} = \cancel{J^\star (\bm x,t)} + \frac{\partial J^\star }{\partial t}\Delta t + \min_{\bm u(\tau),\;t\leq\tau\leq t+\Delta t}\left[L\Delta t + (\nabla_{\bm x} J^\star )^\top f\Delta t\right].
-</span></p>
-<p>Assuming <span class="math inline">\Delta t\rightarrow 0</span> leads to the celebrated <em>Hamilton-Jacobi-Bellman (HJB) equation</em> <span class="math display">\boxed{
--\frac{\partial {\color{blue}J^\star (\bm x(t),t)}}{\partial t} = \min_{\bm u(t)}\left[L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} {\color{blue} J^\star (\bm x(t),t)})^\top \bm f(\bm x(t),\bm u(t),t)\right].}
-</span></p>
-<p>This is obviously a partial differential equation (PDE) for the optimal cost function <span class="math inline">J^\star(\bm x,t)</span>.</p>
-<section id="boundary-conditions-for-the-hjb-equation" class="level3">
-<h3 class="anchored" data-anchor-id="boundary-conditions-for-the-hjb-equation">Boundary conditions for the HJB equation</h3>
-<p>Since the HJB equation is a differential equation, initial/boundary value(s) must be specified to determine a unique solution. In particular, since the equation is first-order with respect to both time and state, specifying the value of the optimal cost function at the final state and the final time is enough.</p>
-<p>For a fixed-final-time, free-final-state, the optimal cost at the final time is <span class="math display">
-J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}).
-</span></p>
-<p>For a fixed-final-time, fixed-final-state, since the component of the cost function corresponding to the terminal state is zero, the optimal cost at the final time is zero as well <span class="math display">
-J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = 0.
-</span></p>
-<p>With the general final-state constraints introduced above, the boundary value condition reads <span class="math display">
-J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}),\qquad \text{on the hypersurface } \psi(\bm x(t_\mathrm{f}),t_\mathrm{f}) = 0.
-</span></p>
-</section>
-<section id="optimal-control-using-the-optimal-cost--to-go-function" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-control-using-the-optimal-cost--to-go-function">Optimal control using the optimal cost (-to-go) function</h3>
-<p>Assume now that the solution <span class="math inline">J^\star (\bm x(t),t)</span> to the HJB equation is available. We can then find the optimal control by the minimization <span class="math display">\boxed
-{\bm u^\star(t) = \arg\min_{\bm u(t)}\left[L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} J^\star (\bm x(t),t))^\top \bm f(\bm x(t),\bm u(t),t)\right].}
-</span></p>
-<p>For convenience, the minimized function is often labelled as <span class="math display">
-Q(\bm x(t),\bm u(t),t) = L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} J^\star (\bm x(t),t))^\top \bm f(\bm x(t),\bm u(t),t)
-</span> and called just <em>Q-function</em>. The optimal control is then <span class="math display">
-\bm u^\star(t) = \arg\min_{\bm u(t)} Q(\bm x(t),\bm u(t),t).
-</span></p>
-</section>
-</section>
-<section id="hjb-equation-formulated-using-a-hamiltonian" class="level2">
-<h2 class="anchored" data-anchor-id="hjb-equation-formulated-using-a-hamiltonian">HJB equation formulated using a Hamiltonian</h2>
-<p>Recall the definition of Hamiltonian <span class="math inline">H(\bm x,\bm u,\bm \lambda,t) = L(\bm x,\bm u,t) + \boldsymbol{\lambda}^\top \mathbf f(\bm x,\bm u,t)</span>. The HJB equation can also be written as <span class="math display">\boxed
-{-\frac{\partial J^\star (\bm x(t),t)}{\partial t} = \min_{\bm u(t)}H(\bm x(t),\bm u(t),\nabla_{\bm x} J^\star (\bm x(t),t),t).}
-</span></p>
-<p>What we have just derived is one of the most profound results in optimal control – Hamiltonian must be minimized by the optimal control. We will exploit it next as a tool for deriving some theoretical results.</p>
-</section>
-<section id="hjb-equation-vs-pontryagins-principle-of-maximum-minimum" class="level2">
-<h2 class="anchored" data-anchor-id="hjb-equation-vs-pontryagins-principle-of-maximum-minimum">HJB equation vs Pontryagin’s principle of maximum (minimum)</h2>
-<p>Recall also that we have already encountered a similar results that made statements about the necessary maximization (or minimization) of the Hamiltonian with respect to the control – the celebrated Pontryagin’s principle of maximum (or minimum). Are these two related? Equivalent?</p>
-</section>
-<section id="hjb-equation-for-an-infinite-time-horizon" class="level2">
-<h2 class="anchored" data-anchor-id="hjb-equation-for-an-infinite-time-horizon">HJB equation for an infinite time horizon</h2>
-<p>When both the system and the cost function are time-invariant, and the final time is infinite, that is, <span class="math inline">t_\mathrm{f}=\infty</span>, the optimal cost function <span class="math inline">J^\star()</span> must necessarily be independent of time, that is, it’s partial derivative with respect to time is zero, that is, <span class="math inline">\frac{\partial J^\star (\bm x(t),t)}{\partial t} = 0</span>. The HJB equation then simplifies to</p>
-<p><span class="math display">\boxed{
-0 = \min_{\bm u(t)}\left[L(\bm x(t),\bm u(t))+(\nabla_{\bm x} {J^\star (\bm x(t),t)})^\top \bm f(\bm x(t),\bm u(t))\right],}
-</span> or, using a Hamiltonian <span class="math display">\boxed
-{0 = \min_{\bm u(t)}H(\bm x(t),\bm u(t),\nabla_{\bm x} J^\star (\bm x(t))).}
-</span></p>
+<p>The material here is mostly based on the chapters 5 (SISO systems) and 6 (MIMO systems) of <span class="citation" data-cites="skogestadMultivariableFeedbackControl2005">Skogestad and Postlethwaite (<a href="#ref-skogestadMultivariableFeedbackControl2005" role="doc-biblioref">2005</a>)</span>.</p>
+<p>While the treatment of the book is more than sufficient for our course, we list here some other resources for further reading. The popular paper <span class="citation" data-cites="steinRespectUnstable2003">Stein (<a href="#ref-steinRespectUnstable2003" role="doc-biblioref">2003</a>)</span> provides a nice explanation of the waterbed effect(s).</p>
+<p>Interested readers may want to consult the specialized monograph <span class="citation" data-cites="seronFundamentalLimitationsFiltering1997">Seron, Braslavsky, and Goodwin (<a href="#ref-seronFundamentalLimitationsFiltering1997" role="doc-biblioref">1997</a>)</span>, but it is certainly not necessary for our course.</p>
+<p>More recent results are surveyed in <span class="citation" data-cites="chenFundamentalLimitationsIntrinsic2019">Chen, Fang, and Ishii (<a href="#ref-chenFundamentalLimitationsIntrinsic2019" role="doc-biblioref">2019</a>)</span>.</p>
 
 
-</section>
 
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-chenFundamentalLimitationsIntrinsic2019" class="csl-entry" role="listitem">
+Chen, Jie, Song Fang, and Hideaki Ishii. 2019. <span>“Fundamental Limitations and Intrinsic Limits of Feedback: <span>An</span> Overview in an Information Age.”</span> <em>Annual Reviews in Control</em> 47 (January): 155–77. <a href="https://doi.org/10.1016/j.arcontrol.2019.03.011">https://doi.org/10.1016/j.arcontrol.2019.03.011</a>.
+</div>
+<div id="ref-seronFundamentalLimitationsFiltering1997" class="csl-entry" role="listitem">
+Seron, Maria M., Julio H. Braslavsky, and Graham C. Goodwin. 1997. <em>Fundamental <span>Limitations</span> in <span>Filtering</span> and <span>Control</span></em>. Communications and <span>Control Engineering</span>. London: Springer. <a href="https://doi.org/10.1007/978-1-4471-0965-5">https://doi.org/10.1007/978-1-4471-0965-5</a>.
+</div>
+<div id="ref-skogestadMultivariableFeedbackControl2005" class="csl-entry" role="listitem">
+Skogestad, Sigurd, and Ian Postlethwaite. 2005. <em>Multivariable <span>Feedback Control</span>: <span>Analysis</span> and <span>Design</span></em>. 2nd ed. Wiley. <a href="https://folk.ntnu.no/skoge/book/">https://folk.ntnu.no/skoge/book/</a>.
+</div>
+<div id="ref-steinRespectUnstable2003" class="csl-entry" role="listitem">
+Stein, G. 2003. <span>“Respect the Unstable.”</span> <em>IEEE Control Systems</em> 23 (4): 12–25. <a href="https://doi.org/10.1109/MCS.2003.1213600">https://doi.org/10.1109/MCS.2003.1213600</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1274,13 +1180,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cont_numerical_references.html" class="pagination-link" aria-label="References">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">References</span>
+      <a href="./limitations_MIMO.html" class="pagination-link" aria-label="Limitations for MIMO systems">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Limitations for MIMO systems</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cont_dp_LQR.html" class="pagination-link" aria-label="Using HJB equation to solve the continuous-time LQR problem">
-        <span class="nav-page-text">Using HJB equation to solve the continuous-time LQR problem</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./reduction_order_model.html" class="pagination-link" aria-label="Model order reduction">
+        <span class="nav-page-text">Model order reduction</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1292,7 +1198,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

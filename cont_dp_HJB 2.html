@@ -739,14 +739,8 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#hamilton-jacobi-bellman-hjb-equation" id="toc-hamilton-jacobi-bellman-hjb-equation" class="nav-link active" data-scroll-target="#hamilton-jacobi-bellman-hjb-equation">Hamilton-Jacobi-Bellman (HJB) equation</a>
-  <ul class="collapse">
-  <li><a href="#boundary-conditions-for-the-hjb-equation" id="toc-boundary-conditions-for-the-hjb-equation" class="nav-link" data-scroll-target="#boundary-conditions-for-the-hjb-equation">Boundary conditions for the HJB equation</a></li>
-  <li><a href="#optimal-control-using-the-optimal-cost--to-go-function" id="toc-optimal-control-using-the-optimal-cost--to-go-function" class="nav-link" data-scroll-target="#optimal-control-using-the-optimal-cost--to-go-function">Optimal control using the optimal cost (-to-go) function</a></li>
-  </ul></li>
-  <li><a href="#hjb-equation-formulated-using-a-hamiltonian" id="toc-hjb-equation-formulated-using-a-hamiltonian" class="nav-link" data-scroll-target="#hjb-equation-formulated-using-a-hamiltonian">HJB equation formulated using a Hamiltonian</a></li>
-  <li><a href="#hjb-equation-vs-pontryagins-principle-of-maximum-minimum" id="toc-hjb-equation-vs-pontryagins-principle-of-maximum-minimum" class="nav-link" data-scroll-target="#hjb-equation-vs-pontryagins-principle-of-maximum-minimum">HJB equation vs Pontryagin’s principle of maximum (minimum)</a></li>
-  <li><a href="#hjb-equation-for-an-infinite-time-horizon" id="toc-hjb-equation-for-an-infinite-time-horizon" class="nav-link" data-scroll-target="#hjb-equation-for-an-infinite-time-horizon">HJB equation for an infinite time horizon</a></li>
+  <li><a href="#hamilton-jacobi-bellman-hjb-equation" id="toc-hamilton-jacobi-bellman-hjb-equation" class="nav-link active" data-scroll-target="#hamilton-jacobi-bellman-hjb-equation">Hamilton-Jacobi-Bellman (HJB) equation</a></li>
+  <li><a href="#hjb-equation-and-hamiltonian" id="toc-hjb-equation-and-hamiltonian" class="nav-link" data-scroll-target="#hjb-equation-and-hamiltonian">HJB equation and Hamiltonian</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -778,11 +772,9 @@ window.Quarto = {
 </span> with the cost function <span class="math display">
 J(\bm x(t_\mathrm{i}), \bm u(\cdot), t_\mathrm{i}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}) + \int_{t_\mathrm{i}}^{t_\mathrm{f}}L(\bm x(t),\bm u(t),t)\, \mathrm d t.
 </span></p>
-<p>The final time can be fixed to a particular value <span class="math inline">t_\mathrm{f}</span>, in which case the state at the final time <span class="math inline">\bm x(t_\mathrm{f})</span> is either free (unspecified but penalized through <span class="math inline">\phi(\bm x(t_\mathrm{f}))</span>), or it is fixed (specified and not penalized, that is, <span class="math inline">\bm x(t_\mathrm{f}) = \mathbf x^\mathrm{ref}</span>).</p>
-<p>The final time can also be free (regarded as an optimization variable itself), in which case general constraints on the state at the final time can be expressed as <span class="math display">
-\psi(\bm x(t_\mathrm{f}),t_\mathrm{f})=0
-</span> or possibly even using an inequality, which we will not consider here.</p>
-<p>The final time can also be considered infinity, that is, <span class="math inline">t_\mathrm{f}=\infty</span>, but we will handle this situation later separately.</p>
+<p>Optionally we can also consider constraints on the state at the final time (be it a particular value or some set of values) <span class="math display">
+\psi(\bm x(t_\mathrm{f}),t_\mathrm{f})=0.
+</span></p>
 <section id="hamilton-jacobi-bellman-hjb-equation" class="level2">
 <h2 class="anchored" data-anchor-id="hamilton-jacobi-bellman-hjb-equation">Hamilton-Jacobi-Bellman (HJB) equation</h2>
 <p>We now consider an arbitrary time <span class="math inline">t</span> and split the (remaining) time interval <span class="math inline">[t,t_\mathrm{f}]</span> into two parts <span class="math inline">[t,t+\Delta t]</span> and <span class="math inline">[t+\Delta t,t_\mathrm{f}]</span> , and structure the cost function accordingly <span class="math display">
@@ -803,50 +795,18 @@ J^\star(\bm x,t) = \min_{\bm u(\tau),\;t\leq\tau\leq t+\Delta t} \left[L\Delta t
 -\frac{\partial {\color{blue}J^\star (\bm x(t),t)}}{\partial t} = \min_{\bm u(t)}\left[L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} {\color{blue} J^\star (\bm x(t),t)})^\top \bm f(\bm x(t),\bm u(t),t)\right].}
 </span></p>
 <p>This is obviously a partial differential equation (PDE) for the optimal cost function <span class="math inline">J^\star(\bm x,t)</span>.</p>
-<section id="boundary-conditions-for-the-hjb-equation" class="level3">
-<h3 class="anchored" data-anchor-id="boundary-conditions-for-the-hjb-equation">Boundary conditions for the HJB equation</h3>
-<p>Since the HJB equation is a differential equation, initial/boundary value(s) must be specified to determine a unique solution. In particular, since the equation is first-order with respect to both time and state, specifying the value of the optimal cost function at the final state and the final time is enough.</p>
-<p>For a fixed-final-time, free-final-state, the optimal cost at the final time is <span class="math display">
-J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}).
-</span></p>
-<p>For a fixed-final-time, fixed-final-state, since the component of the cost function corresponding to the terminal state is zero, the optimal cost at the final time is zero as well <span class="math display">
-J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = 0.
-</span></p>
-<p>With the general final-state constraints introduced above, the boundary value condition reads <span class="math display">
+<p>And since this is a differential equation, boundary value(s) must be specified to determine a unique solution. In particular, since the equation is first-order with respect to both time and state, specifying the value of the optimal cost function at the final state and the final time is enough. With the general final-state constraints we have introduced above, the boundary value condition reads <span class="math display">
 J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}),\qquad \text{on the hypersurface } \psi(\bm x(t_\mathrm{f}),t_\mathrm{f}) = 0.
 </span></p>
+<p>Note that this includes as special cases the fixed-final-state and free-final-state cases.</p>
 </section>
-<section id="optimal-control-using-the-optimal-cost--to-go-function" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-control-using-the-optimal-cost--to-go-function">Optimal control using the optimal cost (-to-go) function</h3>
-<p>Assume now that the solution <span class="math inline">J^\star (\bm x(t),t)</span> to the HJB equation is available. We can then find the optimal control by the minimization <span class="math display">\boxed
-{\bm u^\star(t) = \arg\min_{\bm u(t)}\left[L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} J^\star (\bm x(t),t))^\top \bm f(\bm x(t),\bm u(t),t)\right].}
-</span></p>
-<p>For convenience, the minimized function is often labelled as <span class="math display">
-Q(\bm x(t),\bm u(t),t) = L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} J^\star (\bm x(t),t))^\top \bm f(\bm x(t),\bm u(t),t)
-</span> and called just <em>Q-function</em>. The optimal control is then <span class="math display">
-\bm u^\star(t) = \arg\min_{\bm u(t)} Q(\bm x(t),\bm u(t),t).
-</span></p>
-</section>
-</section>
-<section id="hjb-equation-formulated-using-a-hamiltonian" class="level2">
-<h2 class="anchored" data-anchor-id="hjb-equation-formulated-using-a-hamiltonian">HJB equation formulated using a Hamiltonian</h2>
+<section id="hjb-equation-and-hamiltonian" class="level2">
+<h2 class="anchored" data-anchor-id="hjb-equation-and-hamiltonian">HJB equation and Hamiltonian</h2>
 <p>Recall the definition of Hamiltonian <span class="math inline">H(\bm x,\bm u,\bm \lambda,t) = L(\bm x,\bm u,t) + \boldsymbol{\lambda}^\top \mathbf f(\bm x,\bm u,t)</span>. The HJB equation can also be written as <span class="math display">\boxed
 {-\frac{\partial J^\star (\bm x(t),t)}{\partial t} = \min_{\bm u(t)}H(\bm x(t),\bm u(t),\nabla_{\bm x} J^\star (\bm x(t),t),t).}
 </span></p>
-<p>What we have just derived is one of the most profound results in optimal control – Hamiltonian must be minimized by the optimal control. We will exploit it next as a tool for deriving some theoretical results.</p>
-</section>
-<section id="hjb-equation-vs-pontryagins-principle-of-maximum-minimum" class="level2">
-<h2 class="anchored" data-anchor-id="hjb-equation-vs-pontryagins-principle-of-maximum-minimum">HJB equation vs Pontryagin’s principle of maximum (minimum)</h2>
-<p>Recall also that we have already encountered a similar results that made statements about the necessary maximization (or minimization) of the Hamiltonian with respect to the control – the celebrated Pontryagin’s principle of maximum (or minimum). Are these two related? Equivalent?</p>
-</section>
-<section id="hjb-equation-for-an-infinite-time-horizon" class="level2">
-<h2 class="anchored" data-anchor-id="hjb-equation-for-an-infinite-time-horizon">HJB equation for an infinite time horizon</h2>
-<p>When both the system and the cost function are time-invariant, and the final time is infinite, that is, <span class="math inline">t_\mathrm{f}=\infty</span>, the optimal cost function <span class="math inline">J^\star()</span> must necessarily be independent of time, that is, it’s partial derivative with respect to time is zero, that is, <span class="math inline">\frac{\partial J^\star (\bm x(t),t)}{\partial t} = 0</span>. The HJB equation then simplifies to</p>
-<p><span class="math display">\boxed{
-0 = \min_{\bm u(t)}\left[L(\bm x(t),\bm u(t))+(\nabla_{\bm x} {J^\star (\bm x(t),t)})^\top \bm f(\bm x(t),\bm u(t))\right],}
-</span> or, using a Hamiltonian <span class="math display">\boxed
-{0 = \min_{\bm u(t)}H(\bm x(t),\bm u(t),\nabla_{\bm x} J^\star (\bm x(t))).}
-</span></p>
+<p>What we have just derived is one of the most profound results in optimal control – Hamiltonian must be minimized by the optimal control. We will exploit it next for some derivations.</p>
+<p>Recall also that we have already encountered a similar results that made statements about the necessary maximization (or minimization) of the Hamiltonian with respect to the control – the celebrated Pontryagin’s principle of maximum (or minimum).</p>
 
 
 </section>
@@ -944,7 +904,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/hurak\.github\.io\/orr\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

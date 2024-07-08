@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Dynamic programming for continuous-time optimal control – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>References – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -30,8 +50,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./cont_dp_LQR.html" rel="next">
-<link href="./cont_numerical_references.html" rel="prev">
+<link href="./rocond_mixed_sensitivity.html" rel="next">
+<link href="./roban_software.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,49 +89,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -125,7 +102,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">9.X. Continuous-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">Dynamic programming for continuous-time optimal control</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./roban_uncertainty.html">11. Uncertainty modelling and robustness analysis</a></li><li class="breadcrumb-item"><a href="./roban_references.html">References</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -524,7 +501,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_dp_HJB.html" class="sidebar-item-text sidebar-link active">
+  <a href="./cont_dp_HJB.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Dynamic programming for continuous-time optimal control</span></a>
   </div>
 </li>
@@ -618,7 +595,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./roban_references.html" class="sidebar-item-text sidebar-link">
+  <a href="./roban_references.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -734,28 +711,15 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#hamilton-jacobi-bellman-hjb-equation" id="toc-hamilton-jacobi-bellman-hjb-equation" class="nav-link active" data-scroll-target="#hamilton-jacobi-bellman-hjb-equation">Hamilton-Jacobi-Bellman (HJB) equation</a>
-  <ul class="collapse">
-  <li><a href="#boundary-conditions-for-the-hjb-equation" id="toc-boundary-conditions-for-the-hjb-equation" class="nav-link" data-scroll-target="#boundary-conditions-for-the-hjb-equation">Boundary conditions for the HJB equation</a></li>
-  <li><a href="#optimal-control-using-the-optimal-cost--to-go-function" id="toc-optimal-control-using-the-optimal-cost--to-go-function" class="nav-link" data-scroll-target="#optimal-control-using-the-optimal-cost--to-go-function">Optimal control using the optimal cost (-to-go) function</a></li>
-  </ul></li>
-  <li><a href="#hjb-equation-formulated-using-a-hamiltonian" id="toc-hjb-equation-formulated-using-a-hamiltonian" class="nav-link" data-scroll-target="#hjb-equation-formulated-using-a-hamiltonian">HJB equation formulated using a Hamiltonian</a></li>
-  <li><a href="#hjb-equation-vs-pontryagins-principle-of-maximum-minimum" id="toc-hjb-equation-vs-pontryagins-principle-of-maximum-minimum" class="nav-link" data-scroll-target="#hjb-equation-vs-pontryagins-principle-of-maximum-minimum">HJB equation vs Pontryagin’s principle of maximum (minimum)</a></li>
-  <li><a href="#hjb-equation-for-an-infinite-time-horizon" id="toc-hjb-equation-for-an-infinite-time-horizon" class="nav-link" data-scroll-target="#hjb-equation-for-an-infinite-time-horizon">HJB equation for an infinite time horizon</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">9.X. Continuous-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">Dynamic programming for continuous-time optimal control</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./roban_uncertainty.html">11. Uncertainty modelling and robustness analysis</a></li><li class="breadcrumb-item"><a href="./roban_references.html">References</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Dynamic programming for continuous-time optimal control</h1>
+<h1 class="title">References</h1>
 </div>
 
 
@@ -772,86 +736,54 @@ window.Quarto = {
 </header>
 
 
-<p>In the previous sections we investigated both direct and indirect approaches to the optimal control problem. Similarly as in the discrete-time case, complementing the two approaches is the dynamic programming. Indeed, the key Bellmans’s idea, which we previously formulated in discrete time, can be extended to continuous time as well.</p>
-<p>We consider the continuous-time system <span class="math display">
-\dot{\bm{x}} = \mathbf f(\bm{x},\bm{u},t)
-</span> with the cost function <span class="math display">
-J(\bm x(t_\mathrm{i}), \bm u(\cdot), t_\mathrm{i}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}) + \int_{t_\mathrm{i}}^{t_\mathrm{f}}L(\bm x(t),\bm u(t),t)\, \mathrm d t.
-</span></p>
-<p>The final time can be fixed to a particular value <span class="math inline">t_\mathrm{f}</span>, in which case the state at the final time <span class="math inline">\bm x(t_\mathrm{f})</span> is either free (unspecified but penalized through <span class="math inline">\phi(\bm x(t_\mathrm{f}))</span>), or it is fixed (specified and not penalized, that is, <span class="math inline">\bm x(t_\mathrm{f}) = \mathbf x^\mathrm{ref}</span>).</p>
-<p>The final time can also be free (regarded as an optimization variable itself), in which case general constraints on the state at the final time can be expressed as <span class="math display">
-\psi(\bm x(t_\mathrm{f}),t_\mathrm{f})=0
-</span> or possibly even using an inequality, which we will not consider here.</p>
-<p>The final time can also be considered infinity, that is, <span class="math inline">t_\mathrm{f}=\infty</span>, but we will handle this situation later separately.</p>
-<section id="hamilton-jacobi-bellman-hjb-equation" class="level2">
-<h2 class="anchored" data-anchor-id="hamilton-jacobi-bellman-hjb-equation">Hamilton-Jacobi-Bellman (HJB) equation</h2>
-<p>We now consider an arbitrary time <span class="math inline">t</span> and split the (remaining) time interval <span class="math inline">[t,t_\mathrm{f}]</span> into two parts <span class="math inline">[t,t+\Delta t]</span> and <span class="math inline">[t+\Delta t,t_\mathrm{f}]</span> , and structure the cost function accordingly <span class="math display">
-J(\bm x(t),\bm u(\cdot),t) = \int_{t}^{t+\Delta t} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + \underbrace{\int_{t+\Delta t}^{t_\mathrm{f}} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + \phi(\bm x(t_\mathrm{f}),t_\mathrm{f})}_{J(\bm x(t+\Delta t), \bm u(t+\Delta t), t+\Delta t)}.
-</span></p>
-<p>Bellman’s principle of optimality gives <span class="math display">
-J^\star(\bm x(t),t) = \min_{\bm u(\tau),\;t\leq\tau\leq t+\Delta t} \left[\int_{t}^{t+\Delta t} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + J^\star(\bm x+\Delta \bm x, t+\Delta t)\right].
-</span></p>
-<p>We now perform Taylor series expansion of <span class="math inline">J^\star(\bm x+\Delta \bm x, t+\Delta t)</span> about <span class="math inline">(\bm x,t)</span> <span class="math display">
-J^\star(\bm x,t) = \min_{\bm u(\tau),\;t\leq\tau\leq t+\Delta t} \left[L\Delta t + J^\star(\bm x,t) + (\nabla_{\bm x} J^\star)^\top \Delta \bm x + \frac{\partial J^\star}{\partial t}\Delta t + \mathcal{O}((\Delta t)^2)\right].
-</span></p>
-<p>Using <span class="math display">
-\Delta \bm x = \bm f(\bm x,\bm u,t)\Delta t
-</span> and noting that <span class="math inline">J^\star</span> and <span class="math inline">J_t^\star</span> are independent of <span class="math inline">\bm u(\tau),\;t\leq\tau\leq t+\Delta t</span>, we get <span class="math display">
-\cancel{J^\star (\bm x,t)} = \cancel{J^\star (\bm x,t)} + \frac{\partial J^\star }{\partial t}\Delta t + \min_{\bm u(\tau),\;t\leq\tau\leq t+\Delta t}\left[L\Delta t + (\nabla_{\bm x} J^\star )^\top f\Delta t\right].
-</span></p>
-<p>Assuming <span class="math inline">\Delta t\rightarrow 0</span> leads to the celebrated <em>Hamilton-Jacobi-Bellman (HJB) equation</em> <span class="math display">\boxed{
--\frac{\partial {\color{blue}J^\star (\bm x(t),t)}}{\partial t} = \min_{\bm u(t)}\left[L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} {\color{blue} J^\star (\bm x(t),t)})^\top \bm f(\bm x(t),\bm u(t),t)\right].}
-</span></p>
-<p>This is obviously a partial differential equation (PDE) for the optimal cost function <span class="math inline">J^\star(\bm x,t)</span>.</p>
-<section id="boundary-conditions-for-the-hjb-equation" class="level3">
-<h3 class="anchored" data-anchor-id="boundary-conditions-for-the-hjb-equation">Boundary conditions for the HJB equation</h3>
-<p>Since the HJB equation is a differential equation, initial/boundary value(s) must be specified to determine a unique solution. In particular, since the equation is first-order with respect to both time and state, specifying the value of the optimal cost function at the final state and the final time is enough.</p>
-<p>For a fixed-final-time, free-final-state, the optimal cost at the final time is <span class="math display">
-J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}).
-</span></p>
-<p>For a fixed-final-time, fixed-final-state, since the component of the cost function corresponding to the terminal state is zero, the optimal cost at the final time is zero as well <span class="math display">
-J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = 0.
-</span></p>
-<p>With the general final-state constraints introduced above, the boundary value condition reads <span class="math display">
-J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}),\qquad \text{on the hypersurface } \psi(\bm x(t_\mathrm{f}),t_\mathrm{f}) = 0.
-</span></p>
-</section>
-<section id="optimal-control-using-the-optimal-cost--to-go-function" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-control-using-the-optimal-cost--to-go-function">Optimal control using the optimal cost (-to-go) function</h3>
-<p>Assume now that the solution <span class="math inline">J^\star (\bm x(t),t)</span> to the HJB equation is available. We can then find the optimal control by the minimization <span class="math display">\boxed
-{\bm u^\star(t) = \arg\min_{\bm u(t)}\left[L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} J^\star (\bm x(t),t))^\top \bm f(\bm x(t),\bm u(t),t)\right].}
-</span></p>
-<p>For convenience, the minimized function is often labelled as <span class="math display">
-Q(\bm x(t),\bm u(t),t) = L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} J^\star (\bm x(t),t))^\top \bm f(\bm x(t),\bm u(t),t)
-</span> and called just <em>Q-function</em>. The optimal control is then <span class="math display">
-\bm u^\star(t) = \arg\min_{\bm u(t)} Q(\bm x(t),\bm u(t),t).
-</span></p>
-</section>
-</section>
-<section id="hjb-equation-formulated-using-a-hamiltonian" class="level2">
-<h2 class="anchored" data-anchor-id="hjb-equation-formulated-using-a-hamiltonian">HJB equation formulated using a Hamiltonian</h2>
-<p>Recall the definition of Hamiltonian <span class="math inline">H(\bm x,\bm u,\bm \lambda,t) = L(\bm x,\bm u,t) + \boldsymbol{\lambda}^\top \mathbf f(\bm x,\bm u,t)</span>. The HJB equation can also be written as <span class="math display">\boxed
-{-\frac{\partial J^\star (\bm x(t),t)}{\partial t} = \min_{\bm u(t)}H(\bm x(t),\bm u(t),\nabla_{\bm x} J^\star (\bm x(t),t),t).}
-</span></p>
-<p>What we have just derived is one of the most profound results in optimal control – Hamiltonian must be minimized by the optimal control. We will exploit it next as a tool for deriving some theoretical results.</p>
-</section>
-<section id="hjb-equation-vs-pontryagins-principle-of-maximum-minimum" class="level2">
-<h2 class="anchored" data-anchor-id="hjb-equation-vs-pontryagins-principle-of-maximum-minimum">HJB equation vs Pontryagin’s principle of maximum (minimum)</h2>
-<p>Recall also that we have already encountered a similar results that made statements about the necessary maximization (or minimization) of the Hamiltonian with respect to the control – the celebrated Pontryagin’s principle of maximum (or minimum). Are these two related? Equivalent?</p>
-</section>
-<section id="hjb-equation-for-an-infinite-time-horizon" class="level2">
-<h2 class="anchored" data-anchor-id="hjb-equation-for-an-infinite-time-horizon">HJB equation for an infinite time horizon</h2>
-<p>When both the system and the cost function are time-invariant, and the final time is infinite, that is, <span class="math inline">t_\mathrm{f}=\infty</span>, the optimal cost function <span class="math inline">J^\star()</span> must necessarily be independent of time, that is, it’s partial derivative with respect to time is zero, that is, <span class="math inline">\frac{\partial J^\star (\bm x(t),t)}{\partial t} = 0</span>. The HJB equation then simplifies to</p>
-<p><span class="math display">\boxed{
-0 = \min_{\bm u(t)}\left[L(\bm x(t),\bm u(t))+(\nabla_{\bm x} {J^\star (\bm x(t),t)})^\top \bm f(\bm x(t),\bm u(t))\right],}
-</span> or, using a Hamiltonian <span class="math display">\boxed
-{0 = \min_{\bm u(t)}H(\bm x(t),\bm u(t),\nabla_{\bm x} J^\star (\bm x(t))).}
-</span></p>
+<p>Even when restricted to control systems, the concept of robustness is quite broad and can be approached from many different angles. In our course we are restricting the focus to the approaches formulated in frequency domain. The main reference for this part of the course is the book <span class="citation" data-cites="skogestadMultivariableFeedbackControl2005">(<a href="#ref-skogestadMultivariableFeedbackControl2005" role="doc-biblioref">Skogestad and Postlethwaite 2005</a>)</span>. The concepts and techniques introduced in our lecture are covered in Chapters 7 and 8 (up to 8.5) of the book.</p>
+<p>What we typically do not cover in the lecture, but only due to time constraints, is the topic of structured uncertainties and their analysis using structured singular value (SSV, 𝜇). These are treated in the section 8.6 through 8.11 of the book. It is warmly recommended to have a look at it.</p>
+<p>Although the book is not freely available online (only the first three pages are downloadable on the authors’ web page), it is available in a decent number of copies in <a href="https://aleph.cvut.cz/F?func=direct&amp;doc_number=000664179&amp;local_base=DUPL&amp;format=999">the university library</a>.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Get the second edition of Skogestad’s book
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In case you are interested in getting the book in one way or another (perhaps even by purchasing it), make sure you get the second edition published 2005. The book contains some useful snippets of Matlab code and the first edition relies on some ancient version of Matlab toolboxes, which makes it useless these days.</p>
+</div>
+</div>
+<p>The topic of modeling uncertainty in frequency domain using weighting filters plugged into additive or multiplicative structures is fairly classical now and as such can be found in numerous textbooks on robust control such as <span class="citation" data-cites="doyleFeedbackControlTheory2009">(<a href="#ref-doyleFeedbackControlTheory2009" role="doc-biblioref">Doyle, Francis, and Tannenbaum 2009</a>)</span>, <span class="citation" data-cites="zhouRobustOptimalControl1995">(<a href="#ref-zhouRobustOptimalControl1995" role="doc-biblioref">Zhou, Doyle, and Glover 1995</a>)</span>, <span class="citation" data-cites="dullerudCourseRobustControl2000">(<a href="#ref-dullerudCourseRobustControl2000" role="doc-biblioref">Dullerud and Paganini 2000</a>)</span>, <span class="citation" data-cites="sanchez-penaRobustSystemsTheory1998">(<a href="#ref-sanchez-penaRobustSystemsTheory1998" role="doc-biblioref">Sánchez-Peña and Sznaier 1998</a>)</span>. Although these are fine texts, frankly speaking they offer nearly no guidance for applying the highly advanced concepts to practical problems – they mostly focus on building up the theoretical framework. In this regard, Skogestad’s book is truly unique.</p>
+<p>There are some newer texts that appear to be a bit more on the application side such as <span class="citation" data-cites="lavretskyRobustAdaptiveControl2024">(<a href="#ref-lavretskyRobustAdaptiveControl2024" role="doc-biblioref">Lavretsky and Wise 2024</a>)</span>, <span class="citation" data-cites="yedavalliRobustControlUncertain2014">(<a href="#ref-yedavalliRobustControlUncertain2014" role="doc-biblioref">Yedavalli 2014</a>)</span> or <span class="citation" data-cites="guRobustControlDesign2013">(<a href="#ref-guRobustControlDesign2013" role="doc-biblioref">Gu, Petkov, and Konstantinov 2013</a>)</span>, but I am not familiar them, to be honest.</p>
 
 
-</section>
 
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-doyleFeedbackControlTheory2009" class="csl-entry" role="listitem">
+Doyle, John C., Bruce A. Francis, and Allen R. Tannenbaum. 2009. <em>Feedback <span>Control Theory</span></em>. Reprint of the 1990 edition by Macmillan Publishing. Dover Publications. <a href="https://www.control.utoronto.ca/people/profs/francis/dft.pdf">https://www.control.utoronto.ca/people/profs/francis/dft.pdf</a>.
+</div>
+<div id="ref-dullerudCourseRobustControl2000" class="csl-entry" role="listitem">
+Dullerud, Geir E., and Fernando Paganini. 2000. <em>A <span>Course</span> in <span>Robust Control Theory</span>: <span>A Convex Approach</span></em>. Texts in <span>Applied Mathematics</span>. New York: Springer-Verlag. <a href="https://doi.org/10.1007/978-1-4757-3290-0">https://doi.org/10.1007/978-1-4757-3290-0</a>.
+</div>
+<div id="ref-guRobustControlDesign2013" class="csl-entry" role="listitem">
+Gu, Da-Wei, Petko H. Petkov, and Mihail M. Konstantinov. 2013. <em>Robust <span>Control Design</span> with <span>MATLAB</span><span></span></em>. 2nd ed. Advanced <span>Textbooks</span> in <span>Control</span> and <span>Signal Processing</span>. New York: Springer. <a href="https://doi.org/10.1007/978-1-4471-4682-7">https://doi.org/10.1007/978-1-4471-4682-7</a>.
+</div>
+<div id="ref-lavretskyRobustAdaptiveControl2024" class="csl-entry" role="listitem">
+Lavretsky, Eugene, and Kevin Wise. 2024. <em>Robust and <span>Adaptive Control</span>: <span>With Aerospace Applications</span></em>. 2nd ed. Advanced <span>Textbooks</span> in <span>Control</span> and <span>Signal Processing</span> (<span>C</span>&amp;<span>SP</span>). Cham: Springer. <a href="https://doi.org/10.1007/978-3-031-38314-4">https://doi.org/10.1007/978-3-031-38314-4</a>.
+</div>
+<div id="ref-sanchez-penaRobustSystemsTheory1998" class="csl-entry" role="listitem">
+Sánchez-Peña, Ricardo S., and Mario Sznaier. 1998. <em>Robust <span>Systems Theory</span> and <span>Applications</span></em>. 1st ed. Wiley-Interscience.
+</div>
+<div id="ref-skogestadMultivariableFeedbackControl2005" class="csl-entry" role="listitem">
+Skogestad, Sigurd, and Ian Postlethwaite. 2005. <em>Multivariable <span>Feedback Control</span>: <span>Analysis</span> and <span>Design</span></em>. 2nd ed. Wiley. <a href="https://folk.ntnu.no/skoge/book/">https://folk.ntnu.no/skoge/book/</a>.
+</div>
+<div id="ref-yedavalliRobustControlUncertain2014" class="csl-entry" role="listitem">
+Yedavalli, Rama K. 2014. <em>Robust <span>Control</span> of <span>Uncertain Dynamic Systems</span>: <span>A Linear State Space Approach</span></em>. New York: Springer. <a href="https://doi.org/10.1007/978-1-4614-9132-3">https://doi.org/10.1007/978-1-4614-9132-3</a>.
+</div>
+<div id="ref-zhouRobustOptimalControl1995" class="csl-entry" role="listitem">
+Zhou, Kemin, John C. Doyle, and Keith Glover. 1995. <em>Robust and <span>Optimal Control</span></em>. 1st ed. Prentice Hall.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1274,13 +1206,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cont_numerical_references.html" class="pagination-link" aria-label="References">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">References</span>
+      <a href="./roban_software.html" class="pagination-link" aria-label="Software">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Software</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cont_dp_LQR.html" class="pagination-link" aria-label="Using HJB equation to solve the continuous-time LQR problem">
-        <span class="nav-page-text">Using HJB equation to solve the continuous-time LQR problem</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./rocond_mixed_sensitivity.html" class="pagination-link" aria-label="Mixed sensitivity design">
+        <span class="nav-page-text">Mixed sensitivity design</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1292,7 +1224,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Dynamic programming for continuous-time optimal control – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>Trajectory stabilization and neigboring extremals – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./cont_dp_LQR.html" rel="next">
-<link href="./cont_numerical_references.html" rel="prev">
+<link href="./cont_indir_references.html" rel="next">
+<link href="./cont_indir_CARE.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -125,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">9.X. Continuous-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">Dynamic programming for continuous-time optimal control</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_overview.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_trajectory_stabilization.html">Trajectory stabilization and neigboring extremals</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -437,7 +437,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_trajectory_stabilization.html" class="sidebar-item-text sidebar-link">
+  <a href="./cont_indir_trajectory_stabilization.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Trajectory stabilization and neigboring extremals</span></a>
   </div>
 </li>
@@ -524,7 +524,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_dp_HJB.html" class="sidebar-item-text sidebar-link active">
+  <a href="./cont_dp_HJB.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Dynamic programming for continuous-time optimal control</span></a>
   </div>
 </li>
@@ -734,28 +734,15 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#hamilton-jacobi-bellman-hjb-equation" id="toc-hamilton-jacobi-bellman-hjb-equation" class="nav-link active" data-scroll-target="#hamilton-jacobi-bellman-hjb-equation">Hamilton-Jacobi-Bellman (HJB) equation</a>
-  <ul class="collapse">
-  <li><a href="#boundary-conditions-for-the-hjb-equation" id="toc-boundary-conditions-for-the-hjb-equation" class="nav-link" data-scroll-target="#boundary-conditions-for-the-hjb-equation">Boundary conditions for the HJB equation</a></li>
-  <li><a href="#optimal-control-using-the-optimal-cost--to-go-function" id="toc-optimal-control-using-the-optimal-cost--to-go-function" class="nav-link" data-scroll-target="#optimal-control-using-the-optimal-cost--to-go-function">Optimal control using the optimal cost (-to-go) function</a></li>
-  </ul></li>
-  <li><a href="#hjb-equation-formulated-using-a-hamiltonian" id="toc-hjb-equation-formulated-using-a-hamiltonian" class="nav-link" data-scroll-target="#hjb-equation-formulated-using-a-hamiltonian">HJB equation formulated using a Hamiltonian</a></li>
-  <li><a href="#hjb-equation-vs-pontryagins-principle-of-maximum-minimum" id="toc-hjb-equation-vs-pontryagins-principle-of-maximum-minimum" class="nav-link" data-scroll-target="#hjb-equation-vs-pontryagins-principle-of-maximum-minimum">HJB equation vs Pontryagin’s principle of maximum (minimum)</a></li>
-  <li><a href="#hjb-equation-for-an-infinite-time-horizon" id="toc-hjb-equation-for-an-infinite-time-horizon" class="nav-link" data-scroll-target="#hjb-equation-for-an-infinite-time-horizon">HJB equation for an infinite time horizon</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">9.X. Continuous-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./cont_dp_HJB.html">Dynamic programming for continuous-time optimal control</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_overview.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_trajectory_stabilization.html">Trajectory stabilization and neigboring extremals</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Dynamic programming for continuous-time optimal control</h1>
+<h1 class="title">Trajectory stabilization and neigboring extremals</h1>
 </div>
 
 
@@ -772,84 +759,107 @@ window.Quarto = {
 </header>
 
 
-<p>In the previous sections we investigated both direct and indirect approaches to the optimal control problem. Similarly as in the discrete-time case, complementing the two approaches is the dynamic programming. Indeed, the key Bellmans’s idea, which we previously formulated in discrete time, can be extended to continuous time as well.</p>
-<p>We consider the continuous-time system <span class="math display">
-\dot{\bm{x}} = \mathbf f(\bm{x},\bm{u},t)
-</span> with the cost function <span class="math display">
-J(\bm x(t_\mathrm{i}), \bm u(\cdot), t_\mathrm{i}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}) + \int_{t_\mathrm{i}}^{t_\mathrm{f}}L(\bm x(t),\bm u(t),t)\, \mathrm d t.
+<p>Indirect methods for optimal control reformulate the optimal control problem into a set of equtions – boundary value problems with differential and algebraic equations in the case of continuous-time systems – and by solving these (typically numerically) we obtain the optimal state and control trajectories. Practical usefullness of these is rather limited as such optimal control trajectory constitutes an open-loop control – there is certainly no need to advocate the importance of feedback in this advanced control course.</p>
+<p>One way to introduce feedback is to regard the computed optimal state trajectory <span class="math inline">\bm x^\star(t)</span> as a reference trajectory and design a feedback controller to track this reference. To our advantage, we already have the corresponding control trajectory <span class="math inline">\bm u^\star(t)</span> too, and theferore we can formulate such reference tracking problem as a problem of regulating the deviation <span class="math inline">\delta \bm x(t)</span> of the state from its reference by means of superposing a feedback control <span class="math inline">\delta \bm u(t)</span> onto the (open-loop) optimal control.</p>
+<p>While this problem – also known as the problem of <em>stabilization of a (reference) trajectory</em> – can be solved by basically any feedback control scheme, one elegant way is to linearize the system around the reference trajectory and formulate the problem as the LQR problem for a time-varying linear system.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Linearization around a trajectory
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Don’t forget that when linearizing a nonlinear system <span class="math inline">\dot{\bm x} = \mathbf f(\bm x,\bm u)</span> around a point that is not equilibrium – and this inevitably happens when linearizing along the state trajectory <span class="math inline">\bm x^\star(t)</span> obtained from indirect approach to optimal control – the linearized system <span class="math inline">\frac{\mathrm d}{\mathrm d t} \delta \bm x= \mathbf A(t) \delta \bm x + \mathbf B(t) \delta \bm u</span> considers not only the state variables but also the control variables as increments <span class="math inline">\delta \bm x(t)</span> and <span class="math inline">\delta \bm u(t)</span> that must be added to the nominal values <span class="math inline">\bm x^\star(t)</span> and <span class="math inline">\bm u^\star(t)</span> of the state and control variables determining the operating point. That is, <span class="math inline">\bm x(t) = \bm x^\star(t) + \delta \bm x(t)</span> and <span class="math inline">\bm u(t) = \bm u^\star(t) + \delta \bm u(t)</span>.</p>
+</div>
+</div>
+<p>Having decided on an LQR framework, we can now come up with the three matrices <span class="math inline">\mathbf Q</span>, <span class="math inline">\mathbf R</span> and <span class="math inline">\mathbf S</span> that set the quadratic cost function. Once this choice is made, we can just invoke the solver for continuous-time Riccati equation with the ultimate goal of finding the time-varying state feedback gain <span class="math inline">\mathbf K(t)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+LQR for trajectory stabilization cab be done in discrete time
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If discrete-time feedback control is eventually desired, which it mostly is, the whole LQR design for a time-varying linear system will have to be done using just periodically sampled state and control trajectories and applying recursive formulas for the discrete-time Riccati equation and state feedback gain.</p>
+</div>
+</div>
+<p>The three weighting matrices <span class="math inline">\mathbf Q</span>, <span class="math inline">\mathbf R</span> and <span class="math inline">\mathbf S</span>, if chosen arbitrarily, are not related to the original cost function that is minimized by the optimal state and control trajectories. The matrices just parameterize a new optimal control problem. It turns out, however, that there is a clever (and insightful) way of choosing these matrices so that the trajectory stabilization problem inherits the original cost function. In other words, even when the system fails to stay on the optimal trajectory perfectly, the LQR state-feedback controller will keep minimizing the same cost function when regulating the deviation from the optimal trajectory.</p>
+<p>Recall that using the conventional definition of Hamiltonian <span class="math inline">H(\bm x, \bm u, \bm \lambda) = L(\bm x, \bm u) + \bm \lambda^\top \mathbf f(\bm x, \bm u)</span>, in which we now assume time invariance of both the system and the cost function for notational simplicity, the necessary conditions of optimality are <span class="math display">
+\begin{aligned}
+\dot{\bm x} &amp;= \nabla_{\bm\lambda} H(\bm x,\bm u,\boldsymbol \lambda)  = \mathbf f(\bm x, \bm u), \\
+\dot{\bm \lambda} &amp;= -\nabla_{\bm x} H(\bm x,\bm u,\boldsymbol \lambda), \\
+\mathbf 0 &amp;= \nabla_{\bm u} H(\bm x,\bm u,\boldsymbol \lambda),\\
+\bm x(t_\mathrm{i})&amp;=\mathbf x_\mathrm{i},\\
+\bm x(t_\mathrm{f})&amp;=\mathbf x_\mathrm{f} \quad \text{or}\quad \bm \lambda(t_\mathrm{f})=\nabla\phi(\bm{x}(t_\mathrm{f})),
+\end{aligned}
+</span> where the option on the last line is selected based on whether the state at the final time is fixed or free.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The state at the final time can also be restricted by a linear equation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The conditions of optimality stated above correspond to one of the two standard situations, in which the state in the final time is either fixed to a single value or completely free. The conditions can also be modified to consider the more general situation, in which the state at the final time is restricted to lie on a manifold defined by an equality constraint <span class="math inline">\psi(\bm x(t_\mathrm{f})) = 0</span>.</p>
+</div>
+</div>
+<p>Let’s now consider some tiny perturbation to the initial state <span class="math inline">\bm x(t_\mathrm{i})</span> from its prescribed nominal value <span class="math inline">\mathbf x_\mathrm{i}</span>. It will give rise to deviations all all the variables in the above equations from their nominal – optimal – trajectories. Assuming the deviations are small, linear model suffices to describe them. In other words, what we are now after is linearization of the above equations</p>
+<p><span id="eq-perturbed-necessary-conditions-of-optimality"><span class="math display">
+\begin{aligned}
+\delta \dot{\bm x} &amp;= \nabla_{\bm x} \mathbf f \; \delta \bm x + \nabla_{\bm u} \mathbf f \; \delta \bm u, \\
+\delta \dot{\bm \lambda} &amp;= -\nabla^2_{\bm{xx}} H \; \delta \bm x -\nabla^2_{\bm{xu}} H \; \delta \bm u -\underbrace{\nabla^2_{\bm{x\lambda}} H}_{(\nabla_{\bm x} \mathbf f)^\top} \; \delta \bm \lambda, \\
+\mathbf 0 &amp;= \nabla^2_{\bm{ux}} H \; \delta \bm x + \nabla^2_{\bm{uu}} H \; \delta \bm u + \underbrace{\nabla^2_{\bm{u\lambda}} H}_{(\nabla_{\bm u} \mathbf f)^\top} \; \delta \bm \lambda,\\
+\delta \bm x(t_\mathrm{i}) &amp;= \text{specified},\\
+\delta \bm \lambda(t_\mathrm{f}) &amp;= \nabla^2_{\bm{xx}}\phi(\mathbf{x}(t_\mathrm{f}))\; \delta \bm x(t_\mathrm{f}).
+\end{aligned}
+\tag{1}</span></span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note on notation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s recall for convenience here that since <span class="math inline">\mathbf f(\bm x, \bm u)</span> is a vector function of a vector argument(s), <span class="math inline">\nabla_{\bm x} \mathbf f</span> is a matrix whose columns are gradients of individual components of <span class="math inline">\mathbf f</span>. Equivalently, <span class="math inline">(\nabla_{\bm x} \mathbf f)^\top</span> stands for the Jacobian of the function <span class="math inline">\mathbf f</span> with respect to <span class="math inline">\bm x</span>. Similarly, <span class="math inline">\nabla_{\bm{xx}} H</span> is the Hessian of <span class="math inline">\mathbf f</span> with respect to <span class="math inline">\bm x</span>. That is, it is a matrix composed of second derivatives. It is a symmetric matrix, hence no need to transpose it. Finally, the terms <span class="math inline">\nabla_{\bm{ux}} H</span> and <span class="math inline">\nabla_{\bm{xu}} H</span> are matrices containing mixed second derivatives.</p>
+</div>
+</div>
+<p>With hindsight we relabel the individual terms in <a href="#eq-perturbed-necessary-conditions-of-optimality" class="quarto-xref">Equation&nbsp;1</a> as <span class="math display">
+\begin{aligned}
+\mathbf A(t) &amp;\coloneqq (\nabla_{\bm x} \mathbf f)^\top\\
+\mathbf B(t) &amp;\coloneqq (\nabla_{\bm u} \mathbf f)^\top\\
+\mathbf Q(t) &amp;\coloneqq \nabla^2_{\bm{xx}} H\\
+\mathbf R(t) &amp;\coloneqq \nabla^2_{\bm{uu}} H\\
+\mathbf N(t) &amp;\coloneqq \nabla^2_{\bm{xu}} H\\
+\mathbf S_\mathrm{f} &amp;\coloneqq \nabla^2_{\bm{xx}}\phi(\mathbf{x}(t_\mathrm{f})).
+\end{aligned}
 </span></p>
-<p>The final time can be fixed to a particular value <span class="math inline">t_\mathrm{f}</span>, in which case the state at the final time <span class="math inline">\bm x(t_\mathrm{f})</span> is either free (unspecified but penalized through <span class="math inline">\phi(\bm x(t_\mathrm{f}))</span>), or it is fixed (specified and not penalized, that is, <span class="math inline">\bm x(t_\mathrm{f}) = \mathbf x^\mathrm{ref}</span>).</p>
-<p>The final time can also be free (regarded as an optimization variable itself), in which case general constraints on the state at the final time can be expressed as <span class="math display">
-\psi(\bm x(t_\mathrm{f}),t_\mathrm{f})=0
-</span> or possibly even using an inequality, which we will not consider here.</p>
-<p>The final time can also be considered infinity, that is, <span class="math inline">t_\mathrm{f}=\infty</span>, but we will handle this situation later separately.</p>
-<section id="hamilton-jacobi-bellman-hjb-equation" class="level2">
-<h2 class="anchored" data-anchor-id="hamilton-jacobi-bellman-hjb-equation">Hamilton-Jacobi-Bellman (HJB) equation</h2>
-<p>We now consider an arbitrary time <span class="math inline">t</span> and split the (remaining) time interval <span class="math inline">[t,t_\mathrm{f}]</span> into two parts <span class="math inline">[t,t+\Delta t]</span> and <span class="math inline">[t+\Delta t,t_\mathrm{f}]</span> , and structure the cost function accordingly <span class="math display">
-J(\bm x(t),\bm u(\cdot),t) = \int_{t}^{t+\Delta t} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + \underbrace{\int_{t+\Delta t}^{t_\mathrm{f}} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + \phi(\bm x(t_\mathrm{f}),t_\mathrm{f})}_{J(\bm x(t+\Delta t), \bm u(t+\Delta t), t+\Delta t)}.
+<p>Let’s rewrite the perturbed necessary conditions of optimality using these new symbols</p>
+<p><span class="math display">
+\begin{aligned}
+\delta \dot{\bm x} &amp;= \mathbf A(t) \; \delta \bm x + \mathbf B(t) \; \delta \bm u, \\
+\delta \dot{\bm \lambda} &amp;= - \mathbf Q(t) \; \delta \bm x - \mathbf N(t) \; \delta \bm u - \mathbf A^\top (t)\; \delta \bm \lambda, \\
+\mathbf 0 &amp;= \mathbf N(t) \; \delta \bm x + \mathbf R(t) \; \delta \bm u + \mathbf B^\top (t) \; \delta \bm \lambda,\\
+\delta \bm x(t_\mathrm{i}) &amp;= \text{specified},\\
+\delta \bm \lambda(t_\mathrm{f}) &amp;= \mathbf S_\mathrm{f}    \; \delta \bm x(t_\mathrm{f}).
+\end{aligned}
 </span></p>
-<p>Bellman’s principle of optimality gives <span class="math display">
-J^\star(\bm x(t),t) = \min_{\bm u(\tau),\;t\leq\tau\leq t+\Delta t} \left[\int_{t}^{t+\Delta t} L(\bm x,\bm u,\tau)\,\mathrm{d}\tau + J^\star(\bm x+\Delta \bm x, t+\Delta t)\right].
-</span></p>
-<p>We now perform Taylor series expansion of <span class="math inline">J^\star(\bm x+\Delta \bm x, t+\Delta t)</span> about <span class="math inline">(\bm x,t)</span> <span class="math display">
-J^\star(\bm x,t) = \min_{\bm u(\tau),\;t\leq\tau\leq t+\Delta t} \left[L\Delta t + J^\star(\bm x,t) + (\nabla_{\bm x} J^\star)^\top \Delta \bm x + \frac{\partial J^\star}{\partial t}\Delta t + \mathcal{O}((\Delta t)^2)\right].
-</span></p>
-<p>Using <span class="math display">
-\Delta \bm x = \bm f(\bm x,\bm u,t)\Delta t
-</span> and noting that <span class="math inline">J^\star</span> and <span class="math inline">J_t^\star</span> are independent of <span class="math inline">\bm u(\tau),\;t\leq\tau\leq t+\Delta t</span>, we get <span class="math display">
-\cancel{J^\star (\bm x,t)} = \cancel{J^\star (\bm x,t)} + \frac{\partial J^\star }{\partial t}\Delta t + \min_{\bm u(\tau),\;t\leq\tau\leq t+\Delta t}\left[L\Delta t + (\nabla_{\bm x} J^\star )^\top f\Delta t\right].
-</span></p>
-<p>Assuming <span class="math inline">\Delta t\rightarrow 0</span> leads to the celebrated <em>Hamilton-Jacobi-Bellman (HJB) equation</em> <span class="math display">\boxed{
--\frac{\partial {\color{blue}J^\star (\bm x(t),t)}}{\partial t} = \min_{\bm u(t)}\left[L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} {\color{blue} J^\star (\bm x(t),t)})^\top \bm f(\bm x(t),\bm u(t),t)\right].}
-</span></p>
-<p>This is obviously a partial differential equation (PDE) for the optimal cost function <span class="math inline">J^\star(\bm x,t)</span>.</p>
-<section id="boundary-conditions-for-the-hjb-equation" class="level3">
-<h3 class="anchored" data-anchor-id="boundary-conditions-for-the-hjb-equation">Boundary conditions for the HJB equation</h3>
-<p>Since the HJB equation is a differential equation, initial/boundary value(s) must be specified to determine a unique solution. In particular, since the equation is first-order with respect to both time and state, specifying the value of the optimal cost function at the final state and the final time is enough.</p>
-<p>For a fixed-final-time, free-final-state, the optimal cost at the final time is <span class="math display">
-J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}).
-</span></p>
-<p>For a fixed-final-time, fixed-final-state, since the component of the cost function corresponding to the terminal state is zero, the optimal cost at the final time is zero as well <span class="math display">
-J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = 0.
-</span></p>
-<p>With the general final-state constraints introduced above, the boundary value condition reads <span class="math display">
-J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}),\qquad \text{on the hypersurface } \psi(\bm x(t_\mathrm{f}),t_\mathrm{f}) = 0.
-</span></p>
-</section>
-<section id="optimal-control-using-the-optimal-cost--to-go-function" class="level3">
-<h3 class="anchored" data-anchor-id="optimal-control-using-the-optimal-cost--to-go-function">Optimal control using the optimal cost (-to-go) function</h3>
-<p>Assume now that the solution <span class="math inline">J^\star (\bm x(t),t)</span> to the HJB equation is available. We can then find the optimal control by the minimization <span class="math display">\boxed
-{\bm u^\star(t) = \arg\min_{\bm u(t)}\left[L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} J^\star (\bm x(t),t))^\top \bm f(\bm x(t),\bm u(t),t)\right].}
-</span></p>
-<p>For convenience, the minimized function is often labelled as <span class="math display">
-Q(\bm x(t),\bm u(t),t) = L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} J^\star (\bm x(t),t))^\top \bm f(\bm x(t),\bm u(t),t)
-</span> and called just <em>Q-function</em>. The optimal control is then <span class="math display">
-\bm u^\star(t) = \arg\min_{\bm u(t)} Q(\bm x(t),\bm u(t),t).
-</span></p>
-</section>
-</section>
-<section id="hjb-equation-formulated-using-a-hamiltonian" class="level2">
-<h2 class="anchored" data-anchor-id="hjb-equation-formulated-using-a-hamiltonian">HJB equation formulated using a Hamiltonian</h2>
-<p>Recall the definition of Hamiltonian <span class="math inline">H(\bm x,\bm u,\bm \lambda,t) = L(\bm x,\bm u,t) + \boldsymbol{\lambda}^\top \mathbf f(\bm x,\bm u,t)</span>. The HJB equation can also be written as <span class="math display">\boxed
-{-\frac{\partial J^\star (\bm x(t),t)}{\partial t} = \min_{\bm u(t)}H(\bm x(t),\bm u(t),\nabla_{\bm x} J^\star (\bm x(t),t),t).}
-</span></p>
-<p>What we have just derived is one of the most profound results in optimal control – Hamiltonian must be minimized by the optimal control. We will exploit it next as a tool for deriving some theoretical results.</p>
-</section>
-<section id="hjb-equation-vs-pontryagins-principle-of-maximum-minimum" class="level2">
-<h2 class="anchored" data-anchor-id="hjb-equation-vs-pontryagins-principle-of-maximum-minimum">HJB equation vs Pontryagin’s principle of maximum (minimum)</h2>
-<p>Recall also that we have already encountered a similar results that made statements about the necessary maximization (or minimization) of the Hamiltonian with respect to the control – the celebrated Pontryagin’s principle of maximum (or minimum). Are these two related? Equivalent?</p>
-</section>
-<section id="hjb-equation-for-an-infinite-time-horizon" class="level2">
-<h2 class="anchored" data-anchor-id="hjb-equation-for-an-infinite-time-horizon">HJB equation for an infinite time horizon</h2>
-<p>When both the system and the cost function are time-invariant, and the final time is infinite, that is, <span class="math inline">t_\mathrm{f}=\infty</span>, the optimal cost function <span class="math inline">J^\star()</span> must necessarily be independent of time, that is, it’s partial derivative with respect to time is zero, that is, <span class="math inline">\frac{\partial J^\star (\bm x(t),t)}{\partial t} = 0</span>. The HJB equation then simplifies to</p>
-<p><span class="math display">\boxed{
-0 = \min_{\bm u(t)}\left[L(\bm x(t),\bm u(t))+(\nabla_{\bm x} {J^\star (\bm x(t),t)})^\top \bm f(\bm x(t),\bm u(t))\right],}
-</span> or, using a Hamiltonian <span class="math display">\boxed
-{0 = \min_{\bm u(t)}H(\bm x(t),\bm u(t),\nabla_{\bm x} J^\star (\bm x(t))).}
+<p>Assuming that <span class="math inline">\nabla^2_{\bm{uu}} H</span> is nonsingular, which can solve the third equation for <span class="math inline">\bm u</span> <span class="math display">
+\bm u = -\nabla^2_{\bm{uu}} H^{-1} \left( \nabla^2_{\bm{ux}} H \; \delta \bm x + (\nabla_{\bm u} \mathbf f)^\top \; \delta \bm \lambda\right ).
 </span></p>
 
 
-</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1274,13 +1284,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cont_numerical_references.html" class="pagination-link" aria-label="References">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">References</span>
+      <a href="./cont_indir_CARE.html" class="pagination-link" aria-label="Continuous-time Riccati equation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Continuous-time Riccati equation</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cont_dp_LQR.html" class="pagination-link" aria-label="Using HJB equation to solve the continuous-time LQR problem">
-        <span class="nav-page-text">Using HJB equation to solve the continuous-time LQR problem</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cont_indir_references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1292,7 +1302,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
