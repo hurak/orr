@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Optimization modelling languages – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>Differential dynamic programming (DDP) – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,41 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
 }
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
 }
-</style>
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -64,8 +50,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./opt_theory_references.html" rel="next">
-<link href="./opt_theory_constrained.html" rel="prev">
+<link href="./dynamic_programming_references.html" rel="next">
+<link href="./dynamic_programming_LQR.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -159,7 +145,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_problems.html">1. Optimization – theory</a></li><li class="breadcrumb-item"><a href="./opt_theory_modellers.html">Optimization modelling languages</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dynamic_programming.html">5. Discrete-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./dynamic_programming_DDP.html">Differential dynamic programming (DDP)</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -219,7 +205,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_theory_modellers.html" class="sidebar-item-text sidebar-link active">
+  <a href="./opt_theory_modellers.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Optimization modelling languages</span></a>
   </div>
 </li>
@@ -383,7 +369,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dynamic_programming_DDP.html" class="sidebar-item-text sidebar-link">
+  <a href="./dynamic_programming_DDP.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Differential dynamic programming (DDP)</span></a>
   </div>
 </li>
@@ -774,26 +760,15 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#why-optimization-modelling-languages" id="toc-why-optimization-modelling-languages" class="nav-link active" data-scroll-target="#why-optimization-modelling-languages">Why optimization modelling languages?</a></li>
-  <li><a href="#why-not-optimization-modelling-languages" id="toc-why-not-optimization-modelling-languages" class="nav-link" data-scroll-target="#why-not-optimization-modelling-languages">Why not optimization modelling languages?</a></li>
-  <li><a href="#language-independent-optimization-modelling-languages" id="toc-language-independent-optimization-modelling-languages" class="nav-link" data-scroll-target="#language-independent-optimization-modelling-languages">Language-independent optimization modelling languages</a></li>
-  <li><a href="#optimization-modelling-in-julia" id="toc-optimization-modelling-in-julia" class="nav-link" data-scroll-target="#optimization-modelling-in-julia">Optimization modelling in Julia</a></li>
-  <li><a href="#optimization-modelling-in-matlab" id="toc-optimization-modelling-in-matlab" class="nav-link" data-scroll-target="#optimization-modelling-in-matlab">Optimization modelling in Matlab</a></li>
-  <li><a href="#optimization-modelling-in-python" id="toc-optimization-modelling-in-python" class="nav-link" data-scroll-target="#optimization-modelling-in-python">Optimization modelling in Python</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_problems.html">1. Optimization – theory</a></li><li class="breadcrumb-item"><a href="./opt_theory_modellers.html">Optimization modelling languages</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dynamic_programming.html">5. Discrete-time optimal control – dynamic programming</a></li><li class="breadcrumb-item"><a href="./dynamic_programming_DDP.html">Differential dynamic programming (DDP)</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Optimization modelling languages</h1>
+<h1 class="title">Differential dynamic programming (DDP)</h1>
 </div>
 
 
@@ -810,223 +785,233 @@ window.Quarto = {
 </header>
 
 
-<section id="why-optimization-modelling-languages" class="level2">
-<h2 class="anchored" data-anchor-id="why-optimization-modelling-languages">Why optimization modelling languages?</h2>
-<p>Realistically complex optimization problems cannot be solved with just a pen and a paper – computer programs (often called <em>optimization solvers</em>) are needed to solve them. And now comes the challenge: as various solvers for even the same class of problems differ in the algorithms they implement, so do their interfaces – every solver expects the inputs (the data defining the optimization problem) in a specific format. This makes it difficult to switch between solvers, as the problem data has to be reformatted every time.</p>
-<div id="exm-data-formatting" class="theorem example">
-<p><span class="theorem-title"><strong>Example 1 (Data formatting for different solvers)</strong></span> Consider the following optimization problem: <span class="math display">
+<p>We consider the standard discrete-time optimal control problem:</p>
+<ul>
+<li>We are given a dynamical system modelled by <span class="math inline">\bm x_{k+1} = \mathbf f(\bm x_k, \bm u_k)</span>. For simplicity of notation we only consider a time invariant system, extension to the time-varying is straightforward.</li>
+<li>Due to time invariance we consider the time <span class="math inline">k=0</span> as the initial time. Specification of the initial state is thus <span class="math inline">\bm x_0 = \mathbf x_\mathrm{init}</span>.</li>
+<li>On the time horizon <span class="math inline">[0,N]</span> we now search for the optimal control trajectory <span class="math inline">(\bm u_k)_{k=0}^{N-1}</span> such that the cost function <span class="math inline">J_0\left(\bm x_0, (\bm u_k)_{k=0}^{N-1}\right) = \phi(\bm x_N) + \sum_{k=0}^{N-1} L(\bm x_k, \bm u_k)</span> is minimized.</li>
+<li>Constraints on the state at the final time can be added later, we do not consider them in this initial study.</li>
+</ul>
+<p>We are already aware of the <em>curse of dimensionality</em> of the standard dynamic programming as it calls for evaluating the optimal cost (to go) <span class="math inline">J_k^\star(\bm x_k)</span> at a grid of the state space and the time interval. <em>Differential dynamic programming (DDP)</em> is a way to relieve the computational burden by restricting the considered set of states to a neighborhood of some given state and control trajectories. It is only in this neighbourhood that an improving trajectories are search for. The key assumption for the method is that the optimal cost can be approximated by a quadratic function, for which such minimization is trivial.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Similarity to iterative algorithms for optimization such as Newton’s method
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When searching for the <span class="math inline">\min_{\bm x\in\mathbb R^n} f(\bm x)</span>, Newton’s method starts with an initial guess of the solution <span class="math inline">\bm x^0</span>, assumes that in its neighbourhood the cost function <span class="math inline">f(\bm x_0 + \bm d)</span> can be approximated by a quadratic function <span class="math inline">q(\bm d) = f(\bm x_0) + \left(\nabla f(\bm x_0)\right)^\top \bm d + \frac{1}{2}\bm d^\top \nabla^2 f(\bm x_0) \bm d</span>, minimizes this quadratic function, which leads to the update of the guess <span class="math inline">\bm x^1 = x^0 + \underbrace{\arg \min_{\bm d\in\mathbb R^n} q(\bm d)}_{\bm d_0}</span>, that is, <span class="math inline">\bm x^1 = \bm x^0 + \bm d^0</span>, and repeats.</p>
+</div>
+</div>
+<p>We start with some initial (guess of the optimal) control trajectory <span class="math display">(\bm u_0^0, \bm u_1^0, \ldots, \bm u_{N-1}^0) \eqqcolon (\bm u_k^0)_{k=0}^{N-1}.</span></p>
+<p>The system (initially at the fixed <span class="math inline">\bm x_0</span>) responds to this control trajectory with the state trajectory <span class="math display">(\bm x_1^0, \bm x_2^0, \ldots, \bm x_{N}^0) \eqqcolon (\bm x_k^0)_{k=1}^{N}.</span></p>
+<p>Correspondingly, at time <span class="math inline">k\in[0,N-1]</span> the <em>cost to go</em> from the state <span class="math inline">x_k^0</span> is <span class="math display">
+J_k^0(\bm x_k^0) \coloneqq J_k(\bm x_k^0, (\bm u_i^0)_{i=k}^{N-1}).
+</span></p>
+<p>Recall that if the optimal control trajectory <span class="math inline">(\bm u_0^\star, \bm u_1^\star, \ldots, \bm u_{N-1}^\star) \eqqcolon (\bm u_k^\star)_{k=0}^{N-1}</span> is applied, the optimal state trajectory <span class="math inline">(\bm x_1^\star, \bm x_2^\star, \ldots, \bm x_{N}^\star) \eqqcolon (\bm x_k^\star)_{k=1}^{N}</span> is a consequence. Furthermove, at every time <span class="math inline">k</span> the cost to go is <span class="math display">
+J_k^\star(\bm x_k^\star) \eqqcolon J_k(\bm x_k^\star, (\bm u_i^\star)_{i=k}^{N-1}),
+</span> and it is optimal, of course, by the very principle of dynamic programming.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Upper index denotes the control used from the given state and time on
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In the following we will heavily use the upper right index. For example, when writing <span class="math inline">J_k^\heartsuit(\bm x_k)</span>, we mean that the control sequence <span class="math inline">(\bm u_k^\heartsuit, \bm u_{k+1}^\heartsuit, \ldots, \bm u_{N-1}^\heartsuit)</span> is applied when the system is at state <span class="math inline">\bm x_k</span> at time <span class="math inline">k</span>, that is</p>
+<p><span class="math display">J_k^\heartsuit(\bm x_k) \coloneqq J_k(\bm x_k, (\bm u_k^\heartsuit, \bm u_{k+1}^\heartsuit, \ldots, \bm u_{N-1}^\heartsuit)).</span></p>
+</div>
+</div>
+<p>With the nominal control trajectory is applied, it obviously holds that <span id="eq-bellman-equation-nonoptimal"><span class="math display">
+J_k^0(\bm x_k^0) = L(\bm x_k^0,\bm u_k^0) + J_{k+1}^0(\bm x_{k+1}^0).
+\tag{1}</span></span></p>
+<p>Assume now a tiny perturbation <span class="math inline">\delta \bm x_k^0</span> from the state <span class="math inline">\bm x_k^0</span> and <span class="math inline">\delta \bm u_k^0</span> from the control <span class="math inline">\bm u_k^0</span> at the time <span class="math inline">k</span>. The motivation for introduction of such perturbation is the same as we had in Newton’s method – trying to decrease the cost function a bit.</p>
+<p>The previous equation also holds for the perturbed state and control, but note that since the control sequence is different, the optimal cost to go is different too. <span id="eq-bellman-equation-nonoptimal-perturbed"><span class="math display">
+J_k^1(\underbrace{\bm x_k^0+\delta \bm x_k^0}_{\bm x_k^1}) = L(\bm x_k^0+\delta \bm x_k^0,\underbrace{\bm u_k^0+\delta \bm u_k^0}_{\bm u_k^1}) + J_{k+1}^1(\underbrace{\bm x_{k+1}^0+\delta \bm x_{k+1}^0}_{\bm x_{k+1}^1}),
+\tag{2}</span></span> where <span class="math display">
+\delta \bm x_{k+1}^0 = \bm f(\bm x_k^0+\delta \bm x_k^0,\bm u_k^0+\delta \bm u_k^0) - \bm x_{k+1}^0.
+</span></p>
+<p>We now aim at approximating the cost to go by a quadratic function using the first three terms of Taylor’s series. We will need the first and second derivatives of the terms in the above equation. Let’s start with the first derivatives. When differentiating <span class="math inline">J_{k+1}^1(\bm x_{k+1}^0)</span> with respect to <span class="math inline">\bm x_k^0</span>, we need to invoke the chain rule as <span class="math inline">\bm x_{k+1}^0 = \bm f(\bm x_k^0, \bm u_k^0)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Chain rule for the first derivative of composed functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider the composed function <span class="math inline">h(\bm x)\coloneqq f(\mathbf g(\bm x))</span>. Its first derivative is <span class="math display">
+\mathrm{D} h(\bm x) = \left.\mathrm{D}g(\bm y)\right|_{\bm y=\mathbf f(\bm x)}\mathrm{D} \mathbf f(\bm x),
+</span> where <span class="math inline">\mathrm{D}g(\bm y)</span> is a row vector of derivatives, and <span class="math inline">\mathrm{D} \mathbf f(\bm x)</span> is a (Jacobian) matrix <span class="math display">
+\mathrm D\mathbf f(\bm x) =
+\begin{bmatrix}
+\frac{\partial f_1(\bm x)}{\partial x_1} &amp; \frac{\partial f_1(\bm x)}{\partial x_2} &amp; \ldots &amp; \frac{\partial f_1(\bm x)}{\partial x_n}\\
+\frac{\partial f_2(\bm x)}{\partial x_1} &amp; \frac{\partial f_2(\bm x)}{\partial x_2} &amp; \ldots &amp; \frac{\partial f_2(\bm x)}{\partial x_n}\\
+\vdots\\
+\frac{\partial f_m(\bm x)}{\partial x_1} &amp; \frac{\partial f_m(\bm x)}{\partial x_2} &amp; \ldots &amp; \frac{\partial f_m(\bm x)}{\partial x_n}
+\end{bmatrix}.
+</span></p>
+<p>Or, if formatted as the gradient, which we prefer in our course, we can write <span class="math display">\boxed
+{\nabla h(\bm x) = \nabla \mathbf f(x) \left.\nabla g(\bm y)\right|_{\bm y = \mathbf f(\bm x)},}
+</span> where <span class="math display">
+\nabla \mathbf f(x) = \begin{bmatrix} \nabla f_1(\bm x) &amp; \nabla f_2(\bm x) &amp; \ldots &amp; \nabla f_m(\bm x)\end{bmatrix}.
+</span></p>
+</div>
+</div>
+<p>Applying this to obtain derivatives of <span class="math inline">J_{k+1}^1\left(\bm f(\bm x_k^0, \bm u_k^0)\right)</span> with respect to <span class="math inline">\bm x_k</span> gives <span class="math display">
+\mathrm{D}_{\bm x_{k}}J_{k+1}^1\left(\bm f(\bm x_k^0, \bm u_k^0)\right) = \left.\mathrm{D}_{\bm x_{k+1}}J_{k+1}^1\left(\bm x_{k+1}^0\right)\right|_{\bm x_{k+1}^0 = \mathbf f(\bm x_k^0,\bm u_k^0)} \mathrm{D}_{\bm x_k} \bm f(\bm x_k^0, \bm u_k^0),
+</span> or, using gradients <span class="math display">\boxed
+{\nabla_{\bm x_{k}}J_{k+1}^1\left(\bm f(\bm x_k^0, \bm u_k^0)\right) = \nabla_{\bm x_k} \bm f(\bm x_k^0, \bm u_k^0) \, \left.\nabla_{\bm x_{k+1}}J_{k+1}^1\left(\bm x_{k+1}^0\right)\right|_{\bm x_{k+1}^0 = \mathbf f(\bm x_k^0,\bm u_k^0)}.}
+</span></p>
+<p>And similarly for the derivatives with respect to <span class="math inline">\bm u_k</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Chain rule for the second derivative of composed functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We consider (again) the composed function <span class="math inline">h(\bm x)\coloneqq g(\mathbf f(\bm x))</span>. Referring to the previous box with the expressions for the first derivative, the second derivative must obviously invoke the rule for differentiation of a product. The Hessian is <span class="math display">
+  \mathrm H h(\bm x) = \left[\mathrm{D}\mathbf f(\bm x)\right]^\top \left.\mathrm H g(\bm y)\right|_{\bm y=\mathbf f(\bm x)}\mathrm{D}\mathbf f(\bm x) + \sum_{k=1}^m \left.\frac{\partial g(\bm y)}{\partial y_k}\right|_{\bm y = \mathbf f(\bm x)} \mathrm{H} f_k(\bm x).
+</span></p>
+<p>This is based on <span class="citation" data-cites="magnusMatrixDifferentialCalculus2019">Magnus and Neudecker (<a href="#ref-magnusMatrixDifferentialCalculus2019" role="doc-biblioref">2019</a>)</span>, Theorem 6.8 on page 122. It is worth emphasizing that in the second term we form the Hessians (that is, matrices) for each component <span class="math inline">f_i(\bm x)</span> of the vector function <span class="math inline">\mathbf f(\bm x)</span>. This way we avoid the need for anything like a three-dimensional (tensor) version of Hessians and we can stick to matrices and vectors.</p>
+<p>Since in our course we prefer working with gradients, we present the result in the gradient form <span class="math display">\boxed
+{  \nabla^2 h(\bm x) = \nabla \mathbf f(\bm x) \left.\nabla^2 g(\bm y)\right|_{\bm y=\mathbf f(\bm x)}\left[\nabla\mathbf f(\bm x)\right]^\top + \sum_{k=1}^m \left.\frac{\partial g(\bm y)}{\partial y_k}\right|_{\bm y = \mathbf f(\bm x)} \nabla^2 f_k(\bm x).}
+</span></p>
+</div>
+</div>
+<p>Applying this to obtain the second derivatives of <span class="math inline">J_{k+1}^1\left(\bm f(\bm x_k^0, \bm u_k^0)\right)</span> with respect to <span class="math inline">\bm x_k</span> gives <span class="math display">
 \begin{aligned}
-  \operatorname*{minimize}_{\bm x \in \mathbb R^2} &amp; \quad \frac{1}{2} \bm x^\top \begin{bmatrix}4 &amp; 1\\ 1 &amp; 2 \end{bmatrix} \bm x + \begin{bmatrix}1 \\ 1\end{bmatrix}^\top \bm x \\
-  \text{subject to} &amp; \quad \begin{bmatrix}1 \\ 0 \\ 0\end{bmatrix} \leq \begin{bmatrix} 1 &amp; 1\\ 1 &amp; 0\\ 0 &amp; 1\end{bmatrix} \bm x \leq  \begin{bmatrix}1 \\ 0.7 \\ 0.7\end{bmatrix}
+\nabla_{\bm{xx}_k}^2 J_{k+1}^1\left(\bm f(\bm x_k^0, \bm u_k^0)\right) &amp;= \nabla_{\bm x_k} \mathbf f(\bm x_k^0, \bm u_k^0) \left.\nabla_{\bm{xx}_{k+1}}^2 J_{k+1}^1 (\bm x_{k+1}^0) \right|_{\bm x_{k+1}^0 = \mathbf f(\bm x_k^0,\bm u_k^0)}\left[\nabla_{\bm x_k} \mathbf f(\bm x_k^0, \bm u_k^0)\right]^\top\\
+&amp;+ \sum_{i=1}^m \left.\frac{\partial J_{k+1}^1 (\bm x_{k+1}^0)}{\partial x_{k+1,i}}\right|_{\bm x_{k+1}^0 = \mathbf f(\bm x_k^0,\bm u_k^0)} \nabla_{\bm{xx}_k}^2 f_i(\bm x_k^0, \bm u_k^0).
 \end{aligned}
 </span></p>
-<p>There are dozens of solvers that can be used to solve this problem. Here we demonstrate a usage of these two: <a href="https://osqp.org">OSQP</a> and <a href="https://oxfordcontrol.github.io/COSMO.jl/stable/">COSMO.jl</a>. And we are going to call the solvers in Julia (using the the wrappers <a href="https://github.com/osqp/OSQP.jl">OSQP.jl</a> for the former). First, we start with OSQP (in fact, this is their example):</p>
-<div id="aabde794" class="cell">
-<details open="" class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">OSQP</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SparseArrays</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the problem data and build the problem description</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">4.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">2.0</span>])</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">1.0</span>]</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">0.0</span>; <span class="fl">0.0</span> <span class="fl">1.0</span>])</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.0</span>; <span class="fl">0.0</span>]</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.7</span>; <span class="fl">0.7</span>]</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>problem_OSQP <span class="op">=</span> OSQP.<span class="fu">Model</span>()</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>OSQP.<span class="fu">setup!</span>(problem_OSQP; P<span class="op">=</span>P, q<span class="op">=</span>q, A<span class="op">=</span>A, l<span class="op">=</span>l, u<span class="op">=</span>u, alpha<span class="op">=</span><span class="fl">1</span>, verbose<span class="op">=</span><span class="cn">false</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the optimization problem and show the results</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>results_OSQP <span class="op">=</span> OSQP.<span class="fu">solve!</span>(problem_OSQP)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>results_OSQP.x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>Now we do the same with COSMO. First, we must take into account that COSMO cannot accept two-sided inequalities, so we have to reformulate the problem so that the constraints are only in the form of <span class="math inline">\mathbf A\bm x + b \geq \bm 0</span>: <span class="math display">
+<p>With this preparation, we can go for expanding the <a href="#eq-bellman-equation-nonoptimal-perturbed" class="quarto-xref">Equation&nbsp;2</a>. Strictly speaking, when keeping only the first three terms of the Taylor series on both sides, the quality no longer holds. But we will enforce it as a means of approximation.</p>
+<p><span class="math display">
 \begin{aligned}
-  \operatorname*{minimize}_{\bm x \in \mathbb R^2} &amp; \quad \frac{1}{2} \bm x^\top \begin{bmatrix}4 &amp; 1\\ 1 &amp; 2 \end{bmatrix} \bm x + \begin{bmatrix}1 \\ 1\end{bmatrix}^\top \bm x \\
-  \text{subject to} &amp; \quad \begin{bmatrix} -1 &amp; -1\\ -1 &amp; 0\\ 0 &amp; -1\\ 1 &amp; 1\\ 1 &amp; 0\\ 0 &amp; 1\end{bmatrix}\bm x + \begin{bmatrix}1 \\ 0.7 \\ 0.7 \\ -1 \\ 0 \\ 0\end{bmatrix} \geq  \mathbf 0.
+J_k^1(\bm x_k^1) + \left[\nabla J_k^1(\bm x_k^0)\right]^\top \delta \bm x_k^0 + \frac{1}{2} \left[\delta \bm x_k^0\right]^\top \nabla^2 J_k^1(\bm x_k^0) \delta \bm x_k^0 = L(\bm x_k^0,\bm u_k^0) + J_{k+1}^1(\bm x_{k+1}^0)\\
++\left[\nabla_{\bm x} L(\bm x_k^0, \bm u_k^0) + \nabla_{\bm x} \bm f(\bm x_k^0, \bm u_k^0) \, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right]^\top \,\delta \bm x_k^0 \\
++\left[\nabla_{\bm u} L(\bm x_k^0, \bm u_k^0) + \nabla_{\bm u} \bm f(\bm x_k^0, \bm u_k^0) \, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right]^\top \,\delta \bm u_k^0 \\
++ \frac{1}{2}[\delta \bm x_k^0]^\top \left[\nabla_{\bm x\bm x}^2 L(\bm x_k^0, \bm u_k^0) + \nabla_{\bm x} \bm f(\bm x_k^0, \bm u_k^0) \, \nabla^2 J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm x} \bm f(\bm x_k^0, \bm u_k^0)\right]^\top + \sum_{i=1}^m \frac{\partial J_{k+1}^1 (\bm x_{k+1}^0)}{\partial x_{k+1,i}} \nabla_{\bm{xx}}^2 f_i(\bm x_k^0, \bm u_k^0) \right] \,\delta \bm x_k^0\\
++ \frac{1}{2}[\delta \bm u_k^0]^\top \left[\nabla_{\bm u\bm u}^2 L(\bm x_k^0, \bm u_k^0) + \nabla_{\bm u} \bm f(\bm x_k^0, \bm u_k^0) \, \nabla^2 J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm u} \bm f(\bm x_k^0, \bm u_k^0)\right]^\top + \sum_{i=1}^m \frac{\partial J_{k+1}^1 (\bm x_{k+1}^0)}{\partial x_{k+1,i}} \nabla_{\bm{uu}}^2 f_i(\bm x_k^0, \bm u_k^0) \right]  \,\delta \bm u_k^0\\
++ [\delta \bm x_k^0]^\top \left[\nabla_{\bm x\bm u}^2 L(\bm x_k^0, \bm u_k^0) + \nabla_{\bm x} \bm f(\bm x_k^0, \bm u_k^0) \, \nabla^2 J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm u} \bm f(\bm x_k^0, \bm u_k^0)\right]^\top + \sum_{i=1}^m \frac{\partial J_{k+1}^1 (\bm x_{k+1}^0)}{\partial x_{k+1,i}} \nabla_{\bm{xu}}^2 f_i(\bm x_k^0, \bm u_k^0) \right] \,\delta \bm u_k^0
 \end{aligned}
 </span></p>
-<div id="44dfd1e3" class="cell">
-<details open="" class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">COSMO</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SparseArrays</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the problem data and build the problem description</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">4.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">2.0</span>])</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">1.0</span>]</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">0.0</span>; <span class="fl">0.0</span> <span class="fl">1.0</span>])</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.0</span>; <span class="fl">0.0</span>]</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.7</span>; <span class="fl">0.7</span>]</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>Aa <span class="op">=</span> [<span class="op">-</span>A; A]</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>ba <span class="op">=</span> [u; <span class="op">-</span>l]</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>problem_COSMO <span class="op">=</span> COSMO.<span class="fu">Model</span>()</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>constraint <span class="op">=</span> COSMO.<span class="fu">Constraint</span>(Aa, ba, COSMO.Nonnegatives)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>settings <span class="op">=</span> COSMO.<span class="fu">Settings</span>(verbose<span class="op">=</span><span class="cn">false</span>)</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">assemble!</span>(problem_COSMO, P, q, constraint, settings <span class="op">=</span> settings)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the optimization problem and show the results</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>results_COSMO <span class="op">=</span> COSMO.<span class="fu">optimize!</span>(problem_COSMO)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>results_COSMO.x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<p>In order to tame the complexity of the expressions a bit we introduce the auxiliary function – the discrete-time Hamiltonian <span class="math display">\boxed
+{H(\bm x_k, \bm u_k, \bm \lambda_{k+1}) = L(\bm x_k, \bm u_k) + \bm \lambda_{k+1}^\top \bm f(\bm x_k, \bm u_k).}
+</span></p>
+<p>The gradient of the Hamiltonian with respect to <span class="math inline">\bm x_k</span> is <span class="math display">\boxed
+{\nabla_{\bm x} H(\bm x_k, \bm u_k, \bm \lambda_{k+1}) = \nabla_{\bm x} L(\bm x_k, \bm u_k) + \nabla_{\bm x} \bm f(\bm x_k, \bm u_k) \, \bm \lambda_{k+1}.}
+</span></p>
+<p>If we set <span class="math inline">\bm \lambda_{k+1}</span> equal to <span class="math inline">\nabla J_{k+1}^1(\bm x_{k+1}^0)</span>, we get <span class="math display">
+\nabla_{\bm x} H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) = \nabla_{\bm x} L(\bm x_k, \bm u_k) + \nabla_{\bm x} \bm f(\bm x_k, \bm u_k) \, \nabla J_{k+1}^1(\bm x_{k+1}^0),
+</span> which can be used to simplify the second row in the above equation. Similarly, <span class="math display">
+\nabla_{\bm u} H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) = \nabla_{\bm u} L(\bm x_k, \bm u_k) + \nabla_{\bm u} \bm f(\bm x_k, \bm u_k) \, \nabla J_{k+1}^1(\bm x_{k+1}^0),
+</span> which can be used to simplify the third row in the above equation.</p>
+<p>The second derivatives – the Hessian – of the Hamiltonian is <span class="math display">\boxed
+{\nabla_{\bm x\bm x}^2 H(\bm x_k, \bm u_k, \bm \lambda_{k+1}) = \nabla_{\bm x\bm x}^2 L(\bm x_k, \bm u_k) + \sum_{i=1}^m \lambda_{k+1,i} \nabla_{\bm{xx}}^2 f_i(\bm x_k^0, \bm u_k^0).}
+</span></p>
+<p>Substituting for <span class="math inline">\bm \lambda_{k+1}</span> we get <span class="math display">
+\nabla_{\bm x \bm x}^2 H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) = \nabla_{\bm x \bm x}^2 L(\bm x_k, \bm u_k) + \sum_{i=1}^m \frac{\partial J_{k+1}^1 (\bm x_{k+1}^0)}{\partial x_{k+1,i}} \nabla_{\bm{xx}}^2 f_i(\bm x_k^0, \bm u_k^0),
+</span> and similarly <span class="math display">
+\nabla_{\bm u \bm u}^2 H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) = \nabla_{\bm u \bm u}^2 L(\bm x_k, \bm u_k) + \sum_{i=1}^m \frac{\partial J_{k+1}^1 (\bm x_{k+1}^0)}{\partial x_{k+1,i}} \nabla_{\bm{uu}}^2 f_i(\bm x_k^0, \bm u_k^0),
+</span> and <span class="math display">
+\nabla_{\bm x \bm u}^2 H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) = \nabla_{\bm x \bm u}^2 L(\bm x_k, \bm u_k) + \sum_{i=1}^m \frac{\partial J_{k+1}^1 (\bm x_{k+1}^0)}{\partial x_{k+1,i}} \nabla_{\bm{xu}}^2 f_i(\bm x_k^0, \bm u_k^0).
+</span></p>
+<p>All these can be used to simplify the above set of equations to <span class="math display">\boxed
+{\begin{aligned}
+J_k^1(\bm x_k^0) + \left[\nabla J_k^1(\bm x_k^0)\right]^\top \delta \bm x_k^0 + \frac{1}{2} \left[\delta \bm x_k^0\right]^\top \nabla^2 J_k^1(\bm x_k^0) \delta \bm x_k^0 = L(\bm x_k^0,\bm u_k^0) + J_{k+1}^1(\bm x_{k+1}^0)\\
++\left[\nabla_{\bm x} H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm x_k^0 \\
++\left[\nabla_{\bm u} H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm u_k^0 \\
++ \frac{1}{2}[\delta \bm x_k^0]^\top \left[\nabla_{\bm x \bm x}^2 H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm x} \bm f(\bm x_k, \bm u_k) \nabla J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm x} \bm f(\bm x_k, \bm u_k)\right]^\top \right] \,\delta \bm x_k^0\\
++ \frac{1}{2}[\delta \bm u_k^0]^\top \left[\nabla_{\bm u \bm u}^2 H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm u} \bm f(\bm x_k, \bm u_k) \nabla J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm u} \bm f(\bm x_k, \bm u_k)\right]^\top \right]  \,\delta \bm u_k^0\\
++ [\delta \bm x_k^0]^\top \left[\nabla_{\bm x \bm u}^2 H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm x} \bm f(\bm x_k, \bm u_k) \nabla J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm u} \bm f(\bm x_k, \bm u_k)\right]^\top \right] \,\delta \bm u_k^0
+\end{aligned}}
+</span></p>
+<p>One more modification is needed. When <span class="math inline">\delta \bm x_k = 0</span>, <span class="math inline">\bm x_k^0 = \bm x_k^1</span>, and yet <span class="math inline">J_k^0(\bm x_k^0) \neq J_k^1(\bm x_k^1)</span> in general, because the two assume different control from the time <span class="math inline">k</span> onward. We denote the offset as <span class="math display">
+a_k = J_k^1(\bm x_k^1) - J_k^0(\bm x_k^0).
+</span></p>
+<p>But then <span class="math display">
+J_k^1(\bm x_k^1) = J_k^0(\bm x_k^0) + a_k,
+</span> which we substitute into the above boxed multiline equation. And while we are at it, let’s also label the long terms with shorter labels: <span class="math display">
+\begin{aligned}
+J_k^{\color{red}0}(\bm x_k^0) + {\color{red}a_k} + \left[\nabla J_k^1(\bm x_k^0)\right]^\top \delta \bm x_k^0 + \frac{1}{2} \left[\delta \bm x_k^0\right]^\top \nabla^2 J_k^1(\bm x_k^0) \delta \bm x_k^0 = L(\bm x_k^0,\bm u_k^0) + J_{k+1}^{\color{red}0}(\bm x_{k+1}^0) + {\color{red}a_{k+1}}\\
++\left[\nabla_{\bm x} H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm x_k^0 \\
++\left[\nabla_{\bm u} H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm u_k^0 \\
++ \frac{1}{2}[\delta \bm x_k^0]^\top \underbrace{\left[\nabla_{\bm x \bm x}^2 H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm x} \bm f(\bm x_k, \bm u_k) \nabla J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm x} \bm f(\bm x_k, \bm u_k)\right]^\top \right]}_{\mathbf A_k} \,\delta \bm x_k^0\\
++ \frac{1}{2}[\delta \bm u_k^0]^\top \underbrace{\left[\nabla_{\bm u \bm u}^2 H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm u} \bm f(\bm x_k, \bm u_k) \nabla J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm u} \bm f(\bm x_k, \bm u_k)\right]^\top \right]}_{\mathbf C_k}  \,\delta \bm u_k^0\\
++ [\delta \bm x_k^0]^\top \underbrace{\left[\nabla_{\bm x \bm u}^2 H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm x} \bm f(\bm x_k, \bm u_k) \nabla J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm u} \bm f(\bm x_k, \bm u_k)\right]^\top \right]}_{\mathbf B_k} \,\delta \bm u_k^0
+\end{aligned}
+</span></p>
+<p>The fact that we do not know <span class="math inline">a_k</span> and <span class="math inline">a_{k-1}</span> does not have to worry us at this moment. We will figure it out later.</p>
+<p>For convenience, we rewrite the above equation with the new shortening symbols <span class="math display">\boxed
+{\begin{aligned}
+J_k^{0}(\bm x_k^0) + a_k + \left[\nabla J_k^1(\bm x_k^0)\right]^\top \delta \bm x_k^0 + \frac{1}{2} \left[\delta \bm x_k^0\right]^\top \nabla^2 J_k^1(\bm x_k^0) \delta \bm x_k^0 = L(\bm x_k^0,\bm u_k^0) + J_{k+1}^0(\bm x_{k+1}^0) + a_{k+1}\\
++\left[\nabla_{\bm x} H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm x_k^0 + \left[\nabla_{\bm u} H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm u_k^0 \\
++ \frac{1}{2}[\delta \bm x_k^0]^\top \mathbf A_k \,\delta \bm x_k^0 + [\delta \bm x_k^0]^\top \mathbf B_k \,\delta \bm u_k^0 + \frac{1}{2}[\delta \bm u_k^0]^\top \mathbf C_k  \,\delta \bm u_k^0.
+\end{aligned}}
+</span></p>
+<p>We now apply the principle of optimality (the principle of dynamic programming) to <a href="#eq-bellman-equation-nonoptimal-perturbed" class="quarto-xref">Equation&nbsp;2</a> <span class="math display">
+J_k^1(\bm x_k^1) = \min_{\delta u_k^0} \left[L(\bm x_k^0+\delta \bm x_k^0,\bm u_k^0+\delta \bm u_k^0) + J_{k+1}^1(\bm x_{k+1}^1)\right]
+</span> using the just derived quadratic model <span class="math display">
+\begin{aligned}
+J_k^{0}(\bm x_k^0) + a_k + \left[\nabla J_k^1(\bm x_k^0)\right]^\top \delta \bm x_k^0 + \frac{1}{2} \left[\delta \bm x_k^0\right]^\top \nabla^2 J_k^1(\bm x_k^0) \delta \bm x_k^0 = {\color{red}\min_{\delta \bm u_k^0}}\left[L(\bm x_k^0,\bm u_k^0) + J_{k+1}^0(\bm x_{k+1}^0) + a_{k+1}\right.\\
++\left[\nabla_{\bm x} H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm x_k^0 + \left[\nabla_{\bm u} H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm u_k^0 \\
+\left.+ \frac{1}{2}[\delta \bm x_k^0]^\top \mathbf A_k \,\delta \bm x_k^0 + [\delta \bm x_k^0]^\top \mathbf B_k \,\delta \bm u_k^0 + \frac{1}{2}[\delta \bm u_k^0]^\top \mathbf C_k  \,\delta \bm u_k^0\right].
+\end{aligned}
+</span></p>
+<p>Simplifying the minimized term on the right hand side by dropping the terms that do not depend on <span class="math inline">\delta \bm u_k^0</span> gives <span class="math display">
+\delta \bm u_k^0 = \arg \min_{\delta \bm u_k^0} \left[\left[\nabla_{\bm u} H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm u_k^0 + [\delta \bm x_k^0]^\top \mathbf B_k \,\delta \bm u_k^0 + \frac{1}{2}[\delta \bm u_k^0]^\top \mathbf C_k  \,\delta \bm u_k^0. \right]
+</span></p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<p>Although the two solvers are solving the same problem, the data has to be formatted differently for each of them (and the difference in syntax is not negligible either).</p>
-<p>What if we could formulate the same problem without considering the pecualiarities of each solver? It turns out that it is possible. In Julia we can use <a href="https://jump.dev/JuMP.jl/stable/">JuMP.jl</a>:</p>
-<div id="ad444875" class="cell">
-<details open="" class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">JuMP</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SparseArrays</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">OSQP</span>, <span class="bu">COSMO</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the problem data and build the problem description</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">4.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">2.0</span>])</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">1.0</span>]</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">0.0</span>; <span class="fl">0.0</span> <span class="fl">1.0</span>])</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.0</span>; <span class="fl">0.0</span>]</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.7</span>; <span class="fl">0.7</span>]</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>model_JuMP <span class="op">=</span> <span class="fu">Model</span>()</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="pp">@variable</span>(model_JuMP, x[<span class="fl">1</span><span class="op">:</span><span class="fl">2</span>])</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="pp">@objective</span>(model_JuMP, Min, <span class="fl">0.5</span><span class="op">*</span>x<span class="op">'*</span>P<span class="op">*</span>x <span class="op">+</span> q<span class="op">'*</span>x)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(model_JuMP, A<span class="op">*</span>x <span class="op">.&lt;=</span> u)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(model_JuMP, A<span class="op">*</span>x <span class="op">.&gt;=</span> l)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the optimization problem using OSQP and show the results</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="fu">set_silent</span>(model_JuMP)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="fu">set_optimizer</span>(model_JuMP, OSQP.Optimizer)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="fu">optimize!</span>(model_JuMP)</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="fu">termination_status</span>(model_JuMP)</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>x_OSQP <span class="op">=</span> <span class="fu">value</span>.(x)</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Now solve the problem using COSMO and show the results</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="fu">set_optimizer</span>(model_JuMP, COSMO.Optimizer)</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="fu">optimize!</span>(model_JuMP)</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="fu">termination_status</span>(model_JuMP)</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>x_COSMO <span class="op">=</span> <span class="fu">value</span>.(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="callout-title-container flex-fill">
+Warning
 </div>
 </div>
-<p>Notice how the optimization problem is defined just once in the last code and then different solvers can be chosen to solve it. The code represents an instance of a so-called <em>optimization modelling language (OML)</em>, or actually its major class called <em>algebraic modelling language (AML)</em>.</p>
-<p>The key motivation for using an OML/AML is to separate the process of formulating the problem from the process of solving it (using a particular solver). Furthermore, such solver-independent problem description (called optimization model) better mimics the way we formulate these problems using a pen and a paper, making it (perhaps) a bit more convenient to write our own and read someone else’s models.</p>
-</section>
-<section id="why-not-optimization-modelling-languages" class="level2">
-<h2 class="anchored" data-anchor-id="why-not-optimization-modelling-languages">Why not optimization modelling languages?</h2>
-<p>As a matter of fact, some optimization experts even keep avoiding OML/AML altogether. For example, if a company pays for a (not really cheap) license of <a href="https://www.gurobi.com/solutions/gurobi-optimizer/">Gurobi Optimizer</a> – a powerful optimization library for (MI)LP/QP/QCQP –, it may be the case that for a particular very large-scale optimization problem their optimization specialist will have hard time to find a third-party solver of comparable performance. If then <a href="https://www.gurobi.com/documentation/current/refman/py_python_api_overview.html">its Python API</a> makes definition of optimization problems convenient too (see the code below), maybe there is little regret that such problem definitions cannot be reused with a third-party solver. The more so that since it is tailored to Gurobi solver, it will offer control over the finest details.</p>
-<div id="05fbf0cc" class="cell">
-<details open="" class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="bu">gurobipy</span> as gp</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="bu">numpy</span> as np</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the data for the model</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> np.<span class="fu">array</span>([[<span class="fl">4.0</span>, <span class="fl">1.0</span>], [<span class="fl">1.0</span>, <span class="fl">2.0</span>]])</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> np.<span class="fu">array</span>([<span class="fl">1.0</span>, <span class="fl">1.0</span>])</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.<span class="fu">array</span>([[<span class="fl">1.0</span>, <span class="fl">1.0</span>], [<span class="fl">1.0</span>, <span class="fl">0.0</span>], [<span class="fl">0.0</span>, <span class="fl">1.0</span>]])</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> np.<span class="fu">array</span>([<span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>])</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> np.<span class="fu">array</span>([<span class="fl">1.0</span>, <span class="fl">0.7</span>, <span class="fl">0.7</span>])</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new model</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> gp.<span class="fu">Model</span>(<span class="st">"qp"</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a vector variable</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> m.<span class="fu">addMVar</span>((<span class="fl">2</span>,))</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the objective</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>obj <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="fu">*</span>(x<span class="pp">@P@x</span> <span class="op">+</span> q<span class="pp">@x</span>)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>m.<span class="fu">setObjective</span>(obj)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the constraints</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>m.<span class="fu">addConstr</span>(A<span class="pp">@x</span> <span class="op">&gt;=</span> l, <span class="st">"c1"</span>)</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>m.<span class="fu">addConstr</span>(A<span class="pp">@x</span> <span class="op">&lt;=</span> u, <span class="st">"c2"</span>)</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the solver</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>m.<span class="fu">optimize</span>()</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> v <span class="kw">in</span> m.<span class="fu">getVars</span>()<span class="op">:</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(f<span class="st">"{v.VarName} {v.X:g}"</span>)</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(f<span class="st">"Obj: {m.ObjVal:g}"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="callout-body-container callout-body">
+<p>Ooops, the notation is still quite awkward. So far <span class="math inline">\bm u_k^0</span> was understood as just any perturbation, but now on the left hand side we consider an optimal one. Shall we add some other superscript to distinguish these?</p>
 </div>
-<p>Similar and yet different is the story of the <a href="https://www.ibm.com/products/ilog-cplex-optimization-studio/cplex-optimizer">IBM ILOG CPLEX</a>, another top-notch solvers addressing the same problems as Gurobi. They do have their own modeling language called <a href="https://www.ibm.com/docs/en/icos/22.1.1?topic=opl-optimization-programming-language">Optimization Modelling Language (OPL)</a>, but it is also only interfacing with their solver(s). We can only guess that their motivation for developing their own optimization modelling language was that at the time of its developments (in 1990s) Python was still in pre-2.0 stage and formulating optimization problems in programming languages like C/C++ or Fortran was nowhere close to being convenient. Gurobi, in turn, started in 2008, when Python was already a popular language.</p>
-</section>
-<section id="language-independent-optimization-modelling-languages" class="level2">
-<h2 class="anchored" data-anchor-id="language-independent-optimization-modelling-languages">Language-independent optimization modelling languages</h2>
-<p>Optimization/algebraic modelling languages were originally developed outside programming languages, essentially as standalone tools. Examples are <a href="https://ampl.com/learn/ampl-book/">AMPL</a>, <a href="https://www.gams.com/latest/docs/UG_MAIN.html#UG_Language_Environment">GAMS</a>, and, say, <a href="https://en.wikibooks.org/wiki/GLPK/GMPL_(MathProg)">GLPK/GMPL (MathProg)</a>. We listed these main names here since they can be bumped across (they are still actively developed), but we are not going to discuss them in our course any further. The reason is that there are now alternatives that are implemented as packages/toolboxes in programming languages such as Julia, Matlab, and Python, which offer a more fluent workflow – a user can use the same programming language to acquire the data, preprocess them, formulate the optimization problem, configure and call a solver, and finally do some postprocessing including a visualization and whatever reporting, all without leaving the language of their choice.</p>
-</section>
-<section id="optimization-modelling-in-julia" class="level2">
-<h2 class="anchored" data-anchor-id="optimization-modelling-in-julia">Optimization modelling in Julia</h2>
-<p>My obvious (personal) bias towards Julia programming language is partly due to the terrific support for optimization modelling in Julia:</p>
-<ul>
-<li><p><a href="https://jump.dev">JuMP.jl</a> not only constitutes one of the flagship packages of the Julia ecosystem but it is on par with the state of the art optimization modelling languages. Furthermore, being a free and open source software, it enjoys a vibrant community of developers and users. They even meet annually at JuMP-dev conference (<a href="https://jump.dev/meetings/jumpdev2023/">in 2023 in Boston, MA</a>).</p></li>
-<li><p><a href="https://jump.dev/Convex.jl">Convex.jl</a> is an implementation of the concept of <a href="https://fenchel.stanford.edu/home">Disciplined Convex Programming (DCP)</a> in Julia (below we also list its implementations in Matlab and Python). Even though it is now registered as a part of the JuMP.jl project, it is still a separate concept. Interesting, convenient, but it seems to be in a maintanence mode now.</p></li>
-</ul>
-<div id="f1e3e5dd" class="cell">
-<details open="" class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Convex</span>, <span class="bu">SCS</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the problem data and build the problem description</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> [<span class="fl">4.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">2.0</span>]</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">1.0</span>]</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">0.0</span>; <span class="fl">0.0</span> <span class="fl">1.0</span>]</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>]</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">0.7</span>, <span class="fl">0.7</span>]</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a vector variable of size n</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fu">Variable</span>(<span class="fl">2</span>)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the objective </span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>objective <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="fu">*quadform</span>(x,P) <span class="op">+</span> <span class="fu">dot</span>(q,x)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the constraints</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>constraints <span class="op">=</span> [l <span class="op">&lt;=</span> A<span class="op">*</span>x, A<span class="op">*</span>x <span class="op">&lt;=</span> u]</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the overal description of the optimization problem</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>problem <span class="op">=</span> <span class="fu">minimize</span>(objective, constraints)</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the problem</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="fu">solve!</span>(problem, SCS.Optimizer; silent_solver <span class="op">=</span> <span class="cn">true</span>)</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the status of the problem</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>problem.status <span class="co"># :Optimal, :Infeasible, :Unbounded etc.</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the optimum value</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>problem.optval</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the optimal x</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>x.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
-</section>
-<section id="optimization-modelling-in-matlab" class="level2">
-<h2 class="anchored" data-anchor-id="optimization-modelling-in-matlab">Optimization modelling in Matlab</h2>
-<p>Popularity of Matlab as a language and an ecosystem for control-related computations is undeniable. Therefore, let’s have a look at what is available for modelling optimization problems in Matlab:</p>
-<ul>
-<li><p><a href="https://www.mathworks.com/help/optim/index.html?s_tid=CRUX_lftnav">Optimization Toolbox for Matlab</a> is one of the commercial toolboxes produced by Matlab and Simulink creators. Since the R2017b release the toolbox supports <a href="https://www.mathworks.com/help/optim/ug/problem-based-workflow.html">Problem-based optimization workflow</a> (besides the more traditional <a href="https://www.mathworks.com/help/optim/optimization-problem-setup-solver-based.html">Solver-based optimization workflow</a> supported since the beginning), which can be regarded as a kind of an optimization/algebraic modelling language, albeit restricted to their own solvers.</p></li>
-<li><p><a href="https://yalmip.github.io">Yalmip</a> started as <em>Yet Another LMI Parser</em> quite some time ago (which reveals its control theoretic roots), but these days it serves as fairly complete algebraic modelling language (within Matlab), interfacing to perhaps any optimization solver, both commercial and free&amp;open-source. It is free and open-source. Is is still actively developed and maintained and it abounds with tutorials and examples.</p></li>
-<li><p><a href="http://cvxr.com/cvx/">CVX</a> is a Matlab counterpart of Convex.jl (or the other way around, if you like, since it has been here longer). The name stipulates that it only allows convex optimization probles (unlike Yalmip) – it follows the <a href="https://fenchel.stanford.edu/home">Disciplined Convex Programming (DCP)</a> paradigm. Unfortunately, the development seems to have stalled – the last update is from 2020.</p></li>
-</ul>
-</section>
-<section id="optimization-modelling-in-python" class="level2">
-<h2 class="anchored" data-anchor-id="optimization-modelling-in-python">Optimization modelling in Python</h2>
-<p>Python is a very popular language for scientific computing. Although it is arguable if it is actually suitable for implementation of numerical algoritms, when it comes to building optimization models, it does its job fairly well (and the numerical solvers it calls can be developed in different language). Several packages implementing OML/AML are available:</p>
-<ul>
-<li><p><a href="https://www.cvxpy.org">cvxpy</a> is yet another instantiation of <a href="https://fenchel.stanford.edu/home">Disciplined Convex Programming</a> that we alredy mention when introducing Convex.jl and CVX. And it turns out that this one exhibits the greatest momentum. The team of developers seems to be have exceeded a critical mass, hence the tools seems like a safe bet already.</p></li>
-<li><p><a href="http://www.pyomo.org">Pyomo</a> is a popular open-source optimization modelling language within Python.</p></li>
-<li><p><a href="https://github.com/APMonitor/">APMonitor</a> and <a href="https://gekko.readthedocs.io/en/latest/">GEKKO</a> are relatively young projects, primarily motivated by applications of machine learning and optimization in chemical process engineering.</p></li>
-</ul>
+<p>If no constraints are imposed on the control, the optimal control perturbation can be found analytically by setting the gradient of the above expression to zero, that is<br>
+<span class="math display">
+\nabla_{\bm u_k}H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \mathbf B_k^\top \delta \bm x_k^0 + \mathbf C_k  \,\delta \bm u_k^0 = 0,
+</span> from which it follows that the optimizing control perturbation is <span class="math display">
+\delta \bm u_k^0 = \underbrace{-\mathbf C_k^{-1} \mathbf B_k^\top}_{\color{blue}\mathbf K_k} \delta \bm x_k^0 \underbrace{- \mathbf C_k^{-1}\nabla_{\bm u_k}H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)}_{\color{blue}\mathbf k_k}.,
+</span> where <span class="math display">
+\delta \bm x_k^0 = \bm x_k^1 - \bm x_k^0.
+</span></p>
+<p>The major conclusion now is that the perturbation control is generated in a feedback manner using an affine control law (or <em>policy</em>) as <span class="math display">
+\delta \bm u_k^0 = {\color{blue}\mathbf K_k} \delta \bm x_k^0 + {\color{blue}\mathbf k_k}.
+</span></p>
+<p>The full control sequence <span class="math inline">\left(\bm u_k^1\right)_{k=0}^{N-1}</span> is then<br>
+<span class="math display">
+\bm u_k^1 = \bm u_k^0 + \delta \bm u_k^0.
+</span></p>
+<p>Now…</p>
 
 
-</section>
 
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-magnusMatrixDifferentialCalculus2019" class="csl-entry" role="listitem">
+Magnus, Jan R., and Heinz Neudecker. 2019. <em>Matrix <span>Differential Calculus</span> with <span>Applications</span> in <span>Statistics</span> and <span>Econometrics</span></em>. 3rd ed. Wiley <span>Series</span> in <span>Probability</span> and <span>Statistics</span>. Hoboken, NJ: Wiley. <a href="https://onlinelibrary.wiley.com/doi/book/10.1002/9781119541219">https://onlinelibrary.wiley.com/doi/book/10.1002/9781119541219</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1119,7 +1104,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/hurak\.github\.io\/orr\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -1449,12 +1434,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./opt_theory_constrained.html" class="pagination-link" aria-label="Theory for constrained optimization">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Theory for constrained optimization</span>
+      <a href="./dynamic_programming_LQR.html" class="pagination-link" aria-label="Solving LQR via dynamic programming">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Solving LQR via dynamic programming</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./opt_theory_references.html" class="pagination-link" aria-label="References">
+      <a href="./dynamic_programming_references.html" class="pagination-link" aria-label="References">
         <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1467,7 +1452,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2024, Zdeněk Hurák</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

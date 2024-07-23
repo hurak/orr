@@ -914,65 +914,65 @@ J_k^1(\bm x_k^1) + \left[\nabla J_k^1(\bm x_k^0)\right]^\top \delta \bm x_k^0 + 
 <p>The gradient of the Hamiltonian with respect to <span class="math inline">\bm x_k</span> is <span class="math display">\boxed
 {\nabla_{\bm x} H(\bm x_k, \bm u_k, \bm \lambda_{k+1}) = \nabla_{\bm x} L(\bm x_k, \bm u_k) + \nabla_{\bm x} \bm f(\bm x_k, \bm u_k) \, \bm \lambda_{k+1}.}
 </span></p>
-<p>If we set <span class="math inline">\bm \lambda_{k+1}</span> equal to <span class="math inline">\nabla J_{k+1}^1(\bm x_{k+1}^0)</span>, we get <span class="math display">
-\nabla_{\bm x} H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) = \nabla_{\bm x} L(\bm x_k, \bm u_k) + \nabla_{\bm x} \bm f(\bm x_k, \bm u_k) \, \nabla J_{k+1}^1(\bm x_{k+1}^0),
+<p>If we evaluate <span class="math inline">\bm \lambda_{k+1}</span> at <span class="math inline">\nabla J_{k+1}^1(\bm x_{k+1}^0)</span>, and the state and the control at <span class="math inline">\bm x_k^0</span> and <span class="math inline">\bm u_k^0</span>, respectively, we get <span class="math display">
+\nabla_{\bm x} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) = \nabla_{\bm x} L(\bm x_k^0, \bm u_k^0) + \nabla_{\bm x} \bm f(\bm x_k^0, \bm u_k^0) \, \nabla J_{k+1}^1(\bm x_{k+1}^0),
 </span> which can be used to simplify the second row in the above equation. Similarly, <span class="math display">
-\nabla_{\bm u} H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) = \nabla_{\bm u} L(\bm x_k, \bm u_k) + \nabla_{\bm u} \bm f(\bm x_k, \bm u_k) \, \nabla J_{k+1}^1(\bm x_{k+1}^0),
+\nabla_{\bm u} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) = \nabla_{\bm u} L(\bm x_k^0, \bm u_k^0) + \nabla_{\bm u} \bm f(\bm x_k^0, \bm u_k^0) \, \nabla J_{k+1}^1(\bm x_{k+1}^0),
 </span> which can be used to simplify the third row in the above equation.</p>
-<p>The second derivatives – the Hessian – of the Hamiltonian is <span class="math display">\boxed
+<p>The matrix of second derivatives – the Hessian – of the Hamiltonian is <span class="math display">\boxed
 {\nabla_{\bm x\bm x}^2 H(\bm x_k, \bm u_k, \bm \lambda_{k+1}) = \nabla_{\bm x\bm x}^2 L(\bm x_k, \bm u_k) + \sum_{i=1}^m \lambda_{k+1,i} \nabla_{\bm{xx}}^2 f_i(\bm x_k^0, \bm u_k^0).}
 </span></p>
 <p>Substituting for <span class="math inline">\bm \lambda_{k+1}</span> we get <span class="math display">
-\nabla_{\bm x \bm x}^2 H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) = \nabla_{\bm x \bm x}^2 L(\bm x_k, \bm u_k) + \sum_{i=1}^m \frac{\partial J_{k+1}^1 (\bm x_{k+1}^0)}{\partial x_{k+1,i}} \nabla_{\bm{xx}}^2 f_i(\bm x_k^0, \bm u_k^0),
+\nabla_{\bm x \bm x}^2 H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) = \nabla_{\bm x \bm x}^2 L(\bm x_k^0, \bm u_k^0) + \sum_{i=1}^m \frac{\partial J_{k+1}^1 (\bm x_{k+1}^0)}{\partial x_{k+1,i}} \nabla_{\bm{xx}}^2 f_i(\bm x_k^0, \bm u_k^0),
 </span> and similarly <span class="math display">
-\nabla_{\bm u \bm u}^2 H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) = \nabla_{\bm u \bm u}^2 L(\bm x_k, \bm u_k) + \sum_{i=1}^m \frac{\partial J_{k+1}^1 (\bm x_{k+1}^0)}{\partial x_{k+1,i}} \nabla_{\bm{uu}}^2 f_i(\bm x_k^0, \bm u_k^0),
+\nabla_{\bm u \bm u}^2 H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) = \nabla_{\bm u \bm u}^2 L(\bm x_k^0, \bm u_k^0) + \sum_{i=1}^m \frac{\partial J_{k+1}^1 (\bm x_{k+1}^0)}{\partial x_{k+1,i}} \nabla_{\bm{uu}}^2 f_i(\bm x_k^0, \bm u_k^0),
 </span> and <span class="math display">
-\nabla_{\bm x \bm u}^2 H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) = \nabla_{\bm x \bm u}^2 L(\bm x_k, \bm u_k) + \sum_{i=1}^m \frac{\partial J_{k+1}^1 (\bm x_{k+1}^0)}{\partial x_{k+1,i}} \nabla_{\bm{xu}}^2 f_i(\bm x_k^0, \bm u_k^0).
+\nabla_{\bm x \bm u}^2 H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) = \nabla_{\bm x \bm u}^2 L(\bm x_k^0, \bm u_k^0) + \sum_{i=1}^m \frac{\partial J_{k+1}^1 (\bm x_{k+1}^0)}{\partial x_{k+1,i}} \nabla_{\bm{xu}}^2 f_i(\bm x_k^0, \bm u_k^0).
 </span></p>
 <p>All these can be used to simplify the above set of equations to <span class="math display">\boxed
 {\begin{aligned}
 J_k^1(\bm x_k^0) + \left[\nabla J_k^1(\bm x_k^0)\right]^\top \delta \bm x_k^0 + \frac{1}{2} \left[\delta \bm x_k^0\right]^\top \nabla^2 J_k^1(\bm x_k^0) \delta \bm x_k^0 = L(\bm x_k^0,\bm u_k^0) + J_{k+1}^1(\bm x_{k+1}^0)\\
-+\left[\nabla_{\bm x} H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm x_k^0 \\
-+\left[\nabla_{\bm u} H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm u_k^0 \\
-+ \frac{1}{2}[\delta \bm x_k^0]^\top \left[\nabla_{\bm x \bm x}^2 H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm x} \bm f(\bm x_k, \bm u_k) \nabla J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm x} \bm f(\bm x_k, \bm u_k)\right]^\top \right] \,\delta \bm x_k^0\\
-+ \frac{1}{2}[\delta \bm u_k^0]^\top \left[\nabla_{\bm u \bm u}^2 H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm u} \bm f(\bm x_k, \bm u_k) \nabla J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm u} \bm f(\bm x_k, \bm u_k)\right]^\top \right]  \,\delta \bm u_k^0\\
-+ [\delta \bm x_k^0]^\top \left[\nabla_{\bm x \bm u}^2 H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm x} \bm f(\bm x_k, \bm u_k) \nabla J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm u} \bm f(\bm x_k, \bm u_k)\right]^\top \right] \,\delta \bm u_k^0
++\left[\nabla_{\bm x} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm x_k^0 \\
++\left[\nabla_{\bm u} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm u_k^0 \\
++ \frac{1}{2}[\delta \bm x_k^0]^\top \left[\nabla_{\bm x \bm x}^2 H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm x} \bm f(\bm x_k^0, \bm u_k^0) \nabla J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm x} \bm f(\bm x_k^0, \bm u_k^0)\right]^\top \right] \,\delta \bm x_k^0\\
++ \frac{1}{2}[\delta \bm u_k^0]^\top \left[\nabla_{\bm u \bm u}^2 H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm u} \bm f(\bm x_k^0, \bm u_k^0) \nabla J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm u} \bm f(\bm x_k^0, \bm u_k^0)\right]^\top \right]  \,\delta \bm u_k^0\\
++ [\delta \bm x_k^0]^\top \left[\nabla_{\bm x \bm u}^2 H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm x} \bm f(\bm x_k^0, \bm u_k^0) \nabla J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm u} \bm f(\bm x_k^0, \bm u_k^0)\right]^\top \right] \,\delta \bm u_k^0
 \end{aligned}}
 </span></p>
 <p>One more modification is needed. When <span class="math inline">\delta \bm x_k = 0</span>, <span class="math inline">\bm x_k^0 = \bm x_k^1</span>, and yet <span class="math inline">J_k^0(\bm x_k^0) \neq J_k^1(\bm x_k^1)</span> in general, because the two assume different control from the time <span class="math inline">k</span> onward. We denote the offset as <span class="math display">
-a_k = J_k^1(\bm x_k^1) - J_k^0(\bm x_k^0).
+a_k = J_k^1(\bm x_k^0) - J_k^0(\bm x_k^0).
 </span></p>
 <p>But then <span class="math display">
-J_k^1(\bm x_k^1) = J_k^0(\bm x_k^0) + a_k,
+J_k^1(\bm x_k^0) = J_k^0(\bm x_k^0) + a_k,
 </span> which we substitute into the above boxed multiline equation. And while we are at it, let’s also label the long terms with shorter labels: <span class="math display">
 \begin{aligned}
 J_k^{\color{red}0}(\bm x_k^0) + {\color{red}a_k} + \left[\nabla J_k^1(\bm x_k^0)\right]^\top \delta \bm x_k^0 + \frac{1}{2} \left[\delta \bm x_k^0\right]^\top \nabla^2 J_k^1(\bm x_k^0) \delta \bm x_k^0 = L(\bm x_k^0,\bm u_k^0) + J_{k+1}^{\color{red}0}(\bm x_{k+1}^0) + {\color{red}a_{k+1}}\\
-+\left[\nabla_{\bm x} H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm x_k^0 \\
-+\left[\nabla_{\bm u} H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm u_k^0 \\
-+ \frac{1}{2}[\delta \bm x_k^0]^\top \underbrace{\left[\nabla_{\bm x \bm x}^2 H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm x} \bm f(\bm x_k, \bm u_k) \nabla J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm x} \bm f(\bm x_k, \bm u_k)\right]^\top \right]}_{\mathbf A_k} \,\delta \bm x_k^0\\
-+ \frac{1}{2}[\delta \bm u_k^0]^\top \underbrace{\left[\nabla_{\bm u \bm u}^2 H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm u} \bm f(\bm x_k, \bm u_k) \nabla J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm u} \bm f(\bm x_k, \bm u_k)\right]^\top \right]}_{\mathbf C_k}  \,\delta \bm u_k^0\\
-+ [\delta \bm x_k^0]^\top \underbrace{\left[\nabla_{\bm x \bm u}^2 H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm x} \bm f(\bm x_k, \bm u_k) \nabla J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm u} \bm f(\bm x_k, \bm u_k)\right]^\top \right]}_{\mathbf B_k} \,\delta \bm u_k^0
++\left[\nabla_{\bm x} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm x_k^0 \\
++\left[\nabla_{\bm u} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm u_k^0 \\
++ \frac{1}{2}[\delta \bm x_k^0]^\top \underbrace{\left[\nabla_{\bm x \bm x}^2 H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm x} \bm f(\bm x_k^0, \bm u_k^0) \nabla J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm x} \bm f(\bm x_k^0, \bm u_k^0)\right]^\top \right]}_{\mathbf A_k} \,\delta \bm x_k^0\\
++ \frac{1}{2}[\delta \bm u_k^0]^\top \underbrace{\left[\nabla_{\bm u \bm u}^2 H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm u} \bm f(\bm x_k^0, \bm u_k^0) \nabla J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm u} \bm f(\bm x_k^0, \bm u_k^0)\right]^\top \right]}_{\mathbf C_k}  \,\delta \bm u_k^0\\
++ [\delta \bm x_k^0]^\top \underbrace{\left[\nabla_{\bm x \bm u}^2 H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm x} \bm f(\bm x_k^0, \bm u_k^0) \nabla J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm u} \bm f(\bm x_k^0, \bm u_k^0)\right]^\top \right]}_{\mathbf B_k} \,\delta \bm u_k^0
 \end{aligned}
 </span></p>
-<p>The fact that we do not know <span class="math inline">a_k</span> and <span class="math inline">a_{k-1}</span> does not have to worry us at this moment. We will figure it out later.</p>
+<p>The fact that we do not know <span class="math inline">a_k</span> and <span class="math inline">a_{k+1}</span> does not have to worry us at this moment. We will figure it out later.</p>
 <p>For convenience, we rewrite the above equation with the new shortening symbols <span class="math display">\boxed
 {\begin{aligned}
 J_k^{0}(\bm x_k^0) + a_k + \left[\nabla J_k^1(\bm x_k^0)\right]^\top \delta \bm x_k^0 + \frac{1}{2} \left[\delta \bm x_k^0\right]^\top \nabla^2 J_k^1(\bm x_k^0) \delta \bm x_k^0 = L(\bm x_k^0,\bm u_k^0) + J_{k+1}^0(\bm x_{k+1}^0) + a_{k+1}\\
-+\left[\nabla_{\bm x} H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm x_k^0 + \left[\nabla_{\bm u} H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm u_k^0 \\
++\left[\nabla_{\bm x} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm x_k^0 + \left[\nabla_{\bm u} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm u_k^0 \\
 + \frac{1}{2}[\delta \bm x_k^0]^\top \mathbf A_k \,\delta \bm x_k^0 + [\delta \bm x_k^0]^\top \mathbf B_k \,\delta \bm u_k^0 + \frac{1}{2}[\delta \bm u_k^0]^\top \mathbf C_k  \,\delta \bm u_k^0.
 \end{aligned}}
 </span></p>
-<p>We now apply the principle of optimality (the principle of dynamic programming) to <a href="#eq-bellman-equation-nonoptimal-perturbed" class="quarto-xref">Equation&nbsp;2</a> <span class="math display">
+<p>We now apply the principle of optimality (the principle of dynamic programming) to the approximation of <a href="#eq-bellman-equation-nonoptimal-perturbed" class="quarto-xref">Equation&nbsp;2</a> <span class="math display">
 J_k^1(\bm x_k^1) = \min_{\delta u_k^0} \left[L(\bm x_k^0+\delta \bm x_k^0,\bm u_k^0+\delta \bm u_k^0) + J_{k+1}^1(\bm x_{k+1}^1)\right]
-</span> using the just derived quadratic model <span class="math display">
+</span> by the just derived quadratic model <span class="math display">
 \begin{aligned}
 J_k^{0}(\bm x_k^0) + a_k + \left[\nabla J_k^1(\bm x_k^0)\right]^\top \delta \bm x_k^0 + \frac{1}{2} \left[\delta \bm x_k^0\right]^\top \nabla^2 J_k^1(\bm x_k^0) \delta \bm x_k^0 = {\color{red}\min_{\delta \bm u_k^0}}\left[L(\bm x_k^0,\bm u_k^0) + J_{k+1}^0(\bm x_{k+1}^0) + a_{k+1}\right.\\
-+\left[\nabla_{\bm x} H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm x_k^0 + \left[\nabla_{\bm u} H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm u_k^0 \\
++\left[\nabla_{\bm x} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm x_k^0 + \left[\nabla_{\bm u} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm u_k^0 \\
 \left.+ \frac{1}{2}[\delta \bm x_k^0]^\top \mathbf A_k \,\delta \bm x_k^0 + [\delta \bm x_k^0]^\top \mathbf B_k \,\delta \bm u_k^0 + \frac{1}{2}[\delta \bm u_k^0]^\top \mathbf C_k  \,\delta \bm u_k^0\right].
 \end{aligned}
 </span></p>
 <p>Simplifying the minimized term on the right hand side by dropping the terms that do not depend on <span class="math inline">\delta \bm u_k^0</span> gives <span class="math display">
-\delta \bm u_k^0 = \arg \min_{\delta \bm u_k^0} \left[\left[\nabla_{\bm u} H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm u_k^0 + [\delta \bm x_k^0]^\top \mathbf B_k \,\delta \bm u_k^0 + \frac{1}{2}[\delta \bm u_k^0]^\top \mathbf C_k  \,\delta \bm u_k^0. \right]
+\delta \bm u_k^0 = \arg \min_{\delta \bm u_k^0} \left[\left[\nabla_{\bm u} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm u_k^0 + [\delta \bm x_k^0]^\top \mathbf B_k \,\delta \bm u_k^0 + \frac{1}{2}[\delta \bm u_k^0]^\top \mathbf C_k  \,\delta \bm u_k^0. \right]
 </span></p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -989,9 +989,9 @@ Warning
 </div>
 <p>If no constraints are imposed on the control, the optimal control perturbation can be found analytically by setting the gradient of the above expression to zero, that is<br>
 <span class="math display">
-\nabla_{\bm u_k}H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \mathbf B_k^\top \delta \bm x_k^0 + \mathbf C_k  \,\delta \bm u_k^0 = 0,
+\nabla_{\bm u_k}H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \mathbf B_k^\top \delta \bm x_k^0 + \mathbf C_k  \,\delta \bm u_k^0 = 0,
 </span> from which it follows that the optimizing control perturbation is <span class="math display">
-\delta \bm u_k^0 = \underbrace{-\mathbf C_k^{-1} \mathbf B_k^\top}_{\color{blue}\mathbf K_k} \delta \bm x_k^0 \underbrace{- \mathbf C_k^{-1}\nabla_{\bm u_k}H\left(\bm x_k, \bm u_k, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)}_{\color{blue}\mathbf k_k}.,
+\delta \bm u_k^0 = \underbrace{-\mathbf C_k^{-1} \mathbf B_k^\top}_{\color{blue}\mathbf K_k} \delta \bm x_k^0 \underbrace{- \mathbf C_k^{-1}\nabla_{\bm u_k}H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)}_{\color{blue}\mathbf k_k}.,
 </span> where <span class="math display">
 \delta \bm x_k^0 = \bm x_k^1 - \bm x_k^0.
 </span></p>
