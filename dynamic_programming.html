@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.1">
+<meta name="generator" content="quarto-1.6.2">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -345,6 +345,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./dynamic_programming_LQR.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Solving LQR via dynamic programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming_DDP.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Differential dynamic programming (DDP)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -1137,7 +1143,7 @@ We omit the final time from the notation for the cost function
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>While the cost function does depend on the final time too, in most if not all our analyses we assume that it is fixed and understood from the context. Hence we will not explicitly indicate the dependence on the final time. We will write just <span class="math inline">J_i(\ldots)</span>. This may help reduce the notational clutter as we are going to need the upper index for something else soon.</p>
+<p>While the cost function does depend on the final time too, in most if not all our analyses we assume that it is fixed and understood from the context. Hence we will not explicitly indicate the dependence on the final time. We will write just <span class="math inline">J_i(\ldots)</span> instead of <span class="math inline">J_i^N(\ldots)</span>. This may help reduce the notational clutter as we are going to need the upper index for something else soon.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -1150,7 +1156,7 @@ We omit the state trajectory from the notation for the cost function and leave j
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The cost function is clearly a function of the full sequence <span class="math inline">\bm x_i, \bm x_{i+1},\ldots, \bm x_N</span> of the state vectors too. In the previous chapters we handled it systematically (either by considering them as optimization variables in the simultaneous direct approach or by introducing Lagrange multipliers in the indirect approache). But here we want to emphasize the fact that starting with <span class="math inline">\bm x_{i+1}</span>, the whole state trajectory is uniquelly determined by the initial state <span class="math inline">\bm x_i</span> and the corresponding control trajectory <span class="math inline">\bm u_i, \bm u_{i+1},\ldots, \bm u_{N-1}</span>. Therefore, we write the cost function as a function of the initial state, the initial time (we already agreed above not to emphasize the final time), and the sequence of controls.</p>
+<p>The cost function is clearly a function of the full sequence <span class="math inline">\bm x_i, \bm x_{i+1},\ldots, \bm x_N</span> of the state vectors too. In the previous chapters we handled it systematically (either by considering them as optimization variables in the simultaneous direct approach or by introducing Lagrange multipliers in the indirect approach). But here we want to emphasize the fact that starting with <span class="math inline">\bm x_{i+1}</span>, the whole state trajectory is uniquelly determined by the initial state <span class="math inline">\bm x_i</span> and the corresponding control trajectory <span class="math inline">\bm u_i, \bm u_{i+1},\ldots, \bm u_{N-1}</span>. Therefore, we write the cost function as a function of the initial state, the initial time (we already agreed above not to emphasize the final time), and the sequence of controls.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -1214,9 +1220,10 @@ J_k^\star(\bm x_k) = \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\m
 </span></p>
 <section id="alternative-formulation-of-dynamic-programming-using-q-factors" class="level3">
 <h3 class="anchored" data-anchor-id="alternative-formulation-of-dynamic-programming-using-q-factors">Alternative formulation of dynamic programming using Q-factors</h3>
-<p>The cost function in <a href="#eq-cost_of_the_all_but_one_optimal_controls" class="quarto-xref">Equation&nbsp;2</a> is sometimes called <em>Q-factor</em> and we denote it <span class="math inline">Q_k(\bm x_k,\bm u_k)</span>. We write its definition here for convenience <span class="math display">
+<p>The cost function in <a href="#eq-cost_of_the_all_but_one_optimal_controls" class="quarto-xref">Equation&nbsp;2</a> is sometimes called <em>Q-factor</em> and we denote it <span class="math inline">Q_k^\star(\bm x_k,\bm u_k)</span>. We write its definition here for convenience <span class="math display">
 Q^\star_k(\bm x_k,\bm u_k) = L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1}).
 </span></p>
+<p>It is a cost of choosing the control <span class="math inline">\bm u_k</span> at state <span class="math inline">\bm x_k</span> at time <span class="math inline">k</span> and then following the optimal control from the next time on.</p>
 <p>The optimal cost function <span class="math inline">J_k^\star(\bm x_k)</span> can be recovered from the optimal Q-factor <span class="math inline">Q_k^\star(\bm x_k,\bm u_k)</span> by taking the minimum over <span class="math inline">\bm u_k</span> <span class="math display">
 J_k^\star(\bm x_k) = \min_{\bm u_k} Q_k^\star(\bm x_k,\bm u_k).
 </span></p>

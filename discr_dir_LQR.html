@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.1">
+<meta name="generator" content="quarto-1.6.2">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -379,6 +379,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./dynamic_programming_LQR.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Solving LQR via dynamic programming</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming_DDP.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Differential dynamic programming (DDP)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -860,7 +866,7 @@ Tip
 \text{subject to} &amp;\quad \widetilde{\mathbf A} \bar{\bm z} + \tilde{\bm b} = \mathbf 0.
 \end{aligned}}
 </span></p>
-<div id="15003367" class="cell">
+<div id="4ee84939" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">direct_dlqr_simultaneous</span>(A,B,x₀,Q,R,S,N)</span>
