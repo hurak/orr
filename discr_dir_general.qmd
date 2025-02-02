@@ -6,7 +6,7 @@ format:
         code-fold: true
 execute:
     enabled: false
-jupyter: julia-1.10
+engine: julia
 ---
 In this section we formulate a finite-horizon optimal control problem (OCP) for a discrete-time dynamical system as a mathematical optimization (also mathematical programming) problem, which can then be solved numerically by a suitable solvers for nonlinear programming (NLP), or possibly quadratic programming (QP). The outcome of such numerical optimization is an optimal control trajectory (a sequence of controls), which is why this approach is called *direct* – we optimize directly over the trajectories.
 
@@ -32,7 +32,7 @@ digraph G {
 }
 ```
 
-But now back to the direct approaches. We will start with a general nonlinear discrete-time optimal control problem in this section and then specialize to the linear quadratic regulation (LQR) problem in the next section. Finally, since the computed control trajectory constitutes an open-loop control scheme, something must be done about it if feedback scheme is preferred – we introduce the concept of a *receding horizon control *(RHC), perhaps bettern known as *model predictive control *(MPC), that turns the direct approach into a feedback control scheme.
+But now back to the direct approaches. We will start with a general nonlinear discrete-time optimal control problem in this section and then specialize to the linear quadratic regulation (LQR) problem in the next section. Finally, since the computed control trajectory constitutes an open-loop control scheme, something must be done about it if feedback scheme is preferred – we introduce the concept of a *receding horizon control *(RHC), perhaps better known as *model predictive control *(MPC), that turns the direct approach into a feedback control scheme.
 
 We start by considering a nonlinear discrete-time system modelled by the state equation
 $$

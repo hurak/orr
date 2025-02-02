@@ -10,7 +10,7 @@ format:
 execute:
     enabled: false
     warning: false
-jupyter: julia-1.10
+engine: julia
 ---
 
 In the previous two chapters we explained direct and indirect approaches to discrete-time optimal control. While the former conveniently allows incorporating almost arbitrary constraints, it only provides a control trajectory (a finite sequence of values of the control variable); if feedback is needed, the optimization must be performed in every sampling period (thus implementing the concept of receding horizon or model predictive control, MPC). The latter, in contrast, can lead to a (state) feedback control law, but this only happens in special cases such as a regulation of a linear system minimizing a quadratic cost (LQR) while assuming no bound constraints on the the control or state variables; in the general case it leads to a two-point boundary value problem, which can only be solved numerically for trajectories.
@@ -136,12 +136,12 @@ Before we proceed, some comments on the notation are in order. Indeed, a well tu
 
 ::: {.callout-note}
 ## We omit the final time from the notation for the cost function
-While the cost function does depend on the final time too, in most if not all our analyses we assume that it is fixed and understood from the context. Hence we will not explicitly indicate the dependence on the final time. We will write just $J_i(\ldots)$. This may help reduce the notational clutter as we are going to need the upper index for something else soon. 
+While the cost function does depend on the final time too, in most if not all our analyses we assume that it is fixed and understood from the context. Hence we will not explicitly indicate the dependence on the final time. We will write just $J_i(\ldots)$ instead of $J_i^N(\ldots)$. This may help reduce the notational clutter as we are going to need the upper index for something else soon. 
 :::
 
 ::: {.callout-note}
 ## We omit the state trajectory from the notation for the cost function and leave just the initial state
-The cost function is clearly a function of the full sequence $\bm x_i, \bm x_{i+1},\ldots, \bm x_N$ of the state vectors too. In the previous chapters we handled it systematically (either by considering them as optimization variables in the simultaneous direct approach or by introducing Lagrange multipliers in the indirect approache). But here we want to emphasize the fact that starting with $\bm x_{i+1}$, the whole state trajectory is uniquelly determined by the initial state $\bm x_i$ and the corresponding control trajectory $\bm u_i, \bm u_{i+1},\ldots, \bm u_{N-1}$. Therefore, we write the cost function as a function of the initial state, the initial time (we already agreed above not to emphasize the final time), and the sequence of controls.
+The cost function is clearly a function of the full sequence $\bm x_i, \bm x_{i+1},\ldots, \bm x_N$ of the state vectors too. In the previous chapters we handled it systematically (either by considering them as optimization variables in the simultaneous direct approach or by introducing Lagrange multipliers in the indirect approach). But here we want to emphasize the fact that starting with $\bm x_{i+1}$, the whole state trajectory is uniquelly determined by the initial state $\bm x_i$ and the corresponding control trajectory $\bm u_i, \bm u_{i+1},\ldots, \bm u_{N-1}$. Therefore, we write the cost function as a function of the initial state, the initial time (we already agreed above not to emphasize the final time), and the sequence of controls.
 :::
 
 ::: {.callout-note}
@@ -193,10 +193,12 @@ $$
 
 ### Alternative formulation of dynamic programming using Q-factors
 
-The cost function in @eq-cost_of_the_all_but_one_optimal_controls is sometimes called *Q-factor* and we denote it $Q_k(\bm x_k,\bm u_k)$. We write its definition here for convenience
+The cost function in @eq-cost_of_the_all_but_one_optimal_controls is sometimes called *Q-factor* and we denote it $Q_k^\star(\bm x_k,\bm u_k)$. We write its definition here for convenience
 $$
 Q^\star_k(\bm x_k,\bm u_k) = L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1}).
 $$
+
+It is a cost of choosing the control $\bm u_k$ at state $\bm x_k$ at time $k$ and then following the optimal control from the next time on.
 
 The optimal cost function $J_k^\star(\bm x_k)$ can be recovered from the optimal Q-factor $Q_k^\star(\bm x_k,\bm u_k)$ by taking the minimum over $\bm u_k$
 $$

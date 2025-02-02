@@ -40,18 +40,35 @@
   langid = {english}
 }
 
-@article{agrawalDifferentiableConvexOptimization2019,
+@article{aghassiSolvingAsymmetricVariational2006,
+  title = {Solving Asymmetric Variational Inequalities via Convex Optimization},
+  author = {Aghassi, Michele and Bertsimas, Dimitris and Perakis, Georgia},
+  year = {2006},
+  month = sep,
+  journal = {Operations Research Letters},
+  volume = {34},
+  number = {5},
+  pages = {481--490},
+  issn = {0167-6377},
+  doi = {10.1016/j.orl.2005.09.006},
+  url = {https://www.sciencedirect.com/science/article/pii/S0167637705001124},
+  urldate = {2025-01-02},
+  abstract = {Using duality, we reformulate the asymmetric variational inequality (VI) problem over a conic region as an optimization problem. We give sufficient conditions for the convexity of this reformulation. We thereby identify a class of VIs that includes monotone affine VIs over polyhedra, which may be solved by commercial optimization solvers.}
+}
+
+@inproceedings{agrawalDifferentiableConvexOptimization2019,
   title = {Differentiable {{Convex Optimization Layers}}},
+  booktitle = {Advances in {{Neural Information Processing Systems}} 32 ({{NeurIPS}} 2019)},
   author = {Agrawal, Akshay and Amos, Brandon and Barratt, Shane and Boyd, Stephen and Diamond, Steven and Kolter, Zico},
   year = {2019},
   month = oct,
-  journal = {arXiv:1910.12430 [cs, math, stat]},
   eprint = {1910.12430},
-  primaryclass = {cs, math, stat},
+  address = {Vancouver, Canada},
   url = {http://arxiv.org/abs/1910.12430},
   urldate = {2021-09-17},
   abstract = {Recent work has shown how to embed differentiable optimization problems (that is, problems whose solutions can be backpropagated through) as layers within deep learning architectures. This method provides a useful inductive bias for certain problems, but existing software for differentiable optimization layers is rigid and difficult to apply to new settings. In this paper, we propose an approach to differentiating through disciplined convex programs, a subclass of convex optimization problems used by domain-specific languages (DSLs) for convex optimization. We introduce disciplined parametrized programming, a subset of disciplined convex programming, and we show that every disciplined parametrized program can be represented as the composition of an affine map from parameters to problem data, a solver, and an affine map from the solver's solution to a solution of the original problem (a new form we refer to as affine-solver-affine form). We then demonstrate how to efficiently differentiate through each of these components, allowing for end-to-end analytical differentiation through the entire convex program. We implement our methodology in version 1.1 of CVXPY, a popular Python-embedded DSL for convex optimization, and additionally implement differentiable layers for disciplined convex programs in PyTorch and TensorFlow 2.0. Our implementation significantly lowers the barrier to using convex optimization problems in differentiable programs. We present applications in linear machine learning models and in stochastic control, and we show that our layer is competitive (in execution time) compared to specialized differentiable solvers from past work.},
-  archiveprefix = {arxiv}
+  archiveprefix = {arXiv},
+  isbn = {978-1-71380-793-3}
 }
 
 @inproceedings{ahmadiDSOSSDSOSOptimization2014,
@@ -122,6 +139,23 @@
   address = {Carnegie Mellon University}
 }
 
+@misc{amosOptNetDifferentiableOptimization2021,
+  title = {{{OptNet}}: {{Differentiable Optimization}} as a {{Layer}} in {{Neural Networks}}},
+  shorttitle = {{{OptNet}}},
+  author = {Amos, Brandon and Kolter, J. Zico},
+  year = {2021},
+  month = dec,
+  number = {arXiv:1703.00443},
+  eprint = {1703.00443},
+  primaryclass = {cs, math, stat},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.1703.00443},
+  url = {http://arxiv.org/abs/1703.00443},
+  urldate = {2024-08-14},
+  abstract = {This paper presents OptNet, a network architecture that integrates optimization problems (here, specifically in the form of quadratic programs) as individual layers in larger end-to-end trainable deep networks. These layers encode constraints and complex dependencies between the hidden states that traditional convolutional and fully-connected layers often cannot capture. We explore the foundations for such an architecture: we show how techniques from sensitivity analysis, bilevel optimization, and implicit differentiation can be used to exactly differentiate through these layers and with respect to layer parameters; we develop a highly efficient solver for these layers that exploits fast GPU-based batch solves within a primal-dual interior point method, and which provides backpropagation gradients with virtually no additional cost on top of the solve; and we highlight the application of these approaches in several problems. In one notable example, the method is learns to play mini-Sudoku (4x4) given just input and output games, with no a-priori information about the rules of the game; this highlights the ability of OptNet to learn hard constraints better than other neural architectures.},
+  archiveprefix = {arXiv}
+}
+
 @misc{anderssonCasADiDocumentation2023,
   title = {{{CasADi Documentation}}},
   author = {Andersson, Joel and Gillis, Joris and Horn, Greg},
@@ -155,30 +189,16 @@
   url = {http://cost-td1207.zib.de/sites/default/files/miguel_f_anjos.pdf}
 }
 
-@article{arnstromDualActiveSetSolver2022a,
-  title = {A {{Dual Active-Set Solver}} for {{Embedded Quadratic Programming Using Recursive LDL}}{{{\textsuperscript{T}}}}{\textsuperscript{\$}} {{Updates}}},
-  author = {Arnstr{\"o}m, Daniel and Bemporad, Alberto and Axehill, Daniel},
-  year = {2022},
-  month = aug,
-  journal = {IEEE Transactions on Automatic Control},
-  volume = {67},
-  number = {8},
-  pages = {4362--4369},
-  issn = {1558-2523},
-  doi = {10.1109/TAC.2022.3176430},
-  abstract = {In this technical article, we present a dual active-set solver for quadratic programming that has properties suitable for use in embedded model predictive control applications. In particular, the solver is efficient, can easily be warm started, and is simple to code. Moreover, the exact worst-case computational complexity of the solver can be determined offline and, by using outer proximal-point iterations, ill-conditioned problems can be handled in a robust manner.}
-}
-
-@article{arnstromLinearProgrammingMethod2022a,
-  title = {A {{Linear Programming Method Based}} on {{Proximal-Point Iterations With Applications}} to {{Multi-Parametric Programming}}},
-  author = {Arnstr{\"o}m, Daniel and Bemporad, Alberto and Axehill, Daniel},
-  year = {2022},
-  journal = {IEEE Control Systems Letters},
-  volume = {6},
-  pages = {2066--2071},
-  issn = {2475-1456},
-  doi = {10.1109/LCSYS.2021.3138218},
-  abstract = {We propose a linear programming method that is based on active-set changes and proximal-point iterations. The method solves a sequence of least-distance problems using a warm-started quadratic programming solver that can reuse internal matrix factorizations from the previously solved least-distance problem. We show that the proposed method terminates in a finite number of iterations and that it outperforms state-of-the-art LP solvers in scenarios where an extensive number of small/medium scale LPs need to be solved rapidly, occurring in, for example, multi-parametric programming algorithms. In particular, we show how the proposed method can accelerate operations such as redundancy removal, computation of Chebyshev centers and solving linear feasibility problems.}
+@book{aptPrinciplesConstraintProgramming2003,
+  title = {Principles of {{Constraint Programming}}},
+  author = {Apt, Krzysztof},
+  year = {2003},
+  publisher = {Cambridge University Press},
+  address = {Cambridge},
+  url = {https://doi.org/10.1017/CBO9780511615320},
+  abstract = {Scheduling, vehicle routing and timetabling are all examples of constraint problems, and methods to solve them rely on the idea of constraint propagation and search. This book meets the need for a modern, multidisciplinary introduction to the field that covers foundations and applications. Written by Krzysztof Apt, an authority on the subject, it will be welcomed by graduate students and professionals. With the insertion of constraint techniques into programming environments, new developments have accelerated the solution process. Constraint programming combines ideas from artificial intelligence, programming languages, databases, and operational research.},
+  isbn = {978-0-521-12549-9},
+  langid = {english}
 }
 
 @phdthesis{axehillIntegerQuadraticProgramming2008,
@@ -289,7 +309,35 @@
   doi = {10.1137/0715015},
   url = {https://epubs.siam.org/doi/10.1137/0715015},
   urldate = {2018-08-01},
-  abstract = {A new algorithm is presented for computing a vector x which satisfies a given m by \$n(m {$>$} n {\textbackslash}geqq 2)\$ linear system in the sense that the \$l\_1 \$ norm is minimized. That is, if A is a matrix having m columns \$a\_1 , {\textbackslash}cdots ,a\_m \$ each of length n, and b is a vector with components \${\textbackslash}beta \_1 , {\textbackslash}cdots ,{\textbackslash}beta \_m \$, then x is selected so that {\textbackslash}[{\textbackslash}phi (x) = {\textbar}{\textbar}A\^{}T x - b{\textbar}{\textbar}\_1  = {\textbackslash}sum \_\{i = 1\}\^{}m \{{\textbackslash}left{\textbar}a\_i\^{}T x - {\textbackslash}beta \_i {\textbackslash}right{\textbar}\} {\textbackslash}] is as small as possible. Such solutions are of interest for the ``robust'' fitting of a linear model to data.The function \${\textbackslash}phi \$ is directly minimized in a finite number of steps using techniques borrowed from Conn's approach toward minimizing piecewise differentiable functions. In these techniques if x is any point and \$A\_{\textbackslash}mathcal \{Z\} \$ stands for the submatrix consisting of those columns \$a\_j\$ from A for which the corresponding residuals \$a\_j\^{}T x - {\textbackslash}beta \_j \$ are zero, then the discontinuities in the gradient of \${\textbackslash}phi \$ at x are handled by making use of the projector onto the null space of \$A\_{\textbackslash}mathcal \{Z\}\^{}T \$.Attention has been paid both to numerical stability and efficiency in maintaining and updating a factorization of \$A\_{\textbackslash}mathcal\{Z\} \$ from which the necessary projector is obtainable.The algorithm compares favorably with the best so far reported for the linear \$l\_1\$ problem, and it can easily be extended to handle linear constraints.}
+  abstract = {A new algorithm is presented for computing a vector x which satisfies a given m by \$n(m {$>$} n {\textbackslash}geqq 2)\$ linear system in the sense that the \$l\_1 \$ norm is minimized. That is, if A is a matrix having m columns \$a\_1 , {\textbackslash}cdots ,a\_m \$ each of length n, and b is a vector with components \${\textbackslash}beta \_1 , {\textbackslash}cdots ,{\textbackslash}beta \_m \$, then x is selected so that {\textbackslash}[{\textbackslash}phi (x) = {\textbar}{\textbar}A{\textasciicircum}T x - b{\textbar}{\textbar}\_1  = {\textbackslash}sum \_\{i = 1\}{\textasciicircum}m \{{\textbackslash}left{\textbar}a\_i{\textasciicircum}T x - {\textbackslash}beta \_i {\textbackslash}right{\textbar}\} {\textbackslash}] is as small as possible. Such solutions are of interest for the ``robust'' fitting of a linear model to data.The function \${\textbackslash}phi \$ is directly minimized in a finite number of steps using techniques borrowed from Conn's approach toward minimizing piecewise differentiable functions. In these techniques if x is any point and \$A\_{\textbackslash}mathcal \{Z\} \$ stands for the submatrix consisting of those columns \$a\_j\$ from A for which the corresponding residuals \$a\_j{\textasciicircum}T x - {\textbackslash}beta \_j \$ are zero, then the discontinuities in the gradient of \${\textbackslash}phi \$ at x are handled by making use of the projector onto the null space of \$A\_{\textbackslash}mathcal \{Z\}{\textasciicircum}T \$.Attention has been paid both to numerical stability and efficiency in maintaining and updating a factorization of \$A\_{\textbackslash}mathcal\{Z\} \$ from which the necessary projector is obtainable.The algorithm compares favorably with the best so far reported for the linear \$l\_1\$ problem, and it can easily be extended to handle linear constraints.}
+}
+
+@book{bauschkeIntroductionConvexityOptimization2023,
+  title = {An {{Introduction}} to {{Convexity}}, {{Optimization}}, and {{Algorithms}}},
+  author = {Bauschke, Heinz H. and Moursi, Walaa M.},
+  year = {2023},
+  month = dec,
+  series = {{{MOS-SIAM Series}} on {{Optimization}}},
+  publisher = {{Society for Industrial and Applied Mathematics}},
+  address = {Philadelphia},
+  url = {https://doi.org/10.1137/1.9781611977806},
+  abstract = {This concise, self-contained volume introduces convex analysis and optimization algorithms, with an emphasis on bridging the two areas. It explores cutting-edge algorithms---such as the proximal gradient, Douglas--Rachford, Peaceman--Rachford, and FISTA---that have applications in machine learning, signal processing, image reconstruction, and other fields. An Introduction to Convexity, Optimization, and Algorithms contains algorithms illustrated by Julia examples and more than 200 exercises that enhance the reader's understanding of the topic. Clear explanations and step-by-step algorithmic descriptions facilitate self-study for individuals looking to enhance their expertise in convex analysis and optimization.},
+  isbn = {978-1-61197-779-0},
+  langid = {english}
+}
+
+@book{bazaraaNonlinearProgrammingTheory2006,
+  title = {Nonlinear {{Programming}}: {{Theory}} and {{Algorithms}}},
+  shorttitle = {Nonlinear {{Programming}}},
+  author = {Bazaraa, Mokhtar S. and Sherali, Hanif D. and Shetty, C. M.},
+  year = {2006},
+  month = may,
+  edition = {3},
+  publisher = {Wiley-Interscience},
+  url = {https://www.wiley.com/en-us/Nonlinear+Programming%3A+Theory+and+Algorithms%2C+3rd+Edition-p-9780471486008},
+  abstract = {COMPREHENSIVE COVERAGE OF NONLINEAR PROGRAMMING THEORY AND ALGORITHMS, THOROUGHLY REVISED AND EXPANDEDNonlinear Programming: Theory and Algorithms{\texthorizontalbar}now in an extensively updated Third Edition{\texthorizontalbar}addresses the problem of optimizing an objective function in the presence of equality and inequality constraints. Many realistic problems cannot be adequately represented as a linear program owing to the nature of the nonlinearity of the objective function and/or the nonlinearity of any constraints. The Third Edition begins with a general introduction to nonlinear programming with illustrative examples and guidelines for model construction.Concentration on the three major parts of nonlinear programming is provided:Convex analysis with discussion of topological properties of convex sets, separation and support of convex sets, polyhedral sets, extreme points and extreme directions of polyhedral sets, and linear programmingOptimality conditions and duality with coverage of the nature, interpretation, and value of the classical Fritz John (FJ) and the Karush-Kuhn-Tucker (KKT) optimality conditions; the interrelationships between various proposed constraint qualifications; and Lagrangian duality and saddle point optimality conditionsAlgorithms and their convergence, with a presentation of algorithms for solving both unconstrained and constrained nonlinear programming problemsImportant features of the Third Edition include:New topics such as second interior point methods, nonconvex optimization, nondifferentiable optimization, and moreUpdated discussion and new applications in each chapterDetailed numerical examples and graphical illustrationsEssential coverage of modeling and formulating nonlinear programsSimple numerical problemsAdvanced theoretical exercisesThe book is a solid reference for professionals as well as a useful text for students in the fields of operations research, management science, industrial engineering, applied mathematics, and also in engineering disciplines that deal with analytical optimization techniques. The logical and self-contained format uniquely covers nonlinear programming techniques with a great depth of information and an abundance of valuable examples and illustrations that showcase the most current advances in nonlinear problems.},
+  isbn = {978-0-471-48600-8},
+  langid = {english}
 }
 
 @book{beckFirstOrderMethodsOptimization2017,
@@ -307,7 +355,7 @@
 }
 
 @book{beckIntroductionNonlinearOptimization2014,
-  title = {Introduction to {{Nonlinear Optimization}}},
+  title = {Introduction to {{Nonlinear Optimization}}: : {{Theory}}, {{Algorithms}}, and {{Applications}} with {{MATLAB}}},
   author = {Beck, Amir},
   year = {2014},
   month = oct,
@@ -318,6 +366,22 @@
   urldate = {2022-01-26},
   abstract = {This book emerged from the idea that an optimization training should include three basic components: a strong theoretical and algorithmic foundation, familiarity with various applications, and the ability to apply the theory and algorithms on actual ``real-life'' problems. The book is intended to be the basis of such an extensive training. The mathematical development of the main concepts in nonlinear optimization is done rigorously, where a special effort was made to keep the proofs as simple as possible. The results are presented gradually and accompanied with many illustrative examples. Since the aim is not to give an encyclopedic overview, the focus is on the most useful and important concepts. The theory is complemented by numerous discussions on applications from various scientific fields such as signal processing, economics and localization. Some basic algorithms are also presented and studied to provide some flavor of this important aspect of optimization. Many topics are demonstrated by MATLAB programs, and ideally, the interested reader will find satisfaction in the ability of actually solving problems on his or her own. The book contains several topics that, compared to other classical textbooks, are treated differently. The following are some examples of the less common issues.},
   isbn = {978-1-61197-364-8}
+}
+
+@book{beckIntroductionNonlinearOptimization2023,
+  title = {Introduction to {{Nonlinear Optimization}}: {{Theory}}, {{Algorithms}}, and {{Applications}} with {{Python}} and {{MATLAB}}},
+  shorttitle = {Introduction to {{Nonlinear Optimization}}},
+  author = {Beck, Amir},
+  year = {2023},
+  month = aug,
+  series = {{{MOS-SIAM Series}} on {{Optimization}}},
+  edition = {2},
+  publisher = {Society for Industrial \& Applied Mathematics},
+  address = {Philadelphia, PA, USA},
+  url = {https://doi.org/10.1137/1.9781611977622},
+  abstract = {Built on the framework of the successful first edition, this book serves as a modern introduction to the field of optimization. The author's objective is to provide the foundations of theory and algorithms of nonlinear optimization as well as to present a variety of applications from diverse areas of applied sciences. Introduction to Nonlinear Optimization gradually yet rigorously builds connections between theory, algorithms, applications, and actual implementation. The book contains several topics not typically included in optimization books, such as optimality conditions in sparsity constrained optimization, hidden convexity, and total least squares. Readers will discover a wide array of applications such as circle fitting, Chebyshev center, the Fermat--Weber problem, denoising, clustering, total least squares, and orthogonal regression. These applications are studied both theoretically and algorithmically, illustrating concepts such as duality. Python and MATLAB programs are used to show how the theory can be implemented. The extremely popular CVX toolbox (MATLAB) and CVXPY module (Python) are described and used.More than 250 theoretical, algorithmic, and numerical exercises enhance the reader's understanding of the topics. (More than 70 of the exercises provide detailed solutions, and many others are provided with final answers.) The theoretical and algorithmic topics are illustrated by Python and MATLAB examples.},
+  isbn = {978-1-61197-761-5},
+  langid = {english}
 }
 
 @article{behrendtTechnicalReportTotally2021,
@@ -332,7 +396,7 @@
   url = {http://arxiv.org/abs/2110.06705},
   urldate = {2022-05-10},
   abstract = {This paper presents a decentralized algorithm for a team of agents to track time-varying fixed points that are the solutions to time-varying convex optimization problems. The algorithm is first-order, and it allows for total asynchrony in the communications and computations of all agents, i.e., all such operations can occur with arbitrary timing and arbitrary (finite) delays. Convergence rates are computed in terms of the communications and computations that agents execute, without specifying when they must occur. These rates apply to convergence to the minimum of each individual objective function, as well as agents' long-run behavior as their objective functions change. Then, to improve the usage of limited communication and computation resources, we optimize the timing of agents' operations relative to changes in their objective functions to minimize total fixed point tracking error over time. Simulation results are presented to illustrate these developments in practice and empirically assess their robustness to uncertainties in agents' update laws.},
-  archiveprefix = {arxiv}
+  archiveprefix = {arXiv}
 }
 
 @book{ben-talLecturesModernConvex2001,
@@ -498,7 +562,7 @@
   doi = {10.1137/0320018},
   url = {https://epubs.siam.org/doi/abs/10.1137/0320018},
   urldate = {2019-04-11},
-  abstract = {We consider the problem \${\textbackslash}min {\textbackslash}\{ f(x){\textbar}x {\textbackslash}geqq 0{\textbackslash}\} \$, and propose algorithms of the form \$x\_\{k + 1\}  = [x\_k  - {\textbackslash}alpha \_k D\_k {\textbackslash}nabla f(x\_k )]\^{} +  \$, where \$[ {\textbackslash}cdot ]\^{} +  \$ denotes projection on the positive orthant, \${\textbackslash}alpha \_k \$ is a stepsize chosen by an Armijo-like rule and \$D\_k \$ is a positive definite symmetric matrix which is partly diagonal. We show that \$D\_k \$ can be calculated simply on the basis of second derivatives of f so that the resulting Newton-like algorithm has a typically superlinear rate of convergence. With other choices of \$D\_k \$ convergence at a typically linear rate is obtained. The algorithms are almost as simple as their unconstrained counterparts. They are well suited for problems of large dimension such as those arising in optimal control while being competitive with existing methods for low-dimensional problems. The effectiveness of the Newton-like algorithm is demonstrated via computational examples involving as many as 10,000 variables. Extensions to general linearly constrained problems are also provided. These extensions utilize a notion of an active generalized rectangle patterned after the notion of an active manifold used in manifold suboptimization methods. By contrast with these methods, many constraints can be added or subtracted from the binding set at each iteration without the need to solve a quadratic programming problem.}
+  abstract = {We consider the problem \${\textbackslash}min {\textbackslash}\{ f(x){\textbar}x {\textbackslash}geqq 0{\textbackslash}\} \$, and propose algorithms of the form \$x\_\{k + 1\}  = [x\_k  - {\textbackslash}alpha \_k D\_k {\textbackslash}nabla f(x\_k )]{\textasciicircum} +  \$, where \$[ {\textbackslash}cdot ]{\textasciicircum} +  \$ denotes projection on the positive orthant, \${\textbackslash}alpha \_k \$ is a stepsize chosen by an Armijo-like rule and \$D\_k \$ is a positive definite symmetric matrix which is partly diagonal. We show that \$D\_k \$ can be calculated simply on the basis of second derivatives of f so that the resulting Newton-like algorithm has a typically superlinear rate of convergence. With other choices of \$D\_k \$ convergence at a typically linear rate is obtained. The algorithms are almost as simple as their unconstrained counterparts. They are well suited for problems of large dimension such as those arising in optimal control while being competitive with existing methods for low-dimensional problems. The effectiveness of the Newton-like algorithm is demonstrated via computational examples involving as many as 10,000 variables. Extensions to general linearly constrained problems are also provided. These extensions utilize a notion of an active generalized rectangle patterned after the notion of an active manifold used in manifold suboptimization methods. By contrast with these methods, many constraints can be added or subtracted from the binding set at each iteration without the need to solve a quadratic programming problem.}
 }
 
 @article{bertsekasPseudonormalityLagrangeMultiplier2002,
@@ -638,6 +702,23 @@
   abstract = {In this paper, we provide a general classification of mathematical optimization problems, followed by a matrix of applications that shows the areas in which these problems have been typically applied in process systems engineering. We then provide a review of solution methods of the major types of optimization problems for continuous and discrete variable optimization, particularly nonlinear and mixed-integer nonlinear programming (MINLP). We also review their extensions to dynamic optimization and optimization under uncertainty. While these areas are still subject to significant research efforts, the emphasis in this paper is on major developments that have taken place over the last 25 years.}
 }
 
+@article{bielEfficientStochasticProgramming2022,
+  title = {Efficient {{Stochastic Programming}} in {{Julia}}},
+  author = {Biel, Martin and Johansson, Mikael},
+  year = {2022},
+  month = jul,
+  journal = {INFORMS Journal on Computing},
+  volume = {34},
+  number = {4},
+  pages = {1885--1902},
+  publisher = {INFORMS},
+  issn = {1091-9856},
+  doi = {10.1287/ijoc.2022.1158},
+  url = {https://pubsonline.informs.org/doi/abs/10.1287/ijoc.2022.1158},
+  urldate = {2024-05-01},
+  abstract = {We present StochasticPrograms.jl, a user-friendly and powerful open-source framework for stochastic programming written in the Julia language. The framework includes both modeling tools and structure-exploiting optimization algorithms. Stochastic programming models can be efficiently formulated using an expressive syntax, and models can be instantiated, inspected, and analyzed interactively. The framework scales seamlessly to distributed environments. Small instances of a model can be run locally to ensure correctness, whereas larger instances are automatically distributed in a memory-efficient way onto supercomputers or clouds and solved using parallel optimization algorithms. These structure-exploiting solvers are based on variations of the classical L-shaped, progressive-hedging, and quasi-gradient algorithms. We provide a concise mathematical background for the various tools and constructs available in the framework along with code listings exemplifying their usage. Both software innovations related to the implementation of the framework and algorithmic innovations related to the structured solvers are highlighted. We conclude by demonstrating strong scaling properties of the distributed algorithms on numerical benchmarks in a multinode setup. Summary of Contribution: This paper presents StochasticPrograms.jl, an open-source framework for stochastic programming implemented in the Julia programming language. The framework includes an expressive syntax for formulating stochastic programming models as well as versatile analysis tools and parallel optimization algorithms. The framework will prove useful to researchers, educators, and industrial users alike. Researchers will benefit from the readily extensible open-source framework, in which they can formulate complex stochastic models or quickly typeset and test novel optimization algorithms. Educators of stochastic programming will benefit from the clean and expressive syntax. Moreover, the framework supports analysis tools and stochastic programming constructs from classical theory and leading textbooks. We strongly believe that the StochasticPrograms.jl framework can reduce the barrier to entry for incoming practitioners of stochastic programming. Industrial practitioners can make use of StochasticPrograms.jl to rapidly formulate complex models, analyze small instances locally, and then run large-scale instances in production. In doing so, they get distributed capabilities for free without changing the code and access to well-tested state-of-the-art implementations of parallel structure-exploiting solvers. As the framework is open-source, anyone from these target audiences can contribute with new functionality to the framework. In conclusion, by providing both an intuitive interface for new users and an extensive development environment for expert users, StochasticPrograms.jl has strong potential to further the field of stochastic programming.}
+}
+
 @book{bierlaireOptimizationPrinciplesAlgorithms2018,
   title = {Optimization: {{Principles}} and {{Algorithms}}},
   shorttitle = {Optimization},
@@ -749,6 +830,21 @@
   school = {Technische Hogeschool Eindhoven}
 }
 
+@article{bootSensitivityAnalysisConvex1963,
+  title = {On {{Sensitivity Analysis}} in {{Convex Quadratic Programming Problems}}},
+  author = {Boot, J. C. G.},
+  year = {1963},
+  month = oct,
+  journal = {Operations Research},
+  publisher = {INFORMS},
+  doi = {10.1287/opre.11.5.771},
+  url = {https://pubsonline.informs.org/doi/abs/10.1287/opre.11.5.771},
+  urldate = {2024-08-14},
+  abstract = {The present paper consists of three clearly distinct sections. In the first section we discuss the problem of how the solution vector of a quadratic programming problem changes in case of infinites...},
+  copyright = {{\copyright} 1963 INFORMS},
+  langid = {english}
+}
+
 @book{borweinConvexAnalysisNonlinear2006,
   title = {Convex {{Analysis}} and {{Nonlinear Optimization}}: {{Theory}} and {{Examples}}},
   shorttitle = {Convex {{Analysis}} and {{Nonlinear Optimization}}},
@@ -781,7 +877,7 @@
   title = {An Introduction to Optimization on Smooth Manifolds},
   author = {Boumal, Nicolas},
   year = {2023},
-  publisher = {To appear with Cambridge University Press},
+  publisher = {Cambridge University Press},
   url = {https://www.nicolasboumal.net/book/},
   urldate = {2022-02-11},
   abstract = {This is a book about optimization on smooth manifolds for readers who are comfortable with linear algebra and multivariable calculus. There are no prerequisites in geometry or optimization. Chapters 3 and 5 in particular can serve as a standalone introduction to differential and Riemannian geometry. They focus on embedded submanifolds of linear spaces, with full proofs. A distinguishing feature is that these early chapters do not involve charts. Chapter 8 provides the general theory so that we can build quotient manifolds in Chapter 9. The optimization algorithms in Chapters 4 and 6 apply to the general case, but can already be understood after reading Chapters 3 and 5. Chapter 7 details examples of submanifolds that come up in practice. Chapter 10 covers more advanced Riemannian tools, and Chapter 11 introduces geodesic convexity. In a one-semester graduate course of the mathematics department at Princeton University in 2019 and 2020 (24 lectures of 80 minutes each, two projects, no exercises), I covered much of Chapters 1--6 and select parts of Chapter 7 before the midterm break, then much of Chapters 8--9 and select parts of Chapters 10--11 after the break. Those chapters were shorter at the time, but it still made for a sustained pace. At EPFL in 2021, I discussed mostly Chapters 1--8 in 13 lectures of 90 minutes, plus as many exercise sessions and two projects. The course is popular with applied mathematicians and mathematically inclined engineering students, at the graduate and advanced undergraduate level. You may also be interested in the Manopt toolboxes (Matlab, Python, Julia), and in the book Optimization Algorithms on Matrix Manifolds by Absil, Mahony and Sepulchre (Princeton University Press, 2008), all freely available online. These slides hold a summary of the basic geometric tools and algorithms from Chapters 3 and 5. Here are a one-hour video and a two-hour video introducing the basics of differential geometry and Riemannian geometry for optimization on smooth manifolds, using a variation of the slides linked here. These two videos have mostly the same contents. This version forms the basis for a forthcoming publication with Cambridge University Press.},
@@ -827,6 +923,17 @@
   annotation = {05103}
 }
 
+@techreport{boydEE363ReviewSession2008,
+  type = {Lecture Notes for {{EE363}}},
+  title = {{{EE363 Review Session}} 4: {{Linear Matrix Inequalities}}},
+  author = {Boyd, Stephen},
+  year = {2008},
+  address = {Stanford, CA},
+  institution = {Stanford University},
+  url = {https://stanford.edu/class/ee363/sessions/s4notes.pdf},
+  urldate = {2024-08-22}
+}
+
 @book{boydIntroductionAppliedLinear2018,
   title = {Introduction to {{Applied Linear Algebra}}: {{Vectors}}, {{Matrices}}, and {{Least Squares}}},
   shorttitle = {Introduction to {{Applied Linear Algebra}}},
@@ -856,8 +963,7 @@
   month = jan,
   series = {Studies in {{Applied}} and {{Numerical Mathematics}}},
   publisher = {{Society for Industrial and Applied Mathematics}},
-  doi = {10.1137/1.9781611970777},
-  url = {https://epubs.siam.org/doi/book/10.1137/1.9781611970777},
+  url = {https://web.stanford.edu/~boyd/lmibook/},
   urldate = {2021-04-16},
   abstract = {The basic topic of this book is solving problems from system and control theory using convex optimization. We show that a wide variety of problems arising in system and control theory can be reduced to a handful of standard convex and quasiconvex optimization problems that involve matrix inequalities. For a few special cases there are ``analytic solutions'' to these problems, but our main point is that they can be solved numerically in all cases. These standard problems can be solved in polynomial-time (by, e.g., the ellipsoid algorithm of Shor, Nemirovskii, and Yudin), and so are tractable, at least in a theoretical sense. Recently developed interior-point methods for these standard problems have been found to be extremely efficient in practice. Therefore, we consider the original problems from system and control theory as solved. This book is primarily intended for the researcher in system and control theory, but can also serve as a source of application problems for researchers in convex optimization. Although we believe that the methods described in this book have great practical value, we should warn the reader whose primary interest is applied control engineering. This is a research monograph: We present no specific examples or numerical results, and we make only brief comments about the implications of the results for practical control engineering. To put it in a more positive light, we hope that this book will later be considered as the first book on the topic, not the most readable or accessible. The background required of the reader is knowledge of basic system and control theory and an exposure to optimization. Sontag's book Mathematical Control Theory [Son90] is an excellent survey. Further background material is covered in the texts Linear Systems [Kai80] by Kailath, Nonlinear Systems Analysis [Vid92] by Vidyasagar, Optimal Control: Linear Quadratic Methods [AM90] by Anderson and Moore, and Convex Analysis and Minimization Algorithms I [HUL93] by Hiriart-Urruty and Lemar{\'e}chal. We also highly recommend the book Interior-point Polynomial Algorithms in Convex Programming [NN94] by Nesterov and Nemirovskii as a companion to this book. The reader will soon see that their ideas and methods play a critical role in the basic idea presented in this book.},
   isbn = {978-0-89871-485-2}
@@ -877,6 +983,24 @@
   urldate = {2021-07-04},
   abstract = {We consider the problem of minimizing the largest generalized eigenvalue of a pair of symmetric matrices, each of which depends affinely on the decision variables. Although this problem may appear specialized, it is in fact quite general, and includes for example all linear, quadratic, and linear fractional programs. Many problems arising in control theory can be cast in this form. The problem is nondifferentiable but quasiconvex, so methods such as Kelley's cutting-plane algorithm or the ellipsoid algorithm of Shor, Nemirovsky, and Yudin are guaranteed to minimize it. In this paper we describe relevant background material and a simple interior-point method that solves such problems more efficiently. The algorithm is a variation on Huard's method of centers, using a self-concordant barrier for matrix inequalities developed by Nesterov and Nemirovsky. (Nesterov and Nemirovsky have also extended their potential reduction methods to handle the same problem.) Since the problem is quasiconvex but not convex, devising a nonheuristic stopping criterion (i.e., one that guarantees a given accuracy) is more difficult than in the convex case. We describe several nonheuristic stopping criteria that are based on the dual of a related convex problem and a new ellipsoidal approximation that is slightly sharper, in some cases, than a more general result to Nesterov and Nemirovsky. The algorithm is demonstrated on an example: determining the quadratic Lyapunov function that optimizes a decay-rate estimate for a differential inclusion.},
   langid = {english}
+}
+
+@misc{boydMoreAdvancedTopics,
+  title = {More {{Advanced Topics}}},
+  author = {Boyd, Stephen and Diamond, Steven and Zhang, Junzi and Agrawal, Akshay},
+  url = {https://web.stanford.edu/~junziz/papers/cvx_additional_materials.pdf},
+  langid = {english}
+}
+
+@techreport{boydSolvingSemidefinitePrograms,
+  type = {Lecture Notes for {{EE363}}},
+  title = {Solving Semidefinite Programs Using Cvx},
+  author = {Boyd, Stephen},
+  year = {2008},
+  address = {Stanford, CA},
+  institution = {Stanford University},
+  url = {https://stanford.edu/class/ee363/notes/lmi-cvx.pdf},
+  urldate = {2024-08-22}
 }
 
 @article{boydTutorialGeometricProgramming2007,
@@ -977,7 +1101,7 @@
   month = oct,
   publisher = {Cambridge University Press},
   address = {Cambridge, UK},
-  url = {https://people.eecs.berkeley.edu/~elghaoui/optmodbook.html},
+  url = {https://doi.org/10.1017/CBO9781107279667},
   abstract = {Emphasizing practical understanding over the technicalities of specific algorithms, this elegant textbook is an accessible introduction to the field of optimization, focusing on powerful and reliable convex optimization techniques. Students and practitioners will learn how to recognize, simplify, model and solve optimization problems - and apply these principles to their own projects. A clear and self-contained introduction to linear algebra demonstrates core mathematical concepts in a way that is easy to follow, and helps students to understand their practical relevance. Requiring only a basic understanding of geometry, calculus, probability and statistics, and striking a careful balance between accessibility and rigor, it enables students to quickly understand the material, without being overwhelmed by complex mathematics. Accompanied by numerous end-of-chapter problems, an online solutions manual for instructors, and relevant examples from diverse fields including engineering, data science, economics, finance, and management, this is the perfect introduction to optimization for undergraduate and graduate students.},
   isbn = {978-1-107-05087-7},
   langid = {english}
@@ -1076,8 +1200,7 @@
 @misc{dahlPolynomialOptimizationUsing2015,
   title = {Polynomial Optimization Using {{MOSEK}} and {{Julia}}},
   author = {Dahl, Joachim},
-  year = {2015},
-  month = jul,
+  year = {2015-07-12/2015-07-17},
   address = {Pittsburgh},
   url = {https://docs.mosek.com/slides/2015/ismp-2015-dahl-polyopt.pdf}
 }
@@ -1093,7 +1216,7 @@
   url = {http://arxiv.org/abs/2101.09545},
   urldate = {2021-12-20},
   abstract = {This monograph covers some recent advances on a range of acceleration techniques frequently used in convex optimization. We first use quadratic optimization problems to introduce two key families of methods, momentum and nested optimization schemes, which coincide in the quadratic case to form the Chebyshev method whose complexity is analyzed using Chebyshev polynomials. We discuss momentum methods in detail, starting with the seminal work of Nesterov (1983) and structure convergence proofs using a few master templates, such as that of {\textbackslash}emph\{optimized gradient methods\} which have the key benefit of showing how momentum methods maximize convergence rates. We further cover proximal acceleration techniques, at the heart of the {\textbackslash}emph\{Catalyst\} and {\textbackslash}emph\{Accelerated Hybrid Proximal Extragradient\} frameworks, using similar algorithmic patterns. Common acceleration techniques directly rely on the knowledge of some regularity parameters of the problem at hand, and we conclude by discussing {\textbackslash}emph\{restart\} schemes, a set of simple techniques to reach nearly optimal convergence rates while adapting to unobserved regularity parameters.},
-  archiveprefix = {arxiv}
+  archiveprefix = {arXiv}
 }
 
 @book{delfourShapesGeometriesMetrics2011,
@@ -1260,6 +1383,19 @@
   abstract = {The PATH solver is an implementation of a stabilized Newton method for the solution of the Mixed Complementarity Problem. The stabilization scheme employs a path-generation procedure which is used to construct a piecewise-linear path from the current point to the Newton point; a step length acceptance criterion and a non-monotone pathsearch are then used to choose the next iterate. The algorithm is shown to be globally convergent under assumptions which generalize those required to obtain similar results in the smooth case. Several imple{$\acute{\epsilon}$}entation issues are discussed, and extensive computational results obtained from problems commonly found in the literature are given}
 }
 
+@book{dodsonProbabilisticDesignOptimization2014,
+  title = {Probabilistic {{Design}} for {{Optimization}} and {{Robustness}} for {{Engineers}}},
+  author = {Dodson, Bryan and Hammett, Patrick and Klerx, Rene},
+  year = {2014},
+  month = sep,
+  publisher = {Wiley},
+  address = {Chichester, West Sussex, United Kingdom},
+  url = {https://onlinelibrary.wiley.com/doi/book/10.1002/9781118796245},
+  abstract = {Probabilistic Design for Optimization and Robustness:* Presents the theory of modeling with variation using physical models and methods for practical applications on designs more insensitive to variation.* Provides a comprehensive guide to optimization and robustness for probabilistic design.* Features examples, case studies and exercises throughout. The methods presented can be applied to a wide range of disciplines such as mechanics, electrics, chemistry, aerospace, industry and engineering. This text is supported by an accompanying website featuring videos, interactive animations to aid the readers understanding.},
+  isbn = {978-1-118-79619-1},
+  langid = {english}
+}
+
 @article{donohoMostLargeUnderdetermined2006,
   title = {For Most Large Underdetermined Systems of Linear Equations the Minimal {$l$}1-norm Solution Is Also the Sparsest Solution},
   author = {Donoho, David L.},
@@ -1329,7 +1465,7 @@
 }
 
 @article{durisChebyshevSolutionsLinear1968,
-  title = {Chebyshev and \$l\^{}1 \$-{{Solutions}} of {{Linear Equations Using Least Squares Solutions}}},
+  title = {Chebyshev and \$l{\textasciicircum}1 \$-{{Solutions}} of {{Linear Equations Using Least Squares Solutions}}},
   author = {Duris, C. and Sreedharan, V.},
   year = {1968},
   month = sep,
@@ -1395,6 +1531,34 @@
   urldate = {2022-07-29},
   abstract = {The goal of the Encyclopedia of Optimization is to introduce the reader to a complete set of topics that show the spectrum of research, the richness of ideas, and the breadth of applications that has come from this field. In 2000, the first edition was widely acclaimed and received high praise. J.B. Rosen crowned it ``an indispensable resource'' and Dingzhu Du lauded it as ``the standard most important reference in this very dynamic research field''. Top authors such as Herbert Hauptman (winner of the Nobel Prize) and Leonid Khachiyan (the Ellipsoid theorist) contributed and the second edition keeps these seminal entries. The second edition builds on the success of the former edition with more than 150 completely new entries, designed to ensure that the reference addresses recent areas where optimization theories and techniques have advanced. Particularly heavy attention resulted in health science and transportation, with entries such as ``Algorithms for Genomics'', ``Optimization and Radiotherapy Treatment Design'', and ``Crew Scheduling''.},
   isbn = {978-0-387-74758-3},
+  langid = {english}
+}
+
+@book{facchineiFiniteDimensionalVariationalInequalities2003,
+  title = {Finite-{{Dimensional Variational Inequalities}} and {{Complementarity Problems}}, {{Volume I}}},
+  author = {Facchinei, Francisco and Pang, Jong-Shi},
+  year = {2003},
+  month = feb,
+  series = {Springer {{Series}} in {{Operations Research}} and {{Financial Engineering}}},
+  publisher = {Springer},
+  address = {New York, NY},
+  url = {https://doi.org/10.1007/b97543},
+  abstract = {The ?nite-dimensional nonlinear complementarity problem (NCP) is a s- tem of ?nitely many nonlinear inequalities in ?nitely many nonnegative variables along with a special equation that expresses the complementary relationship between the variables and corresponding inequalities. This complementarity condition is the key feature distinguishing the NCP from a general inequality system, lies at the heart of all constrained optimi- tion problems in ?nite dimensions, provides a powerful framework for the modeling of equilibria of many kinds, and exhibits a natural link between smooth and nonsmooth mathematics. The ?nite-dimensional variational inequality (VI), which is a generalization of the NCP, provides a broad unifying setting for the study of optimization and equilibrium problems and serves as the main computational framework for the practical solution of a host of continuum problems in the mathematical sciences. The systematic study of the ?nite-dimensional NCP and VI began in the mid-1960s; in a span of four decades, the subject has developed into a very fruitful discipline in the ?eld of mathematical programming. The - velopments include a rich mathematical theory, a host of e?ective solution algorithms, a multitude of interesting connections to numerous disciplines, and a wide range of important applications in engineering and economics. As a result of their broad associations, the literature of the VI/CP has bene?ted from contributions made by mathematicians (pure, applied, and computational), computer scientists, engineers of many kinds (civil, ch- ical, electrical, mechanical, and systems), and economists of diverse exp- tise (agricultural, computational, energy, ?nancial, and spatial).},
+  isbn = {978-0-387-95580-3},
+  langid = {english}
+}
+
+@book{facchineiFiniteDimensionalVariationalInequalities2003a,
+  title = {Finite-{{Dimensional Variational Inequalities}} and {{Complementarity Problems}}, {{Volume II}}},
+  author = {Facchinei, Francisco and Pang, Jong-Shi},
+  year = {2003},
+  month = feb,
+  series = {Springer {{Series}} in {{Operations Research}} and {{Financial Engineering}}},
+  publisher = {Springer},
+  address = {New York, NY},
+  url = {https://doi.org/10.1007/b97544},
+  abstract = {The ?nite-dimensional nonlinear complementarity problem (NCP) is a s- tem of ?nitely many nonlinear inequalities in ?nitely many nonnegative variables along with a special equation that expresses the complementary relationship between the variables and corresponding inequalities. This complementarity condition is the key feature distinguishing the NCP from a general inequality system, lies at the heart of all constrained optimi- tion problems in ?nite dimensions, provides a powerful framework for the modeling of equilibria of many kinds, and exhibits a natural link between smooth and nonsmooth mathematics. The ?nite-dimensional variational inequality (VI), which is a generalization of the NCP, provides a broad unifying setting for the study of optimization and equilibrium problems and serves as the main computational framework for the practical solution of a host of continuum problems in the mathematical sciences. The systematic study of the ?nite-dimensional NCP and VI began in the mid-1960s; in a span of four decades, the subject has developed into a very fruitful discipline in the ?eld of mathematical programming. The - velopments include a rich mathematical theory, a host of e?ective solution algorithms, a multitude of interesting connections to numerous disciplines, and a wide range of important applications in engineering and economics. As a result of their broad associations, the literature of the VI/CP has bene?ted from contributions made by mathematicians (pure, applied, and computational), computer scientists, engineers of many kinds (civil, ch- ical, electrical, mechanical, and systems), and economists of diverse exp- tise (agricultural, computational, energy, ?nancial, and spatial).},
+  isbn = {978-0-387-95581-0},
   langid = {english}
 }
 
@@ -1471,6 +1635,23 @@
   url = {https://doi.org/10.1007/BF02192160},
   urldate = {2023-11-28},
   abstract = {The paper presents a damped and perturbed Newton-type method for solving linear complementarity problems with positive-semidefinite matricesM. In particular, the following properties hold: all occurring subproblems are linear equations; each subproblem is uniquely solvable without any assumption; every accumulation point generated by the method solves the linear complementarity problem. The additional property ofM to be an R0-matrix is sufficient, but not necessary, for the boundedness of the iterates. Provided thatM is positive definite on a certain subspace, the method converges Q-quadratically.},
+  langid = {english}
+}
+
+@article{fletcherNonlinearProgrammingNonsmooth1989,
+  title = {Nonlinear Programming and Nonsmooth Optimization by Successive Linear Programming},
+  author = {Fletcher, R. and {de la Maza}, E. Sainz},
+  year = {1989},
+  month = jan,
+  journal = {Mathematical Programming},
+  volume = {43},
+  number = {1},
+  pages = {235--256},
+  issn = {1436-4646},
+  doi = {10.1007/BF01582292},
+  url = {https://doi.org/10.1007/BF01582292},
+  urldate = {2024-09-28},
+  abstract = {Methods are considered for solving nonlinear programming problems using an exactl1 penalty function. LP-like subproblems incorporating a trust region constraint are solved successively both to estimate the active set and to provide a foundation for proving global convergence. In one particular method, second order information is represented by approximating the reduced Hessian matrix, and Coleman-Conn steps are taken. A criterion for accepting these steps is given which enables the superlinear convergence properties of the Coleman-Conn method to be retained whilst preserving global convergence and avoiding the Maratos effect. The methods generalize to solve a wide range of composite nonsmooth optimization problems and the theory is presented in this general setting. A range of numerical experiments on small test problems is described.},
   langid = {english}
 }
 
@@ -1556,6 +1737,24 @@
   langid = {english}
 }
 
+@incollection{frieszFiniteDimensionalVariational2010,
+  title = {Finite {{Dimensional Variational Inequalities}} and {{Nash Equilibria}}},
+  booktitle = {Dynamic {{Optimization}} and {{Differential Games}}},
+  author = {Friesz, Terry L.},
+  editor = {Friesz, Terry L.},
+  year = {2010},
+  series = {International {{Series}} in {{Operations Research}} \& {{Management Science}}},
+  pages = {219--265},
+  publisher = {Springer US},
+  address = {Boston, MA},
+  doi = {10.1007/978-0-387-72778-3_5},
+  url = {https://doi.org/10.1007/978-0-387-72778-3_5},
+  urldate = {2025-01-02},
+  abstract = {In this chapter, we lay the foundation for turning our focus from dynamic optimization, which has been the subject of preceding chapters, to the notion of a dynamic game. To fully appreciate the material presented in subsequent chapters, we must in the present chapter review some of the essential features of the theory of finite-dimensional variational inequalities and static noncooperative mathematical games. Today many economists and engineers are exposed to the notion of a game-theoretic equilibrium that we study in this chapter, namely Nash equilibrium. Yet, the relationship of such equilibria to certain nonextremal problems known as fixed-point problems, variational inequalities and nonlinear complementarity problems is not widely understood. It is the fact that, as we shall see, Nash and Nash-like equilibria are related to and frequently equivalent to nonextremal problems that makes the computation and qualitative investigation of such equilibria so tractable. Although the static games discussed in this chapter are really steady states of dynamic games, we are, for the most part, indifferent in this chapter to any underlying dynamics. We also comment that readers familiar with finite-dimensional variational inequalities and static Nash games may wish to skip this chapter.},
+  isbn = {978-0-387-72778-3},
+  langid = {english}
+}
+
 @misc{frisonGiafHpipm2023,
   title = {Giaf/Hpipm},
   author = {Frison, Gianluca},
@@ -1610,6 +1809,18 @@
   urldate = {2023-05-28},
   abstract = {This paper provides an overview of developments in robust optimization since 2007. It seeks to give a representative picture of the research topics most explored in recent years, highlight common themes in the investigations of independent research teams and highlight the contributions of rising as well as established researchers both to the theory of robust optimization and its practice. With respect to the theory of robust optimization, this paper reviews recent results on the cases without and with recourse, i.e., the static and dynamic settings, as well as the connection with stochastic optimization and risk theory, the concept of distributionally robust optimization, and findings in robust nonlinear optimization. With respect to the practice of robust optimization, we consider a broad spectrum of applications, in particular inventory and logistics, finance, revenue management, but also queueing networks, machine learning, energy systems and the public good. Key developments in the period from 2007 to present include: (i) an extensive body of work on robust decision-making under uncertainty with uncertain distributions, i.e., ``robustifying'' stochastic optimization, (ii) a greater connection with decision sciences by linking uncertainty sets to risk theory, (iii) further results on nonlinear optimization and sequential decision-making and (iv) besides more work on established families of examples such as robust inventory and revenue management, the addition to the robust optimization literature of new application areas, especially energy systems and the public good.},
   langid = {english}
+}
+
+@book{gabrielComplementarityModelingEnergy2013,
+  title = {Complementarity {{Modeling}} in {{Energy Markets}}},
+  author = {Gabriel, Steven A. and Conejo, Antonio J. and Fuller, J. David and Hobbs, Benjamin F. and Ruiz, Carlos},
+  year = {2013},
+  series = {International {{Series}} in {{Operations Research}} \& {{Management Science}}},
+  publisher = {Springer},
+  address = {New York, NY},
+  url = {https://doi.org/10.1007/978-1-4419-6123-5},
+  abstract = {This addition to the ISOR series introduces complementarity models in a straightforward and approachable manner and uses them to carry out an in-depth analysis of energy markets, including formulation issues and solution techniques. In a nutshell, complementarity models generalize: a. optimization problems via their Karush-Kuhn-Tucker conditions b. on-cooperative games in which each player may be solving a separate but related optimization problem with potentially overall system constraints (e.g., market-clearing conditions) c. conomic and engineering problems that aren't specifically derived from optimization problems (e.g., spatial price equilibria) d. roblems in which both primal and dual variables (prices) appear in the original formulation (e.g., The National Energy Modeling System (NEMS) or its precursor, PIES). As such, complementarity models are a very general and flexible modeling format. A natural question is why concentrate on energy markets for this complementarity approach? s it turns out, energy or other markets that have game theoretic aspects are best modeled by complementarity problems. The reason is that the traditional perfect competition approach no longer applies due to deregulation and restructuring of these markets and thus the corresponding optimization problems may no longer hold. Also, in some instances it is important in the original model formulation to involve both primal variables (e.g., production) as well as dual variables (e.g., market prices) for public and private sector energy planning. Traditional optimization problems can not directly handle this mixing of primal and dual variables but complementarity models can and this makes them all that more effective for decision-makers.},
+  isbn = {978-1-4419-6122-8}
 }
 
 @article{gandolfoStablePathFollowingControl2017,
@@ -1787,6 +1998,20 @@
   langid = {english}
 }
 
+@book{gueninGentleIntroductionOptimization2014,
+  title = {A {{Gentle Introduction}} to {{Optimization}}},
+  author = {Guenin, B. and K{\"o}nemann, J. and Tun{\c c}el, L.},
+  year = {2014},
+  month = jul,
+  publisher = {Cambridge University Press},
+  doi = {10.1017/CBO9781107282094},
+  url = {https://www.cambridge.org/highereducation/books/a-gentle-introduction-to-optimization/F3E04AD76ADD3C202A2206902CD2D051},
+  urldate = {2025-01-21},
+  abstract = {Optimization is an essential technique for solving problems in areas as diverse as accounting, computer science and engineering. Assuming only basic linear algebra and with a clear focus on the fundamental concepts, this textbook is the perfect starting point for first- and second-year undergraduate students from a wide range of backgrounds and with varying levels of ability. Modern, real-world examples motivate the theory throughout. The authors keep the text as concise and focused as possible, with more advanced material treated separately or in starred exercises. Chapters are self-contained so that instructors and students can adapt the material to suit their own needs and a wide selection of over 140 exercises gives readers the opportunity to try out the skills they gain in each section. Solutions are available for instructors. The book also provides suggestions for further reading to help students take the next step to more advanced material.},
+  isbn = {9781107282094},
+  langid = {english}
+}
+
 @misc{GurobiOptimizerExample,
   title = {Gurobi {{Optimizer Example Tour}}},
   year = {2023},
@@ -1841,7 +2066,7 @@
   url = {http://arxiv.org/abs/1906.07961},
   urldate = {2023-12-20},
   abstract = {Optimizing over the cone of nonnegative polynomials, and its dual counterpart, optimizing over the space of moments that admit a representing measure, are fundamental problems that appear in many different applications from engineering and computational mathematics to business. In this paper, we review a number of these applications. These include, but are not limited to, problems in control (e.g., formal safety verification), finance (e.g., option pricing), statistics and machine learning (e.g., shape-constrained regression and optimal design), and game theory (e.g., Nash equilibria computation in polynomial games). We then show how sum of squares techniques can be used to tackle these problems, which are hard to solve in general. We conclude by highlighting some directions that could be pursued to further disseminate sum of squares techniques within more applied fields. Among other things, we briefly address the current challenge that scalability represents for optimization problems that involve sum of squares polynomials and discuss recent trends in software development.},
-  archiveprefix = {arxiv}
+  archiveprefix = {arXiv}
 }
 
 @misc{hallLCQPowSolverLinear2022,
@@ -1856,7 +2081,7 @@
   url = {http://arxiv.org/abs/2211.16341},
   urldate = {2022-12-03},
   abstract = {In this paper we introduce an open-source software package written in C++ for efficiently finding solutions to quadratic programming problems with linear complementarity constraints. These problems arise in a wide range of applications in engineering and economics, and they are challenging to solve due to their structural violation of standard constraint qualifications, and highly nonconvex, nonsmooth feasible sets. This work extends a previously presented algorithm based on a sequential convex programming approach applied to a standard penalty reformulation. We examine the behavior of local convergence and introduce new algorithmic features. Competitive performance profiles are presented in comparison to state-of-the-art solvers and solution variants in both existing and new benchmarks.},
-  archiveprefix = {arxiv}
+  archiveprefix = {arXiv}
 }
 
 @article{hallSequentialConvexProgramming2022,
@@ -1904,7 +2129,7 @@
 @book{hanssonOptimizationLearningControl2023,
   title = {Optimization for {{Learning}} and {{Control}}},
   author = {Hansson, Anders and Andersen, Martin},
-  year = {23 kv{\v e}tna 2023},
+  year = {2023},
   address = {Hoboken, NJ, USA},
   url = {https://www.wiley.com/en-us/Optimization+for+Learning+and+Control-p-9781119809135},
   abstract = {Optimization for Learning and Control~Comprehensive resource providing a masters' level introduction to optimization theory and algorithms for learning and control~Optimization for Learning and Control describes how optimization is used in these domains, giving a thorough introduction to both unsupervised learning, supervised learning, and reinforcement learning, with an emphasis on optimization methods for large-scale learning and control problems.~Several applications areas are also discussed, including signal processing, system identification, optimal control, and machine learning.~Today, most of the material on the optimization aspects of deep learning that is accessible for students at a Masters' level is focused on surface-level computer programming; deeper knowledge about the optimization methods and the trade-offs that are behind these methods is not provided. The objective of this book is to make this scattered knowledge, currently mainly available in publications in academic journals, accessible for Masters' students in a coherent way. The focus is on basic algorithmic principles and trade-offs.~Optimization for Learning and Control covers sample topics such as:* Optimization theory and optimization methods, covering classes of optimization problems like least squares problems, quadratic problems, conic optimization problems and rank optimization.* First-order methods, second-order methods, variable metric methods, and methods for nonlinear least squares problems.* Stochastic optimization methods, augmented Lagrangian methods, interior-point methods, and conic optimization methods.* Dynamic programming for solving optimal control problems and its generalization to reinforcement learning.* How optimization theory is used to develop theory and tools of statistics and learning, e.g., the maximum likelihood method, expectation maximization, k-means clustering, and support vector machines.* How calculus of variations is used in optimal control and for deriving the family of exponential distributions.~Optimization for Learning and Control is an ideal resource on the subject for scientists and engineers learning about which optimization methods are useful for learning and control problems; the text will also appeal to industry professionals using machine learning for different practical applications.},
@@ -1957,8 +2182,8 @@
   eprint = {math/0306180},
   url = {http://arxiv.org/abs/math/0306180},
   urldate = {2010-04-21},
-  abstract = {This article concerns the question: which subsets of \$\{{\textbackslash}mathbb R\}\^{}m\$ can be represented with Linear Matrix Inequalities, LMIs? This gives some perspective on the scope and limitations of one of the most powerful techniques commonly used in control theory. Also before having much hope of representing engineering problems as LMIs by automatic methods one needs a good idea of which problems can and cannot be represented by LMIs. Little is currently known about such problems. In this article we give a necessary condition, we call "rigid convexity", which must hold for a set \$\{{\textbackslash}cC\} {\textbackslash}in \{{\textbackslash}mathbb R\}\^{}m\$ in order for \$\{{\textbackslash}cC\}\$ to have an LMI representation. Rigid convexity is proved to be necessary and sufficient when \$m=2\$. This settles a question formally stated by Pablo Parrilo and Berndt Sturmfels in [PSprep].},
-  archiveprefix = {arxiv}
+  abstract = {This article concerns the question: which subsets of \$\{{\textbackslash}mathbb R\}{\textasciicircum}m\$ can be represented with Linear Matrix Inequalities, LMIs? This gives some perspective on the scope and limitations of one of the most powerful techniques commonly used in control theory. Also before having much hope of representing engineering problems as LMIs by automatic methods one needs a good idea of which problems can and cannot be represented by LMIs. Little is currently known about such problems. In this article we give a necessary condition, we call "rigid convexity", which must hold for a set \$\{{\textbackslash}cC\} {\textbackslash}in \{{\textbackslash}mathbb R\}{\textasciicircum}m\$ in order for \$\{{\textbackslash}cC\}\$ to have an LMI representation. Rigid convexity is proved to be necessary and sufficient when \$m=2\$. This settles a question formally stated by Pablo Parrilo and Berndt Sturmfels in [PSprep].},
+  archiveprefix = {arXiv}
 }
 
 @article{henrionConstraintQualifications1992,
@@ -2006,7 +2231,7 @@
   url = {http://arxiv.org/abs/1407.1650},
   urldate = {2022-02-02},
   abstract = {Infinite-dimensional linear conic formulations are described for nonlinear optimal control problems. The primal linear problem consists of finding occupation measures supported on optimal relaxed controlled trajectories, whereas the dual linear problem consists of finding the largest lower bound on the value function of the optimal control problem. Various approximation results relating the original optimal control problem and its linear conic formulations are developed. As illustrated by a couple of simple examples, these results are relevant in the context of finite-dimensional semidefinite programming relaxations used to approximate numerically the solutions of the infinite-dimensional linear conic problems.},
-  archiveprefix = {arxiv}
+  archiveprefix = {arXiv}
 }
 
 @article{henrionLinearMatrixInequalities2002,
@@ -2138,6 +2363,32 @@
   abstract = {We present novel mixed-integer programming (MIP) formulations for optimization over nonconvex piecewise linear functions. We exploit recent advances in the systematic construction of MIP formulations to derive new formulations for univariate functions using a geometric approach and for bivariate functions using a combinatorial approach. All formulations are strong, small (so-called logarithmic formulations), and have other desirable computational properties. We present extensive experiments in which they exhibit substantial computational performance improvements over existing approaches. To accompany these advanced formulations, we present PiecewiseLinearOpt, an extension of the JuMP modeling language in Julia that implements our models (alongside other formulations from the literature) through a high-level interface, hiding the complexity of the formulations from the end user.}
 }
 
+@book{hurlimannMathematicalModelingBasics2024,
+  title = {Mathematical {{Modeling Basics}}},
+  author = {H{\"u}rlimann, Tony},
+  year = {2024},
+  month = oct,
+  url = {https://matmod.ch/lpl/doc/modelbook.pdf},
+  langid = {english}
+}
+
+@article{chandrasekaranRelativeEntropyOptimization2017,
+  title = {Relative Entropy Optimization and Its Applications},
+  author = {Chandrasekaran, Venkat and Shah, Parikshit},
+  year = {2017},
+  month = jan,
+  journal = {Mathematical Programming},
+  volume = {161},
+  number = {1},
+  pages = {1--32},
+  issn = {1436-4646},
+  doi = {10.1007/s10107-016-0998-2},
+  url = {https://doi.org/10.1007/s10107-016-0998-2},
+  urldate = {2024-08-16},
+  abstract = {In this expository article, we study optimization problems specified via linear and relative entropy inequalities. Such relative entropy programs (REPs) are convex optimization problems as the relative entropy function is jointly convex with respect to both its arguments. Prominent families of convex programs such as geometric programs (GPs), second-order cone programs, and entropy maximization problems are special cases of REPs, although REPs are more general than these classes of problems. We provide solutions based on REPs to a range of problems such as permanent maximization, robust optimization formulations of GPs, and hitting-time estimation in dynamical systems. We survey previous approaches to some of these problems and the limitations of those methods, and we highlight the more powerful generalizations afforded by REPs. We conclude with a discussion of quantum analogs of the relative entropy function, including a review of the similarities and distinctions with respect to the classical case. We also describe a stylized application of quantum relative entropy optimization that exploits the joint convexity of the quantum relative entropy function.},
+  langid = {english}
+}
+
 @article{changDistributedConstrainedOptimization2013,
   title = {Distributed {{Constrained Optimization}} by {{Consensus-Based Primal-Dual Perturbation Method}}},
   author = {Chang, Tsung-Hui and Nedi{\'c}, Angelia and Scaglione, Anna},
@@ -2149,7 +2400,7 @@
   url = {http://arxiv.org/abs/1304.5590},
   urldate = {2014-01-13},
   abstract = {Various distributed optimization methods have been developed for solving problems which have simple local constraint sets and whose objective function is the sum of local cost functions of distributed agents in a network. Motivated by emerging applications in smart grid and distributed sparse regression, this paper studies distributed optimization methods for solving general problems which have a coupled global cost function and have inequality constraints. We consider a network scenario where each agent has no global knowledge and can access only its local mapping and constraint functions. To solve this problem in a distributed manner, we propose a consensus-based distributed primal-dual perturbation (PDP) algorithm. In the algorithm, agents employ the average consensus technique to estimate the global cost and constraint functions via exchanging messages with neighbors, and meanwhile use a local primal-dual perturbed subgradient method to approach a global optimum. The proposed PDP method not only can handle smooth inequality constraints but also non-smooth constraints such as some sparsity promoting constraints arising in sparse optimization. We prove that the proposed PDP algorithm converges to an optimal primal-dual solution of the original problem, under standard problem and network assumptions. Numerical results illustrating the performance of the proposed algorithm for a distributed demand response control problem in smart grid are also presented.},
-  archiveprefix = {arxiv}
+  archiveprefix = {arXiv}
 }
 
 @book{chenAppliedIntegerProgramming2010,
@@ -2312,8 +2563,9 @@
 @misc{JuMP2024,
   title = {{{JuMP}}},
   year = {2024},
-  month = feb,
+  month = nov,
   url = {https://jump.dev/JuMP.jl/stable/JuMP.pdf},
+  urldate = {2024-12-25},
   howpublished = {JuMP-dev}
 }
 
@@ -2372,6 +2624,34 @@
   langid = {english}
 }
 
+@book{khanSetvaluedOptimizationIntroduction2014,
+  title = {Set-Valued {{Optimization}}: {{An Introduction}} with {{Applications}}},
+  shorttitle = {Set-Valued {{Optimization}}},
+  author = {Khan, Akhtar A. and Tammer, Christiane and Z{\u a}linescu, Constantin},
+  year = {28 {\v r}{\'i}jna 2014},
+  series = {Vector {{Optimization}}},
+  publisher = {Springer},
+  address = {Berlin; Heidelberg},
+  url = {https://doi.org/10.1007/978-3-642-54265-7},
+  isbn = {978-3-642-54264-0}
+}
+
+@misc{kiesslingAlmostFeasibleSequential2024,
+  title = {An {{Almost Feasible Sequential Linear Programming Algorithm}}},
+  author = {Kiessling, David and Vanaret, Charlie and Astudillo, Alejandro and Decre, Wilm and Swevers, Jan},
+  year = {2024},
+  month = jan,
+  number = {arXiv:2401.13840},
+  eprint = {2401.13840},
+  primaryclass = {math},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2401.13840},
+  url = {http://arxiv.org/abs/2401.13840},
+  urldate = {2024-06-28},
+  abstract = {This paper proposes an almost feasible Sequential Linear Programming (afSLP) algorithm. In the first part, the practical limitations of previously proposed Feasible Sequential Linear Programming (FSLP) methods are discussed along with illustrative examples. Then, we present a generalization of FSLP based on a tolerance-tube method that addresses the shortcomings of FSLP. The proposed algorithm afSLP consists of two phases. Phase I starts from random infeasible points and iterates towards a relaxation of the feasible set. Once the tolerance-tube around the feasible set is reached, phase II is started and all future iterates are kept within the tolerance-tube. The novel method includes enhancements to the originally proposed tolerance-tube method that are necessary for global convergence. afSLP is shown to outperform FSLP and the state-of-the-art solver IPOPT on a SCARA robot optimization problem.},
+  archiveprefix = {arXiv}
+}
+
 @book{kinderlehrerIntroductionVariationalInequalities2000,
   title = {An {{Introduction}} to {{Variational Inequalities}} and {{Their Applications}}},
   author = {Kinderlehrer, David and Stampacchia, Guido},
@@ -2413,6 +2693,22 @@
   urldate = {2021-11-26},
   abstract = {Even with state-of-the-art hardware and software, mixed integer programs can require hours, or even days, of run time and are not guaranteed to yield an optimal (or near-optimal, or any!) solution. In this paper, we present suggestions for appropriate use of state-of-the-art optimizers and guidelines for careful formulation, both of which can vastly improve performance.},
   langid = {english}
+}
+
+@article{klotzPracticalGuidelinesSolving2013a,
+  title = {Practical Guidelines for Solving Difficult Linear Programs},
+  author = {Klotz, Ed and Newman, Alexandra M.},
+  year = {2013},
+  month = oct,
+  journal = {Surveys in Operations Research and Management Science},
+  volume = {18},
+  number = {1},
+  pages = {1--17},
+  issn = {1876-7354},
+  doi = {10.1016/j.sorms.2012.11.001},
+  url = {https://www.sciencedirect.com/science/article/pii/S1876735412000189},
+  urldate = {2025-01-24},
+  abstract = {The advances in state-of-the-art hardware and software have enabled the inexpensive, efficient solution of many large-scale linear programs previously considered intractable. However, a significant number of large linear programs can require hours, or even days, of run time and are not guaranteed to yield an optimal (or near-optimal) solution. In this paper, we present suggestions for diagnosing and removing performance problems in state-of-the-art linear programming solvers, and guidelines for careful model formulation, both of which can vastly improve performance.}
 }
 
 @book{kochenderferAlgorithmsOptimization2019,
@@ -2483,7 +2779,7 @@
   doi = {10.1137/S1052623400366802},
   url = {http://epubs.siam.org/doi/abs/10.1137/S1052623400366802},
   urldate = {2014-07-01},
-  abstract = {We consider the problem of finding the unconstrained global minimum of a real-valued polynomial p(x): \{{\textbackslash}mathbb\{R\}\}\^{}n{\textbackslash}to \{{\textbackslash}mathbb\{R\}\}\$, as well as the global minimum of p(x), in a compact set K defined by polynomial inequalities. It is shown that this problem reduces to solving an (often finite) sequence of convex linear matrix inequality (LMI) problems. A notion of Karush--Kuhn--Tucker polynomials is introduced in a global optimality condition. Some illustrative examples are provided.,  We consider the problem of finding the unconstrained global minimum of a real-valued polynomial p(x): \{{\textbackslash}mathbb\{R\}\}\^{}n{\textbackslash}to \{{\textbackslash}mathbb\{R\}\}\$, as well as the global minimum of p(x), in a compact set K defined by polynomial inequalities. It is shown that this problem reduces to solving an (often finite) sequence of convex linear matrix inequality (LMI) problems. A notion of Karush--Kuhn--Tucker polynomials is introduced in a global optimality condition. Some illustrative examples are provided.}
+  abstract = {We consider the problem of finding the unconstrained global minimum of a real-valued polynomial p(x): \{{\textbackslash}mathbb\{R\}\}{\textasciicircum}n{\textbackslash}to \{{\textbackslash}mathbb\{R\}\}\$, as well as the global minimum of p(x), in a compact set K defined by polynomial inequalities. It is shown that this problem reduces to solving an (often finite) sequence of convex linear matrix inequality (LMI) problems. A notion of Karush--Kuhn--Tucker polynomials is introduced in a global optimality condition. Some illustrative examples are provided.,  We consider the problem of finding the unconstrained global minimum of a real-valued polynomial p(x): \{{\textbackslash}mathbb\{R\}\}{\textasciicircum}n{\textbackslash}to \{{\textbackslash}mathbb\{R\}\}\$, as well as the global minimum of p(x), in a compact set K defined by polynomial inequalities. It is shown that this problem reduces to solving an (often finite) sequence of convex linear matrix inequality (LMI) problems. A notion of Karush--Kuhn--Tucker polynomials is introduced in a global optimality condition. Some illustrative examples are provided.}
 }
 
 @book{lasserreIntroductionPolynomialSemiAlgebraic2015,
@@ -2575,7 +2871,7 @@
   url = {http://arxiv.org/abs/2002.03447},
   urldate = {2021-04-08},
   abstract = {We introduce MathOptInterface, an abstract data structure for representing mathematical optimization problems based on combining pre-defined functions and sets. MathOptInterface is significantly more general than existing data structures in the literature, encompassing, for example, a spectrum of problems classes from integer programming with indicator constraints to bilinear semidefinite programming. We also outline an automated rewriting system between equivalent formulations of a constraint. MathOptInterface has been implemented in practice, forming the foundation of a recent rewrite of JuMP, an open-source algebraic modeling language in the Julia language. The regularity of the MathOptInterface representation leads naturally to a general file format for mathematical optimization we call MathOptFormat. In addition, the automated rewriting system provides modeling power to users while making it easy to connect new solvers to JuMP.},
-  archiveprefix = {arxiv}
+  archiveprefix = {arXiv}
 }
 
 @misc{legatMultivariatePolynomialsJulia2022,
@@ -2638,6 +2934,16 @@
   abstract = {Checking non-negativity of polynomials using sum-of-squares has recently been popularized and found many applications in control. Although the method is based on convex programming, the optimization problems rapidly grow and result in huge semidefinite programs. Additionally, they often become increasingly ill-conditioned. To alleviate these problems, it is important to exploit properties of the analyzed polynomial, and post-process the obtained solution. This technical note describes how the sum-of-squares module in the MATLAB toolbox YALMIP handles these issues.}
 }
 
+@misc{lofbergSemidefiniteProgramming2016,
+  title = {Semidefinite Programming},
+  author = {Lofberg, Johan},
+  year = {2016},
+  month = sep,
+  url = {https://yalmip.github.io/tutorial/semidefiniteprogramming/},
+  urldate = {2024-08-22},
+  abstract = {Who wudda thought? Optimization over positive definite symmetric matrices is easy.}
+}
+
 @misc{lofbergYALMIP,
   title = {{{YALMIP}}},
   author = {L{\"o}fberg, Johan},
@@ -2695,7 +3001,7 @@
   month = nov,
   series = {International {{Series}} in {{Operations Research}} \& {{Management Science}}},
   edition = {5},
-  volume = {228},
+  number = {228},
   publisher = {Springer},
   address = {Cham, Switzerland},
   url = {https://doi.org/10.1007/978-3-030-85450-8},
@@ -2709,9 +3015,11 @@
   author = {Luenberger, David G.},
   year = {1997},
   month = jan,
-  edition = {1969 edition},
+  series = {Wiley {{Professional Paperback Series}}},
+  edition = {Reprint of the 1969 edition},
   publisher = {Wiley-Interscience},
   address = {New York},
+  url = {https://www.wiley.com/en-us/Optimization+by+Vector+Space+Methods-p-9780471181170},
   abstract = {Engineers must make decisions regarding the distribution of expensive resources in a manner that will be economically beneficial. This problem can be realistically formulated and logically analyzed with optimization theory. This book shows engineers how to use optimization theory to solve complex problems. Unifies the large field of optimization with a few geometric principles. Covers functional analysis with a minimum of mathematics. Contains problems that relate to the applications in the book.},
   isbn = {978-0-471-18117-0},
   langid = {english}
@@ -2790,7 +3098,7 @@
   url = {http://arxiv.org/abs/1908.05209},
   urldate = {2023-09-15},
   abstract = {Historically, scalability has been a major challenge to the successful application of semidefinite programming in fields such as machine learning, control, and robotics. In this paper, we survey recent approaches for addressing this challenge including (i) approaches for exploiting structure (e.g., sparsity and symmetry) in a problem, (ii) approaches that produce low-rank approximate solutions to semidefinite programs, (iii) more scalable algorithms that rely on augmented Lagrangian techniques and the alternating direction method of multipliers, and (iv) approaches that trade off scalability with conservatism (e.g., by approximating semidefinite programs with linear and second-order cone programs). For each class of approaches we provide a high-level exposition, an entry-point to the corresponding literature, and examples drawn from machine learning, control, or robotics. We also present a list of software packages that implement many of the techniques discussed in the paper. Our hope is that this paper will serve as a gateway to the rich and exciting literature on scalable semidefinite programming for both theorists and practitioners.},
-  archiveprefix = {arxiv}
+  archiveprefix = {arXiv}
 }
 
 @book{mangasarianNonlinearProgramming1994,
@@ -2855,6 +3163,24 @@
   langid = {english}
 }
 
+@article{mccormickComputabilityGlobalSolutions1976,
+  title = {Computability of Global Solutions to Factorable Nonconvex Programs: {{Part I}} --- {{Convex}} Underestimating Problems},
+  shorttitle = {Computability of Global Solutions to Factorable Nonconvex Programs},
+  author = {McCormick, Garth P.},
+  year = {1976},
+  month = dec,
+  journal = {Mathematical Programming},
+  volume = {10},
+  number = {1},
+  pages = {147--175},
+  issn = {1436-4646},
+  doi = {10.1007/BF01580665},
+  url = {https://doi.org/10.1007/BF01580665},
+  urldate = {2025-01-12},
+  abstract = {For nonlinear programming problems which are factorable, a computable procedure for obtaining tight underestimating convex programs is presented. This is used to exclude from consideration regions where the global minimizer cannot exist.},
+  langid = {english}
+}
+
 @article{mehdiloozadFindingMaximalElement2015,
   title = {Finding a Maximal Element of a Convex Set through Its Characteristic Cone: {{An}} Application to Finding a Strictly Complementary Solution},
   shorttitle = {Finding a Maximal Element of a Convex Set through Its Characteristic Cone},
@@ -2867,7 +3193,7 @@
   url = {http://arxiv.org/abs/1503.09014},
   urldate = {2022-05-10},
   abstract = {In order to express a polyhedron as the (Minkowski) sum of a polytope and a polyhedral cone, Motzkin (1936) made a transition from the polyhedron to a polyhedral cone. Based on his excellent idea, we represent a set by a characteristic cone. By using this representation, we then reach four main results: (i) expressing a closed convex set containing no line as the direct sum of the convex hull of its extreme points and conical hull of its extreme directions, (ii) establishing a convex programming (CP) based framework for determining a maximal element-an element with the maximum number of positive components-of a convex set, (iii) developing a linear programming problem for finding a relative interior point of a polyhedron, and (iv) proposing two procedures for the identification of a strictly complementary solution in linear programming.},
-  archiveprefix = {arxiv}
+  archiveprefix = {arXiv}
 }
 
 @inproceedings{mentaStabilityDynamicFeedback2018,
@@ -2904,6 +3230,23 @@
   langid = {english}
 }
 
+@article{millerChanceConstrainedProgramming1965,
+  title = {Chance {{Constrained Programming}} with {{Joint Constraints}}},
+  author = {Miller, Bruce L. and Wagner, Harvey M.},
+  year = {1965},
+  month = dec,
+  journal = {Operations Research},
+  volume = {13},
+  number = {6},
+  pages = {930--945},
+  publisher = {INFORMS},
+  issn = {0030-364X},
+  doi = {10.1287/opre.13.6.930},
+  url = {https://pubsonline.informs.org/doi/abs/10.1287/opre.13.6.930},
+  urldate = {2024-05-01},
+  abstract = {This paper considers the mathematical properties of chance constrained programming problems where the restriction is on the joint probability of a multivariate random event. One model that is considered arises when the right-handside constants of the linear constraints are random. Another model treated here occurs when the coefficients of the linear programming variables are described by a multinormal distribution. It is shown that under certain restrictions both situations can be viewed as a deterministic nonlinear programming problem. Since most computational methods for solving nonlinear programming models require the constraints be concave, this paper explores whether the resultant problem meets the concavity assumption. For many probability laws of practical importance, the constraint in the first type of model is shown to violate concavity. However, a simple logarithmic transformation does produce a concave restriction for an important class of problems. The paper also surveys the ``generalized linear programming'' method for solving such problems when the logarithmic transformation is justified. For the second type model, the constraint is demonstrated to be nonconcave.}
+}
+
 @misc{mitchellStrictComplementarity2018,
   type = {Lecture},
   title = {Strict Complementarity},
@@ -2934,7 +3277,7 @@
 @misc{MOSEKModelingCookbook2024,
   title = {{{MOSEK Modeling Cookbook}}},
   year = {2024},
-  month = jan,
+  month = sep,
   url = {https://docs.mosek.com/MOSEKModelingCookbook-a4paper.pdf},
   howpublished = {Mosek ApS}
 }
@@ -2958,8 +3301,8 @@
 @misc{MOSEKOptimizerAPI2024,
   title = {{{MOSEK Optimizer API}} for {{Julia}}},
   year = {2024},
-  month = jan,
-  url = {https://docs.mosek.com/10.1/juliaapi.pdf},
+  month = oct,
+  url = {https://docs.mosek.com/10.2/juliaapi.pdf},
   howpublished = {MOSEK ApS}
 }
 
@@ -3091,6 +3434,21 @@
   langid = {english}
 }
 
+@book{nesterovLecturesConvexOptimization2018,
+  title = {Lectures on {{Convex Optimization}}},
+  author = {Nesterov, Yurii},
+  year = {2018},
+  month = dec,
+  series = {Springer {{Optimization}} and {{Its Applications}}},
+  edition = {2},
+  publisher = {Springer},
+  address = {Cham},
+  url = {https://doi.org/10.1007/978-3-319-91578-4},
+  abstract = {This book provides a comprehensive, modern introduction to convex optimization, a field that is becoming increasingly important in applied mathematics, economics and finance, engineering, and computer science, notably in data science and machine learning.Written by a leading expert in the field, this book includes recent advances in the algorithmic theory of convex optimization, naturally complementing the existing literature. It contains a unified and rigorous presentation of the acceleration techniques for minimization schemes of first- and second-order. It provides readers with a full treatment of the smoothing technique, which has tremendously extended the abilities of gradient-type methods. Several powerful approaches in structural optimization, including optimization in relative scale and polynomial-time interior-point methods, are also discussed in detail. Researchers in theoretical optimization as well as professionals working on optimization problems will findthis book very useful. It presents many successful examples of how to develop very fast specialized minimization algorithms. Based on the author's lectures, it can naturally serve as the basis for introductory and advanced courses in convex optimization for students in engineering, economics, computer science and mathematics.},
+  isbn = {978-3-319-91577-7},
+  langid = {english}
+}
+
 @book{nocedalNumericalOptimization2006,
   title = {Numerical {{Optimization}}},
   author = {Nocedal, Jorge and Wright, Stephen},
@@ -3123,6 +3481,23 @@
   langid = {english}
 }
 
+@article{odonoghueOperatorSplittingHomogeneous2021,
+  title = {Operator {{Splitting}} for a {{Homogeneous Embedding}} of the {{Linear Complementarity Problem}}},
+  author = {O'Donoghue, Brendan},
+  year = {2021},
+  month = jan,
+  journal = {SIAM Journal on Optimization},
+  volume = {31},
+  number = {3},
+  pages = {1999--2023},
+  publisher = {{Society for Industrial and Applied Mathematics}},
+  issn = {1052-6234},
+  doi = {10.1137/20M1366307},
+  url = {https://epubs.siam.org/doi/abs/10.1137/20M1366307},
+  urldate = {2024-04-13},
+  abstract = {We establish connections between the facial reduction algorithm of Borwein and Wolkowicz and the self-dual homogeneous model of Goldman and Tucker when applied to conic optimization problems. Specifically, we show that the self-dual homogeneous model returns facial reduction certificates when it fails to return a primal-dual optimal solution or a certificate of infeasibility. Using this observation, we give an algorithm based on facial reduction for solving the primal problem that, in principle, always succeeds. (An analogous algorithm is easily stated for the dual problem.) This algorithm has the appealing property that it only performs facial reduction when it is required, not when it is possible; e.g., if a primal-dual optimal solution exists, it will be found in lieu of a facial reduction certificate even if Slater's condition fails. For the case of linear, second-order, and semidefinite optimization, we show that the algorithm can be implemented by assuming oracle access to the central-path limit point of an extended embedding, a strictly feasible conic problem with a strictly feasible dual. We then give numerical experiments illustrating barriers to practical implementation.}
+}
+
 @article{odonoghueSplittingMethodOptimal2013,
   title = {A {{Splitting Method}} for {{Optimal Control}}},
   author = {O'Donoghue, B. and Stathopoulos, G. and Boyd, S.},
@@ -3143,6 +3518,21 @@
   year = {2023},
   url = {https://www.mathworks.com/products/optimization.html},
   howpublished = {The Mathworks, Inc.}
+}
+
+@article{ottaNPProNewtonProjection2024,
+  title = {{{NPPro}}: A {{Newton}} Projection with Proportioning Solver for Quadratic Programming with Affine Constraints},
+  shorttitle = {{{NPPro}}},
+  author = {Otta, Pavel and {\v S}antin, Ond{\v r}ej and Havlena, Vladim{\'i}r},
+  year = {2024},
+  month = dec,
+  journal = {Optimization Methods and Software},
+  publisher = {Taylor \& Francis},
+  url = {https://www.tandfonline.com/doi/abs/10.1080/10556788.2024.2436180},
+  urldate = {2025-01-10},
+  abstract = {The second-order method for the solution of quadratic programming (QP) with affine constraints is introduced in this paper. It belongs to an active-set method family. However, it uses a projection ...},
+  copyright = {{\copyright} 2025 Informa UK Limited, trading as Taylor \& Francis Group},
+  langid = {english}
 }
 
 @article{outrataMathematicalProgramsComplementarity2000,
@@ -3187,6 +3577,23 @@
   abstract = {We consider optimization problems with equality, inequality, and abstract set constraints. We investigate the relations between various characteristics of the constraint set related to the existence of Lagrange multipliers. For problems with no abstract set constraint, the classical condition of quasiregularity provides the connecting link between the most common constraint qualifications and existence of Lagrange multipliers. In earlier work, we introduced a new and general condition, pseudonormality, that is central within the theory of constraint qualifications, exact penalty functions, and existence of Lagrange multipliers. In this paper, we explore the relations between pseudonormality, quasiregularity, and existence of Lagrange multipliers, and show that, unlike pseudonormality, quasiregularity cannot play the role of a general constraint qualification in the presence of an abstract set constraint. In particular, under a regularity assumption on the abstract constraint set, we show that pseudonormality implies quasiregularity. However, contrary to pseudonormality, quasiregularity does not imply the existence of Lagrange multipliers, except under additional assumptions.}
 }
 
+@article{palacios-gomezNonlinearOptimizationSuccessive1982,
+  title = {Nonlinear {{Optimization}} by {{Successive Linear Programming}}},
+  author = {{Palacios-Gomez}, F. and Lasdon, L. and Engquist, M.},
+  year = {1982},
+  month = oct,
+  journal = {Management Science},
+  volume = {28},
+  number = {10},
+  pages = {1106--1120},
+  publisher = {INFORMS},
+  issn = {0025-1909},
+  doi = {10.1287/mnsc.28.10.1106},
+  url = {https://pubsonline.informs.org/doi/10.1287/mnsc.28.10.1106},
+  urldate = {2024-06-27},
+  abstract = {Successive Linear Programming (SLP), which is also known as the Method of Approximation Programming, solves nonlinear optimization problems via a sequence of linear programs. This paper reports on promising computational results with SLP that contrast with the poor performance indicated by previously published comparative tests. The paper provides a detailed description of an efficient, reliable SLP algorithm along with a convergence theorem for linearly constrained problems and extensive computational results. It also discusses several alternative strategies for implementing SLP. The computational results show that SLP compares favorably with the Generalized Reduced Gradient Code GRG2 and with MINOS/GRG. It appears that SLP will be most successful when applied to large problems with low degrees of freedom.}
+}
+
 @article{pandalaQpSWIFTRealTimeSparse2019,
   title = {{{qpSWIFT}}: {{A Real-Time Sparse Quadratic Program Solver}} for {{Robotic Applications}}},
   shorttitle = {{{qpSWIFT}}},
@@ -3202,6 +3609,23 @@
   url = {https://ieeexplore.ieee.org/document/8754693},
   urldate = {2024-01-19},
   abstract = {In this letter, we present qpSWIFT, a real-time quadratic program (QP) solver. Motivated by the need for a robust embedded QP solver in robotic applications, qpSWIFT employs standard primal-dual interior-point method, along with Mehrotra predictor--corrector steps and Nesterov--Todd scaling. The sparse structure of the resulting Karush--Kuhn--Tucker linear system in the QP formulation is exploited, and sparse direct methods are utilized to solve the linear system of equations. To further accelerate the factorization process, we only modify the corresponding rows of the matrix factors that change during iterations and cache the nonzero Cholesky pattern. qpSWIFT is library free, written in ANSI-C and its performance is benchmarked through standard problems that could be cast as QP. Numerical results show that qpSWIFT outperforms state-of-the-art solvers for small scale problems. To evaluate the performance of the solver, a real-time implementation of the solver in the model predictive control framework through experiments on a quadrupedal robot are presented.}
+}
+
+@article{pangDifferentialVariationalInequalities2008,
+  title = {Differential Variational Inequalities},
+  author = {Pang, Jong-Shi and Stewart, David E.},
+  year = {2008},
+  month = jun,
+  journal = {Mathematical Programming},
+  volume = {113},
+  number = {2},
+  pages = {345--424},
+  issn = {1436-4646},
+  doi = {10.1007/s10107-006-0052-x},
+  url = {https://doi.org/10.1007/s10107-006-0052-x},
+  urldate = {2025-01-03},
+  abstract = {This paper introduces and studies the class of differential variational inequalities (DVIs) in a finite-dimensional Euclidean space. The DVI provides a powerful modeling paradigm for many applied problems in which dynamics, inequalities, and discontinuities are present; examples of such problems include constrained time-dependent physical systems with unilateral constraints, differential Nash games, and hybrid engineering systems with variable structures. The DVI unifies several mathematical problem classes that include ordinary differential equations (ODEs) with smooth and discontinuous right-hand sides, differential algebraic equations (DAEs), dynamic complementarity systems, and evolutionary variational inequalities. Conditions are presented under which the DVI can be converted, either locally or globally, to an equivalent ODE with a Lipschitz continuous right-hand function. For DVIs that cannot be so converted, we consider their numerical resolution via an Euler time-stepping procedure, which involves the solution of a sequence of finite-dimensional variational inequalities. Borrowing results from differential inclusions (DIs) with upper semicontinuous, closed and convex valued multifunctions, we establish the convergence of such a procedure for solving initial-value DVIs. We also present a class of DVIs for which the theory of DIs is not directly applicable, and yet similar convergence can be established. Finally, we extend the method to a boundary-value DVI and provide conditions for the convergence of the method. The results in this paper pertain exclusively to systems with ``index'' not exceeding two and which have absolutely continuous solutions.},
+  langid = {english}
 }
 
 @incollection{panikTheoremsAlternativeLinear1993,
@@ -3374,6 +3798,17 @@
   langid = {english}
 }
 
+@article{powellWeNeedModernize2024,
+  title = {We Need to Modernize How We Introduce Students to Optimization},
+  author = {Powell, Warren B.},
+  year = {2024},
+  journal = {OR/MS Today Informs},
+  number = {2},
+  pages = {24--28},
+  url = {https://castle.princeton.edu/wp-content/uploads/2024/06/Powell-Teaching_Optimization_Powell_Feature-ORMS-Today-June-7-2024.pdf},
+  urldate = {2024-06-15}
+}
+
 @inproceedings{prajnaIntroducingSOSTOOLSGeneral2002,
   title = {Introducing {{SOSTOOLS}}: A General Purpose Sum of Squares Programming Solver},
   shorttitle = {Introducing {{SOSTOOLS}}},
@@ -3431,6 +3866,23 @@
   abstract = {Mathematical programs with equilibrium (or complementarity) constraints, MPECs for short, are a dif- ficult class of constrained optimization problems. The feasible set has a very special structure and violates most of the standard constraint qualifications (CQs). Thus, the Karush-Kuhn-Tucker (KKT) conditions are not necessarily satisfied by minimizers and the convergence assumptions of many methods for solving constrained optimization problems are not fulfilled. Therefore it is necessary, both from a theoretical and numerical point of view, to consider suitable optimality conditions, tailored CQs and specially designed al- gorithms for solving MPECs. In this paper, we present a new sequential optimality condition useful for the convergence analysis for several methods of solving MPECs, such as relaxations schemes, complementarity- penalty methods and interior-relaxation methods. We also introduce a variant of the augmented Lagrangian method for solving MPEC whose stopping criterion is based on this sequential condition and it has strong convergence properties. Furthermore, a new CQ for M-stationary which is weaker than the recently intro- duced MPEC relaxed constant positive linear dependence (MPEC-RCPLD) associated to such sequential condition is presented. Relations between the old and new CQs as well as the algorithmic consequences will be discussed.}
 }
 
+@article{rebennackPiecewiseLinearFunction2020,
+  title = {Piecewise {{Linear Function Fitting}} via {{Mixed-Integer Linear Programming}}},
+  author = {Rebennack, Steffen and Krasko, Vitaliy},
+  year = {2020},
+  month = apr,
+  journal = {INFORMS Journal on Computing},
+  volume = {32},
+  number = {2},
+  pages = {507--530},
+  publisher = {INFORMS},
+  issn = {1091-9856},
+  doi = {10.1287/ijoc.2019.0890},
+  url = {https://pubsonline.informs.org/doi/abs/10.1287/ijoc.2019.0890},
+  urldate = {2024-08-14},
+  abstract = {Piecewise linear (PWL) functions are used in a variety of applications. Computing such continuous PWL functions, however, is a challenging task. Software packages and the literature on PWL function fitting are dominated by heuristic methods. This is true for both fitting discrete data points and continuous univariate functions. The only exact methods rely on nonconvex model formulations. Exact methods compute continuous PWL function for a fixed number of breakpoints minimizing some distance function between the original function and the PWL function. An optimal PWL function can only be computed if the breakpoints are allowed to be placed freely and are not fixed to a set of candidate breakpoints. In this paper, we propose the first convex model for optimal continuous univariate PWL function fitting. Dependent on the metrics chosen, the resulting formulations are either mixed-integer linear programming or mixed-integer quadratic programming problems. These models yield optimal continuous PWL functions for a set of discrete data. On the basis of these convex formulations, we further develop an exact algorithm to fit continuous univariate functions. Computational results for benchmark instances from the literature demonstrate the superiority of the proposed convex models compared with state-of-the-art nonconvex models.}
+}
+
 @misc{ReferenceManualArtelys,
   title = {Reference Manual --- {{Artelys Knitro}} 14.0 {{User}}'s {{Manual}}},
   year = {2023},
@@ -3451,7 +3903,7 @@
   doi = {10.1007/s11081-015-9286-x},
   url = {https://doi.org/10.1007/s11081-015-9286-x},
   urldate = {2019-05-03},
-  abstract = {The concepts of positive span and positive basis are important in derivative-free optimization. In fact, a well-known result is that if the gradient of a continuously differentiable objective function on {$\mathbb{R}n$}Rn{\textbackslash}mathbb\{R\}\^{}n is nonzero at a point, then one of the vectors in any positive basis (or any positive spanning set) of {$\mathbb{R}n$}Rn{\textbackslash}mathbb\{R\}\^{}n is a descent direction for the objective function from that point. This article summarizes the basic results and explores additional properties of positive spanning sets, positively independent sets and positive bases that are potentially useful in the design of derivative-free optimization algorithms. In particular, it provides construction procedures for these special sets of vectors that were not previously mentioned in the literature. It also proves that invertible linear transformations preserve positive independence and the positive spanning property. Moreover, this article introduces the notion of linear equivalence between positive spanning sets and between positively independent sets to simplify the analysis of their structures. Linear equivalence turns out to be a generalization of the concept of structural equivalence between positive bases that was introduced by Coope and Price (SIAM J Optim 11:859--869, 2001). Furthermore, this article clarifies which properties of linearly independent sets, spanning sets and ordinary bases carry over to positively independent sets, positive spanning sets, and positive bases. For example, a linearly independent set can always be extended to a basis of a linear space but a positively independent set cannot always be extended to a positive basis. Also, the maximum size of a linearly independent set in {$Rn$}RnR\^{}n is n but there is no limit to the size of a positively independent set in {$\mathbb{R}n$}Rn{\textbackslash}mathbb\{R\}\^{}n when {$n\geq$}3n{$\geq$}3n {\textbackslash}ge 3. Whenever possible, the results are proved for the more general case of frames of convex cones instead of focusing only on positive bases of linear spaces. In addition, this article discusses some algorithms for determining whether a given set of vectors is positively independent or whether it positively spans a linear subspace of {$\mathbb{R}n$}Rn{\textbackslash}mathbb\{R\}\^{}n. Finally, it provides an algorithm for extending any finite set of vectors to a positive spanning set of {$\mathbb{R}n$}Rn{\textbackslash}mathbb\{R\}\^{}n using only a relatively small number of additional vectors.},
+  abstract = {The concepts of positive span and positive basis are important in derivative-free optimization. In fact, a well-known result is that if the gradient of a continuously differentiable objective function on {$\mathbb{R}n$}Rn{\textbackslash}mathbb\{R\}{\textasciicircum}n is nonzero at a point, then one of the vectors in any positive basis (or any positive spanning set) of {$\mathbb{R}n$}Rn{\textbackslash}mathbb\{R\}{\textasciicircum}n is a descent direction for the objective function from that point. This article summarizes the basic results and explores additional properties of positive spanning sets, positively independent sets and positive bases that are potentially useful in the design of derivative-free optimization algorithms. In particular, it provides construction procedures for these special sets of vectors that were not previously mentioned in the literature. It also proves that invertible linear transformations preserve positive independence and the positive spanning property. Moreover, this article introduces the notion of linear equivalence between positive spanning sets and between positively independent sets to simplify the analysis of their structures. Linear equivalence turns out to be a generalization of the concept of structural equivalence between positive bases that was introduced by Coope and Price (SIAM J Optim 11:859--869, 2001). Furthermore, this article clarifies which properties of linearly independent sets, spanning sets and ordinary bases carry over to positively independent sets, positive spanning sets, and positive bases. For example, a linearly independent set can always be extended to a basis of a linear space but a positively independent set cannot always be extended to a positive basis. Also, the maximum size of a linearly independent set in {$Rn$}RnR{\textasciicircum}n is n but there is no limit to the size of a positively independent set in {$\mathbb{R}n$}Rn{\textbackslash}mathbb\{R\}{\textasciicircum}n when {$n\geq$}3n{$\geq$}3n {\textbackslash}ge 3. Whenever possible, the results are proved for the more general case of frames of convex cones instead of focusing only on positive bases of linear spaces. In addition, this article discusses some algorithms for determining whether a given set of vectors is positively independent or whether it positively spans a linear subspace of {$\mathbb{R}n$}Rn{\textbackslash}mathbb\{R\}{\textasciicircum}n. Finally, it provides an algorithm for extending any finite set of vectors to a positive spanning set of {$\mathbb{R}n$}Rn{\textbackslash}mathbb\{R\}{\textasciicircum}n using only a relatively small number of additional vectors.},
   langid = {english}
 }
 
@@ -3510,6 +3962,51 @@
   langid = {english}
 }
 
+@book{rossiHandbookConstraintProgramming2006,
+  title = {Handbook of {{Constraint Programming}}},
+  editor = {Rossi, Francesca and van Beek, Peter and Walsh, Toby},
+  year = {2006},
+  month = oct,
+  series = {Foundations of {{Artificial Intelligence}}},
+  publisher = {Elsevier Science},
+  address = {Amsterdam Heidelberg},
+  url = {https://www.sciencedirect.com/bookseries/foundations-of-artificial-intelligence/vol/2/suppl/C},
+  abstract = {Constraint programming is a powerful paradigm for solving combinatorial search problems that draws on a wide range of techniques from artificial intelligence, computer science, databases, programming languages, and operations research. Constraint programming is currently applied with success to many domains, such as scheduling, planning, vehicle routing, configuration, networks, and bioinformatics.The aim of this handbook is to capture the full breadth and depth of the constraint programming field and to be encyclopedic in its scope and coverage. While there are several excellent books on constraint programming, such books necessarily focus on the main notions and techniques and cannot cover also extensions, applications, and languages. The handbook gives a reasonably complete coverage of all these lines of work, based on constraint programming, so that a reader can have a rather precise idea of the whole field and its potential. Of course each line of work is dealt with in a survey-like style, where some details may be neglected in favor of coverage. However, the extensive bibliography of each chapter will help the interested readers to find suitable sources for the missing details. Each chapter of the handbook is intended to be a self-contained survey of a topic, and is written by one or more authors who are leading researchers in the area.The intended audience of the handbook is researchers, graduate students, higher-year undergraduates and practitioners who wish to learn about the state-of-the-art in constraint programming. No prior knowledge about the field is necessary to be able to read the chapters and gather useful knowledge. Researchers from other fields should find in this handbook an effective way to learn about constraint programming and to possibly use some of the constraint programming concepts and techniques in their work, thus providing a means for a fruitful cross-fertilization among different research areas.The handbook is organized in two parts. The first part covers the basic foundations of constraint programming, including the history, the notion of constraint propagation, basic search methods, global constraints, tractability and computational complexity, and important issues in modeling a problem as a constraint problem. The second part covers constraint languages and solver, several useful extensions to the basic framework (such as interval constraints, structured domains, and distributed CSPs), and successful application areas for constraint programming.- Covers the whole field of constraint programming- Survey-style chapters- Five chapters on applications},
+  isbn = {978-0-444-52726-4},
+  langid = {english}
+}
+
+@book{roubicekRelaxationOptimizationTheory2020,
+  title = {Relaxation in {{Optimization Theory}} and {{Variational Calculus}}},
+  author = {Roub{\'i}{\v c}ek, Tom{\'a}{\v s}},
+  year = {2020},
+  month = dec,
+  series = {De {{Gruyter Series}} in {{Nonlinear Analysis}} and {{Applications}}},
+  edition = {2nd Revised and Extended edition},
+  volume = {4},
+  publisher = {De Gruyter},
+  address = {Berlin ; Boston},
+  url = {https://doi.org/10.1515/9783110590852},
+  abstract = {The relaxation method has enjoyed an intensive development during many decades and this new edition of this comprehensive text reflects in particular the main achievements in the past 20 years. Moreover, many further improvements and extensions are included, both in the direction of optimal control and optimal design as well as in numerics and applications in materials science, along with an updated treatment of the abstract parts of the theory.},
+  isbn = {978-3-11-058962-7},
+  langid = {english}
+}
+
+@book{ryuLargeScaleConvexOptimization2022,
+  title = {Large-{{Scale Convex Optimization}}: {{Algorithms}} \& {{Analyses}} via {{Monotone Operators}}},
+  shorttitle = {Large-{{Scale Convex Optimization}}},
+  author = {Ryu, Ernest K. and Yin, Wotao},
+  year = {2022},
+  month = dec,
+  edition = {New edition},
+  publisher = {Cambridge University Press},
+  address = {Cambridge, United Kingdom New York, NY, USA Port Melbourne, VIC, Australia New Delhi, India Singapore},
+  url = {https://doi.org/10.1017/9781009160865},
+  abstract = {Starting from where a first course in convex optimization leaves off, this text presents a unified analysis of first-order optimization methods -- including parallel-distributed algorithms -- through the abstraction of monotone operators. With the increased computational power and availability of big data over the past decade, applied disciplines have demanded that larger and larger optimization problems be solved. This text covers the first-order convex optimization methods that are uniquely effective at solving these large-scale optimization problems. Readers will have the opportunity to construct and analyze many well-known classical and modern algorithms using monotone operators, and walk away with a solid understanding of the diverse optimization algorithms. Graduate students and researchers in mathematical optimization, operations research, electrical engineering, statistics, and computer science will appreciate this concise introduction to the theory of convex optimization algorithms.},
+  isbn = {978-1-00-916085-8},
+  langid = {english}
+}
+
 @inproceedings{saundersonSemidefiniteRelaxationsOptimization2014,
   title = {Semidefinite Relaxations for Optimization Problems over Rotation Matrices},
   booktitle = {53rd {{IEEE Conference}} on {{Decision}} and {{Control}}},
@@ -3549,12 +4046,37 @@
   isbn = {978-1-61197-658-8}
 }
 
-@techreport{shapiroTutorialStochasticProgramming2007,
-  title = {A {{Tutorial}} on {{Stochastic Programming}}},
-  author = {Shapiro, Alexander and Philpott, Andy},
-  year = {2007},
+@article{sheraliGlobalOptimizationAlgorithm1992,
+  title = {A Global Optimization Algorithm for Polynomial Programming Problems Using a {{Reformulation-Linearization Technique}}},
+  author = {Sherali, Hanif D. and Tuncbilek, Cihan H.},
+  year = {1992},
   month = mar,
-  url = {https://www.stoprog.org/sites/default/files/SPTutorial/TutorialSP.pdf},
+  journal = {Journal of Global Optimization},
+  volume = {2},
+  number = {1},
+  pages = {101--112},
+  issn = {1573-2916},
+  doi = {10.1007/BF00121304},
+  url = {https://doi.org/10.1007/BF00121304},
+  urldate = {2024-09-06},
+  abstract = {This paper is concerned with the development of an algorithm to solve continuous polynomial programming problems for which the objective function and the constraints are specified polynomials. A linear programming relaxation is derived for the problem based on a Reformulation Linearization Technique (RLT), which generates nonlinear (polynomial) implied constraints to be included in the original problem, and subsequently linearizes the resulting problem by defining new variables, one for each distinct polynomial term. This construct is then used to obtain lower bounds in the context of a proposed branch and bound scheme, which is proven to converge to a global optimal solution. A numerical example is presented to illustrate the proposed algorithm.},
+  langid = {english}
+}
+
+@article{sheraliRLTUnifiedApproach2007,
+  title = {{{RLT}}: {{A}} Unified Approach for Discrete and Continuous Nonconvex Optimization},
+  shorttitle = {{{RLT}}},
+  author = {Sherali, Hanif D.},
+  year = {2007},
+  month = feb,
+  journal = {Annals of Operations Research},
+  volume = {149},
+  number = {1},
+  pages = {185--193},
+  issn = {1572-9338},
+  doi = {10.1007/s10479-006-0107-7},
+  url = {https://doi.org/10.1007/s10479-006-0107-7},
+  urldate = {2024-09-06},
   langid = {english}
 }
 
@@ -3631,7 +4153,7 @@
   url = {http://arxiv.org/abs/2304.00290},
   urldate = {2024-01-18},
   abstract = {This paper presents PIQP, a high-performance toolkit for solving generic sparse quadratic programs (QP). Combining an infeasible Interior Point Method (IPM) with the Proximal Method of Multipliers (PMM), the algorithm can handle ill-conditioned convex QP problems without the need for linear independence of the constraints. The open-source implementation is written in C++ with interfaces to C, Python, Matlab, and R leveraging the Eigen3 library. The method uses a pivoting-free factorization routine and allocation-free updates of the problem data, making the solver suitable for embedded applications. The solver is evaluated on the Maros-M{\textbackslash}'esz{\textbackslash}'aros problem set and optimal control problems, demonstrating state-of-the-art performance for both small and large-scale problems, outperforming commercial and open-source solvers.},
-  archiveprefix = {arxiv}
+  archiveprefix = {arXiv}
 }
 
 @book{sokolowskiIntroductionShapeOptimization1992,
@@ -3662,6 +4184,23 @@
   abstract = {We discuss assumptions on the constraint functions that allow constructive description of the geometry of a given set around a given point in terms of the constraints derivatives. Consequences for characterizing solutions of variational and optimization problems are discussed. In the optimization case, these include primal and primal-dual first- and second-order necessary optimality conditions.},
   isbn = {978-0-470-40053-1},
   langid = {english}
+}
+
+@article{solodovNewProjectionMethod1999,
+  title = {A {{New Projection Method}} for {{Variational Inequality Problems}}},
+  author = {Solodov, M. V. and Svaiter, B. F.},
+  year = {1999},
+  month = jan,
+  journal = {SIAM Journal on Control and Optimization},
+  volume = {37},
+  number = {3},
+  pages = {765--776},
+  publisher = {{Society for Industrial and Applied Mathematics}},
+  issn = {0363-0129},
+  doi = {10.1137/S0363012997317475},
+  url = {https://epubs.siam.org/doi/10.1137/S0363012997317475},
+  urldate = {2025-01-02},
+  abstract = {We consider the forward-backward splitting method for finding a zero of the sum of two maximal monotone mappings. This method is known to converge when the inverse of the forward mapping is strongly monotone. We propose a modification to this method, in the spirit of the extragradient method for monotone variational inequalities, under which the method converges assuming only the forward mapping is (Lipschitz) continuous on some closed convex subset of its domain. The modification entails an additional forward step and a projection step at each iteration. Applications of the modified method to decomposition in convex programming and monotone variational inequalities are discussed.}
 }
 
 @article{stathopoulosOperatorSplittingMethods2016,
@@ -3737,6 +4276,13 @@
   howpublished = {JuMP-dev}
 }
 
+@phdthesis{taccariOptimizationMethodsPiecewise2010,
+  title = {Optimization {{Methods}} for {{Piecewise Affine Model Fitting}}},
+  author = {Taccari, Leonardo},
+  year = {2010},
+  school = {Politecnico di Milano}
+}
+
 @book{taillardDesignHeuristicAlgorithms2023,
   title = {Design of {{Heuristic Algorithms}} for {{Hard Optimization}}: {{With Python Codes}} for the {{Travelling Salesman Problem}}},
   shorttitle = {Design of {{Heuristic Algorithms}} for {{Hard Optimization}}},
@@ -3787,6 +4333,40 @@
   urldate = {2022-02-02},
   abstract = {Optimization is an area of critical importance in engineering and applied sciences. When designing products, materials, factories, production processes, manufacturing or service systems, and financial products, engineers strive for the best possible solutions, the most economical use of limited resources, and the greatest efficiency. As system complexity increases, these goals mandate the use of state-of-the-art optimization methodology and computational tools.},
   isbn = {978-1-61197-467-6}
+}
+
+@article{tillmannCardinalityMinimizationConstraints2024,
+  title = {Cardinality {{Minimization}}, {{Constraints}}, and {{Regularization}}: {{A Survey}}},
+  shorttitle = {Cardinality {{Minimization}}, {{Constraints}}, and {{Regularization}}},
+  author = {Tillmann, Andreas M. and Bienstock, Daniel and Lodi, Andrea and Schwartz, Alexandra},
+  year = {2024},
+  month = aug,
+  journal = {SIAM Review},
+  volume = {66},
+  number = {3},
+  pages = {403--477},
+  publisher = {{Society for Industrial and Applied Mathematics}},
+  issn = {0036-1445},
+  doi = {10.1137/21M142770X},
+  url = {https://epubs.siam.org/doi/10.1137/21M142770X},
+  urldate = {2024-11-14},
+  abstract = {In this study, we consider a rich class of mathematical programs with  equilibrium constraints  (MPECs) involving  both integer and continuous variables. Such a class, which subsumes mathematical programs with complementarity constraints, as well as bilevel programs involving lower level convex programs  is, in general, extremely hard to solve due to complementarity constraints and integrality requirements. For its solution, we design an (exact) algorithmic framework based on branch-and-bound (B\&B) that treats each node of the B\&B tree as a separate optimization problem and potentially changes its formulation and solution approach by designing, for example, a separate B\&B tree. The framework is implemented and computationally evaluated on a specific instance of MPEC, namely  a competitive facility location  problem  that takes into account the queueing process that determines the equilibrium assignment of users to open facilities, and a generalization of models for which, to date, no exact method has been proposed.}
+}
+
+@article{torielloFittingPiecewiseLinear2012,
+  title = {Fitting Piecewise Linear Continuous Functions},
+  author = {Toriello, Alejandro and Vielma, Juan Pablo},
+  year = {2012},
+  month = may,
+  journal = {European Journal of Operational Research},
+  volume = {219},
+  number = {1},
+  pages = {86--95},
+  issn = {0377-2217},
+  doi = {10.1016/j.ejor.2011.12.030},
+  url = {https://www.sciencedirect.com/science/article/pii/S0377221711011246},
+  urldate = {2024-10-30},
+  abstract = {We consider the problem of fitting a continuous piecewise linear function to a finite set of data points, modeled as a mathematical program with convex objective. We review some fitting problems that can be modeled as convex programs, and then introduce mixed-binary generalizations that allow variability in the regions defining the best-fit function's domain. We also study the additional constraints required to impose convexity on the best-fit function.}
 }
 
 @article{tsitsiklisDistributedAsynchronousDeterministic1986,
@@ -3850,6 +4430,21 @@
   langid = {english}
 }
 
+@book{uryasevProbabilisticConstrainedOptimization2000,
+  title = {Probabilistic {{Constrained Optimization}}: {{Methodology}} and {{Applications}}},
+  shorttitle = {Probabilistic {{Constrained Optimization}}},
+  author = {Uryasev, Stanislav},
+  year = {2000},
+  month = nov,
+  series = {Nonconvex {{Optimization}} and {{Its Applications}}},
+  publisher = {Springer},
+  address = {New York, NY},
+  url = {https://doi.org/10.1007/978-1-4757-3150-7},
+  abstract = {Probabilistic and percentile/quantile functions play an important role in several applications, such as finance (Value-at-Risk), nuclear safety, and the environment. Recently, significant advances have been made in sensitivity analysis and optimization of probabilistic functions, which is the basis for construction of new efficient approaches. This book presents the state of the art in the theory of optimization of probabilistic functions and several engineering and finance applications, including material flow systems, production planning, Value-at-Risk, asset and liability management, and optimal trading strategies for financial derivatives (options).  Audience: The book is a valuable source of information for faculty, students, researchers, and practitioners in financial engineering, operation research, optimization, computer science, and related areas.},
+  isbn = {978-0-7923-6644-7},
+  langid = {english}
+}
+
 @misc{UserGuideArtelys,
   title = {User Guide --- {{Artelys Knitro}} 14.0 {{User}}'s {{Manual}}},
   year = {2023},
@@ -3881,6 +4476,23 @@
   year = {2013},
   url = {https://www.seas.ucla.edu/~vandenbe/ee236a/lectures/pwl.pdf},
   urldate = {2023-11-16}
+}
+
+@article{vandenbergheSemidefiniteProgramming1996,
+  title = {Semidefinite {{Programming}}},
+  author = {Vandenberghe, Lieven and Boyd, Stephen},
+  year = {1996},
+  month = mar,
+  journal = {SIAM Review},
+  volume = {38},
+  number = {1},
+  pages = {49--95},
+  publisher = {{Society for Industrial and Applied Mathematics}},
+  issn = {0036-1445},
+  doi = {10.1137/1038003},
+  url = {https://epubs.siam.org/doi/abs/10.1137/1038003},
+  urldate = {2024-09-06},
+  abstract = {This paper studies the semidefinite programming SDP problem, i.e., the optimization problem of a linear function of a symmetric matrix subject to linear equality constraints and the additional condition that the matrix be positive semidefinite. First the classical cone duality is reviewed as it is specialized to SDP is reviewed. Next an interior point algorithm is presented that converges to the optimal solution in polynomial time. The approach is a direct extension of Ye's projective method for linear programming. It is also argued that many known interior point methods for linear programs can be transformed in a mechanical way to algorithms for SDP with proofs of convergence and polynomial time complexity carrying over in a similar fashion. Finally, the significance of these results is studied in a variety of combinatorial optimization problems including the general 0-1 integer programs, the maximum clique and maximum stable set problems in perfect graphs, the maximum k-partite subgraph problem in graphs, and various graph partitioning and cut problems. As a result, barrier oracles are presented for certain combinatorial optimization problems (in particular, clique and stable set problem for perfect graphs) whose linear programming formulation requires exponentially many inequalities. Existence of such barrier oracles refutes the commonly believed notion that to solve a combinatorial optimization problem with interior point methods, its linear programming formulation is eeded explicitly.}
 }
 
 @book{vandeputDataScienceSupply2021,

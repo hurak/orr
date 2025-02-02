@@ -6,7 +6,7 @@ format:
         code-fold: true
 execute:
     enabled: false
-jupyter: julia-1.10
+engine: julia
 ---
 
 Here we specialize the general procedure from the previous section to the case of a linear system and a quadratic cost. we start by considering a simple problem of *regulation*, wherein the goal is to bring the system either exactly or approximately to zero final state, that is, $\mathbf x^\text{ref}=\mathbf 0$ and we want $\bm x_N=\mathbf x^\text{ref}$ or $\bm x_N\approx\mathbf x^\text{ref}$, respectively. 
@@ -75,36 +75,44 @@ $$
 \end{aligned}}
 $$
 
-```{julia}
+<!-- ```{julia}
+using BlockArrays
+using LinearAlgebra
+using LinearSolve
+using QDLDL
+using SparseArrays
+
 function direct_dlqr_simultaneous(A,B,x₀,Q,R,S,N)
-    Qbar = BlockArray(spzeros(N*n,N*n),repeat([n],N),repeat([n],N))
+    n = 2 #size(A)[1]
+    m = 1 #size(B)[2]
+    Q̄ = BlockArray(spzeros(N*n,N*n),repeat([n],N),repeat([n],N))
     for i=1:(N-1)
-        Qbar[Block(i,i)] = Q
+        Q̄[Block(i,i)] = Q
     end
-    Qbar[Block(N,N)] = S
-    Rbar = BlockArray(spzeros(N*m,N*m),repeat([m],N),repeat([m],N))
+    Q̄[Block(N,N)] = S
+    R̄ = BlockArray(spzeros(N*m,N*m),repeat([m],N),repeat([m],N))
     for i=1:N
-        Rbar[Block(i,i)] = R
+        R̄[Block(i,i)] = R
     end
-    Qtilde = blockdiag(sparse(Qbar),sparse(Rbar))                               # The matrix defining the quadratic cost.
-    Bbar = BlockArray(spzeros(N*n,N*m),repeat([n],N),repeat([m],N))
+    Q̃ = blockdiag(sparse(Q̄),sparse(R̄))                                  # The matrix defining the quadratic cost.
+    B̄ = BlockArray(spzeros(N*n,N*m),repeat([n],N),repeat([m],N))
     for i=1:N
-        Bbar[Block(i,i)] = B
+        B̄[Block(i,i)] = B
     end
-    Abar = BlockArray(sparse(-1.0*I,n*N,n*N),repeat([n],N),repeat([n],N))
+    Ā = BlockArray(sparse(-1.0*I,n*N,n*N),repeat([n],N),repeat([n],N))
     for i=2:N
-        Abar[Block(i,(i-1))] = A
+        Ā[Block(i,(i-1))] = A
     end
-    Atilde = sparse([Abar Bbar])                                                # The matrix defining the linear (affine) equation.
-    A0bar = spzeros(n*N,n)
-    A0bar[1:n,1:n] = A
-    btilde = A0bar*sparse(x₀)                                                   # The constant offset for the linear (affine) equation.
-    K = [Qtilde Atilde'; Atilde spzeros(size(Atilde,1),size(Atilde,1))]         # Sparse KKT matrix.
-    F = qdldl(K)                                                                # KKT matrix LDL factorization.
-    k = [spzeros(size(Atilde,1)); -btilde]                                      # Right hand side of the KKT system
-    xtildeλ = solve(F,k)                                                        # Solving the KKT system using the factorization.
-    xopt = reshape(xtildeλ[1:(n*N)],(n,:))
-    uopt = reshape(xtildeλ[(n*N+1):(n+m)*N+1],(m,:))
+    Ã = sparse([Ā B̄])                               # The matrix defining the linear (affine) equation.
+    Ā₀ = spzeros(n*N,n)
+    Ā₀[1:n,1:n] = A
+    b̃ = Ā₀*sparse(x₀)                               # The constant offset for the linear (affine) equation.
+    K = [Q̃ Ã'; Ã spzeros(size(Ã,1),size(Ã,1))]      # Sparse KKT matrix.
+    k = [spzeros(size(Q̃,1)); -b̃]                    # Right hand side of the KKT system
+    prob = LinearProblem(K,k)                       # The KKT system as a linear problem.
+    z̃λ = LinearSolve.solve(prob)                    # Solving the KKT system. Ready for trying various solvers.
+    xopt = reshape(z̃λ[1:(n*N)],(n,:))
+    uopt = reshape(z̃λ[(n*N+1):(n+m)*N],(m,:))
     return xopt,uopt
 end
 
@@ -136,7 +144,7 @@ xlabel!("k")
 ylabel!("x")
 
 plot(p1,p2,layout=(2,1))
-```
+``` -->
 
 This constrained optimization problem can still be solved without invoking a numerical solver for solving quadratic programs (QP). We do it by introducing a vector $\boldsymbol\lambda$ of Lagrange multipliers to form the Lagrangian function
 $$

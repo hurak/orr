@@ -1,0 +1,147 @@
+@misc{bambadePROXQPEfficientVersatile2023,
+  title = {{{PROXQP}}: An {{Efficient}} and {{Versatile Quadratic Programming Solver}} for {{Real-Time Robotics Applications}} and {{Beyond}}},
+  shorttitle = {{{PROXQP}}},
+  author = {Bambade, Antoine and Schramm, Fabian and Kazdadi, Sarah El and Caron, St{\'e}phane and Taylor, Adrien and Carpentier, Justin},
+  year = {2023},
+  month = sep,
+  url = {https://inria.hal.science/hal-04198663},
+  urldate = {2024-01-18},
+  abstract = {Convex Quadratic programming (QP) has become a core component in the modern engineering toolkit, particularly in robotics, where QP problems are legions, ranging from real-time whole-body controllers to planning and estimation algorithms. Many of those QPs need to be solved at high frequency. Meeting timing requirements requires taking advantage of as many structural properties as possible for the problem at hand. For instance, it is generally crucial to resort to warm-starting to exploit the resemblance of consecutive control iterations. While a large range of off-the-shelf QP solvers is available, only a few are suited to exploit problem structure and warm-starting capacities adequately. In this work, we propose the PROXQP algorithm, a new and efficient QP solver that exploits QP structures by leveraging primal-dual augmented Lagrangian techniques. For convex QPs, PROXQP features a global convergence guarantee to the closest feasible QP, an essential property for safe closedloop control. We illustrate its practical performance on various standard robotic and control experiments, including a real-world closed-loop model predictive control application. While originally tailored for robotics applications, we show that PROXQP also performs at the level of state of the art on generic QP problems, making PROXQP suitable for use as an off-the-shelf solver for regular applications beyond robotics.},
+  langid = {english}
+}
+
+@article{bootSensitivityAnalysisConvex1963,
+  title = {On {{Sensitivity Analysis}} in {{Convex Quadratic Programming Problems}}},
+  author = {Boot, J. C. G.},
+  year = {1963},
+  month = oct,
+  journal = {Operations Research},
+  publisher = {INFORMS},
+  doi = {10.1287/opre.11.5.771},
+  url = {https://pubsonline.informs.org/doi/abs/10.1287/opre.11.5.771},
+  urldate = {2024-08-14},
+  abstract = {The present paper consists of three clearly distinct sections. In the first section we discuss the problem of how the solution vector of a quadratic programming problem changes in case of infinites...},
+  copyright = {{\copyright} 1963 INFORMS},
+  langid = {english}
+}
+
+@misc{caronOptimalityConditionsNumerical2022,
+  title = {Optimality Conditions and Numerical Tolerances in {{QP}} Solvers},
+  author = {Caron, St{\'e}phane},
+  year = {2022},
+  month = nov,
+  url = {https://scaron.info/blog/optimality-conditions-and-numerical-tolerances-in-qp-solvers.html}
+}
+
+@article{ferreauQpOASESParametricActiveset2014,
+  title = {{{qpOASES}}: A Parametric Active-Set Algorithm for~Quadratic Programming},
+  shorttitle = {{{qpOASES}}},
+  author = {Ferreau, Hans Joachim and Kirches, Christian and Potschka, Andreas and Bock, Hans Georg and Diehl, Moritz},
+  year = {2014},
+  month = dec,
+  journal = {Mathematical Programming Computation},
+  volume = {6},
+  number = {4},
+  pages = {327--363},
+  issn = {1867-2957},
+  doi = {10.1007/s12532-014-0071-1},
+  url = {https://doi.org/10.1007/s12532-014-0071-1},
+  urldate = {2022-05-01},
+  abstract = {Many practical applications lead to optimization problems that can either be stated as quadratic programming (QP) problems or require the solution of QP problems on a lower algorithmic level. One relatively recent approach to solve QP problems are parametric active-set methods that are based on tracing the solution along a linear homotopy between a QP problem with known solution and the QP problem to be solved. This approach seems to make them particularly suited for applications where a-priori information can be used to speed-up the QP solution or where high solution accuracy is required. In this paper we describe the open-source C++ software package qpOASES, which implements a parametric active-set method in a reliable and efficient way. Numerical tests show that qpOASES can outperform other popular academic and commercial QP solvers on small- to medium-scale convex test examples of the Maros-M{\'e}sz{\'a}ros QP collection. Moreover, various interfaces to third-party software packages make it easy to use, even on embedded computer hardware. Finally, we describe how qpOASES can be used to compute critical points of nonconvex QP problems.},
+  langid = {english}
+}
+
+@misc{frisonGiafHpipm2023,
+  title = {Giaf/Hpipm},
+  author = {Frison, Gianluca},
+  year = {2023},
+  month = apr,
+  url = {https://github.com/giaf/hpipm},
+  urldate = {2023-04-08},
+  abstract = {High-performance interior-point-method QP and QCQP solvers}
+}
+
+@article{frisonHPIPMHighperformanceQuadratic2020,
+  title = {{{HPIPM}}: A High-Performance Quadratic Programming Framework for Model Predictive Control},
+  shorttitle = {{{HPIPM}}},
+  author = {Frison, Gianluca and Diehl, Moritz},
+  year = {2020},
+  month = jan,
+  journal = {IFAC-PapersOnLine},
+  series = {21st {{IFAC World Congress}}},
+  volume = {53},
+  number = {2},
+  pages = {6563--6569},
+  issn = {2405-8963},
+  doi = {10.1016/j.ifacol.2020.12.073},
+  url = {https://www.sciencedirect.com/science/article/pii/S2405896320303293},
+  urldate = {2023-04-08},
+  abstract = {This paper introduces HPIPM, a high-performance framework for quadratic programming (QP), designed to provide building blocks to efficiently and reliably solve model predictive control problems. HPIPM currently supports three QP types, and provides interior point method (IPM) solvers as well (partial) condensing routines. In particular, the IPM for optimal control QPs is intended to supersede the HPMPC solver, and it largely improves robustness while keeping the focus on speed. Numerical experiments show that HPIPM reliably solves challenging QPs, and that it outperforms other state-of-the-art solvers in speed.},
+  langid = {english}
+}
+
+@article{ottaNPProNewtonProjection2024,
+  title = {{{NPPro}}: A {{Newton}} Projection with Proportioning Solver for Quadratic Programming with Affine Constraints},
+  shorttitle = {{{NPPro}}},
+  author = {Otta, Pavel and {\v S}antin, Ond{\v r}ej and Havlena, Vladim{\'i}r},
+  year = {2024},
+  month = dec,
+  journal = {Optimization Methods and Software},
+  publisher = {Taylor \& Francis},
+  url = {https://www.tandfonline.com/doi/abs/10.1080/10556788.2024.2436180},
+  urldate = {2025-01-10},
+  abstract = {The second-order method for the solution of quadratic programming (QP) with affine constraints is introduced in this paper. It belongs to an active-set method family. However, it uses a projection ...},
+  copyright = {{\copyright} 2025 Informa UK Limited, trading as Taylor \& Francis Group},
+  langid = {english}
+}
+
+@article{pandalaQpSWIFTRealTimeSparse2019,
+  title = {{{qpSWIFT}}: {{A Real-Time Sparse Quadratic Program Solver}} for {{Robotic Applications}}},
+  shorttitle = {{{qpSWIFT}}},
+  author = {Pandala, Abhishek Goud and Ding, Yanran and Park, Hae-Won},
+  year = {2019},
+  month = oct,
+  journal = {IEEE Robotics and Automation Letters},
+  volume = {4},
+  number = {4},
+  pages = {3355--3362},
+  issn = {2377-3766},
+  doi = {10.1109/LRA.2019.2926664},
+  url = {https://ieeexplore.ieee.org/document/8754693},
+  urldate = {2024-01-19},
+  abstract = {In this letter, we present qpSWIFT, a real-time quadratic program (QP) solver. Motivated by the need for a robust embedded QP solver in robotic applications, qpSWIFT employs standard primal-dual interior-point method, along with Mehrotra predictor--corrector steps and Nesterov--Todd scaling. The sparse structure of the resulting Karush--Kuhn--Tucker linear system in the QP formulation is exploited, and sparse direct methods are utilized to solve the linear system of equations. To further accelerate the factorization process, we only modify the corresponding rows of the matrix factors that change during iterations and cache the nonzero Cholesky pattern. qpSWIFT is library free, written in ANSI-C and its performance is benchmarked through standard problems that could be cast as QP. Numerical results show that qpSWIFT outperforms state-of-the-art solvers for small scale problems. To evaluate the performance of the solver, a real-time implementation of the solver in the model predictive control framework through experiments on a quadrupedal robot are presented.}
+}
+
+@misc{schwanPIQPProximalInteriorPoint2023,
+  title = {{{PIQP}}: {{A Proximal Interior-Point Quadratic Programming Solver}}},
+  shorttitle = {{{PIQP}}},
+  author = {Schwan, Roland and Jiang, Yuning and Kuhn, Daniel and Jones, Colin N.},
+  year = {2023},
+  month = sep,
+  number = {arXiv:2304.00290},
+  eprint = {2304.00290},
+  primaryclass = {math},
+  publisher = {arXiv},
+  url = {http://arxiv.org/abs/2304.00290},
+  urldate = {2024-01-18},
+  abstract = {This paper presents PIQP, a high-performance toolkit for solving generic sparse quadratic programs (QP). Combining an infeasible Interior Point Method (IPM) with the Proximal Method of Multipliers (PMM), the algorithm can handle ill-conditioned convex QP problems without the need for linear independence of the constraints. The open-source implementation is written in C++ with interfaces to C, Python, Matlab, and R leveraging the Eigen3 library. The method uses a pivoting-free factorization routine and allocation-free updates of the problem data, making the solver suitable for embedded applications. The solver is evaluated on the Maros-M{\textbackslash}'esz{\textbackslash}'aros problem set and optimal control problems, demonstrating state-of-the-art performance for both small and large-scale problems, outperforming commercial and open-source solvers.},
+  archiveprefix = {arXiv}
+}
+
+@article{stellatoOSQPOperatorSplitting2020,
+  title = {{{OSQP}}: An Operator Splitting Solver for Quadratic Programs},
+  shorttitle = {{{OSQP}}},
+  author = {Stellato, Bartolomeo and Banjac, Goran and Goulart, Paul and Bemporad, Alberto and Boyd, Stephen},
+  year = {2020},
+  month = dec,
+  journal = {Mathematical Programming Computation},
+  volume = {12},
+  number = {4},
+  pages = {637--672},
+  issn = {1867-2949, 1867-2957},
+  doi = {10.1007/s12532-020-00179-2},
+  url = {http://link.springer.com/10.1007/s12532-020-00179-2},
+  urldate = {2023-09-08},
+  abstract = {We present a general-purpose solver for convex quadratic programs based on the alternating direction method of multipliers, employing a novel operator splitting technique that requires the solution of a quasi-definite linear system with the same coefficient matrix at almost every iteration. Our algorithm is very robust, placing no requirements on the problem data such as positive definiteness of the objective function or linear independence of the constraint functions. It can be configured to be division-free once an initial matrix factorization is carried out, making it suitable for real-time applications in embedded systems. In addition, our technique is the first operator splitting method for quadratic programs able to reliably detect primal and dual infeasible problems from the algorithm iterates. The method also supports factorization caching and warm starting, making it particularly efficient when solving parametrized problems arising in finance, control, and machine learning. Our open-source C implementation OSQP has a small footprint, is library-free, and has been extensively tested on many problem instances from a wide variety of application areas. It is typically ten times faster than competing interior-point methods, and sometimes much more when factorization caching or warm start is used. OSQP has already shown a large impact with tens of thousands of users both in academia and in large corporations.},
+  langid = {english}
+}

@@ -9,7 +9,7 @@ format:
 execute:
     enabled: false
     warning: false
-jupyter: julia-1.10
+engine: julia
 ---
 
 As we have already discussed a couple of times, in the LQR problem we consider a linear time invariant (LTI) system modelled by
@@ -61,7 +61,7 @@ J^\star(\bm x(t),t) = \frac{1}{2}\bm x^\top (t)\mathbf S(t)\bm x(t).
 $$
 
 :::{.callout-note}
-Recall that we did something similar when making a *sweep* assumption to derive a Riccati equation following the indirect approach – we just make an inspired guess and see if it works. Here the inspiration comes from the observation made elsewhere, that the optimal cost function in the LQR problem is quadratic in $\bm x$.
+Recall that we did something similar when making a *sweep* assumption to derive a Riccati equation following the indirect approach – we just make an inspired guess and see if it solves the equation. Here the inspiration comes from the observation made elsewhere, that the optimal cost function in the LQR problem is quadratic in $\bm x$.
 :::
 
 We now aim at substituting this into the HJB equation. Observe that $\frac{\partial J^\star}{\partial t}=\bm x^\top(t) \dot{\mathbf{S}}(t) \bm x(t)$ and $\nabla_{\bm x} J^\star = \mathbf S \bm x$. Upon substitution to the HJB equation, we get

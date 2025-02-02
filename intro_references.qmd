@@ -1,0 +1,42 @@
+---
+title: "Literature for the course"
+bibliography: 
+    - ref_convex_and_conic_optimization.bib
+    - ref_mpc.bib
+    - ref_nonlinear_programming.bib
+    - ref_numerical_optimal_control.bib
+    - ref_optimization.bib
+    - ref_optimal_control.bib
+    - ref_robust_control.bib
+csl: ieee-control-systems.csl
+format:
+    html     
+---
+
+The two subdomains of control theory - **optimal control** and **robust control** -, which we explore in this course, are both quite mature, and are covered by a wealth of books, introductory and advanced. The same holds for the doman of **numerical optimization**, which provides important components for both control subdomains.  
+
+In our course **we do not follow any single textbook** chapter by chapter. 
+
+Instead, besides our own lecture notes we are going to refer to various study resources once we study the individual (weekly) topics. In doing that we prefer freely available online resources and books available in the university library, but we also give some recommendations for relevant and helpful books that are not freely available.
+
+Below we give a general recommendation on literature categorized into the three domains. Students are not required to obtain those books but perhaps such curated and commented lists might do some service to interested students.
+
+## Numerical optimization 
+
+The popular @luenbergerLinearNonlinearProgramming2021 offers deep but clear explanations, and @nocedalNumericalOptimization2006 is commonly regarded as a comprehensive reference, and yet it is readable. The broad scope of the recently published @hanssonOptimizationLearningControl2023 fits our course nearly perfectly, even including the optimal control part. Very didactic and also accompanied by Matlab and Python codes is @beckIntroductionNonlinearOptimization2023. @calafioreOptimizationModels2014 is also recommendable. Unfortunately, none of these books is freely available online.
+
+However, there are a few recently published textbooks that are also legally available online and that are fairly comprehensive and readable: @bierlaireOptimizationPrinciplesAlgorithms2018, @martinsEngineeringDesignOptimization2022 and @kochenderferAlgorithmsOptimization2019, the latter including code in Julia language. The freely available "convex optimization bible" @boydConvexOptimization2004 contains perfect explanations of many advanced optimization concepts such as duality. 
+
+## Optimal control
+
+One of a few optimal control textbooks that covers also discrete-time problems is the classical textboook @lewisOptimalControl2012, which has been lately made available online on the author's web page. 
+
+Majority of classical optimal control textbooks and monographs focus on continuous-time systems, for which we need to invoke *calculus of variations*. While it is not a trivial subject, an accessible treatment tailored to continuous-time optimal control is provided by @liberzonCalculusVariationsOptimal2011 (a draft available online). The monograph @brysonAppliedOptimalControl1975 is regarded a classic, but @kirkOptimalControlTheory2004 is perhaps a bit more readable (and affordable as it was reprinted by a low-cost publisher). A few copies of another reprinted classic @andersonOptimalControlLinear2007 are available in the library, but freely downloadable electronic version are also available. 
+
+While all these classical monographs provide fundamental theoretical insight, computational tools they provide (mostly in one way or another reformulating the optimal control problem into a Riccati equation) are mostly restricted to linear systems. For nonlinear continuous-time systems, hardly anything is as practical as numerical methods as covered for example by @bettsPracticalMethodsOptimal2020. When restricted to discrete-time systems, model predictive control is covered by @rawlingsModelPredictiveControl2017, which is also available online. 
+
+## Robust control
+
+The topic of robust control is also described in a wealth of books. But unlike in the area of optimization and general optimal control, here we do have a strong preference for a single book, and our choice is fairly confident: @skogestadMultivariableFeedbackControl2005. We are going to use it in the last third of the course. A few copies of this book are available in the university library (reserved for the students of this course). In addition, the first three chapters are freely downloadable on the author's web page. But we strongly recommend considering purchasing the book. It might turn out very useful as a reference even after passing an exam in this course. 
+
+Other classical references are  @francisCourseControlTheory1987, @zhouEssentialsRobustControl1997, @sanchez-penaRobustSystemsTheory1998, @greenLinearRobustControl2012, @lavretskyRobustAdaptiveControl2024, but we are not going to used them in our course. 

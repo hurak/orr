@@ -9,7 +9,7 @@ format:
 execute:
     enabled: false
     warning: false
-jupyter: julia-1.10
+engine: julia
 ---
 
 In the previous sections we investigated both direct and indirect approaches to the optimal control problem. Similarly as in the discrete-time case, complementing the two approaches is the dynamic programming. Indeed, the key Bellmans's idea, which we previously formulated in discrete time, can be extended to continuous time as well.
@@ -23,10 +23,15 @@ $$
 J(\bm x(t_\mathrm{i}), \bm u(\cdot), t_\mathrm{i}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}) + \int_{t_\mathrm{i}}^{t_\mathrm{f}}L(\bm x(t),\bm u(t),t)\, \mathrm d t.
 $$
 
-Optionally we can also consider constraints on the state at the final time (be it a particular value or some set of values)
+The final time can be fixed to a particular value $t_\mathrm{f}$, in which case the state at the final time $\bm x(t_\mathrm{f})$ is either free (unspecified but penalized through $\phi(\bm x(t_\mathrm{f}))$), or it is fixed (specified and not penalized, that is, $\bm x(t_\mathrm{f}) = \mathbf x^\mathrm{ref}$). 
+
+The final time can also be free (regarded as an optimization variable itself), in which case general constraints on the state at the final time can be expressed as
 $$
-\psi(\bm x(t_\mathrm{f}),t_\mathrm{f})=0.
+\psi(\bm x(t_\mathrm{f}),t_\mathrm{f})=0
 $$
+or possibly even using an inequality, which we will not consider here.
+
+The final time can also be considered infinity, that is, $t_\mathrm{f}=\infty$, but we will handle this situation later separately.
 
 ## Hamilton-Jacobi-Bellman (HJB) equation
 
@@ -61,20 +66,62 @@ $$
 
 This is obviously a partial differential equation (PDE) for the optimal cost function $J^\star(\bm x,t)$. 
 
-And since this is a differential equation, boundary value(s) must be specified to determine a unique solution. In particular, since the equation is first-order with respect to both time and state, specifying the value of the optimal cost function at the final state and the final time is enough. With the general final-state constraints we have introduced above, the boundary value condition reads 
+### Boundary conditions for the HJB equation
+
+Since the HJB equation is a differential equation, initial/boundary value(s) must be specified to determine a unique solution. In particular, since the equation is first-order with respect to both time and state, specifying the value of the optimal cost function at the final state and the final time is enough. 
+
+For a fixed-final-time, free-final-state, the optimal cost at the final time is 
+$$
+J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}).
+$$
+
+For a fixed-final-time, fixed-final-state, since the component of the cost function corresponding to the terminal state is zero, the optimal cost at the final time is zero as well
+$$
+J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = 0.
+$$
+
+With the general final-state constraints introduced above, the boundary value condition reads 
 $$
 J^\star (\bm x(t_\mathrm{f}),t_\mathrm{f}) = \phi(\bm x(t_\mathrm{f}),t_\mathrm{f}),\qquad \text{on the hypersurface } \psi(\bm x(t_\mathrm{f}),t_\mathrm{f}) = 0. 
 $$
 
-Note that this includes as special cases the fixed-final-state and free-final-state cases.
+### Optimal control using the optimal cost (-to-go) function
 
-## HJB equation and Hamiltonian
+Assume now that the solution $J^\star (\bm x(t),t)$ to the HJB equation is available. We can then find the optimal control by the minimization
+$$\boxed
+{\bm u^\star(t) = \arg\min_{\bm u(t)}\left[L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} J^\star (\bm x(t),t))^\top \bm f(\bm x(t),\bm u(t),t)\right].}
+$$
+
+For convenience, the minimized function is often labelled as
+$$
+Q(\bm x(t),\bm u(t),t) = L(\bm x(t),\bm u(t),t)+(\nabla_{\bm x} J^\star (\bm x(t),t))^\top \bm f(\bm x(t),\bm u(t),t)
+$$
+and called just *Q-function*. The optimal control is then
+$$
+\bm u^\star(t) = \arg\min_{\bm u(t)} Q(\bm x(t),\bm u(t),t).
+$$
+
+## HJB equation formulated using a Hamiltonian
 
 Recall the definition of Hamiltonian $H(\bm x,\bm u,\bm \lambda,t) = L(\bm x,\bm u,t) + \boldsymbol{\lambda}^\top \mathbf f(\bm x,\bm u,t)$. The HJB equation can also be written as
 $$\boxed
 {-\frac{\partial J^\star (\bm x(t),t)}{\partial t} = \min_{\bm u(t)}H(\bm x(t),\bm u(t),\nabla_{\bm x} J^\star (\bm x(t),t),t).}
 $$
 
-What we have just derived is one of the most profound results in optimal control – Hamiltonian must be minimized by the optimal control. We will exploit it next for some derivations. 
+What we have just derived is one of the most profound results in optimal control – Hamiltonian must be minimized by the optimal control. We will exploit it next as a tool for deriving some theoretical results. 
 
-Recall also that we have already encountered a similar results that made statements about the necessary maximization (or minimization) of the Hamiltonian with respect to the control – the celebrated Pontryagin's principle of maximum (or minimum).
+## HJB equation vs Pontryagin's principle of maximum (minimum)
+
+Recall also that we have already encountered a similar results that made statements about the necessary maximization (or minimization) of the Hamiltonian with respect to the control – the celebrated Pontryagin's principle of maximum (or minimum). Are these two related? Equivalent?
+
+## HJB equation for an infinite time horizon  
+
+When both the system and the cost function are time-invariant, and the final time is infinite, that is, $t_\mathrm{f}=\infty$, the optimal cost function $J^\star()$ must necessarily be independent of time, that is, it's partial derivative with respect to time is zero, that is, $\frac{\partial J^\star (\bm x(t),t)}{\partial t} = 0$. The HJB equation then simplifies to 
+
+$$\boxed{
+0 = \min_{\bm u(t)}\left[L(\bm x(t),\bm u(t))+(\nabla_{\bm x} {J^\star (\bm x(t),t)})^\top \bm f(\bm x(t),\bm u(t))\right],}
+$$
+or, using a Hamiltonian
+$$\boxed
+{0 = \min_{\bm u(t)}H(\bm x(t),\bm u(t),\nabla_{\bm x} J^\star (\bm x(t))).}
+$$

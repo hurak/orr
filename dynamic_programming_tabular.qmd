@@ -10,7 +10,7 @@ format:
 execute:
     enabled: false
     warning: false
-jupyter: julia-1.10
+engine: julia
 ---
 
 Based on what we have seen so far, it turns out that the key to solving the discrete-time optimal control problem is to find some... functions. Either the optimal cost function $J_k^\star(\bm x_k)$ or the optimal Q-factor $Q_k^\star(\bm x_k,\bm u_k)$. Once we have them, we can easily find the optimal control $\bm u_k^\star(\bm x_k)$. The question however is how to find these functions. We have seen some recursions for both of them, but it is not clear how to turn these into practical algorithms. We do it here.

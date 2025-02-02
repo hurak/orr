@@ -8,7 +8,6 @@ format:
         code-fold: true
 #execute:
 #    enabled: true
-#jupyter: julia-1.10
 engine: julia
 ---
 
@@ -57,7 +56,7 @@ $$
 \end{aligned}
 $$
 
-The last two equations represent boundary conditions. Note that here we have already fixed the initial state. If this is not appropriate in a particular scenario, go back and adjust the boundary equation accordingly. 
+The last two equations represent the boundary conditions. Note that here we have already fixed the initial state. If this is not appropriate in a particular scenario, go back and adjust the boundary equation accordingly. 
 
 The third equation above – the stationarity equation – can be used to extract the optimal control
 $$
@@ -109,7 +108,7 @@ J_{N-2} &=\ldots
 \end{aligned}
 $$
 
-Upon introducing a new name $\mathbf S_{N-1}$ for term $\mathbf A^\top \mathbf S_N \mathbf A+\mathbf Q$ and similarly for all preceding times, we arrive at a **discrete-time Lyapunov equation**
+Upon introducing a new name $\mathbf S_{N-1}$ for the term $\mathbf A^\top \mathbf S_N \mathbf A+\mathbf Q$ and similarly for all the preceding discrete times, we arrive at a **discrete-time Lyapunov equation**
 $$
 \boxed{\mathbf S_{k} = \mathbf A^\top \mathbf S_{k+1}\mathbf A+\mathbf Q.}
 $$

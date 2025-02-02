@@ -8,7 +8,7 @@ format:
         code-summary: "Show the code"
 execute:
     enabled: false
-jupyter: julia-1.10
+engine: julia
 ---
 
 ## Why optimization modelling languages?
@@ -123,7 +123,7 @@ The key motivation for using an OML/AML is to separate the process of formulatin
 
 As a matter of fact, some optimization experts even keep avoiding OML/AML altogether. For example, if a company pays for a (not really cheap) license of [Gurobi Optimizer](https://www.gurobi.com/solutions/gurobi-optimizer/) – a powerful optimization library for (MI)LP/QP/QCQP –, it may be the case that for a particular very large-scale optimization problem their optimization specialist will have hard time to find a third-party solver of comparable performance. If then [its Python API](https://www.gurobi.com/documentation/current/refman/py_python_api_overview.html) makes definition of optimization problems convenient too (see the code below), maybe there is little regret that such problem definitions cannot be reused with a third-party solver. The more so that since it is tailored to Gurobi solver, it will offer control over the finest details. 
 
-```{julia}
+```
 import gurobipy as gp
 import numpy as np
 

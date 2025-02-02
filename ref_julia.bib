@@ -1,0 +1,237 @@
+@misc{altmeyerPatrickAltmeyerJulia2022,
+  title = {Patrick {{Altmeyer}} - {{Julia}} and {{Quarto}}: A Match Made in Heaven? 🌤},
+  shorttitle = {Patrick {{Altmeyer}} - {{Julia}} and {{Quarto}}},
+  author = {Altmeyer, Patrick},
+  year = {2022},
+  month = apr,
+  journal = {Patrick Altmeyer},
+  url = {https://www.paltmeyer.com/blog/posts/julia-and-quarto-a-match-made-in-heaven/},
+  urldate = {2024-01-10},
+  abstract = {An opinionated, practical review celebrating the open-source community. I discuss why Quarto is nothing short of revolutionary and how I've been using it with Julia.},
+  langid = {english}
+}
+
+@misc{bermanStateJuliaScientific2024,
+  title = {The {{State}} of {{Julia}} for {{Scientific Machine Learning}}},
+  author = {Berman, Edward and Ginesin, Jacob},
+  year = {2024},
+  month = oct,
+  number = {arXiv:2410.10908},
+  eprint = {2410.10908},
+  primaryclass = {cs},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2410.10908},
+  url = {http://arxiv.org/abs/2410.10908},
+  urldate = {2024-12-14},
+  abstract = {Julia has been heralded as a potential successor to Python for scientific machine learning and numerical computing, boasting ergonomic and performance improvements. Since Julia's inception in 2012 and declaration of language goals in 2017, its ecosystem and language-level features have grown tremendously. In this paper, we take a modern look at Julia's features and ecosystem, assess the current state of the language, and discuss its viability and pitfalls as a replacement for Python as the de-facto scientific machine learning language. We call for the community to address Julia's language-level issues that are preventing further adoption.},
+  archiveprefix = {arXiv}
+}
+
+@article{bezansonJuliaDynamismPerformance2018,
+  title = {Julia: Dynamism and Performance Reconciled by Design},
+  shorttitle = {Julia},
+  author = {Bezanson, Jeff and Chen, Jiahao and Chung, Benjamin and Karpinski, Stefan and Shah, Viral B. and Vitek, Jan and Zoubritzky, Lionel},
+  year = {2018},
+  month = oct,
+  journal = {Proceedings of the ACM on Programming Languages},
+  volume = {2},
+  number = {OOPSLA},
+  pages = {1--23},
+  issn = {2475-1421},
+  doi = {10.1145/3276490},
+  url = {https://dl.acm.org/doi/10.1145/3276490},
+  urldate = {2023-06-11},
+  abstract = {Julia is a programming language for the scientific community that combines features of productivity languages, such as Python or MATLAB, with characteristics of performance-oriented languages, such as C++ or Fortran. Julia's productivity features include: dynamic typing, automatic memory management, rich type annotations, and multiple dispatch. At the same time, Julia allows programmers to control memory layout and leverages a specializing just-in-time compiler to eliminate much of the overhead of those features. This paper details the design choices made by the creators of Julia and reflects on the implications of those choices for performance and usability.},
+  langid = {english}
+}
+
+@article{bouchet-valatDataFramesJlFlexible2023,
+  title = {{{DataFrames}}.Jl: {{Flexible}} and {{Fast Tabular Data}} in {{Julia}}},
+  shorttitle = {{{DataFrames}}.Jl},
+  author = {{Bouchet-Valat}, Milan and Kami{\'n}ski, Bogumi{\l}},
+  year = {2023},
+  month = sep,
+  journal = {Journal of Statistical Software},
+  volume = {107},
+  pages = {1--32},
+  issn = {1548-7660},
+  doi = {10.18637/jss.v107.i04},
+  url = {https://doi.org/10.18637/jss.v107.i04},
+  urldate = {2023-09-24},
+  abstract = {DataFrames.jl is a package written for and in the Julia language offering flexible and efficient handling of tabular data sets in memory. Thanks to Julia's unique strengths, it provides an appealing set of features: Rich support for standard data processing tasks and excellent flexibility and efficiency for more advanced and non-standard operations. We present the fundamental design of the package and how it compares with implementations of data frames in other languages, its main features, performance, and possible extensions. We conclude with a practical illustration of typical data processing operations.},
+  copyright = {Copyright (c) 2023 Milan  Bouchet-Valat, Bogumi{\l} Kami{\'n}ski},
+  langid = {english}
+}
+
+@misc{carlsonControlsystemsAnalysisDesign2022,
+  title = {Control-Systems Analysis and Design with {{JuliaControl}}},
+  author = {Carlson, Fredrik Bagge},
+  year = {2022},
+  volume = {9},
+  url = {https://youtu.be/favQKOyyx4o},
+  urldate = {2023-01-29}
+}
+
+@inproceedings{carlsonControlSystemsJlControl2021,
+  title = {{{ControlSystems}}.Jl: {{A Control Toolbox}} in {{Julia}}},
+  booktitle = {60th {{Conference}} on {{Decision}} and {{Control}}},
+  author = {Carlson, Fredrik Bagge and F{\"a}lt, Mattias and Heimerson, Albin and Troeng, Olof},
+  year = {2021-12-13/2021-12-17},
+  address = {Austin, Texas, USA},
+  url = {https://raw.githubusercontent.com/JuliaControl/CDC2021/master/CDC2021.pdf}
+}
+
+@article{carlsonMonteCarloMeasurementsJlNonlinear2020,
+  title = {{{MonteCarloMeasurements}}.Jl: {{Nonlinear Propagation}} of {{Arbitrary Multivariate Distributions}} by Means of {{Method Overloading}}},
+  shorttitle = {{{MonteCarloMeasurements}}.Jl},
+  author = {Carlson, Fredrik Bagge},
+  year = {2020},
+  month = jan,
+  journal = {arXiv:2001.07625 [cs, stat]},
+  eprint = {2001.07625},
+  primaryclass = {cs, stat},
+  url = {http://arxiv.org/abs/2001.07625},
+  urldate = {2021-07-28},
+  abstract = {This manuscript outlines a software package that facilitates working with probability distributions by means of Monte-Carlo methods, in a way that allows for propagation of multivariate probability distributions through arbitrary functions. We provide a {\textbackslash}emph\{type\} that represents probability distributions by an internal vector of unweighted samples, {\textbackslash}texttt\{Particles\}, which is a subtype of a {\textbackslash}texttt\{Real\} number and behaves just like a regular real number in calculations by means of method overloading. This makes the software easy to work with and presents minimal friction for the user. We highlight how this design facilitates optimal usage of SIMD instructions and showcase the package for uncertainty propagation through an off-the-shelf ODE solver, as well as for robust probabilistic optimization with automatic differentiation.},
+  archiveprefix = {arXiv}
+}
+
+@techreport{carlsonOptimizationControllerParameters2018,
+  title = {Optimization of {{Controller Parameters}} in {{Julia}} Using {{ControlSystems}}.Jl and {{Automatic Differentiation}}},
+  author = {Carlson, Fredrik Bagge},
+  year = {2018},
+  number = {TFRT-7656},
+  pages = {12},
+  institution = {Lund University},
+  url = {https://portal.research.lu.se/portal/files/61129581/autotuning.pdf},
+  langid = {english}
+}
+
+@misc{edelmanIntroductionComputationalThinking2024,
+  type = {Course},
+  title = {Introduction to {{Computational Thinking}}},
+  author = {Edelman, Alan and Sanders, David P. and Leiserson, Charles E.},
+  year = {2024},
+  url = {https://computationalthinking.mit.edu/Fall24/},
+  urldate = {2025-01-25}
+}
+
+@article{giordanoUncertaintyPropagationFunctionally2016,
+  title = {Uncertainty Propagation with Functionally Correlated Quantities},
+  author = {Giordano, Mos{\`e}},
+  year = {2016},
+  month = oct,
+  journal = {arXiv:1610.08716 [physics]},
+  eprint = {1610.08716},
+  primaryclass = {physics},
+  url = {http://arxiv.org/abs/1610.08716},
+  urldate = {2021-07-31},
+  abstract = {Many uncertainty propagation software exist, written in different programming languages, but not all of them are able to handle functional correlation between quantities. In this paper we review one strategy to deal with uncertainty propagation of quantities that are functionally correlated, and introduce a new software offering this feature: the Julia package Measurements.jl. It supports real and complex numbers with uncertainty, arbitrary-precision calculations, mathematical and linear algebra operations with matrices and arrays.},
+  archiveprefix = {arXiv}
+}
+
+@misc{chapmanDataToolkitRobustData2023,
+  type = {Conference Presentation},
+  title = {{{DataToolkit}}: {{Robust}} Data Management Made Simple},
+  author = {Chapman, Timothy},
+  year = {2023-07-25/2023-07-29},
+  url = {https://pretalx.com/media/juliacon2023/submissions/9BTTRL/resources/presentation_0F8lVWc.pdf},
+  urldate = {2024-01-11}
+}
+
+@misc{JuliaLanguage2025,
+  title = {The {{Julia Language}}},
+  year = {2025},
+  month = jan,
+  url = {https://docs.julialang.org/en/v1/},
+  urldate = {2025-01-25},
+  howpublished = {The Julia Project}
+}
+
+@book{kwongHandsOnDesignPatterns2020,
+  title = {Hands-{{On Design Patterns}} and {{Best Practices}} with {{Julia}}: {{Proven}} Solutions to Common Problems in Software Design for {{Julia}} 1.x},
+  shorttitle = {Hands-{{On Design Patterns}} and {{Best Practices}} with {{Julia}}},
+  author = {Kwong, Tom and Karpinski, Stefan},
+  year = {2020},
+  month = jan,
+  publisher = {Packt Publishing},
+  address = {Birmingham, UK},
+  url = {https://www.packtpub.com/product/hands-on-design-patterns-and-best-practices-with-julia/9781838648817},
+  isbn = {978-1-83864-881-7},
+  langid = {english}
+}
+
+@book{kwonJuliaProgrammingOperations2019,
+  title = {Julia {{Programming}} for {{Operations Research}}},
+  author = {Kwon, Changhyun},
+  year = {2019},
+  month = mar,
+  edition = {2},
+  publisher = {Independently published},
+  url = {https://juliabook.chkwon.net/book},
+  isbn = {978-1-79820-547-1},
+  langid = {english}
+}
+
+@book{lauwensThinkJuliaHow2019,
+  title = {Think {{Julia}}: {{How}} to {{Think Like}} a {{Computer Scientist}}},
+  shorttitle = {Think {{Julia}}},
+  author = {Lauwens, Ben and Downey, Allen},
+  year = {2019},
+  publisher = {O'Reilly Media},
+  address = {Beijing ; Sebastopol, CA},
+  url = {https://benlauwens.github.io/ThinkJulia.jl/latest/book.html},
+  isbn = {978-1-4920-4503-8},
+  langid = {english}
+}
+
+@phdthesis{oslejsekUsingJuliaLanguage2023,
+  type = {Undergraduate Thesis},
+  title = {Using {{Julia}} Language for Automatic Control of an Educational Laboratory Model},
+  author = {O{\v s}lej{\v s}ek, {\v S}t{\v e}p{\'a}n},
+  year = {2023},
+  address = {Prague, Czechia},
+  url = {https://wiki.control.fel.cvut.cz/mediawiki/images/4/42/Bp_2023_oslejsek_stepan.pdf},
+  school = {Czech Technical University}
+}
+
+@article{schanenRapidPrototypingJulia2022,
+  title = {Rapid {{Prototyping}} with {{Julia}}: {{From Mathematics}} to {{Fast Code}}},
+  shorttitle = {Rapid {{Prototyping}} with {{Julia}}},
+  author = {Schanen, Michel and Churavy, Valentin and Kim, Youngdae and Anitescu, Mihai},
+  year = {2022},
+  month = jul,
+  journal = {SIAM News},
+  url = {https://sinews.siam.org/Details-Page/rapid-prototyping-with-julia-from-mathematics-to-fast-code},
+  urldate = {2022-07-07},
+  abstract = {Software development---a dominant expenditure for scientific projects---is often limited by technical programming challenges, not mathematical insight. Here we share our experience with the Julia programming language in the context of the U.S. Department of Energy's Exascale Computing Project (ECP) as part of ExaSGD, a power grid optimization application. Julia is a free and open-source language that has the potential for...},
+  langid = {american}
+}
+
+@book{storopoliJuliaDataScience2021,
+  title = {Julia {{Data Science}}},
+  author = {Storopoli, Jose and Huijzer, Rik and Alonso, Lazaro},
+  year = {2021},
+  month = oct,
+  publisher = {Independently published},
+  url = {https://juliadatascience.io/},
+  isbn = {9798489859165},
+  langid = {english}
+}
+
+@inproceedings{tinnerholmOpenModelicaJlModular2021,
+  title = {{{OpenModelica}}.Jl: {{A}} Modular and Extensible {{Modelica}} Compiler Framework in {{Julia}} Targeting {{ModelingToolkit}}.Jl},
+  shorttitle = {{{OpenModelica}}.Jl},
+  booktitle = {Proceedings of 14th {{Modelica Conference}} 2021},
+  author = {Tinnerholm, John and Pop, Adrian and Heuermann, Andreas and Sj{\"o}lund, Martin},
+  year = {2021},
+  month = sep,
+  pages = {109--117},
+  address = {Link{\"o}ping, Sweden},
+  doi = {10.3384/ecp21181109},
+  url = {https://ecp.ep.liu.se/index.php/modelica/article/view/186},
+  urldate = {2022-06-08},
+  abstract = {This paper presents current work on our Modelica Compiler framework in Julia: OpenModelica.jl. We provide a brief overview of this novel framework and its features, and we also present the latest addition to the possible backend options. We target ModelingToolkit.jl (MTK), a framework for symbolic-numerical computation and scientific machine learning. We evaluated the performance of our new backend using the ScalableTestsuite, a benchmark suite for Modelica Compilers. In our experiment, we demonstrate that MTK can be used as a backend with competitive simulation performance. In addition, using the scientific machine learning features of the Modeling toolkit, we were able to approximate models in the ScalableTestsuite using surrogate techniques and how such techniques can be used to accelerate the solving of nonlinear algebraic loops during tearing. Based on our experiments, we propose using this new framework to automatically generate surrogate components of a Modelica model during the simulation to increase performance. The experimental work presented here provides one of the first investigations concerning the integration of the symbolic-numerical abilities of Julia within a Modelica tool.},
+  copyright = {Copyright (c) 2021 Array},
+  langid = {american}
+}

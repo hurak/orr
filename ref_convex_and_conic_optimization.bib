@@ -1,0 +1,379 @@
+@inproceedings{agrawalDifferentiableConvexOptimization2019,
+  title = {Differentiable {{Convex Optimization Layers}}},
+  booktitle = {Advances in {{Neural Information Processing Systems}} 32 ({{NeurIPS}} 2019)},
+  author = {Agrawal, Akshay and Amos, Brandon and Barratt, Shane and Boyd, Stephen and Diamond, Steven and Kolter, Zico},
+  year = {2019},
+  month = oct,
+  eprint = {1910.12430},
+  address = {Vancouver, Canada},
+  url = {http://arxiv.org/abs/1910.12430},
+  urldate = {2021-09-17},
+  abstract = {Recent work has shown how to embed differentiable optimization problems (that is, problems whose solutions can be backpropagated through) as layers within deep learning architectures. This method provides a useful inductive bias for certain problems, but existing software for differentiable optimization layers is rigid and difficult to apply to new settings. In this paper, we propose an approach to differentiating through disciplined convex programs, a subclass of convex optimization problems used by domain-specific languages (DSLs) for convex optimization. We introduce disciplined parametrized programming, a subset of disciplined convex programming, and we show that every disciplined parametrized program can be represented as the composition of an affine map from parameters to problem data, a solver, and an affine map from the solver's solution to a solution of the original problem (a new form we refer to as affine-solver-affine form). We then demonstrate how to efficiently differentiate through each of these components, allowing for end-to-end analytical differentiation through the entire convex program. We implement our methodology in version 1.1 of CVXPY, a popular Python-embedded DSL for convex optimization, and additionally implement differentiable layers for disciplined convex programs in PyTorch and TensorFlow 2.0. Our implementation significantly lowers the barrier to using convex optimization problems in differentiable programs. We present applications in linear machine learning models and in stochastic control, and we show that our layer is competitive (in execution time) compared to specialized differentiable solvers from past work.},
+  archiveprefix = {arXiv},
+  isbn = {978-1-71380-793-3}
+}
+
+@phdthesis{amosDifferentiableOptimizationBasedModeling2019,
+  title = {Differentiable {{Optimization-Based Modeling}} for {{Machine Learning}}},
+  author = {Amos, Brandon},
+  year = {2019},
+  url = {https://github.com/bamos/thesis},
+  school = {Carnegie Mellon University}
+}
+
+@misc{amosDifferentiableOptimizationBasedModeling2019a,
+  type = {Thesis Defense},
+  title = {Differentiable {{Optimization-Based Modeling}} for {{Machine Learning}}},
+  author = {Amos, Brandon},
+  year = {2019},
+  address = {Carnegie Mellon University}
+}
+
+@misc{amosOptNetDifferentiableOptimization2021,
+  title = {{{OptNet}}: {{Differentiable Optimization}} as a {{Layer}} in {{Neural Networks}}},
+  shorttitle = {{{OptNet}}},
+  author = {Amos, Brandon and Kolter, J. Zico},
+  year = {2021},
+  month = dec,
+  number = {arXiv:1703.00443},
+  eprint = {1703.00443},
+  primaryclass = {cs, math, stat},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.1703.00443},
+  url = {http://arxiv.org/abs/1703.00443},
+  urldate = {2024-08-14},
+  abstract = {This paper presents OptNet, a network architecture that integrates optimization problems (here, specifically in the form of quadratic programs) as individual layers in larger end-to-end trainable deep networks. These layers encode constraints and complex dependencies between the hidden states that traditional convolutional and fully-connected layers often cannot capture. We explore the foundations for such an architecture: we show how techniques from sensitivity analysis, bilevel optimization, and implicit differentiation can be used to exactly differentiate through these layers and with respect to layer parameters; we develop a highly efficient solver for these layers that exploits fast GPU-based batch solves within a primal-dual interior point method, and which provides backpropagation gradients with virtually no additional cost on top of the solve; and we highlight the application of these approaches in several problems. In one notable example, the method is learns to play mini-Sudoku (4x4) given just input and output games, with no a-priori information about the rules of the game; this highlights the ability of OptNet to learn hard constraints better than other neural architectures.},
+  archiveprefix = {arXiv}
+}
+
+@misc{anjosConicOptimizationBasics2014,
+  title = {Conic {{Optimization The Basics}}, Some {{Fundamental Results}}, and {{Recent Developments}}},
+  author = {Anjos, Miguel F.},
+  year = {2014},
+  month = apr,
+  url = {http://cost-td1207.zib.de/sites/default/files/miguel_f_anjos.pdf}
+}
+
+@book{bauschkeIntroductionConvexityOptimization2023,
+  title = {An {{Introduction}} to {{Convexity}}, {{Optimization}}, and {{Algorithms}}},
+  author = {Bauschke, Heinz H. and Moursi, Walaa M.},
+  year = {2023},
+  month = dec,
+  series = {{{MOS-SIAM Series}} on {{Optimization}}},
+  publisher = {{Society for Industrial and Applied Mathematics}},
+  address = {Philadelphia},
+  url = {https://doi.org/10.1137/1.9781611977806},
+  abstract = {This concise, self-contained volume introduces convex analysis and optimization algorithms, with an emphasis on bridging the two areas. It explores cutting-edge algorithms---such as the proximal gradient, Douglas--Rachford, Peaceman--Rachford, and FISTA---that have applications in machine learning, signal processing, image reconstruction, and other fields. An Introduction to Convexity, Optimization, and Algorithms contains algorithms illustrated by Julia examples and more than 200 exercises that enhance the reader's understanding of the topic. Clear explanations and step-by-step algorithmic descriptions facilitate self-study for individuals looking to enhance their expertise in convex analysis and optimization.},
+  isbn = {978-1-61197-779-0},
+  langid = {english}
+}
+
+@book{ben-talLecturesModernConvex2001,
+  title = {Lectures on {{Modern Convex Optimization}}: {{Analysis}}, {{Algorithms}}, and {{Engineering Applications}}},
+  shorttitle = {Lectures on {{Modern Convex Optimization}}},
+  author = {{Ben-Tal}, Aharon and Nemirovski, Arkadi},
+  year = {2001},
+  month = aug,
+  publisher = {{Society for Industrial and Applied Mathematics}},
+  address = {Philadelphia, PA},
+  abstract = {Here is a book devoted to well-structured and thus efficiently solvable convex optimization problems, with emphasis on conic quadratic and semidefinite programming. The authors present the basic theory underlying these problems as well as their numerous applications in engineering, including synthesis of filters, Lyapunov stability analysis, and structural design. The authors also discuss the complexity issues and provide an overview of the basic theory of state-of-the-art polynomial time interior point methods for linear, conic quadratic, and semidefinite programming. The book's focus on well-structured convex problems in conic form allows for unified theoretical and algorithmical treatment of a wide spectrum of important optimization problems arising in applications.},
+  isbn = {978-0-89871-491-3},
+  langid = {english}
+}
+
+@unpublished{ben-talLecturesModernConvex2023,
+  type = {Lecture Notes},
+  title = {Lectures on {{Modern Convex Optimization}} - 2020/2021/2022/2023 {{Analysis}}, {{Algorithms}}, {{Engineering Applications}}},
+  shorttitle = {Lectures on {{Modern Convex Optimization}}},
+  author = {{Ben-Tal}, Aharon and Nemirovski, Arkadi},
+  year = {2023},
+  address = {Technion \& Georgia Institute of Technology},
+  url = {https://www2.isye.gatech.edu/~nemirovs/LMCOLN2023Spring.pdf}
+}
+
+@misc{bertsekasConvexAnalysisOptimization2014,
+  type = {Lecture Slides},
+  title = {Convex Analysis and Optimization Based on 6.253 Class Lectures at the {{Mass}}. {{Institute}} of {{Technology}}, {{Cambridge}}, {{Mass}}, {{Spring}} 2014},
+  author = {Bertsekas, Dimitri P.},
+  year = {2014},
+  url = {http://web.mit.edu/dimitrib/www/home.html}
+}
+
+@book{bertsekasConvexOptimizationAlgorithms2015,
+  title = {Convex {{Optimization Algorithms}}},
+  author = {Bertsekas, Dimitri P.},
+  year = {2015},
+  month = feb,
+  publisher = {Athena Scientific},
+  address = {Nashua},
+  url = {http://www.athenasc.com/convexalgorithms.html},
+  isbn = {978-1-886529-28-1},
+  langid = {english}
+}
+
+@book{bertsekasConvexOptimizationTheory2009,
+  title = {Convex {{Optimization Theory}}},
+  author = {Bertsekas, Dimitri P.},
+  year = {2009},
+  month = jun,
+  publisher = {Athena Scientific},
+  address = {Belmont, Mass},
+  url = {http://web.mit.edu/dimitrib/www/Convex_Theory_Entire_Book.pdf},
+  isbn = {978-1-886529-31-1},
+  langid = {english}
+}
+
+@book{borweinConvexAnalysisNonlinear2006,
+  title = {Convex {{Analysis}} and {{Nonlinear Optimization}}: {{Theory}} and {{Examples}}},
+  shorttitle = {Convex {{Analysis}} and {{Nonlinear Optimization}}},
+  author = {Borwein, Jonathan and Lewis, Adrian S.},
+  year = {2006},
+  series = {{{CMS Books}} in {{Mathematics}}},
+  edition = {2},
+  publisher = {Springer},
+  address = {New York},
+  url = {https://link.springer.com/book/10.1007/978-0-387-31256-9},
+  isbn = {978-0-387-29570-1},
+  langid = {english}
+}
+
+@book{boydConvexOptimization2004,
+  title = {Convex {{Optimization}}},
+  author = {Boyd, Stephen and Vandenberghe, Lieven},
+  year = {2004},
+  month = mar,
+  edition = {Seventh printing with corrections 2009},
+  publisher = {Cambridge University Press},
+  address = {Cambridge, UK},
+  url = {https://web.stanford.edu/~boyd/cvxbook/},
+  abstract = {Convex optimization problems arise frequently in many different fields. A comprehensive introduction to the subject, this book shows in detail how such problems can be solved numerically with great efficiency. The focus is on recognizing convex optimization problems and then finding the most appropriate technique for solving them. The text contains many worked examples and homework exercises and will appeal to students, researchers and practitioners in fields such as engineering, computer science, mathematics, statistics, finance, and economics.},
+  isbn = {978-0-521-83378-3},
+  langid = {english}
+}
+
+@misc{boydConvexOptimizationApplications,
+  title = {Convex {{Optimization Applications}}},
+  author = {Boyd, Stephen and Diamond, Steven and Zhang, Junzi and Agrawal, Akshay},
+  url = {https://web.stanford.edu/~boyd/papers/pdf/cvx_applications.pdf},
+  urldate = {2021-07-30},
+  langid = {english}
+}
+
+@misc{boydMoreAdvancedTopics,
+  title = {More {{Advanced Topics}}},
+  author = {Boyd, Stephen and Diamond, Steven and Zhang, Junzi and Agrawal, Akshay},
+  url = {https://web.stanford.edu/~junziz/papers/cvx_additional_materials.pdf},
+  langid = {english}
+}
+
+@book{brinkhuisConvexAnalysisOptimization2020,
+  title = {Convex {{Analysis}} for {{Optimization}}},
+  author = {Brinkhuis, Jan},
+  year = {2020},
+  month = may,
+  series = {Graduate {{Texts}} in {{Operations Research}}},
+  publisher = {Springer},
+  address = {Cham},
+  url = {https://link.springer.com/book/10.1007/978-3-030-41804-5},
+  abstract = {Presents a unified novel three-step method for all constructions, formulas and proofs of the important classic notions of convexity Includes numerous exercises and illustrations to stimulate learning by doing and seeing Written in a narrative style with short sections and concise proofs},
+  isbn = {978-3-030-41803-8},
+  langid = {english}
+}
+
+@article{daspremontAccelerationMethods2021,
+  title = {Acceleration {{Methods}}},
+  author = {{d'Aspremont}, Alexandre and Scieur, Damien and Taylor, Adrien},
+  year = {2021},
+  month = mar,
+  journal = {arXiv:2101.09545 [cs, math]},
+  eprint = {2101.09545},
+  primaryclass = {cs, math},
+  url = {http://arxiv.org/abs/2101.09545},
+  urldate = {2021-12-20},
+  abstract = {This monograph covers some recent advances on a range of acceleration techniques frequently used in convex optimization. We first use quadratic optimization problems to introduce two key families of methods, momentum and nested optimization schemes, which coincide in the quadratic case to form the Chebyshev method whose complexity is analyzed using Chebyshev polynomials. We discuss momentum methods in detail, starting with the seminal work of Nesterov (1983) and structure convergence proofs using a few master templates, such as that of {\textbackslash}emph\{optimized gradient methods\} which have the key benefit of showing how momentum methods maximize convergence rates. We further cover proximal acceleration techniques, at the heart of the {\textbackslash}emph\{Catalyst\} and {\textbackslash}emph\{Accelerated Hybrid Proximal Extragradient\} frameworks, using similar algorithmic patterns. Common acceleration techniques directly rely on the knowledge of some regularity parameters of the problem at hand, and we conclude by discussing {\textbackslash}emph\{restart\} schemes, a set of simple techniques to reach nearly optimal convergence rates while adapting to unobserved regularity parameters.},
+  archiveprefix = {arXiv}
+}
+
+@article{gandolfoStablePathFollowingControl2017,
+  title = {Stable {{Path-Following Control}} for a {{Quadrotor Helicopter Considering Energy Consumption}}},
+  author = {Gandolfo, Daniel C. and Salinas, Lucio R. and Brand{\~a}o, Alexandre and Toibero, Juan M.},
+  year = {2017},
+  month = jul,
+  journal = {IEEE Transactions on Control Systems Technology},
+  volume = {25},
+  number = {4},
+  pages = {1423--1430},
+  issn = {1558-0865},
+  doi = {10.1109/TCST.2016.2601288},
+  abstract = {A substantial interest in aerial robots has grown in recent years. However, the energetic cost of flying is one of the key challenges nowadays. Rotorcrafts are heavier-than-air flying machines that use lift generated by one or several rotors (vertically oriented propellers), and because of this, they spend a large proportion of their available energy to maintain their own weight in the air. In this brief, this concept is used to evaluate the relationship between navigation speed and energy consumption in a miniature quadrotor helicopter, which travels over a desired path. A novel path-following controller is proposed in which the speed of the rotorcraft is a dynamic profile that varies with the geometric requirements of the desired path. The stability of the control law is proved using the Lyapunov theory. The experimental results using a real quadrotor show the good performance of the proposed controller, and the percentages of involved energy are quantified using a model of a lithium polymer battery that was previously identified.}
+}
+
+@article{henrionLinearConicOptimization2014,
+  title = {Linear Conic Optimization for Nonlinear Optimal Control},
+  author = {Henrion, Didier and Pauwels, Edouard},
+  year = {2014},
+  month = jul,
+  journal = {arXiv:1407.1650 [math]},
+  eprint = {1407.1650},
+  primaryclass = {math},
+  url = {http://arxiv.org/abs/1407.1650},
+  urldate = {2022-02-02},
+  abstract = {Infinite-dimensional linear conic formulations are described for nonlinear optimal control problems. The primal linear problem consists of finding occupation measures supported on optimal relaxed controlled trajectories, whereas the dual linear problem consists of finding the largest lower bound on the value function of the optimal control problem. Various approximation results relating the original optimal control problem and its linear conic formulations are developed. As illustrated by a couple of simple examples, these results are relevant in the context of finite-dimensional semidefinite programming relaxations used to approximate numerically the solutions of the infinite-dimensional linear conic problems.},
+  archiveprefix = {arXiv}
+}
+
+@book{hiriart-urrutyFundamentalsConvexAnalysis2001,
+  title = {Fundamentals of {{Convex Analysis}}},
+  author = {{Hiriart-Urruty}, Jean-Baptiste and Lemar{\'e}chal, Claude},
+  year = {2004},
+  series = {Grundlehren {{Text Editions}}},
+  edition = {1st, corrected 2nd printing},
+  publisher = {Springer},
+  address = {Berlin; Heidelberg},
+  url = {https://doi.org/10.1007/978-3-642-56468-0},
+  abstract = {This book is an abridged version of our two-volume opus Convex Analysis and Minimization Algorithms [18], about which we have received very positive feedback from users, readers, lecturers ever since it was published - by Springer-Verlag in 1993. Its pedagogical qualities were particularly appreciated, in the combination with a rather advanced technical material. Now [18] hasa dual but clearly defined nature: - an introduction to the basic concepts in convex analysis, - a study of convex minimization problems (with an emphasis on numerical al- rithms), and insists on their mutual interpenetration. It is our feeling that the above basic introduction is much needed in the scientific community. This is the motivation for the present edition, our intention being to create a tool useful to teach convex anal\- ysis. We have thus extracted from [18] its "backbone" devoted to convex analysis, namely ChapsIII-VI and X. Apart from some local improvements, the present text is mostly a copy of the corresponding chapters. The main difference is that we have deleted material deemed too advanced for an introduction, or too closely attached to numerical algorithms. Further, we have included exercises, whose degree of difficulty is suggested by 0, I or 2 stars *. Finally, the index has been considerably enriched. Just as in [18], each chapter is presented as a "lesson", in the sense of our old masters, treating of a given subject in its entirety.},
+  isbn = {978-3-540-42205-1},
+  langid = {english}
+}
+
+@article{chandrasekaranRelativeEntropyOptimization2017,
+  title = {Relative Entropy Optimization and Its Applications},
+  author = {Chandrasekaran, Venkat and Shah, Parikshit},
+  year = {2017},
+  month = jan,
+  journal = {Mathematical Programming},
+  volume = {161},
+  number = {1},
+  pages = {1--32},
+  issn = {1436-4646},
+  doi = {10.1007/s10107-016-0998-2},
+  url = {https://doi.org/10.1007/s10107-016-0998-2},
+  urldate = {2024-08-16},
+  abstract = {In this expository article, we study optimization problems specified via linear and relative entropy inequalities. Such relative entropy programs (REPs) are convex optimization problems as the relative entropy function is jointly convex with respect to both its arguments. Prominent families of convex programs such as geometric programs (GPs), second-order cone programs, and entropy maximization problems are special cases of REPs, although REPs are more general than these classes of problems. We provide solutions based on REPs to a range of problems such as permanent maximization, robust optimization formulations of GPs, and hitting-time estimation in dynamical systems. We survey previous approaches to some of these problems and the limitations of those methods, and we highlight the more powerful generalizations afforded by REPs. We conclude with a discussion of quantum analogs of the relative entropy function, including a review of the similarities and distinctions with respect to the classical case. We also describe a stylized application of quantum relative entropy optimization that exploits the joint convexity of the quantum relative entropy function.},
+  langid = {english}
+}
+
+@article{mehdiloozadFindingMaximalElement2015,
+  title = {Finding a Maximal Element of a Convex Set through Its Characteristic Cone: {{An}} Application to Finding a Strictly Complementary Solution},
+  shorttitle = {Finding a Maximal Element of a Convex Set through Its Characteristic Cone},
+  author = {Mehdiloozad, Mahmood and Tone, Kaoru and Askarpour, Rahim and Ahmadi, Mohammad Bagher},
+  year = {2015},
+  month = mar,
+  journal = {arXiv:1503.09014 [math]},
+  eprint = {1503.09014},
+  primaryclass = {math},
+  url = {http://arxiv.org/abs/1503.09014},
+  urldate = {2022-05-10},
+  abstract = {In order to express a polyhedron as the (Minkowski) sum of a polytope and a polyhedral cone, Motzkin (1936) made a transition from the polyhedron to a polyhedral cone. Based on his excellent idea, we represent a set by a characteristic cone. By using this representation, we then reach four main results: (i) expressing a closed convex set containing no line as the direct sum of the convex hull of its extreme points and conical hull of its extreme directions, (ii) establishing a convex programming (CP) based framework for determining a maximal element-an element with the maximum number of positive components-of a convex set, (iii) developing a linear programming problem for finding a relative interior point of a polyhedron, and (iv) proposing two procedures for the identification of a strictly complementary solution in linear programming.},
+  archiveprefix = {arXiv}
+}
+
+@inproceedings{morbidiMinimumenergyPathGeneration2016,
+  title = {Minimum-Energy Path Generation for a Quadrotor {{UAV}}},
+  booktitle = {2016 {{IEEE International Conference}} on {{Robotics}} and {{Automation}} ({{ICRA}})},
+  author = {Morbidi, Fabio and Cano, Roel and Lara, David},
+  year = {2016},
+  month = may,
+  pages = {1492--1498},
+  doi = {10.1109/ICRA.2016.7487285},
+  abstract = {A major limitation of existing battery-powered quadrotor UAVs is their reduced flight endurance. To address this issue, by leveraging the electrical model of a brushless DC motor, we explicitly determine minimum-energy paths between a predefined initial and final configuration of a quadrotor by solving an optimal control problem with respect to the angular accelerations of the four propellers. As a variation on this problem, if the total energy consumption between two boundary states is fixed, minimum-time and/or minimum-control-effort trajectories are computed for the aerial vehicle. The theory is illustrated for the DJI Phantom 2 quadrotor in three realistic scenarios.}
+}
+
+@book{nesterovIntroductoryLecturesConvex2004,
+  title = {Introductory {{Lectures}} on {{Convex Optimization}}: {{A Basic Course}}},
+  shorttitle = {Introductory {{Lectures}} on {{Convex Optimization}}},
+  author = {Nesterov, Yurii},
+  year = {2004},
+  series = {Applied {{Optimization}}},
+  publisher = {Springer US},
+  url = {https://www.springer.com/gp/book/9781402075537},
+  urldate = {2019-03-05},
+  abstract = {It was in the middle of the 1980s, when the seminal paper by Kar\- markar opened a new epoch in nonlinear optimization. The importance of this paper, containing a new polynomial-time algorithm for linear op\- timization problems, was not only in its complexity bound. At that time, the most surprising feature of this algorithm was that the theoretical pre\- diction of its high efficiency was supported by excellent computational results. This unusual fact dramatically changed the style and direc\- tions of the research in nonlinear optimization. Thereafter it became more and more common that the new methods were provided with a complexity analysis, which was considered a better justification of their efficiency than computational experiments. In a new rapidly develop\- ing field, which got the name "polynomial-time interior-point methods", such a justification was obligatory. Afteralmost fifteen years of intensive research, the main results of this development started to appear in monographs [12, 14, 16, 17, 18, 19]. Approximately at that time the author was asked to prepare a new course on nonlinear optimization for graduate students. The idea was to create a course which would reflect the new developments in the field. Actually, this was a major challenge. At the time only the theory of interior-point methods for linear optimization was polished enough to be explained to students. The general theory of self-concordant functions had appeared in print only once in the form of research monograph [12].},
+  isbn = {978-1-4020-7553-7},
+  langid = {english}
+}
+
+@book{nesterovLecturesConvexOptimization2018,
+  title = {Lectures on {{Convex Optimization}}},
+  author = {Nesterov, Yurii},
+  year = {2018},
+  month = dec,
+  series = {Springer {{Optimization}} and {{Its Applications}}},
+  edition = {2},
+  publisher = {Springer},
+  address = {Cham},
+  url = {https://doi.org/10.1007/978-3-319-91578-4},
+  abstract = {This book provides a comprehensive, modern introduction to convex optimization, a field that is becoming increasingly important in applied mathematics, economics and finance, engineering, and computer science, notably in data science and machine learning.Written by a leading expert in the field, this book includes recent advances in the algorithmic theory of convex optimization, naturally complementing the existing literature. It contains a unified and rigorous presentation of the acceleration techniques for minimization schemes of first- and second-order. It provides readers with a full treatment of the smoothing technique, which has tremendously extended the abilities of gradient-type methods. Several powerful approaches in structural optimization, including optimization in relative scale and polynomial-time interior-point methods, are also discussed in detail. Researchers in theoretical optimization as well as professionals working on optimization problems will findthis book very useful. It presents many successful examples of how to develop very fast specialized minimization algorithms. Based on the author's lectures, it can naturally serve as the basis for introductory and advanced courses in convex optimization for students in engineering, economics, computer science and mathematics.},
+  isbn = {978-3-319-91577-7},
+  langid = {english}
+}
+
+@book{rockafellarConvexAnalysis1970,
+  title = {Convex {{Analysis}}},
+  author = {Rockafellar, R. Tyrrell},
+  year = {1970},
+  series = {Princeton {{Mathematical Series}}},
+  edition = {Tenth printing, 1997},
+  publisher = {Princeton University Press},
+  url = {https://press.princeton.edu/books/paperback/9780691015866/convex-analysis},
+  abstract = {Available for the first time in paperback, R. Tyrrell Rockafellar's classic study presents readers with a coherent branch of nonlinear mathematical analysis that is especially suited to the study of optimization problems. Rockafellar's theory differs from classical analysis in that differentiability assumptions are replaced by convexity assumptions. The topics treated in this volume include: systems of inequalities, the minimum or maximum of a convex function over a convex set, Lagrange multipliers, minimax theorems and duality, as well as basic results about the structure of convex sets and the continuity and differentiability of convex functions and saddle- functions. This book has firmly established a new and vital area not only for pure mathematics but also for applications to economics and engineering. A sound knowledge of linear algebra and introductory real analysis should provide readers with sufficient background for this book. There is also a guide for the reader who may be using the book as an introduction, indicating which parts are essential and which may be skipped on a first reading.},
+  googlebooks = {1TiOka9bx3sC},
+  isbn = {978-0-691-01586-6},
+  langid = {english}
+}
+
+@book{ryuLargeScaleConvexOptimization2022,
+  title = {Large-{{Scale Convex Optimization}}: {{Algorithms}} \& {{Analyses}} via {{Monotone Operators}}},
+  shorttitle = {Large-{{Scale Convex Optimization}}},
+  author = {Ryu, Ernest K. and Yin, Wotao},
+  year = {2022},
+  month = dec,
+  edition = {New edition},
+  publisher = {Cambridge University Press},
+  address = {Cambridge, United Kingdom New York, NY, USA Port Melbourne, VIC, Australia New Delhi, India Singapore},
+  url = {https://doi.org/10.1017/9781009160865},
+  abstract = {Starting from where a first course in convex optimization leaves off, this text presents a unified analysis of first-order optimization methods -- including parallel-distributed algorithms -- through the abstraction of monotone operators. With the increased computational power and availability of big data over the past decade, applied disciplines have demanded that larger and larger optimization problems be solved. This text covers the first-order convex optimization methods that are uniquely effective at solving these large-scale optimization problems. Readers will have the opportunity to construct and analyze many well-known classical and modern algorithms using monotone operators, and walk away with a solid understanding of the diverse optimization algorithms. Graduate students and researchers in mathematical optimization, operations research, electrical engineering, statistics, and computer science will appreciate this concise introduction to the theory of convex optimization algorithms.},
+  isbn = {978-1-00-916085-8},
+  langid = {english}
+}
+
+@book{stoerConvexityOptimizationFinite1970,
+  title = {Convexity and {{Optimization}} in {{Finite Dimensions I}}},
+  author = {Stoer, Josef and Witzgall, Christoph},
+  year = {1970},
+  series = {Grundlehren Der Mathematischen {{Wissenschaften}}},
+  publisher = {Springer},
+  address = {Berlin, Heidelberg},
+  url = {https://doi.org/10.1007/978-3-642-46216-0},
+  urldate = {2022-07-29},
+  isbn = {978-3-642-46218-4},
+  langid = {english}
+}
+
+@inproceedings{vielmaConicOptimizationJulia2020a,
+  title = {Conic {{Optimization}} in {{Julia}} and {{JuMP}}},
+  booktitle = {{{JuliaCon}} 2020},
+  author = {Vielma, Juan Pablo},
+  year = {2020},
+  url = {https://juan-pablo-vielma.github.io/presentations/JULIACON_2020.pdf},
+  langid = {english}
+}
+
+@misc{yeConicLinearProgramming2017,
+  title = {Conic Linear Programming},
+  author = {Ye, Yinyu},
+  year = {2017},
+  month = oct,
+  url = {https://web.stanford.edu/class/msande314/sdpmain.pdf}
+}
+
+@book{zotero-undefined,
+  title = {Convex {{Optimization}}: {{Euclidean Distance Geometry}}},
+  author = {Dattorro, Jon},
+  year = {2019},
+  month = oct,
+  edition = {2},
+  publisher = {Meboo Publishing USA},
+  url = {https://meboo.convexoptimization.com/Meboo.html},
+  isbn = {978-0-578-16140-2}
+}

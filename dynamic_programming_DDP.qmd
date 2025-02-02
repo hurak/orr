@@ -1,0 +1,316 @@
+---
+title: "Differential dynamic programming (DDP)"
+bibliography: 
+    - ref_optimal_control.bib
+    - ref_reinforcement_learning_and_dynamic_programming.bib
+    - ref_matrix_calculus.bib
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+execute:
+    enabled: false
+    warning: false
+engine: julia
+---
+
+We consider the standard discrete-time optimal control problem: 
+
+- We are given a dynamical system modelled by $\bm x_{k+1} = \mathbf f(\bm x_k, \bm u_k)$. For simplicity of notation we only consider a time invariant system, extension to the time-varying is straightforward. 
+- Due to time invariance we consider the time $k=0$ as the initial time. Specification of the initial state is thus $\bm x_0 = \mathbf x_\mathrm{init}$. 
+- On the time horizon $[0,N]$ we now search for the optimal control trajectory $(\bm u_k)_{k=0}^{N-1}$ such that the cost function $J_0\left(\bm x_0, (\bm u_k)_{k=0}^{N-1}\right) = \phi(\bm x_N) + \sum_{k=0}^{N-1} L(\bm x_k, \bm u_k)$ is minimized.
+- Constraints on the state at the final time can be added later, we do not consider them in this initial study.
+
+We are already aware of the *curse of dimensionality* of the standard dynamic programming as it calls for evaluating the optimal cost (to go) $J_k^\star(\bm x_k)$ at a grid of the state space and the time interval. *Differential dynamic programming (DDP)* is a way to relieve the computational burden by restricting the considered set of states to a neighborhood of some given state and control trajectories. It is only in this neighbourhood that an improving trajectories are search for. The key assumption for the method is that the optimal cost can be approximated by a quadratic function, for which such minimization is trivial.
+
+::: {.callout-note}
+## Similarity to iterative algorithms for optimization such as Newton's method
+When searching for the $\min_{\bm x\in\mathbb R^n} f(\bm x)$, Newton's method starts with an initial guess of the solution $\bm x^0$, assumes that in its neighbourhood the cost function $f(\bm x_0 + \bm d)$ can be approximated by a quadratic function $q(\bm d) = f(\bm x_0) + \left(\nabla f(\bm x_0)\right)^\top \bm d + \frac{1}{2}\bm d^\top \nabla^2 f(\bm x_0) \bm d$, minimizes this quadratic function, which leads to the update of the guess $\bm x^1 = x^0 + \underbrace{\arg \min_{\bm d\in\mathbb R^n} q(\bm d)}_{\bm d_0}$, that is, $\bm x^1 = \bm x^0 + \bm d^0$, and repeats. 
+::: 
+
+We start with some initial (guess of the optimal) control trajectory 
+$$(\bm u_0^0, \bm u_1^0, \ldots, \bm u_{N-1}^0) \eqqcolon (\bm u_k^0)_{k=0}^{N-1}.$$ 
+
+The system (initially at the fixed $\bm x_0$) responds to this control trajectory with the state trajectory 
+$$(\bm x_1^0, \bm x_2^0, \ldots, \bm x_{N}^0) \eqqcolon (\bm x_k^0)_{k=1}^{N}.$$
+
+Correspondingly, at time $k\in[0,N-1]$ the *cost to go* from the state $x_k^0$ is 
+$$
+J_k^0(\bm x_k^0) \coloneqq J_k(\bm x_k^0, (\bm u_i^0)_{i=k}^{N-1}).
+$$
+
+Recall that if the optimal control trajectory $(\bm u_0^\star, \bm u_1^\star, \ldots, \bm u_{N-1}^\star) \eqqcolon (\bm u_k^\star)_{k=0}^{N-1}$ is applied, the optimal state trajectory $(\bm x_1^\star, \bm x_2^\star, \ldots, \bm x_{N}^\star) \eqqcolon (\bm x_k^\star)_{k=1}^{N}$ is a consequence. Furthermove, at every time $k$ the cost to go is
+$$
+J_k^\star(\bm x_k^\star) \eqqcolon J_k(\bm x_k^\star, (\bm u_i^\star)_{i=k}^{N-1}),
+$$
+and it is optimal, of course, by the very principle of dynamic programming.
+
+::: {.callout-important}
+## Upper index denotes the control used from the given state and time on
+In the following we will heavily use the upper right index. For example, when writing $J_k^\heartsuit(\bm x_k)$, we mean that the control sequence $(\bm u_k^\heartsuit, \bm u_{k+1}^\heartsuit, \ldots, \bm u_{N-1}^\heartsuit)$ is applied when the system is at state $\bm x_k$ at time $k$, that is 
+
+$$J_k^\heartsuit(\bm x_k) \coloneqq J_k(\bm x_k, (\bm u_k^\heartsuit, \bm u_{k+1}^\heartsuit, \ldots, \bm u_{N-1}^\heartsuit)).$$
+:::
+
+With the nominal control trajectory is applied, it obviously holds that
+$$
+J_k^0(\bm x_k^0) = L(\bm x_k^0,\bm u_k^0) + J_{k+1}^0(\bm x_{k+1}^0).
+$$ {#eq-bellman-equation-nonoptimal}
+
+Assume now a tiny perturbation $\delta \bm x_k^0$ from the state $\bm x_k^0$ and $\delta \bm u_k^0$ from the control $\bm u_k^0$ at the time $k$. The motivation for introduction of such perturbation is the same as we had in Newton's method – trying to decrease the cost function a bit.
+
+The previous equation also holds for the perturbed state and control, but note that since the control sequence is different, the optimal cost to go is different too.
+$$
+J_k^1(\underbrace{\bm x_k^0+\delta \bm x_k^0}_{\bm x_k^1}) = L(\bm x_k^0+\delta \bm x_k^0,\underbrace{\bm u_k^0+\delta \bm u_k^0}_{\bm u_k^1}) + J_{k+1}^1(\underbrace{\bm x_{k+1}^0+\delta \bm x_{k+1}^0}_{\bm x_{k+1}^1}), 
+$$ {#eq-bellman-equation-nonoptimal-perturbed}
+where 
+$$
+\delta \bm x_{k+1}^0 = \bm f(\bm x_k^0+\delta \bm x_k^0,\bm u_k^0+\delta \bm u_k^0) - \bm x_{k+1}^0.
+$$
+
+We now aim at approximating the cost to go by a quadratic function using the first three terms of Taylor's series. We will need the first and second derivatives of the terms in the above equation. Let's start with the first derivatives. When differentiating $J_{k+1}^1(\bm x_{k+1}^0)$ with respect to $\bm x_k^0$, we need to invoke the chain rule as $\bm x_{k+1}^0 = \bm f(\bm x_k^0, \bm u_k^0)$.
+
+::: {.callout-tip}
+## Chain rule for the first derivative of composed functions
+Consider the composed function $h(\bm x)\coloneqq f(\mathbf g(\bm x))$. Its first derivative is
+$$
+\mathrm{D} h(\bm x) = \left.\mathrm{D}g(\bm y)\right|_{\bm y=\mathbf f(\bm x)}\mathrm{D} \mathbf f(\bm x),
+$$
+where $\mathrm{D}g(\bm y)$ is a row vector of derivatives, and $\mathrm{D} \mathbf f(\bm x)$ is a (Jacobian) matrix
+$$
+\mathrm D\mathbf f(\bm x) = 
+\begin{bmatrix} 
+\frac{\partial f_1(\bm x)}{\partial x_1} & \frac{\partial f_1(\bm x)}{\partial x_2} & \ldots & \frac{\partial f_1(\bm x)}{\partial x_n}\\
+\frac{\partial f_2(\bm x)}{\partial x_1} & \frac{\partial f_2(\bm x)}{\partial x_2} & \ldots & \frac{\partial f_2(\bm x)}{\partial x_n}\\
+\vdots\\
+\frac{\partial f_m(\bm x)}{\partial x_1} & \frac{\partial f_m(\bm x)}{\partial x_2} & \ldots & \frac{\partial f_m(\bm x)}{\partial x_n}
+\end{bmatrix}.
+$$
+
+Or, if formatted as the gradient, which we prefer in our course, we can write
+$$\boxed
+{\nabla h(\bm x) = \nabla \mathbf f(x) \left.\nabla g(\bm y)\right|_{\bm y = \mathbf f(\bm x)},}
+$$
+where 
+$$
+\nabla \mathbf f(x) = \begin{bmatrix} \nabla f_1(\bm x) & \nabla f_2(\bm x) & \ldots & \nabla f_m(\bm x)\end{bmatrix}.
+$$
+:::
+
+Applying this to obtain derivatives of $J_{k+1}^1\left(\bm f(\bm x_k^0, \bm u_k^0)\right)$ with respect to $\bm x_k$ gives
+$$
+\mathrm{D}_{\bm x_{k}}J_{k+1}^1\left(\bm f(\bm x_k^0, \bm u_k^0)\right) = \left.\mathrm{D}_{\bm x_{k+1}}J_{k+1}^1\left(\bm x_{k+1}^0\right)\right|_{\bm x_{k+1}^0 = \mathbf f(\bm x_k^0,\bm u_k^0)} \mathrm{D}_{\bm x_k} \bm f(\bm x_k^0, \bm u_k^0), 
+$$
+or, using gradients
+$$\boxed
+{\nabla_{\bm x_{k}}J_{k+1}^1\left(\bm f(\bm x_k^0, \bm u_k^0)\right) = \nabla_{\bm x_k} \bm f(\bm x_k^0, \bm u_k^0) \, \left.\nabla_{\bm x_{k+1}}J_{k+1}^1\left(\bm x_{k+1}^0\right)\right|_{\bm x_{k+1}^0 = \mathbf f(\bm x_k^0,\bm u_k^0)}.}
+$$
+
+And similarly for the derivatives with respect to $\bm u_k$.
+
+::: {.callout-tip}
+## Chain rule for the second derivative of composed functions
+We consider (again) the composed function $h(\bm x)\coloneqq g(\mathbf f(\bm x))$. Referring to the previous box with the expressions for the first derivative, the second derivative must obviously invoke the rule for differentiation of a product. The Hessian is
+$$
+  \mathrm H h(\bm x) = \left[\mathrm{D}\mathbf f(\bm x)\right]^\top \left.\mathrm H g(\bm y)\right|_{\bm y=\mathbf f(\bm x)}\mathrm{D}\mathbf f(\bm x) + \sum_{k=1}^m \left.\frac{\partial g(\bm y)}{\partial y_k}\right|_{\bm y = \mathbf f(\bm x)} \mathrm{H} f_k(\bm x).
+$$
+
+This is based on @magnusMatrixDifferentialCalculus2019, Theorem 6.8 on page 122. It is worth emphasizing that in the second term we form the Hessians (that is, matrices) for each component $f_i(\bm x)$ of the vector function $\mathbf f(\bm x)$. This way we avoid the need for anything like a three-dimensional (tensor) version of Hessians and we can stick to matrices and vectors.
+
+Since in our course we prefer working with gradients, we present the result in the gradient form
+$$\boxed
+{  \nabla^2 h(\bm x) = \nabla \mathbf f(\bm x) \left.\nabla^2 g(\bm y)\right|_{\bm y=\mathbf f(\bm x)}\left[\nabla\mathbf f(\bm x)\right]^\top + \sum_{k=1}^m \left.\frac{\partial g(\bm y)}{\partial y_k}\right|_{\bm y = \mathbf f(\bm x)} \nabla^2 f_k(\bm x).}
+$$ 
+:::
+
+Applying this to obtain the second derivatives of $J_{k+1}^1\left(\bm f(\bm x_k^0, \bm u_k^0)\right)$ with respect to $\bm x_k$ gives
+$$
+\begin{aligned}
+\nabla_{\bm{xx}_k}^2 J_{k+1}^1\left(\bm f(\bm x_k^0, \bm u_k^0)\right) &= \nabla_{\bm x_k} \mathbf f(\bm x_k^0, \bm u_k^0) \left.\nabla_{\bm{xx}_{k+1}}^2 J_{k+1}^1 (\bm x_{k+1}^0) \right|_{\bm x_{k+1}^0 = \mathbf f(\bm x_k^0,\bm u_k^0)}\left[\nabla_{\bm x_k} \mathbf f(\bm x_k^0, \bm u_k^0)\right]^\top\\ 
+&+ \sum_{i=1}^m \left.\frac{\partial J_{k+1}^1 (\bm x_{k+1}^0)}{\partial x_{k+1,i}}\right|_{\bm x_{k+1}^0 = \mathbf f(\bm x_k^0,\bm u_k^0)} \nabla_{\bm{xx}_k}^2 f_i(\bm x_k^0, \bm u_k^0).
+\end{aligned}
+$$
+
+With this preparation, we can go for expanding the @eq-bellman-equation-nonoptimal-perturbed. Strictly speaking, when keeping only the first three terms of the Taylor series on both sides, the quality no longer holds. But we will enforce it as a means of approximation. 
+
+$$
+\begin{aligned}
+J_k^1(\bm x_k^1) + \left[\nabla J_k^1(\bm x_k^0)\right]^\top \delta \bm x_k^0 + \frac{1}{2} \left[\delta \bm x_k^0\right]^\top \nabla^2 J_k^1(\bm x_k^0) \delta \bm x_k^0 = L(\bm x_k^0,\bm u_k^0) + J_{k+1}^1(\bm x_{k+1}^0)\\
++\left[\nabla_{\bm x} L(\bm x_k^0, \bm u_k^0) + \nabla_{\bm x} \bm f(\bm x_k^0, \bm u_k^0) \, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right]^\top \,\delta \bm x_k^0 \\
++\left[\nabla_{\bm u} L(\bm x_k^0, \bm u_k^0) + \nabla_{\bm u} \bm f(\bm x_k^0, \bm u_k^0) \, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right]^\top \,\delta \bm u_k^0 \\
++ \frac{1}{2}[\delta \bm x_k^0]^\top \left[\nabla_{\bm x\bm x}^2 L(\bm x_k^0, \bm u_k^0) + \nabla_{\bm x} \bm f(\bm x_k^0, \bm u_k^0) \, \nabla^2 J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm x} \bm f(\bm x_k^0, \bm u_k^0)\right]^\top + \sum_{i=1}^m \frac{\partial J_{k+1}^1 (\bm x_{k+1}^0)}{\partial x_{k+1,i}} \nabla_{\bm{xx}}^2 f_i(\bm x_k^0, \bm u_k^0) \right] \,\delta \bm x_k^0\\
++ \frac{1}{2}[\delta \bm u_k^0]^\top \left[\nabla_{\bm u\bm u}^2 L(\bm x_k^0, \bm u_k^0) + \nabla_{\bm u} \bm f(\bm x_k^0, \bm u_k^0) \, \nabla^2 J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm u} \bm f(\bm x_k^0, \bm u_k^0)\right]^\top + \sum_{i=1}^m \frac{\partial J_{k+1}^1 (\bm x_{k+1}^0)}{\partial x_{k+1,i}} \nabla_{\bm{uu}}^2 f_i(\bm x_k^0, \bm u_k^0) \right]  \,\delta \bm u_k^0\\
++ [\delta \bm x_k^0]^\top \left[\nabla_{\bm x\bm u}^2 L(\bm x_k^0, \bm u_k^0) + \nabla_{\bm x} \bm f(\bm x_k^0, \bm u_k^0) \, \nabla^2 J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm u} \bm f(\bm x_k^0, \bm u_k^0)\right]^\top + \sum_{i=1}^m \frac{\partial J_{k+1}^1 (\bm x_{k+1}^0)}{\partial x_{k+1,i}} \nabla_{\bm{xu}}^2 f_i(\bm x_k^0, \bm u_k^0) \right] \,\delta \bm u_k^0
+\end{aligned}
+$$
+
+In order to tame the complexity of the expressions a bit we introduce the auxiliary function – the discrete-time Hamiltonian
+$$\boxed
+{H(\bm x_k, \bm u_k, \bm \lambda_{k+1}) = L(\bm x_k, \bm u_k) + \bm \lambda_{k+1}^\top \bm f(\bm x_k, \bm u_k).}
+$$
+
+The gradient of the Hamiltonian with respect to $\bm x_k$ is
+$$\boxed
+{\nabla_{\bm x} H(\bm x_k, \bm u_k, \bm \lambda_{k+1}) = \nabla_{\bm x} L(\bm x_k, \bm u_k) + \nabla_{\bm x} \bm f(\bm x_k, \bm u_k) \, \bm \lambda_{k+1}.}
+$$
+
+If we evaluate $\bm \lambda_{k+1}$ at $\nabla J_{k+1}^1(\bm x_{k+1}^0)$, and the state and the control at $\bm x_k^0$ and $\bm u_k^0$, respectively, we get 
+$$
+\nabla_{\bm x} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) = \nabla_{\bm x} L(\bm x_k^0, \bm u_k^0) + \nabla_{\bm x} \bm f(\bm x_k^0, \bm u_k^0) \, \nabla J_{k+1}^1(\bm x_{k+1}^0),
+$$
+which can be used to simplify the second row in the above equation. Similarly,
+$$
+\nabla_{\bm u} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) = \nabla_{\bm u} L(\bm x_k^0, \bm u_k^0) + \nabla_{\bm u} \bm f(\bm x_k^0, \bm u_k^0) \, \nabla J_{k+1}^1(\bm x_{k+1}^0),
+$$
+which can be used to simplify the third row in the above equation.
+
+The matrix of second derivatives – the Hessian – of the Hamiltonian is
+$$\boxed
+{\nabla_{\bm x\bm x}^2 H(\bm x_k, \bm u_k, \bm \lambda_{k+1}) = \nabla_{\bm x\bm x}^2 L(\bm x_k, \bm u_k) + \sum_{i=1}^m \lambda_{k+1,i} \nabla_{\bm{xx}}^2 f_i(\bm x_k^0, \bm u_k^0).}
+$$
+
+Evaluating $\bm \lambda_{k+1}$ at $\nabla J_{k+1}^1(\bm x_{k+1}^0)$ and the state and the control at $\bm x_k^0$ and $\bm u_k^0$, respectively, we get
+$$
+\nabla_{\bm x \bm x}^2 H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) = \nabla_{\bm x \bm x}^2 L(\bm x_k^0, \bm u_k^0) + \sum_{i=1}^m \frac{\partial J_{k+1}^1 (\bm x_{k+1}^0)}{\partial x_{k+1,i}} \nabla_{\bm{xx}}^2 f_i(\bm x_k^0, \bm u_k^0),
+$$
+and similarly
+$$
+\nabla_{\bm u \bm u}^2 H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) = \nabla_{\bm u \bm u}^2 L(\bm x_k^0, \bm u_k^0) + \sum_{i=1}^m \frac{\partial J_{k+1}^1 (\bm x_{k+1}^0)}{\partial x_{k+1,i}} \nabla_{\bm{uu}}^2 f_i(\bm x_k^0, \bm u_k^0), 
+$$
+and
+$$
+\nabla_{\bm x \bm u}^2 H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) = \nabla_{\bm x \bm u}^2 L(\bm x_k^0, \bm u_k^0) + \sum_{i=1}^m \frac{\partial J_{k+1}^1 (\bm x_{k+1}^0)}{\partial x_{k+1,i}} \nabla_{\bm{xu}}^2 f_i(\bm x_k^0, \bm u_k^0). 
+$$
+
+All these can be used to simplify the above set of equations to
+$$\boxed
+{\begin{aligned}
+J_k^1(\bm x_k^0) + \left[\nabla J_k^1(\bm x_k^0)\right]^\top \delta \bm x_k^0 + \frac{1}{2} \left[\delta \bm x_k^0\right]^\top \nabla^2 J_k^1(\bm x_k^0) \delta \bm x_k^0 = L(\bm x_k^0,\bm u_k^0) + J_{k+1}^1(\bm x_{k+1}^0)\\
++\left[\nabla_{\bm x} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm x_k^0 \\
++\left[\nabla_{\bm u} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm u_k^0 \\
++ \frac{1}{2}[\delta \bm x_k^0]^\top \left[\nabla_{\bm x \bm x}^2 H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm x} \bm f(\bm x_k^0, \bm u_k^0) \nabla^2 J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm x} \bm f(\bm x_k^0, \bm u_k^0)\right]^\top \right] \,\delta \bm x_k^0\\
++ \frac{1}{2}[\delta \bm u_k^0]^\top \left[\nabla_{\bm u \bm u}^2 H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm u} \bm f(\bm x_k^0, \bm u_k^0) \nabla^2 J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm u} \bm f(\bm x_k^0, \bm u_k^0)\right]^\top \right]  \,\delta \bm u_k^0\\
++ [\delta \bm x_k^0]^\top \left[\nabla_{\bm x \bm u}^2 H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm x} \bm f(\bm x_k^0, \bm u_k^0) \nabla^2 J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm u} \bm f(\bm x_k^0, \bm u_k^0)\right]^\top \right] \,\delta \bm u_k^0
+\end{aligned}}
+$$
+
+One more modification is needed. When $\delta \bm x_k = 0$, $\bm x_k^0 = \bm x_k^1$, and yet $J_k^0(\bm x_k^0) \neq J_k^1(\bm x_k^1)$ in general, because the two assume different control from the time $k$ onward. We denote the offset as
+$$
+a_k = J_k^1(\bm x_k^0) - J_k^0(\bm x_k^0).
+$$ 
+
+But then 
+$$
+J_k^1(\bm x_k^0) = J_k^0(\bm x_k^0) + a_k,
+$$ 
+which we substitute into the above boxed multiline equation. And while we are at it, let's also label the long terms with shorter labels:
+$$
+\begin{aligned}
+J_k^{\color{red}0}(\bm x_k^0) + {\color{red}a_k} + \left[\nabla J_k^1(\bm x_k^0)\right]^\top \delta \bm x_k^0 + \frac{1}{2} \left[\delta \bm x_k^0\right]^\top \nabla^2 J_k^1(\bm x_k^0) \delta \bm x_k^0 = L(\bm x_k^0,\bm u_k^0) + J_{k+1}^{\color{red}0}(\bm x_{k+1}^0) + {\color{red}a_{k+1}}\\
++\left[\nabla_{\bm x} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm x_k^0 \\
++\left[\nabla_{\bm u} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm u_k^0 \\
++ \frac{1}{2}[\delta \bm x_k^0]^\top \underbrace{\left[\nabla_{\bm x \bm x}^2 H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm x} \bm f(\bm x_k^0, \bm u_k^0) \nabla^2 J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm x} \bm f(\bm x_k^0, \bm u_k^0)\right]^\top \right]}_{\mathbf A_k} \,\delta \bm x_k^0\\
++ \frac{1}{2}[\delta \bm u_k^0]^\top \underbrace{\left[\nabla_{\bm u \bm u}^2 H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm u} \bm f(\bm x_k^0, \bm u_k^0) \nabla^2 J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm u} \bm f(\bm x_k^0, \bm u_k^0)\right]^\top \right]}_{\mathbf C_k}  \,\delta \bm u_k^0\\
++ [\delta \bm x_k^0]^\top \underbrace{\left[\nabla_{\bm x \bm u}^2 H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \nabla_{\bm x} \bm f(\bm x_k^0, \bm u_k^0) \nabla^2 J_{k+1}^1(\bm x_{k+1}^0) \left[\nabla_{\bm u} \bm f(\bm x_k^0, \bm u_k^0)\right]^\top \right]}_{\mathbf B_k} \,\delta \bm u_k^0
+\end{aligned}
+$$
+
+The fact that we do not know $a_k$ and $a_{k+1}$ does not have to worry us at this moment. We will figure it out later.
+
+For convenience, we rewrite the above equation in the shortened form with the new symbols
+$$\boxed
+{\begin{aligned}
+J_k^{0}(\bm x_k^0) + a_k + \left[\nabla J_k^1(\bm x_k^0)\right]^\top \delta \bm x_k^0 + \frac{1}{2} \left[\delta \bm x_k^0\right]^\top \nabla^2 J_k^1(\bm x_k^0) \delta \bm x_k^0 = L(\bm x_k^0,\bm u_k^0) + J_{k+1}^0(\bm x_{k+1}^0) + a_{k+1}\\
++\left[\nabla_{\bm x} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm x_k^0 + \left[\nabla_{\bm u} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm u_k^0 \\
++ \frac{1}{2}[\delta \bm x_k^0]^\top \mathbf A_k \,\delta \bm x_k^0 + [\delta \bm x_k^0]^\top \mathbf B_k \,\delta \bm u_k^0 + \frac{1}{2}[\delta \bm u_k^0]^\top \mathbf C_k  \,\delta \bm u_k^0.
+\end{aligned}}
+$${#eq-bellman-equation-nonoptimal-perturbed-short}
+
+We now apply the principle of optimality (the principle of dynamic programming) to the approximation of @eq-bellman-equation-nonoptimal-perturbed
+$$
+J_k^1(\bm x_k^1) = \min_{\delta u_k^0} \left[L(\bm x_k^0+\delta \bm x_k^0,\bm u_k^0+\delta \bm u_k^0) + J_{k+1}^1(\bm x_{k+1}^1)\right] 
+$$
+by the just derived quadratic model
+$$
+\begin{aligned}
+J_k^{0}(\bm x_k^0) + a_k + \left[\nabla J_k^1(\bm x_k^0)\right]^\top \delta \bm x_k^0 + \frac{1}{2} \left[\delta \bm x_k^0\right]^\top \nabla^2 J_k^1(\bm x_k^0) \delta \bm x_k^0 = {\color{red}\min_{\delta \bm u_k^0}}\left[L(\bm x_k^0,\bm u_k^0) + J_{k+1}^0(\bm x_{k+1}^0) + a_{k+1}\right.\\
++\left[\nabla_{\bm x} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm x_k^0 + \left[\nabla_{\bm u} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm u_k^0 \\
+\left.+ \frac{1}{2}[\delta \bm x_k^0]^\top \mathbf A_k \,\delta \bm x_k^0 + [\delta \bm x_k^0]^\top \mathbf B_k \,\delta \bm u_k^0 + \frac{1}{2}[\delta \bm u_k^0]^\top \mathbf C_k  \,\delta \bm u_k^0\right].
+\end{aligned}
+$$
+
+Simplifying the minimized term on the right hand side by dropping the terms that do not depend on $\delta \bm u_k^0$ gives
+$$
+\delta \bm u_k^0 = \arg \min_{\delta \bm u_k^0} \left[\left[\nabla_{\bm u} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm u_k^0 + [\delta \bm x_k^0]^\top \mathbf B_k \,\delta \bm u_k^0 + \frac{1}{2}[\delta \bm u_k^0]^\top \mathbf C_k  \,\delta \bm u_k^0. \right]
+$$
+
+::: {.callout-warning}
+The notation is a bit awkward. So far $\bm u_k^0$ was understood as *some* perturbation, but now on the left hand side we consider a particular one – the one that is optimal. Shall we add some other superscript to distinguish these? Perhaps something like $\delta \bm u_k^{0\star}$? We prefer not to clutter the notation and just declare that $\delta \bm u_k^0$ is the optimal control perturbation.
+:::
+
+### No constraints on the control
+If no constraints are imposed on the control, the optimal control perturbation can be found analytically by setting the gradient of the above expression to zero, that is  
+$$
+\nabla_{\bm u_k}H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \mathbf B_k^\top \delta \bm x_k^0 + \mathbf C_k  \,\delta \bm u_k^0 = 0,
+$$
+from which it follows that the optimizing control perturbation is
+$$
+\delta \bm u_k^0 = \underbrace{-\mathbf C_k^{-1} \mathbf B_k^\top}_{\color{blue}\mathbf K_k} \delta \bm x_k^0 \underbrace{- \mathbf C_k^{-1}\nabla_{\bm u_k}H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)}_{\color{blue}\mathbf k_k},
+$$
+where 
+$$
+\delta \bm x_k^0 = \bm x_k^1 - \bm x_k^0.
+$$
+
+The major conclusion now is that the perturbation control is generated in a feedback manner using an affine control law (or *policy*) as
+$$\boxed
+{\delta \bm u_k^0 = {\color{blue}\mathbf K_k} \delta \bm x_k^0 + {\color{blue}\mathbf k_k}.}
+$${#eq-affine-feedback-control-law}
+
+The full control sequence $\left(\bm u_k^1\right)_{k=0}^{N-1}$ is then  
+$$
+\bm u_k^1 = \bm u_k^0 + \delta \bm u_k^0.
+$$
+
+Now we substitute the affine feedback control law given by @eq-affine-feedback-control-law into @eq-bellman-equation-nonoptimal-perturbed-short for the optimal cost-to-go approximation. We get
+$$
+\begin{aligned}
+J_k^{0}(\bm x_k^0) + a_k + \left[\nabla J_k^1(\bm x_k^0)\right]^\top \delta \bm x_k^0 + \frac{1}{2} \left[\delta \bm x_k^0\right]^\top \nabla^2 J_k^1(\bm x_k^0) \delta \bm x_k^0 = L(\bm x_k^0,\bm u_k^0) + J_{k+1}^0(\bm x_{k+1}^0) + a_{k+1}\\
++\left[\nabla_{\bm x} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,\delta \bm x_k^0 + \left[\nabla_{\bm u} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \,[\mathbf K_k \delta \bm x_k^0 + \mathbf k_k] \\
++ \frac{1}{2}[\delta \bm x_k^0]^\top \mathbf A_k \,\delta \bm x_k^0 + [\delta \bm x_k^0]^\top \mathbf B_k \,[\mathbf K_k \delta \bm x_k^0 + \mathbf k_k] + \frac{1}{2}[\mathbf K_k \delta \bm x_k^0 + \mathbf k_k]^\top \mathbf C_k  \,[\mathbf K_k \delta \bm x_k^0 + \mathbf k_k].
+\end{aligned},
+$$
+
+which after combining the terms with the equal powers of $\delta \bm x_k^0$ transforms to
+$$
+\begin{aligned}
+J_k^{0}(\bm x_k^0) + a_k + \left[\nabla J_k^1(\bm x_k^0)\right]^\top \delta \bm x_k^0 + \frac{1}{2} \left[\delta \bm x_k^0\right]^\top \nabla^2 J_k^1(\bm x_k^0) \delta \bm x_k^0 \\
+= L(\bm x_k^0,\bm u_k^0) + J_{k+1}^0(\bm x_{k+1}^0) + a_{k+1} + \left[H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \mathbf k_k + \frac{1}{2} \mathbf k_k^\top \mathbf C_k \,\mathbf k_k\\
++\left[\nabla_{\bm x} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \mathbf K_k^\top \nabla_{\bm u} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \mathbf k_k^\top\mathbf B_k^\top + \mathbf K_k^\top \mathbf C_k \mathbf k_k\right]^\top \,\delta \bm x_k^0 \\
++ \frac{1}{2}[\delta \bm x_k^0]^\top \left[\mathbf A_k + 2\mathbf B_k \,\mathbf K_k + \mathbf K_k^\top \mathbf C_k \mathbf K_k\right]\,\delta \bm x_k^0.
+\end{aligned}.
+$$
+
+Setting equal the terms corresponding to the same powers of $\delta \bm x_k^0$ on both sides, while also recalling @eq-bellman-equation-nonoptimal, which we restate here
+$$
+J_k^{0}(\bm x_k^0) = L(\bm x_k^0,\bm u_k^0) + J_{k+1}^0(\bm x_{k+1}^0),
+$$
+gives the following equations
+$$\boxed
+{\begin{aligned}
+a_k &= a_{k+1} + \left[H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right)\right]^\top \mathbf k_k + \frac{1}{2} \mathbf k_k^\top \mathbf C_k \,\mathbf k_k,\\
+\nabla J_k^1(\bm x_k^0) &= \nabla_{\bm x} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \mathbf K_k^\top \nabla_{\bm u} H\left(\bm x_k^0, \bm u_k^0, \nabla J_{k+1}^1(\bm x_{k+1}^0)\right) + \mathbf k_k^\top\mathbf B_k^\top + \mathbf K_k^\top \mathbf C_k \mathbf k_k,\\
+\nabla^2 J_k^1(\bm x_k^0) &= \mathbf A_k + \mathbf B_k\,\mathbf K_k + \mathbf K_k^\top \mathbf B_k^\top + \mathbf K_k^\top \mathbf C_k \mathbf K_k, 
+\end{aligned}}
+$$
+where in the last line we symmetrized by $2\mathbf B_k\,\mathbf K_k = \mathbf B_k\,\mathbf K_k + \mathbf K_k^\top \mathbf B_k^\top$.
+
+These are three backwards running difference equations. They are initialized with the *boundary conditions* at the final time
+$$\boxed
+{\begin{aligned}
+a_N &= 0,\\ 
+\nabla J_N^1(\bm x_N^0) &= \nabla \phi(\bm x_N^0), \\
+\nabla^2 J_N^1(\bm x_N^0) &= \nabla^2 \phi(\bm x_N^0).
+\end{aligned}}
+$$
+
