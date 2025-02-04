@@ -4,3 +4,32 @@ format:
     html:
         html-math-method: katex
 ---
+
+## Electric vehicle charging
+
+Solve the problem of distributing a limited power to 3 electric vehicle chargers throughout the next 10 hours. Specifically, you are supposed to find an hourly-sampled optimal plan for each car that minimizes the total cost of the charging. 
+
+You are given a time-dependent maximum energy $E_{\mathrm{max}}[k]$ available for charging (in kWh), a time-dependent cost of the energy $c[k]$ (in €/kWh), maximum allowed charging energy per hour for the *i*th car $E_{i,\mathrm{max}}$ (in kWh), total requested energy $E_{i,\mathrm{req}}$ for the *i*th car (also in kWh), and the departure (discrete) time $d_i$ for each car. 
+
+All the cars are connected to chargers and can start charging from time 1. Departure time is the time when the energy charged to the *i*th car has reached at least $E_{i,\mathrm{req}}$ and charging of the car must stop. 
+
+Let's emphasize: the index $k$ is a time index running from 1 to 10, and the index $i$ specifies the corresponding car, i.e. $i\in\{1,2,3\}$.
+
+The data for this optimization problem is given in the following tables.
+
+| Car | $E_{i,\mathrm{max}}$ (kWh)   | $E_{i,\mathrm{req}}$ (kWh)   | $d_i$   |
+|-----|------------------------------|------------------------------|---------|
+| 1   | 6                            | 15                           | 3       |
+| 2   | 6                            | 25                           | 7       |
+| 3   | 4                            | 30                           | 10      |
+
+: Data for the three vehicles: maximum energy per hour, total requested energy, and the departure time
+
+| Time | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    | 9    | 10   |
+|------|------|------|------|------|------|------|------|------|------|------|
+| $E_{\mathrm{max}}[k]$ | 11.6 | 11.9 | 10.6 | 8.8  | 8.0  | 8.8  | 10.6 | 11.9 | 11.6 | 10.0 |
+| $c[k]$ | 0.58 | 0.72 | 0.92 | 0.68 | 0.54 | 0.78 | 0.64 | 0.57 | 0.74 | 0.74 |
+
+: Evolution in time of the maximum available energy and the cost of the energy
+
+Formulate this task as an optimization problem, identify the class of this optimization problem (LP, QP or NLP) and solve it [...] #TODO
