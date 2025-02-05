@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Loop transfer recovery (LTR) – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>Homework – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./ext_H2.html" rel="next">
-<link href="./ext_LQG.html" rel="prev">
+<link href="./opt_algo_derivatives.html" rel="next">
+<link href="./opt_theory_references.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,6 +69,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -82,7 +125,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ext_stochastic_LQR.html">10. Some extensions: LQG, LTR, H2</a></li><li class="breadcrumb-item"><a href="./ext_LTR.html">Loop transfer recovery (LTR)</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_problems.html">1. Optimization – theory</a></li><li class="breadcrumb-item"><a href="./opt_theory_hw.html">Homework</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -189,7 +232,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_theory_hw.html" class="sidebar-item-text sidebar-link">
+  <a href="./opt_theory_hw.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Homework</span></a>
   </div>
 </li>
@@ -641,7 +684,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ext_LTR.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ext_LTR.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Loop transfer recovery (LTR)</span></a>
   </div>
 </li>
@@ -846,15 +889,21 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#electric-vehicle-charging" id="toc-electric-vehicle-charging" class="nav-link active" data-scroll-target="#electric-vehicle-charging">Electric vehicle charging</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ext_stochastic_LQR.html">10. Some extensions: LQG, LTR, H2</a></li><li class="breadcrumb-item"><a href="./ext_LTR.html">Loop transfer recovery (LTR)</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_problems.html">1. Optimization – theory</a></li><li class="breadcrumb-item"><a href="./opt_theory_hw.html">Homework</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Loop transfer recovery (LTR)</h1>
+<h1 class="title">Homework</h1>
 </div>
 
 
@@ -871,8 +920,113 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="electric-vehicle-charging" class="level2">
+<h2 class="anchored" data-anchor-id="electric-vehicle-charging">Electric vehicle charging</h2>
+<p>Solve the problem of distributing a limited power to 3 electric vehicle chargers throughout the next 10 hours. Specifically, you are supposed to find an hourly-sampled optimal plan for each car that minimizes the total cost of the charging.</p>
+<p>You are given a time-dependent maximum energy <span class="math inline">E_{\mathrm{max}}[k]</span> available for charging (in kWh), a time-dependent cost of the energy <span class="math inline">c[k]</span> (in €/kWh), maximum allowed charging energy per hour for the <em>i</em>th car <span class="math inline">E_{i,\mathrm{max}}</span> (in kWh), total requested energy <span class="math inline">E_{i,\mathrm{req}}</span> for the <em>i</em>th car (also in kWh), and the departure (discrete) time <span class="math inline">d_i</span> for each car.</p>
+<p>All the cars are connected to chargers and can start charging from time 1. Departure time is the time when the energy charged to the <em>i</em>th car has reached at least <span class="math inline">E_{i,\mathrm{req}}</span> and charging of the car must stop.</p>
+<p>Let’s emphasize: the index <span class="math inline">k</span> is a time index running from 1 to 10, and the index <span class="math inline">i</span> specifies the corresponding car, i.e.&nbsp;<span class="math inline">i\in\{1,2,3\}</span>.</p>
+<p>The data for this optimization problem is given in the following tables.</p>
+<table class="caption-top table">
+<caption>Data for the three vehicles: maximum energy per hour, total requested energy, and the departure time</caption>
+<colgroup>
+<col style="width: 6%">
+<col style="width: 40%">
+<col style="width: 40%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Car</th>
+<th><span class="math inline">E_{i,\mathrm{max}}</span> (kWh)</th>
+<th><span class="math inline">E_{i,\mathrm{req}}</span> (kWh)</th>
+<th><span class="math inline">d_i</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>6</td>
+<td>15</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>6</td>
+<td>25</td>
+<td>7</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>4</td>
+<td>30</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top table">
+<caption>Evolution in time of the maximum available energy and the cost of the energy</caption>
+<colgroup>
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Time</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">E_{\mathrm{max}}[k]</span></td>
+<td>11.6</td>
+<td>11.9</td>
+<td>10.6</td>
+<td>8.8</td>
+<td>8.0</td>
+<td>8.8</td>
+<td>10.6</td>
+<td>11.9</td>
+<td>11.6</td>
+<td>10.0</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">c[k]</span></td>
+<td>0.58</td>
+<td>0.72</td>
+<td>0.92</td>
+<td>0.68</td>
+<td>0.54</td>
+<td>0.78</td>
+<td>0.64</td>
+<td>0.57</td>
+<td>0.74</td>
+<td>0.74</td>
+</tr>
+</tbody>
+</table>
+<p>Formulate this task as an optimization problem, identify the class of this optimization problem (LP, QP or NLP) and solve it […] #TODO</p>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1294,13 +1448,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./ext_LQG.html" class="pagination-link" aria-label="LQG control">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">LQG control</span>
+      <a href="./opt_theory_references.html" class="pagination-link" aria-label="References">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">References</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ext_H2.html" class="pagination-link" aria-label="H2-optimal control">
-        <span class="nav-page-text">H2-optimal control</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./opt_algo_derivatives.html" class="pagination-link" aria-label="Computing derivatives">
+        <span class="nav-page-text">Computing derivatives</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1312,7 +1466,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2025, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

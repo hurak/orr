@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Loop transfer recovery (LTR) – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>Course outline – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./ext_H2.html" rel="next">
-<link href="./ext_LQG.html" rel="prev">
+<link href="./intro_software.html" rel="next">
+<link href="./intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -82,7 +111,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ext_stochastic_LQR.html">10. Some extensions: LQG, LTR, H2</a></li><li class="breadcrumb-item"><a href="./ext_LTR.html">Loop transfer recovery (LTR)</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html">0. Introduction</a></li><li class="breadcrumb-item"><a href="./intro_outline.html">Course outline</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -124,7 +153,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro_outline.html" class="sidebar-item-text sidebar-link">
+  <a href="./intro_outline.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Course outline</span></a>
   </div>
 </li>
@@ -641,7 +670,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ext_LTR.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ext_LTR.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Loop transfer recovery (LTR)</span></a>
   </div>
 </li>
@@ -852,9 +881,9 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ext_stochastic_LQR.html">10. Some extensions: LQG, LTR, H2</a></li><li class="breadcrumb-item"><a href="./ext_LTR.html">Loop transfer recovery (LTR)</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html">0. Introduction</a></li><li class="breadcrumb-item"><a href="./intro_outline.html">Course outline</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Loop transfer recovery (LTR)</h1>
+<h1 class="title">Course outline</h1>
 </div>
 
 
@@ -871,6 +900,38 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>The course is structured into 14 topics, each of them corresponding to one lecture. The topics are as follows:</p>
+<ul>
+<li>Optimization
+<ol type="1">
+<li>Theory: formulations, conditions, types of problems, optimization modellers, …</li>
+<li>Algorithms: computing derivatives (symbolic, finite difference, autdiff), gradient, Newton, …, solvers</li>
+</ol></li>
+<li>Discrete-time optimal control
+<ol start="3" type="1">
+<li>Direct approach (via optimization): on finite horizon, MPC</li>
+<li>Indirect approach (via Hamilton equations): finite and infinite horizon, LQR, Riccati equations, …</li>
+<li>Dynamic programming: Bellman’s principle, …</li>
+<li>More on MPC: combining direct and indirect approaches and dynamic programming</li>
+</ol></li>
+<li>Continuous-time optimal control
+<ol start="7" type="1">
+<li>Indirect approach (via calculus of variations): boundary value problem, Riccati equations, LQR</li>
+<li>Indirect approach (via Pontryagin’s principle of maximum): time-optimal constrained control</li>
+<li>Numerical methods for both direct and indirect approaches: shooting, multiple shooting, collocation</li>
+<li>Some extensions of LQ-optimal control: stochastic LQR, LQG, LTR, <span class="math inline">\(\mathcal{H}_2\)</span></li>
+</ol></li>
+<li>Robust control
+<ol start="11" type="1">
+<li>Modeling of uncertainty, robustness analysis: small gain theorem, structured singular values</li>
+<li>Robust control design: <span class="math inline">\(\mathcal{H}_\infty\)</span>-optimal control, <span class="math inline">\(\mu\)</span>-synthesis</li>
+<li>Analysis of achievable performance</li>
+</ol></li>
+<li>Other topics
+<ol start="14" type="1">
+<li>Model order reduction, controller order reduction</li>
+</ol></li>
+</ul>
 
 
 
@@ -1294,13 +1355,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./ext_LQG.html" class="pagination-link" aria-label="LQG control">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">LQG control</span>
+      <a href="./intro.html" class="pagination-link" aria-label="What is optimal and robust control?">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">What is optimal and robust control?</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ext_H2.html" class="pagination-link" aria-label="H2-optimal control">
-        <span class="nav-page-text">H2-optimal control</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./intro_software.html" class="pagination-link" aria-label="Software for the course">
+        <span class="nav-page-text">Software for the course</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -922,11 +956,63 @@ window.Quarto = {
 
 <section id="electric-vehicle-charging" class="level2">
 <h2 class="anchored" data-anchor-id="electric-vehicle-charging">Electric vehicle charging</h2>
-<p>Solve the problem of distributing a limited power to 3 electric vehicle chargers throughout the next 10 hours. Specifically, you are supposed to find an hourly-sampled optimal plan for each car that minimizes the total cost of the charging.</p>
-<p>You are given a time-dependent maximum energy <span class="math inline">E_{\mathrm{max}}[k]</span> available for charging (in kWh), a time-dependent cost of the energy <span class="math inline">c[k]</span> (in €/kWh), maximum allowed charging energy per hour for the <em>i</em>th car <span class="math inline">E_{i,\mathrm{max}}</span> (in kWh), total requested energy <span class="math inline">E_{i,\mathrm{req}}</span> for the <em>i</em>th car (also in kWh), and the departure (discrete) time <span class="math inline">d_i</span> for each car.</p>
-<p>All the cars are connected to chargers and can start charging from time 1. Departure time is the time when the energy charged to the <em>i</em>th car has reached at least <span class="math inline">E_{i,\mathrm{req}}</span> and charging of the car must stop.</p>
-<p>Let’s emphasize: the index <span class="math inline">k</span> is a time index running from 1 to 10, and the index <span class="math inline">i</span> specifies the corresponding car, i.e.&nbsp;<span class="math inline">i\in\{1,2,3\}</span>.</p>
-<p>The data for this optimization problem is given in the following tables.</p>
+<p>Solve the problem of distributing a limited power to <span class="math inline">N</span> electric vehicle chargers throughout the next <span class="math inline">K</span> hours. Specifically, you are supposed to find an hourly-sampled optimal plan for each car that minimizes the total cost of the charging.</p>
+<p>You are given a time-dependent maximum energy <span class="math inline">a[k]</span> available for charging (in kWh), a time-dependent cost of the energy <span class="math inline">c[k]</span> (in €/kWh), maximum allowed charging energy per hour for the <em>i</em>th car <span class="math inline">m_i</span> (in kWh), total requested energy <span class="math inline">r_i</span> for the <em>i</em>th car (also in kWh), and the departure (discrete) time <span class="math inline">d_i</span> for each car.</p>
+<p>All the cars are connected to chargers and can start charging from time 1. Departure time is the time when the energy charged to the <em>i</em>th car has reached at least <span class="math inline">r_i</span> and charging of the car must stop.</p>
+<p>Let’s emphasize: the index <span class="math inline">k</span> is a time index running from 1 to <span class="math inline">K</span>, and the index <span class="math inline">i</span> specifies the corresponding car, i.e.&nbsp;<span class="math inline">i\in\{1,2,\ldots, N\}</span></p>
+<p>Formulate this task as an optimization problem, identify the class of this optimization problem (LP, QP or NLP) and solve it by completing the following Julia script and heeding the following instructions.</p>
+<ul>
+<li>Model the optimization problem either trough <code>JuMP</code> or <code>Convex</code>.</li>
+<li>Solve it using one of the available solvers: <code>HiGHS, SCS, Ipopt</code>.</li>
+<li>Upload only a single file named <code>hw.jl</code> as your solution.</li>
+</ul>
+<div id="2" class="cell" data-execution_count="0">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">JuMP</span> <span class="co"># or Convex</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">HiGHS</span>, <span class="bu">SCS</span>, <span class="bu">Ipopt</span> <span class="co"># Available solvers</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">    find_optimal_charging_plan(</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">        a::Vector{Float64},</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">        c::Vector{Float64},</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">        m::Vector{Float64},</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">        r::Vector{Float64},</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">        d::Vector{Int64}</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="st">    )</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="st">Computes an optimal charging schedule for `K` electric vehicles over `N` hours.</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="st"># Arguments</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="st">- `a`: An `N`-element vector specifying the maximum available charging energy per hour (kWh).</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="st">- `c`: An `N`-element vector representing the cost of charging per hour (€/kWh).</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="st">- `m`: A `K`-element vector with the maximum allowed charging energy for each vehicle (kWh).</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="st">- `r`: A `K`-element vector specifying the total energy required by each vehicle (kWh).</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="st">- `d`: A `K`-element vector indicating the departure time (hour) of each vehicle.</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="st"># Returns</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="st">A tuple containing:</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="st">- An `N × K` matrix representing the optimal charging schedule (kWh allocated per vehicle per hour).</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="st">- The optimal total charging cost (€).</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="st">- A symbol indicating the type of optimization problem solved (`:LP`, `:QP`, or `:NLP`).</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">find_optimal_charging_plan</span>(</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    a<span class="op">::</span><span class="dt">Vector{Float64}</span>,</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    c<span class="op">::</span><span class="dt">Vector{Float64}</span>,</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    m<span class="op">::</span><span class="dt">Vector{Float64}</span>,</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    r<span class="op">::</span><span class="dt">Vector{Float64}</span>,</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    d<span class="op">::</span><span class="dt">Vector{Int64}</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    K <span class="op">=</span> <span class="fu">length</span>(a) <span class="co"># Timespan (hours)</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> <span class="fu">length</span>(m) <span class="co"># Number of vehicles</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span><span class="al">TODO</span><span class="co"> model and solve the problem</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">zeros</span>(N, K), <span class="fl">0.0</span>, <span class="op">:</span>NLP <span class="co"># or :LP or :QP</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The data you can use to test your solution is given in the following tables.</p>
 <table class="caption-top table">
 <caption>Data for the three vehicles: maximum energy per hour, total requested energy, and the departure time</caption>
 <colgroup>
@@ -938,8 +1024,8 @@ window.Quarto = {
 <thead>
 <tr class="header">
 <th>Car</th>
-<th><span class="math inline">E_{i,\mathrm{max}}</span> (kWh)</th>
-<th><span class="math inline">E_{i,\mathrm{req}}</span> (kWh)</th>
+<th><span class="math inline">m_i</span> (kWh)</th>
+<th><span class="math inline">r_i</span> (kWh)</th>
 <th><span class="math inline">d_i</span></th>
 </tr>
 </thead>
@@ -996,7 +1082,7 @@ window.Quarto = {
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline">E_{\mathrm{max}}[k]</span></td>
+<td><span class="math inline">a[k]</span></td>
 <td>11.6</td>
 <td>11.9</td>
 <td>10.6</td>
@@ -1023,7 +1109,6 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p>Formulate this task as an optimization problem, identify the class of this optimization problem (LP, QP or NLP) and solve it […] #TODO</p>
 
 
 </section>
