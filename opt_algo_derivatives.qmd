@@ -1,26 +1,111 @@
 ---
-title: "Computing derivatives"
+title: "Computing the derivatives"
 bibliography: ref_optimization.bib
 format:
     html:
         html-math-method: katex
-        code-fold: true
+        code-fold: show
+        code-summary: "Show the code"
 execute:
     enabled: false
 engine: julia
 ---
 
-We have already argued that using derivatives within gives us a huge advantage in solving optimization problems. 
+We have already argued that using derivatives gives optimization algorithms a boost. There are three methods to compute derivatives (and gradients, Jacobians, Hessians): 
 
-There are three ways to compute derivatives:
-
-- symbolic methods,
-- numerical finite-difference (FD) methods,
-- algorithmic (also automatic) differentiation (AD) methods.
+- *symbolic* methods,
+- numerical *finite-difference (FD)* methods,
+- *algorithmic* (also *automatic*) *differentiation (AD)* methods.
 
 ## Symbolic methods
 
-These are essentially the methods that we have all learnt to apply using a pen and paper. A bunch of rules. The outcome is an expression.
+These are essentially the methods that we have all learnt to apply using a pen and paper. A bunch of rules. The input for the procedure is a function and the output from the procedure is another function. For example, for $f(x) = x^2$, the derivative is $f'(x) = 2x$. 
+
+Although straightforward and automatable, symbolic methods are not always the best choice. When does this happen?
+
+- The function to be differentiated is already rather complicated, and the derivative will typically be even more complicated. Its evaluation then may be computationally expensive. We will see that in the example.
+
+- The function to be differentiated is not available in the closed form (as a formula), but only as a software implementation, however open-source.
+
+::: {#exm-symbolic-gradient-simulation}
+### Symbolic computation of the gradient of a function of the simulated trajectory
+Consider the state-space model of a pendulum
+$$
+\underbrace{
+\begin{bmatrix}
+\dot \theta\\ \dot \omega
+\end{bmatrix}}_{\dot{\bm x}}
+=
+\underbrace{
+\begin{bmatrix}
+1\\ -\frac{g}{l}\sin\theta
+\end{bmatrix}}_{\mathbf f(\bm x)},
+$$
+where $l=1\,\mathrm{m}$ is the length of the pendulum, $g=9.81\,\mathrm{m}/\mathrm{s}^2$ is the acceleration due to gravity, $\theta$ and $\omega$ are the angle and angular velocity of the pendulum, respectively. We are going to simulate the trajectory of the pendulum that is initially at some nonzero angle, say, $\theta(0) = \pi/4 = \theta_0$, and zero velocity, that is, $\omega(0) = 0 = \omega_0$. And we are going to consider the 2-norm (actually its square for convenience) of the state vector at the end of the simulation interval as the cost function to be minimized, for which we need to evaluate the gradient at the initial state. 
+
+First, we write an ODE solver that obtains an approximation of the final point $\bm x(t_\mathrm{f})$ of the state trajectory on the interval $[0,t_\mathrm{f}]$, and a function that computes the cost as a function of the initial state $J(\bm x_0)$.
+
+::: {.callout-note}
+## Alternative (and still imperfect) notation
+The state at the final time is a function of the state at the initial time, hence we could also write it as $\bm x(t_\mathrm{f};\bm x_0)$, in which case the cost cold be written as $J(\bm x(t_\mathrm{f};\bm x_0))$. The dependence of the cost on the initial state is still visible, but the notation is a bit more clumsy (and abusive anyway).
+:::
+
+``` {julia}
+#| output: false
+function solve_for_final_state_fd(f, x₀, tspan, h)
+    t0, tf = tspan
+    t = t0
+    x = x₀
+    while t < tf
+        x = x + h * f(x)
+        t = t + h
+    end
+    return x
+end
+
+function J(x₀) 
+    x_final = solve_for_final_state_fd(f, x₀, tspan, h)
+    return x_final[1]^2 + x_final[2]^2
+end
+```
+
+And now we use the solver to compute the trajectory and the cost
+``` {julia}
+g = 9.81
+l = 1.0
+f(x) = [x[2], -g/l*sin(x[1])]  
+θ₀ = π/4
+ω₀ = 0.0   
+tspan = (0.0, 1.0)
+h = 0.1
+
+J([θ₀, ω₀]) 
+```
+
+We now use the [Symbolics.jl](https://symbolics.juliasymbolics.org/) package to compute the gradient of the cost function at the initial state. We first define symbolic state variables and and then obtain the symbolic expression for the cost function just by evaluating the function we already have at these symbolic state variables.
+``` {julia}
+using Symbolics
+@variables θ₀ ω₀
+J_sym = J([θ₀, ω₀])
+```
+
+If the shortcomings of symbolic methods have not yet started surfacing, scroll to the right in the the output field. Rather long, n'est-ce pas? And we have just started, because we now must differentiate this long expression symbolically (and then we convert it from a symbolic expression back to a standard function in Julia):
+``` {julia}
+#| output: false
+∇J_sym = Symbolics.gradient(J_sym,[θ₀, ω₀])
+∇J_sym_expr = build_function(∇J_sym, [θ₀, ω₀])
+∇J_sym_fun = eval(∇J_sym_expr[1])
+```
+
+Finally, let's do some benchmarking of evaluation of the gradient at the given (initial) state:
+
+``` {julia}
+using BenchmarkTools
+@btime ∇J_sym_fun([π/4,0.0])
+```
+
+We will compare against these results in the next sections, once we introduce alternatives to symbolic differentiation.
+:::
 
 ## Numerical finite-difference (FD) methods
 
@@ -39,6 +124,10 @@ $$
 $$
 
 For functions of vector variables, the same idea applies, but now we have to compute the difference for each component of the vector.
+
+### Dependence of the error on the step size
+
+fff
 
 ## Algorithmic (also Automatic) differentiation methods
 
