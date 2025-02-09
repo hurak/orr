@@ -17,6 +17,7 @@ website:
           - intro_references.qmd
       - section: "1. Optimization – theory"
         contents:
+          - opt_theory_goals.qmd
           - opt_theory_problems.qmd
           - opt_theory_reformulations.qmd
           - text: "Unconstrained optimization"
@@ -28,6 +29,7 @@ website:
           - opt_theory_hw.qmd
       - section: "2. Optimization – algorithms"
         contents:
+          - opt_algo_goals.qmd
           - opt_algo_derivatives.qmd
           - text: "Unconstrained optimization"
             href: opt_algo_unconstrained.qmd
@@ -38,7 +40,9 @@ website:
           - opt_algo_hw.qmd
       - section: "3. Discrete-time optimal control – direct approach"
         contents:
-          - discr_dir_general.qmd
+          - discr_dir_goals.qmd
+          - text: "General finite-horizon nonlinear optimal control as an NLP"
+            href: discr_dir_general.qmd
           - discr_dir_LQR.qmd
           - discr_dir_mpc.qmd
           - discr_dir_mpc_solvers.qmd
@@ -46,17 +50,23 @@ website:
           - discr_dir_hw.qmd
       - section: "4. Discrete-time optimal control – indirect approach"
         contents:
-          - discr_indir_general.qmd
+          - discr_indir_goals.qmd
+          - text:  "General finite-horizon nonlinear optimal control as a TP-BVP"
+            href: discr_indir_general.qmd
           - discr_indir_LQR_fin_horizon.qmd
           - discr_indir_LQR_inf_horizon.qmd
           - discr_indir_DARE.qmd
           - discr_indir_references.qmd
           - discr_indir_hw.qmd
-      - section: "5. Discrete-time optimal control – dynamic programming"
+      - section: "5. Discrete-time optimal control – dynamic programming (DP)"
         contents:
-          - dynamic_programming.qmd
-          - dynamic_programming_tabular.qmd
-          - dynamic_programming_LQR.qmd
+          - dynamic_programming_goals.qmd
+          - text: "DP and discrete-time optimal control"
+            href: dynamic_programming.qmd
+          - text: "Tabular outcomes of DP"
+            href: dynamic_programming_tabular.qmd
+          - text: "Solving LQR via DP"
+            href: dynamic_programming_LQR.qmd
           - dynamic_programming_DDP.qmd
           - dynamic_programming_references.qmd
           - dynamic_programming_hw.qmd
