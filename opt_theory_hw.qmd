@@ -38,14 +38,14 @@ using HiGHS, SCS, Ipopt # Available solvers
         d::Vector{Int64}
     )
 
-Computes an optimal charging schedule for `K` electric vehicles over `N` hours.
+Computes an optimal charging schedule for `N` electric vehicles over `K` hours.
 
 # Arguments
-- `a`: An `N`-element vector specifying the maximum available charging energy per hour (kWh).
-- `c`: An `N`-element vector representing the cost of charging per hour (€/kWh).
-- `m`: A `K`-element vector with the maximum allowed charging energy for each vehicle (kWh).
-- `r`: A `K`-element vector specifying the total energy required by each vehicle (kWh).
-- `d`: A `K`-element vector indicating the departure time (hour) of each vehicle.
+- `a`: A `K`-element vector specifying the maximum available charging energy per hour (kWh).
+- `c`: A `K`-element vector representing the cost of charging per hour (€/kWh).
+- `m`: An `N`-element vector with the maximum allowed charging energy for each vehicle (kWh).
+- `r`: An `N`-element vector specifying the total energy required by each vehicle (kWh).
+- `d`: An `N`-element vector indicating the departure time (hour) of each vehicle.
 
 # Returns
 A tuple containing:
