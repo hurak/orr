@@ -1,6 +1,20 @@
 # 0. Introduce the course briefly, ask about programming capabilities and academic background
 # 1. Show how to install Julia and use juliaup
 # 2. Show how to use Julia REPL and set up environment with packages.
+
+x = 3
+arr = [1, 2, 3]
+arr[1]
+x *= 3  # x = 9
+
+for k = 1:4
+    @show k
+end
+
+my_square(x) = x^2
+my_square(3)
+my_square.(arr)
+
 # 3. Show how to use JuMP and Convex to solve a least-squares problem.
 
 # y_true = a*x_true + b
@@ -25,7 +39,7 @@ model = Model()
 @objective(
     model,
     Min,
-    (y_meas - (â * x_true .+ b̂))' * (y_meas - (â * x_true .+ b̂))
+    sum((y_meas - (â * x_true .+ b̂)).^2)
 )
 
 set_optimizer(model, HiGHS.Optimizer)
@@ -57,7 +71,7 @@ model = Model()
 @objective(
     model,
     Min,
-    (y2_meas - (â * x2_true .+ b̂))' * (y2_meas - (â * x2_true .+ b̂))
+    sum((y2_meas - (â * x2_true .+ b̂)).^2 )
 )
 set_optimizer(model, HiGHS.Optimizer)
 optimize!(model)
@@ -72,7 +86,7 @@ residuals = y2_meas - (â * x2_true .+ b̂)
 
 optimize!(model)
 
-plot!(x2_true, value(â) * x2_true .+ value(b̂), linewidth=2)
+plot!(x2_true, value(â) * x2_true .+ value(b̂), linewidth=2, color=:yellow)
 
 ## Convex.jl
 using Convex
@@ -93,4 +107,4 @@ problem = minimize(objective, constraints)
 solve!(problem, HiGHS.Optimizer)    # throws error
 using SCS
 solve!(problem, SCS.Optimizer)
-plot!(x2_true, evaluate(â) * x2_true .+ evaluate(b̂), linewidth=2)
+plot!(x2_true, evaluate(â) * x2_true .+ evaluate(b̂), linewidth=2, )
