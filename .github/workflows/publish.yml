@@ -17,9 +17,11 @@ jobs:
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
+      - name: Set up Julia
+        uses: julia-actions/setup-julia@v2
+
       - name: Render and Publish
-      - uses: julia-actions/setup-julia@v2
-      - uses: quarto-dev/quarto-actions/publish@v2
+        uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
           path: ./website/
