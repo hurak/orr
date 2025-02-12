@@ -890,9 +890,11 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#julia" id="toc-julia" class="nav-link active" data-scroll-target="#julia">Julia</a>
   <ul class="collapse">
   <li><a href="#install-julia" id="toc-install-julia" class="nav-link" data-scroll-target="#install-julia">Install Julia</a></li>
-  <li><a href="#ide" id="toc-ide" class="nav-link" data-scroll-target="#ide">IDE</a></li>
-  <li><a href="#differences-from-other-languages" id="toc-differences-from-other-languages" class="nav-link" data-scroll-target="#differences-from-other-languages">Differences from other languages</a></li>
+  <li><a href="#install-vs-code" id="toc-install-vs-code" class="nav-link" data-scroll-target="#install-vs-code">Install VS Code</a></li>
+  <li><a href="#documentation" id="toc-documentation" class="nav-link" data-scroll-target="#documentation">Documentation</a></li>
+  <li><a href="#discussion-forum" id="toc-discussion-forum" class="nav-link" data-scroll-target="#discussion-forum">Discussion forum</a></li>
   </ul></li>
+  <li><a href="#matlab-and-simulink" id="toc-matlab-and-simulink" class="nav-link" data-scroll-target="#matlab-and-simulink">Matlab and Simulink</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -918,28 +920,35 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Although our course is heavily based on mathematical methods, it is a course designed for (control) engineers, which is to say that our main shared goal is to learn to <strong>solve engineering problems by using the mathematical methods</strong>. And except for the simplest textbook problems, the needed methods are <strong>numerical</strong>, which inevitably means that the course will have a strong <strong>software</strong> component.</p>
-<p>On the other hand, our graduate course is not just a vocational training in using a dedicated software tool, and therefore we are going to <strong>implement</strong> the methods introduced in our course by ourselves, even if at a prototype level. We believe that this is the best way to learn the potentials and limitations of the methods, even if ultimately when solving industrial problems we may want (or be forced) to use use specialized software tools developed by professionals.</p>
-<p>In our course, we are going to use the <a href="https://julialang.org">Julia</a> programming language for implementation of the methods. A code written in Julia is certainly easily readable even by people programming in Matlab or Python. Whether this choice offers any advantage over the two other languages will be seen in the course.</p>
-<p>Julia is used not only by the teacher(s) in these lecture notes, but also by students for programming the solutions to assigned homework problems (as collected and automatically evaluated through the FEL Brute system).</p>
-<p>Below we give some basic information about Julia, including links to learning resources.</p>
+<p>Although our course is heavily based on mathematical methods, it is a course designed for (control) engineers, which is to say that our main shared goal is to learn to <strong>solve engineering problems by using the mathematical methods</strong>. And except for the simplest textbook problems, the needed methods are <strong>numerical</strong>, which inevitably means that our course must have a strong <strong>software</strong> component.</p>
+<p>On the other hand, our graduate course is not just a vocational training in using a dedicated software tool. Instead, we are going to <strong>implement</strong> the methods introduced in our course by ourselves, at least to some degree, and even if at a prototype level. We believe that this is the best way to learn the potentials and limitations of the methods, even if ultimately – when solving real industrial problems – we may want (or be forced) to use use software tools developed by specialists.</p>
 <section id="julia" class="level2">
 <h2 class="anchored" data-anchor-id="julia">Julia</h2>
+<p>In our course we are going to use the <a href="https://julialang.org">Julia</a> programming language for implementation of the methods and numerical experimentation. The language and its compiler and standard libraries are free (and open source), ane a rich ecosystem of packages is available. Julia is a modern language, similarly high-level as Matlab or Python, but with a performance comparable to C or Fortran.</p>
+<p>Julia is going to be used not only by the course lecturer(s) when demonstrating the methods in the lectures, these online lecture notes and exercises, but also by the students when programming the solutions to assigned homework problems. In order to reduce the load on students, incomplete code snippets will be provided, which students will have to complete only in the core algorithmic sections.</p>
+<p>Below we give some basic information about Julia, including links to learning resources.</p>
 <section id="install-julia" class="level3">
 <h3 class="anchored" data-anchor-id="install-julia">Install Julia</h3>
-<p>https://docs.julialang.org/en/v1/manual/installation/</p>
+<p>Instructions for all platforms are at <a href="https://docs.julialang.org/en/v1/manual/installation/">https://docs.julialang.org/en/v1/manual/installation/</a>.</p>
 </section>
-<section id="ide" class="level3">
-<h3 class="anchored" data-anchor-id="ide">IDE</h3>
-<p>VS Code https://code.visualstudio.com</p>
-<p>Julia Extension https://code.visualstudio.com/docs/languages/julia</p>
+<section id="install-vs-code" class="level3">
+<h3 class="anchored" data-anchor-id="install-vs-code">Install VS Code</h3>
+<p>The most recommendable IDE is VS Code <a href="https://code.visualstudio.com">https://code.visualstudio.com</a>. Julia Extension <a href="https://code.visualstudio.com/docs/languages/julia">https://code.visualstudio.com/docs/languages/julia</a> can be installed within VS Code.</p>
 </section>
-<section id="differences-from-other-languages" class="level3">
-<h3 class="anchored" data-anchor-id="differences-from-other-languages">Differences from other languages</h3>
-<p>https://docs.julialang.org/en/v1/manual/noteworthy-differences/#Noteworthy-Differences-from-other-Languages</p>
+<section id="documentation" class="level3">
+<h3 class="anchored" data-anchor-id="documentation">Documentation</h3>
+<p>The official documentation is available at <a href="https://docs.julialang.org/en/v1/">https://docs.julialang.org/en/v1/</a>. It can also be downloaded as a PDF file. Programmers fluent with Matlab or Python will find this overview of differences <a href="https://docs.julialang.org/en/v1/manual/noteworthy-differences/#Noteworthy-Differences-from-other-Languages">https://docs.julialang.org/en/v1/manual/noteworthy-differences/#Noteworthy-Differences-from-other-Languages</a> useful.</p>
+</section>
+<section id="discussion-forum" class="level3">
+<h3 class="anchored" data-anchor-id="discussion-forum">Discussion forum</h3>
+<p>An active discussion forum exists <a href="https://discourse.julialang.org">https://discourse.julialang.org</a>. But you may perhaps start by asking questions on our own course forum within the Teams platform.</p>
+</section>
+</section>
+<section id="matlab-and-simulink" class="level2">
+<h2 class="anchored" data-anchor-id="matlab-and-simulink">Matlab and Simulink</h2>
+<p>As a course on computational methods for control design, we certainly cannot ignore the existence of Matlab and Simulink due their wide adoption both in academia and industry. In particular, when it comes to Simulink and its code generation capabilities, there is hardly any alternative. Therefore we will list in the respective sections of these lecture notes the appropropriate Matlab and Simulink functions and tools. After all, those students who decide to work on a semestral project in our automatic control lab will have to use Matlab and Simulink.</p>
 
 
-</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->

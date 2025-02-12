@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.21">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>B(E)3M35ORR – Optimal and Robust Control – Computing derivatives</title>
+<title>Computing the derivatives – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -31,16 +65,16 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./opt_algo_unconstrained.html" rel="next">
-<link href="./opt_theory_references.html" rel="prev">
+<link href="./opt_algo_goals.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-2be10d9e998f81ff6e49e26833438aa5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -69,7 +103,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
@@ -84,7 +118,7 @@ ul.task-list li input[type="checkbox"] {
    });
 }}});
   </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -122,13 +156,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_algo_derivatives.html">2. Optimization – algorithms</a></li><li class="breadcrumb-item"><a href="./opt_algo_derivatives.html">Computing derivatives</a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_algo_goals.html">2. Optimization – algorithms</a></li><li class="breadcrumb-item"><a href="./opt_algo_derivatives.html">Computing the derivatives</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -152,13 +186,54 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
- <span class="menu-text">1. Optimization – theory</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">0. Introduction</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">What is optimal and robust control?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro_outline.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course outline</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro_software.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Software for the course</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Literature for the course</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">1. Optimization – theory</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./opt_theory_goals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning goals</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./opt_theory_problems.html" class="sidebar-item-text sidebar-link">
@@ -174,13 +249,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./opt_theory_unconstrained.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Theory for unconstrained optimization</span></a>
+ <span class="menu-text">Unconstrained optimization</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./opt_theory_constrained.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Theory for constrained optimization</span></a>
+ <span class="menu-text">Constrained optimization</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -192,36 +267,48 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./opt_theory_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References for optimization theory</span></a>
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./opt_theory_hw.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
  <span class="menu-text">2. Optimization – algorithms</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./opt_algo_goals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning goals</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./opt_algo_derivatives.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Computing derivatives</span></a>
+ <span class="menu-text">Computing the derivatives</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./opt_algo_unconstrained.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Algorithms for unconstrained optimization</span></a>
+ <span class="menu-text">Unconstrained optimization</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./opt_algo_constrained.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Algorithms for constrained optimization</span></a>
+ <span class="menu-text">Constrained optimization</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -233,24 +320,42 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./opt_algo_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References for optimization algorithms</span></a>
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./opt_algo_hw.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
  <span class="menu-text">3. Discrete-time optimal control – direct approach</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_dir_control.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Control on a finite horizon as an optimization</span></a>
+  <a href="./discr_dir_goals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning goals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_dir_general.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">General finite-horizon nonlinear optimal control as an NLP</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_dir_LQR.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Finite-horizon LQR as a QP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -265,33 +370,51 @@ window.Quarto = {
  <span class="menu-text">Numerical solvers for MPC</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_dir_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_dir_hw.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">4. Discrete-time optimal control – indirect approach</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_indir.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">General nonlinear discrete-time optimal control</span></a>
+  <a href="./discr_indir_goals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning goals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_indir_general.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">General finite-horizon nonlinear optimal control as a TP-BVP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./discr_indir_LQR_fin_horizon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Discrete-time LQR-optimal control on a finite horizon</span></a>
+ <span class="menu-text">Discrete-time LQR on a finite horizon</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./discr_indir_LQR_inf_horizon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Discrete-time LQR-optimal control on an infinite horizon</span></a>
+ <span class="menu-text">Discrete-time LQR on an infinite horizon</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -300,40 +423,82 @@ window.Quarto = {
  <span class="menu-text">Discrete-time algebraic Riccati equation (DARE)</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_indir_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_indir_hw.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
- <span class="menu-text">5. Discrete-time optimal control – dynamic programming</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">5. Discrete-time optimal control – dynamic programming (DP)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming_goals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning goals</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dynamic_programming.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Optimal control via dynamic programming</span></a>
+ <span class="menu-text">DP and discrete-time optimal control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming_tabular.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tabular outcomes of DP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dynamic_programming_LQR.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">LQR via dynamic programming</span></a>
+ <span class="menu-text">Solving LQR via DP</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming_DDP.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Differential dynamic programming (DDP)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming_hw.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
  <span class="menu-text">6. More on MPC</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./discr_dir_mpc_stability.html" class="sidebar-item-text sidebar-link">
@@ -348,31 +513,49 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./discr_dir_mpc_economic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Economic MPC</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./discr_dir_mpc_explicit.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Explicit MPC</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_dir_mpc_economic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Economic MPC</span></a>
+  <a href="./discr_dir_mpc_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_dir_mpc_hw.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
  <span class="menu-text">7. Continuous-time optimal control - indirect approach via calculus of variations</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_indir_overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview of continuous-time optimal control</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_calculus_of_variations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Calculus of variations and optimal control</span></a>
+ <span class="menu-text">Calculus of variations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -399,17 +582,35 @@ window.Quarto = {
  <span class="menu-text">Continuous-time Riccati equation</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_indir_trajectory_stabilization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Trajectory stabilization and neigboring extremals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_indir_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_indir_hw.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
  <span class="menu-text">8. Continuous-time optimal control - indirect approach via Pontryagin’s maximum principle</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_Pontryagin.html" class="sidebar-item-text sidebar-link">
@@ -428,104 +629,211 @@ window.Quarto = {
  <span class="menu-text">Time-optimal control</span></a>
   </div>
 </li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true">
- <span class="menu-text">9. Continuous-time optimal control - direct approach via numerical optimization</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_dir_shooting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Shooting method for optimal control</span></a>
+  <a href="./cont_indir_references_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_dir_multiple_shooting.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Multiple shooting method for optimal control</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./cont_dir_collocation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Collocation methods for optimal control</span></a>
+  <a href="./cont_indir_hw_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true">
- <span class="menu-text">10. Some extensions: LQG, LTR, H2</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">9. Numerical methods for continuous-time optimal control - both indirect and direct approaches</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./stochastic_LQR.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Stochastic LQR control</span></a>
+  <a href="./cont_numerical_indirect.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Numerical methods for indirect approach</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./LQG.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">LQG control</span></a>
+  <a href="./cont_numerical_direct.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Numerical methods for direct approach</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./LTR.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Loop transfer recovery (LTR)</span></a>
+  <a href="./cont_numerical_software.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Software</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./H2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">H2-optimal control</span></a>
+  <a href="./cont_numerical_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_numerical_hw.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" aria-expanded="true">
- <span class="menu-text">11. Uncertainty modelling and analysis</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">9.X. Continuous-time optimal control – dynamic programming</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./uncertainty.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Uncertainty modelling</span></a>
+  <a href="./cont_dp_HJB.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dynamic programming for continuous-time optimal control</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./robustness.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Robustness analysis</span></a>
+  <a href="./cont_dp_LQR.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Using HJB equation to solve the continuous-time LQR problem</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_dp_DDP.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Differential dynamic programming (DDP)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_dp_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cont_dp_hw.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" aria-expanded="true">
- <span class="menu-text">12. Robust control</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text">10. Some extensions: LQG, LTR, H2</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ext_stochastic_LQR.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LQR for stochastic systems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ext_LQG.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LQG control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ext_LTR.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Loop transfer recovery (LTR)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ext_H2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">H2-optimal control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ext_software.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Software</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ext_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ext_hw.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
+ <span class="menu-text">11. Uncertainty modelling and robustness analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./roban_uncertainty.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Uncertainty (in) modelling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./roban_unstructured.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Robustness analysis for unstructured uncertainty</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./roban_structured.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Robustness analysis for structured uncertainty</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./roban_software.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Software</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./roban_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./roban_hw.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true">
+ <span class="menu-text">12. Robust control</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rocond_mixed_sensitivity.html" class="sidebar-item-text sidebar-link">
@@ -544,40 +852,70 @@ window.Quarto = {
  <span class="menu-text">Mu synthesis</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rocond_software.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Software</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rocond_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rocond_hw.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" aria-expanded="true">
- <span class="menu-text">13. Limits of performance</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="true">
+ <span class="menu-text">13. Limitations of achievable performance</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./limits_of_performance_SISO.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Limits for SISO systems</span></a>
+  <a href="./limitations_SISO.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Limitations for SISO systems</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./limits_of_performance_MIMO.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Limits for MIMO systems</span></a>
+  <a href="./limitations_MIMO.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Limitations for MIMO systems</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./limitations_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./limitations_hw.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="true">
  <span class="menu-text">14. Model and controller order reduction</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./reduction_order_model.html" class="sidebar-item-text sidebar-link">
@@ -588,6 +926,24 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./reduction_order_controller.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Controller order reduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reduction_order_benchmarks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Benchmarks</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reduction_order_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reduction_order_hw.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
   </div>
 </li>
       </ul>
@@ -603,7 +959,10 @@ window.Quarto = {
    
   <ul>
   <li><a href="#symbolic-methods" id="toc-symbolic-methods" class="nav-link active" data-scroll-target="#symbolic-methods">Symbolic methods</a></li>
-  <li><a href="#numerical-finite-difference-fd-methods" id="toc-numerical-finite-difference-fd-methods" class="nav-link" data-scroll-target="#numerical-finite-difference-fd-methods">Numerical finite-difference (FD) methods</a></li>
+  <li><a href="#numerical-finite-difference-fd-methods" id="toc-numerical-finite-difference-fd-methods" class="nav-link" data-scroll-target="#numerical-finite-difference-fd-methods">Numerical finite-difference (FD) methods</a>
+  <ul class="collapse">
+  <li><a href="#dependence-of-the-error-on-the-step-size" id="toc-dependence-of-the-error-on-the-step-size" class="nav-link" data-scroll-target="#dependence-of-the-error-on-the-step-size">Dependence of the error on the step size</a></li>
+  </ul></li>
   <li><a href="#algorithmic-also-automatic-differentiation-methods" id="toc-algorithmic-also-automatic-differentiation-methods" class="nav-link" data-scroll-target="#algorithmic-also-automatic-differentiation-methods">Algorithmic (also Automatic) differentiation methods</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -611,9 +970,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_algo_derivatives.html">2. Optimization – algorithms</a></li><li class="breadcrumb-item"><a href="./opt_algo_derivatives.html">Computing derivatives</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_algo_goals.html">2. Optimization – algorithms</a></li><li class="breadcrumb-item"><a href="./opt_algo_derivatives.html">Computing the derivatives</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Computing derivatives</h1>
+<h1 class="title">Computing the derivatives</h1>
 </div>
 
 
@@ -630,16 +989,123 @@ window.Quarto = {
 </header>
 
 
-<p>We have already argued that using derivatives within gives us a huge advantage in solving optimization problems.</p>
-<p>There are three ways to compute derivatives:</p>
+<p>We have already argued that using derivatives gives optimization algorithms a boost. There are three methods to compute derivatives (and gradients, Jacobians, Hessians):</p>
 <ul>
-<li>symbolic methods,</li>
-<li>numerical finite-difference (FD) methods,</li>
-<li>algorithmic (also automatic) differentiation (AD) methods.</li>
+<li><em>symbolic</em> methods,</li>
+<li>numerical <em>finite-difference (FD)</em> methods,</li>
+<li><em>algorithmic</em> (also <em>automatic</em>) <em>differentiation (AD)</em> methods.</li>
 </ul>
 <section id="symbolic-methods" class="level2">
 <h2 class="anchored" data-anchor-id="symbolic-methods">Symbolic methods</h2>
-<p>These are essentially the methods that we have all learnt to apply using a pen and paper. A bunch of rules. The outcome is an expression.</p>
+<p>These are essentially the methods that we have all learnt to apply using a pen and paper. A bunch of rules. The input for the procedure is a function and the output from the procedure is another function. For example, for <span class="math inline">f(x) = x^2</span>, the derivative is <span class="math inline">f'(x) = 2x</span>.</p>
+<p>Although straightforward and automatable, symbolic methods are not always the best choice. When does this happen?</p>
+<ul>
+<li><p>The function to be differentiated is already rather complicated, and the derivative will typically be even more complicated. Its evaluation then may be computationally expensive. We will see that in the example.</p></li>
+<li><p>The function to be differentiated is not available in the closed form (as a formula), but only as a software implementation, however open-source.</p></li>
+</ul>
+<div id="exm-symbolic-gradient-simulation" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1 (Symbolic computation of the gradient of a function of the simulated trajectory)</strong></span> Consider the state-space model of a pendulum <span class="math display">
+\underbrace{
+\begin{bmatrix}
+\dot \theta\\ \dot \omega
+\end{bmatrix}}_{\dot{\bm x}}
+=
+\underbrace{
+\begin{bmatrix}
+1\\ -\frac{g}{l}\sin\theta
+\end{bmatrix}}_{\mathbf f(\bm x)},
+</span> where <span class="math inline">l=1\,\mathrm{m}</span> is the length of the pendulum, <span class="math inline">g=9.81\,\mathrm{m}/\mathrm{s}^2</span> is the acceleration due to gravity, <span class="math inline">\theta</span> and <span class="math inline">\omega</span> are the angle and angular velocity of the pendulum, respectively. We are going to simulate the trajectory of the pendulum that is initially at some nonzero angle, say, <span class="math inline">\theta(0) = \pi/4 = \theta_0</span>, and zero velocity, that is, <span class="math inline">\omega(0) = 0 = \omega_0</span>. And we are going to consider the 2-norm (actually its square for convenience) of the state vector at the end of the simulation interval as the cost function to be minimized, for which we need to evaluate the gradient at the initial state.</p>
+<p>First, we write an ODE solver that obtains an approximation of the final point <span class="math inline">\bm x(t_\mathrm{f})</span> of the state trajectory on the interval <span class="math inline">[0,t_\mathrm{f}]</span>, and a function that computes the cost as a function of the initial state <span class="math inline">J(\bm x_0)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Alternative (and still imperfect) notation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The state at the final time is a function of the state at the initial time, hence we could also write it as <span class="math inline">\bm x(t_\mathrm{f};\bm x_0)</span>, in which case the cost cold be written as <span class="math inline">J(\bm x(t_\mathrm{f};\bm x_0))</span>. The dependence of the cost on the initial state is still visible, but the notation is a bit more clumsy (and abusive anyway).</p>
+</div>
+</div>
+<div id="2" class="cell" data-execution_count="1">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">solve_for_final_state_fd</span>(f, x₀, tspan, h)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    t0, tf <span class="op">=</span> tspan</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> t0</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> x₀</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> t <span class="op">&lt;</span> tf</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> x <span class="op">+</span> h <span class="op">*</span> <span class="fu">f</span>(x)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        t <span class="op">=</span> t <span class="op">+</span> h</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">J</span>(x₀) </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    x_final <span class="op">=</span> <span class="fu">solve_for_final_state_fd</span>(f, x₀, tspan, h)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x_final[<span class="fl">1</span>]<span class="op">^</span><span class="fl">2</span> <span class="op">+</span> x_final[<span class="fl">2</span>]<span class="op">^</span><span class="fl">2</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>And now we use the solver to compute the trajectory and the cost</p>
+<div id="4" class="cell" data-execution_count="1">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> <span class="fl">9.81</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(x) <span class="op">=</span> [x[<span class="fl">2</span>], <span class="op">-</span>g<span class="op">/</span><span class="fu">l*sin</span>(x[<span class="fl">1</span>])]  </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>θ₀ <span class="op">=</span> <span class="cn">π</span><span class="op">/</span><span class="fl">4</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>ω₀ <span class="op">=</span> <span class="fl">0.0</span>   </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>tspan <span class="op">=</span> (<span class="fl">0.0</span>, <span class="fl">1.0</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">J</span>([θ₀, ω₀])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>1.6184460563562304</code></pre>
+</div>
+</div>
+<p>We now use the <a href="https://symbolics.juliasymbolics.org/">Symbolics.jl</a> package to compute the gradient of the cost function at the initial state. We first define symbolic state variables and and then obtain the symbolic expression for the cost function just by evaluating the function we already have at these symbolic state variables.</p>
+<div id="6" class="cell" data-execution_count="1">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Symbolics</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="pp">@variables</span> θ₀ ω₀</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>J_sym <span class="op">=</span> <span class="fu">J</span>([θ₀, ω₀])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀)^2 + (-0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(0.1(-0.9810000000000001sin(0.1(-0.9810000000000001sin(θ₀) + ω₀) + θ₀ + 0.1ω₀) - 0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) + ω₀) + 0.1(-0.9810000000000001sin(θ₀) - 0.9810000000000001sin(θ₀ + 0.1ω₀) + ω₀) + θ₀ + 0.1ω₀) + ω₀)^2</code></pre>
+</div>
+</div>
+<p>If the shortcomings of symbolic methods have not yet started surfacing, scroll to the right in the the output field. Rather long, n’est-ce pas? And we have just started, because we now must differentiate this long expression symbolically (and then we convert it from a symbolic expression back to a standard function in Julia):</p>
+<div id="8" class="cell" data-execution_count="1">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>∇J_sym <span class="op">=</span> Symbolics.<span class="fu">gradient</span>(J_sym,[θ₀, ω₀])</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>∇J_sym_expr <span class="op">=</span> <span class="fu">build_function</span>(∇J_sym, [θ₀, ω₀])</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>∇J_sym_fun <span class="op">=</span> <span class="fu">eval</span>(∇J_sym_expr[<span class="fl">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Finally, let’s do some benchmarking of evaluation of the gradient at the given (initial) state:</p>
+<div id="10" class="cell" data-execution_count="1">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BenchmarkTools</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="pp">@btime</span> <span class="fu">∇J_sym_fun</span>([<span class="cn">π</span><span class="op">/</span><span class="fl">4</span>,<span class="fl">0.0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  93.125 μs (4 allocations: 160 bytes)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>2-element Vector{Float64}:
+ 3.9096539447898264
+ 0.020083627236371047</code></pre>
+</div>
+</div>
+<p>We will compare against these results in the next sections, once we introduce alternatives to symbolic differentiation.</p>
+</div>
 </section>
 <section id="numerical-finite-difference-fd-methods" class="level2">
 <h2 class="anchored" data-anchor-id="numerical-finite-difference-fd-methods">Numerical finite-difference (FD) methods</h2>
@@ -652,6 +1118,10 @@ window.Quarto = {
 \frac{\mathrm d f(x)}{\mathrm d x} \approx \frac{f(x+\frac{\alpha}{2})-f(x-\frac{\alpha}{2})}{\alpha}\qquad\qquad \text{central difference}
 </span></p>
 <p>For functions of vector variables, the same idea applies, but now we have to compute the difference for each component of the vector.</p>
+<section id="dependence-of-the-error-on-the-step-size" class="level3">
+<h3 class="anchored" data-anchor-id="dependence-of-the-error-on-the-step-size">Dependence of the error on the step size</h3>
+<p>fff</p>
+</section>
 </section>
 <section id="algorithmic-also-automatic-differentiation-methods" class="level2">
 <h2 class="anchored" data-anchor-id="algorithmic-also-automatic-differentiation-methods">Algorithmic (also Automatic) differentiation methods</h2>
@@ -695,18 +1165,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -738,7 +1197,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -746,7 +1225,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -843,7 +1322,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -1071,13 +1549,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./opt_theory_references.html" class="pagination-link" aria-label="References for optimization theory">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">References for optimization theory</span>
+      <a href="./opt_algo_goals.html" class="pagination-link" aria-label="Learning goals">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Learning goals</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./opt_algo_unconstrained.html" class="pagination-link" aria-label="Algorithms for unconstrained optimization">
-        <span class="nav-page-text">Algorithms for unconstrained optimization</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./opt_algo_unconstrained.html" class="pagination-link" aria-label="Unconstrained optimization">
+        <span class="nav-page-text">Unconstrained optimization</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1088,7 +1566,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>Copyright 2024, Zdeněk Hurák</p>
+<p>Copyright 2025, Zdeněk Hurák</p>
 <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;

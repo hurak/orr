@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>General nonlinear discrete-time optimal control as a two-point boundary value problem – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>Software for the course – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./discr_indir_LQR_fin_horizon.html" rel="next">
-<link href="./discr_indir_goals.html" rel="prev">
+<link href="./intro_references.html" rel="next">
+<link href="./intro_rules.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,49 +69,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -125,7 +82,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_indir_goals.html">4. Discrete-time optimal control – indirect approach</a></li><li class="breadcrumb-item"><a href="./discr_indir_general.html">General finite-horizon nonlinear optimal control as a TP-BVP</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html">0. Introduction</a></li><li class="breadcrumb-item"><a href="./intro_software.html">Software for the course</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -173,7 +130,13 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro_software.html" class="sidebar-item-text sidebar-link">
+  <a href="./intro_rules.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rules of the course</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro_software.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Software for the course</span></a>
   </div>
 </li>
@@ -262,7 +225,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./opt_algo_derivatives.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Computing derivatives</span></a>
+ <span class="menu-text">Computing the derivatives</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -321,7 +284,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./discr_dir_LQR.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Finite-horizon LQR-optimal control as a QP</span></a>
+ <span class="menu-text">Finite-horizon LQR as a QP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -367,7 +330,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_indir_general.html" class="sidebar-item-text sidebar-link active">
+  <a href="./discr_indir_general.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">General finite-horizon nonlinear optimal control as a TP-BVP</span></a>
   </div>
 </li>
@@ -380,7 +343,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./discr_indir_LQR_inf_horizon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Discrete-time LQR-optimal control on an infinite horizon</span></a>
+ <span class="menu-text">Discrete-time LQR on an infinite horizon</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -427,7 +390,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dynamic_programming_tabular.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tabular outcoms of DP</span></a>
+ <span class="menu-text">Tabular outcomes of DP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -924,19 +887,21 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#optimization-constrains-given-only-by-the-state-equations" id="toc-optimization-constrains-given-only-by-the-state-equations" class="nav-link active" data-scroll-target="#optimization-constrains-given-only-by-the-state-equations">Optimization constrains given only by the state equations</a></li>
-  <li><a href="#general-additive-cost-function" id="toc-general-additive-cost-function" class="nav-link" data-scroll-target="#general-additive-cost-function">General additive cost function</a></li>
-  <li><a href="#derivation-of-the-first-order-necessary-conditions-of-optimality" id="toc-derivation-of-the-first-order-necessary-conditions-of-optimality" class="nav-link" data-scroll-target="#derivation-of-the-first-order-necessary-conditions-of-optimality">Derivation of the first-order necessary conditions of optimality</a></li>
-  <li><a href="#necessary-conditions-of-optimality-as-two-point-boundary-value-problem-tp-bvp" id="toc-necessary-conditions-of-optimality-as-two-point-boundary-value-problem-tp-bvp" class="nav-link" data-scroll-target="#necessary-conditions-of-optimality-as-two-point-boundary-value-problem-tp-bvp">Necessary conditions of optimality as two-point boundary value problem (TP-BVP)</a></li>
+  <li><a href="#julia" id="toc-julia" class="nav-link active" data-scroll-target="#julia">Julia</a>
+  <ul class="collapse">
+  <li><a href="#install-julia" id="toc-install-julia" class="nav-link" data-scroll-target="#install-julia">Install Julia</a></li>
+  <li><a href="#ide" id="toc-ide" class="nav-link" data-scroll-target="#ide">IDE</a></li>
+  <li><a href="#differences-from-other-languages" id="toc-differences-from-other-languages" class="nav-link" data-scroll-target="#differences-from-other-languages">Differences from other languages</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_indir_goals.html">4. Discrete-time optimal control – indirect approach</a></li><li class="breadcrumb-item"><a href="./discr_indir_general.html">General finite-horizon nonlinear optimal control as a TP-BVP</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html">0. Introduction</a></li><li class="breadcrumb-item"><a href="./intro_software.html">Software for the course</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">General nonlinear discrete-time optimal control as a two-point boundary value problem</h1>
+<h1 class="title">Software for the course</h1>
 </div>
 
 
@@ -953,187 +918,28 @@ window.Quarto = {
 </header>
 
 
-<p>While in the previous chapter we formulated an optimal control problem (OCP) directly as a mathematical programming (general NLP or even QP) problem over the control (and possibly state) trajectories, in this chapter we introduce an alternative – <em>indirect</em> – approach. The essence of the approach is that we formulate first-order necessary conditions of optimality for the OCP in the form of equations, and then solve these. Although less straightforward to extend with additional constraints than the direct approach, the indirect approach also exhibits some advantages. In particular, in some cases (such as a quadratic cost and a linear system) it yields a feedback control law and not just a control trajectory.</p>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/J14PTv9J6cs?si=cACBQb5BLcEck2-D" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<section id="optimization-constrains-given-only-by-the-state-equations" class="level2">
-<h2 class="anchored" data-anchor-id="optimization-constrains-given-only-by-the-state-equations">Optimization constrains given only by the state equations</h2>
-<p>As in the chapter on the direct approach, here we also start by considering a general nonlinear and possibly time-varying discrete-time dynamical system characterized by the state vector <span class="math inline">\bm x_k\in\mathbb R^n</span> whose evolution in discrete time <span class="math inline">k</span> is uniquely determined by the state equation <span class="math display">
-\bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k),
-</span> accompanied by the initial state (vector) <span class="math inline">\bm x_i\in\mathbb R^n</span> and a sequence of control inputs <span class="math inline">\bm u_i, \bm u_{i+1}, \ldots, \bm u_{k-1}</span>, where the control variable can also be a vector, that is, <span class="math inline">\bm u_k \in \mathbb R^m</span>.</p>
-<p>These state equations will constitute the only constraints of the optimization problem. Unlike in the direct approach, here in our introductory treatment we do not impose any inequality constraints such as bounds on the control inputs, because the theory to be presented is not able to handle them.</p>
+<p>Although our course is heavily based on mathematical methods, it is a course designed for (control) engineers, which is to say that our main shared goal is to learn to <strong>solve engineering problems by using the mathematical methods</strong>. And except for the simplest textbook problems, the needed methods are <strong>numerical</strong>, which inevitably means that the course will have a strong <strong>software</strong> component.</p>
+<p>On the other hand, our graduate course is not just a vocational training in using a dedicated software tool, and therefore we are going to <strong>implement</strong> the methods introduced in our course by ourselves, even if at a prototype level. We believe that this is the best way to learn the potentials and limitations of the methods, even if ultimately when solving industrial problems we may want (or be forced) to use use specialized software tools developed by professionals.</p>
+<p>In our course, we are going to use the <a href="https://julialang.org">Julia</a> programming language for implementation of the methods. A code written in Julia is certainly easily readable even by people programming in Matlab or Python. Whether this choice offers any advantage over the two other languages will be seen in the course.</p>
+<p>Julia is used not only by the teacher(s) in these lecture notes, but also by students for programming the solutions to assigned homework problems (as collected and automatically evaluated through the FEL Brute system).</p>
+<p>Below we give some basic information about Julia, including links to learning resources.</p>
+<section id="julia" class="level2">
+<h2 class="anchored" data-anchor-id="julia">Julia</h2>
+<section id="install-julia" class="level3">
+<h3 class="anchored" data-anchor-id="install-julia">Install Julia</h3>
+<p>https://docs.julialang.org/en/v1/manual/installation/</p>
 </section>
-<section id="general-additive-cost-function" class="level2">
-<h2 class="anchored" data-anchor-id="general-additive-cost-function">General additive cost function</h2>
-<p>For the above described dynamical system we want to find a control sequence <span class="math inline">\bm u_k</span> that minimizes a suitable optimization criterion over a finite horizon <span class="math inline">k\in[i,N]</span>. Namely, we will look for a control that minimizes a criterion of the following kind <span id="eq-general_nonlinear_optimal_control"><span class="math display">
-J_i^N(\underbrace{\bm x_{i+1}, \bm x_{i+2}, \ldots, \bm x_{N}}_{\bar{\bm x}}, \underbrace{\bm u_{i}, \ldots, \bm u_{N-1}}_{\bar{\bm u}};\bm x_i) = \phi(\bm x_N,N) + \sum_{k=i}^{N-1} L_k(\bm x_k,\bm u_k).
-\tag{1}</span></span></p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Regarding the notation <span class="math inline">J_i^N(\cdot)</span> for the cost, if the initial and final times are understood from the context, they do not have to be displayed. But we will soon need to indicate the initial time explicitly in our derivations.</p>
-</div>
-</div>
-<p>The property of the presented cost function that will turn out crucial in our subsequent work is that is <em>additive</em> over the time horizon. Although this restricts the class of cost functions a bit, it is still general enough to encompass a wide range of problems, such as minimizing the total (financial) cost to be paid, the total energy to be used, the total distance to be travelled, the cumulative error to be minimized, etc.</p>
-<p>Here is a list of a few popular cost functions.</p>
-<dl>
-<dt>Minimum-time (or time-optimal) problem</dt>
-<dd>
-Setting <span class="math inline">\phi=1</span> and <span class="math inline">L_k=1</span> gives <span class="math inline">J=N-i</span>, that is, the length of the time horizon, the duration of control. Altough in this course we do not introduce concepts and tools for optimization over integer variables, in this simple case of just a single integer variable even a simple search over the length of control interval will be computationally tractable. Furthermore, as we will see in one of the next chapters once we switch from discrete-time to continuous-time systems, this time-optimal control design problem will turn out tractable using the tools presented in this course.
-</dd>
-<dt>Minimum-fuel problem</dt>
-<dd>
-Setting <span class="math inline">\phi=0</span> and <span class="math inline">L_k=|u_k|</span>, which gives <span class="math inline">J=\sum_{k=i}^{N-1}|u_k|</span>.
-</dd>
-<dt>Minimum-energy problem</dt>
-<dd>
-Setting <span class="math inline">\phi=0</span> and <span class="math inline">L_k=\frac{1}{2} u_k^2</span>, which gives <span class="math inline">J=\frac{1}{2} \sum_{k=i}^{N-1} u_k^2</span>. It is fair to admit that this sum of squared inputs cannot always be interpretted as the energy – for instance, what if the control input is a degree of openning of a valve? Sum of angles over time can hardly be interpreted as energy. Instead, it should be interpretted in the mathematical way as the (squared) norm, that is, a “size” of the input. Note that the same objection can be given to the previous case of a minimum-fuel problem.
-</dd>
-<dt>Mixed quadratic problem (also LQ-optimal control problem)</dt>
-<dd>
-Setting <span class="math inline">\phi=\frac{1}{2}s_N x_N^2</span> and <span class="math inline">L_k=\frac{1}{2} (qx_k^2+ru_k^2),\, q,r\geq 0</span>, which gives <span class="math inline">J=\frac{1}{2}s_Nx_N^2+\frac{1}{2} \sum_{k=i}^{N-1} (r x_k^2+q u_k^2)</span>. Or in the case of vector state and control variables <span class="math inline">J=\frac{1}{2}\bm x_N^\top \mathbf S_N \bm x_N+\frac{1}{2} \sum_{k=i}^{N-1} (\bm x_k^\top \mathbf Q \bm x_k + \bm u_k^\top \mathbf R \bm u_k), \, \mathbf Q, \mathbf R \succeq 0</span>. This type of an optimization cost is particularly popular. Both for the mathematical reasons (we all now appreciate the nice properties of quadratic functions) and for practical engineering reasons as it allows us to capture a trade-off between the control performance (penalty on <span class="math inline">\bm x_k</span>) and control effort (penalty on <span class="math inline">\bm u_k</span>). Note also that the state at the terminal time <span class="math inline">N</span> is penalized separately just in order to allow another trade-off between the transient and terminal behavior. The cost function can also be modified to penalize deviation of the state from some nonzero desired (aka reference) state trajectory, that is <span class="math inline">J=\frac{1}{2}(\bm x_N - \bm x_N^\text{ref})^\top \mathbf S_N (\bm x_N - \bm x_N^\text{ref}) +\frac{1}{2} \sum_{k=i}^{N-1} \left((\bm x_k - \bm x_k^\text{ref})^\top \mathbf Q (\bm x_k - \bm x_k^\text{ref}) + \bm u_k^\top \mathbf R \bm u_k\right)</span>.
-</dd>
-</dl>
-<p>Note that in none of these cost function did we include <span class="math inline">\bm u_{N}</span> as an optimization variables as it has no influence over the interval <span class="math inline">[i,N]</span>.</p>
-<p>Needless to emphasize, as in some other applications maximizing may seem more appropriate (such as maximizing the yield, bandwidth or robustness), we can always reformulate the maximization into minimization. Therefore in our course we always formulate the optimal control problems as minimization problems.</p>
+<section id="ide" class="level3">
+<h3 class="anchored" data-anchor-id="ide">IDE</h3>
+<p>VS Code https://code.visualstudio.com</p>
+<p>Julia Extension https://code.visualstudio.com/docs/languages/julia</p>
 </section>
-<section id="derivation-of-the-first-order-necessary-conditions-of-optimality" class="level2">
-<h2 class="anchored" data-anchor-id="derivation-of-the-first-order-necessary-conditions-of-optimality">Derivation of the first-order necessary conditions of optimality</h2>
-<p>Having formulated a finite-dimensional constrained nonlinear optimization problem, we avoid the temptation to call an NLP solver to solve it numerically, and proceed instead with our own analysis of the problem. Let’s see how far we can get. By introducing Lagrange multipliers <span class="math inline">{\color{blue}\bm\lambda_k}</span>, we turn the constrained problem into an unconstrained one. The new cost function (we use the prime to distinguish it from the original cost) is <span class="math display">
-\begin{aligned}
-&amp; {J'}_i^N(\bm x_i, \ldots, \bm x_N, \bm u_i, \ldots, \bm u_{N-1},{\color{blue}\bm \lambda_i, \ldots, \bm \lambda_{N-1}}) \\
-&amp;\qquad\qquad\qquad = \phi(\bm x_N,N) + \sum_{k=i}^{N-1}\left[L_{k}(\bm x_k,\bm u_k)+\bm {\color{blue}\lambda^\top_{k}}\;\left[\mathbf f_k(\bm x_k,\bm u_k)-\bm x_{k+1}\right]\right].
-\end{aligned}
-</span></p>
-<p>From now on, in principle, we do not need any guidance here, do we? We are given an unconstrained optimization problem and its solution is just a few moments away. In particular, stationary point(s) must be found (and then we are going to argue if these qualify as minimizers or not). This calls for differentiating the above expression with respect to all the variables and setting these derivatives equal to zeros.</p>
-<p>Although the principles are clear, some hindsight might be shared here if compact formulas are to be found. First such advice is to rename the variable(s) <span class="math inline">{\color{blue}\boldsymbol \lambda_k}</span> to <span class="math inline">{\color{red}\boldsymbol \lambda_{k+1}}</span> <span class="math display">
-\begin{aligned}
-&amp; {J'}_i^N(\bm x_i, \ldots, \bm x_N, \bm u_i, \ldots, \bm u_{N-1},{\color{red}\bm \lambda_{i+1}, \ldots, \bm \lambda_{N}}) \\
-&amp; \qquad\qquad\qquad = \phi(N,\bm x_N) + \sum_{k=i}^{N-1}\left[L_{k}(\bm x_k,\bm u_k)+\boldsymbol {\color{red}\boldsymbol \lambda^\top_{k+1}}\; \left[\mathbf f_k(\bm x_k,\bm u_k)-\mathbf x_{k+1}\right]\right].
-\end{aligned}
-</span></p>
-<p>This is really just a notational decision but thanks to it our resulting formulas will enjoy some symmetry.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Maybe it would be more didactic to leave you to go on without this advice on notation, and only then to nudge you to figure out this remedy by yourself. But admittedly this is not the kind of competence that we aim at in this course. Let’s spend time with more rewarding things.</p>
-</div>
-</div>
-<p>Another notational advice – but this one is more systematic and fundamental — is to make the above expression a bit shorter by introducing a new variable defined as <span class="math display">\boxed{H_k(\bm x_k,\bm u_k,\boldsymbol\lambda_{k+1}) = L_{k}(\bm x_k,\bm u_k)+\boldsymbol \lambda_{k+1}^\top \; \mathbf f_k(\bm x_k,\bm u_k).}
-</span></p>
-<p>We will call this new function <em>Hamiltonian</em>. Indeed, the choice of this name is motivated by the analogy with the equally named concept used in physics and theoretical mechanics, but we will only make more references to this analogy later in the course once we transition to continuous-time systems modelled by differential equations.</p>
-<p>Introducing the Hamiltonian reformulates the cost function (and we omit the explicit dependence on all its input arguments) as <span class="math display">
-{J'}_i^N = \phi(N,\bm x_N) + \sum_{k=i}^{N-1}\left[H_{k}(\bm x_k,\bm u_k,\boldsymbol\lambda_{k+1})-\boldsymbol\lambda^\top_{k+1}\;\mathbf x_{k+1}\right].
-</span></p>
-<p>The final polishing of the expression before starting to compute the derivatives consists in bringing together the terms that contain related variables: the state <span class="math inline">\bm x_N</span> at the final time, the state <span class="math inline">\bm x_i</span> at the initial time, and the states, controls and Lagrange multipliers in the transient period<br>
-<span class="math display">
-{J'}_i^N = \underbrace{\phi(N,\bm x_N) -\boldsymbol\lambda^\top_{N}\;\mathbf x_{N}}_\text{at terminal time} + \underbrace{H_i(\bm x_i,\mathbf u_i,\boldsymbol\lambda_{i+1})}_\text{at initial time} + \sum_{k=i+1}^{N-1}\left[H_{k}(\bm x_k,\bm u_k,\boldsymbol\lambda_{k+1})-\boldsymbol\lambda^\top_{k}\;\mathbf x_{k}\right].
-</span></p>
-<p>Although this step was not necessary, it will make things a bit more convenient once we start looking for the derivatives. And the time for it has just come.</p>
-<p>Recall now the recommended procedure for finding derivatives of functions of vectors: find the differential instead, and identify the derivative within the result. The gradient is then (by convention) obtained as the transpose of the derivative. Following this derivative-identification procedure, we anticipate the differential of the augmented cost function in the following form <span class="math display">
-\begin{split}
-\text{d}{J'}_i^N &amp;= (\qquad)^\top \; \text{d}\bm x_N + (\qquad)^\top \; \text{d}\bm x_i \\&amp;+ \sum_{k=i+1}^{N-1}(\qquad)^\top \; \text{d}\bm x_k + \sum_{k=i}^{N-1}(\qquad)^\top \; \text{d}\bm u_k + \sum_{k=i+1}^{N}(\qquad)^\top \; \text{d}\boldsymbol \lambda_k.
-\end{split}
-</span></p>
-<p>Identifying the gradients amounts to filling in the empty brackets. It straightforward if tedious (in particular the lower and upper bounds on the summation indices must be carefuly checked). The solution is <span class="math display">
-\begin{split}
-\text{d}{J'}_i^N &amp;= \left(\nabla_{\bm x_N}\phi-\lambda_N\right)^\top \; \text{d}\bm x_N + \left(\nabla_{\bm x_i}H_i\right)^\top \; \text{d}\bm x_i \\&amp;+ \sum_{k=i+1}^{N-1}\left(\nabla_{\bm x_k}H_k-\boldsymbol\lambda_k\right)^\top \; \text{d}\bm x_k + \sum_{k=i}^{N-1}\left(\nabla_{\bm u_k}H_k\right)^\top \; \text{d}\bm u_k + \sum_{k=i+1}^{N}\left(\nabla_{\boldsymbol \lambda_k}H_{k-1}-\bm x_k\right)^\top \; \text{d}\boldsymbol \lambda_k.
-\end{split}
-</span></p>
-<p>The ultimate goal of this derivation was to find stationary points for the augmented cost function, that is, to find conditions under which <span class="math inline">\text{d}{J'}_i^N=0</span>. In typical optimization problems, the optimization is conducted with respect to all the participating variables, which means that the corresponding differentials may be arbitrary and the only way to guarantee that the total differential of <span class="math inline">J_i'</span> is zeros is to make the associated gradients (the contents of the brackets) equal to zero. There are two exceptions to this rule in our case, though:</p>
-<ul>
-<li><p>The state at the initial time is typically fixed and not available for optimization. Then <span class="math inline">\text{d}\bm x_i=0</span> and the corresponding necessary condition is replaced by the statement that <span class="math inline">\bm x_i</span> is equal to some particular value, say, <span class="math inline">\bm x_i = \mathbf x^\text{init}</span>. We have already discussed this before. In fact, in these situations we might even prefer to reflect it by the notation <span class="math inline">J_i^N(\ldots;\bm x_i)</span>, which emphasizes that <span class="math inline">\bm x_i</span> is a parameter and not a variable. But in the solution below we do allow for the possibility that <span class="math inline">\bm x_i</span> is a variable too (hence <span class="math inline">\text{d}\bm x_i\neq 0</span>) for completeness.</p></li>
-<li><p>The state at the final time may also be given/fixed, in which case the corresponding condition is replaced by the statement that <span class="math inline">\bm x_N</span> is equal to some particular value, say, <span class="math inline">\bm x_N = \mathbf x^\text{ref}</span>. But if it is not the case, then the final state is also subject to optimization and the corresponding necessary condition of optimality is obtained by setting the content of the corresponding brackets to zero.</p></li>
-</ul>
-</section>
-<section id="necessary-conditions-of-optimality-as-two-point-boundary-value-problem-tp-bvp" class="level2">
-<h2 class="anchored" data-anchor-id="necessary-conditions-of-optimality-as-two-point-boundary-value-problem-tp-bvp">Necessary conditions of optimality as two-point boundary value problem (TP-BVP)</h2>
-<p>The ultimate form of the first-order necessary conditions of optimality, which incorporates the special cases discussed above, is given by these equations <span class="math display">
-\boxed{
-\begin{aligned}
-\mathbf x_{k+1} &amp;= \nabla_{\boldsymbol\lambda_{k+1}}H_k, \;\;\; \color{gray}{k=i,\ldots, N-1},\\
-\boldsymbol\lambda_k &amp;= \nabla_{\bm x_k}H_k, \;\;\; \color{gray}{k=i+1,\ldots, N-1}\\
-0 &amp;=  \nabla_{\bm u_k}H_k, \;\;\; \color{gray}{k=i,\ldots, N-1}\\
-\color{blue}{0} &amp;= \color{blue}{\left(\nabla_{\bm x_N}\phi-\lambda_N\right)^\top \mathrm{d}\bm x_N},\\
-\color{blue}{0} &amp;= \color{blue}{\left(\nabla_{\bm x_i}H_i\right)^\top \mathrm{d}\bm x_i},
-\end{aligned}
-}
-</span> or more explicitly <span class="math display">
-\boxed{
-\begin{aligned}
-\mathbf x_{k+1} &amp;= \mathbf f_k(\bm x_k,\bm u_k), \;\;\; \color{gray}{k=i,\ldots, N-1},\\
-\boldsymbol\lambda_k &amp;= \nabla_{\bm x_k}\mathbf f_k\;\;   \boldsymbol\lambda_{\mathbf k+1}+\nabla_{\bm x_k}L_k, \;\;\; \color{gray}{k=i+1,\ldots, N-1}\\
-0 &amp;=  \nabla_{\bm u_k}\mathbf f_k\;\; \boldsymbol\lambda_{k+1}+\nabla_{u_k}L_k, \;\;\; \color{gray}{k=i,\ldots, N-1}\\
-\color{blue}{0} &amp;= \color{blue}{\left(\nabla_{\bm x_N}\phi-\lambda_N\right)^\top \mathrm{d}\bm x_N},\\
-\color{blue}{0} &amp;= \color{blue}{\left(\nabla_{\bm x_i}H_i\right)^\top \mathrm{d}\bm x_i}.
-\end{aligned}
-}
-</span></p>
-<p>Recall that since <span class="math inline">\mathbf f</span> is a vector function, <span class="math inline">\nabla \mathbf f</span> is not just a gradient but rather a matrix whose columns are gradients of the individual components of the vector <span class="math inline">\mathbf f</span> — it is a transpose of Jacobian.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The first three necessary conditions above can be made completely “symmetric” by running the second one from <span class="math inline">k=i</span> because the <span class="math inline">\boldsymbol\lambda_i</span> introduced this way does not influence the rest of the problem and we could easily live with one useless variable.</p>
-</div>
-</div>
-<p>We have just derived the (necessary) conditions of optimality in the form of five sets of (vector) equations:</p>
-<ul>
-<li>The first two are <em>recurrent</em> (or <em>discrete-time</em>) equations, which means that they introduce coupling between the variables evaluated at consecutive times. In fact, the former is just the standard state equation that gives the state at one time as a function of the state (and the control) at the previous time. The latter gives a prescription for the variable <span class="math inline">\bm \lambda_k</span> as a function of (among others) the same variable evaluated at the next (!) time, that is, <span class="math inline">\bm \lambda_{k+1}</span>. Although from the optimization perspective these variables play the role of Lagrange multipliers, we call them <em>co-state variables</em> in optimal control theory because of the way they relate to the state equations. The corresponding vector equation is called a <em>co-state equation</em>.</li>
-</ul>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>It is a crucial property of the co-state equation that the evolution of the co-state variable is dictated backward in time by the equation.</p>
-</div>
-</div>
-<ul>
-<li><p>The third set of equations are just algebraic equations that relate the control inputs to the state and co-state variables. Sometimes it is called a <em>stationarity equation</em>.</p></li>
-<li><p>The last two are just single (vector) equations related to the end and the beginning of the time horizon. They are both stated in the general enough form that allows the corresponding states to be treated as either fixed or subject to optimization. In particular, if the final state is to be treated as free (subject to optimization), that is, <span class="math inline">\mathrm{d}\bm x_N</span> can be atritrary and the only way the corresponding equation can be satisfied is <span class="math inline">\nabla_{\bm x_N}\phi=\lambda_N</span>. If, on the other hand, the final state is to be treated as fixed, the the corresponding equation is just replaced by <span class="math inline">\bm x_N = \mathbf x^\text{ref}</span>. Similarly for the initial state. But as we have hinted a few times, most often than not the initial state will be regarded as fixed and not subject to optimization, in which case the corresponding equation is replaced by <span class="math inline">\bm x_i = \mathbf x^\text{init}</span>.</p></li>
-</ul>
-<p>To summarize, the equations that give the necessary conditions of optimality for a general nonlinear discrete-time optimal control problem form a discrete-time <em>two-point boundary value problem</em> (TP-BVP). Values of some variables are specified at the initial time, values of some (maybe the same or some other) variables are defined at the final time. The equations prescribe the evolution of some variables forward in time while for some other variables the evolution backward in time is dictated.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This is in contrast with the initial value problem (IVP) for state equations, for which we only specify the state at one end of the time horizon — the initial state — and then the state equation disctates the evolution of the (state) variable forward in time.</p>
-</div>
-</div>
-<p>Boundary value problems are more difficult to solve than the initial value problems. Typically we can only solve them numerically, in which case it is appropriate to ask if anything has been gained by this indirect procedure compared with the direct one. After all, we did not even incorporate the inequality constraints in the problem, which was a piece of case in the direct approach. But we will see that in some special cases the TP-BVP they can be solved analytically and the outcome is particularly useful and would never have been discovered, if only the direct approach had been followed. We elaborate on this in the next section.</p>
+<section id="differences-from-other-languages" class="level3">
+<h3 class="anchored" data-anchor-id="differences-from-other-languages">Differences from other languages</h3>
+<p>https://docs.julialang.org/en/v1/manual/noteworthy-differences/#Noteworthy-Differences-from-other-Languages</p>
 
 
+</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
@@ -1556,13 +1362,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./discr_indir_goals.html" class="pagination-link" aria-label="Learning goals">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Learning goals</span>
+      <a href="./intro_rules.html" class="pagination-link" aria-label="Rules of the course">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Rules of the course</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./discr_indir_LQR_fin_horizon.html" class="pagination-link" aria-label="Discrete-time LQR on a finite horizon">
-        <span class="nav-page-text">Discrete-time LQR on a finite horizon</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./intro_references.html" class="pagination-link" aria-label="Literature for the course">
+        <span class="nav-page-text">Literature for the course</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
