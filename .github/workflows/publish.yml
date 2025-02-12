@@ -21,6 +21,7 @@ jobs:
         uses: julia-actions/setup-julia@v2
         with:
           project: '.'
+      - uses: julia-actions/cache@v2
 
       - run: pwd
       - run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
