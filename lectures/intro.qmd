@@ -6,19 +6,70 @@ bibliography:
     - ref_robust_control.bib
 csl: ieee-control-systems.csl
 format:
-    html     
+    html:
+        html-math-method: katex     
 ---
 
-## What is optimal control
+{{< video https://youtu.be/26sP4QIXgVA?si=uA3kXF3P4bLq0KhX >}}
+
+## What is optimal control?
 
 What does the adjective "optimal" stand for? According to the authoritative [Oxford English Dictionary (OED)](https://doi.org/10.1093/OED/1089148459), the word is defined as: *best, most favourable, especially under a particular set of circumstance*.
 
-Optimal control is then simply... the best control. 
+Optimal control is then simply... **the best control**. 
 
-Whenever optimality of some design is considered, a quantitative measure of the quality of the design must be specified. In control engineering it is typically called *cost function*. It is either provided by the customer, or chosen by the control engineer so that it reflects the customer's requirements. An optimal controller then minimizes this cost. Alternatively, instead of a cost to be minimized, some kind of value to be maximized can be considered. But is a lot more common in control engineering to minimize a cost.  
+::: {.callout-caution}
+Since the word optimal already denotes the best, there is no point in saying "more optimal" or "the most optimal" (in Czech: "optimálnější" or "nejoptimálnější"). People using these terms simply do not know what they are talking about.
+:::
 
-## Why do we need optimal control
+## Cost function
 
-However, the methods of optimal control are not always invoked with the urgent need to minimize some cost. 
+Optimality of a (control) design can only be meaningfully considered if some quantitative measure of the quality of the design is specified. In control engineering it is typically called *cost function*, or simply *cost*. It is either provided by the customer, or chosen by the control engineer so that it reflects the customer's requirements. An optimal controller then minimizes this cost. Alternatively, instead of a cost to be minimized, some kind of value to be maximized can be considered. But is a lot more common in control engineering to minimize a cost. 
+
+Among the classical examples of a cost function are the following:
+
+- rise time, overshoot, settling time, ...
+- classical integral criteria: 
+    - integral of the square of the error (ISE): $J = \int_0^\infty e^2(t) \mathrm{d}t$, (or $J = \int_0^\infty \bm e^\top\bm e \,\mathrm{d}t$ in the vector case), 
+    - integral of the absolute error (IAE): $J = \int_0^\infty |e(t)| \mathrm{d}t$, 
+    - integral of the absolute error weighted by time (ITAE): $J = \int_0^\infty t|e(t)| \mathrm{d}t$, 
+    - ...
+
+These are all quantifying in one way or another the *performance*, that is, how small the regulation error is, or how fast it gets small. But oftentimes the control effort must also be kept small. This necessity of a trade-off between performance and control effort is standard in optimal control theory. One way to handle it is through the celebrated LQR cost
+
+- quadratic cost function: $J = \int_0^\infty (\bm x^\top \mathbf Q \bm x + \bm u^\top \mathbf R \bm u) \mathrm{d}t$, where $\bm x$ and $\bm u$ are the (possibly vector) state and control variables, respectively, and $\mathbf Q$ and $\mathbf R$ are positive semidefinite weighting matrices that serve as the "tuning knobs" through which we express the trade-off. 
+
+Finally, an alternative – and nicely unifying – approach to expressing cost functions is through the use of system norms. 
+
+- system norms: $\mathcal H_2$ system norm, $\mathcal H_\infty$ system norm, $\ell_1$ system norm, ...
+
+The time to define these will only come later in the course, but at this moment we just mention it here. 
+
+## Why do we need optimal control?
+
+There are three slightly different motivations for using the methods of optimal control, all equally useful: 
+
+1. **The best performance is really needed**. This is the most obvious opportunity. It occurs when, for example, the time for a robot to finish the assembly process must be as short as possible, or the fuel consumed by a vehicle to reach the final destination should be as low as possible. 
+
+2. **Knowledge of the best achievable performance is needed.** Frequently, the technology chosen for the project imposes stringent coinstraints on the class of a controller that can be implemented. Say, just a PI or PID controller is allowed. Since the methods of optimal control typically yield controllers of higher complexity (higher-order, or nonlinear, or employing online optimization), an optimal controller would not be implementable with the chosen technology. However, even in these situations it may be useful to have an optimal controller as a baseline for comparison. If we know the minimum possible cost needed to accomplish the control task, we can compare it with the cost incurred by the current (setting of the) controller. Is the difference acceptable? If not, we can perhaps try to convice the customer to allow a more complex controller. If yes, we know that there is no need to keep on tuning the PID controller manually. 
+
+3. **Any reasonable controller would suffice, but it is difficult to find.** Even if optimality of the control design is not a strict requirement, and it is only required to make the system "just work", say, just to stable, decently fast, and free of large oscillations, even these modest requirements may turn out rather challenging in many situations. In particular, if the system has several inputs and outputs, the more so if it is unstable, or non-minimum phase, or nonlinear, or when the system is subject to disturbances or uncertainty. The methods of optimal control provide a systematic way to design a controller in these situations.
 
 ## Robust control
+
+### What is robust control?
+
+Robust control system, as we understand it in this course, is capable of maintaining its performance even though the controlled system is subject to changes in its parameters, structure, or operating conditions.
+
+### Robust control vs adaptive control
+
+It is commonly understood that a robust controller is a controller with a fixed structure and fixed values of its parameters. As such it does not adapt to the aformentioned changes of the controlled system. This is in contrast with another important branch of control engineering, adaptive control. 
+
+### Robustness just as one aspect of a control system
+
+Robustness of a control system is certainly an important practical property, and as such it has been discussed in a number of publications and courses under the name of "robust control". But we emphasize it here that we really view robustness as just another, however important, aspect of **any** control system. There is no point in seriously considering a nonrobust controller. Recall that even those classical concepts such as gain and phase margins, GM and PM, respectively, that you are familiar with from the introductory courses on automatic control, do characterize robustness. In our course, we will be investigating robustness in a systematic way, see the next paragraph. 
+
+### Robustness as an optimization criterion
+
+The reason why we address this particular aspect of a control system in our course is that robustness can be naturally incorporated into the design of a controller using the methods of optimal control. Namely, the frameworks $\mathcal H_\infty$-optimal control and $\mu$-synthesis are the most prominent examples of such optimization-based robust control design. While it used to be possible to design, say, a PID controller while keeping an eye on the gain and phase margins, we aim at attaining robustness as an outcome of optimization procedures.
+
