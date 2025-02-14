@@ -5,10 +5,13 @@ format:
     html:
         html-math-method: katex
         code-fold: true
-execute:
-    enabled: false
+crossref:
+  fig-prefix: Fig. 
+  eq-prefix: Eq.
 engine: julia
 ---
+
+There is bag of trick that can be used to reformulate an optimization problem into an equivalent a form that is more suitable for a theoretical analysis or a particular numerical solver. Here we only pick a few. 
 
 ## Maximization into minimization
 
@@ -16,7 +19,7 @@ Given a function $f(\bm x)$, we can maximize it by minimizing $-f(\bm x)$.
 
 ## Equality into inequality constraints
 
-As a matter of fact, we could declare as the most general format of an NLP problem the one with only inequality constraints. This is because we can always transform an equality constraint into two inequality constraints. Given an equality constraint $h(\bm x) = 0$, we can write it as $h(\bm x) \leq 0$ and $-h(\bm x) \leq 0$, that is, 
+As a matter of fact, we can declare an NLP problem only inequality constraints as the most general one. This is because we can always transform an equality constraint into two inequality constraints. Given an equality constraint $h(\bm x) = 0$, we can write it as $h(\bm x) \leq 0$ and $-h(\bm x) \leq 0$, that is, 
 
 $$
 \underbrace{\begin{bmatrix}
@@ -25,7 +28,7 @@ h(\bm x) \\
 \end{bmatrix}}_{\mathbf g(\bm x)} \leq \mathbf 0.
 $$
 
-On the other hand, it may be useful to keep the equality constraints explicit in the problem formulation for the benefit of theoretical analysis, numerical methods and convenience of the user/modeller.
+On the other hand, it is typically useful to keep the equality constraints explicit in the problem formulation for the benefit of theoretical analysis, numerical methods and convenience of the user/modeller.
 
 ## Inequality into "sort-of" equality constraints
 
@@ -61,7 +64,7 @@ We also impose the restriction that all the coefficients $c_i$ are nonnegative. 
 
 The trouble with the absolute value function is that it is not linear, it is not even smooth. And yet, as we will see below, this optimization with the absolute value can be reformulated as a linear program.
 
-One possible reformulation introduces two new nonnegative (vector) variables $\bm x^+\geq 0$ and $\bm x^-\geq 0$ and with which the original variables can be expressed as $x_i = x_i^+ - x_i^-, \; i=1, \ldots, n$. The cost function can then be written as $\sum c_i|x_i| = \sum_i c_i (x_i^+ + x_i^-)$. 
+One possible reformulation introduces two new nonnegative (vector) variables $\bm x^+\geq 0$ and $\bm x^-\geq 0$, with which the original variables can be expressed as $x_i = x_i^+ - x_i^-, \; i=1, \ldots, n$. The cost function can then be written as $\sum c_i|x_i| = \sum_i c_i (x_i^+ + x_i^-)$. 
 
 This may look surprising (and incorrect) at first, but we argue that at an optimum, $x_i^+$ or $x_i^-$ must be zero. Otherwise we could subtract (in case $c_i>0$) the same amount from/to both, which would not change the satisfaction of the constraints (this modification cancels in $x_i = x_i^+ - x_i^-$), and the cost would be further reduced.
 
@@ -90,4 +93,8 @@ $$
 
 ## Piecewise linear
 
+#TODO
+
 ## Quadratic
+
+#TODO

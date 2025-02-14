@@ -6,12 +6,13 @@ format:
     html:
         html-math-method: katex
         code-fold: true
-execute:
-    enabled: true
+crossref:
+  fig-prefix: Fig. 
+  eq-prefix: Eq.
 engine: julia
 ---
 
-Here we are going to analyze the optimization problem with no constraints
+We are going to analyze the optimization problem with no constraints
 $$
 \operatorname*{minimize}_{\bm x \in \mathbb{R}^n} \quad  f(\bm x).
 $$
@@ -28,9 +29,9 @@ First, let's define carefully what we mean by *a minimum* in the unconstrained p
 For those whose mother tongue does not use articles such as **the** and **a/an** in English, it is worth emphasizing that there is a difference between "the minimum" and "a minimum". In the former we assume that there is just one minimum, in the latter we make no such assumption.  
 :::
 
-Consider a (scalar) function of a scalar variable for simplicity
+Consider a (scalar) function of a scalar variable for simplicity. Something like the function whose graph is shown in @fig-scalar-function below.
 
-![](figures/scalar_function_extrema.png){width="50%"}
+![An example of a scalar function of a scalar real argument that exhibits several local minima and maxima](figures/scalar_function_extrema.png){width="50%" #fig-scalar-function}
 
 We say, that the function has a local minimum at $x^\star$ if $f(x)\geq f(x^\star)$ in an $\varepsilon$ neighbourhood. All the red dots in the above figure are local minima. Similarly, of course, the function has a local maximum at $x^\star$ if $f(x)\leq f(x^\star)$ in an $\varepsilon$ neighbourhood. Such local maxima are the green dots in the figure. The smallest and the largest of these are global minima and maxima, respectively.
 
@@ -41,7 +42,7 @@ Here we consider two types of conditions of optimality for unconstrained minimiz
 
 ### Scalar optimization variable
 
-You may want to have a look at the video, but below we continue with the text that summarizes the video.
+You may want to have a look at the video, but below we continue with the text that covers (and polishes and sometimes even extends a bit) the content of the video.
 
 {{< video https://www.youtube.com/embed/z64cXTZKw4I?si=KBHtbW3bd51jEipK >}}
 

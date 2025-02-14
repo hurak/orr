@@ -3,13 +3,14 @@ title: "Optimization problems"
 bibliography: 
     - ref_optimization.bib
     - ref_numerical_optimal_control.bib
+csl: ieee-control-systems.csl 
 format:
     html:
         html-math-method: katex
         code-fold: true
-execute:
-    enabled: true
-    warning: false
+crossref:
+  fig-prefix: Fig. 
+  eq-prefix: Eq.
 engine: julia
 ---
 
@@ -32,7 +33,7 @@ If maximization of the objective function $f()$ is desired, we can simply multip
 
 Typically there are two types of constraints that can be imposed on the optimization variable $\bm x$:
 
-- explicit characterization of the set such as $\bm x \in \mathbb{R}^n$ or $\bm x \in \mathbb{Z}^n$, possibly even a direction enumeration such as $\bm x \in \{0,1\}^n$ in the case of binary variables, 
+- explicit characterization of the set such as $\bm x \in \mathbb{R}^n$ or $\bm x \in \mathbb{Z}^n$, possibly even a direct enumeration such as $\bm x \in \{0,1\}^n$ in the case of binary variables, 
 - implicit characterization of the set using equations and inequalities such as $g_i(\bm x) \leq 0$ and $h_i(\bm x) = 0$ for $i = 1, \ldots, m$ and $j = 1, \ldots, p$.
 
 An example of a more structured and yet sufficiently general optimization problems over several real and integer variables is
@@ -44,11 +45,11 @@ $$
 \end{aligned}
 $$
 
-Indeed, for named sets such as $\mathbb R$ or $\mathbb Z$, it is common to place the set constraints directly underneath the word "minimize". But it is just one convention, and these constraints could be listed into the "subject to" section as well.
+Indeed, for named sets such as $\mathbb R$ or $\mathbb Z$, it is common to place the set constraints directly underneath the word "minimize". But it is just one convention, and these constraints could be listed in the "subject to" section as well.
 
 ::: {.callout-tip}
-## Integer optimization not in this course
-In this course we are only going to consider optimization problems with real-valued variables. This decision does not suggest that optimization with integer variables is less relevant for optimal control, quite the opposite! It is just that the theory and algorithms for integer or mixed integer optimization are based on different principles than those for real variables. And they can hardly fit into a single course. Good news for the interested students is that a graduate course named [Combinatorial algorithms (B3B35KOA)](https://rtime.ciirc.cvut.cz/~hanzalek/KO/) covering integer optimization in detail is offered by the Cybernetics and Robotics study program at CTU FEE. Applications of integer optimization to optimal control are part of the course on [Hybrid systems (B3B39HYS)](https://moodle.fel.cvut.cz/course/view.php?id=7973).
+## Integer optimization not included in this course
+In this course we are only going to consider optimization problems with real-valued variables. This decision does not suggest that optimization with integer variables is less relevant for optimal control, quite the opposite! It is just that the theory and algorithms for integer or mixed integer optimization are based on different principles than those for real variables. And they can hardly fit into a single course. Good news for the interested students is that a graduate course named [Combinatorial algorithms (B3B35KOA)](https://rtime.ciirc.cvut.cz/~hanzalek/KO/) covering integer optimization in detail is offered by our Cybernetics and Robotics study program at CTU FEE. Additionally, applications of integer optimization to optimal control are partly discussed in the course on [Hybrid systems (B3B39HYS)](https://moodle.fel.cvut.cz/course/view.php?id=7973).
 :::
 
 The form of an optimization problem that we are going to use in our course most often than not is
@@ -78,11 +79,10 @@ Linear vs nonlinear
 : By linear problems we mean problems where the objective function and all the functions defining the constraints are linear (or actually affine) functions of the optimization variable $\bm x$. Such problems constitute the simplest class of optimization problems, are very well understood, and there are efficient algorithms for solving them. In contrast, nonlinear problems are typically more difficult to solve (but see the discussion of the role of convexity below).
 
 Smooth vs nonsmooth
-: Efficient algorithms for optimization over real variables benefit heavily from knowledge of the derivatives of the objective and constraint functions. If the functions are differentiable (aka smooth), we say that the whole optimization problem is smooth. Nonsmooth problems are typically a more difficult to analyze and solve (but again, see the discussion of the role of convexity below).
+: Efficient algorithms for optimization over real variables benefit heavily from knowledge of the derivatives of the objective and constraint functions. If the functions are differentiable (aka smooth), we say that the whole optimization problem is smooth. Nonsmooth problems are typically more difficult to analyze and solve (but again, see the discussion of the role of convexity below).
 
 Convex vs nonconvex
-: If the objective function and the feasible set are convex (the latter holds when the functions defining the inequality constraints are convex and the functions defining the equality constrains are affine), the whole optimization problem is convex. Convex optimization problems are very well understood and there are efficient algorithms for solving them. In contrast, nonconvex problems are typically more difficult to solve. It turns out that convexity is a lot more important property than linearity and smoothness when it comes to solving optimization problems efficiently. 
-
+: If the objective function and the feasible set are convex (the latter holds when the functions defining the inequality constraints are convex and the functions defining the equality constrains are affine), the whole optimization problem is convex. Convex optimization problems are very well understood and there are efficient algorithms for solving them. In contrast, nonconvex problems are typically more difficult to solve. It is not becomming a common knowledge that convexity is a lot more important property than linearity and smoothness when it comes to solving optimization problems efficiently. 
 
 ## Classes of optimization problems
 
@@ -140,7 +140,7 @@ First, what is a cone? It is a set such that if something is in the cone, then a
 
 ![Regular (pointed, convex, closed) cone in a plane](figures/cone.png){#fig-cone width="50%"}
 
-Now, what is the point in using cones in optimization? Reformulation of nonlinear optimization problems using cones constitutes a systematic way to identify what these (conic) optimization problems have in common with linear programs, for which powerful theory and efficient algorithms exist. 
+Now, what is the role of cones in optimization? Reformulation of nonlinear optimization problems using cones constitutes a systematic way to identify what these (conic) optimization problems have in common with linear programs, for which powerful theory and efficient algorithms exist. 
 
 Note that an LP in the standard form can be written as
 $$
@@ -162,7 +162,7 @@ $$
 where $\mathcal{K}$ is a cone in $\mathbb R^n$. 
 
 ::: {.callout-tip}
-## Inequality as belonging to a cone
+## Inequality interpreted as belonging to a cone
 A fundamental idea unrolled here: the inequality $\bm x\geq 0$ can be interpreted as $\bm x$ belonging to a componentwise nonegative cone, that is $\bm x \in \mathbb R_+^n$. What if some other cone $\mathcal K$ is considered? What would be the interpretation of the inequality then?
 :::
 
@@ -199,7 +199,7 @@ col = repeat([1:50;50:-1:1],outer=2)
 band(lower, upper, color=col, axis=(type=Axis3,xlabel="x₁",ylabel="x₂",zlabel="x₃"))
 ```
 
-Which of the three axes plays the role of the axis of symmetry for the cone must be agreed beforhand. Singling this direction out, the SOC in $\mathbb R^n$ can also be formulated as 
+Which of the three axes plays the role of the axis of symmetry for the cone must be agreed beforehand. Singling this direction out, the SOC in $\mathbb R^n$ can also be formulated as 
 $$
 \mathcal{K}_\mathrm{SOC}^n = \left\{ (\bm x, t) \in \mathbb R^{n-1} \times \mathbb R \mid \|\bm x\|_2 \leq t \right\}.
 $$
@@ -308,6 +308,8 @@ where the latter constraint is more often than not written as $\bm X \succeq 0$,
 We are not going to cover them here, but we only enumerate a few other cones useful in optimization: rotated second-order cone, exponential cone, power cone, ... A concise overview is in [@MOSEKModelingCookbook2024]
 
 ### Geometric program (GP)
+
+#TODO: although of little immediate use in our course.
 
 ### Nonlinear program (NLP)
 
