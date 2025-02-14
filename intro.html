@@ -931,8 +931,7 @@ window.Quarto = {
   <ul>
   <li><a href="#what-is-optimal-control" id="toc-what-is-optimal-control" class="nav-link active" data-scroll-target="#what-is-optimal-control">What is optimal control?</a></li>
   <li><a href="#cost-function" id="toc-cost-function" class="nav-link" data-scroll-target="#cost-function">Cost function</a></li>
-  <li><a href="#why-do-we-need-optimal-control" id="toc-why-do-we-need-optimal-control" class="nav-link" data-scroll-target="#why-do-we-need-optimal-control">Why do we need optimal control?</a></li>
-  <li><a href="#robust-control" id="toc-robust-control" class="nav-link" data-scroll-target="#robust-control">Robust control</a>
+  <li><a href="#why-do-we-need-optimal-control" id="toc-why-do-we-need-optimal-control" class="nav-link" data-scroll-target="#why-do-we-need-optimal-control">Why do we need optimal control?</a>
   <ul class="collapse">
   <li><a href="#what-is-robust-control" id="toc-what-is-robust-control" class="nav-link" data-scroll-target="#what-is-robust-control">What is robust control?</a></li>
   <li><a href="#robust-control-vs-adaptive-control" id="toc-robust-control-vs-adaptive-control" class="nav-link" data-scroll-target="#robust-control-vs-adaptive-control">Robust control vs adaptive control</a></li>
@@ -1015,9 +1014,6 @@ Caution
 <li><p><strong>Knowledge of the best achievable performance is needed.</strong> Frequently, the technology chosen for the project imposes stringent coinstraints on the class of a controller that can be implemented. Say, just a PI or PID controller is allowed. Since the methods of optimal control typically yield controllers of higher complexity (higher-order, or nonlinear, or employing online optimization), an optimal controller would not be implementable with the chosen technology. However, even in these situations it may be useful to have an optimal controller as a baseline for comparison. If we know the minimum possible cost needed to accomplish the control task, we can compare it with the cost incurred by the current (setting of the) controller. Is the difference acceptable? If not, we can perhaps try to convice the customer to allow a more complex controller. If yes, we know that there is no need to keep on tuning the PID controller manually.</p></li>
 <li><p><strong>Any reasonable controller would suffice, but it is difficult to find.</strong> Even if optimality of the control design is not a strict requirement, and it is only required to make the system “just work”, say, just to stable, decently fast, and free of large oscillations, even these modest requirements may turn out rather challenging in many situations. In particular, if the system has several inputs and outputs, the more so if it is unstable, or non-minimum phase, or nonlinear, or when the system is subject to disturbances or uncertainty. The methods of optimal control provide a systematic way to design a controller in these situations.</p></li>
 </ol>
-</section>
-<section id="robust-control" class="level2">
-<h2 class="anchored" data-anchor-id="robust-control">Robust control</h2>
 <section id="what-is-robust-control" class="level3">
 <h3 class="anchored" data-anchor-id="what-is-robust-control">What is robust control?</h3>
 <p>Robust control system, as we understand it in this course, is capable of maintaining its performance even though the controlled system is subject to changes in its parameters, structure, or operating conditions.</p>
