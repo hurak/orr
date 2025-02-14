@@ -68,6 +68,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -886,9 +929,16 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-is-optimal-control" id="toc-what-is-optimal-control" class="nav-link active" data-scroll-target="#what-is-optimal-control">What is optimal control</a></li>
-  <li><a href="#why-do-we-need-optimal-control" id="toc-why-do-we-need-optimal-control" class="nav-link" data-scroll-target="#why-do-we-need-optimal-control">Why do we need optimal control</a></li>
-  <li><a href="#robust-control" id="toc-robust-control" class="nav-link" data-scroll-target="#robust-control">Robust control</a></li>
+  <li><a href="#what-is-optimal-control" id="toc-what-is-optimal-control" class="nav-link active" data-scroll-target="#what-is-optimal-control">What is optimal control?</a></li>
+  <li><a href="#cost-function" id="toc-cost-function" class="nav-link" data-scroll-target="#cost-function">Cost function</a></li>
+  <li><a href="#why-do-we-need-optimal-control" id="toc-why-do-we-need-optimal-control" class="nav-link" data-scroll-target="#why-do-we-need-optimal-control">Why do we need optimal control?</a></li>
+  <li><a href="#robust-control" id="toc-robust-control" class="nav-link" data-scroll-target="#robust-control">Robust control</a>
+  <ul class="collapse">
+  <li><a href="#what-is-robust-control" id="toc-what-is-robust-control" class="nav-link" data-scroll-target="#what-is-robust-control">What is robust control?</a></li>
+  <li><a href="#robust-control-vs-adaptive-control" id="toc-robust-control-vs-adaptive-control" class="nav-link" data-scroll-target="#robust-control-vs-adaptive-control">Robust control vs adaptive control</a></li>
+  <li><a href="#robustness-just-as-one-aspect-of-a-control-system" id="toc-robustness-just-as-one-aspect-of-a-control-system" class="nav-link" data-scroll-target="#robustness-just-as-one-aspect-of-a-control-system">Robustness just as one aspect of a control system</a></li>
+  <li><a href="#robustness-as-an-optimization-criterion" id="toc-robustness-as-an-optimization-criterion" class="nav-link" data-scroll-target="#robustness-as-an-optimization-criterion">Robustness as an optimization criterion</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -914,20 +964,78 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/26sP4QIXgVA?si=uA3kXF3P4bLq0KhX" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <section id="what-is-optimal-control" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-optimal-control">What is optimal control</h2>
+<h2 class="anchored" data-anchor-id="what-is-optimal-control">What is optimal control?</h2>
 <p>What does the adjective “optimal” stand for? According to the authoritative <a href="https://doi.org/10.1093/OED/1089148459">Oxford English Dictionary (OED)</a>, the word is defined as: <em>best, most favourable, especially under a particular set of circumstance</em>.</p>
-<p>Optimal control is then simply… the best control.</p>
-<p>Whenever optimality of some design is considered, a quantitative measure of the quality of the design must be specified. In control engineering it is typically called <em>cost function</em>. It is either provided by the customer, or chosen by the control engineer so that it reflects the customer’s requirements. An optimal controller then minimizes this cost. Alternatively, instead of a cost to be minimized, some kind of value to be maximized can be considered. But is a lot more common in control engineering to minimize a cost.</p>
+<p>Optimal control is then simply… <strong>the best control</strong>.</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Since the word optimal already denotes the best, there is no point in saying “more optimal” or “the most optimal” (in Czech: “optimálnější” or “nejoptimálnější”). People using these terms simply do not know what they are talking about.</p>
+</div>
+</div>
+</section>
+<section id="cost-function" class="level2">
+<h2 class="anchored" data-anchor-id="cost-function">Cost function</h2>
+<p>Optimality of a (control) design can only be meaningfully considered if some quantitative measure of the quality of the design is specified. In control engineering it is typically called <em>cost function</em>, or simply <em>cost</em>. It is either provided by the customer, or chosen by the control engineer so that it reflects the customer’s requirements. An optimal controller then minimizes this cost. Alternatively, instead of a cost to be minimized, some kind of value to be maximized can be considered. But is a lot more common in control engineering to minimize a cost.</p>
+<p>Among the classical examples of a cost function are the following:</p>
+<ul>
+<li>rise time, overshoot, settling time, …</li>
+<li>classical integral criteria:
+<ul>
+<li>integral of the square of the error (ISE): <span class="math inline">J = \int_0^\infty e^2(t) \mathrm{d}t</span>, (or <span class="math inline">J = \int_0^\infty \bm e^\top\bm e \,\mathrm{d}t</span> in the vector case),</li>
+<li>integral of the absolute error (IAE): <span class="math inline">J = \int_0^\infty |e(t)| \mathrm{d}t</span>,</li>
+<li>integral of the absolute error weighted by time (ITAE): <span class="math inline">J = \int_0^\infty t|e(t)| \mathrm{d}t</span>,</li>
+<li>…</li>
+</ul></li>
+</ul>
+<p>These are all quantifying in one way or another the <em>performance</em>, that is, how small the regulation error is, or how fast it gets small. But oftentimes the control effort must also be kept small. This necessity of a trade-off between performance and control effort is standard in optimal control theory. One way to handle it is through the celebrated LQR cost</p>
+<ul>
+<li>quadratic cost function: <span class="math inline">J = \int_0^\infty (\bm x^\top \mathbf Q \bm x + \bm u^\top \mathbf R \bm u) \mathrm{d}t</span>, where <span class="math inline">\bm x</span> and <span class="math inline">\bm u</span> are the (possibly vector) state and control variables, respectively, and <span class="math inline">\mathbf Q</span> and <span class="math inline">\mathbf R</span> are positive semidefinite weighting matrices that serve as the “tuning knobs” through which we express the trade-off.</li>
+</ul>
+<p>Finally, an alternative – and nicely unifying – approach to expressing cost functions is through the use of system norms.</p>
+<ul>
+<li>system norms: <span class="math inline">\mathcal H_2</span> system norm, <span class="math inline">\mathcal H_\infty</span> system norm, <span class="math inline">\ell_1</span> system norm, …</li>
+</ul>
+<p>The time to define these will only come later in the course, but at this moment we just mention it here.</p>
 </section>
 <section id="why-do-we-need-optimal-control" class="level2">
-<h2 class="anchored" data-anchor-id="why-do-we-need-optimal-control">Why do we need optimal control</h2>
-<p>However, the methods of optimal control are not always invoked with the urgent need to minimize some cost.</p>
+<h2 class="anchored" data-anchor-id="why-do-we-need-optimal-control">Why do we need optimal control?</h2>
+<p>There are three slightly different motivations for using the methods of optimal control, all equally useful:</p>
+<ol type="1">
+<li><p><strong>The best performance is really needed</strong>. This is the most obvious opportunity. It occurs when, for example, the time for a robot to finish the assembly process must be as short as possible, or the fuel consumed by a vehicle to reach the final destination should be as low as possible.</p></li>
+<li><p><strong>Knowledge of the best achievable performance is needed.</strong> Frequently, the technology chosen for the project imposes stringent coinstraints on the class of a controller that can be implemented. Say, just a PI or PID controller is allowed. Since the methods of optimal control typically yield controllers of higher complexity (higher-order, or nonlinear, or employing online optimization), an optimal controller would not be implementable with the chosen technology. However, even in these situations it may be useful to have an optimal controller as a baseline for comparison. If we know the minimum possible cost needed to accomplish the control task, we can compare it with the cost incurred by the current (setting of the) controller. Is the difference acceptable? If not, we can perhaps try to convice the customer to allow a more complex controller. If yes, we know that there is no need to keep on tuning the PID controller manually.</p></li>
+<li><p><strong>Any reasonable controller would suffice, but it is difficult to find.</strong> Even if optimality of the control design is not a strict requirement, and it is only required to make the system “just work”, say, just to stable, decently fast, and free of large oscillations, even these modest requirements may turn out rather challenging in many situations. In particular, if the system has several inputs and outputs, the more so if it is unstable, or non-minimum phase, or nonlinear, or when the system is subject to disturbances or uncertainty. The methods of optimal control provide a systematic way to design a controller in these situations.</p></li>
+</ol>
 </section>
 <section id="robust-control" class="level2">
 <h2 class="anchored" data-anchor-id="robust-control">Robust control</h2>
+<section id="what-is-robust-control" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-robust-control">What is robust control?</h3>
+<p>Robust control system, as we understand it in this course, is capable of maintaining its performance even though the controlled system is subject to changes in its parameters, structure, or operating conditions.</p>
+</section>
+<section id="robust-control-vs-adaptive-control" class="level3">
+<h3 class="anchored" data-anchor-id="robust-control-vs-adaptive-control">Robust control vs adaptive control</h3>
+<p>It is commonly understood that a robust controller is a controller with a fixed structure and fixed values of its parameters. As such it does not adapt to the aformentioned changes of the controlled system. This is in contrast with another important branch of control engineering, adaptive control.</p>
+</section>
+<section id="robustness-just-as-one-aspect-of-a-control-system" class="level3">
+<h3 class="anchored" data-anchor-id="robustness-just-as-one-aspect-of-a-control-system">Robustness just as one aspect of a control system</h3>
+<p>Robustness of a control system is certainly an important practical property, and as such it has been discussed in a number of publications and courses under the name of “robust control”. But we emphasize it here that we really view robustness as just another, however important, aspect of <strong>any</strong> control system. There is no point in seriously considering a nonrobust controller. Recall that even those classical concepts such as gain and phase margins, GM and PM, respectively, that you are familiar with from the introductory courses on automatic control, do characterize robustness. In our course, we will be investigating robustness in a systematic way, see the next paragraph.</p>
+</section>
+<section id="robustness-as-an-optimization-criterion" class="level3">
+<h3 class="anchored" data-anchor-id="robustness-as-an-optimization-criterion">Robustness as an optimization criterion</h3>
+<p>The reason why we address this particular aspect of a control system in our course is that robustness can be naturally incorporated into the design of a controller using the methods of optimal control. Namely, the frameworks <span class="math inline">\mathcal H_\infty</span>-optimal control and <span class="math inline">\mu</span>-synthesis are the most prominent examples of such optimization-based robust control design. While it used to be possible to design, say, a PID controller while keeping an eye on the gain and phase margins, we aim at attaining robustness as an outcome of optimization procedures.</p>
 
 
+</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
