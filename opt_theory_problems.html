@@ -1009,7 +1009,7 @@ Note
 <p>If maximization of the objective function <span class="math inline">f()</span> is desired, we can simply multiply the objective function by <span class="math inline">-1</span> and minimize the resulting function.</p>
 <p>Typically there are two types of constraints that can be imposed on the optimization variable <span class="math inline">\bm x</span>:</p>
 <ul>
-<li>explicit characterization of the set such as <span class="math inline">\bm x \in \mathbb{R}^n</span> or <span class="math inline">\bm x \in \mathbb{Z}^n</span>, possibly even a direction enumeration such as <span class="math inline">\bm x \in \{0,1\}^n</span> in the case of binary variables,</li>
+<li>explicit characterization of the set such as <span class="math inline">\bm x \in \mathbb{R}^n</span> or <span class="math inline">\bm x \in \mathbb{Z}^n</span>, possibly even a direct enumeration such as <span class="math inline">\bm x \in \{0,1\}^n</span> in the case of binary variables,</li>
 <li>implicit characterization of the set using equations and inequalities such as <span class="math inline">g_i(\bm x) \leq 0</span> and <span class="math inline">h_i(\bm x) = 0</span> for <span class="math inline">i = 1, \ldots, m</span> and <span class="math inline">j = 1, \ldots, p</span>.</li>
 </ul>
 <p>An example of a more structured and yet sufficiently general optimization problems over several real and integer variables is <span class="math display">
@@ -1019,18 +1019,18 @@ Note
 &amp; h_j(\bm x, \bm y) = 0, \quad j = 1, \ldots, p.
 \end{aligned}
 </span></p>
-<p>Indeed, for named sets such as <span class="math inline">\mathbb R</span> or <span class="math inline">\mathbb Z</span>, it is common to place the set constraints directly underneath the word “minimize”. But it is just one convention, and these constraints could be listed into the “subject to” section as well.</p>
+<p>Indeed, for named sets such as <span class="math inline">\mathbb R</span> or <span class="math inline">\mathbb Z</span>, it is common to place the set constraints directly underneath the word “minimize”. But it is just one convention, and these constraints could be listed in the “subject to” section as well.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Integer optimization not in this course
+Integer optimization not included in this course
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In this course we are only going to consider optimization problems with real-valued variables. This decision does not suggest that optimization with integer variables is less relevant for optimal control, quite the opposite! It is just that the theory and algorithms for integer or mixed integer optimization are based on different principles than those for real variables. And they can hardly fit into a single course. Good news for the interested students is that a graduate course named <a href="https://rtime.ciirc.cvut.cz/~hanzalek/KO/">Combinatorial algorithms (B3B35KOA)</a> covering integer optimization in detail is offered by the Cybernetics and Robotics study program at CTU FEE. Applications of integer optimization to optimal control are part of the course on <a href="https://moodle.fel.cvut.cz/course/view.php?id=7973">Hybrid systems (B3B39HYS)</a>.</p>
+<p>In this course we are only going to consider optimization problems with real-valued variables. This decision does not suggest that optimization with integer variables is less relevant for optimal control, quite the opposite! It is just that the theory and algorithms for integer or mixed integer optimization are based on different principles than those for real variables. And they can hardly fit into a single course. Good news for the interested students is that a graduate course named <a href="https://rtime.ciirc.cvut.cz/~hanzalek/KO/">Combinatorial algorithms (B3B35KOA)</a> covering integer optimization in detail is offered by our Cybernetics and Robotics study program at CTU FEE. Additionally, applications of integer optimization to optimal control are partly discussed in the course on <a href="https://moodle.fel.cvut.cz/course/view.php?id=7973">Hybrid systems (B3B39HYS)</a>.</p>
 </div>
 </div>
 <p>The form of an optimization problem that we are going to use in our course most often than not is <span class="math display">
@@ -1061,11 +1061,11 @@ By linear problems we mean problems where the objective function and all the fun
 </dd>
 <dt>Smooth vs nonsmooth</dt>
 <dd>
-Efficient algorithms for optimization over real variables benefit heavily from knowledge of the derivatives of the objective and constraint functions. If the functions are differentiable (aka smooth), we say that the whole optimization problem is smooth. Nonsmooth problems are typically a more difficult to analyze and solve (but again, see the discussion of the role of convexity below).
+Efficient algorithms for optimization over real variables benefit heavily from knowledge of the derivatives of the objective and constraint functions. If the functions are differentiable (aka smooth), we say that the whole optimization problem is smooth. Nonsmooth problems are typically more difficult to analyze and solve (but again, see the discussion of the role of convexity below).
 </dd>
 <dt>Convex vs nonconvex</dt>
 <dd>
-If the objective function and the feasible set are convex (the latter holds when the functions defining the inequality constraints are convex and the functions defining the equality constrains are affine), the whole optimization problem is convex. Convex optimization problems are very well understood and there are efficient algorithms for solving them. In contrast, nonconvex problems are typically more difficult to solve. It turns out that convexity is a lot more important property than linearity and smoothness when it comes to solving optimization problems efficiently.
+If the objective function and the feasible set are convex (the latter holds when the functions defining the inequality constraints are convex and the functions defining the equality constrains are affine), the whole optimization problem is convex. Convex optimization problems are very well understood and there are efficient algorithms for solving them. In contrast, nonconvex problems are typically more difficult to solve. It is not becomming a common knowledge that convexity is a lot more important property than linearity and smoothness when it comes to solving optimization problems efficiently.
 </dd>
 </dl>
 </section>
@@ -1113,7 +1113,7 @@ If the objective function and the feasible set are convex (the latter holds when
 </section>
 <section id="conic-program-cp" class="level3">
 <h3 class="anchored" data-anchor-id="conic-program-cp">Conic program (CP)</h3>
-<p>First, what is a cone? It is a set such that if something is in the cone, then a multiple of it by a nonnegative number is still in the set. We are going to restrict ourselves to <em>regular cones</em>, which are are pointed, closed and convex. An example of such regular cone in a plane is in <a href="#fig-cone" class="quarto-xref">Figure&nbsp;1</a> below.</p>
+<p>First, what is a cone? It is a set such that if something is in the cone, then a multiple of it by a nonnegative number is still in the set. We are going to restrict ourselves to <em>regular cones</em>, which are are pointed, closed and convex. An example of such regular cone in a plane is in <a href="#fig-cone" class="quarto-xref">Fig.&nbsp;1</a> below.</p>
 <div id="fig-cone" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cone-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1124,7 +1124,7 @@ Figure&nbsp;1: Regular (pointed, convex, closed) cone in a plane
 </figcaption>
 </figure>
 </div>
-<p>Now, what is the point in using cones in optimization? Reformulation of nonlinear optimization problems using cones constitutes a systematic way to identify what these (conic) optimization problems have in common with linear programs, for which powerful theory and efficient algorithms exist.</p>
+<p>Now, what is the role of cones in optimization? Reformulation of nonlinear optimization problems using cones constitutes a systematic way to identify what these (conic) optimization problems have in common with linear programs, for which powerful theory and efficient algorithms exist.</p>
 <p>Note that an LP in the standard form can be written as <span class="math display">
 \begin{aligned}
 \operatorname*{minimize} &amp;\quad \mathbf c^\top \bm x\\
@@ -1145,7 +1145,7 @@ Figure&nbsp;1: Regular (pointed, convex, closed) cone in a plane
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Inequality as belonging to a cone
+Inequality interpreted as belonging to a cone
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1163,7 +1163,7 @@ Inequality as belonging to a cone
 <p>The most immediate cone in <span class="math inline">\mathbb R^n</span> is the <em>second-order cone</em>, also called the <em>Lorentz cone</em> or even the <em>ice cream cone</em>. We explain it in <span class="math inline">\mathbb R^3</span> for the ease of visualization, but generalization to <span class="math inline">\mathbb R^n</span> is straightforward. The second-order cone in <span class="math inline">\mathbb R^3</span> is defined as <span class="math display">
 \mathcal{K}_\mathrm{SOC}^3 = \left\{ \bm x \in \mathbb R^3 \mid \sqrt{x_1^2 + x_2^2} \leq x_3 \right\}.
 </span></p>
-<p>and is visualized in <a href="#fig-soc-cone" class="quarto-xref">Figure&nbsp;2</a> below.</p>
+<p>and is visualized in <a href="#fig-soc-cone" class="quarto-xref">Fig.&nbsp;2</a> below.</p>
 <div id="cell-fig-soc-cone" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display" data-execution_count="1">
 <div id="fig-soc-cone" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1178,7 +1178,7 @@ Figure&nbsp;2: A second-order cone in 3D
 </div>
 </div>
 </div>
-<p>Which of the three axes plays the role of the axis of symmetry for the cone must be agreed beforhand. Singling this direction out, the SOC in <span class="math inline">\mathbb R^n</span> can also be formulated as <span class="math display">
+<p>Which of the three axes plays the role of the axis of symmetry for the cone must be agreed beforehand. Singling this direction out, the SOC in <span class="math inline">\mathbb R^n</span> can also be formulated as <span class="math display">
 \mathcal{K}_\mathrm{SOC}^n = \left\{ (\bm x, t) \in \mathbb R^{n-1} \times \mathbb R \mid \|\bm x\|_2 \leq t \right\}.
 </span></p>
 <p>A second-order conic program in standard form is then <span class="math display">
@@ -1258,11 +1258,12 @@ d
 </section>
 <section id="other-conic-programs" class="level4">
 <h4 class="anchored" data-anchor-id="other-conic-programs">Other conic programs</h4>
-<p>We are not going to cover them here, but we only enumerate a few other cones useful in optimization: rotated second-order cone, exponential cone, power cone, … A concise overview is in <span class="citation" data-cites="MOSEKModelingCookbook2024">(<a href="#ref-MOSEKModelingCookbook2024" role="doc-biblioref"><span>“<span>MOSEK Modeling Cookbook</span>”</span> 2024</a>)</span></p>
+<p>We are not going to cover them here, but we only enumerate a few other cones useful in optimization: rotated second-order cone, exponential cone, power cone, … A concise overview is in <span class="citation" data-cites="MOSEKModelingCookbook2024"><a href="#ref-MOSEKModelingCookbook2024" role="doc-biblioref">[1]</a></span></p>
 </section>
 </section>
 <section id="geometric-program-gp" class="level3">
 <h3 class="anchored" data-anchor-id="geometric-program-gp">Geometric program (GP)</h3>
+<p>#TODO: although of little immediate use in our course.</p>
 </section>
 <section id="nonlinear-program-nlp" class="level3">
 <h3 class="anchored" data-anchor-id="nonlinear-program-nlp">Nonlinear program (NLP)</h3>
@@ -1274,19 +1275,19 @@ d
 &amp; \mathbf h(\bm x) = 0.
 \end{aligned}
 </span></p>
-<p>Smoothness of the problem can easily be determined based on the differentiability of the functions. Convexity can also be determined by inspecting the functions, but this is not necessarily easy. One way to check convexity of a function is to view it as a composition of simple functions and exploit the knowledge about convexity of these simple functions. See <span class="citation" data-cites="boydConvexOptimization2004">(<a href="#ref-boydConvexOptimization2004" role="doc-biblioref">Boyd and Vandenberghe 2004, sec. 3.2</a>)</span></p>
+<p>Smoothness of the problem can easily be determined based on the differentiability of the functions. Convexity can also be determined by inspecting the functions, but this is not necessarily easy. One way to check convexity of a function is to view it as a composition of simple functions and exploit the knowledge about convexity of these simple functions. See <span class="citation" data-cites="boydConvexOptimization2004"><a href="#ref-boydConvexOptimization2004" role="doc-biblioref">[2, Sec. 3.2]</a></span></p>
 
 
 
 </section>
 </section>
 
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-boydConvexOptimization2004" class="csl-entry" role="listitem">
-Boyd, Stephen, and Lieven Vandenberghe. 2004. <em>Convex <span>Optimization</span></em>. Seventh printing with corrections 2009. Cambridge, UK: Cambridge University Press. <a href="https://web.stanford.edu/~boyd/cvxbook/">https://web.stanford.edu/~boyd/cvxbook/</a>.
-</div>
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list">
 <div id="ref-MOSEKModelingCookbook2024" class="csl-entry" role="listitem">
-<span>“<span>MOSEK Modeling Cookbook</span>.”</span> 2024. Mosek ApS. <a href="https://docs.mosek.com/MOSEKModelingCookbook-a4paper.pdf">https://docs.mosek.com/MOSEKModelingCookbook-a4paper.pdf</a>.
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline"><span>“<span>MOSEK Modeling Cookbook</span>.”</span> Mosek ApS, Sep. 2024. Available: <a href="https://docs.mosek.com/MOSEKModelingCookbook-a4paper.pdf">https://docs.mosek.com/MOSEKModelingCookbook-a4paper.pdf</a></div>
+</div>
+<div id="ref-boydConvexOptimization2004" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">S. Boyd and L. Vandenberghe, <em>Convex <span>Optimization</span></em>, Seventh printing with corrections 2009. Cambridge, UK: Cambridge University Press, 2004. Available: <a href="https://web.stanford.edu/~boyd/cvxbook/">https://web.stanford.edu/~boyd/cvxbook/</a></div>
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
