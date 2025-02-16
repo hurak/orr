@@ -4,8 +4,10 @@ format:
     html:
         html-math-method: katex
         code-fold: true
-execute:
-    enabled: false
+        code-summary: "Show the code"
+crossref:
+  fig-prefix: Fig. 
+  eq-prefix: Eq.
 engine: julia
 ---
 In this section we formulate a finite-horizon optimal control problem (OCP) for a discrete-time dynamical system as a mathematical optimization (also mathematical programming) problem, which can then be solved numerically by a suitable solvers for nonlinear programming (NLP), or possibly quadratic programming (QP). The outcome of such numerical optimization is an optimal control trajectory (a sequence of controls), which is why this approach is called *direct* – we optimize directly over the trajectories.

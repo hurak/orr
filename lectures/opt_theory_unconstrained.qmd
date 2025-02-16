@@ -6,6 +6,7 @@ format:
     html:
         html-math-method: katex
         code-fold: true
+        code-summary: "Show the code"
 crossref:
   fig-prefix: Fig. 
   eq-prefix: Eq.
@@ -34,7 +35,6 @@ Consider a (scalar) function of a scalar variable for simplicity. Something like
 ![An example of a scalar function of a scalar real argument that exhibits several local minima and maxima](figures/scalar_function_extrema.png){width="50%" #fig-scalar-function}
 
 We say, that the function has a local minimum at $x^\star$ if $f(x)\geq f(x^\star)$ in an $\varepsilon$ neighbourhood. All the red dots in the above figure are local minima. Similarly, of course, the function has a local maximum at $x^\star$ if $f(x)\leq f(x^\star)$ in an $\varepsilon$ neighbourhood. Such local maxima are the green dots in the figure. The smallest and the largest of these are global minima and maxima, respectively.
-
 
 ## Conditions of optimality
 
@@ -246,21 +246,25 @@ Once again, this was more than just an example – quadratic functions are so im
 
 ## Classification of stationary points
 
-For a stationary (also critical) $\bm x^\star$, that is, one that satisfies the first-order necessary condition 
+For a stationary (also critical) point $\bm x^\star$, that is, one that satisfies the first-order necessary condition 
 $$
 \nabla f(\bm x^\star) = 0,
 $$
 
 we can classify it as 
 
-- Minimum: $\nabla^2 f(x^\star)\succ 0$
-- Maximum: $\nabla^2 f(x^\star)\prec 0$
-- Saddle point: $\nabla^2 f(x^\star)$ indefinite
-- Singular point (we cannot decide): $\nabla^2 f(x^\star)=0$
+- Minimum: if $\nabla^2 f(\bm x^\star)\succ 0$,
+- Maximum: if $\nabla^2 f(\bm x^\star)\prec 0$,
+- Saddle point: if $\nabla^2 f(\bm x^\star)$ is indefinite,
+- Singular point: if $\nabla^2 f(\bm x^\star)$ is singular and $\nabla^2 f(\bm x^\star)\succeq 0$ (or $\nabla^2 f(\bm x^\star)\prec 0$).
+
+{{< video https://youtu.be/IVGSr43UD2E?si=8agVzs0yc1jAEP0c >}}
 
 ::: {#exm-classification-of-stationary-points-minimum}
 ## Minimum of a quadratic function
-We consider a quadratic function $f(\mathbf x) = \frac{1}{2}\mathbf{x}^\mathrm{T}\mathbf{Q}\mathbf{x} + \mathbf{r}^\mathrm{T}\mathbf{x}$ for a particular $\mathbf{Q}$ and $\mathbf{r}$. 
+We consider a quadratic function 
+$$f(\mathbf x) = \frac{1}{2}\mathbf{x}^\mathrm{T}\mathbf{Q}\mathbf{x} + \mathbf{r}^\mathrm{T}\mathbf{x}$$
+for a particular $\mathbf{Q}$ and $\mathbf{r}$. 
 ```{julia}
 #| code-fold: show
 Q = [1 1; 1 2]
@@ -380,7 +384,7 @@ This can also be visually confirmed by the surface and contour plots of the func
 
 ```{julia}
 #| label: fig-non-quadratic_surface_singular
-#| fig-cap: "Singular point of a non-quadratic function"
+#| fig-cap: "Singular point of a non-quadratic function that turrns out to be a minimum"
 #| fig-subcap:
 #|   - "Surface plot"
 #|   - "Contour plot"
@@ -393,6 +397,6 @@ f_data = [f([x1,x2]) for x2=x2_data, x1=x1_data];
 using Plots
 display(surface(x1_data,x2_data,f_data))
 contour(x1_data,x2_data,f_data)
-display(plot!([x_stationary[1]], [x_stationary[2]], marker=:circle, label="Stationary point"))
+display(plot!([0.0], [0.0], marker=:circle, label="Stationary point"))
 ```
 :::
