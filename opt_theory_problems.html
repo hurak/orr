@@ -1204,32 +1204,32 @@ Figure&nbsp;2: A second-order cone in 3D
 <p>Assuming the data is structured as <span class="math display">
 \begin{bmatrix}
 \mathbf A\\
-\mathbf c^\top
+\mathbf r^\top
 \end{bmatrix}
 \bm x \succeq
 \begin{bmatrix}
 \mathbf b\\
-d
+q
 \end{bmatrix},
 </span> the inequality can be rewritten as <span class="math display">
 \begin{bmatrix}
 \mathbf A\\
-\mathbf c^\top
+\mathbf r^\top
 \end{bmatrix}
 \bm x -
 \begin{bmatrix}
 \mathbf b\\
-d
+q
 \end{bmatrix} \in \mathcal{K}_\mathrm{SOC}^n,
 </span> which finally gives <span class="math display">
-\|\mathbf A \bm x - \mathbf b\|_2 \leq \mathbf c^\top \bm x + d.
+\|\mathbf A \bm x - \mathbf b\|_2 \leq \mathbf r^\top \bm x + q.
 </span></p>
 <p>To summarize, another form of a second-order cone program (SOCP) is</p>
 <p><span class="math display">
 \begin{aligned}
 \operatorname*{minimize} &amp;\quad \mathbf c^\top \bm x\\
 \text{subject to} &amp;\quad \mathbf A_\mathrm{eq}\bm x = \mathbf b_\mathrm{eq},\\
-&amp;\quad \|\mathbf A \bm x - \mathbf b\|_2 \leq \mathbf c^\top \bm x + d.
+&amp;\quad \|\mathbf A \bm x - \mathbf b\|_2 \leq \mathbf r^\top \bm x + q.
 \end{aligned}
 </span></p>
 <p>We can see that the SOCP contains both linear and quadratic constraints, hence it generalizes LP and QP, including convex QCQP. To see the latter, expand the square of <span class="math inline">\|\mathbf A \bm x - \mathbf b\|_2</span> into <span class="math inline">(\bm x^\top \mathbf A^\top  - \mathbf b^\top)(\mathbf A \bm x - \mathbf b) = \bm x^\top \mathbf A^\top \mathbf A \bm x + \ldots</span></p>

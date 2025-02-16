@@ -1115,7 +1115,7 @@ plot(p1,p2,layout=(2,1))
 </section>
 <section id="sequential-dense-formulation" class="level3">
 <h3 class="anchored" data-anchor-id="sequential-dense-formulation">Sequential (dense) formulation</h3>
-<p>We can express <span class="math inline">\bar{\bm x}</span> as a function of <span class="math inline">\bar{\bm u}</span> and <span class="math inline">\mathbf x_0</span>. This can be done in a straightforward way using (<a href="#eq-linear_system_linear_constraints_matrix_format" class="quarto-xref">Equation&nbsp;1</a>), namely, <span class="math display">
+<p>We can express <span class="math inline">\bar{\bm x}</span> as a function of <span class="math inline">\bar{\bm u}</span> and <span class="math inline">\mathbf x_0</span>. This can be done in a straightforward way using (<a href="#eq-linear_system_linear_constraints_matrix_format" class="quarto-xref">Eq.&nbsp;1</a>), namely, <span class="math display">
 \bar{\bm x} = (\mathbf I-\overline{\mathbf A})^{-1}\overline{\mathbf B} \bm u + (\mathbf I-\overline{\mathbf A})^{-1} \overline{\mathbf A}_0 \mathbf x_0.
 </span></p>
 <p>However, instead of solving the sets of equations, we can do this substitution in a more insightful way. Write down the state equation for several discrete times <span class="math display">
@@ -1216,7 +1216,7 @@ Note
 </section>
 <section id="adding-the-constraints-on-states" class="level4">
 <h4 class="anchored" data-anchor-id="adding-the-constraints-on-states">Adding the constraints on states</h4>
-<p>We might feel a little bit uneasy about loosing an immediate access to <span class="math inline">\bar{\bm x}</span>. But the game is not lost. We just need to express <span class="math inline">\bar{\bm x}</span> as a function of <span class="math inline">\bar{\bm u}</span> and <span class="math inline">\mathbf x_0</span> and impose the constraint on the result. But such expression is already available, see (<a href="#eq-x_as_function_of_u_and_x0" class="quarto-xref">Equation&nbsp;2</a>). Therefore, we can formulate the constraint, say, an upper bound on the state vector <span class="math display">
+<p>We might feel a little bit uneasy about loosing an immediate access to <span class="math inline">\bar{\bm x}</span>. But the game is not lost. We just need to express <span class="math inline">\bar{\bm x}</span> as a function of <span class="math inline">\bar{\bm u}</span> and <span class="math inline">\mathbf x_0</span> and impose the constraint on the result. But such expression is already available, see (<a href="#eq-x_as_function_of_u_and_x0" class="quarto-xref">Eq.&nbsp;2</a>). Therefore, we can formulate the constraint, say, an upper bound on the state vector <span class="math display">
 \bm x_k \leq \mathbf x_\mathrm{max}
 </span> as <span class="math display">
 \bar{\mathbf x}_\mathrm{min} \leq \widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \mathbf x_0 \leq \bar{\mathbf x}_\mathrm{max},
