@@ -234,29 +234,29 @@ Assuming the data is structured as
 $$
 \begin{bmatrix}
 \mathbf A\\
-\mathbf c^\top
+\mathbf r^\top
 \end{bmatrix}
 \bm x \succeq
 \begin{bmatrix}
 \mathbf b\\
-d
+q
 \end{bmatrix},
 $$
 the inequality can be rewritten as
 $$
 \begin{bmatrix}
 \mathbf A\\
-\mathbf c^\top
+\mathbf r^\top
 \end{bmatrix}
 \bm x -
 \begin{bmatrix}
 \mathbf b\\
-d
+q
 \end{bmatrix} \in \mathcal{K}_\mathrm{SOC}^n,
 $$
 which finally gives
 $$
-\|\mathbf A \bm x - \mathbf b\|_2 \leq \mathbf c^\top \bm x + d.
+\|\mathbf A \bm x - \mathbf b\|_2 \leq \mathbf r^\top \bm x + q.
 $$
 
 To summarize, another form of a second-order cone program (SOCP) is
@@ -265,7 +265,7 @@ $$
 \begin{aligned}
 \operatorname*{minimize} &\quad \mathbf c^\top \bm x\\
 \text{subject to} &\quad \mathbf A_\mathrm{eq}\bm x = \mathbf b_\mathrm{eq},\\ 
-&\quad \|\mathbf A \bm x - \mathbf b\|_2 \leq \mathbf c^\top \bm x + d. 
+&\quad \|\mathbf A \bm x - \mathbf b\|_2 \leq \mathbf r^\top \bm x + q. 
 \end{aligned}
 $$
 
