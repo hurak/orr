@@ -1,6 +1,9 @@
 ---
 title: "Computing the derivatives"
-bibliography: ref_optimization.bib
+bibliography: 
+    - ref_optimization.bib
+    - ref_numerical_optimal_control.bib
+csl: ieee-control-systems.csl
 format:
     html:
         html-math-method: katex
@@ -113,22 +116,94 @@ We will compare against these results in the next sections, once we introduce al
 These methods approximate the derivative by computing differences between the function values at different points, hence the name *finite-difference (FD)* methods. The simplest FD methods follow from the definition of the derivative after omiting the limit:
 
 $$
-\frac{\mathrm d f(x)}{\mathrm d x} \approx \frac{f(x+\alpha)-f(x)}{\alpha}\qquad\qquad \text{forward difference}
+\frac{\mathrm d f(x)}{\mathrm d x} \approx \frac{f(x+h)-f(x)}{h}\qquad\qquad \text{forward difference}
 $$
 or
 $$
-\frac{\mathrm d f(x)}{\mathrm d x} \approx \frac{f(x)-f(x-\alpha)}{\alpha}\qquad\qquad \text{backward difference}
+\frac{\mathrm d f(x)}{\mathrm d x} \approx \frac{f(x)-f(x-h)}{h}\qquad\qquad \text{backward difference}
 $$
 or
 $$
-\frac{\mathrm d f(x)}{\mathrm d x} \approx \frac{f(x+\frac{\alpha}{2})-f(x-\frac{\alpha}{2})}{\alpha}\qquad\qquad \text{central difference}
+\frac{\mathrm d f(x)}{\mathrm d x} \approx \frac{f(x+\frac{h}{2})-f(x-\frac{h}{2})}{h}\qquad\qquad \text{central difference}
 $$
 
 For functions of vector variables, the same idea applies, but now we have to compute the difference for each component of the vector.
 
 ### Dependence of the error on the step size
 
-fff
+The finite-difference methods only approximate the derivatives. The smaller the $h$ in the above formulas, the smaller the approximation error. Really? Not quite. Let's explore it through an example.
 
-## Algorithmic (also Automatic) differentiation methods
+::: {#exm-finite-difference-error}
+## Dependence of the error on the step size
+Consider a scalar function of a vector argument $f(\bm x) = \sum_{i=1}^n x_i^2$.
+``` {julia}
+f(x) = sum(xᵢ^2 for xᵢ in x) 
+```
+Now, in order to compute the gradient $\nabla f$, we need to compute all the individual partial derivatives, the individual components of the vector. Let's now restrict ourselves just to one component, say, the first one, that is, let's compute $\frac{\partial f(\mathbf x)}{\partial x_1}$. 
 
+In this simple example a formula can be written down upon inspection: $\frac{\partial f(\mathbf x)}{\partial x_1} = 2x_i$:
+``` {julia}
+x₀ = rand(10)
+∇f_1_exact = 2*x₀[1]
+```
+but let's pretend that this answer is not available to us (we will only use it for evaluation of approximation errors of of chosen FD methods). 
+
+We now give a function for computing the first entry in the gradient (vector) by using the forward FD method. Note that in defining the function we exploit the [multiple dispatch functionality of Julia](https://docs.julialang.org/en/v1/manual/methods/), thanks to which the function will handled the floating point model of the input appropriately. That is, the input vector could be [IEEE-754 double-precision floating-point](https://en.wikipedia.org/wiki/Double-precision_floating-point_format) format, or [IEEE-754 single-precision floating-point](https://en.wikipedia.org/wiki/Single-precision_floating-point_format) format (or perhaps even something else). 
+
+``` {julia}
+function ∇f_1(f,x₀::Vector{T},h::T) where T<:Real
+    (f(x₀[1]+h)-f(x₀[1]))/h
+end
+```
+
+We can now compute the first entry of the gradient for the particular vector given in the *IEEE double* format (default for Julia)
+``` {julia}
+∇f_1(f,x₀,h)
+```
+
+We can also compute the same quantity for the same vector represented in the *IEEE single* format:
+``` {julia}
+∇f_1(f,Vector{Float32}(x₀),Float32(h))
+```
+
+Obviously, both answers differ from the accurate one computed above. 
+
+Now, let's examine the error as a function of the size of the interval $h$:
+``` {julia}
+h_range = exp10.(range(-13, stop=-1, length=1000));
+abs_err_64 = [abs((∇f_1_exact - ∇f_1(f,x₀,h))) for h in h_range];
+abs_err_32 = [abs((∇f_1_exact - ∇f_1(f,Vector{Float32}(x₀),Float32(h)))) for h in h_range];
+
+using Plots
+plot(h_range, abs_err_64,xaxis=:log, yaxis=:log, xlabel="h", ylabel = "|e|", label = "IEEE double")
+plot!(h_range, abs_err_32,xaxis=:log, yaxis=:log, xlabel="h", ylabel = "|e|", label = "IEEE single")
+```
+
+If we read the graph from right to left – as $h$ is getting smaller –, we observe that initially the error decreases for both 64- and 32-bit floating-point format, and it decreases at the same rate. The reason for this decrease is that the trunction error dominates here, and this error goes down with $h$.
+
+The major intended takeaway from this example is that this reduction of the error only takes place down to some $h$ below which the error no longer decreases; in fact, it actally increases as $h$ gets smaller. The reason is that for $h$ this small, the rounding errors dominate. Apparently, they start exhibitting themselves for smaller values with the 64-bit format than with 32-bit format.  
+
+It is known from rigorous numerical analysis that the error in the case of the simple backward or forward finite difference approximation to a scalar derivative scales with $\sqrt{\epsilon}$, where $\epsilon$ is the [machine epsilon](https://en.wikipedia.org/wiki/Machine_epsilon). Here we can expect even worse outcome as the dimension $n$ of the vector grows. Note that $\epsilon$ for double precision IEEE is
+
+``` {julia}
+2^(-53)
+```
+
+which is available in Julia through [eps()](https://docs.julialang.org/en/v1/manual/integers-and-floating-point-numbers/#Machine-epsilon) function with the type as the input argument (if no argument is given, it assumes `Float64`):
+
+``` {julia}
+sqrt(eps())
+```
+
+Similarly, the 32-bit version is
+
+``` {julia}
+sqrt(eps(Float32))
+```
+
+Apparently, these are roughly the "cutt-off" values of $h$.
+:::
+
+## Automatic (also Algorithmic) differentiation (AD) methods
+
+#TODO: in the meantime, have a look at [@grosNumericalOptimalControl2022, Chapter 5], or [@martinsEngineeringDesignOptimization2022, Section 6.6].
