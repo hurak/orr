@@ -93,7 +93,7 @@ using Symbolics
 J_sym = J([θ₀, ω₀])
 ```
 
-If the shortcomings of symbolic methods have not yet started surfacing, scroll to the right in the the output field. Rather long, n'est-ce pas? And we have just started, because we now must differentiate this long expression symbolically (and then we convert it from a symbolic expression back to a standard function in Julia):
+If the shortcomings of symbolic methods have not yet started surfacing, scroll to the right in the output field. Rather long, n'est-ce pas? And we have just started, because we now must differentiate this long expression symbolically (and then we convert it from a symbolic expression back to a standard function in Julia):
 ``` {julia}
 #| output: false
 ∇J_sym = Symbolics.gradient(J_sym,[θ₀, ω₀])
@@ -141,7 +141,7 @@ f(x) = sum(xᵢ^2 for xᵢ in x)
 ```
 Now, in order to compute the gradient $\nabla f$, we need to compute all the individual partial derivatives, the individual components of the vector. Let's now restrict ourselves just to one component, say, the first one, that is, let's compute $\frac{\partial f(\mathbf x)}{\partial x_1}$. 
 
-In this simple example a formula can be written down upon inspection: $\frac{\partial f(\mathbf x)}{\partial x_1} = 2x_i$:
+In this simple example, a formula can be written down upon inspection: $\frac{\partial f(\mathbf x)}{\partial x_1} = 2x_1$:
 ``` {julia}
 x₀ = rand(10)
 ∇f_1_exact = 2*x₀[1]
