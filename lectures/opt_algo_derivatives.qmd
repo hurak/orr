@@ -42,7 +42,7 @@ $$
 =
 \underbrace{
 \begin{bmatrix}
-1\\ -\frac{g}{l}\sin\theta
+\omega\\ -\frac{g}{l}\sin\theta
 \end{bmatrix}}_{\mathbf f(\bm x)},
 $$
 where $l=1\,\mathrm{m}$ is the length of the pendulum, $g=9.81\,\mathrm{m}/\mathrm{s}^2$ is the acceleration due to gravity, $\theta$ and $\omega$ are the angle and angular velocity of the pendulum, respectively. We are going to simulate the trajectory of the pendulum that is initially at some nonzero angle, say, $\theta(0) = \pi/4 = \theta_0$, and zero velocity, that is, $\omega(0) = 0 = \omega_0$. And we are going to consider the 2-norm (actually its square for convenience) of the state vector at the end of the simulation interval as the cost function to be minimized, for which we need to evaluate the gradient at the initial state. 
