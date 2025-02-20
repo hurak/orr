@@ -34,6 +34,13 @@ Trust region methods
 
 ## Descent methods
 
+A single iteration of a descent method consists of the following step:
+$$
+\boxed{
+\bm x_{k+1} = \bm x_{k} + \alpha_k \bm d_k,}        
+$$ {#eq-descent-method}
+where $\bm x_k$ is the current solution, $\bm d_k$ is the search direction, and $\alpha_k$ is the step length.
+
 The obvious quality that the search direction needs to satisfy, is that the cost function decreses along it, at least locally (for a small step length). 
 
 ::: {#def-descent-direction}
@@ -406,13 +413,75 @@ $$
 \boxed{\bm x_{k+1} = \bm x_{k} - [\nabla^2 f(\bm x_k)]^{-1} \nabla f(\bm x_k).}
 $$
 
-A few observations
+##### Implementation of the Newton's step
 
-- If compared to the general prescription for descent direction methods (\ref{eq:descent_direction_method}), the Newton's method determines the direction and the step lenght at once (both $\alpha_k$ and $\mathbf d_k$ are hidden in the term $- [\nabla^2 f(\mathbf x_k)]^{-1} \nabla f(\mathbf x_k)$).
+How would you implement this (vector) version of the Newton's step? Note that although the mathematical formula contains a symbol for the inverse of a matrix, computationally it is better for formulate this computation in a way that a system of linear equations is solved. Namely, denoting the second term on the right by $\bm d_k$, our symbol for the direction, that is, $[\nabla^2 f(\bm x_k)]^{-1} \nabla f(\bm x_k) = \bm d_k$, we can find $\bm d_k$ by solving the following system of linear equations  
+$$
+\nabla^2 f(\bm x_k) \bm d_k = \nabla f(\bm x_k).
+$$
 
-- If compared with steepest descent (gradient) method, especially with its scaled version (see @eq-scaled-gradient-method), Newton's method fits into the framework nicely because the inverse $[\nabla^2 f(\mathbf x_k)]^{-1}$ of the Hessian can be regarded as a kind of a scaling matrix $\mathbf D$. Indeed, you can find arguments in some textbooks that Newton's method involves scaling that is optimal in some sense. We skip the details here because we only wanted to highlight the similarity in the structure of the two methods.   
+::: {.callout-caution}
+## Inverse of a matrix is rarely needed in numerical computations
+Indeed, discussion forums for various programming languages and environments abound with questions about how to find the inverse of a matrix. The answer is almost always: are you sure you really need it? Most probably what you need is to solve a systems of linear equations, and that is a (slightly) different task. 
+:::
 
-The great popularity of Newton's method is mainly due to its nice convergence – quadratic. Although we skip any discussion of convergence rates here, note that for all other methods this is an ideal that aims to be approached.
+If you are now tempted to go for some general solver for the linear system of equations $\mathbf A\bm x = \mathbf b$, something like the famous `x = A\b` in Matlab, wait a minute. An important property of the Hessian matrix $\nabla^2 f(\bm x_k)$ is that it is symmetric. This can be exploited to solve the system of equations more efficiently. But well-behaved Hesians satisfy yet another property – they are positive definite in the vicinity of a local minimum. For this class of matrices, an efficient way to solve the corresponding system of equations is to use the *Cholesky decomposition* (factorization). (By the way, the pronounciation is ʃəˈlɛski.). A real positive-definite matrix $\mathbf A$ can be decomposed as
+
+$$
+\mathbf A = \mathbf L \mathbf L^\top,
+$$
+where $\mathbf L$ is a lower triangular matrix. 
+
+::: {#exm-cholesky-decomposition}
+## Solving a system of linear equations with a symmetric positive definite matrix using Cholesky decomposition
+```{julia}
+A = [10 1 0; 1 20 3; 0 3 30]
+b = [1, 2, 3]
+
+using LinearAlgebra
+C = cholesky(A)
+```
+
+`C` is a structure that contains the decomposition. We can access the lower triangular matrix $\mathbf L$ as 
+```{julia}
+L = C.L
+```
+
+Having computed the lower triangular matrix $\mathbf L$, we can write the original problem as 
+$$
+\mathbf L \mathbf L^\top \bm x = \mathbf b,
+$$
+which can be reformulated into solving two triangular systems by simple backsubstitution:
+$$
+\begin{aligned}
+\mathbf L \mathbf y &= \mathbf b,\\
+\mathbf L^\top \bm x &= \mathbf y.
+\end{aligned}
+$$
+
+```{julia}
+y = L\b
+```
+
+```{julia}
+x = L'\y
+```
+
+Both steps are realized by the following single line of code in Julia, but note that what is behind is really solving the two triangular systems by backsubstitution
+```{julia}
+x = C\b
+```
+
+You can verify by yourself (using `@btime` macro from the [BenchmarkTools](https://juliaci.github.io/BenchmarkTools.jl/) package) that the decomposition followed by solving two triangular systems is faster than calling a general solver for linear systems of equations.
+:::
+
+Back to the Newton's method. We can make a few observations:
+
+- If compared to the general prescription for descent direction methods (as described in @eq-descent-method), the Newton's method determines the direction and the step lenght at once (both $\alpha_k$ and $\mathbf d_k$ are contained in the term $- [\nabla^2 f(\mathbf x_k)]^{-1} \nabla f(\mathbf x_k)$).
+
+- If compared with steepest descent (gradient) method, especially with its scaled version in @eq-scaled-gradient-method, Newton's method fits into the framework nicely because the inverse $[\nabla^2 f(\mathbf x_k)]^{-1}$ of the Hessian can be regarded as a particular choice of a scaling matrix $\mathbf D$. Indeed, you can find arguments in some textbooks that Newton's method involves scaling that is optimal in some sense. We skip the details here because we only wanted to highlight the similarity in the structure of the two methods.   
+
+The great popularity of Newton's method is mainly due to its nice convergence – quadratic. Although we skip any discussion of convergence rates here, note that for all other methods this is an ideal that is to be approached.
 
 The plausible convergence rate of Newton's method is paid for by a few disadvantages
 
