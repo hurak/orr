@@ -635,13 +635,19 @@ The plausible convergence rate of Newton's method is paid for by a few disadvant
 - The necessity to solve a linear system of equations requires that the Hessian be nonsingular. When can an optimization problem lose nonsingularity of its Hessian? And can anything be done, when it does so? 
 - And it is not only that the Hessian must be nonsingular, but it must also be positive (definite). Note that in the scalar case this corresponds to the situation when the second derivative is positive. Negativeness of the second derivative can send the algorithm in the opposite direction – away from the local minimum – , which would ruin the convergence of the algorithm completely.
 
-The last two issues are handled by some modification of the standard Newton's method
+The last two issues are handled by some modification of the standard Newton's method.
 
 ##### Damped Newton's method 
 
 A parameter $\alpha\in(0,1)$ is introduced that shortens the step as in 
 $$
-  \bm x_{k+1} = \bm x_{k} - \alpha(\nabla^2 f(\bm x_k))^{-1} \nabla f(\bm x_k).
+  \bm x_{k+1} = \bm x_{k} - \alpha\left[\nabla^2 f(\bm x_k)\right]^{-1} \nabla f(\bm x_k).
+$$
+
+##### Modifying the Hessian so that it is positive definite
+
+$$
+  \bm x_{k+1} = \bm x_{k} - \left[\nabla^2 f(\bm x_k)+ \lambda \mathbf I\right]^{-1} \nabla f(\bm x_k).
 $$
 
 ##### Fixed constant positive definite matrix instead of the inverse of the Hessian
