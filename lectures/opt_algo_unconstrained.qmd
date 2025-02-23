@@ -252,12 +252,12 @@ end
 
 F,X = gradient_descent_quadratic_exact_decor(Q,c,x0,ϵ,N)
 
-x1_data = x2_data = -4:0.01:4;
+x1_grid = x2_grid = -4:0.01:4;
 f(x) = 1/2*dot(x,Q*x)+dot(x,c)
-z_data = [f([x1,x2]) for x2=x2_data, x1=x1_data];
+z_grid = [f([x1,x2]) for x2=x2_grid, x1=x1_grid];
 
 using Plots
-contour(x1_data,x2_data,z_data)
+contour(x1_grid,x2_grid,z_grid)
 plot!(X[1,:],X[2,:],label="xk",marker=:diamond,aspect_ratio=1)
 scatter!([x0[1],],[x0[2],],label="x0")
 scatter!([xs[1],],[xs[2],],label="xopt")
@@ -349,7 +349,7 @@ It is worth emphasizing how the algorithm changed: the direction of steepest des
 
 ### Newton's method
 
-Newton's method is one of flagship algorithms in numerical computing. I am certainly not exaggerating if I include it in my personal Top 10 list of algorithms relevant for engineers. We may encounter the method in two settings: 
+Newton's method is one of flagship algorithms in numerical computing. With confidence I include it in my personal Top 10 list of algorithms relevant for engineers and scientists. We may encounter the method in two settings: 
 
 - as a method for solving (systems of) nonlinear equations (aka rootfinding),
 - and as a method for optimization. 
@@ -357,7 +357,7 @@ Newton's method is one of flagship algorithms in numerical computing. I am certa
 The two are inherently related and it is useful to be able to see the connection.
 
 #### Newton's method for rootfinding
-The problem to be solved is that of finding $x$ for which a given function $g()$ vanishes. In other words, we solve the following equation 
+The problem to be solved is that of finding $x\in\mathbb R$ for which a given function $g()$ vanishes. In other words, we solve the following equation 
 $$
  g(x) = 0.
 $$
@@ -366,9 +366,9 @@ The above state scalar version has also its vector extension
 $$
  \mathbf g(\bm x) = \mathbf 0,
 $$
-in which $\bm x$ stands for an $n$-tuple of variables and $\mathbf g()$ actually stands for an $n$-tuple of functions. Even more general version allows for different number of variables and equations. 
+in which $\bm x$ stands for an $n$-tuple of variables, that is, $\bm x\in \mathbb R^n$, and $\mathbf g()$ denotes an $n$-tuple of functions. Even more general version allows for different number of variables and equations. 
 
-We start with a scalar version. A single iteration of the method evaluates not only the value of the function $g(x_k)$ at the given point but also its derivative $g'(x_k)$. It then uses the two to approximate the function $g()$ at $x_k$ by a linear (actually affine) function and computes the intersection of this approximating function with the horizontal axis. This gives as $x_{k+1}$, that is, the $(k+1)$-th approximation to a solution (root). We can write this down as 
+We start with a scalar version. A single iteration of the method evaluates not only the value $g(x_k)$ of the function $g$ at the given point $x_k$ but also its derivative $g'(x_k)$. It then uses the two to approximate the function $g()$ at $x_k$ by a linear (actually affine) function and computes the intersection of this approximating function with the horizontal axis. This gives as $x_{k+1}$, that is, the $(k+1)$-th approximation to a solution (root). We can write this down as 
 $$
 \begin{aligned}
  \underbrace{g(x_{k+1})}_{0} &= g(x_{k}) + g'(x_{k})(x_{k+1}-x_k)\\
@@ -384,7 +384,7 @@ In the vector form, the formula is
 $$
 \boxed{\bm x_{k+1} = \bm x_{k} - [\nabla \mathbf g(\bm x_k)^\top]^{-1}\mathbf g(\bm x_k),}
 $$
-where $\nabla \mathbf g(\bm x_k)^\top$ is the (Jacobian) matrix of the first derivatives of $\mathbf g$ at $\bm x_k$, that is, $\nabla \mathbf g()$ is a matrix with the gradient of the $g_i(\bm x)$ function in its $i$-th column.  
+where $\nabla \mathbf g(\bm x_k)^\top$ is the (Jacobian) matrix of the first derivatives of $\mathbf g$ at $\bm x_k$, that is, $\nabla \mathbf g()$ is a matrix with the gradient of the $g_i(\bm x)$ function as its $i$-th column.  
 
 #### Newton's method for optimization
 
@@ -408,14 +408,49 @@ $$
 \boxed{x_{k+1} = x_{k} - \frac{f'(x_k)}{f''(x_k)}.}
 $$
 
+::: {#exm-newton-scalar}
+## Newton's method for minimization in the scalar case
+We consider the scalar function of a single (real) variable
+``` {julia}
+f(x) = 3cos(x)*sin(2x+2)^2
+```
+Let's have a look at its graph on some interval.
+``` {julia}
+x_grid = 0:0.01:1
+f_grid = f.(x_grid)
+
+using Plots
+plot(x_grid,f_grid,label="f(x)",xlabel="x")
+```
+Now, the essence of the method is that at a given point $x_k$ we approximate the function locally by a quadratic function. Say, 
+``` {julia}
+xₖ = 0.25
+```
+We can evaluate at this point not only the function but its first and second derivatives as well. We use one of the packages for AD.
+``` {julia}
+using ForwardDiff
+Df = x -> ForwardDiff.derivative(f,x)
+D²f = x -> ForwardDiff.derivative(Df,x)
+```
+Now, we can write the quadratic "model function" as
+``` {julia}
+mₖ(x) = f(xₖ) + Df(xₖ)*(x-xₖ) + 1/2*D²f(xₖ)*(x-xₖ)^2
+```
+``` {julia}
+mₖ_grid = mₖ.(x_grid)
+
+plot!(x_grid,mₖ_grid,label="mₖ(x)")
+scatter!([xₖ,],[f(xₖ),],label="f(xₖ)")
+```
+Looking at the graph, as an outcome of this particular iteration we will get something like $x_{k+1}=0.55$ or so. Another iteration will then follow. But we are not proceeding with this example. Instead, we will turn our attention to a two-variable problem.  
+:::
+
 The vector version of the Newton's step is
 $$
 \boxed{\bm x_{k+1} = \bm x_{k} - [\nabla^2 f(\bm x_k)]^{-1} \nabla f(\bm x_k).}
 $$
 
-##### Implementation of the Newton's step
-
-How would you implement this (vector) version of the Newton's step? Note that although the mathematical formula contains a symbol for the inverse of a matrix, computationally it is better for formulate this computation in a way that a system of linear equations is solved. Namely, denoting the second term on the right by $\bm d_k$, our symbol for the direction, that is, $[\nabla^2 f(\bm x_k)]^{-1} \nabla f(\bm x_k) = \bm d_k$, we can find $\bm d_k$ by solving the following system of linear equations  
+Although the mathematical formula contains a symbol for the inverse of a matrix, computationally it is better for formulate this computation in a way that a system of linear equations is solved. Namely, denoting the second term on the right by $\bm d_k$, our symbol for the direction, that is, $[\nabla^2 f(\bm x_k)]^{-1} \nabla f(\bm x_k) = \bm d_k$, we can find $\bm d_k$ by solving the following system of linear equations  
 $$
 \nabla^2 f(\bm x_k) \bm d_k = \nabla f(\bm x_k).
 $$
@@ -425,7 +460,117 @@ $$
 Indeed, discussion forums for various programming languages and environments abound with questions about how to find the inverse of a matrix. The answer is almost always: are you sure you really need it? Most probably what you need is to solve a systems of linear equations, and that is a (slightly) different task. 
 :::
 
-If you are now tempted to go for some general solver for the linear system of equations $\mathbf A\bm x = \mathbf b$, something like the famous `x = A\b` in Matlab, wait a minute. An important property of the Hessian matrix $\nabla^2 f(\bm x_k)$ is that it is symmetric. This can be exploited to solve the system of equations more efficiently. But well-behaved Hesians satisfy yet another property – they are positive definite in the vicinity of a local minimum. For this class of matrices, an efficient way to solve the corresponding system of equations is to use the *Cholesky decomposition* (factorization). (By the way, the pronounciation is ʃəˈlɛski.) A real positive-definite matrix $\mathbf A$ can be decomposed as
+::: {#exm-newton-vector}
+## Newton's method for minimization in the vector case
+Consider the function
+``` {julia}
+#| code-fold: false
+f(x) = (x[1]+1)^4 + x[1]*x[2] + (x[2]+1)^4
+```
+
+The graph of the function is in @fig-newton-vector below.
+``` {julia}
+#| code-fold: true
+#| fig-cap: Graph of the example function
+#| label: fig-newton-vector
+x₁_grid = x₂_grid = -3:0.1:3;  
+f_grid = [f([x₁,x₂]) for x₁=x₂_grid, x₂=x₂_grid];
+
+using Plots
+surface(x₁_grid,x₂_grid,f_grid)
+xlabel!("x₁")
+ylabel!("x₂")
+xlims!(-3,3) 
+ylims!(-3,3)
+```
+
+Some more insight can perhaps be obtained by plotting the contours as in @fig-newton-vector-contour.
+``` {julia}
+#| code-fold: true
+#| fig-cap: Contour graph of the example function
+#| label: fig-newton-vector-contour
+contour(x₁_grid,x₂_grid,f_grid,levels=50)
+xlabel!("x₁")
+ylabel!("x₂")
+xlims!(-3,3) 
+ylims!(-3,3)
+```
+
+We choose to compute the gradient manually/symbolically:
+``` {julia}
+#| code-fold: false
+∇f(x) = [4*(1 + x[1])^3 + x[2], x[1] + 4*(1 + x[2])^3]
+```
+
+and similarly we do for the Hessian: 
+``` {julia}
+#| code-fold: false
+∇²f(x) = [12*(1 + x[1])^2 1; 1 12*(1 + x[2])^2]
+```
+
+We now consider a particular value of the vector variable and use not only the function value but also the gradient and the Hessian to compute the local quadratic model:
+``` {julia}
+xₖ = [0.7,0.5]
+
+using LinearAlgebra     # Because of the dot function
+mₖ(x) = f(xₖ) + dot(∇f(xₖ),(x-xₖ)) + 1/2*dot((x-xₖ),∇²f(xₖ),(x-xₖ))
+```
+
+The contours of the local quadratic model and the contours of the original function can be plotted together as in @fig-newton-example-vector-quadratic-model.
+``` {julia}
+#| fig-cap: Contours of a quadratic model over those for the original example function
+#| label: fig-newton-example-vector-quadratic-model
+mₖ_grid = [mₖ([x₁,x₂]) for x₁=x₁_grid, x₂=x₂_grid];
+contour!(x₁_grid, x₂_grid, mₖ_grid,levels=10)
+scatter!([xₖ[1],],[xₖ[2],],label="xₖ")
+```
+
+The immediately following step of the Newton's method would constitute in finding the minimum of the quadratic function, that is, to localize the center of the contour ellipses. It can be guessed that such minimum will be located in the direction to the bottom left from the initial point, which is consistent with the contours of the original cost function. 
+
+``` {julia}
+xₖ₊₁ = xₖ - ∇²f(xₖ)\∇f(xₖ)
+scatter!([xₖ₊₁[1],],[xₖ₊₁[2],],label="xₖ₊₁")
+```
+
+We now compute a whole sequence of such local minimizers of quadratic models. In other words, we demonstrate the functionality of a basic implementation of Newton's method. 
+
+``` {julia}
+using Printf
+
+function newton_method(f,∇f,∇²f,x₀,ϵ,N)
+    x = x₀
+    k = 0
+    while (norm(∇f(x)) > ϵ)
+        k = k+1
+        x = x - ∇²f(x)\∇f(x)
+        @printf("iter = %3d     ||∇f|| = %17.6f     f = %19.6f \n",k,norm(∇f(x)),f(x))
+        if k >= N
+         return f(x),x
+        end
+    end
+    return f(x),x
+end
+```
+
+After setting the termination parameters we are ready to start the iterative algorithm:
+``` {julia}
+ϵ = 1e-8
+N = 100
+x₀ = xₖ
+
+f_opt,x_opt = newton_method(f,∇f,∇²f,x₀,ϵ,N)
+```
+
+Finally, plot the minimizer into the contour plots.
+``` {julia}
+#| code-fold: false
+scatter!([x_opt[1],],[x_opt[2],],label="x*")
+```
+:::
+
+##### Efficient implementation by exploiting the symmetry and the positive definiteness of Hessian
+
+In our straightforward implementation of the Newton's method, we formulated a linear system of equations $\mathbf A\bm x = \mathbf b$, and we used the backslash operator ([introduced by K. Hensel in 1929, and adopted and popularized by Matlab](https://blogs.mathworks.com/cleve/2013/08/19/backslash/), and then imported by other languages, including Juluia) to find the solution by writing `x = A\b`. Although there is some decision tree behind the backslash operator (for example, depending on the shape of the matrix), more detailed analysis of the properties of the matrix is typically not performed automatically when calling `x = A\b`. But the Hessian matrix $\nabla^2 f(\bm x_k)$ (playing the role of the matrix $\mathbf A$ in the previous sentences) does possess important properties. First, it is symmetric. This can be exploited to solve the system of equations more efficiently. Second, well-behaved Hesians are positive definite in the vicinity of a local minimum. For this class of matrices, an efficient way to solve the corresponding system of equations is to use the *Cholesky decomposition* (factorization). (By the way, the pronounciation is ʃəˈlɛski.) A real positive-definite matrix $\mathbf A$ can be decomposed as
 
 $$
 \mathbf A = \mathbf L \mathbf L^\top,
@@ -486,8 +631,9 @@ The great popularity of Newton's method is mainly due to its nice convergence �
 The plausible convergence rate of Newton's method is paid for by a few disadvantages
 
 - The need to compute the Hessian. This is perhaps not quite obvious with simple problems but it can play some role with larger problems (recall our discussion of symbolic methods for finding derivatives).
-- Once the Hessian is computed, it must be inverted (actually, a linear system must by solved). But this assumes that Hessian is nonsingular. How can we guarantee this for a given problem? 
-- It is not only that Hessian must be nonsingular but it must also be positive (definite). Note that in the scalar case this corresponds to the situation when the second derivative is positive. Negativeness of the second derivative can send the algorithm in the opposite direction – away from the local minimum – , which which would ruin the convergence of the algorithm.
+- Once the Hessian is computed, it must be inverted (actually, a linear system must by solved). Although we have already discussed the efficient method based on Cholesky decomposition, it is still quite some computational work.
+- The necessity to solve a linear system of equations requires that the Hessian be nonsingular. When can an optimization problem lose nonsingularity of its Hessian? And can anything be done, when it does so? 
+- And it is not only that the Hessian must be nonsingular, but it must also be positive (definite). Note that in the scalar case this corresponds to the situation when the second derivative is positive. Negativeness of the second derivative can send the algorithm in the opposite direction – away from the local minimum – , which would ruin the convergence of the algorithm completely.
 
 The last two issues are handled by some modification of the standard Newton's method
 
