@@ -412,19 +412,21 @@ $$
 ## Newton's method for minimization in the scalar case
 We consider the scalar function of a single (real) variable
 ``` {julia}
-f(x) = 3cos(x)*sin(2x+2)^2
+# f(x) = 3cos(x)*sin(2x+2)^2
+f(x) = -x^4 + 12x^3 - 47x^2 + 60x
 ```
 Let's have a look at its graph on some interval.
 ``` {julia}
-x_grid = 0:0.01:1
+x_grid = 1:0.01:5.5
 f_grid = f.(x_grid)
 
 using Plots
 plot(x_grid,f_grid,label="f(x)",xlabel="x")
 ```
-Now, the essence of the method is that at a given point $x_k$ we approximate the function locally by a quadratic function. Say, 
+Now, the essence of the method is that at a given point $x_k$ we approximate the function locally by a quadratic function. Say, we choose
 ``` {julia}
-xₖ = 0.25
+#xₖ = 0.25
+xₖ = 2.4
 ```
 We can evaluate at this point not only the function but its first and second derivatives as well. We use one of the packages for AD.
 ``` {julia}
@@ -436,13 +438,42 @@ Now, we can write the quadratic "model function" as
 ``` {julia}
 mₖ(x) = f(xₖ) + Df(xₖ)*(x-xₖ) + 1/2*D²f(xₖ)*(x-xₖ)^2
 ```
+
+We now evaluate this model on the interval and plot it:
 ``` {julia}
 mₖ_grid = mₖ.(x_grid)
 
 plot!(x_grid,mₖ_grid,label="mₖ(x)")
 scatter!([xₖ,],[f(xₖ),],label="f(xₖ)")
 ```
-Looking at the graph, as an outcome of this particular iteration we will get something like $x_{k+1}=0.55$ or so. Another iteration will then follow. But we are not proceeding with this example. Instead, we will turn our attention to a two-variable problem.  
+
+From the formula for the Newton's step we get that 
+``` {julia}
+xₖ₊₁ = xₖ - Df(xₖ)/D²f(xₖ)
+```
+
+``` {julia}
+scatter!([xₖ₊₁],[f(xₖ₊₁)],label="f(xₖ₊₁)")
+```
+
+Let's go for another iteration:
+
+``` {julia}
+plot(x_grid,f_grid,label="f(x)",xlabel="x")
+
+mₖ₊₁(x) = f(xₖ₊₁) + Df(xₖ₊₁)*(x-xₖ₊₁) + 1/2*D²f(xₖ₊₁)*(x-xₖ₊₁)^2
+mₖ₊₁_grid = mₖ₊₁.(x_grid)
+plot!(x_grid,mₖ₊₁_grid,label="mₖ₊₁(x)")
+scatter!([xₖ,],[f(xₖ),],label="f(xₖ)")
+scatter!([xₖ₊₁,],[f(xₖ₊₁),],label="f(xₖ₊₁)")
+
+xₖ₊₂ = xₖ₊₁ - Df(xₖ₊₁)/D²f(xₖ₊₁)
+scatter!([xₖ₊₂],[f(xₖ₊₂)],label="f(xₖ₊₂)")
+```
+
+And the iterations would go on... 
+
+Before we leave this example, you are invited to experiment with setting different initial values of `x`. 
 :::
 
 The vector version of the Newton's step is
