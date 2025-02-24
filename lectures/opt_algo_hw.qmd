@@ -1,6 +1,98 @@
 ---
 title: "Homework"
+bibliography: ref_optimization.bib
 format:
     html:
         html-math-method: katex
+engine: julia
 ---
+## BFGS
+
+In this assignment, you will implement the BFGS (Broyden–Fletcher–Goldfarb–Shanno) algorithm—a popular quasi-Newton method for unconstrained optimization—in the Julia programming language. Specifically, you will be implementing the inverse Hessian update variant, which can be, e.g., found in the [Broyden–Fletcher–Goldfarb–Shanno algorithm](https://en.wikipedia.org/wiki/Broyden–Fletcher–Goldfarb–Shanno_algorithm) Wikipedia page.
+
+The instructions for the assignment are as follows
+
+- Your solution should be contained in a single file named `hw.jl`, which you will upload to the [BRUTE](https://cw.fel.cvut.cz/brute) system.
+- You should use Automatic Differentiation (AD) to compute the gradients of the objective function. You can use the `Zygote` package for this purpose.
+- You should use backtracking line search with the Armijo condition to find the step size.
+- The implementation should be based on the provided template below.
+
+```{julia}
+#| eval: false
+using LinearAlgebra
+using Zygote # For Automatic Differentiation (AD)
+
+"""
+    BFGS(J::Function, x₀::Vector{T}, ε::T=sqrt(eps(T)), maxiter::Int=50) where T <: AbstractFloat
+
+Performs unconstrained optimization using the Broyden–Fletcher–Goldfarb–Shanno (BFGS) quasi-Newton method.
+
+# Arguments
+- `f`: The objective function to be minimized. It should take a vector `x` and return a scalar.
+- `x₀`: A vector representing the initial guess for the optimization. The element type `T` must be a subtype of `AbstractFloat`.
+- `ε`: The convergence tolerance for the gradient norm (default: `√eps(T)`, where `T` is the element type of `x₀`).
+- `maxiter`: The maximum number of iterations allowed (default: 50).
+- `verbose`: A boolean indicating whether to print the optimization progress (default: `false`).
+
+# Returns
+A tuple containing:
+- A vector of type `Vector{T}` representing the optimized solution.
+- The optimal function value at the solution.
+- The number of iterations performed.
+- A symbol indicating the termination status (`:converged` or `:maxiter_reached`)
+
+This implementation supports arbitrary precision arithmetic if `x₀` is of a higher precision type (e.g., `BigFloat`).
+"""
+function BFGS(f::Function, x₀::Vector{T}, ε::T=√(eps(T)), maxiter::Int=50; verbose::Bool=false) where T <: AbstractFloat
+
+    xₖ = x₀ # Initial guess
+
+    # Preallocate memory - all the variables that will be used in the loop
+    xₖ₊₁ = similar(xₖ)
+    ∇fₖ = zeros(T, length(xₖ))
+    ∇fₖ₊₁ = similar(∇fₖ)
+    Hₖ = Matrix{T}(I, length(x₀), length(x₀)) 
+    Hₖ₊₁ = similar(Hₖ)
+    yₖ = similar(∇fₖ)
+    sₖ = similar(xₖ)
+    pₖ = similar(xₖ)
+
+    # TODO Compute ∇f(xₖ) using AD
+    # ∇fₖ =
+
+    if norm(∇fₖ, Inf) < ε # Convergence check - Inital guess is already optimal
+        return xₖ, f(xₖ), 0, :converged
+    end
+
+    Hₖ ./= norm(∇fₖ)  # Initial inverse Hessian approximation
+
+    for k = 1:maxiter
+
+        if norm(∇fₖ, Inf) < ε # Convergence check
+            return xₖ, f(xₖ), k, :converged
+        end
+
+        if verbose
+            println("Iteration: ", k,  " | f(xₖ): ", f(xₖ)," | ǁ∇f(xₖ)ǁ∞: ", norm(∇fₖ, Inf))
+        end
+
+        # TODO Complete the BFGS update, i.e., compute xₖ₊₁, ∇fₖ₊₁, and Hₖ₊₁
+        # For the linesearch use the Armijo condition (https://en.wikipedia.org/wiki/Backtracking_line_search)
+
+        # Prepare for the next iteration
+        xₖ .= xₖ₊₁
+        ∇fₖ .= ∇fₖ₊₁
+        Hₖ .= Hₖ₊₁
+
+    end
+
+    return xₖ, f(xₖ), maxiter, :maxiter_reached
+
+end
+```
+
+To test your implementation, take a look at common test functions in the [Optimization Test Functions](https://en.wikipedia.org/wiki/Test_functions_for_optimization) Wikipedia page. For example, you can use the Rosenbrock function:
+$$
+f(\bm{x}) = \sum_{i=1}^{n-1} \left[100(x_{i+1} - x_i^2)^2 + (1 - x_i)^2\right],
+$$
+which has the global minimum at $\bm{x} = (1, 1, \ldots, 1)$. 
