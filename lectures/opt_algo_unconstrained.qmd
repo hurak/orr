@@ -477,7 +477,7 @@ x₁_grid = x₂_grid = -3:0.1:3;
 f_grid = [f([x₁,x₂]) for x₁=x₂_grid, x₂=x₂_grid];
 
 using Plots
-surface(x₁_grid,x₂_grid,f_grid)
+surface(x₁_grid,x₂_grid,f_grid')   # Note the transpose.
 xlabel!("x₁")
 ylabel!("x₂")
 xlims!(-3,3) 
@@ -489,7 +489,7 @@ Some more insight can perhaps be obtained by plotting the contours as in @fig-ne
 #| code-fold: true
 #| fig-cap: Contour graph of the example function
 #| label: fig-newton-vector-contour
-contour(x₁_grid,x₂_grid,f_grid,levels=50)
+contour(x₁_grid,x₂_grid,f_grid',levels=50)  # Note the transpose.
 xlabel!("x₁")
 ylabel!("x₂")
 xlims!(-3,3) 
@@ -521,11 +521,11 @@ The contours of the local quadratic model and the contours of the original funct
 #| fig-cap: Contours of a quadratic model over those for the original example function
 #| label: fig-newton-example-vector-quadratic-model
 mₖ_grid = [mₖ([x₁,x₂]) for x₁=x₁_grid, x₂=x₂_grid];
-contour!(x₁_grid, x₂_grid, mₖ_grid,levels=10)
+contour!(x₁_grid, x₂_grid, mₖ_grid',levels=10)
 scatter!([xₖ[1],],[xₖ[2],],label="xₖ")
 ```
 
-The immediately following step of the Newton's method would constitute in finding the minimum of the quadratic function, that is, to localize the center of the contour ellipses. It can be guessed that such minimum will be located in the direction to the bottom left from the initial point, which is consistent with the contours of the original cost function. 
+The following step of the Newton's method would constitute in finding the minimum of the quadratic function, that is, to localize the center of the contour ellipses. It can be guessed that such minimum will be located in the direction to the bottom left from the initial point, which is consistent with the contours of the original cost function. 
 
 ``` {julia}
 xₖ₊₁ = xₖ - ∇²f(xₖ)\∇f(xₖ)
@@ -564,8 +564,9 @@ f_opt,x_opt = newton_method(f,∇f,∇²f,x₀,ϵ,N)
 Finally, plot the minimizer into the contour plots.
 ``` {julia}
 #| code-fold: false
-scatter!([x_opt[1],],[x_opt[2],],label="x*")
+scatter!([x_opt[1],],[x_opt[2],],label="x⋆")
 ```
+
 :::
 
 ##### Efficient implementation by exploiting the symmetry and the positive definiteness of Hessian
@@ -573,9 +574,9 @@ scatter!([x_opt[1],],[x_opt[2],],label="x*")
 In our straightforward implementation of the Newton's method, we formulated a linear system of equations $\mathbf A\bm x = \mathbf b$, and we used the backslash operator ([introduced by K. Hensel in 1929, and adopted and popularized by Matlab](https://blogs.mathworks.com/cleve/2013/08/19/backslash/), and then imported by other languages, including Juluia) to find the solution by writing `x = A\b`. Although there is some decision tree behind the backslash operator (for example, depending on the shape of the matrix), more detailed analysis of the properties of the matrix is typically not performed automatically when calling `x = A\b`. But the Hessian matrix $\nabla^2 f(\bm x_k)$ (playing the role of the matrix $\mathbf A$ in the previous sentences) does possess important properties. First, it is symmetric. This can be exploited to solve the system of equations more efficiently. Second, well-behaved Hesians are positive definite in the vicinity of a local minimum. For this class of matrices, an efficient way to solve the corresponding system of equations is to use the *Cholesky decomposition* (factorization). (By the way, the pronounciation is ʃəˈlɛski.) A real positive-definite matrix $\mathbf A$ can be decomposed as
 
 $$
-\mathbf A = \mathbf L \mathbf L^\top,
+\mathbf A = \bm L \bm L^\top,
 $$
-where $\mathbf L$ is a lower triangular matrix. 
+where $\bm L$ is a lower triangular matrix. 
 
 ::: {#exm-cholesky-decomposition}
 ## Solving a system of linear equations with a symmetric positive definite matrix using Cholesky decomposition
@@ -587,20 +588,20 @@ using LinearAlgebra
 C = cholesky(A)
 ```
 
-`C` is a structure that contains the decomposition. We can access the lower triangular matrix $\mathbf L$ as 
+`C` is a structure that contains the decomposition. We can access the lower triangular matrix $\bm L$ as 
 ```{julia}
 L = C.L
 ```
 
-Having computed the lower triangular matrix $\mathbf L$, we can write the original problem as 
+Having computed the lower triangular matrix $\bm L$, we can write the original problem as 
 $$
-\mathbf L \mathbf L^\top \bm x = \mathbf b,
+\bm L \bm L^\top \bm x = \mathbf b,
 $$
 which can be reformulated into solving two triangular systems by simple backsubstitution:
 $$
 \begin{aligned}
-\mathbf L \mathbf y &= \mathbf b,\\
-\mathbf L^\top \bm x &= \mathbf y.
+\bm L \bm y &= \mathbf b,\\
+\bm L^\top \bm x &= \bm y.
 \end{aligned}
 $$
 
