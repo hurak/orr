@@ -695,10 +695,111 @@ Now that we admitted to have something else then just the (inverse of the) Hessi
 
 ### Quasi-Newton's methods
 
-#TODO In the meantime, have a look at [@martinsEngineeringDesignOptimization2022, Section 4.4.4], or [@kochenderferAlgorithmsOptimization2019, Section 6.3].
+#TODO In the meantime, have a look at [@martinsEngineeringDesignOptimization2022, Section 4.4.4], or [@kochenderferAlgorithmsOptimization2019, Section 6.3], or [@bierlaireOptimizationPrinciplesAlgorithms2018, Chapter 13].
+
+Similarly as we did when introducing the Newton's method, we start our exposition with solving equations. Quasi-Newton methods (indeed, the plural is appropriate here because there is a whole family of methods under this name) generalize the key idea behind the (scalar) secant method for rootfinding. Let's recall it here. The methods is based on *secant approximation* of the derivative:
+$$
+\dot f(x_k) \approx \frac{f(x_k)-f(x_{k-1})}{x_k-x_{k-1}}.
+$$
+ 
+We substitute this approximation into the Newton's formula
+$$
+x_{k+1} = x_k - \underbrace{\frac{x_k-x_{k-1}}{f(x_k)-f(x_{k-1})}}_{\approx \dot f(x_k)}f(x_k).
+$$
+
+Transitioning from scalar rootfinding to optimization is as easy as increasing the order of the derivatives in the formula
+
+$$
+\ddot f(x_k) \approx \frac{\dot f(x_k)-\dot f(x_{k-1})}{x_k-x_{k-1}} =: b_k,
+$$
+which can be rewritten into the *secant condition*
+$$
+b_k (\underbrace{x_k-x_{k-1}}_{s_{k-1}}) = \underbrace{\dot f(x_k)-\dot f(x_{k-1})}_{y_{k-1}}.
+$$
+
+The vector version of the secant condition is
+
+$$
+\begin{aligned}\boxed{
+ \bm B_{k+1} \mathbf s_k = \mathbf y_k},
+\end{aligned}
+$$
+where $\bm B_{k+1}$ is a matrix (to be determined) with Hessian-like properties
+
+$$
+\bm B_{k+1} = \bm B_{k+1}^\top, \qquad \bm B_{k+1} \succ \mathbf 0.
+$$
+
+How can we get it? Computing the matrix at every step anew is not computationally efficient. The preferred way is to compute the matrix $\bm B_{k+1}$ just by adding as small an update to the matrix $\bm B_{k+1}$ computed in the previous step as possible 
+$$
+\bm B_{k+1} = \bm B_{k} + \text{small update}.
+$$
+
+Several update schemes are documented in the literature. Particularly attractive are schemes that update not just $\bm B_{k+1}$ but $\bm B_{k+1}^{-1}$ directly. One popular update is BFGS:
+
+$$\boxed{
+\begin{aligned}
+ \bm H_{k+1} &= \bm H_{k} + \left(1+\frac{\mathbf y_k^\top \bm H_k \mathbf y_k}{\mathbf s_k^\top\mathbf y_k}\right)\cdot\frac{\mathbf s_k\mathbf s_k^\top}{\mathbf s_k^\top \mathbf y_k} - \frac{\mathbf s_k \mathbf y_k^\top \bm H_k + \bm H_k\mathbf y_k \mathbf s_k^\top}{\mathbf y_k^\top \mathbf s_k}.
+\end{aligned}}
+$$
 
 ## Trust region methods
 
 #TODO In the meantime, have a look at [@martinsEngineeringDesignOptimization2022, Section 4.5], or [@kochenderferAlgorithmsOptimization2019, Section 4.4].
 
+The key concept of trust region methods is that of... *trust region*. Trust region is a region (typically a ball or an ellipsoid) around the current point, in which we trust some approximation of the original cost function. We then find the minimum of this approximating function subject to the constraint on the norm of the step. Typically, the approximating function that is simple enough to minimize is a quadratic one: 
+$$
+m_k(\bm d) = f(\bm x_k) + \nabla f(\bm x_k)^\top \bm d + \frac{1}{2}\bm d^\top \underbrace{\nabla^2 f(\bm x_k)}_{\text{or} \approx} \bm d
+$$
+but trust the model only within
+$$
+\|\bm d\|_2 \leq \delta_k.
+$$
 
+In other words, we formulate the constrained optimization problem
+$$\boxed{
+\begin{aligned}
+ \operatorname*{minimize}_{\bm d\in\mathbb R^n} &\quad m_k(\bm d)\\
+ \text{subject to} &\quad \|\bm d\|_2 \leq \delta_k.
+\end{aligned}}
+$$
+
+For later convenience (when differentiating the Lagrangian), we rewrite the constraint as
+$$
+\frac{1}{2}\left(\|\bm d\|_2^2 - \delta_k^2\right) \leq 0.
+$$
+
+Let's write down the optimality conditions for this constrained problem. The Lagrangian is
+$$
+L(\bm x_k, \bm d) = f(\bm x_k) + \nabla f(\bm x_k)^\top \bm d + \frac{1}{2}\bm d^\top \nabla^2 f(\bm x_k)\bm d + \frac{\mu}{2} (\|\bm d\|^2-\delta_k^2)
+$$
+
+The necessary conditions (the KKT conditions) can be written upon inspection
+$$
+\begin{aligned}
+\nabla_{\bm{d}}L(\bm x_k, \bm d) = \nabla f(\bm x_k) + \nabla^2 f(\bm x_k) \bm d + \mu \bm d &= 0,\\
+\|\bm d\|_2^2 - \delta_k^2 &\leq 0,\\
+\mu &\geq 0,\\
+\mu \left(\|\bm d\|_2^2 - \delta_k^2\right) &= 0.
+\end{aligned}
+$$
+
+Now, there are two scenarios: either the optimal step $\bm d$ keeps the updated $\bm x_{k+1}$ still strictly inside the trust region, or the updated $\bm x_{k+1}$ is at the boundary of the trust region. In the former case, since the constraint is satisfied strictly, the dual variable $\mu=0$ and the optimality condition simplifies to $\nabla f(\bm x_k) + \nabla^2 f(\bm x_k) \bm d= 0$, which leads to the standard Newton's update $\bm d = -[\nabla^2 f(\bm x_k)]^{-1}\nabla f(\bm x_k)$. In the latter case the update is
+
+$$
+\bm d = -[\nabla^2 f(\bm x_k) + \mu \mathbf I]^{-1}\nabla f(\bm x_k),
+$$
+which has the form that we have already discussed when mentioning modifications of Newton's method.
+
+Let's recall here our discussion of line search methods – we argued that there is rarely a need to compute the minimum at each step, and "good enough" reductions of the cost function typically suffice. The situation is similar for the trust region methods – approximate solution to the minimization (sub)problem is enough. However, here we are not going to discuss such methods here. 
+
+One issue that, however, requires discussion, is the issue of evaluationg the predictive performance of the (quadratic) model. If the model is not good enough, the trust region must be shrunk, if it is fairly good, the trust region must be expanded. In both cases, the constrained optimization (sub)problem must be solved again. 
+
+One metric we can use to evaluate the model is  
+$$
+\eta = \frac{\text{actual improvement}}{\text{predicted improvement}} = \frac{f(\bm x_k)-f(\bm x_{k+1})}{f(\bm x_k)-m_k(\bm x_{k+1})}.
+$$
+
+We shrink the region for small $\eta$ ($\approx 0$), and expand it for larger $\eta$ ($\approx 1$).
+
+We conclude this short discussion of trust region methods by comparing it with the descent methods. While in the descent methods we set the direction first, and the perform a line search in the chosen direction, in trust region methods this sequence is reversed. Kind of. By setting the radius of the trust region, we essentially set an upper bound on the step length. The subsequent optimization subproblem can be viewed as a search for a direction. 
