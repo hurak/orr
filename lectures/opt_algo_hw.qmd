@@ -12,15 +12,15 @@ In this assignment, you will implement the BFGS (Broyden–Fletcher–Goldfarb�
 
 The instructions for the assignment are as follows
 
-- Your solution should be contained in a single file named `hw.jl`, which you will upload to the [BRUTE](https://cw.fel.cvut.cz/brute) system.
+- Your solution should be contained in a single file named `hw.jl`, which you will upload to the [BRUTE](https://cw.felk.cvut.cz/brute) system.
 - You should use Automatic Differentiation (AD) to compute the gradients of the objective function. You can use the `Zygote` package for this purpose.
-- You should use backtracking line search with the Armijo condition to find the step size.
+- You should use backtracking line search with the Armijo condition to find the step size, see [Approximate line search – backtracking](https://hurak.github.io/orr/opt_algo_unconstrained.html#approximate-line-search-backtracking).
 - The implementation should be based on the provided template below.
 
 ```{julia}
 #| eval: false
 using LinearAlgebra
-using Zygote # For Automatic Differentiation (AD)
+using Zygote # for Automatic Differentiation (AD)
 
 """
     BFGS(J::Function, x₀::Vector{T}, ε::T=sqrt(eps(T)), maxiter::Int=50) where T <: AbstractFloat
@@ -77,7 +77,7 @@ function BFGS(f::Function, x₀::Vector{T}, ε::T=√(eps(T)), maxiter::Int=50; 
         end
 
         # TODO Complete the BFGS update, i.e., compute xₖ₊₁, ∇fₖ₊₁, and Hₖ₊₁
-        # For the linesearch use the Armijo condition (https://en.wikipedia.org/wiki/Backtracking_line_search)
+        # For the linesearch use the Armijo condition (https://hurak.github.io/orr/opt_algo_unconstrained.html#approximate-line-search-backtracking)
 
         # Prepare for the next iteration
         xₖ .= xₖ₊₁
