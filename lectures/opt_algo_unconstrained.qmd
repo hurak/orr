@@ -481,7 +481,7 @@ $$
 \boxed{\bm x_{k+1} = \bm x_{k} - [\nabla^2 f(\bm x_k)]^{-1} \nabla f(\bm x_k).}
 $$
 
-Although the mathematical formula contains a symbol for the inverse of a matrix, computationally it is better for formulate this computation in a way that a system of linear equations is solved. Namely, denoting the second term on the right by $\bm d_k$, our symbol for the direction, that is, $[\nabla^2 f(\bm x_k)]^{-1} \nabla f(\bm x_k) = \bm d_k$, we can find $\bm d_k$ by solving the following system of linear equations  
+Although the mathematical formula contains a symbol for the inverse of a matrix, computationally it is better to formulate this computation in a way that a system of linear equations is solved. Namely, denoting the second term on the right by $\bm d_k$, our symbol for the direction, that is, $[\nabla^2 f(\bm x_k)]^{-1} \nabla f(\bm x_k) = \bm d_k$, we can find $\bm d_k$ by solving the following system of linear equations  
 $$
 \nabla^2 f(\bm x_k) \bm d_k = \nabla f(\bm x_k).
 $$
