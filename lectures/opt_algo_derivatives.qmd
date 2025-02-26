@@ -217,7 +217,7 @@ Apparently, these are roughly the "cutt-off" values of $h$.
 Similar to a complex number, a dual number has two components, one corresponding to the value, the other corresponding to the derivative:
 
 $$
-x = v + \partial\epsilon,
+x = v + d\epsilon,
 $$
 where the special property of $\epsilon$ is
 $$
@@ -234,7 +234,7 @@ x &= (v_1 + d_1\epsilon)\cdot (v_2 + d_2\epsilon)\\
 \end{aligned}
 $$
 
-Similarly for other functions. We illustrate this best using and example.
+Similarly for other functions. We illustrate this using the following example.
 
 ::: {#exm-dual-numbers}
 Consider a function $y(x) = \cos(x^2)$. Its derivative is trivially $\frac{\mathrm d y}{\mathrm d x} = -2x\sin(x^2)$. 
@@ -252,19 +252,19 @@ Then we show the usage of a functionality already provided in [ForwardDiff.jl](h
 
 ``` {julia}
 struct Dual
-    r        # the VALUE part
-    ∂        # the DERIVATIVE part
+    v        # the VALUE part
+    d        # the DERIVATIVE part
 end
 ```
 
 Now we need to overload the involved basic operations such as `addition` and `multiplication` of two dual numbers, `multiplication by a scalar`, `squaring` and finding the value of `cosine` function.
 
 ``` {julia}
-Base.:+(a::Dual,b::Dual) = Dual(a.r+b.r,a.∂+b.∂)
-Base.:*(a::Dual,b::Dual) = Dual(a.r*b.r,a.∂*b.r+b.∂*a.r)
-Base.:*(a::Number,b::Dual) = Dual(a*b.r,a*b.∂)
-Base.:^(a::Dual,b::Int) = Dual(a.r^b,b*a.r^(b-1))
-Base.:cos(a::Dual) = Dual(cos(a.r),-sin(a.r)*a.∂)
+Base.:+(a::Dual,b::Dual) = Dual(a.v+b.v,a.d+b.d)
+Base.:*(a::Dual,b::Dual) = Dual(a.v*b.v,a.d*b.v+b.d*a.v)
+Base.:*(a::Number,b::Dual) = Dual(a*b.v,a*b.d)
+Base.:^(a::Dual,b::Int) = Dual(a.v^b,b*a.v^(b-1))
+Base.:cos(a::Dual) = Dual(cos(a.v),-sin(a.v)*a.d)
 ```
 
 Let's now check the functionality of the individual functions
