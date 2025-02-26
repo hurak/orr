@@ -207,3 +207,126 @@ Apparently, these are roughly the "cutt-off" values of $h$.
 ## Automatic (also Algorithmic) differentiation (AD) methods
 
 #TODO: in the meantime, have a look at [@grosNumericalOptimalControl2022, Chapter 5], or [@martinsEngineeringDesignOptimization2022, Section 6.6], or [@kochenderferAlgorithmsOptimization2019, Section 2].
+
+### Forward AD
+
+#TODO
+
+#### Implementation of Forward AD by dual numbers
+
+Similar to a complex number, a dual number has two components, one corresponding to the value, the other corresponding to the derivative:
+
+$$
+x = v + \partial\epsilon,
+$$
+where the special property of $\epsilon$ is
+$$
+\epsilon^2=0.
+$$
+
+(Compare it with the property of the imaginary unit: $i^2=-1$.)
+
+Multiplication of two dual numbers $y = x_1\cdot x_2$ is the defined naturally as
+$$
+\begin{aligned}
+x &= (v_1 + d_1\epsilon)\cdot (v_2 + d_2\epsilon)\\
+  &= v_1v_2 + (v_1d_2+d_1v_2) \epsilon.
+\end{aligned}
+$$
+
+Similarly for other functions. We illustrate this best using and example.
+
+::: {#exm-dual-numbers}
+Consider a function $y(x) = \cos(x^2)$. Its derivative is trivially $\frac{\mathrm d y}{\mathrm d x} = -2x\sin(x^2)$. 
+
+Let's now evaluate this result at a particular value of $x$, say
+
+``` {julia}
+#| code-fold: false
+x = 2
+```
+
+First, we are going to develop our own data class (actually `struct`) in Julia for [dual numbers](https://en.wikipedia.org/wiki/Dual_number). The code below is inspired by a code from @kochenderferAlgorithmsOptimization2019 (they even provide [Jupyter Notebooks](https://github.com/sisl/algforopt-notebooks)). 
+
+Then we show the usage of a functionality already provided in [ForwardDiff.jl](https://github.com/JuliaDiff/ForwardDiff.jl) package implementing the forward mode AD. 
+
+``` {julia}
+struct Dual
+    r        # the VALUE part
+    ∂        # the DERIVATIVE part
+end
+```
+
+Now we need to overload the involved basic operations such as `addition` and `multiplication` of two dual numbers, `multiplication by a scalar`, `squaring` and finding the value of `cosine` function.
+
+``` {julia}
+Base.:+(a::Dual,b::Dual) = Dual(a.r+b.r,a.∂+b.∂)
+Base.:*(a::Dual,b::Dual) = Dual(a.r*b.r,a.∂*b.r+b.∂*a.r)
+Base.:*(a::Number,b::Dual) = Dual(a*b.r,a*b.∂)
+Base.:^(a::Dual,b::Int) = Dual(a.r^b,b*a.r^(b-1))
+Base.:cos(a::Dual) = Dual(cos(a.r),-sin(a.r)*a.∂)
+```
+
+Let's now check the functionality of the individual functions
+
+``` {julia}
+#| code-fold: false
+X = Dual(x,1)
+```
+
+``` {julia}
+#| code-fold: false
+Y = Dual(3,0)
+```
+
+``` {julia}
+#| code-fold: false
+3*X
+```
+
+``` {julia}
+#| code-fold: false
+Y*X
+```
+
+``` {julia}
+#| code-fold: false
+X^2
+```
+
+``` {julia}
+#| code-fold: false
+cos(X)
+```
+
+Finally, let's use the new functionality to compute the derivative of the assigned function $\cos(x^2)$
+``` {julia}
+#| code-fold: false
+cos(X^2)
+```
+
+In practice, you will hardly feel a need to implement your own library for algorithmic differentiation. Instead, you may want to use one of those avaialable ones, such as `ForwardDiff.jl`.
+
+``` {julia}
+#| code-fold: false
+using ForwardDiff
+X = ForwardDiff.Dual(x,1)
+Y = cos(X^2)
+Y.value
+```
+
+``` {julia}
+#| code-fold: false
+Y.partials
+```
+
+Compare with the "exact" 
+``` {julia}
+#| code-fold: false
+-2*x*sin(x^2)
+```
+:::
+
+### Reverse AD
+
+#TODO
