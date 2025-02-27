@@ -1060,19 +1060,19 @@ Figure&nbsp;1: Three approaches to discrete-time optimal control
 \begin{aligned}
 \operatorname*{minimize}_{\bm u_i,\ldots, \bm u_{N-1}, \bm x_{i},\ldots, \bm x_N}&amp;\quad \left(\phi(\bm x_N,N) + \sum_{k=i}^{N-1} L_k(\bm x_k,\bm u_k) \right)\\
 \text{subject to}  &amp;\quad \bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k),\quad k=i, \ldots, N-1,\\
-                    &amp;\quad \bm u_{\min} \leq \bm u_k \leq \bm u_{\max},\\
-                    &amp;\quad \bm x_{\min} \leq \bm x_k \leq \bm x_{\max},\\
+                    &amp;\quad \mathbf u^{\min} \leq \bm u_k \leq \mathbf u^{\max},\\
+                    &amp;\quad \mathbf x^{\min} \leq \bm x_k \leq \mathbf x^{\max},\\
                     &amp;\quad\bm x_i = \mathbf x^\text{init},\\
-                    &amp;\quad \left(\bm x_N = \mathbf x^\text{ref}, \; \text{or} \; \mathbf h_\text{final}(\bm x_N) =  \mathbf 0, \text{or} \; \mathbf g_\text{final}(\bm x_N) \leq  \mathbf 0\right),                    
+                    &amp;\quad \left(\bm x_N = \mathbf x^\text{ref}, \; \text{or} \; \mathbf h^\text{final}(\bm x_N) =  \mathbf 0, \text{or} \; \mathbf g^\text{final}(\bm x_N) \leq  \mathbf 0\right),                    
 \end{aligned}
 </span> where</p>
 <ul>
 <li>the inequalities should be interpreted componentwise,</li>
-<li><span class="math inline">\bm u_{\min}</span> and <span class="math inline">\bm u_{\max}</span> are lower and upper bounds on the control, respectively,</li>
-<li><span class="math inline">\bm x_{\min}</span> and <span class="math inline">\bm x_{\max}</span> are lower and upper bounds on the state, respectively,</li>
+<li><span class="math inline">\mathbf u^{\min}</span> and <span class="math inline">\mathbf u^{\max}</span> are lower and upper bounds on the control, respectively,</li>
+<li><span class="math inline">\mathbf x^{\min}</span> and <span class="math inline">\mathbf x^{\max}</span> are lower and upper bounds on the state, respectively,</li>
 <li><span class="math inline">\mathbf x^\text{init}</span> is a fixed initial state,</li>
 <li><span class="math inline">\mathbf x^\text{ref}</span> is a required (reference) final state,</li>
-<li>and the functions <span class="math inline">\mathbf g_\text{final}()</span> and <span class="math inline">\mathbf h_\text{final}()</span> can be used to define the constraint set for the final state.</li>
+<li>and the functions <span class="math inline">\mathbf g^\text{final}()</span> and <span class="math inline">\mathbf h^\text{final}()</span> can be used to define the constraint set for the final state.</li>
 </ul>
 <p>This optimal control problem is an instance of a general nonlinear programming (NLP) problem <span class="math display">
 \begin{aligned}
