@@ -32,7 +32,7 @@ Referring to the two options for the last constraint,
 It is a standard dilemma in optimization, not only in optimal control, that if we want to satisfy some requirement, we can either strictly enforce it through constraints or we can seemingly relax it and set a cost to be paid for not satysfying it.
 :::
 
-### Simultaneous (sparse) formulation
+## Simultaneous (sparse) formulation
 
 Below we rewrite the latter problem, that is, $\bm x_N\approx\mathbf 0$, in the "unrolled" form, where we stack the state and control variables into "long" vectors $\bar{\bm x}$ and $\bar{\bm u}$. Doing the same for the former is straightforward.
 $$ 
@@ -50,10 +50,10 @@ $$
 subject to
 $$
 \begin{bmatrix} \bm x_1 \\ \bm x_2 \\ \bm x_3\\ \vdots \\ \bm x_N \end{bmatrix} = \underbrace{\begin{bmatrix}\mathbf 0 & & & &\\\mathbf A & \mathbf 0 & & &\\ &\mathbf A &\mathbf 0 & & \\ & & &\ddots & \\& & &\mathbf A & \mathbf 0 \end{bmatrix}}_{\overline{\mathbf A}} 
- \begin{bmatrix} \bm x_1 \\ \bm x_2 \\ \bm x_3\\ \vdots \\ \bm x_N \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf B & & & & \\ & \mathbf B & & & \\& &\mathbf B & \\ & & &\ddots \\ & & & & \mathbf B \end{bmatrix}}_{\overline{\mathbf B}}\begin{bmatrix} \bm u_0 \\ \bm u_1 \\ \bm u_2\\\vdots \\ \bm u_{N-1} \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf A\\\mathbf 0\\\mathbf 0\\\vdots\\\mathbf 0\end{bmatrix}}_{\overline{\mathbf A}_0}\mathbf x_0.   
+ \begin{bmatrix} \bm x_1 \\ \bm x_2 \\ \bm x_3\\ \vdots \\ \bm x_N \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf B & & & & \\ & \mathbf B & & & \\& &\mathbf B & \\ & & &\ddots \\ & & & & \mathbf B \end{bmatrix}}_{\overline{\mathbf B}}\begin{bmatrix} \bm u_0 \\ \bm u_1 \\ \bm u_2\\\vdots \\ \bm u_{N-1} \end{bmatrix} + \underbrace{\begin{bmatrix}\mathbf A\\\mathbf 0\\\mathbf 0\\\vdots\\\mathbf 0\end{bmatrix}}_{\overline{\mathbf A}_0}\mathbf x_0,    
 $$
 
-Note that the last term in the cost function can be discarded because it is constant.
+in which we have already substituted the particular $\mathbf x_0$ for the variable $\bm x_0$. Consequently, the last term in the cost function can be discarded because it is constant.
 
 The terms with the $\bar{\bm x}$ vector can be combined and we get
 $$
@@ -79,7 +79,37 @@ $$
 \end{aligned}}
 $$
 
-<!-- ```{julia}
+This constrained optimization problem can still be solved without invoking a numerical solver for solving quadratic programs (QP). We do it by introducing a vector $\boldsymbol\lambda$ of Lagrange multipliers to form the Lagrangian function
+$$
+ \mathcal{L}(\bar{\bm z}, \boldsymbol \lambda) = \frac{1}{2}\bar{\bm z}^\top \widetilde{\mathbf Q} \bar{\bm z} + \boldsymbol\lambda^\top(\widetilde{\mathbf A} \bar{\bm z} + \tilde{\mathbf b}),
+$$
+for which the gradients with respect to $\bar{\bm z}$ and $\boldsymbol\lambda$ are
+$$
+\begin{aligned}
+ \nabla_{\tilde{\bm{z}}} \mathcal{L}(\bar{\bm z}, \boldsymbol\lambda) &= \widetilde{\mathbf Q}\bar{\bm z} + \tilde{\mathbf A}^\top\boldsymbol\lambda,\\
+ \nabla_{\boldsymbol{\lambda}} \mathcal{L}(\tilde{\bm x}, \boldsymbol\lambda) &=\widetilde{\mathbf A} \bar{\bm z} + \tilde{\mathbf b}.
+\end{aligned}
+$$
+
+Requiring that the overall gradient vanishes leads to the following KKT set of linear equations
+$$
+ \begin{bmatrix}
+  \widetilde{\mathbf Q} & \widetilde{\mathbf A}^\top\\ \widetilde{\mathbf A} & \mathbf 0
+ \end{bmatrix}
+\begin{bmatrix}
+ \bar{\bm z}\\\boldsymbol\lambda
+\end{bmatrix}
+=
+\begin{bmatrix}
+ \mathbf 0\\ -\tilde{\mathbf b}
+\end{bmatrix}.
+$$
+
+Solving this could be accomplished by using some general solver for linear systems or by using some more tailored solver for symmetric indefinite systems (based on [LDL factorization](https://en.wikipedia.org/wiki/Cholesky_decomposition#LDL_decomposition)). 
+
+::: {#exm-direct-simultaneous}
+## Reformulating the unconstrained LQR problem as a system of linear equations
+```{julia}
 using BlockArrays
 using LinearAlgebra
 using LinearSolve
@@ -87,8 +117,8 @@ using QDLDL
 using SparseArrays
 
 function direct_dlqr_simultaneous(A,B,x₀,Q,R,S,N)
-    n = 2 #size(A)[1]
-    m = 1 #size(B)[2]
+    n = size(A)[1]
+    m = size(B)[2]
     Q̄ = BlockArray(spzeros(N*n,N*n),repeat([n],N),repeat([n],N))
     for i=1:(N-1)
         Q̄[Block(i,i)] = Q
@@ -98,7 +128,7 @@ function direct_dlqr_simultaneous(A,B,x₀,Q,R,S,N)
     for i=1:N
         R̄[Block(i,i)] = R
     end
-    Q̃ = blockdiag(sparse(Q̄),sparse(R̄))                                  # The matrix defining the quadratic cost.
+    Q̃ = blockdiag(sparse(Q̄),sparse(R̄))              # The matrix defining the quadratic cost.
     B̄ = BlockArray(spzeros(N*n,N*m),repeat([n],N),repeat([m],N))
     for i=1:N
         B̄[Block(i,i)] = B
@@ -136,53 +166,26 @@ S = diagm(0=>s)     # Matrix defining the terminal state cost.
 Q = diagm(0=>q)     # Matrix defining the running state dost.
 R = diagm(0=>r)     # Matrix defining the cost of control.
 
-uopts,xopts = direct_dlqr_simultaneous(A,B,x₀,Q,R,S,N)
+xopt,uopt = direct_dlqr_simultaneous(A,B,x₀,Q,R,S,N)
 
 using Plots
-p1 = plot(0:(N-1),uopts,marker=:diamond,label="u",linetype=:steppost)
+p1 = plot(0:(N-1),uopt',marker=:diamond,label="u",linetype=:steppost)
 xlabel!("k")
 ylabel!("u")
 
-p2 = plot(0:N,hcat(x0,xopts)',marker=:diamond,label=["x1" "x2"],linetype=:steppost)
+p2 = plot(0:N,hcat(x₀,xopt)',marker=:diamond,label=["x1" "x2"],linetype=:steppost)
 xlabel!("k")
 ylabel!("x")
 
 plot(p1,p2,layout=(2,1))
-``` -->
+```
+:::
 
-This constrained optimization problem can still be solved without invoking a numerical solver for solving quadratic programs (QP). We do it by introducing a vector $\boldsymbol\lambda$ of Lagrange multipliers to form the Lagrangian function
-$$
- \mathcal{L}(\bar{\bm z}, \boldsymbol \lambda) = \frac{1}{2}\bar{\bm z}^\top \widetilde{\mathbf Q} \bar{\bm z} + \boldsymbol\lambda^\top(\widetilde{\mathbf A} \bar{\bm z} + \tilde{\mathbf b}),
-$$
-for which the gradients with respect to $\bar{\bm z}$ and $\boldsymbol\lambda$ are
-$$
-\begin{aligned}
- \nabla_{\tilde{\bm{z}}} \mathcal{L}(\bar{\bm z}, \boldsymbol\lambda) &= \widetilde{\mathbf Q}\bar{\bm z} + \tilde{\mathbf A}^\top\boldsymbol\lambda,\\
- \nabla_{\boldsymbol{\lambda}} \mathcal{L}(\tilde{\bm x}, \boldsymbol\lambda) &=\widetilde{\mathbf A} \bar{\bm z} + \tilde{\mathbf b}.
-\end{aligned}
-$$
+### Adding constraints on controls and states
+When solving a realistic optimal control problem, we may want to impose inequality constraints on $\bm u_k$ due to saturation of actuators.
+We may also want to add constraints on $\bm x_k$ as well, which may reflect some performance specifications. In both cases, we would arrive at the full KKT conditions, and rather than trying to solve these, we resort to some finetuned numerical solver for quadratic programming (QP) instead.  
 
-Requiring that the overall gradient vanishes leads to the following KKT set of linear equations
-$$
- \begin{bmatrix}
-  \widetilde{\mathbf Q} & \widetilde{\mathbf A}^\top\\ \widetilde{\mathbf A} & \mathbf 0
- \end{bmatrix}
-\begin{bmatrix}
- \bar{\bm z}\\\boldsymbol\lambda
-\end{bmatrix}
-=
-\begin{bmatrix}
- \mathbf 0\\ -\tilde{\mathbf b}
-\end{bmatrix}.
-$$
-
-Solving this could be accomplished by using some general solver for linear systems or by using some more tailored solver for symmetric indefinite systems (based on [LDL factorization](https://en.wikipedia.org/wiki/Cholesky_decomposition#LDL_decomposition), for example [ldl](https://www.mathworks.com/help/matlab/ref/ldl.html) in Matlab). 
-
-#### Adding constraints on controls and states
-When solving a real optimal control problem, we may want to impose inequality constraints on $\bm u_k$ due to saturation of actuators.
-We may also want to add constraints on $\bm x_k$ as well, which may reflect some performance specifications. In both cases, the KKT system above would have to be augmented and we resort to some already finetuned numerical solver for quadratic programming (QP) instead.  
-
-### Sequential (dense) formulation
+## Sequential (dense) formulation
 
 We can express $\bar{\bm x}$ as a function of $\bar{\bm u}$ and $\mathbf x_0$. This can be done in a straightforward way using (@eq-linear_system_linear_constraints_matrix_format), namely, 
 $$
@@ -221,7 +224,7 @@ $$
  \underbrace{
   \begin{bmatrix}
  \mathbf A\\\mathbf A^2\\\vdots\\\mathbf A^N
- \end{bmatrix}}_{\widehat{\mathbf A}}\mathbf x_0
+ \end{bmatrix}}_{\widehat{\mathbf A}}\mathbf x_0.
 $$
 
 For convenience, let's rewrite the compact relation between $\bar{\bm x}$ and $\bar{\bm u}$ and $\mathbf x_0$
@@ -229,7 +232,7 @@ $$
  \bar{\bm x} = \widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \mathbf x_0.
 $$ {#eq-x_as_function_of_u_and_x0}
 
-We can now substitute this into the original cost, which then becomes independent of $\bar{\bm x}$, which we reflect by using a new name $\tilde J$
+We can now substitute this into the original cost, which then becomes independent of $\bar{\bm x}$, which we reflect formally by using a new name $\tilde J$
 $$
 \begin{aligned}
  \tilde J(\bar{\bm u};\mathbf x_0) &= \frac{1}{2}(\widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \mathbf x_0)^\top\overline{\mathbf Q} (\widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \mathbf x_0) + \frac{1}{2}\bar{\bm u}^\top\overline{\mathbf R} \bar{\bm u} + \frac{1}{2}\mathbf x_0^\top\mathbf Q\mathbf x_0\\
@@ -238,7 +241,7 @@ $$
 \end{aligned}
 $$
 
-The last term (the one independent of $\bar{\bm u}$) does not have an impact on the optimal $\bar{\bm u}$ and therefore it can be discarded, but such minor modification perhaps does no justify a new name for the cost function and we write it as
+The last term (the one independent of $\bar{\bm u}$) does not have an impact on the optimal $\bar{\bm u}$ and therefore it can be discarded, but such minor modification perhaps does not justify a new name for the cost function. We write it as
 $$
  \tilde J(\bar{\bm u};\mathbf x_0) = \frac{1}{2}\bar{\bm u}^\top\underbrace{(\widehat{\mathbf C}^\top \overline{\mathbf Q} \widehat{\mathbf C} + \overline{\mathbf R})}_{\mathbf H}\bar{\bm u} +  \mathbf x_0^\top\underbrace{\widehat{\mathbf A}^\top \overline{\mathbf Q} \widehat{\mathbf C}}_{\mathbf F^\top} \bar{\bm u}.
 $$
@@ -257,18 +260,79 @@ $$
  \bar{\bm u} = -\mathbf H^{-1} \mathbf F \mathbf x_0.
 $$
 
-::: {.callout-note}
-Solving linear equations by direct computation of the matrix inverse is not a recommended practice. Use dedicated solvers of linear equations instead. For example, in Matlab use the backslash operator, which invokes the most suitable solver.
+::: {#exm-direct-sequential}
+## Reformulating the unconstrained LQR problem as a system of linear equations
+``` {julia}
+function direct_dlqr_sequential(A,B,x₀,Q,R,S,N)
+    n = size(A)[1]
+    m = size(B)[2]
+    Q̄ = BlockArray(spzeros(N*n,N*n),repeat([n],N),repeat([n],N))
+    for i=1:(N-1)
+        Q̄[Block(i,i)] = Q
+    end
+    Q̄[Block(N,N)] = S
+    R̄ = BlockArray(spzeros(N*m,N*m),repeat([m],N),repeat([m],N))
+    for i=1:N
+        R̄[Block(i,i)] = R
+    end
+    Ĉ = BlockArray(spzeros(N*n,N*m),repeat([n],N),repeat([m],N))
+    Â = BlockArray(spzeros(N*n,n),repeat([n],N),[n])
+    for i=1:N
+        for j = 1:i
+            Ĉ[Block(i,j)] = A^(i-j)*B
+            Â[Block(i,1)] = A^i
+        end
+    end
+    H = Ĉ'*Q̄*Ĉ + R̄
+    H = Array(H)
+    F = Ĉ'*Q̄*Â
+    F = Array(F)
+
+    uopt = -H\(F*x₀)
+    xopt = Ĉ*uopt + Â*x₀
+    xopt = reshape(xopt,(2,:))
+    return xopt,uopt
+end
+
+n = 2               # Number of state variables.
+m = 1               # Number of (control) input variables. 
+A = rand(n,n)       # State matrix.
+B = rand(n,m)       # Input coupling matrix.
+x₀ = [1.0, 3.0]     # Initial state.
+
+N = 10              # Time horizon.
+
+s = [1.0, 2.0]      
+q = [1.0, 2.0]
+r = [1.0]
+
+S = diagm(0=>s)     # Matrix defining the terminal state cost.
+Q = diagm(0=>q)     # Matrix defining the running state dost.
+R = diagm(0=>r)     # Matrix defining the cost of control.
+
+xopt,uopt = direct_dlqr_sequential(A,B,x₀,Q,R,S,N)
+
+using Plots
+p1 = plot(0:(N-1),uopt,marker=:diamond,label="u",linetype=:steppost)
+xlabel!("k")
+ylabel!("u")
+
+p2 = plot(0:N,hcat(x₀,xopt)',marker=:diamond,label=["x1" "x2"],linetype=:steppost)
+xlabel!("k")
+ylabel!("x")
+
+plot(p1,p2,layout=(2,1))
+```
 :::
 
-#### Adding the constraints on controls
+### Adding the constraints on controls
 
 Adding constraints on $\bar{\bm u}$ is straightforward. It is just that instead of a linear system we will have a linear system with additional inequality constraints. Let's get one
 $$
 \begin{aligned}
  \operatorname*{minimize}_{\bar{\bm u}} & \quad \frac{1}{2}\bar{\bm u}^T \mathbf H \bar{\bm u} + \mathbf x_0^T\mathbf F^T \bar{\bm u}\\
- \text{subject to} &\quad \bar{\bm u} \leq \bar{\mathbf u}_\mathrm{max}\\
-               &\quad \bar{\bm u} \geq \bar{\mathbf u}_\mathrm{min}, 
+ \text{subject to} &\quad \bar{\bm u} \leq \bar{\mathbf u}^\mathrm{max}\\
+               &\quad \bar{\bm u} \geq \bar{\mathbf u}^\mathrm{min}, 
 \end{aligned}
 $$
 which we can rewrite more explicitly (in the matrix-vector format) as
@@ -286,16 +350,90 @@ $$
                     &    &         &  -\mathbf{I}
                  \end{bmatrix}
                  \begin{bmatrix}
-                  \mathbf u_0 \\ \mathbf u_1 \\ \vdots \\ \mathbf u_{N-1}
+                  \bm u_0 \\ \bm u_1 \\ \vdots \\ \bm u_{N-1}
                  \end{bmatrix}
                  \leq
                  \begin{bmatrix}
-                  \mathbf u_\mathbf{max} \\ \mathbf u_\mathrm{max} \\ \vdots \\ \mathbf u_\mathrm{max}\\ -\mathbf u_\mathrm{min} \\ -\mathbf u_\mathrm{min} \\ \vdots \\ -\mathbf u_\mathrm{min}
+                  \mathbf u^\mathbf{max} \\ \mathbf u^\mathrm{max} \\ \vdots \\ \mathbf u^\mathrm{max}\\ -\mathbf u^\mathrm{min} \\ -\mathbf u^\mathrm{min} \\ \vdots \\ -\mathbf u^\mathrm{min}
                  \end{bmatrix}.
  \end{aligned}
 $$ 
 
-#### Adding the constraints on states
+::: {#exm-direct-sequential-constrained-u}
+``` {julia}
+using Convex
+using SCS
+
+function direct_dlqr_sequential(A,B,x₀,Q,R,S,N,(umin,umax))
+    n = size(A)[1]
+    m = size(B)[2]
+    Q̄ = BlockArray(spzeros(N*n,N*n),repeat([n],N),repeat([n],N))
+    for i=1:(N-1)
+        Q̄[Block(i,i)] = Q
+    end
+    Q̄[Block(N,N)] = S
+    R̄ = BlockArray(spzeros(N*m,N*m),repeat([m],N),repeat([m],N))
+    for i=1:N
+        R̄[Block(i,i)] = R
+    end
+    Ĉ = BlockArray(spzeros(N*n,N*m),repeat([n],N),repeat([m],N))
+    Â = BlockArray(spzeros(N*n,n),repeat([n],N),[n])
+    for i=1:N
+        for j = 1:i
+            Ĉ[Block(i,j)] = A^(i-j)*B
+            Â[Block(i,1)] = A^i
+        end
+    end
+    H = Ĉ'*Q̄*Ĉ + R̄
+    H = Array(H)
+    F = Ĉ'*Q̄*Â
+    F = Array(F)
+    u = Variable(N*m)
+    problem = minimize(1/2*quadform(u,H) + dot(F*x₀,u))
+    problem.constraints = [u >= umin, u <= umax]
+    Convex.solve!(problem, SCS.Optimizer; silent = true)
+    xopt = Ĉ*u.value + Â*x₀
+    xopt = reshape(xopt,(2,:))
+    uopt = u.value
+    return xopt,uopt
+end
+
+n = 2               # Number of state variables.
+m = 1               # Number of (control) input variables. 
+A = rand(n,n)       # State matrix.
+B = rand(n,m)       # Input coupling matrix.
+x₀ = [1.0, 3.0]     # Initial state.
+
+N = 10              # Time horizon.
+
+s = [1.0, 2.0]      
+q = [1.0, 2.0]
+r = [1.0]
+
+S = diagm(0=>s)     # Matrix defining the terminal state cost.
+Q = diagm(0=>q)     # Matrix defining the running state dost.
+R = diagm(0=>r)     # Matrix defining the cost of control.
+
+umin = -1.0
+umax = 1.0
+
+xopt,uopt = direct_dlqr_sequential(A,B,x₀,Q,R,S,N,(umin,umax))
+
+using Plots
+p1 = plot(0:(N-1),uopt,marker=:diamond,label="u",linetype=:steppost)
+xlabel!("k")
+ylabel!("u")
+
+p2 = plot(0:N,hcat(x₀,xopt)',marker=:diamond,label=["x1" "x2"],linetype=:steppost)
+xlabel!("k")
+ylabel!("x")
+
+plot(p1,p2,layout=(2,1))
+```
+:::
+
+
+### Adding the constraints on states
 
 We might feel a little bit uneasy about loosing an immediate access to $\bar{\bm x}$. But the game is not lost. We just need to express $\bar{\bm x}$ as a function of $\bar{\bm u}$ and $\mathbf x_0$ and impose the constraint on the result. But such expression is already available, see (@eq-x_as_function_of_u_and_x0). Therefore, we can formulate the constraint, say, an upper bound on the state vector 
 $$
@@ -303,6 +441,6 @@ $$
 $$
 as
 $$
- \bar{\mathbf x}_\mathrm{min} \leq \widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \mathbf x_0 \leq \bar{\mathbf x}_\mathrm{max}, 
+ \bar{\mathbf x}^\mathrm{min} \leq \widehat{\mathbf C} \bar{\bm u} + \widehat{\mathbf A} \mathbf x_0 \leq \bar{\mathbf x}^\mathrm{max}, 
 $$
-where the the bars in $\bar{\mathbf x}_\mathrm{min}$ and $\bar{\mathbf x}_\mathrm{max}$ obviously indicates that these vectors were obtained by stacking the corresponding vectors for all times $k=1,\ldots,N$.
+where the the bars in $\bar{\mathbf x}^\mathrm{min}$ and $\bar{\mathbf x}^\mathrm{max}$ obviously indicates that these vectors were obtained by stacking the corresponding vectors for all times $k=1,\ldots,N$.
