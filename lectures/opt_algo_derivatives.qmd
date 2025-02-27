@@ -116,7 +116,7 @@ using ForwardDiff
 @btime ForwardDiff.gradient(J, [π/4,0.0])
 ```
 
-Note that while for the former, quite some work muse have been done before the timing was done, for the latter, we start completely from the scratch, just with the function definition. But before we start exploring the AD methods, we give a brief overview of the numerical methods based on finite-difference (FD) approximations.
+Note that while for the former quite some work must have been done before the timing analysis was started (namely, the formula for the derivative had to be found), for the latter we started only with the function definition. And yet the latter approach wins hands down.  But before we start exploring the AD methods, we give a brief overview of numerical methods based on finite-difference (FD) approximations.
 :::
 
 ## Numerical finite-difference (FD) methods
