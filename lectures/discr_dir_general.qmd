@@ -81,20 +81,20 @@ $$
 \begin{aligned}
  \operatorname*{minimize}_{\bm u_i,\ldots, \bm u_{N-1}, \bm x_{i},\ldots, \bm x_N}&\quad \left(\phi(\bm x_N,N) + \sum_{k=i}^{N-1} L_k(\bm x_k,\bm u_k) \right)\\
  \text{subject to}  &\quad \bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k),\quad k=i, \ldots, N-1,\\
-                    &\quad \bm u_{\min} \leq \bm u_k \leq \bm u_{\max},\\ 
-                    &\quad \bm x_{\min} \leq \bm x_k \leq \bm x_{\max},\\
+                    &\quad \mathbf u^{\min} \leq \bm u_k \leq \mathbf u^{\max},\\ 
+                    &\quad \mathbf x^{\min} \leq \bm x_k \leq \mathbf x^{\max},\\
                     &\quad\bm x_i = \mathbf x^\text{init},\\
-                    &\quad \left(\bm x_N = \mathbf x^\text{ref}, \; \text{or} \; \mathbf h_\text{final}(\bm x_N) =  \mathbf 0, \text{or} \; \mathbf g_\text{final}(\bm x_N) \leq  \mathbf 0\right),                    
+                    &\quad \left(\bm x_N = \mathbf x^\text{ref}, \; \text{or} \; \mathbf h^\text{final}(\bm x_N) =  \mathbf 0, \text{or} \; \mathbf g^\text{final}(\bm x_N) \leq  \mathbf 0\right),                    
 \end{aligned}
 $$
 where 
 
 - the inequalities should be interpreted componentwise,
-- $\bm u_{\min}$ and $\bm u_{\max}$ are lower and upper bounds on the control, respectively, 
-- $\bm x_{\min}$ and $\bm x_{\max}$ are lower and upper bounds on the state, respectively, 
+- $\mathbf u^{\min}$ and $\mathbf u^{\max}$ are lower and upper bounds on the control, respectively, 
+- $\mathbf x^{\min}$ and $\mathbf x^{\max}$ are lower and upper bounds on the state, respectively, 
 - $\mathbf x^\text{init}$ is a fixed initial state,
 - $\mathbf x^\text{ref}$ is a required (reference) final state, 
-- and the functions $\mathbf g_\text{final}()$ and $\mathbf h_\text{final}()$ can be used to define the constraint set for the final state.
+- and the functions $\mathbf g^\text{final}()$ and $\mathbf h^\text{final}()$ can be used to define the constraint set for the final state.
 
 
 This optimal control problem is an instance of a general nonlinear programming (NLP) problem 
