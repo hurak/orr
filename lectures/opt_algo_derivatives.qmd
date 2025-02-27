@@ -108,7 +108,15 @@ using BenchmarkTools
 @btime ∇J_sym_fun([π/4,0.0])
 ```
 
-We will compare against these results in the next sections, once we introduce alternatives to symbolic differentiation.
+As a teaser for what what is to come, we also benchmark the solution based on AD:
+
+``` {julia}
+using ForwardDiff
+
+@btime ForwardDiff.gradient(J, [π/4,0.0])
+```
+
+Note that while for the former, quite some work muse have been done before the timing was done, for the latter, we start completely from the scratch, just with the function definition. But before we start exploring the AD methods, we give a brief overview of the numerical methods based on finite-difference (FD) approximations.
 :::
 
 ## Numerical finite-difference (FD) methods
