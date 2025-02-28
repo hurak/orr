@@ -108,7 +108,7 @@ $$
 Solving this could be accomplished by using some general solver for linear systems or by using some more tailored solver for symmetric indefinite systems (based on [LDL factorization](https://en.wikipedia.org/wiki/Cholesky_decomposition#LDL_decomposition)). 
 
 ::: {#exm-direct-simultaneous}
-## Reformulating the unconstrained LQR problem as a system of linear equations
+## Reformulating the unconstrained LQR problem as a system of linear equations – simultaneous approach
 ```{julia}
 using BlockArrays
 using LinearAlgebra
@@ -173,7 +173,7 @@ p1 = plot(0:(N-1),uopt',marker=:diamond,label="u",linetype=:steppost)
 xlabel!("k")
 ylabel!("u")
 
-p2 = plot(0:N,hcat(x₀,xopt)',marker=:diamond,label=["x1" "x2"],linetype=:steppost)
+p2 = plot(0:N,hcat(x₀,xopt)',marker=:diamond,label=["x₁" "x₂"],linetype=:steppost)
 xlabel!("k")
 ylabel!("x")
 
@@ -261,7 +261,7 @@ $$
 $$
 
 ::: {#exm-direct-sequential}
-## Reformulating the unconstrained LQR problem as a system of linear equations
+## Reformulating the unconstrained LQR problem as a system of linear equations – sequential approach
 ``` {julia}
 function direct_dlqr_sequential(A,B,x₀,Q,R,S,N)
     n = size(A)[1]
@@ -317,7 +317,7 @@ p1 = plot(0:(N-1),uopt,marker=:diamond,label="u",linetype=:steppost)
 xlabel!("k")
 ylabel!("u")
 
-p2 = plot(0:N,hcat(x₀,xopt)',marker=:diamond,label=["x1" "x2"],linetype=:steppost)
+p2 = plot(0:N,hcat(x₀,xopt)',marker=:diamond,label=["x₁" "x₂"],linetype=:steppost)
 xlabel!("k")
 ylabel!("x")
 
@@ -360,6 +360,7 @@ $$
 $$ 
 
 ::: {#exm-direct-sequential-constrained-u}
+## Reformulating the LQR problem with constraints on control as a quadratic program – sequential approach
 ``` {julia}
 using Convex
 using SCS
@@ -424,7 +425,7 @@ p1 = plot(0:(N-1),uopt,marker=:diamond,label="u",linetype=:steppost)
 xlabel!("k")
 ylabel!("u")
 
-p2 = plot(0:N,hcat(x₀,xopt)',marker=:diamond,label=["x1" "x2"],linetype=:steppost)
+p2 = plot(0:N,hcat(x₀,xopt)',marker=:diamond,label=["x₁" "x₂"],linetype=:steppost)
 xlabel!("k")
 ylabel!("x")
 
