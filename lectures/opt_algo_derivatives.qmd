@@ -187,9 +187,9 @@ plot(h_range, abs_err_64,xaxis=:log, yaxis=:log, xlabel="h", ylabel = "|e|", lab
 plot!(h_range, abs_err_32,xaxis=:log, yaxis=:log, xlabel="h", ylabel = "|e|", label = "IEEE single")
 ```
 
-If we read the graph from right to left – as $h$ is getting smaller –, we observe that initially the error decreases for both 64- and 32-bit floating-point format, and it decreases at the same rate. The reason for this decrease is that the trunction error dominates here, and this error goes down with $h$.
+If we read the graph from right to left – as $h$ is getting smaller –, we observe that initially the error decreases for both 64- and 32-bit floating-point format, and it decreases at the same rate. The reason for this decrease is that the *trunction error* (essentially what we commit here by doing FD approximation is that we truncate the Taylor series) dominates here, and this error goes down with $h$.
 
-The major intended takeaway from this example is that this reduction of the error only takes place down to some $h$ below which the error no longer decreases; in fact, it actally increases as $h$ gets smaller. The reason is that for $h$ this small, the rounding errors dominate. Apparently, they start exhibitting themselves for smaller values with the 64-bit format than with 32-bit format.  
+The major intended takeaway from this example is that this reduction of the error only takes place down to some $h$ below which the error no longer decreases; in fact, it actally increases as $h$ gets smaller. The reason is that for $h$ this small, the *rounding errors* dominate. Apparently, they start exhibitting themselves for smaller values with the 64-bit format than with 32-bit format. The rounding errors are getting dominant here as we are subtracting two numbers that are getting more and more similar as $h$ decreaces. This is known as the phenomenon of [catastrophic cancellation](https://en.wikipedia.org/wiki/Catastrophic_cancellation).
 
 It is known from rigorous numerical analysis that the error in the case of the simple backward or forward finite difference approximation to a scalar derivative scales with $\sqrt{\epsilon}$, where $\epsilon$ is the [machine epsilon](https://en.wikipedia.org/wiki/Machine_epsilon). Here we can expect even worse outcome as the dimension $n$ of the vector grows. Note that $\epsilon$ for double precision IEEE is
 
