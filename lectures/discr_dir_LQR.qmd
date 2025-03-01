@@ -16,12 +16,12 @@ engine: julia
 Here we specialize the general procedure from the previous section to the case of a **L**inear system and a **Q**uadratic cost. We start by considering a simple problem of **R**egulation, wherein the goal is to bring the system either exactly or approximately to zero final state, that is, $\mathbf x^\text{ref}=\mathbf 0$ and we want $\bm x_N=\mathbf x^\text{ref}$ or $\bm x_N\approx\mathbf x^\text{ref}$, respectively. The problem is known as the **LQR** problem.
 $$
 \begin{aligned}
- \operatorname*{minimize}_{\mathbf u_0,\ldots, \mathbf u_{N-1}, \mathbf x_{0},\ldots, \mathbf x_N} &\quad  \frac{1}{2} \bm x_N^\top \mathbf S \bm x_N + \frac{1}{2} \sum_{k=0}^{N-1} \left(\bm x_k^\top \mathbf Q \bm x_k + \bm u_k^\top \mathbf R \bm u_k \right)\\ 
+ \operatorname*{minimize}_{\bm u_0,\ldots, \bm u_{N-1}, \bm x_{0},\ldots, \bm x_N} &\quad  \frac{1}{2} \bm x_N^\top \mathbf S \bm x_N + \frac{1}{2} \sum_{k=0}^{N-1} \left(\bm x_k^\top \mathbf Q \bm x_k + \bm u_k^\top \mathbf R \bm u_k \right)\\ 
 \text{subject to}   &\quad \bm x_{k+1} = \mathbf A\bm x_k + \mathbf B\bm u_k,\quad k = 0, \ldots, N-1, \\
                     &\quad \bm x_0 = \mathbf x_0,\\
                     &\quad \bm x_N = \mathbf 0\;  (\text{or}\, \bm x_N \approx \mathbf 0).
  \end{aligned}
- $$
+$$
 
 Referring to the two options for the last constraint,  
 
