@@ -20,27 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -50,7 +30,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./discr_dir_mpc_solvers.html" rel="next">
+<link href="./discr_dir_mpc_software.html" rel="next">
 <link href="./discr_dir_LQR.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -321,7 +301,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_dir_mpc_solvers.html" class="sidebar-item-text sidebar-link">
+  <a href="./discr_dir_mpc_software.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Numerical solvers for MPC</span></a>
   </div>
 </li>
@@ -920,7 +900,6 @@ div.csl-indent {
   <li><a href="#prediction-horizon-vs-control" id="toc-prediction-horizon-vs-control" class="nav-link" data-scroll-target="#prediction-horizon-vs-control">Prediction horizon vs control</a></li>
   <li><a href="#hard-constraints-vs-soft-constraints" id="toc-hard-constraints-vs-soft-constraints" class="nav-link" data-scroll-target="#hard-constraints-vs-soft-constraints">Hard constraints vs soft constraints</a></li>
   <li><a href="#linear-vs-nonlinear-mpc" id="toc-linear-vs-nonlinear-mpc" class="nav-link" data-scroll-target="#linear-vs-nonlinear-mpc">Linear vs nonlinear MPC</a></li>
-  <li><a href="#literature" id="toc-literature" class="nav-link" data-scroll-target="#literature">Literature</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -992,29 +971,11 @@ Note
 <section id="linear-vs-nonlinear-mpc" class="level2">
 <h2 class="anchored" data-anchor-id="linear-vs-nonlinear-mpc">Linear vs nonlinear MPC</h2>
 <p>x</p>
-</section>
-<section id="literature" class="level2">
-<h2 class="anchored" data-anchor-id="literature">Literature</h2>
-<p><span class="citation" data-cites="rawlingsModelPredictiveControl2017">(<a href="#ref-rawlingsModelPredictiveControl2017" role="doc-biblioref">Rawlings, Mayne, and Diehl 2017</a>)</span>, <span class="citation" data-cites="borrelliPredictiveControlLinear2017">(<a href="#ref-borrelliPredictiveControlLinear2017" role="doc-biblioref">Borrelli, Bemporad, and Morari 2017</a>)</span>, <span class="citation" data-cites="grosNumericalOptimalControl2022">(<a href="#ref-grosNumericalOptimalControl2022" role="doc-biblioref">Gros and Diehl 2022</a>)</span> <span class="citation" data-cites="bemporadModelPredictiveControl2021a">(<a href="#ref-bemporadModelPredictiveControl2021a" role="doc-biblioref">Bemporad 2021</a>)</span></p>
-
 
 
 </section>
 
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-bemporadModelPredictiveControl2021a" class="csl-entry" role="listitem">
-Bemporad, Alberto. 2021. <span>“Model Predictive Control.”</span> Lecture Slides. <a href="http://cse.lab.imtlucca.it/~bemporad/teaching/mpc/imt/1-linear_mpc.pdf">http://cse.lab.imtlucca.it/~bemporad/teaching/mpc/imt/1-linear_mpc.pdf</a>.
-</div>
-<div id="ref-borrelliPredictiveControlLinear2017" class="csl-entry" role="listitem">
-Borrelli, Francesco, Alberto Bemporad, and Manfred Morari. 2017. <em>Predictive <span>Control</span> for <span>Linear</span> and <span>Hybrid Systems</span></em>. <span>Cambridge, New York</span>: <span>Cambridge University Press</span>. <a href="http://cse.lab.imtlucca.it/~bemporad/publications/papers/BBMbook.pdf">http://cse.lab.imtlucca.it/~bemporad/publications/papers/BBMbook.pdf</a>.
-</div>
-<div id="ref-grosNumericalOptimalControl2022" class="csl-entry" role="listitem">
-Gros, Sebastien, and Moritz Diehl. 2022. <span>“Numerical <span>Optimal Control</span> (<span>Draft</span>).”</span> Systems Control; Optimization Laboratory IMTEK, Faculty of Engineering, University of Freiburg. <a href="https://www.syscop.de/files/2020ss/NOC/book-NOCSE.pdf">https://www.syscop.de/files/2020ss/NOC/book-NOCSE.pdf</a>.
-</div>
-<div id="ref-rawlingsModelPredictiveControl2017" class="csl-entry" role="listitem">
-Rawlings, James B., David Q. Mayne, and Moritz M. Diehl. 2017. <em>Model <span>Predictive Control</span>: <span>Theory</span>, <span>Computation</span>, and <span>Design</span></em>. 2nd ed. <span>Madison, Wisconsin</span>: <span>Nob Hill Publishing, LLC</span>. <a href="http://www.nobhillpublishing.com/mpc-paperback/index-mpc.html">http://www.nobhillpublishing.com/mpc-paperback/index-mpc.html</a>.
-</div>
-</div></section></div></main> <!-- /main -->
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1439,7 +1400,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./discr_dir_mpc_solvers.html" class="pagination-link" aria-label="Numerical solvers for MPC">
+      <a href="./discr_dir_mpc_software.html" class="pagination-link" aria-label="Numerical solvers for MPC">
         <span class="nav-page-text">Numerical solvers for MPC</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
