@@ -899,7 +899,6 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#mpc-tracking" id="toc-mpc-tracking" class="nav-link" data-scroll-target="#mpc-tracking">MPC tracking</a></li>
   <li><a href="#prediction-horizon-vs-control" id="toc-prediction-horizon-vs-control" class="nav-link" data-scroll-target="#prediction-horizon-vs-control">Prediction horizon vs control</a></li>
   <li><a href="#hard-constraints-vs-soft-constraints" id="toc-hard-constraints-vs-soft-constraints" class="nav-link" data-scroll-target="#hard-constraints-vs-soft-constraints">Hard constraints vs soft constraints</a></li>
-  <li><a href="#linear-vs-nonlinear-mpc" id="toc-linear-vs-nonlinear-mpc" class="nav-link" data-scroll-target="#linear-vs-nonlinear-mpc">Linear vs nonlinear MPC</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -932,32 +931,44 @@ ul.task-list li input[type="checkbox"] {
 <li><p>The control sequence was computed under the assumption that the mathematical model is perfectly accurate. As soon as the reality deviates from the model, either because of some unmodelled dynamics or because of the presence of (external) disturbances, the performance of the system will deteriorate. We need a way to turn the presented open-loop (also feedforward) control scheme into a feedback one.</p></li>
 <li><p>The control sequence was computed for a finite time horizon. It is commonly required to consider an infinite time horizon, which is not possible with the presented approach based on solving finite-dimensional mathematical programs.</p></li>
 </ul>
-<p>There are several ways to address these issues. Here we introduced one of them. It is knowns are Model Predictive Control (MPC), or also Receding Horizon Control (RHC). Some more are presented in the next two sections (one based on indirect approach, another one based on dynamic programming).</p>
+<p>There are several ways to address these issues. Here we introduce one of them. It is known are <em>Model Predictive Control (MPC)</em>, also <em>Receding Horizon Control (RHC)</em>. Some more are presented in the next two sections (one based on indirect approach, another one based on dynamic programming).</p>
 </section>
 <section id="model-predictive-control-mpc-as-a-way-to-turn-open-loop-control-into-feedback-control" class="level2">
 <h2 class="anchored" data-anchor-id="model-predictive-control-mpc-as-a-way-to-turn-open-loop-control-into-feedback-control">Model predictive control (MPC) as a way to turn open-loop control into feedback control</h2>
-<p>The idea is to compute an optimal control sequence on a finite time horizon using the material presented in the previous section, apply only the first control action to the system, and then repeat the procedure upon shifting the time horizon by one time step.</p>
-<p>Although this name “model predictive control” is commonly used in the control community, the other – perhaps a bit less popular – name “receding horizon control” is equally descriptive, if not even a bit more.</p>
+<p>The idea is to compute an optimal control sequence on a finite time horizon using the optimization framework presented in the previous section, but then apply only the first element of the computed control trajectory to the system, and proceed to repeating the whole procedure after shifting the time horizon forward by one time step. The name “model predictive control” expresses the fact that a model-based prediction is the key component of the controller. This is expressed in <a href="#fig-mpc" class="quarto-xref">Fig.&nbsp;1</a>.</p>
+<div id="fig-mpc" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mpc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/mpc.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mpc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Diagram describing a single MPC step. Recall that the information carried by the past input trajectories can compressed into the state of the system. A state observer providing an estimate of the state must then be a component of the whole MPC, but then needs not only the input but also the output trajectories.
+</figcaption>
+</figure>
+</div>
+<p>The other name “receding horizon control” is equally descriptive, it emphasizes the phenomenon of the finite time horizon (interval, window) receding (shifting, moving, rolling) as time goes by.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+We all do MPC in our everyday lives
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>It may take a few moments to digest the idea, but it is actually quite natural. As a matter of fact, this is the way most of us control our lifes every day. We plan our actions on a finite time horizon, and while building this plan we use our understanding (model) of the world. We then perform the first action from our plan, observe the impact of our action and possibly a change in the environment, and update our plan accordingly on a new (shifted) time horizon. We repeat this procedure over and over again. It is crucial that the prediction horizon must be long enough so that the full impact of our actions can be observed.</p>
+<p>It may take a few moments to comprehend the idea, but then it turns out perfectly natural. As a matter of fact, this is the way most of us control our lifes every day. We plan our actions on a finite time horizon, and to build this plan we use both our understanding (model) of the world and our knowledge of our current situation (state). We then execute the first action from our plan, observe the consequences of our action the and recent changes in the environment, and update our plan accordingly on a new (shifted) time horizon. We repeat this procedure over and over again. It is crucial that the prediction horizon must be long enough so that the full impact of our actions can be observed, but it must not be too long because the planning then becomes too complex and predictions unreliable.</p>
 </div>
 </div>
 </section>
 <section id="mpc-regulation" class="level2">
 <h2 class="anchored" data-anchor-id="mpc-regulation">MPC regulation</h2>
+<p>We first investigate the situation when the reference (the set-point, the required final state) is zero.</p>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/oMUtYZOgsng?si=cZK2RgxsjGXEQEW0" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 </section>
 <section id="mpc-tracking" class="level2">
 <h2 class="anchored" data-anchor-id="mpc-tracking">MPC tracking</h2>
+<p>We now extend the regulation setup so that nonzero references can be tracked (followed).</p>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/GnFaLl7qwco?si=GN79Zpddv2ZmQ4eU" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 </section>
 <section id="prediction-horizon-vs-control" class="level2">
@@ -966,11 +977,7 @@ Note
 </section>
 <section id="hard-constraints-vs-soft-constraints" class="level2">
 <h2 class="anchored" data-anchor-id="hard-constraints-vs-soft-constraints">Hard constraints vs soft constraints</h2>
-<p>x</p>
-</section>
-<section id="linear-vs-nonlinear-mpc" class="level2">
-<h2 class="anchored" data-anchor-id="linear-vs-nonlinear-mpc">Linear vs nonlinear MPC</h2>
-<p>x</p>
+<p>Discussed in the previous video too.</p>
 
 
 </section>
