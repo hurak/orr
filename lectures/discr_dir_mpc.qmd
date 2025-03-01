@@ -22,23 +22,30 @@ In the previous section we learnt how to compute an optimal control sequence on 
 
 - The control sequence was computed for a finite time horizon. It is commonly required to consider an infinite time horizon, which is not possible with the presented approach based on solving finite-dimensional mathematical programs.
 
-There are several ways to address these issues. Here we introduced one of them. It is knowns are Model Predictive Control (MPC), or also Receding Horizon Control (RHC). Some more are presented in the next two sections (one based on indirect approach, another one based on dynamic programming).
+There are several ways to address these issues. Here we introduce one of them. It is known are *Model Predictive Control (MPC)*, also *Receding Horizon Control (RHC)*. Some more are presented in the next two sections (one based on indirect approach, another one based on dynamic programming).
 
 ## Model predictive control (MPC) as a way to turn open-loop control into feedback control
 
-The idea is to compute an optimal control sequence on a finite time horizon using the material presented in the previous section, apply only the first control action to the system, and then repeat the procedure upon shifting the time horizon by one time step. 
+The idea is to compute an optimal control sequence on a finite time horizon using the optimization framework presented in the previous section, but then apply only the first element of the computed control trajectory to the system, and proceed to repeating the whole procedure after shifting the time horizon forward by one time step. The name "model predictive control" expresses the fact that a model-based prediction is the key component of the controller. This is expressed in @fig-mpc.
 
-Although this name "model predictive control" is commonly used in the control community, the other – perhaps a bit less popular – name "receding horizon control" is equally descriptive, if not even a bit more. 
+![Diagram describing a single MPC step. Recall that the information carried by the past input trajectories can compressed into the state of the system. A state observer providing an estimate of the state must then be a component of the whole MPC, but then needs not only the input but also the output trajectories.](figures/mpc.png){#fig-mpc}
+
+The other name "receding horizon control" is equally descriptive, it emphasizes the phenomenon of the finite time horizon (interval, window) receding (shifting, moving, rolling) as time goes by. 
 
 ::: {.callout-note}
-It may take a few moments to digest the idea, but it is actually quite natural. As a matter of fact, this is the way most of us control our lifes every day. We plan our actions on a finite time horizon, and while building this plan we use our understanding (model) of the world. We then perform the first action from our plan, observe the impact of our action and possibly a change in the environment, and update our plan accordingly on a new (shifted) time horizon. We repeat this procedure over and over again. It is crucial that the prediction horizon must be long enough so that the full impact of our actions can be observed.  
+## We all do MPC in our everyday lives
+It may take a few moments to comprehend the idea, but then it turns out perfectly natural. As a matter of fact, this is the way most of us control our lifes every day. We plan our actions on a finite time horizon, and to build this plan we use both our understanding (model) of the world and our knowledge of our current situation (state). We then execute the first action from our plan, observe the consequences of our action the and recent changes in the environment, and update our plan accordingly on a new (shifted) time horizon. We repeat this procedure over and over again. It is crucial that the prediction horizon must be long enough so that the full impact of our actions can be observed, but it must not be too long because the planning then becomes too complex and predictions unreliable. 
 :::
 
 ## MPC regulation
 
+We first investigate the situation when the reference (the set-point, the required final state) is zero. 
+
 {{< video https://youtu.be/oMUtYZOgsng?si=cZK2RgxsjGXEQEW0 >}}
 
 ## MPC tracking
+
+We now extend the regulation setup so that nonzero references can be tracked (followed). 
 
 {{< video https://youtu.be/GnFaLl7qwco?si=GN79Zpddv2ZmQ4eU >}}
 
@@ -47,7 +54,5 @@ It may take a few moments to digest the idea, but it is actually quite natural. 
 {{< video https://youtu.be/gMOcBSmjdkQ?si=E_Rzf341oqpeQWgm >}}
 
 ## Hard constraints vs soft constraints
-x
 
-## Linear vs nonlinear MPC
-x
+Discussed in the previous video too.
