@@ -3,4 +3,223 @@ title: "Homework"
 format:
     html:
         html-math-method: katex
+engine: julia
 ---
+
+In this homework, you will be implementing a tracking Model Predictive Controller (MPC) for a linear model in Julia. Your task is to take the Optimal Control Problem of the tracking MPC
+$$
+\begin{align*}
+    \underset{\mathbf{x}, u}{\text{minimize}} \quad & \frac{1}{2}\sum_{k=t}^{t+N-1} (\mathbf{y}_{k+1} - r_{k+1})^T\mathbf{Q}(\mathbf{y}_{k+1} - r_{k+1}) + \Delta\mathbf{u}_k^T\mathbf{R}\Delta\mathbf{u}_k\\
+    \text{subject to} \quad & \mathbf{x}_{k+1} = \mathbf{A}\mathbf{x}_k + \mathbf{B}\mathbf{u}_k, \qquad k = t,\dots,t+N-1,\\
+    &\mathbf{u}_\mathrm{min} \leq \mathbf{u}_{k} \leq \mathbf{u}_\mathrm{max}, \qquad k =t,\dots,t+N-1,
+\end{align*}
+$$
+where $\Delta\mathbf{u}_k = \mathbf{u}_k - \mathbf{u}_{k-1}$, and reformulate it as a Quadratic Program (QP) of the form
+$$
+\begin{array}{rl}
+\underset{\mathbf{x}, u}{\text{minimize}} \quad &  \frac{1}{2}\mathbf{z}^T \mathbf{H} \mathbf{z} + [\mathbf{x}_t^T \: \mathbf{u}_{t-1}^T \: \mathbf{r}_{t+1,\dots,t+N}^T]\,\mathbf{F}\,\mathbf{z} \\
+\text{subject to} \quad &\mathbf{G}\mathbf{z} \leq \mathbf{W} + \mathbf{S}\left[\begin{array}{c}\mathbf{x}_t\\ \mathbf{u}_{t-1}\end{array}\right].
+\end{array}
+$$
+where $\mathbf{z}=\left[\begin{array}{c}\Delta \mathbf{u}_t^\mathrm{T} & \ldots & \Delta \mathbf{u}_{t+N-1}^\mathrm{T}\end{array}\right]^\mathrm{T}$, $\mathbf{x}_t$ is the current state value of the model, $\mathbf{u}_{t-1}$ is the most recently applied input and $\mathbf{r}_{t+1,\dots,t+N}$ is the reference over the current prediction horizon. You should then implement the MPC controller using this QP formulation.
+
+The MPC controller should be based on the template provided below. Your goal is to complete the implementation by filling in the missing parts, specifically 
+
+- Complete the `setup_mpc` function that constructs the matrices $\mathbf{H}$, $\mathbf{F}$, $\mathbf{S}$, $\mathbf{W}$, and $\mathbf{G}$ for the QP formulation.
+- Complete the `solve!` function that does the single MPC step, that is, it solves the QP for the given initial state, input, and reference trajectory, and returns the optimal control input.
+
+Your solution should be contained in a single file named `hw.jl`, which you will upload to the [BRUTE](https://cw.felk.cvut.cz/brute) system. You should use the COSMO.jl package for solving the QP. 
+
+```{julia}
+#| eval: false
+
+using LinearAlgebra, SparseArrays, COSMO
+
+mutable struct MPCProblem{T <: AbstractFloat}
+    model::COSMO.Workspace{T}
+    F::Matrix{T}
+    W::Vector{T}
+    S::Matrix{T}
+end
+
+"""
+Sets up the necessary matrices for a tracking Model Predictive Controller (MPC).
+
+Given a discrete-time linear system with state-space representation:
+    x(k+1) = A*x(k) + B*u(k)
+    y(k) = C*x(k)
+
+This function constructs the required matrices to reformulate the MPC problem as a quadratic program (QP):
+
+    min_z  (1/2) * z' * H * z + [x_t', u_(t-1)', r_(t+1:t+N)'] * F * z
+    subject to: G * z ≤ W + S * [x_t, u_(t-1)]
+
+where:
+    - z = [Δu_t; ...; Δu_(t+N-1)] (control input changes over the horizon)
+    - x_t: current state
+    - u_(t-1): most recently applied input
+    - r_(t+1:t+N): reference trajectory
+
+Arguments:
+    - A, B, C: System matrices defining dynamics and output equations
+    - Q: State tracking cost matrix
+    - R: Control input cost matrix
+    - N: Prediction horizon length
+    - u_min, u_max: Input constraints
+
+Returns:
+    A dictionary containing the constructed QP matrices:
+    - H: Quadratic cost matrix
+    - F: Linear cost term matrix
+    - S: Constraint matrix for state and past input
+    - W: Constraint bounds vector
+    - G: Inequality constraint matrix
+"""
+function setup_mpc(A::Matrix{T}, B::Matrix{T}, C::Matrix{T}, Q::Matrix{T}, R::Matrix{T}, N::Int, u_min::Vector{T}, u_max::Vector{T}) where T <: AbstractFloat
+
+    nx = size(A, 1)
+    nu = size(B, 2)
+    ny = size(C, 1)
+
+
+    # TODO Construct the matrices H, F, S, W, and G
+    H = zeros(T, N * nu, N * nu)
+    F = zeros(T, (nx + nu + N * ny) * N, N * nu)
+    S = zeros(T, N * nu, nx + nu)
+    W = zeros(T, N * nu)
+    G = zeros(T, N * nu, N * nu) 
+   
+
+    return H, F, S, W, G
+end
+
+"""
+Constructs a tracking Model Predictive Controller (MPC) problem.
+
+Arguments:
+    - A, B, C: System matrices defining dynamics and output equations
+    - Q: State tracking cost matrix
+    - R: Control input cost matrix
+    - N: Prediction horizon length
+    - u_min, u_max: Input constraints
+
+Returns:
+    An instance of `MPCProblem` containing the COSMO model and the matrices F, W, and S.
+"""
+function MPCProblem(A::Matrix{T}, B::Matrix{T}, C::Matrix{T}, Q::Matrix{T}, R::Matrix{T}, N::Int, u_min::Vector{T}, u_max::Vector{T}) where T <: AbstractFloat
+    H, F, S, W, G = setup_mpc(A, B, C, Q, R, N, u_min, u_max)
+
+    model = COSMO.Model{T}() # COSMO model
+
+    x₀ = zeros(T, size(A, 1)) # Dummy initial state
+    r = zeros(T, N * size(C, 1)) # Dummy reference trajectory
+    u₀ = zeros(T, size(B, 2)) # Dummy initial input
+
+    q = [x₀; u₀; r]' * F
+
+    Ac = -G # G * z ≤ W + S * [x₀; u₀]
+    bc = W + S * [x₀; u₀] # G * z ≤ bc
+    
+    constr = COSMO.Constraint(Ac, bc, COSMO.Nonnegatives);
+
+    settings = COSMO.Settings(verbose=true);
+
+    COSMO.assemble!(model,sparse(H), q, constr, settings = settings) # Assemble the QP
+
+    return MPCProblem(model, F, W, S)
+end
+
+"""
+Solves the MPC problem for the given initial state, input, and reference trajectory.
+
+Arguments:
+    - mpc: An instance of `MPCProblem` containing the COSMO model and the matrices F, W, and S.
+    - xₖ: The current state vector.
+    - uₖ₋₁: The most recently applied input vector.
+    - r: The reference trajectory vector.
+
+Returns:
+    The optimal control input vector at the current time step.
+"""
+function solve!(mpc::MPCProblem{T}, xₖ::Vector{T}, uₖ₋₁::Vector{T}, r::Matrix{T}) where T <: AbstractFloat
+
+    # TODO implement the updates for the COSMO model (q and b)
+    q = zeros(T, size(mpc.F, 2))
+    b = zeros(T, size(mpc.S, 1))
+
+    COSMO.update!(mpc.model, q = q, b = b)
+
+    result = COSMO.optimize!(mpc.model)
+
+    # TODO Extract the optimal control input and return it
+    Δu_opt = result.x
+ 
+    return zeros(T, size(uₖ₋₁, 1))
+end
+```
+
+You may want to test your implementation using the following example:
+```{julia}
+#| eval: false
+using ControlSystemsBase
+using Plots
+
+Ac = [-.0151 -60.5651 0 -32.174;
+     -.0001 -1.3411 .9929 0;
+     .00018 43.2541 -.86939 0;
+      0      0       1      0];
+
+Bc = [-2.516 -13.136;
+     -.1689 -.2514;
+     -17.251 -1.5766;
+     0        0];
+Cc = [0 1 0 0;
+     0 0 0 1];
+Dc = [0 0;
+     0 0];
+
+sys=ss(Ac,Bc,Cc,Dc)
+
+Ts = .05; # Sampling time
+model = c2d(sys,Ts)
+
+A = model.A
+B = model.B
+C = model.C
+
+N = 10 # Prediction horizon
+Q = diagm([10.0, 10.0]); # Tracking weight matrix
+R = Matrix(0.1I, 2, 2); # Input increment weight matrix
+
+u_max = 25.0*[1, 1];
+u_min = -25.0*[1, 1];
+
+mpc = MPCProblem(A, B, C, Q, R, N, u_min, u_max)
+
+Tf = 75*Ts;
+t = 0:Ts:Tf; 
+
+ref = [2*ones(1, length(t)+N); 10*ones(1, length(t)+N)] # Reference trajectory
+
+ref[:, Int(round(end/2)):end] ./= 2
+
+xs = zeros(4, length(t)+1)
+us = zeros(2, length(t))
+ys = zeros(2, length(t))
+
+for k = 2:length(t)
+    u = solve!(mpc, xs[:, k], us[:, k-1], ref[:, k:k+N-1])
+    xs[:, k+1] = A*xs[:, k] + B*u
+    ys[:, k] = C*xs[:, k]
+    us[:, k] = u
+end
+
+## Visualize the results
+using Plots
+plot(t, ys[1, :], label="y1")
+plot!(t, ys[2, :], label="y2")
+
+plot!(t, ref[1, 1:end-N], linestyle=:dash, label="ref1")
+plot!(t, ref[2, 1:end-N], linestyle=:dash, label="ref2")
+
+```
