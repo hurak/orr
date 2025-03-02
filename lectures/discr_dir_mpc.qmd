@@ -3,6 +3,7 @@ title: "Model predictive control (MPC)"
 bibliography: 
     - "ref_mpc.bib"
     - "ref_numerical_optimal_control.bib"
+csl: ieee-control-systems.csl
 format:
     html:
         html-math-method: katex
@@ -43,7 +44,31 @@ We first investigate the situation when the reference (the set-point, the requir
 
 {{< video https://youtu.be/oMUtYZOgsng?si=cZK2RgxsjGXEQEW0 >}}
 
-At the discrete time $t$, a finite-horizon LQR problem is formulated and solved. Since the problem is parameterized by the "initial" time $t$ and the state at this time, we need to reflect this in the notation. Namely, 
+We restrict ourselves to a linear system and a quadratic cost function. We impose lower and upper bounds on the control, and optionally on the states as well. We consider a (long) time horizon $N$. 
+$$
+\begin{aligned}
+ \operatorname*{minimize}_{\bm u_0,\ldots, \bm u_{N-1}, \bm x_{0},\ldots, \bm x_N} &\quad  \frac{1}{2} \bm x_N^\top \mathbf S \bm x_N + \frac{1}{2} \sum_{k=0}^{N-1} \left(\bm x_k^\top \mathbf Q \bm x_k + \bm u_k^\top \mathbf R \bm u_k \right)\\ 
+\text{subject to}   &\quad \bm x_{k+1} = \mathbf A\bm x_k + \mathbf B\bm u_k,\quad k = 0, \ldots, N-1, \\
+                    &\quad \bm x_0 = \mathbf x_0,\\
+                    &\quad \mathbf u^{\min} \leq \bm u_k \leq \mathbf u^{\max},\\
+                    &\quad (\mathbf x^{\min} \leq \bm x_k \leq \mathbf x^{\max}).
+ \end{aligned}
+$$
+
+If the time horizon is really long, we can approximate it by $\infty$, in which case we omit the terminal state penalty from the overall cost function
+$$
+\begin{aligned}
+ \operatorname*{minimize}_{\bm u_0,\bm u_1,\ldots, \bm x_{0}, \bm x_1,\ldots} &\quad  \frac{1}{2} \sum_{k=0}^{\infty} \left(\bm x_k^\top \mathbf Q \bm x_k + \bm u_k^\top \mathbf R \bm u_k \right)\\ 
+\text{subject to}   &\quad \bm x_{k+1} = \mathbf A\bm x_k + \mathbf B\bm u_k,\quad k = 0, 1, 2, \ldots, \\
+                    &\quad \bm x_0 = \mathbf x_0,\\
+                    &\quad \mathbf u^{\min} \leq \bm u_k \leq \mathbf u^{\max},\\
+                    &\quad (\mathbf x^{\min} \leq \bm x_k \leq \mathbf x^{\max}).
+ \end{aligned}
+$$
+
+Now, in a model predictive control (MPC) scheme, at the discrete time $t$, an LQR problem on a finite (and typically only modestly long time prediction horizon $N_\mathrm{p}$ (typically $N_\mathrm{p}\approx 20$ or 30 or so) is formulated and solved. This time window then moves (recedes, rolls) either forever or untill the the final time $N$ is reached. 
+
+Since the problem is parameterized by the "initial" time $t$ and the state at this time, we need to reflect this in the notation. Namely, 
 $$\bm x_{t+k|t}$$ 
 is the predicted state at time $t+k$ as predicted at time $t$ using the information available at that time, that is, $\mathbf x_t (= \bm x_{t|t})$ and the computed control trajectory up to the time just one step before $t+k$. We can emphasize this dependence by writing it explicitly as
 $$\bm x_{t+k|t}(\bm x_t, \bm u_{t}, \bm u_{t+1}, \ldots, \bm u_{t+k-1}),$$
@@ -53,8 +78,8 @@ is the future control at $t+k$ as computed at time $t$ using the information ava
 
 $$
 \begin{aligned}
- \operatorname*{minimize}_{\bm u_{t|t},u_{t+1}\ldots, \bm u_{t+N-1}, \bm x_{t|t},\ldots, \bm x_{t+N|t}} &\quad  \frac{1}{2} \bm x_{t+N|t}^\top \mathbf S \bm x_{t+N|t} + \frac{1}{2} \sum_{k=0}^{N-1} \left(\bm x_{t+k|t}^\top \mathbf Q \bm x_{t+k|t} + \bm u_{t+k|t}^\top \mathbf R \bm u_{t+k|t} \right)\\ 
-\text{subject to}   &\quad \bm x_{t+k+1|t} = \mathbf A\bm x_{t+k|t} + \mathbf B\bm u_{t+k|t},\quad k = 0, \ldots, N-1, \\
+ \operatorname*{minimize}_{\bm u_{t|t},u_{t+1}\ldots, \bm u_{t+N_\mathrm{p}-1}, \bm x_{t|t},\ldots, \bm x_{t+N_\mathrm{p}|t}} &\quad  \frac{1}{2} \bm x_{t+N_\mathrm{p}|t}^\top \mathbf S \bm x_{t+N_\mathrm{p}|t} + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \left(\bm x_{t+k|t}^\top \mathbf Q \bm x_{t+k|t} + \bm u_{t+k|t}^\top \mathbf R \bm u_{t+k|t} \right)\\ 
+\text{subject to}   &\quad \bm x_{t+k+1|t} = \mathbf A\bm x_{t+k|t} + \mathbf B\bm u_{t+k|t},\quad k = 0, \ldots, N_\mathrm{p}-1, \\
                     &\quad \bm x_{t|t} = \mathbf x_t, \\
                     &\quad \mathbf u^{\min} \leq \bm u_{t+k|t} \leq \mathbf u^{\max},\\
                     &\quad \mathbf x^{\min} \leq \bm x_{t+k|t} \leq \mathbf x^{\max}.
@@ -127,3 +152,26 @@ We have just encountered another instance of the classical dillema in optimizati
 :::
 
 ## Prediction horizon vs control horizon
+
+One of the key parameters of a model predictive control is the *prediction horizon* $N_\mathrm{p}$. It must be long enough so that the key dynamics of the system has enough time to exhibit, and yet it must not be too long, because the computational load will be then too high. A rule of thumb (but certainly not a law) is $N_\mathrm{p}\approx 20$. There is one simple way to reduce the computational load – consider the control trajectory defined on a much shorted time horizon than the predicted state trajectory. Namely, we introduce the *control horizon* $N_\mathrm{c} < N_\mathrm{p}$ (typically $N_\mathrm{c}$ can be as small as 2 or 3 or so), and we only consider the control as optimizable on this short horizon. Of course, we must provide some values after this horizon as well (untill the end of the prediction horizon). The simplest strategy is to set it to the last value on the control horizon. The MPC problem then changes to
+$$
+\begin{aligned}
+ \operatorname*{minimize}_{\bm u_{t|t},u_{t+1}\ldots, \bm u_{t+{\color{red}N_\mathrm{c}}-1}, \bm x_{t|t},\ldots, \bm x_{t+N_\mathrm{p}|t}} &\quad  \frac{1}{2} \bm x_{t+N_\mathrm{p}|t}^\top \mathbf S \bm x_{t+N_\mathrm{p}|t} + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \bm x_{t+k|t}^\top \mathbf Q \bm x_{t+k|t} + + \frac{1}{2} \sum_{k=0}^{{\color{red}N_\mathrm{c}}-1} \bm u_{t+k|t}^\top \mathbf R \bm u_{t+k|t}\\ 
+\text{subject to}   &\quad \bm x_{t+k+1|t} = \mathbf A\bm x_{t+k|t} + \mathbf B\bm u_{t+k|t},\quad k = 0, \ldots, N_\mathrm{p}-1, \\
+                    &\quad \bm x_{t|t} = \mathbf x_t, \\
+                    &\quad \mathbf u^{\min} \leq \bm u_{t+k|t} \leq \mathbf u^{\max},\\
+                    &\quad \mathbf x^{\min} \leq \bm x_{t+k|t} \leq \mathbf x^{\max},\\
+                    &\quad {\color{red} \bm u_{t+k|t} = \bm u_{t+N_\mathrm{c}-1|t}, \quad k=N_\mathrm{c}, N_\mathrm{c}+1, \ldots, N_\mathrm{p}}.
+ \end{aligned}
+$$
+
+## Move blocking
+
+Another strategy for reducing the number of control variables is known as *move blocking*. In this approach, the control inputs are held constant over several time steps (they are combined into blocks), effectively reducing the number of optimization variables. More on this in @cagienardMoveBlockingStrategies2007.
+
+## Open questions (for us at this moment)
+
+- Can the stability of a closed-loop system with an MPC controller be guaranteed? Even in the linear case we cannot just have a look at some poles to make a conclusion.
+- What is the role of the terminal state cost in the MPC problem? And how shall we choose it? Apparently, if the original time horizon is finite but very long (say, 1000), with the prediction horizon set to 20, we can hardly argue that the corresponding term in the MPC cost function expresses our requirements on the behaviour of the system at time 1000.
+
+We are going to come back to these after we investigate the other two approaches to discrete-time optimal control – the indirect approach and the dynamical programming.
