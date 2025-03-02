@@ -43,16 +43,87 @@ We first investigate the situation when the reference (the set-point, the requir
 
 {{< video https://youtu.be/oMUtYZOgsng?si=cZK2RgxsjGXEQEW0 >}}
 
+At the discrete time $t$, a finite-horizon LQR problem is formulated and solved. Since the problem is parameterized by the "initial" time $t$ and the state at this time, we need to reflect this in the notation. Namely, 
+$$\bm x_{t+k|t}$$ 
+is the predicted state at time $t+k$ as predicted at time $t$ using the information available at that time, that is, $\mathbf x_t (= \bm x_{t|t})$ and the computed control trajectory up to the time just one step before $t+k$. We can emphasize this dependence by writing it explicitly as
+$$\bm x_{t+k|t}(\bm x_t, \bm u_{t}, \bm u_{t+1}, \ldots, \bm u_{t+k-1}),$$
+but then the notation becomes too convolved, and we stick to the shorter one. We emphasize that it is really just a prediction. The true state at time $t+k$ is denoted $\bm x_{t+k}$. Similarly, 
+$$\bm u_{t+k|t}$$
+is the future control at $t+k$ as computed at time $t$ using the information available at that time, that is, $\bm x_t$.
+
+$$
+\begin{aligned}
+ \operatorname*{minimize}_{\bm u_{t|t},u_{t+1}\ldots, \bm u_{t+N-1}, \bm x_{t|t},\ldots, \bm x_{t+N|t}} &\quad  \frac{1}{2} \bm x_{t+N|t}^\top \mathbf S \bm x_{t+N|t} + \frac{1}{2} \sum_{k=0}^{N-1} \left(\bm x_{t+k|t}^\top \mathbf Q \bm x_{t+k|t} + \bm u_{t+k|t}^\top \mathbf R \bm u_{t+k|t} \right)\\ 
+\text{subject to}   &\quad \bm x_{t+k+1|t} = \mathbf A\bm x_{t+k|t} + \mathbf B\bm u_{t+k|t},\quad k = 0, \ldots, N-1, \\
+                    &\quad \bm x_{t|t} = \mathbf x_t, \\
+                    &\quad \mathbf u^{\min} \leq \bm u_{t+k|t} \leq \mathbf u^{\max},\\
+                    &\quad \mathbf x^{\min} \leq \bm x_{t+k|t} \leq \mathbf x^{\max}.
+ \end{aligned}
+$$
+
+Note that by using the upright front in $\mathbf x_t$ we emphasize that the current state plays (measured or estimated) the role of a parameter and not an optimization variable within this optimization problem.
+
+Previously we have learnt how to rewrite this finite-horizon optimal control problem as a QP problem, which can then be solved with a dedicated QP solver. However, it is worth analyzing the case without the inequality constraints. We know that we can formulate a system of linear equations and solvem, which we formally write at
+$$
+\begin{bmatrix} \bm u_{t|t} \\ \bm u_{t+1|t} \\ \vdots \\ \bm u_{t+N-1|t} \end{bmatrix}
+=
+\mathbf{H}^{-1} \mathbf{F} \mathbf x_t,
+$$
+but since we only indend to apply the first element of the control trajectory, we can write
+$$
+\bm u_{t|t}
+=
+\underbrace{\begin{bmatrix} \mathbf I & \mathbf 0 & \mathbf 0 & \ldots & \mathbf 0 \end{bmatrix}
+\mathbf{H}^{-1} \mathbf{F}}_{\mathbf K_t} \mathbf x_t,
+$$
+in which we can recognize the classical state feedback with the (time-varying) gain $\mathbf K_t$. This is a very useful observation – the MPC strategy, when not considering inequality constraints (aka bounds) on the control or state variables, is just a time-varying state feedback. This observation will turn crucial in later chapters when we come back to MPC and analyze its stability. 
+
 ## MPC tracking
 
 We now extend the regulation setup so that nonzero references can be tracked (followed). 
 
 {{< video https://youtu.be/GnFaLl7qwco?si=GN79Zpddv2ZmQ4eU >}}
 
-## Prediction horizon vs control
+## Hard constraints vs soft constraints on state variables
+
+While it is fairly natural to encode the lower and upper bounds on the state variables as inequality constraints in the optimal control problem, this approach comes with a caveat – the corresponding optimization problem can be infeasible. This is a major trouble if the optimization problem is solved online (in real time), which is the case of an MPC controller. The infeasibility of the optimization problem then amounts to the controller being unable to provide its output. 
 
 {{< video https://youtu.be/gMOcBSmjdkQ?si=E_Rzf341oqpeQWgm >}}
 
-## Hard constraints vs soft constraints
+For example, we may require that the error of regulating the intervehicular gap by an adaptive cruise control (ACC) system is less then 1 m. At one moment, this requirement may turn out unsatisfiable, while, say, 1.1 m error could be achievable, which would cause no harm. And yet the controller would essentially give up and produce no command to the engine. A major trouble. 
 
-Discussed in the previous video too.
+An alternative is to move the requirement from the constraints to the cost function as an extra term. This way, however, the original hard constraint turns into a soft one, by which we mean that we do not guarantee that the requirement is satisfied, but we discourage the optimization algorithm from breaking it by imposing a penalty proportional to how much the constraint is exceeded.
+
+We sketch the scheme here. For the original problem formulation with the hard constraints on the output variables
+
+$$
+\begin{aligned}
+\operatorname*{minimize}_{\Delta \bm u_1,\ldots, \Delta \bm u_{N-1}} &\quad \sum_k^N \left[\ldots \right]\\ 
+\text{subject to}   &\quad \bm x_{k+1} = \mathbf A\bm x_k + \mathbf B\bm u_k,\quad k = 0, \ldots, N-1, \\
+                    &\quad \bm y_{k} = \mathbf C\bm x_k + \mathbf D\bm u_k,\\
+                    &\quad \bm x_0 = \mathbf x_0,\\
+                    &\quad \ldots \\
+                    &\quad \mathbf y^{\min} \leq \bm y_k \leq \mathbf y^{\max}.
+\end{aligned}
+$$
+
+we propose the version with soft constraints
+$$
+\begin{aligned}
+\operatorname*{minimize}_{\Delta \bm u_1,\ldots, \Delta \bm u_{N-1}, {\color{red}\epsilon}} &\quad \sum_k^N  \left[\ldots {+ \color{red}\gamma \epsilon} \right]\\ 
+\text{subject to}   &\quad \bm x_{k+1} = \mathbf A\bm x_k + \mathbf B\bm u_k,\quad k = 0, \ldots, N-1, \\
+                    &\quad \bm y_{k} = \mathbf C\bm x_k + \mathbf D\bm u_k,\\
+                    &\quad \bm x_0 = \mathbf x_0,\\
+                    &\quad \ldots \\
+                    &\quad \mathbf y^{\min} {\color{red}- \epsilon \mathbf v} \leq \bm y_k \leq \mathbf y^{\max} {\color{red}+ \epsilon \mathbf v},
+\end{aligned}
+$$
+where $\gamma > 0$ and $\mathbf v\in\mathbb R^p$ are fixed parameters and $\epsilon$ is the additional optimization variable.
+
+
+::: {.callout-important}
+## Requirements expressed through constraints or an extra term in the cost function
+We have just encountered another instance of the classical dillema in optimization and optimal control that we have had introduced previously. Indeed, it is fairly fundamental and appears both in applications and in development of theory. Keep this degree of freeedom in mind on your optimization and optimal control journey.
+:::
+
+## Prediction horizon vs control horizon
