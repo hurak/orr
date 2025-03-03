@@ -173,41 +173,6 @@ My obvious (personal) bias towards Julia programming language is partly due to t
 
 - [Convex.jl](https://jump.dev/Convex.jl) is an implementation of the concept of [Disciplined Convex Programming (DCP)](https://fenchel.stanford.edu/home) in Julia (below we also list its implementations in Matlab and Python). Even though it is now registered as a part of the JuMP.jl project, it is still a separate concept. Interesting, convenient, but it seems to be in a maintanence mode now.
 
-```{julia}
-using Convex, SCS
-
-# Define the problem data and build the problem description
-P = [4.0 1.0; 1.0 2.0]
-q = [1.0, 1.0]
-A = [1.0 1.0; 1.0 0.0; 0.0 1.0]
-l = [1.0, 0.0, 0.0]
-u = [1.0, 0.7, 0.7]
-
-# Create a vector variable of size n
-x = Variable(2)
-
-# Define the objective 
-objective = 1/2*quadform(x,P) + dot(q,x)
-
-# Define the constraints
-constraints = [l <= A*x, A*x <= u]
-
-# Define the overal description of the optimization problem
-problem = minimize(objective, constraints)
-
-# Solve the problem
-solve!(problem, SCS.Optimizer; silent_solver = true)
-
-# Check the status of the problem
-problem.status # :Optimal, :Infeasible, :Unbounded etc.
-
-# Get the optimum value
-problem.optval
-
-# Get the optimal x
-x.value
-```
-
 ## Optimization modelling in Matlab
 
 Popularity of Matlab as a language and an ecosystem for control-related computations is undeniable. Therefore, let's have a look at what is available for modelling optimization problems in Matlab:
