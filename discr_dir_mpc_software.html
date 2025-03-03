@@ -888,8 +888,15 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#qp-solvers-suitable-for-linear-mpc" id="toc-qp-solvers-suitable-for-linear-mpc" class="nav-link active" data-scroll-target="#qp-solvers-suitable-for-linear-mpc">QP solvers suitable for (linear) MPC</a></li>
+  <li><a href="#higher-level-tools" id="toc-higher-level-tools" class="nav-link" data-scroll-target="#higher-level-tools">Higher-level tools</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -913,21 +920,36 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Essentially QP solvers with some extra features for MPC:</p>
+<section id="qp-solvers-suitable-for-linear-mpc" class="level2">
+<h2 class="anchored" data-anchor-id="qp-solvers-suitable-for-linear-mpc">QP solvers suitable for (linear) MPC</h2>
+<p>The extra features needed for MPC:</p>
 <ul>
-<li><p>warmstarting requires fesibility of the previous solution. If only a fixed number of iterations is allowed (in favor of predictable timing), for some methods the iterations may temporarily lose feasibility.</p></li>
-<li><p>…</p></li>
-<li><p><a href="https://github.com/coin-or/qpOASES">qpOASES</a></p></li>
-<li><p><a href="https://osqp.org">OSQP</a></p></li>
-<li><p><a href="https://github.com/darnstrom/daqp">DAQP</a></p></li>
-<li><p><a href="https://github.com/qpSWIFT/qpSWIFT">qpSWIFT</a></p></li>
-<li><p><a href="https://github.com/Simple-Robotics/proxsuite">ProxQP</a></p></li>
-<li><p><a href="https://github.com/PREDICT-EPFL/piqp">PiQP</a></p></li>
-<li><p><a href="https://github.com/embotech/ecos">ECOS</a></p></li>
-<li><p><a href="https://github.com/giaf/hpipm">HPIPM</a></p></li>
+<li>warmstarting requires fesibility of the previous solution. Some methods the iterations may temporarily lose feasibility, which can be a problem if only a fixed number of iterations is allowed (in favor of predictable timing).</li>
+<li>…</li>
+</ul>
+<p>A curated list of QP solvers is maintained at <a href="https://github.com/qpsolvers/qpbenchmark">https://github.com/qpsolvers/qpbenchmark</a>. Below are a few most popular from the open-source domain:</p>
+<ul>
+<li><a href="https://github.com/coin-or/qpOASES">qpOASES</a></li>
+<li><a href="https://osqp.org">OSQP</a></li>
+<li><a href="https://github.com/darnstrom/daqp">DAQP</a></li>
+<li><a href="https://github.com/qpSWIFT/qpSWIFT">qpSWIFT</a></li>
+<li><a href="https://github.com/Simple-Robotics/proxsuite">ProxQP</a></li>
+<li><a href="https://github.com/PREDICT-EPFL/piqp">PiQP</a></li>
+<li><a href="https://github.com/embotech/ecos">ECOS</a></li>
+<li><a href="https://github.com/giaf/hpipm">HPIPM</a></li>
+</ul>
+</section>
+<section id="higher-level-tools" class="level2">
+<h2 class="anchored" data-anchor-id="higher-level-tools">Higher-level tools</h2>
+<ul>
+<li><a href="https://docs.acados.org">acados</a> – free &amp; open source.</li>
+<li><a href="https://github.com/JuliaControl/ModelPredictiveControl.jl">ModelPredictiveControl.jl</a> – free &amp; open source</li>
+<li><a href="https://www.mathworks.com/products/model-predictive-control.html">Model Predictive Control Toolbox for Matlab</a> – commercial (by The Mathworks). the generated C code follows several industrial standards.</li>
+<li><a href="https://www.embotech.com/softwareproducts/forcespro/overview/">ForcesPro</a> – commercial (by Embotech)</li>
 </ul>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1367,7 +1389,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2025, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

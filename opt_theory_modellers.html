@@ -1168,52 +1168,6 @@ print(f"Obj: {m.ObjVal:g}")</code></pre>
 <li><p><a href="https://jump.dev">JuMP.jl</a> not only constitutes one of the flagship packages of the Julia ecosystem but it is on par with the state of the art optimization modelling languages. Furthermore, being a free and open source software, it enjoys a vibrant community of developers and users. They even meet annually at JuMP-dev conference (<a href="https://jump.dev/meetings/jumpdev2023/">in 2023 in Boston, MA</a>).</p></li>
 <li><p><a href="https://jump.dev/Convex.jl">Convex.jl</a> is an implementation of the concept of <a href="https://fenchel.stanford.edu/home">Disciplined Convex Programming (DCP)</a> in Julia (below we also list its implementations in Matlab and Python). Even though it is now registered as a part of the JuMP.jl project, it is still a separate concept. Interesting, convenient, but it seems to be in a maintanence mode now.</p></li>
 </ul>
-<div id="8" class="cell" data-execution_count="1">
-<details open="" class="code-fold">
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Convex</span>, <span class="bu">SCS</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the problem data and build the problem description</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> [<span class="fl">4.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">2.0</span>]</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">1.0</span>]</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">0.0</span>; <span class="fl">0.0</span> <span class="fl">1.0</span>]</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>]</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">0.7</span>, <span class="fl">0.7</span>]</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a vector variable of size n</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fu">Variable</span>(<span class="fl">2</span>)</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the objective </span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>objective <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="fu">*quadform</span>(x,P) <span class="op">+</span> <span class="fu">dot</span>(q,x)</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the constraints</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>constraints <span class="op">=</span> [l <span class="op">&lt;=</span> A<span class="op">*</span>x, A<span class="op">*</span>x <span class="op">&lt;=</span> u]</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the overal description of the optimization problem</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>problem <span class="op">=</span> <span class="fu">minimize</span>(objective, constraints)</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the problem</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="fu">solve!</span>(problem, SCS.Optimizer; silent_solver <span class="op">=</span> <span class="cn">true</span>)</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the status of the problem</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>problem.status <span class="co"># :Optimal, :Infeasible, :Unbounded etc.</span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the optimum value</span></span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>problem.optval</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the optimal x</span></span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>x.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>┌ Warning: The keyword argument `silent_solver` in `Convex.solve!` has been deprecated in favor of `silent`.
-└ @ Convex ~/.julia/packages/Convex/IPPoR/src/solution.jl:93</code></pre>
-</div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>2×1 Matrix{Float64}:
- 0.3001730150604346
- 0.6998700432179298</code></pre>
-</div>
-</div>
 </section>
 <section id="optimization-modelling-in-matlab" class="level2">
 <h2 class="anchored" data-anchor-id="optimization-modelling-in-matlab">Optimization modelling in Matlab</h2>
