@@ -1,20 +1,16 @@
 ---
 title: "Numerical solvers for MPC"
-format:
-    html:
-        html-math-method: katex
-        code-fold: true
-        code-summary: "Show the code"
-crossref:
-  fig-prefix: Fig. 
-  eq-prefix: Eq.
-engine: julia
+format: html
 ---
 
-Essentially QP solvers with some extra features for MPC:
+## Linear MPC
 
-- warmstarting requires fesibility of the previous solution. If only a fixed number of iterations is allowed (in favor of predictable timing), for some methods the iterations may temporarily lose feasibility.
+QP solvers with some extra features for MPC:
+
+- warmstarting requires fesibility of the previous solution. Some methods the iterations may temporarily lose feasibility, which can be a problem if only a fixed number of iterations is allowed (in favor of predictable timing).
 - ...
+
+A curated list is maintained at [https://github.com/qpsolvers/qpbenchmark](https://github.com/qpsolvers/qpbenchmark). Below are a few most popular from the open-source domain:
 
 - [qpOASES](https://github.com/coin-or/qpOASES)
 - [OSQP](https://osqp.org)
@@ -24,3 +20,7 @@ Essentially QP solvers with some extra features for MPC:
 - [PiQP](https://github.com/PREDICT-EPFL/piqp)
 - [ECOS](https://github.com/embotech/ecos)
 - [HPIPM](https://github.com/giaf/hpipm)
+
+## Nonlinear MPC
+
+- [acados](https://docs.acados.org) 
