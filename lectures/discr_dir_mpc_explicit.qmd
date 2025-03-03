@@ -146,4 +146,18 @@ ylabel!("J⋆(x)")
 #TODO
 :::
 
+## Explicit MPC
+
+As we have discussed a few times, the cost of a finite-horizon optimal control problem is a function of the control trajectory $\bm u_0, \bm u_1, \ldots, \bm u_{N-1}$, while the initial state $\bm x_0$ is a parameter (not subject to optimization)
+
+$$
+J\left(\begin{bmatrix}\bm u_0\\ \bm u_1\\ \vdots \\ \bm u_{N-1}\end{bmatrix}; \bm x_0\right) = \phi(\bm x_N) + \sum_{k=0}^{N-1} L(\bm x_k, \bm u_k).
+$$
+
+You may now perhaps appreciate our choice of notation in the previous paragraphs in that we used $\bm x$ as the parameter. It fits here perfectly. The state at the beginning of the time horizon over which the optimal control is computed is a parameter.
+
+Considering that the cost function is quadratic, and parameterized by a vector, we can apply the multiparametric programming techniquest to find the optimal control law as a function of the state (here playing the role of a vector parameter).
+
+#TODO
+
 [@bemporadModelPredictiveControl2002], [@bemporadModelPredictiveControl2021], [@alessioSurveyExplicitModel2009], [@borrelliPredictiveControlLinear2017]
