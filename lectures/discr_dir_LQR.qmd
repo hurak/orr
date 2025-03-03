@@ -362,8 +362,11 @@ $$
 ::: {#exm-direct-sequential-constrained-u}
 ## Reformulating the LQR problem with constraints on control as a quadratic program – sequential approach
 ``` {julia}
-using Convex
-using SCS
+using LinearAlgebra
+using BlockArrays
+using SparseArrays
+using JuMP
+using OSQP
 
 function direct_dlqr_sequential(A,B,x₀,Q,R,S,N,(umin,umax))
     n = size(A)[1]
@@ -389,13 +392,24 @@ function direct_dlqr_sequential(A,B,x₀,Q,R,S,N,(umin,umax))
     H = Array(H)
     F = Ĉ'*Q̄*Â
     F = Array(F)
-    u = Variable(N*m)
+    prob = Model()
+    @variable(prob, u[1:N*m])
+    @objective(prob, Min, 1/2*dot(u,H,u) + dot(F*x₀,u))
+    @constraint(prob, u .>= umin)
+    @constraint(prob, u .<= umax)
+    set_silent(prob)
+    set_optimizer(prob, OSQP.Optimizer)
+    optimize!(prob)
+    uopt = value.(u)
+    xopt = Ĉ*uopt + Â*x₀
+    xopt = reshape(xopt,(2,:))
+#=     u = Variable(N*m)
     problem = minimize(1/2*quadform(u,H) + dot(F*x₀,u))
     problem.constraints = [u >= umin, u <= umax]
     Convex.solve!(problem, SCS.Optimizer; silent = true)
     xopt = Ĉ*u.value + Â*x₀
     xopt = reshape(xopt,(2,:))
-    uopt = u.value
+    uopt = u.value =#
     return xopt,uopt
 end
 
