@@ -38,6 +38,9 @@ Your solution should be contained in a single file named `hw.jl`, which you will
 
 using LinearAlgebra, SparseArrays, COSMO
 
+# You might find these other packages useful 
+# using ToeplitzMatrices, BlockArrays
+
 mutable struct MPCProblem{T <: AbstractFloat}
     model::COSMO.Workspace{T}
     F::Matrix{T}
