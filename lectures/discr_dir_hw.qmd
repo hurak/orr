@@ -9,7 +9,7 @@ engine: julia
 In this homework, you will be implementing a tracking Model Predictive Controller (MPC) for a linear model in Julia. Your task is to take the Optimal Control Problem of the tracking MPC
 $$
 \begin{align*}
-    \underset{\mathbf{x}, u}{\text{minimize}} \quad & \frac{1}{2}\sum_{k=t}^{t+N-1} (\mathbf{y}_{k+1} - r_{k+1})^T\mathbf{Q}(\mathbf{y}_{k+1} - r_{k+1}) + \Delta\mathbf{u}_k^T\mathbf{R}\Delta\mathbf{u}_k\\
+    \underset{\mathbf{u}_k}{\text{minimize}} \quad & \frac{1}{2}\sum_{k=t}^{t+N-1} (\mathbf{y}_{k+1} - r_{k+1})^T\mathbf{Q}(\mathbf{y}_{k+1} - r_{k+1}) + \Delta\mathbf{u}_k^T\mathbf{R}\Delta\mathbf{u}_k\\
     \text{subject to} \quad & \mathbf{x}_{k+1} = \mathbf{A}\mathbf{x}_k + \mathbf{B}\mathbf{u}_k, \qquad k = t,\dots,t+N-1,\\
     & \mathbf{y}_k = \mathbf{C}\mathbf{x}_k, \qquad k = t+1,\dots,t+N,\\
     &\mathbf{u}_\mathrm{min} \leq \mathbf{u}_{k} \leq \mathbf{u}_\mathrm{max}, \qquad k =t,\dots,t+N-1,
@@ -116,7 +116,7 @@ function MPCProblem(A::Matrix{T}, B::Matrix{T}, C::Matrix{T}, Q::Matrix{T}, R::M
 
     ## We use COSMO with the following QP formulation:
     ## min 1/2 x' * P * x + q' * x
-    ## s.t. A_constr * z - b_constr ≥ 0
+    ## s.t. A_constr * x - b_constr ≥ 0
 
     # Dummy variables - just for illustration and to provide correct stuff to COSMO
     x₀ = zeros(T, size(A, 1))
