@@ -11,17 +11,20 @@ $$
 \begin{align*}
     \underset{\mathbf{x}, u}{\text{minimize}} \quad & \frac{1}{2}\sum_{k=t}^{t+N-1} (\mathbf{y}_{k+1} - r_{k+1})^T\mathbf{Q}(\mathbf{y}_{k+1} - r_{k+1}) + \Delta\mathbf{u}_k^T\mathbf{R}\Delta\mathbf{u}_k\\
     \text{subject to} \quad & \mathbf{x}_{k+1} = \mathbf{A}\mathbf{x}_k + \mathbf{B}\mathbf{u}_k, \qquad k = t,\dots,t+N-1,\\
+    & \mathbf{y}_k = \mathbf{C}\mathbf{x}_k, \qquad k = t+1,\dots,t+N,\\
     &\mathbf{u}_\mathrm{min} \leq \mathbf{u}_{k} \leq \mathbf{u}_\mathrm{max}, \qquad k =t,\dots,t+N-1,
 \end{align*}
 $$
 where $\Delta\mathbf{u}_k = \mathbf{u}_k - \mathbf{u}_{k-1}$, and reformulate it as a Quadratic Program (QP) of the form
 $$
 \begin{array}{rl}
-\underset{\mathbf{x}, u}{\text{minimize}} \quad &  \frac{1}{2}\mathbf{z}^T \mathbf{H} \mathbf{z} + [\mathbf{x}_t^T \: \mathbf{u}_{t-1}^T \: \mathbf{r}_{t+1,\dots,t+N}^T]\,\mathbf{F}\,\mathbf{z} \\
+\underset{\mathbf{z}}{\text{minimize}} \quad &  \frac{1}{2}\mathbf{z}^T \mathbf{H} \mathbf{z} + [\mathbf{x}_t^T \: \mathbf{u}_{t-1}^T \: \mathbf{r}_{t+1,\dots,t+N}^T]\,\mathbf{F}\,\mathbf{z} \\
 \text{subject to} \quad &\mathbf{G}\mathbf{z} \leq \mathbf{W} + \mathbf{S}\left[\begin{array}{c}\mathbf{x}_t\\ \mathbf{u}_{t-1}\end{array}\right].
 \end{array}
 $$
 where $\mathbf{z}=\left[\begin{array}{c}\Delta \mathbf{u}_t^\mathrm{T} & \ldots & \Delta \mathbf{u}_{t+N-1}^\mathrm{T}\end{array}\right]^\mathrm{T}$, $\mathbf{x}_t$ is the current state value of the model, $\mathbf{u}_{t-1}$ is the most recently applied input and $\mathbf{r}_{t+1,\dots,t+N}$ is the reference over the current prediction horizon. You should then implement the MPC controller using this QP formulation.
+
+We recommend starting by writing down the QP formulation on paper and only then proceeding to implement the MPC construction in code. In case of doubts, we advise you to consult the lecture notes, especially the section on the [Sequential (Dense) formulation](https://hurak.github.io/orr/discr_dir_LQR.html#sequential-dense-formulation) of direct discrete-time optimal control problems, as well as the related MPC video lectures. Another source which may serve you well is slides from a doctoral course on MPC by Bemporad, which can be found [here](https://cse.lab.imtlucca.it/~bemporad/teaching/mpc/imt/1-linear_mpc.pdf).
 
 The MPC controller should be based on the template provided below. Your goal is to complete the implementation by filling in the missing parts, specifically 
 
@@ -84,10 +87,10 @@ function setup_mpc(A::Matrix{T}, B::Matrix{T}, C::Matrix{T}, Q::Matrix{T}, R::Ma
 
     # TODO Construct the matrices H, F, S, W, and G
     H = zeros(T, N * nu, N * nu)
-    F = zeros(T, (nx + nu + N * ny) * N, N * nu)
-    S = zeros(T, N * nu, nx + nu)
-    W = zeros(T, N * nu)
-    G = zeros(T, N * nu, N * nu) 
+    F = zeros(T, nx + nu + N * ny, N * nu)
+    S = zeros(T, 2N * nu, nx + nu)
+    W = zeros(T, 2N * nu)
+    G = zeros(T, 2N * nu, N * nu) 
    
 
     return H, F, S, W, G
@@ -111,20 +114,25 @@ function MPCProblem(A::Matrix{T}, B::Matrix{T}, C::Matrix{T}, Q::Matrix{T}, R::M
 
     model = COSMO.Model{T}() # COSMO model
 
-    x₀ = zeros(T, size(A, 1)) # Dummy initial state
-    r = zeros(T, N * size(C, 1)) # Dummy reference trajectory
-    u₀ = zeros(T, size(B, 2)) # Dummy initial input
+    ## We use COSMO with the following QP formulation:
+    ## min 1/2 x' * P * x + q' * x
+    ## s.t. A_constr * z - b_constr ≥ 0
 
-    q = [x₀; u₀; r]' * F
+    # Dummy variables - just for illustration and to provide correct stuff to COSMO
+    x₀ = zeros(T, size(A, 1))
+    r = zeros(T, N * size(C, 1))
+    u₀ = zeros(T, size(B, 2)) 
 
-    Ac = -G # G * z ≤ W + S * [x₀; u₀]
-    bc = W + S * [x₀; u₀] # G * z ≤ bc
+    q = [x₀; u₀; r]' * F 
+
+    P = sparse(H)
+
+    A_constr = -G 
+    b_constr = W + S * [x₀; u₀] 
     
-    constr = COSMO.Constraint(Ac, bc, COSMO.Nonnegatives);
+    constr = COSMO.Constraint(A_constr, b_constr, COSMO.Nonnegatives);
 
-    settings = COSMO.Settings(verbose=true);
-
-    COSMO.assemble!(model,sparse(H), q, constr, settings = settings) # Assemble the QP
+    COSMO.assemble!(model, sparse(H), q, constr, settings = COSMO.Settings(verbose=true)) # Assemble the QP
 
     return MPCProblem(model, F, W, S)
 end
@@ -143,11 +151,11 @@ Returns:
 """
 function solve!(mpc::MPCProblem{T}, xₖ::Vector{T}, uₖ₋₁::Vector{T}, r::Matrix{T}) where T <: AbstractFloat
 
-    # TODO implement the updates for the COSMO model (q and b)
+    # TODO implement the updates for the COSMO model (q and b_constr) 
     q = zeros(T, size(mpc.F, 2))
-    b = zeros(T, size(mpc.S, 1))
+    b_constr = zeros(T, size(mpc.S, 1))
 
-    COSMO.update!(mpc.model, q = q, b = b)
+    COSMO.update!(mpc.model, q = q, b = b_constr)
 
     result = COSMO.optimize!(mpc.model)
 
@@ -158,12 +166,11 @@ function solve!(mpc::MPCProblem{T}, xₖ::Vector{T}, uₖ₋₁::Vector{T}, r::M
 end
 ```
 
-You may want to test your implementation using the following example:
+You should test your implementation using the following example we prepared for you. 
 ```{julia}
 #| eval: false
 using ControlSystemsBase
 using Plots
-
 Ac = [-.0151 -60.5651 0 -32.174;
      -.0001 -1.3411 .9929 0;
      .00018 43.2541 -.86939 0;
@@ -216,10 +223,23 @@ end
 
 ## Visualize the results
 using Plots
-plot(t, ys[1, :], label="y1")
-plot!(t, ys[2, :], label="y2")
+p1= plot(t, ys[1, :], label="y₁", linetype=:steppre, linewidth=2)
+plot!(t, ys[2, :], label="y₂", linetype=:steppre, linewidth=2)
 
-plot!(t, ref[1, 1:end-N], linestyle=:dash, label="ref1")
-plot!(t, ref[2, 1:end-N], linestyle=:dash, label="ref2")
+plot!(t, ref[1, 1:end-N], linestyle=:dash, label="r₁", linetype=:steppre, linewidth=2)
+plot!(t, ref[2, 1:end-N], linestyle=:dash, label="r₂", linetype=:steppre, linewidth=2)
 
+xlabel!("Time [s]")
+ylabel!("Output")
+
+p2 = plot(t[1:end], us[1, :], label="u₁", linetype=:steppre, linewidth=2)
+plot!(t[1:end], us[2, :], label="u₂", linetype=:steppre, linewidth=2)
+
+plot!(t, u_max[1]*ones(length(t)), linestyle=:dash, label="u max", linetype=:steppre, linewidth=2)
+plot!(t, u_min[1]*ones(length(t)), linestyle=:dash, label="u min", linetype=:steppre, linewidth=2)
+
+xlabel!("Time [s]")
+ylabel!("Input")
+
+plot(p1, p2, layout=(2,1), size=(800, 600))
 ```
