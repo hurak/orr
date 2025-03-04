@@ -3,14 +3,14 @@ title: "Numerical solvers for MPC"
 format: html
 ---
 
-## Linear MPC
+## QP solvers suitable for (linear) MPC
 
-QP solvers with some extra features for MPC:
+The extra features needed for MPC:
 
 - warmstarting requires fesibility of the previous solution. Some methods the iterations may temporarily lose feasibility, which can be a problem if only a fixed number of iterations is allowed (in favor of predictable timing).
 - ...
 
-A curated list is maintained at [https://github.com/qpsolvers/qpbenchmark](https://github.com/qpsolvers/qpbenchmark). Below are a few most popular from the open-source domain:
+A curated list of QP solvers is maintained at [https://github.com/qpsolvers/qpbenchmark](https://github.com/qpsolvers/qpbenchmark). Below are a few most popular from the open-source domain:
 
 - [qpOASES](https://github.com/coin-or/qpOASES)
 - [OSQP](https://osqp.org)
@@ -21,6 +21,9 @@ A curated list is maintained at [https://github.com/qpsolvers/qpbenchmark](https
 - [ECOS](https://github.com/embotech/ecos)
 - [HPIPM](https://github.com/giaf/hpipm)
 
-## Nonlinear MPC
+## Higher-level tools
 
-- [acados](https://docs.acados.org) 
+- [acados](https://docs.acados.org) – free & open source.
+- [ModelPredictiveControl.jl](https://github.com/JuliaControl/ModelPredictiveControl.jl) – free & open source
+- [Model Predictive Control Toolbox for Matlab](https://www.mathworks.com/products/model-predictive-control.html) – commercial (by The Mathworks). the generated C code follows several industrial standards.
+- [ForcesPro](https://www.embotech.com/softwareproducts/forcespro/overview/) – commercial (by Embotech)
