@@ -76,6 +76,12 @@ but then the notation becomes rather convoluted and so we stick to the shorter o
 $$\bm u_{t+k|t}$$
 is the future control at $t+k$ as computed at time $t$ using the information available at that time, that is, $\bm x_t$.
 
+::: {.callout-tip}
+## Altenative notation for the optimization variables
+If you find the notation $\bm x_{t+k|t}$ clumsy, feel free to replace it with something simpler that does not explicitly mention the time at which the prediction/optimization is made but does not conflict with the true state at the given time. Perhaps just using a different letter like $\bm z_k$ while understanding $k$ relative with respect to the current time. 
+:::
+
+The optimization problem to be solved at every discrete- time $t$ is
 $$
 \begin{aligned}
  \operatorname*{minimize}_{\bm u_{t|t},u_{t+1}\ldots, \bm u_{t+N_\mathrm{p}-1}, \bm x_{t|t},\ldots, \bm x_{t+N_\mathrm{p}|t}} &\quad  \frac{1}{2} \bm x_{t+N_\mathrm{p}|t}^\top \mathbf S \bm x_{t+N_\mathrm{p}|t} + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \left(\bm x_{t+k|t}^\top \mathbf Q \bm x_{t+k|t} + \bm u_{t+k|t}^\top \mathbf R \bm u_{t+k|t} \right)\\ 
