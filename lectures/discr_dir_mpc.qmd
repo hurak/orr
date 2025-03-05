@@ -123,22 +123,22 @@ We sketch the scheme here. For the original problem formulation with the hard co
 
 $$
 \begin{aligned}
-\operatorname*{minimize}_{\Delta \bm u_1,\ldots, \Delta \bm u_{N-1}} &\quad \sum_k^N \left[\ldots \right]\\ 
-\text{subject to}   &\quad \bm x_{k+1} = \mathbf A\bm x_k + \mathbf B\bm u_k,\quad k = 0, \ldots, N-1, \\
-                    &\quad \bm y_{k} = \mathbf C\bm x_k + \mathbf D\bm u_k,\\
-                    &\quad \bm x_0 = \mathbf x_0,\\
+\operatorname*{minimize}_{\bm u_1,\ldots, \bm u_{N-1}} &\quad \sum_k^N \left[\ldots \right]\\ 
+\text{subject to}   &\quad \bm x_{t+k+1|t} = \mathbf A\bm x_{t+k|t} + \mathbf B\bm u_{t+k|t},\quad k = 0, \ldots, N-1, \\
+                    &\quad \bm y_{t+k|t} = \mathbf C\bm x_{t+k|t} + \mathbf D\bm u_{t+k|t},\\
+                    &\quad \bm x_{t|t} = \mathbf x_t,\\
                     &\quad \ldots \\
-                    &\quad \mathbf y^{\min} \leq \bm y_k \leq \mathbf y^{\max}.
+                    &\quad \mathbf y^{\min} \leq \bm y_{t+k|t} \leq \mathbf y^{\max}.
 \end{aligned}
 $$
 
 we propose the version with soft constraints
 $$
 \begin{aligned}
-\operatorname*{minimize}_{\Delta \bm u_1,\ldots, \Delta \bm u_{N-1}, {\color{red}\epsilon}} &\quad \sum_k^N  \left[\ldots {+ \color{red}\gamma \epsilon} \right]\\ 
-\text{subject to}   &\quad \bm x_{k+1} = \mathbf A\bm x_k + \mathbf B\bm u_k,\quad k = 0, \ldots, N-1, \\
-                    &\quad \bm y_{k} = \mathbf C\bm x_k + \mathbf D\bm u_k,\\
-                    &\quad \bm x_0 = \mathbf x_0,\\
+\operatorname*{minimize}_{\bm u_1,\ldots, \bm u_{N-1}, {\color{red}\epsilon}} &\quad \sum_k^N  \left[\ldots {+ \color{red}\gamma \epsilon} \right]\\ 
+\text{subject to}   &\quad \bm x_{t+k+1|t} = \mathbf A\bm x_{t+k|t} + \mathbf B\bm u_{t+k|t},\quad k = 0, \ldots, N-1, \\
+                    &\quad \bm y_{t+k|t} = \mathbf C\bm x_{t+k|t} + \mathbf D\bm u_{t+k|t},\\
+                    &\quad \bm x_{t|t} = \mathbf x_t,\\
                     &\quad \ldots \\
                     &\quad \mathbf y^{\min} {\color{red}- \epsilon \mathbf v} \leq \bm y_k \leq \mathbf y^{\max} {\color{red}+ \epsilon \mathbf v},
 \end{aligned}
@@ -156,7 +156,7 @@ We have just encountered another instance of the classical dillema in optimizati
 One of the key parameters of a model predictive control is the *prediction horizon* $N_\mathrm{p}$. It must be long enough so that the key dynamics of the system has enough time to exhibit, and yet it must not be too long, because the computational load will be then too high. A rule of thumb (but certainly not a law) is $N_\mathrm{p}\approx 20$. There is one simple way to reduce the computational load – consider the control trajectory defined on a much shorted time horizon than the predicted state trajectory. Namely, we introduce the *control horizon* $N_\mathrm{c} < N_\mathrm{p}$ (typically $N_\mathrm{c}$ can be as small as 2 or 3 or so), and we only consider the control as optimizable on this short horizon. Of course, we must provide some values after this horizon as well (untill the end of the prediction horizon). The simplest strategy is to set it to the last value on the control horizon. The MPC problem then changes to
 $$
 \begin{aligned}
- \operatorname*{minimize}_{\bm u_{t|t},u_{t+1}\ldots, \bm u_{t+{\color{red}N_\mathrm{c}}-1}, \bm x_{t|t},\ldots, \bm x_{t+N_\mathrm{p}|t}} &\quad  \frac{1}{2} \bm x_{t+N_\mathrm{p}|t}^\top \mathbf S \bm x_{t+N_\mathrm{p}|t} + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \bm x_{t+k|t}^\top \mathbf Q \bm x_{t+k|t} + + \frac{1}{2} \sum_{k=0}^{{\color{red}N_\mathrm{c}}-1} \bm u_{t+k|t}^\top \mathbf R \bm u_{t+k|t}\\ 
+ \operatorname*{minimize}_{\bm u_{t|t},u_{t+1|t}\ldots, \bm u_{t+{\color{red}N_\mathrm{c}}-1|t}, \bm x_{t|t},\ldots, \bm x_{t+N_\mathrm{p}|t}} &\quad  \frac{1}{2} \bm x_{t+N_\mathrm{p}|t}^\top \mathbf S \bm x_{t+N_\mathrm{p}|t} + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \bm x_{t+k|t}^\top \mathbf Q \bm x_{t+k|t} + + \frac{1}{2} \sum_{k=0}^{{\color{red}N_\mathrm{c}}-1} \bm u_{t+k|t}^\top \mathbf R \bm u_{t+k|t}\\ 
 \text{subject to}   &\quad \bm x_{t+k+1|t} = \mathbf A\bm x_{t+k|t} + \mathbf B\bm u_{t+k|t},\quad k = 0, \ldots, N_\mathrm{p}-1, \\
                     &\quad \bm x_{t|t} = \mathbf x_t, \\
                     &\quad \mathbf u^{\min} \leq \bm u_{t+k|t} \leq \mathbf u^{\max},\\
