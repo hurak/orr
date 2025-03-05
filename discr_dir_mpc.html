@@ -1050,7 +1050,20 @@ We all do MPC in our everyday lives
 </span></p>
 <p>Now, in a model predictive control (MPC) scheme, at the discrete time <span class="math inline">t</span>, an LQR problem on a finite (and typically only modestly long time prediction horizon <span class="math inline">N_\mathrm{p}</span> (typically <span class="math inline">N_\mathrm{p}\approx 20</span> or 30 or so) is formulated and solved. This time window then moves (recedes, rolls) either forever or untill the the final time <span class="math inline">N</span> is reached.</p>
 <p>Since the problem is parameterized by the “initial” time <span class="math inline">t</span> and the state at this time, we need to reflect this in the notation. Namely, <span class="math display">\bm x_{t+k|t}</span> is the predicted state at time <span class="math inline">t+k</span> as predicted at time <span class="math inline">t</span> using the information available at that time, that is, <span class="math inline">\mathbf x_t (= \bm x_{t|t})</span> and the computed control trajectory up to the time just one step before <span class="math inline">t+k</span>. We can emphasize this dependence by writing it explicitly as <span class="math display">\bm x_{t+k|t}(\bm x_t, \bm u_{t}, \bm u_{t+1}, \ldots, \bm u_{t+k-1}),</span> but then the notation becomes rather convoluted and so we stick to the shorter one. We emphasize that it is really just a prediction. The true state at time <span class="math inline">t+k</span> is denoted <span class="math inline">\bm x_{t+k}</span>. Similarly, <span class="math display">\bm u_{t+k|t}</span> is the future control at <span class="math inline">t+k</span> as computed at time <span class="math inline">t</span> using the information available at that time, that is, <span class="math inline">\bm x_t</span>.</p>
-<p><span class="math display">
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Altenative notation for the optimization variables
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you find the notation <span class="math inline">\bm x_{t+k|t}</span> clumsy, feel free to replace it with something simpler that does not explicitly mention the time at which the prediction/optimization is made but does not conflict with the true state at the given time. Perhaps just using a different letter like <span class="math inline">\bm z_k</span> while understanding <span class="math inline">k</span> relative with respect to the current time.</p>
+</div>
+</div>
+<p>The optimization problem to be solved at every discrete- time <span class="math inline">t</span> is <span class="math display">
 \begin{aligned}
 \operatorname*{minimize}_{\bm u_{t|t},u_{t+1}\ldots, \bm u_{t+N_\mathrm{p}-1}, \bm x_{t|t},\ldots, \bm x_{t+N_\mathrm{p}|t}} &amp;\quad  \frac{1}{2} \bm x_{t+N_\mathrm{p}|t}^\top \mathbf S \bm x_{t+N_\mathrm{p}|t} + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \left(\bm x_{t+k|t}^\top \mathbf Q \bm x_{t+k|t} + \bm u_{t+k|t}^\top \mathbf R \bm u_{t+k|t} \right)\\
 \text{subject to}   &amp;\quad \bm x_{t+k+1|t} = \mathbf A\bm x_{t+k|t} + \mathbf B\bm u_{t+k|t},\quad k = 0, \ldots, N_\mathrm{p}-1, \\
