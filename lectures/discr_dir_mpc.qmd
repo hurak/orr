@@ -72,7 +72,7 @@ Since the problem is parameterized by the "initial" time $t$ and the state at th
 $$\bm x_{t+k|t}$$ 
 is the predicted state at time $t+k$ as predicted at time $t$ using the information available at that time, that is, $\mathbf x_t (= \bm x_{t|t})$ and the computed control trajectory up to the time just one step before $t+k$. We can emphasize this dependence by writing it explicitly as
 $$\bm x_{t+k|t}(\bm x_t, \bm u_{t}, \bm u_{t+1}, \ldots, \bm u_{t+k-1}),$$
-but then the notation becomes too convolved, and we stick to the shorter one. We emphasize that it is really just a prediction. The true state at time $t+k$ is denoted $\bm x_{t+k}$. Similarly, 
+but then the notation becomes rather convoluted and so we stick to the shorter one. We emphasize that it is really just a prediction. The true state at time $t+k$ is denoted $\bm x_{t+k}$. Similarly, 
 $$\bm u_{t+k|t}$$
 is the future control at $t+k$ as computed at time $t$ using the information available at that time, that is, $\bm x_t$.
 
