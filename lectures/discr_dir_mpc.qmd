@@ -76,9 +76,9 @@ but then the notation becomes rather convoluted and so we stick to the shorter o
 $$\bm u_{t+k|t}$$
 is the future control at $t+k$ as computed at time $t$ using the information available at that time, that is, $\bm x_t$.
 
-::: {.callout-tip}
-## Altenative notation for the optimization variables
-If you find the notation $\bm x_{t+k|t}$ clumsy, feel free to replace it with something simpler that does not explicitly mention the time at which the prediction/optimization is made but does not conflict with the true state at the given time. Perhaps just using a different letter like $\bm z_k$ while understanding $k$ relative with respect to the current time. 
+::: {.callout-note}
+## Alternative notation for variables in MPC optimization problems
+If you find the notation $\bm x_{t+k|t}$ clumsy, feel free to replace it with something simpler that does not explicitly mention the time at which the prediction/optimization is made but does not clash with the true state at the given time. Perhaps just using a different letter with a simple lower index such as $\bm z_k$ for the state and $\bm v_k$ for the control, while understanding $k$ relative with respect to the current discrete time. 
 :::
 
 The optimization problem to be solved at every discrete- time $t$ is
@@ -111,7 +111,153 @@ in which we can recognize the classical state feedback with the (time-varying) g
 
 ## MPC tracking
 
-We now extend the regulation setup so that nonzero references can be tracked (followed). 
+### (Nonzero) state reference tracking
+
+An immediate extension of the regulation problem is that we replace the desired target (reference) state $\mathbf x^\mathrm{ref} = \mathbf 0$ with some nonzero $\mathbf x^\mathrm{ref} \neq \mathbf 0$. The cost function then changes to
+$$
+\begin{aligned}
+J(\ldots) &= \frac{1}{2} (\bm x_{t+N_\mathrm{p}|t}-{\color{blue}\mathbf x^\mathrm{ref}})^\top \mathbf S \, (\bm x_{t+N_\mathrm{p}|t}-{\color{blue}\mathbf x^\mathrm{ref}})\\ 
+ & \qquad\qquad + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \left((\bm x_{t+k|t}-{\color{blue}\mathbf x^\mathrm{ref}})^\top \mathbf Q \, (\bm x_{t+k|t}-{\color{blue}\mathbf x^\mathrm{ref}}) + \bm u_{t+k|t}^\top \mathbf R \bm u_{t+k|t}\right).
+\end{aligned} 
+$$
+
+It seems that we are done, that the only change that had to be made was replacement of the *predicted *state by the *prediction* of tracking error in the cost function. But not so fast! Recall that unless the nonzero reference state qualifies as an equilibrium, the control needed to keep the system at the corresponding state is nonzero. Namely, for a general discrete-time linear system $\bm x_{k+1} = \mathbf A \bm x_k + \mathbf B \bm u_k$, at an equilibrium (a steady state) $\mathbf x^\mathrm{ss}$, the following must be satisfied by definition
+$$
+\bm x^\mathrm{ss} = \mathbf A \bm x^\mathrm{ss} + \mathbf B \bm u^\mathrm{ss}.
+$$
+
+Rewriting this, we get
+$$
+(\mathbf A - \mathbf I) \bm x^\mathrm{ss} + \mathbf B \bm u^\mathrm{ss} = \mathbf 0.
+$$
+
+Fixing the value of the steady state vector $\bm x^\mathrm{ss}$ to $\mathbf x^\mathrm{ref}$, we see that $\bm u^\mathrm{ss} = \mathbf 0$ if $(\mathbf A - \mathbf I) \bm x^\mathrm{ref}$, that is, if the desired steady state $\bm x^\mathrm{ref}$ is in the null space of $(\mathbf A - \mathbf I)$. If the desired steady state does not satisfy the condition, which will generally be the case, the corresponding control is necessarily nonzero. It then makes no sense to penalize the control itself. Instead, its deviation from the compatible nonzero value should be penalized. As a consequence, the cost function should be modified to  
+
+$$
+\begin{aligned}
+J(\ldots) &= \frac{1}{2} (\bm x_{t+N_\mathrm{p}|t}-{\color{blue}\mathbf x^\mathrm{ref}})^\top \mathbf S \, (\bm x_{t+N_\mathrm{p}|t}-{\color{blue}\mathbf x^\mathrm{ref}})\\ 
+ & \qquad\qquad + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \left((\bm x_{t+k|t}-{\color{blue}\mathbf x^\mathrm{ref}})^\top \mathbf Q \, (\bm x_{t+k|t}-{\color{blue}\mathbf x^\mathrm{ref}}) + (\bm u_{t+k|t}-{\color{red}\bm u^\mathrm{ss}})^\top \mathbf R (\bm u_{t+k|t}-{\color{red}\bm u^\mathrm{ss}})\right), 
+\end{aligned} 
+$$
+in which we regard ${\color{blue}\mathbf x^\mathrm{ref}}$ as an input to the optimal control problem, and ${\color{ss}\bm u^\mathrm{ss}}$ is a new unknown. 
+
+The optimization problem to be solved at every discrete- time $t$ is then
+$$
+\begin{aligned}
+ \operatorname*{minimize}_{\bm u_{t|t},u_{t+1}\ldots, \bm u_{t+N_\mathrm{p}-1}, \bm x_{t|t},\ldots, \bm x_{t+N_\mathrm{p}|t}, {\color{red}\bm u^\mathrm{ss}}} &\quad  \frac{1}{2} (\bm x_{t+N_\mathrm{p}|t}-{\color{blue}\mathbf x^\mathrm{ref}})^\top \mathbf S \, (\bm x_{t+N_\mathrm{p}|t}-{\color{blue}\mathbf x^\mathrm{ref}})\\ 
+ & \qquad\qquad + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \left((\bm x_{t+k|t}-{\color{blue}\mathbf x^\mathrm{ref}})^\top \mathbf Q \, (\bm x_{t+k|t}-{\color{blue}\mathbf x^\mathrm{ref}}) + (\bm u_{t+k|t}-{\color{red}\bm u^\mathrm{ss}})^\top \mathbf R (\bm u_{t+k|t}-{\color{red}\bm u^\mathrm{ss}})\right)\\ 
+\text{subject to}   &\quad \bm x_{t+k+1|t} = \mathbf A\bm x_{t+k|t} + \mathbf B\bm u_{t+k|t},\quad k = 0, \ldots, N_\mathrm{p}-1, \\
+                    &\quad \bm x_{t|t} = \mathbf x_t, \\
+                    &\quad \mathbf B {\color{red}\bm u^\mathrm{ss}} = (\mathbf I-\mathbf A) {\color{blue}\mathbf x^\mathrm{ref}},\\
+                    &\quad \mathbf u^{\min} \leq \bm u_{t+k|t} \leq \mathbf u^{\max},\\
+                    &\quad \mathbf x^{\min} \leq \bm x_{t+k|t} \leq \mathbf x^{\max}.
+ \end{aligned}
+$$
+
+Note that compared to the regulation problem, here the optimization problem contains a new (vector) optimization variable $\bm u^\mathrm{ss}$, and a new system of linear equations.
+
+### Output reference tracking
+
+Oftentimes we do not have reference values for all the state variables but only for the *output variables*. These are given by the output equation
+$$
+\bm y_k = \mathbf C \bm x_k + \mathbf D \bm u_k.
+$$
+
+For notational convenience we restrict ourselves to the case of no feedthrough, that is, $\mathbf D = \mathbf 0$. 
+
+The goal for the controller is then to make the difference between $\bm y_k = \mathbf C \bm x_k$ and $\mathbf y^\mathrm{ref}$ (often named just $\mathbf r$ if it is clear from the context the reference value of which variables it represents) go to zero.
+
+Similarly as in the case of (nonzero) reference state tracking, nonzero control $\bm u^\mathrm{ss}$ must be expected in steady state.
+
+Note, however, that the steady state $\bm x^\mathrm{ss}$ is not provided this time – we must relate it to the provided reference output. But it is straightforward:
+
+$$
+\mathbf y^\mathrm{ref} = \mathbf C \bm x^\mathrm{ss}\qquad\qquad (\text{or}\; \mathbf y^\mathrm{ref} = \mathbf C \bm x^\mathrm{ss} + \mathbf D \bm u^\mathrm{ss}\; \text{in general}).
+$$
+
+Now we have all that is needed to formulate the MPC problem for output reference tracking:
+
+$$
+\begin{aligned}
+ \operatorname*{minimize}_{\bm u_{t|t},u_{t+1}\ldots, \bm u_{t+N_\mathrm{p}-1}, \bm x_{t|t},\ldots, \bm x_{t+N_\mathrm{p}|t}, {\color{red}\bm u^\mathrm{ss}}, {\color{blue}\bm x^\mathrm{ss}}} &\quad  \frac{1}{2} (\mathbf C\bm x_{t+N_\mathrm{p}|t}-{\color{green}\mathbf y^\mathrm{ref}})^\top \mathbf S \, (\mathbf C\bm x_{t+N_\mathrm{p}|t}-{\color{green}\mathbf y^\mathrm{ref}})\\ 
+ & \qquad + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \left((\mathbf C\bm x_{t+k|t}-{\color{green}\mathbf y^\mathrm{ref}})^\top \mathbf Q \, (\mathbf C\bm x_{t+k|t}-{\color{green}\mathbf y^\mathrm{ref}}) + (\bm u_{t+k|t}-{\color{red}\bm u^\mathrm{ss}})^\top \mathbf R (\bm u_{t+k|t}-{\color{red}\bm u^\mathrm{ss}})\right)\\ 
+\text{subject to}   &\quad \bm x_{t+k+1|t} = \mathbf A\bm x_{t+k|t} + \mathbf B\bm u_{t+k|t},\quad k = 0, \ldots, N_\mathrm{p}-1, \\
+                    &\quad \bm x_{t|t} = \mathbf x_t, \\
+                    &\quad (\mathbf A-\mathbf I) {\color{blue}\bm x^\mathrm{ss}} + \mathbf B {\color{red}\bm u^\mathrm{ss}} = 0,\\
+                    &\quad \mathbf C {\color{blue}\bm x^\mathrm{ss}} = \mathbf y^\mathrm{ref},\\
+                    &\quad \mathbf u^{\min} \leq \bm u_{t+k|t} \leq \mathbf u^{\max},\\
+                    &\quad \mathbf x^{\min} \leq \bm x_{t+k|t} \leq \mathbf x^{\max}.
+ \end{aligned}
+$$
+
+The tricky part is the terminal term in the cost function. Note that if we consider a nonzero $\mathbf D$ matrix, the cost function is
+$$
+\begin{aligned}
+J(\ldots) &= \xcancel{\frac{1}{2} (\bm y_{t+N_\mathrm{p}|t}-{\color{green}\mathbf y^\mathrm{ref}})^\top \mathbf S \, (\bm y_{t+N_\mathrm{p}|t}-{\color{green}\mathbf y^\mathrm{ref}})}\\ 
+ & \qquad + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \left((\bm y_{t+k|t}-{\color{green}\mathbf y^\mathrm{ref}})^\top \mathbf Q \, (\bm y_{t+k|t}-{\color{green}\mathbf y^\mathrm{ref}}) + (\bm u_{t+k|t}-{\color{red}\bm u^\mathrm{ss}})^\top \mathbf R (\bm u_{t+k|t}-{\color{red}\bm u^\mathrm{ss}})\right),
+\end{aligned}
+$$
+but the trouble is that we only consider $\bm u_{t+k|t}$ for $k = 0, \ldots, N_\mathrm{p}-1$, and therefore $\bm y_{t+N_\mathrm{p}-1|t}$ is the last available predicted output – it does not provide $\bm y_{t+N_\mathrm{p}|t}$. The terminal penalty must then be omitted from the cost function, which we have already indicated in the formula by crossing it out.
+
+### Penalizing the control increments
+
+There is an alternative way how to handle the need to consider a nonzero control at steady state. We can penalize not the control itselft but its change, its increment 
+$$
+\Delta \bm u_{t+k|t} = \bm u_{t+k|t} - \bm u_{t+k-1|t}.
+$$
+
+The rationale behind this is that once at steady state, the control does not change any longer.
+
+But then if $\Delta \bm u_{t+k|t}$ is the new optimization variable that replaces $\bm u_{t+k|t}$ in the cost function, we must still be able to express the control $\bm u_{t+k|t}$ 
+
+$$
+\bm u_{t+k|t} = \bm u_{t+k-1|t} + \Delta \bm u_{t+k|t}, 
+$$
+for which we need to keep track of the control at the previous time step. This can be done systematically just by augmenting the state model with an auxillary state variable $\bm x_{t+k|t}^\mathrm{u} \coloneqq \bm u_{t+k-1|t}$
+$$
+\begin{bmatrix} \bm x_{t+k+1|t} \\ \bm x_{t+k+1|t}^\mathrm{u} \end{bmatrix} = \underbrace{\begin{bmatrix} \mathbf A & \mathbf B \\ \mathbf 0 & \mathbf I \end{bmatrix}}_{\mathbf{\widetilde{A}}} \underbrace{\begin{bmatrix} \bm x_{t+k|t} \\ \bm x_{t+k|t}^\mathrm{u} \end{bmatrix}}_{\tilde{\bm{x}}_{t+k|t}} + \underbrace{\begin{bmatrix} \mathbf B \\ \mathbf I \end{bmatrix}}_{\mathbf{\widetilde{B}}} \Delta \bm u_{t+k|t}.
+$$
+
+With this new augmented state vector, the output is
+$$
+\bm y_{t+k|t} = \underbrace{\begin{bmatrix} \mathbf C & \mathbf 0 \end{bmatrix}}_{\mathbf{\widetilde{C}}} \begin{bmatrix} \bm x_{t+k|t} \\ \bm x_{t+k|t}^\mathrm{u} \end{bmatrix}.
+$$
+
+With this new system we can now proceed to formulate the MPC tracking problem
+$$
+\begin{aligned}
+ \operatorname*{minimize}_{\Delta \bm u_{t|t},\Delta u_{t+1}\ldots, \Delta \bm u_{t+N_\mathrm{p}-1}, \bm x_{t|t},\ldots, \bm x_{t+N_\mathrm{p}|t}} &\quad  \frac{1}{2} (\mathbf{\widetilde{C}}\tilde{\bm{x}}_{t+N_\mathrm{p}|t} - \mathbf y^\mathrm{ref})^\top \mathbf S \, (\mathbf{\widetilde{C}}\tilde{\bm{x}}_{t+N_\mathrm{p}|t} - \mathbf y^\mathrm{ref}) \\
+ &\qquad \qquad + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \left((\mathbf{\widetilde{C}}\tilde{\bm{x}}_{t+k|t} - \mathbf y^\mathrm{ref})^\top \mathbf Q \, (\mathbf{\widetilde{C}}\tilde{\bm{x}}_{t+k|t} - \mathbf y^\mathrm{ref}) + \Delta \bm u_{t+k|t}^\top \mathbf R \, \Delta \bm u_{t+k|t} \right)\\ 
+\text{subject to}   &\quad \tilde{\bm{x}}_{t+k+1|t} = \mathbf{\widetilde{A}}\tilde{\bm{x}}_{t+k|t} + \mathbf{\widetilde{B}}\Delta \bm u_{t+k|t},\quad k = 0, \ldots, N_\mathrm{p}-1, \\
+                    &\quad \tilde{\bm{x}}_{t|t} = \begin{bmatrix}\mathbf x_t\\ \mathbf u_{t-1}\end{bmatrix}, \\
+                    &\quad \mathbf x^{\min} \leq \begin{bmatrix}\bm I & \mathbf 0 \end{bmatrix} \tilde{\bm x}_{t+k|t} \leq \mathbf x^{\max},\quad k = 0, \ldots, N_\mathrm{p},\\
+                    &\quad \mathbf u^{\min} \leq \begin{bmatrix}\bm 0 & \mathbf I \end{bmatrix} \tilde{\bm x}_{t+k|t} +  \Delta \bm u_{t+k|t}\leq \mathbf u^{\max},\quad k = 0, \ldots, N_\mathrm{p}-1.
+ \end{aligned}
+$$
+
+A bonus of this formulation is that we can also impose contraints on $\Delta \bm u_{t+k|t}$, which effectively implements *rate constraints* on the control variables. This is useful because sometimes we want to restrict how fast the control variable (say, valve opening) changes in order to save the actuators.
+
+Note that similarly as before, we cannot include the terminal cost if the output equation contains a feedthrough term, that is if $\mathbf D\neq 0$, in which case $\bm u_{t+N|t}$ would be needed, while it is not available in our optimization problem. This does not pose a singificant trouble purely from the viewpoint of expressing the control requirements by the cost function, but we only mention in passing that it does pose a problem when it comes to guaranteening the closed-loop stability. We postpone our discussion of closed-loop stability till later chapters, but here we only mention that the terminal penalty (on the prediction horizon), through which we penalize the deviation of the system from the desired *state*, is one of the mechanisms for achieving closed-loop stability. Within this $\Delta \bm u$ framework we eliminated the need to compute the steady state $\bm x^{ss}$, but if stability guarantees are needed, it must be reintroduced to the problem.
+
+#TODO Show the optimization problem including the computation of the steady state and the terminal penalty on the deviation from the steady state (even though performance-wise we are only interested in the output reference tracking). 
+
+### Output reference tracking for general references (preview control)
+
+Finally, we consider not just a single value of the output vector $\mathbf y^\mathrm{ref}$ towards which the system should ultimately be steered, but we consider an arbitrary reference trajectory ${\color{orange}\mathbf y_k^\mathrm{ref}}$. The MPC problem changes (slightly) to 
+$$
+\begin{aligned}
+ \operatorname*{minimize}_{\Delta \bm u_{t|t},\Delta u_{t+1}\ldots, \Delta \bm u_{t+N_\mathrm{p}-1}, \bm x_{t|t},\ldots, \bm x_{t+N_\mathrm{p}|t}} &\quad  \frac{1}{2} (\mathbf{\widetilde{C}}\tilde{\bm{x}}_{t+N_\mathrm{p}|t} - {\color{orange}\mathbf y_{t+N_\mathrm{p}}^\mathrm{ref}})^\top \mathbf S \, (\mathbf{\widetilde{C}}\tilde{\bm{x}}_{t+N_\mathrm{p}|t} - {\color{orange}\mathbf y_{t+N_\mathrm{p}}^\mathrm{ref}}) \\
+ &\qquad \qquad + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \left((\mathbf{\widetilde{C}}\tilde{\bm{x}}_{t+k|t} - {\color{orange}\mathbf y_{t+k}^\mathrm{ref}})^\top \mathbf Q \, (\mathbf{\widetilde{C}}\tilde{\bm{x}}_{t+k|t} - {\color{orange}\mathbf y_{t+k}^\mathrm{ref}}) + \Delta \bm u_{t+k|t}^\top \mathbf R \, \Delta \bm u_{t+k|t} \right)\\ 
+\text{subject to}   &\quad \tilde{\bm{x}}_{t+k+1|t} = \mathbf{\widetilde{A}}\tilde{\bm{x}}_{t+k|t} + \mathbf{\widetilde{B}}\Delta \bm u_{t+k|t},\quad k = 0, \ldots, N_\mathrm{p}-1, \\
+                    &\quad \tilde{\bm{x}}_{t|t} = \begin{bmatrix}\mathbf x_t\\ \mathbf u_{t-1}\end{bmatrix}, \\
+                    &\quad \mathbf x^{\min} \leq \begin{bmatrix}\bm I & \mathbf 0 \end{bmatrix} \tilde{\bm x}_{t+k|t} \leq \mathbf x^{\max},\quad k = 0, \ldots, N_\mathrm{p},\\
+                    &\quad \mathbf u^{\min} \leq \begin{bmatrix}\bm 0 & \mathbf I \end{bmatrix} \tilde{\bm x}_{t+k|t} +  \Delta \bm u_{t+k|t}\leq \mathbf u^{\max},\quad k = 0, \ldots, N_\mathrm{p}-1.
+ \end{aligned}
+$$
+
+One last time we repeat that if a general output equation with a feedthrough term is considered, the terminal term in the cost function should be omitted.
+
+#TODO
 
 {{< video https://youtu.be/GnFaLl7qwco?si=GN79Zpddv2ZmQ4eU >}}
 
