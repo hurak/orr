@@ -69,6 +69,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -913,6 +956,27 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>We have learnt previously that the following matrix equation <span class="math display">
+\bm X=\mathbf A^\top\left[\bm X-\bm X\mathbf B(\mathbf B^\top\bm X\mathbf B+\mathbf R)^{-1}\mathbf B^\top\bm X\right]\mathbf A+\mathbf Q
+</span> or, equivalently, <span class="math display">\boxed{
+\mathbf A^\top\bm X\mathbf A - \bm X +\mathbf Q - \mathbf A^\top\bm X\mathbf B(\mathbf B^\top\bm X\mathbf B+\mathbf R)^{-1}\mathbf B^\top\bm X\mathbf A = \mathbf 0}
+</span></p>
+<p>called <em>discrete-time algebraic Riccati equation</em> (DARE) is instrumental in solving the infinite time horizon LQR problem. The equation must be solved for the matrix <span class="math inline">\bm X</span> in order to compute the state feedback gain.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The matrix variable <span class="math inline">\bm X</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that here we have replaced the previous name for matrix variable <span class="math inline">\bm S_\infty</span> by the new <span class="math inline">\bm X</span> to emphasize that it is the unknown here.</p>
+</div>
+</div>
+<p>There are several approaches to solving the DARE, and the most reliable and accurate once have already been implemented in major computational packages (see the section on software). Here we do not aim at explaining them.</p>
+<p>#TODO</p>
 
 
 
