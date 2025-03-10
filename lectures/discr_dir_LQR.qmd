@@ -183,7 +183,69 @@ plot(p1,p2,layout=(2,1))
 
 ### Adding constraints on controls and states
 When solving a realistic optimal control problem, we may want to impose inequality constraints on $\bm u_k$ due to saturation of actuators.
-We may also want to add constraints on $\bm x_k$ as well, which may reflect some performance specifications. In both cases, we would arrive at the full KKT conditions, and rather than trying to solve these, we resort to some finetuned numerical solver for quadratic programming (QP) instead.  
+We may also want to add constraints on $\bm x_k$ as well, which may reflect some performance specifications. In both cases, we would arrive at the full KKT conditions, and rather than trying to solve these, we resort to some finetuned numerical solver for quadratic programming (QP) instead. 
+
+::: {#exm-direct-simultaneous-constrained-using-jump}
+## Simultaneous approach to the LQR problem with constraints on control – higher-level implementation using optimization modelling language JuMP
+
+While developing the model all the way down to the individual matrices and vectors gives an insight into the structure of the problem (we learnt that in absence of constraints it amounts to solving an indefinite system of linear equations), here we show how the use of an optimization modelling language can make the process of building the model a lot more convenient. We use JuMP for this purpose, but things would be similar with, say, cvxpy in Python or Yalmip in Matlab. 
+
+``` {julia}
+using LinearAlgebra
+using JuMP
+using OSQP
+
+n = 2               # Number of state variables.
+m = 1               # Number of (control) input variables. 
+A = rand(n,n)       # State matrix.
+B = rand(n,m)       # Input coupling matrix.
+x₀ = [1.0, 3.0]     # Initial state.
+
+N = 10              # Time horizon.
+
+s = [1.0, 2.0]      
+q = [1.0, 2.0]
+r = [1.0]
+
+S = diagm(0=>s)     # Matrix defining the terminal state cost.
+Q = diagm(0=>q)     # Matrix defining the running state dost.
+R = diagm(0=>r)     # Matrix defining the cost of control.
+
+umin = -1.0
+umax = 1.0
+
+ocp = Model(OSQP.Optimizer)
+set_silent(ocp)
+
+@variable(ocp, umin <= u[1:N] <= umax)
+@variable(ocp, x[1:n,1:N+1])
+
+for i in 1:N
+    @constraint(ocp, x[:,i+1] == A*x[:,i] + B*u[i])
+end
+
+fix(x[1,1], x₀[1])
+fix(x[2,1], x₀[2])
+
+@objective(ocp, Min, 1/2*dot(x[:,N],S,x[:,N]) + 1/2*sum(dot(x[:,i],Q,x[:,i]) + dot(u[i],R,u[i]) for i in 1:N-1))
+
+optimize!(ocp)
+uopt = value.(u)
+xopt = value.(x)
+
+using Plots
+
+p1 = plot(0:(N-1),uopt,marker=:diamond,label="u",linetype=:steppost)
+xlabel!("k")
+ylabel!("u")
+
+p2 = plot(0:N,xopt',marker=:diamond,label=["x₁" "x₂"],linetype=:steppost)
+xlabel!("k")
+ylabel!("x")
+
+plot(p1,p2,layout=(2,1))
+```
+:::
 
 ## Sequential (dense) formulation
 
