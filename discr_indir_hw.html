@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -69,6 +103,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -354,8 +431,20 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./discr_indir_LQR_tracking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reference tracking using LQR</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./discr_indir_DARE.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Discrete-time algebraic Riccati equation (DARE)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_indir_software.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Software for LQR and DARE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -888,8 +977,17 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#use-the-lq-optimal-control-methodology-to-design-a-discrete-time-state-feedback-regulator-for-a-given-lti-system" id="toc-use-the-lq-optimal-control-methodology-to-design-a-discrete-time-state-feedback-regulator-for-a-given-lti-system" class="nav-link active" data-scroll-target="#use-the-lq-optimal-control-methodology-to-design-a-discrete-time-state-feedback-regulator-for-a-given-lti-system">Use the LQ-optimal control methodology to design a discrete-time state-feedback regulator for a given LTI system</a>
+  <ul class="collapse">
+  <li><a href="#tasks" id="toc-tasks" class="nav-link" data-scroll-target="#tasks">Tasks</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -913,8 +1011,117 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="use-the-lq-optimal-control-methodology-to-design-a-discrete-time-state-feedback-regulator-for-a-given-lti-system" class="level2">
+<h2 class="anchored" data-anchor-id="use-the-lq-optimal-control-methodology-to-design-a-discrete-time-state-feedback-regulator-for-a-given-lti-system">Use the LQ-optimal control methodology to design a discrete-time state-feedback regulator for a given LTI system</h2>
+<p>Specifically, you should design a discrete-time state-feedback controller that performs fast “sideways” motion of a small indoor quadrotor (four-rotor drone). Namely, the controller should bring a quadrotor from one horizontal position to another. A 2D model is in the figure below</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/2d_quadrotor_rotated.svg" class="img-fluid figure-img"></p>
+<figcaption>Quadrotor model</figcaption>
+</figure>
+</div>
+<p>and the corresponding motion equations are</p>
+<p><span class="math display">\begin{align*}
+\ddot y(t) &amp;= -a(t)\sin \theta(t)\\
+\ddot z(t) &amp; = a(t)\cos \theta(t) - g\\
+\ddot \theta(t) &amp;= \alpha(t)
+\end{align*}</span> where <span class="math inline">a(t)</span> and <span class="math inline">\alpha(t)</span> represent the control inputs to the system, namely the linear and rotational acceleration. This assumes that the innermost control loops are already implemented and closed.</p>
+<p>The gravitational acceleration <span class="math inline">g</span> is approximated by <span class="math inline">10\,\text{m}\,\text{s}^{-2}</span>. The position variables <span class="math inline">y(t)</span> and <span class="math inline">z(t)</span> have units of m, <span class="math inline">\theta</span> is given in rad, and the inputs <span class="math inline">a(t)</span> and <span class="math inline">\alpha(t)</span> are in <span class="math inline">\text{m}\,\text{s}^{-2}</span> and <span class="math inline">\text{rad}\,\text{s}^{-2}</span>, respectively. Only concentrating on the horizontal control, the input <span class="math inline">a(t)</span> is set to</p>
+<p><span class="math display"> a(t)=\frac{10}{\cos\theta(t)}</span> resulting in <span class="math inline">\dot z(t)=0</span> and the simplified dynamics</p>
+<p><span class="math display">\begin{align*}
+\ddot y(t)&amp;=-10 \tan \theta (t),\\
+\ddot \theta(t) &amp;= \alpha(t).
+\end{align*}</span></p>
+<p>The concrete control goal is to bring the quadrotor from the initial state <span class="math inline">y(0)=1,\,\dot y(0)=\theta(0)=\dot \theta(0)=0</span> to the final state <span class="math inline">y(T) = \dot y(T)=\theta(T)=\dot \theta(T)=0</span>.</p>
+<p>In addition, there are constraints on the input <span class="math inline">\alpha(t)</span> and on the state variable <span class="math inline">\theta(t)</span>:</p>
+<p><span class="math display">\begin{align*}
+|\alpha(t)| &amp;\leq 100,\\
+|\theta(t)| &amp;\leq \frac{\pi}{6}.
+\end{align*}</span></p>
+<section id="tasks" class="level3">
+<h3 class="anchored" data-anchor-id="tasks">Tasks</h3>
+<ul>
+<li>Linearize the system around the equilibrium point <span class="math inline">y=0,\,\dot y=0,\,\theta=0,\,\dot \theta=0</span> and discretize it with a sampling time <span class="math inline">T_s=0.01\,\text{s}</span>.</li>
+<li>In Julia, using the linearized model, design an LQ-optimal controller that gets the quadrotor from the initial to the vicinity of the final state (<span class="math inline">\lvert x_i(t) \rvert \leq 0.01</span> for <span class="math inline">i=1,2,3,4</span>) in the shortest possible time you can achieve while respecting the constraints on the input and the state variable.</li>
+<li>For your solution to be accepted, you need to get to the vicinity of the final state within 3 seconds.</li>
+<li>We advise you to use <code>ControlSystemsBase</code> package for the LQ-optimal controller synthesis.</li>
+<li>The controller should be implemented as a function <code>state_feedback(x, t)</code> that takes the current state <code>x</code> and the current time step <code>t</code> as input and returns the control input <span class="math inline">\alpha(t)</span>.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Ranking
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>All the solutions that meet the basic requirements will be ranked according to the time it takes for the quadrotor to reach the final state. The faster the solution, the higher the ranking.</p>
+<p><strong>The top three contenders will be awarded bonus 10% (grade increase) to the practical (open-book) part of the final exam.</strong></p>
+</div>
+</div>
+<p>Your solution should be based on the following template and should be contained in a single file named <code>hw.jl</code>, which you will upload to the <a href="https://cw.felk.cvut.cz/brute">BRUTE</a> system.</p>
+<div id="2" class="cell" data-execution_count="0">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">OrdinaryDiffEq</span>, <span class="bu">ControlSystemsBase</span>, <span class="bu">LinearAlgebra</span>, <span class="bu">Plots</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Ts <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">100</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">quadrotor!</span>(ẋ, x, u, t)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    α <span class="op">=</span> <span class="fu">max</span>(<span class="fu">min</span>(u, <span class="fl">100</span>), <span class="op">-</span><span class="fl">100</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    ẋ[<span class="fl">1</span>] <span class="op">=</span> x[<span class="fl">2</span>]</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    ẋ[<span class="fl">2</span>] <span class="op">=</span> <span class="fu">-10*tan</span>(x[<span class="fl">3</span>])</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    ẋ[<span class="fl">3</span>] <span class="op">=</span> x[<span class="fl">4</span>]</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    ẋ[<span class="fl">4</span>] <span class="op">=</span> α</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">## </span><span class="al">TODO</span><span class="co"> Linearize and discretize the system</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">## </span><span class="al">TODO</span><span class="co"> design the LQ-optimal controller</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">state_feedback</span>(x, t)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">## </span><span class="al">TODO</span><span class="co"> implement the state-feedback controller </span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fl">0.0</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You may test your implementation using the following code snippet:</p>
+<div id="4" class="cell" data-execution_count="0">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>T0 <span class="op">=</span> <span class="fl">0</span>;</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Tf <span class="op">=</span> <span class="fl">3</span>;</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> T0<span class="op">:</span>Ts<span class="op">:</span>Tf;</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="fu">length</span>(ts)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>xs <span class="op">=</span> <span class="fu">zeros</span>(<span class="fl">4</span>, N)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>us <span class="op">=</span> <span class="fu">zeros</span>(<span class="fl">1</span>, N<span class="op">-</span><span class="fl">1</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>xs[<span class="op">:</span>, <span class="fl">1</span>] <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.0</span>; <span class="fl">0.0</span>; <span class="fl">0.0</span>]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="op">=</span> <span class="fl">1</span><span class="op">:</span>N<span class="op">-</span><span class="fl">1</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    us[<span class="op">:</span>, i] <span class="op">.=</span> <span class="fu">state_feedback</span>(xs[<span class="op">:</span>, i], i)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    prob <span class="op">=</span> <span class="fu">ODEProblem</span>(quadrotor!, xs[<span class="op">:</span>, i], [<span class="fl">0</span>, Ts], us[<span class="fl">1</span>, i])</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    sol <span class="op">=</span> <span class="fu">solve</span>(prob, <span class="fu">Tsit5</span>())</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    xs[<span class="op">:</span>, i<span class="op">+</span><span class="fl">1</span>] <span class="op">=</span> sol.u[<span class="kw">end</span>]</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">=</span> <span class="fu">plot</span>(ts, xs[<span class="fl">1</span>, <span class="op">:</span>], label<span class="op">=</span><span class="st">"y"</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(ts, xs[<span class="fl">2</span>, <span class="op">:</span>], label<span class="op">=</span><span class="st">"ẏ"</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(ts, xs[<span class="fl">3</span>, <span class="op">:</span>], label<span class="op">=</span><span class="st">"θ"</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(ts, xs[<span class="fl">4</span>, <span class="op">:</span>], label<span class="op">=</span><span class="st">"θ̇"</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>([T0, Tf], [<span class="op">-</span><span class="cn">pi</span><span class="op">/</span><span class="fl">6</span>, <span class="op">-</span><span class="cn">pi</span><span class="op">/</span><span class="fl">6</span>], label<span class="op">=</span><span class="st">"θ = -π/6"</span>, linestyle<span class="op">=:</span>dash)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>([T0, Tf], [<span class="cn">pi</span><span class="op">/</span><span class="fl">6</span>, <span class="cn">pi</span><span class="op">/</span><span class="fl">6</span>], label<span class="op">=</span><span class="st">"θ = π/6"</span>, linestyle<span class="op">=:</span>dash)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>p2 <span class="op">=</span> <span class="fu">plot</span>(ts[<span class="fl">1</span><span class="op">:</span><span class="kw">end</span><span class="op">-</span><span class="fl">1</span>], us[<span class="fl">1</span>, <span class="op">:</span>], label<span class="op">=</span><span class="st">"u"</span>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(p1, p2, layout<span class="op">=</span>(<span class="fl">2</span>, <span class="fl">1</span>), size<span class="op">=</span>(<span class="fl">800</span>, <span class="fl">600</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
+</section>
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1354,7 +1561,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2025, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

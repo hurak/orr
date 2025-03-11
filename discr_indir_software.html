@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Controller order reduction – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>Software for LQR and DARE – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./reduction_order_benchmarks.html" rel="next">
-<link href="./reduction_order_model.html" rel="prev">
+<link href="./discr_indir_references.html" rel="next">
+<link href="./discr_indir_DARE.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./reduction_order_model.html">14. Model and controller order reduction</a></li><li class="breadcrumb-item"><a href="./reduction_order_controller.html">Controller order reduction</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_indir_goals.html">4. Discrete-time optimal control – indirect approach</a></li><li class="breadcrumb-item"><a href="./discr_indir_software.html">Software for LQR and DARE</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -366,7 +366,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_indir_software.html" class="sidebar-item-text sidebar-link">
+  <a href="./discr_indir_software.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Software for LQR and DARE</span></a>
   </div>
 </li>
@@ -871,7 +871,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reduction_order_controller.html" class="sidebar-item-text sidebar-link active">
+  <a href="./reduction_order_controller.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Controller order reduction</span></a>
   </div>
 </li>
@@ -900,15 +900,23 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#julia" id="toc-julia" class="nav-link active" data-scroll-target="#julia">Julia</a></li>
+  <li><a href="#matlab" id="toc-matlab" class="nav-link" data-scroll-target="#matlab">MATLAB</a></li>
+  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python">Python</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./reduction_order_model.html">14. Model and controller order reduction</a></li><li class="breadcrumb-item"><a href="./reduction_order_controller.html">Controller order reduction</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./discr_indir_goals.html">4. Discrete-time optimal control – indirect approach</a></li><li class="breadcrumb-item"><a href="./discr_indir_software.html">Software for LQR and DARE</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Controller order reduction</h1>
+<h1 class="title">Software for LQR and DARE</h1>
 </div>
 
 
@@ -925,8 +933,36 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="julia" class="level2">
+<h2 class="anchored" data-anchor-id="julia">Julia</h2>
+<p><a href="https://github.com/JuliaControl/ControlSystems.jl">ControlSystems.jl</a></p>
+<ul>
+<li><p><a href="https://juliacontrol.github.io/ControlSystems.jl/stable/lib/synthesis/#ControlSystemsBase.lqr-Tuple%7BUnion%7BContinuous,%20Type%7BContinuous%7D%7D,%20Any,%20Any,%20Any,%20Any,%20Vararg%7BAny%7D%7D">lqr</a></p></li>
+<li><p><a href="https://juliacontrol.github.io/ControlSystems.jl/stable/lib/analysis/#ControlSystemsBase.are-Tuple%7BUnion%7BType%7BDiscrete%7D,%20Discrete%7D,%20AbstractMatrix,%20Any,%20Any,%20Any%7D">are</a> – actually uses MatrixEquations.jl.</p></li>
+</ul>
+<p><a href="https://github.com/andreasvarga/MatrixEquations.jl">MatrixEquations.jl</a></p>
+<ul>
+<li><a href="https://andreasvarga.github.io/MatrixEquations.jl/dev/riccati.html#MatrixEquations.ared">ared</a></li>
+</ul>
+</section>
+<section id="matlab" class="level2">
+<h2 class="anchored" data-anchor-id="matlab">MATLAB</h2>
+<p><a href="https://www.mathworks.com/products/control.html">Control System Toolbox</a></p>
+<ul>
+<li><a href="https://www.mathworks.com/help/control/ref/idare.html">idare</a> (<a href="https://www.mathworks.com/help/control/ref/dare.html">dare</a> deprecated)</li>
+<li><a href="https://www.mathworks.com/help/control/ref/lti.dlqr.html">dlqr</a></li>
+</ul>
+</section>
+<section id="python" class="level2">
+<h2 class="anchored" data-anchor-id="python">Python</h2>
+<p><a href="https://github.com/python-control/python-control">Python Control</a></p>
+<ul>
+<li><a href="https://python-control.readthedocs.io/en/0.10.1/generated/control.dare.html#control.dare">dare</a></li>
+<li><a href="https://python-control.readthedocs.io/en/0.10.1/generated/control.dlqr.html#control.dlqr">dlqr</a></li>
+</ul>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1348,13 +1384,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./reduction_order_model.html" class="pagination-link" aria-label="Model order reduction">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Model order reduction</span>
+      <a href="./discr_indir_DARE.html" class="pagination-link" aria-label="Discrete-time algebraic Riccati equation (DARE)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Discrete-time algebraic Riccati equation (DARE)</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./reduction_order_benchmarks.html" class="pagination-link" aria-label="Benchmarks">
-        <span class="nav-page-text">Benchmarks</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./discr_indir_references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1366,7 +1402,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2025, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

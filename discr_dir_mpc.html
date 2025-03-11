@@ -417,8 +417,20 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./discr_indir_LQR_tracking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reference tracking using LQR</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./discr_indir_DARE.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Discrete-time algebraic Riccati equation (DARE)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_indir_software.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Software for LQR and DARE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -1146,7 +1158,7 @@ J(\ldots) &amp;= \frac{1}{2} (\bm x_{t+N_\mathrm{p}|t}-{\color{blue}\mathbf x^\m
 \text{subject to}   &amp;\quad \bm x_{t+k+1|t} = \mathbf A\bm x_{t+k|t} + \mathbf B\bm u_{t+k|t},\quad k = 0, \ldots, N_\mathrm{p}-1, \\
                     &amp;\quad \bm x_{t|t} = \mathbf x_t, \\
                     &amp;\quad (\mathbf A-\mathbf I) {\color{blue}\bm x^\mathrm{ss}} + \mathbf B {\color{red}\bm u^\mathrm{ss}} = 0,\\
-                    &amp;\quad \mathbf C {\color{blue}\bm x^\mathrm{ss}} = \mathbf y^\mathrm{ref},\\
+                    &amp;\quad \mathbf C {\color{blue}\bm x^\mathrm{ss}} = {\color{green}\mathbf y^\mathrm{ref}},\\
                     &amp;\quad \mathbf u^{\min} \leq \bm u_{t+k|t} \leq \mathbf u^{\max},\\
                     &amp;\quad \mathbf x^{\min} \leq \bm x_{t+k|t} \leq \mathbf x^{\max}.
 \end{aligned}

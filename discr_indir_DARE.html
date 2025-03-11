@@ -20,18 +20,72 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./discr_indir_references.html" rel="next">
-<link href="./discr_indir_LQR_inf_horizon.html" rel="prev">
+<link href="./discr_indir_software.html" rel="next">
+<link href="./discr_indir_LQR_tracking.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -68,6 +122,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -397,8 +454,20 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./discr_indir_LQR_tracking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reference tracking using LQR</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./discr_indir_DARE.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Discrete-time algebraic Riccati equation (DARE)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discr_indir_software.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Software for LQR and DARE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -975,12 +1044,183 @@ The matrix variable <span class="math inline">\bm X</span>
 <p>Note that here we have replaced the previous name for matrix variable <span class="math inline">\bm S_\infty</span> by the new <span class="math inline">\bm X</span> to emphasize that it is the unknown here.</p>
 </div>
 </div>
-<p>There are several approaches to solving the DARE, and the most reliable and accurate once have already been implemented in major computational packages (see the section on software). Here we do not aim at explaining them.</p>
-<p>#TODO</p>
+<p>There are several approaches to solving the DARE, and the most reliable and accurate once have already been implemented in major computational packages (see the section on software). Some overviews and detailed explanations are provided in <span class="citation" data-cites="simaAlgorithmsLinearQuadraticOptimization1996"><a href="#ref-simaAlgorithmsLinearQuadraticOptimization1996" role="doc-biblioref">[1]</a></span>, <span class="citation" data-cites="biniNumericalSolutionAlgebraic2012"><a href="#ref-biniNumericalSolutionAlgebraic2012" role="doc-biblioref">[2]</a></span>, and <span class="citation" data-cites="dattaNumericalMethodsLinear2003"><a href="#ref-dattaNumericalMethodsLinear2003" role="doc-biblioref">[3]</a></span>. Here we only sketch one of them, that displays an important property.</p>
+<p>Recall the linear system that we have developed from the two-point boundary value problem under the assumption of invertability of the matrix <span class="math inline">\mathbf A</span>:</p>
+<p><span class="math display">
+\begin{bmatrix}
+\mathbf x_{k}\\\boldsymbol\lambda_k
+\end{bmatrix}
+=
+\underbrace{\begin{bmatrix}
+\mathbf A^{-1} &amp; \mathbf A^{-1}\mathbf B\mathbf R^{-1}\mathbf B^\top\\\mathbf Q\mathbf A^{-1} &amp; \mathbf A^\top+\mathbf Q\mathbf A^{-1}\mathbf B\mathbf R^{-1}\mathbf B^\top
+\end{bmatrix}}_{\mathbf H}
+\begin{bmatrix}
+\mathbf x_{k+1} \\ \boldsymbol\lambda_{k+1}
+\end{bmatrix}
+</span></p>
+<p>The matrix <span class="math inline">H</span> has a very special property. Defining the auxilliary matrix <span class="math inline">\mathbf J</span> <span class="math display">
+\mathbf J = \begin{bmatrix}\mathbf 0 &amp; \mathbf I\\ -\mathbf I &amp; \mathbf 0\end{bmatrix},
+</span> the matrix <span class="math inline">\mathbf H</span> can be shown to satisfy the following: <span class="math display">
+\mathbf H^\top\mathbf J\mathbf H = \mathbf J.
+</span></p>
+<p>Such matrices are called <em>symplectic</em> and they have several special properties. First, note that <span class="math display">
+\mathbf H^\top\mathbf J = \mathbf J\mathbf H^{-1},
+</span> from which it follows that <span class="math display">
+\mathbf J^{-1}\mathbf H^\top\mathbf J = \mathbf H^{-1}.
+</span></p>
+<p>Using the fact that <span class="math inline">\mathbf J^{-1} = -\mathbf J</span>, we get the promised special property – a particularly simple way to compute the inverse of <span class="math inline">\mathbf H</span>: <span class="math display">
+\mathbf H^{-1} = -\mathbf J\mathbf H^\top\mathbf J.
+</span></p>
+<p>We can use this to obtain the inverse of our particular <span class="math inline">\mathbf H</span> matrix:</p>
+<p><span class="math display">
+\mathbf H^{-1}
+=
+\begin{bmatrix}
+\mathbf A + \mathbf B \mathbf R^{-1} \mathbf B^\top \mathbf A^{-\top}\mathbf Q &amp; \mathbf B\mathbf R^{-1}\mathbf B^\top \mathbf A^{-\top} \\
+\mathbf A^{-\top} \mathbf Q &amp; \mathbf A^{-\top},
+\end{bmatrix}
+</span> where we used the shortand notation <span class="math inline">\mathbf A^{-\top}</span> for <span class="math inline">(\mathbf A^{-1})^\top</span>.</p>
+<p>Now, it can be shown that if <span class="math inline">\lambda</span> is an eigenvalue of <span class="math inline">\mathbf H</span>, so is <span class="math inline">1/\lambda</span>. We are not going to prove it here, we refer an interested reader to <span class="citation" data-cites="lewisOptimalControl2012"><a href="#ref-lewisOptimalControl2012" role="doc-biblioref">[4, p. 81]</a></span>.</p>
+<div id="exm-dare-eigenvalues_of_H" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1 (Eigenvalues of a symplectic matrix)</strong></span> &nbsp;</p>
+<div id="2" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">0.225384</span>  <span class="fl">0.166015</span>   <span class="fl">0.60408</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.920342</span>  <span class="fl">0.0644107</span>  <span class="fl">0.354692</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.483302</span>  <span class="fl">0.536062</span>   <span class="fl">0.718341</span>]</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> [<span class="fl">0.587251</span>  <span class="fl">0.29765</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.305953</span>  <span class="fl">0.616242</span>  </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.400612</span>  <span class="fl">0.201951</span>]</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">2.0</span>, <span class="fl">3.0</span>]</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">2.0</span>]</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> <span class="fu">diagm</span>(<span class="fl">0</span><span class="op">=&gt;</span>q)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>R <span class="op">=</span> <span class="fu">diagm</span>(<span class="fl">0</span><span class="op">=&gt;</span>r)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>H <span class="op">=</span> [<span class="fu">inv</span>(A) A<span class="op">\</span>B<span class="op">/</span>R<span class="op">*</span>B<span class="op">'</span>; Q<span class="op">/</span>A A<span class="op">'+</span>Q<span class="op">/</span>A<span class="op">*</span>B<span class="op">/</span>R<span class="op">*</span>B<span class="op">'</span>]</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>λ, V <span class="op">=</span> <span class="fu">eigen</span>(H)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter</span>(λ, aspect_ratios <span class="op">=</span> <span class="fl">1</span>, label<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>θ <span class="op">=</span> <span class="fu">range</span>(<span class="fl">0</span>, <span class="fl">2</span>π, length<span class="op">=</span><span class="fl">100</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fu">cos</span>.(θ)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="fu">sin</span>.(θ)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(x, y, label<span class="op">=</span><span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<!--?xml version="1.0" encoding="utf-8"?-->
+<svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="672" height="480" viewbox="0 0 2688 1920">
+<defs>
+  <clippath id="clip960">
+    <rect x="0" y="0" width="2688" height="1920"></rect>
+  </clippath>
+</defs>
+<path clip-path="url(#clip960)" d="M0 1920 L2688 1920 L2688 0 L0 0  Z" fill="#ffffff" fill-rule="evenodd" fill-opacity="1"></path>
+<defs>
+  <clippath id="clip961">
+    <rect x="537" y="0" width="1883" height="1883"></rect>
+  </clippath>
+</defs>
+<path clip-path="url(#clip960)" d="M217.02 1734.12 L2640.76 1734.12 L2640.76 47.2441 L217.02 47.2441  Z" fill="#ffffff" fill-rule="evenodd" fill-opacity="1"></path>
+<defs>
+  <clippath id="clip962">
+    <rect x="217" y="47" width="2425" height="1688"></rect>
+  </clippath>
+</defs>
+<polyline clip-path="url(#clip962)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="635.868,1734.12 635.868,47.2441 "></polyline>
+<polyline clip-path="url(#clip962)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="1254.67,1734.12 1254.67,47.2441 "></polyline>
+<polyline clip-path="url(#clip962)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="1873.47,1734.12 1873.47,47.2441 "></polyline>
+<polyline clip-path="url(#clip962)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="2492.27,1734.12 2492.27,47.2441 "></polyline>
+<polyline clip-path="url(#clip962)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="217.02,1509.48 2640.76,1509.48 "></polyline>
+<polyline clip-path="url(#clip962)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="217.02,1200.08 2640.76,1200.08 "></polyline>
+<polyline clip-path="url(#clip962)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="217.02,890.681 2640.76,890.681 "></polyline>
+<polyline clip-path="url(#clip962)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="217.02,581.28 2640.76,581.28 "></polyline>
+<polyline clip-path="url(#clip962)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="217.02,271.88 2640.76,271.88 "></polyline>
+<polyline clip-path="url(#clip960)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="217.02,1734.12 2640.76,1734.12 "></polyline>
+<polyline clip-path="url(#clip960)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="635.868,1734.12 635.868,1715.22 "></polyline>
+<polyline clip-path="url(#clip960)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="1254.67,1734.12 1254.67,1715.22 "></polyline>
+<polyline clip-path="url(#clip960)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="1873.47,1734.12 1873.47,1715.22 "></polyline>
+<polyline clip-path="url(#clip960)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="2492.27,1734.12 2492.27,1715.22 "></polyline>
+<path clip-path="url(#clip960)" d="M605.81 1781.99 L635.486 1781.99 L635.486 1785.93 L605.81 1785.93 L605.81 1781.99 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip960)" d="M649.606 1794.89 L665.926 1794.89 L665.926 1798.82 L643.981 1798.82 L643.981 1794.89 Q646.643 1792.13 651.227 1787.5 Q655.833 1782.85 657.014 1781.51 Q659.259 1778.98 660.139 1777.25 Q661.041 1775.49 661.041 1773.8 Q661.041 1771.04 659.097 1769.31 Q657.176 1767.57 654.074 1767.57 Q651.875 1767.57 649.421 1768.34 Q646.991 1769.1 644.213 1770.65 L644.213 1765.93 Q647.037 1764.79 649.491 1764.21 Q651.944 1763.64 653.981 1763.64 Q659.352 1763.64 662.546 1766.32 Q665.741 1769.01 665.741 1773.5 Q665.741 1775.63 664.93 1777.55 Q664.143 1779.45 662.037 1782.04 Q661.458 1782.71 658.356 1785.93 Q655.254 1789.12 649.606 1794.89 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip960)" d="M1254.67 1767.34 Q1251.06 1767.34 1249.23 1770.9 Q1247.42 1774.45 1247.42 1781.58 Q1247.42 1788.68 1249.23 1792.25 Q1251.06 1795.79 1254.67 1795.79 Q1258.3 1795.79 1260.11 1792.25 Q1261.94 1788.68 1261.94 1781.58 Q1261.94 1774.45 1260.11 1770.9 Q1258.3 1767.34 1254.67 1767.34 M1254.67 1763.64 Q1260.48 1763.64 1263.53 1768.24 Q1266.61 1772.83 1266.61 1781.58 Q1266.61 1790.3 1263.53 1794.91 Q1260.48 1799.49 1254.67 1799.49 Q1248.86 1799.49 1245.78 1794.91 Q1242.72 1790.3 1242.72 1781.58 Q1242.72 1772.83 1245.78 1768.24 Q1248.86 1763.64 1254.67 1763.64 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip960)" d="M1868.12 1794.89 L1884.44 1794.89 L1884.44 1798.82 L1862.5 1798.82 L1862.5 1794.89 Q1865.16 1792.13 1869.74 1787.5 Q1874.35 1782.85 1875.53 1781.51 Q1877.77 1778.98 1878.65 1777.25 Q1879.56 1775.49 1879.56 1773.8 Q1879.56 1771.04 1877.61 1769.31 Q1875.69 1767.57 1872.59 1767.57 Q1870.39 1767.57 1867.94 1768.34 Q1865.51 1769.1 1862.73 1770.65 L1862.73 1765.93 Q1865.55 1764.79 1868.01 1764.21 Q1870.46 1763.64 1872.5 1763.64 Q1877.87 1763.64 1881.06 1766.32 Q1884.26 1769.01 1884.26 1773.5 Q1884.26 1775.63 1883.45 1777.55 Q1882.66 1779.45 1880.55 1782.04 Q1879.97 1782.71 1876.87 1785.93 Q1873.77 1789.12 1868.12 1794.89 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip960)" d="M2495.28 1768.34 L2483.47 1786.78 L2495.28 1786.78 L2495.28 1768.34 M2494.05 1764.26 L2499.93 1764.26 L2499.93 1786.78 L2504.86 1786.78 L2504.86 1790.67 L2499.93 1790.67 L2499.93 1798.82 L2495.28 1798.82 L2495.28 1790.67 L2479.68 1790.67 L2479.68 1786.16 L2494.05 1764.26 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip960)" d="M1371.47 1861.02 Q1373.54 1861.72 1375.48 1864.01 Q1377.45 1866.3 1379.43 1870.31 L1385.95 1883.3 L1379.04 1883.3 L1372.97 1871.11 Q1370.61 1866.34 1368.38 1864.78 Q1366.19 1863.22 1362.37 1863.22 L1355.36 1863.22 L1355.36 1883.3 L1348.93 1883.3 L1348.93 1835.78 L1363.45 1835.78 Q1371.6 1835.78 1375.61 1839.19 Q1379.62 1842.59 1379.62 1849.47 Q1379.62 1853.96 1377.52 1856.92 Q1375.45 1859.88 1371.47 1861.02 M1355.36 1841.06 L1355.36 1857.93 L1363.45 1857.93 Q1368.1 1857.93 1370.45 1855.8 Q1372.84 1853.64 1372.84 1849.47 Q1372.84 1845.3 1370.45 1843.2 Q1368.1 1841.06 1363.45 1841.06 L1355.36 1841.06 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip960)" d="M1421.54 1864.01 L1421.54 1866.88 L1394.61 1866.88 Q1394.99 1872.92 1398.24 1876.11 Q1401.52 1879.26 1407.34 1879.26 Q1410.71 1879.26 1413.87 1878.43 Q1417.05 1877.6 1420.17 1875.95 L1420.17 1881.49 Q1417.02 1882.82 1413.71 1883.52 Q1410.4 1884.22 1406.99 1884.22 Q1398.46 1884.22 1393.46 1879.26 Q1388.5 1874.29 1388.5 1865.83 Q1388.5 1857.07 1393.21 1851.95 Q1397.95 1846.79 1405.97 1846.79 Q1413.16 1846.79 1417.33 1851.44 Q1421.54 1856.06 1421.54 1864.01 M1415.68 1862.29 Q1415.62 1857.49 1412.97 1854.62 Q1410.36 1851.76 1406.04 1851.76 Q1401.13 1851.76 1398.17 1854.53 Q1395.25 1857.3 1394.8 1862.33 L1415.68 1862.29 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip960)" d="M1445.22 1833.84 Q1440.95 1841.16 1438.88 1848.32 Q1436.81 1855.48 1436.81 1862.84 Q1436.81 1870.19 1438.88 1877.41 Q1440.98 1884.61 1445.22 1891.89 L1440.12 1891.89 Q1435.35 1884.41 1432.96 1877.19 Q1430.61 1869.96 1430.61 1862.84 Q1430.61 1855.74 1432.96 1848.54 Q1435.32 1841.35 1440.12 1833.84 L1445.22 1833.84 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip960)" d="M1486.21 1847.65 L1473.32 1865 L1486.88 1883.3 L1479.97 1883.3 L1469.6 1869.3 L1459.22 1883.3 L1452.31 1883.3 L1466.16 1864.65 L1453.49 1847.65 L1460.4 1847.65 L1469.85 1860.35 L1479.3 1847.65 L1486.21 1847.65 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip960)" d="M1494.23 1833.84 L1499.32 1833.84 Q1504.1 1841.35 1506.45 1848.54 Q1508.84 1855.74 1508.84 1862.84 Q1508.84 1869.96 1506.45 1877.19 Q1504.1 1884.41 1499.32 1891.89 L1494.23 1891.89 Q1498.47 1884.61 1500.53 1877.41 Q1502.63 1870.19 1502.63 1862.84 Q1502.63 1855.48 1500.53 1848.32 Q1498.47 1841.16 1494.23 1833.84 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><polyline clip-path="url(#clip960)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="217.02,1734.12 217.02,47.2441 "></polyline>
+<polyline clip-path="url(#clip960)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="217.02,1509.48 235.918,1509.48 "></polyline>
+<polyline clip-path="url(#clip960)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="217.02,1200.08 235.918,1200.08 "></polyline>
+<polyline clip-path="url(#clip960)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="217.02,890.681 235.918,890.681 "></polyline>
+<polyline clip-path="url(#clip960)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="217.02,581.28 235.918,581.28 "></polyline>
+<polyline clip-path="url(#clip960)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="217.02,271.88 235.918,271.88 "></polyline>
+<path clip-path="url(#clip960)" d="M116.585 1509.93 L146.261 1509.93 L146.261 1513.87 L116.585 1513.87 L116.585 1509.93 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip960)" d="M160.381 1522.83 L176.7 1522.83 L176.7 1526.76 L154.756 1526.76 L154.756 1522.83 Q157.418 1520.07 162.001 1515.44 Q166.608 1510.79 167.788 1509.45 Q170.034 1506.92 170.913 1505.19 Q171.816 1503.43 171.816 1501.74 Q171.816 1498.98 169.872 1497.25 Q167.95 1495.51 164.848 1495.51 Q162.649 1495.51 160.196 1496.28 Q157.765 1497.04 154.987 1498.59 L154.987 1493.87 Q157.811 1492.73 160.265 1492.15 Q162.719 1491.58 164.756 1491.58 Q170.126 1491.58 173.321 1494.26 Q176.515 1496.95 176.515 1501.44 Q176.515 1503.57 175.705 1505.49 Q174.918 1507.39 172.811 1509.98 Q172.233 1510.65 169.131 1513.87 Q166.029 1517.06 160.381 1522.83 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip960)" d="M116.214 1200.53 L145.89 1200.53 L145.89 1204.47 L116.214 1204.47 L116.214 1200.53 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip960)" d="M156.793 1213.43 L164.432 1213.43 L164.432 1187.06 L156.122 1188.73 L156.122 1184.47 L164.385 1182.8 L169.061 1182.8 L169.061 1213.43 L176.7 1213.43 L176.7 1217.36 L156.793 1217.36 L156.793 1213.43 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip960)" d="M164.756 876.479 Q161.145 876.479 159.316 880.044 Q157.511 883.586 157.511 890.715 Q157.511 897.822 159.316 901.387 Q161.145 904.928 164.756 904.928 Q168.39 904.928 170.196 901.387 Q172.024 897.822 172.024 890.715 Q172.024 883.586 170.196 880.044 Q168.39 876.479 164.756 876.479 M164.756 872.776 Q170.566 872.776 173.622 877.382 Q176.7 881.965 176.7 890.715 Q176.7 899.442 173.622 904.049 Q170.566 908.632 164.756 908.632 Q158.946 908.632 155.867 904.049 Q152.811 899.442 152.811 890.715 Q152.811 881.965 155.867 877.382 Q158.946 872.776 164.756 872.776 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip960)" d="M156.793 594.625 L164.432 594.625 L164.432 568.259 L156.122 569.926 L156.122 565.667 L164.385 564 L169.061 564 L169.061 594.625 L176.7 594.625 L176.7 598.56 L156.793 598.56 L156.793 594.625 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip960)" d="M160.381 285.225 L176.7 285.225 L176.7 289.16 L154.756 289.16 L154.756 285.225 Q157.418 282.47 162.001 277.84 Q166.608 273.188 167.788 271.845 Q170.034 269.322 170.913 267.586 Q171.816 265.827 171.816 264.137 Q171.816 261.382 169.872 259.646 Q167.95 257.91 164.848 257.91 Q162.649 257.91 160.196 258.674 Q157.765 259.438 154.987 260.989 L154.987 256.266 Q157.811 255.132 160.265 254.554 Q162.719 253.975 164.756 253.975 Q170.126 253.975 173.321 256.66 Q176.515 259.345 176.515 263.836 Q176.515 265.966 175.705 267.887 Q174.918 269.785 172.811 272.378 Q172.233 273.049 169.131 276.266 Q166.029 279.461 160.381 285.225 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip960)" d="M14.1184 970.761 L14.1184 964.332 L61.6384 964.332 L61.6384 970.761 L14.1184 970.761 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip960)" d="M32.8336 924.037 Q28.8869 921.841 27.009 918.785 Q25.1311 915.73 25.1311 911.592 Q25.1311 906.022 29.046 902.998 Q32.9291 899.974 40.1224 899.974 L61.6384 899.974 L61.6384 905.863 L40.3133 905.863 Q35.1889 905.863 32.7063 907.677 Q30.2237 909.491 30.2237 913.215 Q30.2237 917.767 33.2474 920.408 Q36.2711 923.05 41.491 923.05 L61.6384 923.05 L61.6384 928.938 L40.3133 928.938 Q35.1571 928.938 32.7063 930.753 Q30.2237 932.567 30.2237 936.354 Q30.2237 940.842 33.2792 943.484 Q36.3029 946.126 41.491 946.126 L61.6384 946.126 L61.6384 952.014 L25.9905 952.014 L25.9905 946.126 L31.5287 946.126 Q28.2503 944.121 26.6907 941.32 Q25.1311 938.519 25.1311 934.668 Q25.1311 930.784 27.1045 928.079 Q29.0779 925.342 32.8336 924.037 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip960)" d="M12.1769 874.225 Q19.4975 878.49 26.6589 880.559 Q33.8203 882.628 41.1727 882.628 Q48.5251 882.628 55.7502 880.559 Q62.9434 878.458 70.2321 874.225 L70.2321 879.318 Q62.7524 884.092 55.5274 886.479 Q48.3023 888.834 41.1727 888.834 Q34.0749 888.834 26.8817 886.479 Q19.6884 884.124 12.1769 879.318 L12.1769 874.225 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip960)" d="M25.9905 833.23 L43.337 846.121 L61.6384 832.562 L61.6384 839.468 L47.6339 849.845 L61.6384 860.221 L61.6384 867.127 L42.9869 853.282 L25.9905 865.95 L25.9905 859.043 L38.6901 849.59 L25.9905 840.137 L25.9905 833.23 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip960)" d="M12.1769 825.209 L12.1769 820.117 Q19.6884 815.342 26.8817 812.987 Q34.0749 810.6 41.1727 810.6 Q48.3023 810.6 55.5274 812.987 Q62.7524 815.342 70.2321 820.117 L70.2321 825.209 Q62.9434 820.976 55.7502 818.907 Q48.5251 816.807 41.1727 816.807 Q33.8203 816.807 26.6589 818.907 Q19.4975 820.976 12.1769 825.209 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><circle clip-path="url(#clip962)" cx="668.667" cy="1686.38" r="14.4" fill="#009af9" fill-rule="evenodd" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="3.84"></circle>
+<circle clip-path="url(#clip962)" cx="668.667" cy="94.9858" r="14.4" fill="#009af9" fill-rule="evenodd" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="3.84"></circle>
+<circle clip-path="url(#clip962)" cx="1197.22" cy="968.682" r="14.4" fill="#009af9" fill-rule="evenodd" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="3.84"></circle>
+<circle clip-path="url(#clip962)" cx="1197.22" cy="812.679" r="14.4" fill="#009af9" fill-rule="evenodd" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="3.84"></circle>
+<circle clip-path="url(#clip962)" cx="1357.11" cy="890.681" r="14.4" fill="#009af9" fill-rule="evenodd" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="3.84"></circle>
+<circle clip-path="url(#clip962)" cx="2189.11" cy="890.681" r="14.4" fill="#009af9" fill-rule="evenodd" fill-opacity="1" stroke="#000000" stroke-opacity="1" stroke-width="3.84"></circle>
+<polyline clip-path="url(#clip962)" style="stroke:#e26f46; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="1564.07,890.681 1563.45,871.057 1561.58,851.513 1558.48,832.126 1554.15,812.975 1548.62,794.137 1541.91,775.688 1534.03,757.702 1525.04,740.251 1514.95,723.406 1503.82,707.235 1491.68,691.802 1478.59,677.17 1464.6,663.398 1449.76,650.541 1434.14,638.65 1417.79,627.775 1400.79,617.959 1383.2,609.24 1365.09,601.655 1346.54,595.233 1327.61,590.002 1308.4,585.981 1288.96,583.187 1269.39,581.631 1249.76,581.319 1230.15,582.253 1210.64,584.429 1191.3,587.839 1172.22,592.467 1153.47,598.297 1135.13,605.304 1117.27,613.46 1099.97,622.732 1083.29,633.083 1067.29,644.472 1052.05,656.851 1037.63,670.173 1024.08,684.382 1011.46,699.422 999.823,715.232 989.208,731.749 979.663,748.905 971.224,766.632 963.927,784.859 957.801,803.512 952.87,822.516 949.155,841.795 946.669,861.27 945.424,880.864 945.424,900.497 946.669,920.091 949.155,939.566 952.87,958.845 957.801,977.849 963.927,996.502 971.224,1014.73 979.663,1032.46 989.208,1049.61 999.823,1066.13 1011.46,1081.94 1024.08,1096.98 1037.63,1111.19 1052.05,1124.51 1067.29,1136.89 1083.29,1148.28 1099.97,1158.63 1117.27,1167.9 1135.13,1176.06 1153.47,1183.06 1172.22,1188.89 1191.3,1193.52 1210.64,1196.93 1230.15,1199.11 1249.76,1200.04 1269.39,1199.73 1288.96,1198.17 1308.4,1195.38 1327.61,1191.36 1346.54,1186.13 1365.09,1179.71 1383.2,1172.12 1400.79,1163.4 1417.79,1153.59 1434.14,1142.71 1449.76,1130.82 1464.6,1117.96 1478.59,1104.19 1491.68,1089.56 1503.82,1074.13 1514.95,1057.96 1525.04,1041.11 1534.03,1023.66 1541.91,1005.67 1548.62,987.224 1554.15,968.386 1558.48,949.235 1561.58,929.848 1563.45,910.304 1564.07,890.681 "></polyline>
+</svg>
+</div>
+</div>
+</div>
+<p>Similarly, only without providing a proof we state here that if the eigenvectors of <span class="math inline">\mathbf H</span> corresponding to the unstable eigenvalue (<span class="math inline">|\lambda|&gt;1</span>) are denoted as <span class="math inline">\mathbf v_1, \ldots, \mathbf v_n</span>, and are stacked together to form a matrix <span class="math inline">\mathbf V^\mathrm{unstable} = \begin{bmatrix}\mathbf v_1 &amp; \ldots &amp; \mathbf v_n \end{bmatrix}</span>, and we name the two vertical <span class="math inline">n\times n</span> blocks in the matrix <span class="math inline">\mathbf V^\mathrm{unstable} = \begin{bmatrix} \mathbf X_1\\\mathbf X_2\end{bmatrix}</span>, the solution to the DARE can be expressed as <span class="math display">
+\bm X = \mathbf X_2\mathbf X_1^{-1}.
+</span></p>
+<p>This method of solving the DARE is called the <em>invariant subspace</em> method. It is not particularly reliable when the matrix <span class="math inline">\mathbf H</span> has eigenvalues close to the unit circle. And it also required invertibility of the matrix <span class="math inline">\mathbf A</span> in the first place. Still, we wanted to present it here because it displays a fundamental phenomenon often encountered in optimal control – the need to split some eigenvalues, eigenvectors, subspaces into stable and unstable ones.</p>
+<div id="exm-dare-subspace" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2 (Solving the DARE using the invariant subspace method)</strong></span> &nbsp;</p>
+<div id="4" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>indices_unstable <span class="op">=</span> <span class="fu">findall</span>(x <span class="op">-&gt;</span> <span class="fu">abs</span>(x) <span class="op">&gt;</span> <span class="fl">1</span>, λ)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Vᵘ <span class="op">=</span> V[<span class="op">:</span>,indices_unstable]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>X₁ <span class="op">=</span> Vᵘ[<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,<span class="op">:</span>]</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>X₂ <span class="op">=</span> Vᵘ[<span class="fl">4</span><span class="op">:</span><span class="fl">6</span>,<span class="op">:</span>]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X₂<span class="op">/</span>X₁</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> <span class="fu">real</span>(X) <span class="co"># We get rid of the negligible (≈ 10⁻¹⁶) imaginary parts.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>3×3 Matrix{Float64}:
+ 2.5197    0.499383  0.914329
+ 0.499383  2.65859   0.835092
+ 0.914329  0.835092  4.30357</code></pre>
+</div>
+</div>
+<p>We can compare against the solution provided by the specialized package <a href="https://github.com/andreasvarga/MatrixEquations.jl">MatrixEquations.jl</a>:</p>
+<div id="6" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MatrixEquations</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>X_ared, CLSEIG, F <span class="op">=</span> <span class="fu">ared</span>(A,B,R,Q);</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>X_ared</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>3×3 Matrix{Float64}:
+ 2.5197    0.499383  0.914329
+ 0.499383  2.65859   0.835092
+ 0.914329  0.835092  4.30357</code></pre>
+</div>
+</div>
+</div>
 
 
 
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list">
+<div id="ref-simaAlgorithmsLinearQuadraticOptimization1996" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">V. Sima, <em>Algorithms for <span>Linear-Quadratic Optimization</span></em>, 1 edition. New York: <span>Chapman and Hall/CRC</span>, 1996.</div>
+</div>
+<div id="ref-biniNumericalSolutionAlgebraic2012" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">D. A. Bini, B. Iannazzo, and B. Meini, <em>Numerical <span>Solution</span> of <span>Algebraic Riccati Equations</span></em>. Philadelphia: <span>SIAM-Society for Industrial and Applied Mathematics</span>, 2012.</div>
+</div>
+<div id="ref-dattaNumericalMethodsLinear2003" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">B. Datta, <em>Numerical <span>Methods</span> for <span>Linear Control Systems</span></em>. Amsterdam; Boston: Academic Press, 2003.</div>
+</div>
+<div id="ref-lewisOptimalControl2012" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">F. L. Lewis, D. Vrabie, and V. L. Syrmo, <em>Optimal <span>Control</span></em>, 3rd ed. John Wiley &amp; Sons, 2012. Accessed: Mar. 09, 2022. [Online]. Available: <a href="https://lewisgroup.uta.edu/FL%20books/Lewis%20optimal%20control%203rd%20edition%202012.pdf">https://lewisgroup.uta.edu/FL%20books/Lewis%20optimal%20control%203rd%20edition%202012.pdf</a></div>
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1400,13 +1640,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./discr_indir_LQR_inf_horizon.html" class="pagination-link" aria-label="Discrete-time LQR on an infinite horizon">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Discrete-time LQR on an infinite horizon</span>
+      <a href="./discr_indir_LQR_tracking.html" class="pagination-link" aria-label="Reference tracking using LQR">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Reference tracking using LQR</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./discr_indir_references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./discr_indir_software.html" class="pagination-link" aria-label="Software for LQR and DARE">
+        <span class="nav-page-text">Software for LQR and DARE</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
