@@ -184,7 +184,7 @@ $$
 \text{subject to}   &\quad \bm x_{t+k+1|t} = \mathbf A\bm x_{t+k|t} + \mathbf B\bm u_{t+k|t},\quad k = 0, \ldots, N_\mathrm{p}-1, \\
                     &\quad \bm x_{t|t} = \mathbf x_t, \\
                     &\quad (\mathbf A-\mathbf I) {\color{blue}\bm x^\mathrm{ss}} + \mathbf B {\color{red}\bm u^\mathrm{ss}} = 0,\\
-                    &\quad \mathbf C {\color{blue}\bm x^\mathrm{ss}} = \mathbf y^\mathrm{ref},\\
+                    &\quad \mathbf C {\color{blue}\bm x^\mathrm{ss}} = {\color{green}\mathbf y^\mathrm{ref}},\\
                     &\quad \mathbf u^{\min} \leq \bm u_{t+k|t} \leq \mathbf u^{\max},\\
                     &\quad \mathbf x^{\min} \leq \bm x_{t+k|t} \leq \mathbf x^{\max}.
  \end{aligned}

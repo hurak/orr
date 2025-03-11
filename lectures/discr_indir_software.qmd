@@ -1,0 +1,41 @@
+---
+title: "Software for LQR and DARE"
+bibliography: 
+    - "ref_optimal_control.bib"
+csl: ieee-control-systems.csl
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+        code-summary: "Show the code"
+crossref:
+  fig-prefix: Fig. 
+  eq-prefix: Eq.
+engine: julia
+---
+
+## Julia
+
+[ControlSystems.jl](https://github.com/JuliaControl/ControlSystems.jl)
+
+- [lqr](https://juliacontrol.github.io/ControlSystems.jl/stable/lib/synthesis/#ControlSystemsBase.lqr-Tuple{Union{Continuous,%20Type{Continuous}},%20Any,%20Any,%20Any,%20Any,%20Vararg{Any}})
+
+- [are](https://juliacontrol.github.io/ControlSystems.jl/stable/lib/analysis/#ControlSystemsBase.are-Tuple%7BUnion%7BType%7BDiscrete%7D,%20Discrete%7D,%20AbstractMatrix,%20Any,%20Any,%20Any%7D) – actually uses MatrixEquations.jl.
+
+[MatrixEquations.jl](https://github.com/andreasvarga/MatrixEquations.jl)
+
+- [ared](https://andreasvarga.github.io/MatrixEquations.jl/dev/riccati.html#MatrixEquations.ared)
+
+## MATLAB
+
+[Control System Toolbox](https://www.mathworks.com/products/control.html) 
+
+- [idare](https://www.mathworks.com/help/control/ref/idare.html) ([dare](https://www.mathworks.com/help/control/ref/dare.html) deprecated)
+- [dlqr](https://www.mathworks.com/help/control/ref/lti.dlqr.html)
+
+## Python 
+
+[Python Control](https://github.com/python-control/python-control)
+
+- [dare](https://python-control.readthedocs.io/en/0.10.1/generated/control.dare.html#control.dare)
+- [dlqr](https://python-control.readthedocs.io/en/0.10.1/generated/control.dlqr.html#control.dlqr)
