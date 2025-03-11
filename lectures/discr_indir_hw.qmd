@@ -3,4 +3,123 @@ title: "Homework"
 format:
     html:
         html-math-method: katex
+engine: julia
 ---
+
+## Use the LQ-optimal control methodology to design a discrete-time state-feedback regulator for a given LTI system
+
+Specifically, you should design a discrete-time state-feedback controller that performs fast "sideways" motion of a small indoor quadrotor (four-rotor drone). Namely, the controller should bring a quadrotor from one horizontal position to another. A 2D model is in the figure below
+
+![Quadrotor model](figures/2d_quadrotor_rotated.svg)
+
+and the corresponding motion equations are
+
+$$\begin{align*}
+ \ddot y(t) &= -a(t)\sin \theta(t)\\
+ \ddot z(t) & = a(t)\cos \theta(t) - g\\
+ \ddot \theta(t) &= \alpha(t)
+\end{align*}$$
+where $a(t)$ and $\alpha(t)$ represent the control inputs to the system, namely the linear and rotational acceleration. This assumes that the innermost control loops are already implemented and closed.
+
+The gravitational acceleration $g$ is approximated by $10\,\text{m}\,\text{s}^{-2}$. The position variables $y(t)$ and $z(t)$ have units of m, $\theta$ is given in rad, and the inputs $a(t)$ and $\alpha(t)$ are in $\text{m}\,\text{s}^{-2}$ and $\text{rad}\,\text{s}^{-2}$, respectively. Only concentrating on the horizontal control, the input $a(t)$ is set to
+
+$$ a(t)=\frac{10}{\cos\theta(t)}$$
+resulting in $\dot z(t)=0$ and the simplified dynamics
+
+$$\begin{align*}
+\ddot y(t)&=-10 \tan \theta (t),\\
+\ddot \theta(t) &= \alpha(t). 
+\end{align*}$$
+
+
+The concrete control goal is to bring the quadrotor from the initial state $y(0)=1,\,\dot y(0)=\theta(0)=\dot \theta(0)=0$ to the final state $y(T) = \dot y(T)=\theta(T)=\dot \theta(T)=0$.
+
+In addition, there are constraints on the input $\alpha(t)$ and on the state variable $\theta(t)$:
+
+$$\begin{align*}
+ |\alpha(t)| &\leq 100,\\
+ |\theta(t)| &\leq \frac{\pi}{6}.
+\end{align*}$$
+
+### Tasks
+- Linearize the system around the equilibrium point $y=0,\,\dot y=0,\,\theta=0,\,\dot \theta=0$ and discretize it with a sampling time $T_s=0.01\,\text{s}$.
+- In Julia, using the linearized model, design an LQ-optimal controller that gets the quadrotor from the initial to the vicinity of the final state ($\lvert x_i(t) \rvert \leq 0.01$ for $i=1,2,3,4$) in the shortest possible time you can achieve while respecting the constraints on the input and the state variable.
+- For your solution to be accepted, you need to get to the vicinity of the final state within 3 seconds.
+- We advise you to use `ControlSystemsBase` package for the LQ-optimal controller synthesis.
+- The controller should be implemented as a function `state_feedback(x, t)` that takes the current state `x` and the current time step `t` as input and returns the control input $\alpha(t)$.
+
+
+
+::: {.callout-note}
+### Ranking
+All the solutions that meet the basic requirements will be ranked according to the time it takes for the quadrotor to reach the final state. The faster the solution, the higher the ranking.
+
+**The top three contenders will be awarded bonus 10% (grade increase) to the practical (open-book) part of the final exam.**
+
+:::
+
+Your solution should be based on the following template and should be contained in a single file named `hw.jl`, which you will upload to the [BRUTE](https://cw.felk.cvut.cz/brute) system.
+
+```{julia}
+#| eval: false
+
+using OrdinaryDiffEq, ControlSystemsBase, LinearAlgebra, Plots
+
+const Ts = 1/100
+
+function quadrotor!(ẋ, x, u, t)
+
+    α = max(min(u, 100), -100)
+
+    ẋ[1] = x[2]
+    ẋ[2] = -10*tan(x[3])
+    ẋ[3] = x[4]
+    ẋ[4] = α
+end
+
+## TODO Linearize and discretize the system
+
+## TODO design the LQ-optimal controller
+
+function state_feedback(x, t)
+
+    ## TODO implement the state-feedback controller 
+
+    return 0.0
+end
+
+```
+
+You may test your implementation using the following code snippet:
+
+```{julia}
+#| eval: false
+
+T0 = 0;
+Tf = 3;
+ts = T0:Ts:Tf;
+
+N = length(ts)
+xs = zeros(4, N)
+us = zeros(1, N-1)
+xs[:, 1] = [1.0; 0.0; 0.0; 0.0]
+
+for i = 1:N-1
+    us[:, i] .= state_feedback(xs[:, i], i)
+    prob = ODEProblem(quadrotor!, xs[:, i], [0, Ts], us[1, i])
+    sol = solve(prob, Tsit5())
+    xs[:, i+1] = sol.u[end]
+end
+
+
+p1 = plot(ts, xs[1, :], label="y")
+plot!(ts, xs[2, :], label="ẏ")
+plot!(ts, xs[3, :], label="θ")
+plot!(ts, xs[4, :], label="θ̇")
+
+plot!([T0, Tf], [-pi/6, -pi/6], label="θ = -π/6", linestyle=:dash)
+plot!([T0, Tf], [pi/6, pi/6], label="θ = π/6", linestyle=:dash)
+
+p2 = plot(ts[1:end-1], us[1, :], label="u")
+plot(p1, p2, layout=(2, 1), size=(800, 600))
+```
