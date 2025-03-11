@@ -1,10 +1,38 @@
 ---
 title: "Discrete-time algebraic Riccati equation (DARE)"
+bibliography: 
+    - "ref_optimal_control.bib"
+csl: ieee-control-systems.csl
 format:
     html:
         html-math-method: katex
         code-fold: true
-execute:
-    enabled: false
+        code-summary: "Show the code"
+crossref:
+  fig-prefix: Fig. 
+  eq-prefix: Eq.
 engine: julia
 ---
+
+We have learnt previously that the following matrix equation 
+$$
+\bm X=\mathbf A^\top\left[\bm X-\bm X\mathbf B(\mathbf B^\top\bm X\mathbf B+\mathbf R)^{-1}\mathbf B^\top\bm X\right]\mathbf A+\mathbf Q
+$$
+or, equivalently,
+$$\boxed{
+\mathbf A^\top\bm X\mathbf A - \bm X +\mathbf Q - \mathbf A^\top\bm X\mathbf B(\mathbf B^\top\bm X\mathbf B+\mathbf R)^{-1}\mathbf B^\top\bm X\mathbf A = \mathbf 0}
+$$
+
+called *discrete-time algebraic Riccati equation* (DARE) is instrumental in solving the infinite time horizon LQR problem. The equation must be solved for the matrix $\bm X$ in order to compute the state feedback gain.
+
+::: {.callout-note}
+## The matrix variable $\bm X$
+Note that here we have replaced the previous name for matrix variable $\bm S_\infty$ by the new $\bm X$ to emphasize that it is the unknown here.
+:::
+
+There are several approaches to solving the DARE, and the most reliable and accurate once have already been implemented in major computational packages (see the section on software). Here we do not aim at explaining them. 
+
+
+
+#TODO 
+
