@@ -34,7 +34,7 @@ $$\begin{align*}
 
 The concrete control goal is to bring the quadrotor from the initial state $y(0)=1,\,\dot y(0)=\theta(0)=\dot \theta(0)=0$ to the final state $y(T) = \dot y(T)=\theta(T)=\dot \theta(T)=0$.
 
-In adition, there are constraints on the input $\alpha(t)$ and on the state variable $\theta(t)$:
+In addition, there are constraints on the input $\alpha(t)$ and on the state variable $\theta(t)$:
 
 $$\begin{align*}
  |\alpha(t)| &\leq 100,\\
@@ -43,9 +43,9 @@ $$\begin{align*}
 
 ### Tasks
 - Linearize the system around the equilibrium point $y=0,\,\dot y=0,\,\theta=0,\,\dot \theta=0$ and discretize it with a sampling time $T_s=0.01\,\text{s}$.
-- In Julia, design an LQ-optimal controller that gets the quadrotor from the initial to the final state in the shortest possible time you can achieve while respecting the constraints on the input and the state variable. 
+- In Julia, using the linearized model, design an LQ-optimal controller that gets the quadrotor from the initial to the vicinity of the final state ($\lvert x_i(t) \rvert \leq 0.01$ for $i=1,2,3,4$) in the shortest possible time you can achieve while respecting the constraints on the input and the state variable.
 - For your solution to be accepted, you need to get to the vicinity of the final state within 3 seconds.
-- We `ControlSystemsBase` for the LQ-optimal controller synthesis.
+- We advise you to use `ControlSystemsBase` package for the LQ-optimal controller synthesis.
 - The controller should be implemented as a function `state_feedback(x, t)` that takes the current state `x` and the current time step `t` as input and returns the control input $\alpha(t)$.
 
 
@@ -54,7 +54,7 @@ $$\begin{align*}
 ### Ranking
 All the solutions that meet the basic requirements will be ranked according to the time it takes for the quadrotor to reach the final state. The faster the solution, the higher the ranking.
 
-**The top three solutions will be awarded bonus 10% to the practial (open-book) part of the final exam.**
+**The top three contenders will be awarded bonus 10% (grade increase) to the practical (open-book) part of the final exam.**
 
 :::
 
