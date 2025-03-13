@@ -973,24 +973,23 @@ window.Quarto = {
 </span> for which we want to minimize the quadratic cost given by <span class="math display">
 J_0(\bm x_0, \bm u_0, \bm u_1, \ldots, \bm u_{N-1}) = \frac{1}{2}\bm x_N^\top \mathbf S_N \bm x_N + \frac{1}{2}\sum_{k=0}^{N-1}\left(\bm x_k^\top \mathbf Q \bm x_k + \bm u_k^\top \mathbf R \bm u_k\right),
 </span> with <span class="math inline">\mathbf S_N\succeq 0, \mathbf Q\succeq 0, \mathbf R\succ 0</span>, as usual.</p>
-<p>We now invoke the principle of optimality, that is, we start at the end of the time interval and evaluate the optimal cost <span class="math display">
+<p>We now invoke the principle of optimality, that is, we start at the end of the time interval and find the optimal cost <span class="math display">
 J_N^\star(\bm x_N) = \frac{1}{2}\bm x_N^\top \mathbf S_N \bm x_N.
 </span></p>
-<p>Obviously, here we did not even have to do any optimization since at the and of the interval the cost can no longer be influenced by any control. We just evaluated the cost.</p>
-<p>We then proceed backwards in time, that is, we decrease the time to <span class="math inline">k=N-1</span>. Here do have to optimize: <span class="math display">
+<p>Actually, we have nothing to minimize here, we just evaluate the cost. We then proceed backwards in time, that is, we decrease the time to <span class="math inline">k=N-1</span>. Here we do have something to minimize: <span class="math display">
 J^\star_{N-1}(\bm x_{N-1}) = \min_{\bm u_{N-1}\in\mathbb R^m} J_{N-1}(\bm x_{N-1},\bm u_{N-1}) = \min_{\bm u_{N-1}\in\mathbb R^m} \left[L(\bm x_{N-1},\bm u_{N-1}) + J^\star_{N}(\bm x_{N}) \right].
 </span></p>
 <p>We now expand the expression for the cost<br>
 <span class="math display">
 \begin{aligned}
-J_{N-1}(\bm x_{N-1},\bm u_{N-1}) &amp;= \frac{1}{2} \left(\mathbf x_{N-1}^\top \mathbf Q \mathbf x_{N-1} + \mathbf u_{N-1}^\top \mathbf R \mathbf u_{N-1} \right) + J^\star_{N}(\bm x_{N}) \\
-&amp;= \frac{1}{2} \left(\mathbf x_{N-1}^\top \mathbf Q \mathbf x_{N-1} + \mathbf u_{N-1}^\top \mathbf R \mathbf u_{N-1} \right) + \frac{1}{2}\mathbf x_N^\top \mathbf S_N \mathbf x_N\\
-&amp;= \frac{1}{2} \left( \mathbf x_{N-1}^\top \mathbf Q \mathbf x_{N-1} + \mathbf u_{N-1}^\top \mathbf R \mathbf u_{N-1} + \mathbf x_N^\top \mathbf S_N \mathbf x_N \right)\\
-&amp;= \frac{1}{2} \left[ \mathbf x_{N-1}^\top \mathbf Q \mathbf x_{N-1} + \mathbf u_{N-1}^\top \mathbf R \mathbf u_{N-1} + (\mathbf x_{N-1}^\top \mathbf A^\top + \mathbf u_{N-1}^\top \mathbf B^\top) \mathbf S_N (\mathbf A\mathbf x_{N-1} + \mathbf B\mathbf u_{N-1}) \right]\\
-&amp;= \frac{1}{2} \left[\mathbf x_{N-1}^\top (\mathbf Q  + \mathbf A^\top\mathbf S_N \mathbf A)\mathbf x_{N-1} + 2\mathbf x^\top_{N-1}\mathbf A ^\top \mathbf S_N \mathbf B  \mathbf u_{N-1} + \mathbf u^\top_{N-1}(\mathbf R + \mathbf B^\top \mathbf S_n \mathbf B)\mathbf u_{N-1} \right].
+J_{N-1}(\bm x_{N-1},\bm u_{N-1}) &amp;= \frac{1}{2} \left(\bm x_{N-1}^\top \mathbf Q \bm x_{N-1} + \bm u_{N-1}^\top \mathbf R \bm u_{N-1} \right) + J^\star_{N}(\bm x_{N}) \\
+&amp;= \frac{1}{2} \left(\bm x_{N-1}^\top \mathbf Q \bm x_{N-1} + \bm u_{N-1}^\top \mathbf R \bm u_{N-1} \right) + \frac{1}{2}\mathbf x_N^\top \mathbf S_N \mathbf x_N\\
+&amp;= \frac{1}{2} \left( \bm x_{N-1}^\top \mathbf Q \bm x_{N-1} + \bm u_{N-1}^\top \mathbf R \bm u_{N-1} + \mathbf x_N^\top \mathbf S_N \mathbf x_N \right)\\
+&amp;= \frac{1}{2} \left[ \bm x_{N-1}^\top \mathbf Q \bm x_{N-1} + \bm u_{N-1}^\top \mathbf R \bm u_{N-1} + (\bm x_{N-1}^\top \mathbf A^\top + \bm u_{N-1}^\top \mathbf B^\top) \mathbf S_N (\mathbf A\bm x_{N-1} + \mathbf B\bm u_{N-1}) \right]\\
+&amp;= \frac{1}{2} \left[\bm x_{N-1}^\top (\mathbf Q  + \mathbf A^\top\mathbf S_N \mathbf A)\bm x_{N-1} + 2\mathbf x^\top_{N-1}\mathbf A ^\top \mathbf S_N \mathbf B  \bm u_{N-1} + \mathbf u^\top_{N-1}(\mathbf R + \mathbf B^\top \mathbf S_n \mathbf B)\bm u_{N-1} \right].
 \end{aligned}
 </span></p>
-<p>We assumed no constraint on <span class="math inline">\mathbf u_{N-1}</span>, hence finding the minimum of <span class="math inline">J_{N-1}</span> is as easy as setting its gradient to zero <span class="math display">
+<p>Since we assumed no constraint on <span class="math inline">\bm u_{N-1}</span>, finding the minimum of <span class="math inline">J_{N-1}</span> is as easy as setting its gradient to zero <span class="math display">
 \mathbf 0 = \nabla_{\bm u_{N-1}} J_{N-1} = (\mathbf R + \mathbf B^\top \mathbf S_n \mathbf B)\bm u_{N-1} + \mathbf B^\top \mathbf S_N\mathbf A\bm x_{N-1},
 </span> which leads to <span class="math display">
 \bm u_{N-1}^\star = -\underbrace{(\mathbf B^\top \mathbf S_N\mathbf B + \mathbf R)^{-1}\mathbf B^\top \mathbf S_N \mathbf A}_{\mathbf K_{N-1}} \bm x_{N-1},
@@ -998,7 +997,7 @@ J_{N-1}(\bm x_{N-1},\bm u_{N-1}) &amp;= \frac{1}{2} \left(\mathbf x_{N-1}^\top \
 <p>The optimal cost <span class="math inline">J^\star_{N-1}</span> can be obtained by substituting <span class="math inline">\bm u_{N-1}^\star</span> into <span class="math inline">J_{N-1}</span> <span class="math display">
 J_{N-1}^\star = \frac{1}{2}\bm x_{N-1}^\top \underbrace{\left[(\mathbf A-\mathbf B\mathbf K_{N-1})^\top \mathbf S_N(\mathbf A-\mathbf B\mathbf K_{N-1}) + \mathbf K_{N-1}^\top \mathbf R \mathbf K_{N-1} + \mathbf Q\right]}_{\mathbf S_{N-1}} \bm x_{N-1}.
 </span></p>
-<p>Note that the optimal cost <span class="math inline">J^\star_{N-1}</span> is also a quadratic function of the state as is the cost <span class="math inline">J^\star_{N}</span>. We denote the matrix that defines this quadratic function as <span class="math inline">\mathbf S_{N-1}</span>. We do this in anticipation of continuation of this recursive procedure to <span class="math inline">k = N-2, N-3, \ldots</span>, which will give <span class="math inline">\mathbf S_{N-2}, \mathbf S_{N-3}, \ldots</span>. The rest of the story is quite predictable, isn’t it? Applying the Bellman’s principle of optimality we (re)discovered the discrete-time Riccati equation in the <em>Joseph stabilized form</em> <span class="math display">
+<p>Note that the optimal cost <span class="math inline">J^\star_{N-1}</span> is also a quadratic function of the state as is the cost <span class="math inline">J^\star_{N}</span>. We denote the matrix that defines this quadratic function as <span class="math inline">\mathbf S_{N-1}</span>. We do this in anticipation of continuation of this procedure to <span class="math inline">k = N-2, N-3, \ldots</span>, which will give <span class="math inline">\mathbf S_{N-2}, \mathbf S_{N-3}, \ldots</span>. The rest of the story is quite predictable, isn’t it? Applying the Bellman’s principle of optimality we (re)discovered the discrete-time Riccati equation in the <em>Joseph stabilized form</em> <span class="math display">
 \mathbf S_k = (\mathbf A-\mathbf B\mathbf K_{N-1})^\top \mathbf S_N(\mathbf A-\mathbf B\mathbf K_{N-1}) + \mathbf K_{N-1}^\top \mathbf R \mathbf K_{N-1} + \mathbf Q,
 </span> together with the prescription for the state feedback (Kalman) gain <span class="math display">
 \mathbf K_{k} = (\mathbf B^\top \mathbf S_N\mathbf B + \mathbf R)^{-1}\mathbf B^\top \mathbf S_N \mathbf A.
