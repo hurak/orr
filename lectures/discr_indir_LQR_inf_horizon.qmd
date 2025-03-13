@@ -14,6 +14,8 @@ crossref:
 engine: julia
 ---
 
+{{< video https://youtu.be/wLTx0HiK6G0?si=1EExNkBgCMhRqffn >}}
+
 In this section we are going to solve the LQR problem on the time horizon extended to infinity, that is, our goal is to find an infinite (vector) control sequence $\bm u_0, \bm u_{1},\ldots, \bm u_{\infty}$ that minimizes
 $$
  J_0^\infty = \frac{1}{2}\sum_{k=0}^{\infty}\left[\bm x_k^\top \mathbf Q \bm x_k+\bm u_k^\top \mathbf R\bm u_k\right],
@@ -63,8 +65,8 @@ $$
  \mathbf S_{\infty} = \mathbf S_k=\mathbf S_{k+1}
 $$
 to the Riccati equation. The resulting equation
-$$
-\mathbf S_{\infty}=\mathbf A^\text{T}\left[\mathbf S_{\infty}-\mathbf S_{\infty}\mathbf B(\mathbf B^\text{T}\mathbf S_{\infty}\mathbf B+\mathbf R)^{-1}\mathbf B^\text{T}\mathbf S_{\infty}\right]\mathbf A+\mathbf Q
+$$\boxed{
+\mathbf S_{\infty}=\mathbf A^\text{T}\left[\mathbf S_{\infty}-\mathbf S_{\infty}\mathbf B(\mathbf B^\text{T}\mathbf S_{\infty}\mathbf B+\mathbf R)^{-1}\mathbf B^\text{T}\mathbf S_{\infty}\right]\mathbf A+\mathbf Q}
 $$
 is called **discrete-time algebraic Riccati equation** (DARE) and it is one of the most important equations in the field of computational control design. 
 
@@ -75,7 +77,7 @@ $$
 
 Multiplying both sides by the denominator we get the equivalent quadratic (in $s_\infty$) equation
 $$
- b^2s_\infty^2 + (r - a^2b^2 - b^2q)s_\infty - qr = 0.
+ b^2s_\infty^2 + (r - ra^2 - qb^2)s_\infty - qr = 0.
 $$
 
 Voilà! A scalar DARE is just a quadratic equation, for which the solutions can be found readily. 
