@@ -2,6 +2,7 @@
 title: "Discrete-time LQR on an infinite horizon"
 bibliography: 
     - "ref_optimal_control.bib"
+    - "ref_flight_control.bib"
 csl: ieee-control-systems.csl
 format:
     html:
@@ -233,5 +234,114 @@ s₁, s₂ = (-p₁ + sqrt(p₁^2 - 4*p₂*p₀))/(2*p₂), (-p₁ - sqrt(p₁^2
 ```
 :::
 
-As a consequence, the optimal state-feedback gain is $k=0$. For an unstable system this would be unacceptable but for a stable system this makes sense: the system is stable even withouth the control, therefore, when the state is not penalized in the criterion at all ($q=0$), the optimal strategy is not to regulate at all. Mathematically correct. Nonethelesss, from an engineering viewpoint we may be quite unhappy because the role of the feedback regulator is also to attenuate the influence of external disturbances. Our optimal state-feedback regulator does not help at all in these situation. That is why we may want to require positive definite solution of ARE (by strengtheing the condition from detectability to observability of $(A,\sqrt{Q})$).
+As a consequence, the optimal state-feedback gain is $k=0$. For an unstable system this would be unacceptable but for a stable system this makes sense: the system is stable even withouth the control, therefore, when the state is not penalized in the criterion at all ($q=0$), the optimal strategy is not to regulate at all. Mathematically correct. Nonethelesss, from an engineering viewpoint we may be quite unhappy because the role of the feedback regulator is also to attenuate the influence of external disturbances. Our optimal state-feedback regulator does not help at all in these situation. That is why we may want to require positive definite solution of ARE (by strengtheing the condition from detectability to observability of $(\mathbf A,\sqrt{\mathbf Q})$).
+
+The high time for an example of the whole LQR design procedure.
+
+::: {#exm-dlqr-f16}
+## LQR design for lateral-directional dynamics of the F16 aircraft
+This is Example 5.3-1 from [@stevensAircraftControlSimulation2015, page 407]. A linear model of lateral-directional dynamics of F16 trimmed at: VT=502ft/s, 302psf dynamic pressure, cg @ 0.35cbar. It also includes the dynamics of ailerons and rudders and washout filter. The system has two inputs (the commands to the control surfaces), four state variables corresponding to the lateral-directional dynamics of the aircraft, two state variables corresponding to the servo dynamics, and one more corresponding to the washout filter. We assume that all the state variables are available for state feedback (they are measured or estimated).
+
+![Block diagram of a model of lateral-directional dynamics of an aircraft](figures/f16_lqr.png){width=80% #fig-f16-block-diagram}
+
+::: {#tbl-f16-variables}
+
+| Symbol             | Name                                 | Units  |
+|--------------------|--------------------------------------|--------|
+| $u_\mathrm{a}$     | reference for the aileron deflection |  rad   |
+| $u_\mathrm{r}$     | reference for the rudder deflection  |  rad   |
+| $\delta_\mathrm{a}$| true aileron deflection              |  rad   |
+| $\delta_\mathrm{r}$| true rudder deflection               |  rad   |
+| $\beta$            | sideslip angle                       |  rad   |
+| $\phi$             | bank angle                           |  rad   |
+| $p$                | roll rate                            |  rad/s |
+| $r$                | yaw rate                             |  rad/s |
+| $r_\mathrm{w}$     | measured yaw rate (after washout)    |  rad/s |
+
+The two input and six state variables
+
+:::
+
+The code that defines the model
+``` {julia}
+#| code-fold: show
+A = [-0.3220  0.0640   0.0364    -0.9917    0.0003     0.0008   0;
+    0         0        1         0.0037     0          0        0;
+    -30.6492  0        -3.6784   0.6646     -0.7333    0.1315   0;
+    8.5396    0        -0.0254   -0.4764    -0.0319    -0.062   0;
+    0         0        0         0          -20.2      0        0;
+    0         0        0         0          0          -20.2    0;
+    0         0        0         57.2958    0          0       -1]
+
+B = [0     0;
+    0      0;
+    0      0;
+    0      0;
+    20.2   0;
+    0      20.2;
+    0      0]
+
+C = [0      0       0       57.2958 0      0    -1;
+    0       0       57.2958 0       0      0     0;
+    57.2958 0       0       0       0      0     0;
+    0       57.2958 0       0       0      0     0]
+
+# The `C` matrix is only defined for plotting purposes as it converts from radians to degrees.
+
+using ControlSystems, LinearAlgebra
+G = ss(A,B,C,0)
+# Conversion of the model to discrete time 
+Ts = 0.1                     # sampling period
+Gd = c2d(G,Ts)               # discretized system
+A,B,C,D = Gd.A,Gd.B,Gd.C,Gd.D
+```
+
+And in the following code we define the weights for the LQR controller and design the controller
+``` {julia}
+#| code-fold: show
+q_beta = 100.0
+q_phi = 100
+q_p = 1
+q_r = 1
+q_rw = 1
+q = [q_beta, q_phi, q_p, q_r, 0, 0, q_rw]
+Q = diagm(0=>q)
+
+r_a = 10.0
+r_r = 10.0
+r = [r_a, r_r]
+R = diagm(0=>r)
+```
+
+Note how we do not penalize the fifth and sixth state variables, $\delta_\mathrm{a}$ and $\delta_\mathrm{r}$, respectively, because these are just low-pass filtered control inputs, and the control inputs are already penalized with the $\mathbf R$ matrix. But we must check, if the stabilizability and detectability, or actually controllability and observability conditions are satisfied:
+``` {julia}
+#| code-fold: show
+rank(ctrb(A,B)), rank(obsv(A,Q))
+```
+
+The conditions are obviously satisfied, hence a unique stabilizing positive definite solution to DARE exists. We can compute it using a dedicated solver and we can form the matrix of state feedback gains: 
+``` {julia}
+#| code-fold: show
+S = dare(A,B,Q,R)
+K = (R+B'*S*B)\B'*S*A
+```
+
+Alternatively, we could use the higher-level `lqr` or `dlqr` functions (`K = lqr(Gd,Q,R)`, or `K = dlqr(A,B,Q,R)`). Finally we can use the computed gains to construct the controller and simulate and plot a response of the system to nonzero initial conditions:
+
+``` {julia}
+#| code-fold: show
+#| fig-cap: Simulation outcomes for the LQR control of lateral-directional dynamics of F16. Among the state variables we do not include $\delta_\mathrm{a}$ and $\delta_\mathrm{r}$ as these are just low-passs filtered out control inputs
+#| label: fig-simulation-outcomes-f16
+u(x,t) = -K*x # Control law
+t=0:Ts:10.0
+x0 = [1/10, 0, 0, 0, 0, 0, 0]
+y, t, x, uout = lsim(Gd,u,t,x0=x0)
+
+using Plots, LaTeXStrings
+p1 = plot(t,uout', label=[L"u_\mathrm{a} \mathrm{(rad)}" L"u_\mathrm{r} \mathrm{(rad)}"], xlabel="Time (s)", ylabel="Controls",markershape=:circle,markersize=1,linetype=:steppost)
+p2 = plot(t,x[1:4,:]', label=[L"\beta \mathrm{(rad)}" L"\phi \mathrm{(rad)}" L"p \mathrm{(rad/s)}" L"r \mathrm{(rad/s)}" L"\delta_a" L"\delta_r" L"r_w \mathrm{(deg/s)}"], xlabel="Time (s)", ylabel="States",markershape=:circle,markersize=1,linetype=:steppost)
+p3 = plot(t,y', label=[L"r_\mathrm{w} \mathrm{(deg/s)}" L"p \mathrm{(deg/s)}" L"\beta \mathrm{(deg)}" L"\phi \mathrm{(deg)}"], xlabel="Time (s)", ylabel="Outputs",markershape=:circle,markersize=1,linetype=:steppost)
+plot(p1,p2,p3,layout=(3,1))
+```
+:::
 
