@@ -471,13 +471,13 @@ To conclude, the solution to the first-order necessary conditions represented by
 
 We can work a bit more with the value of the optimal cost. Substituting the optimal control we can see (after some careful two-line work) that 
 $$
- J_0 = \frac{1}{2}\bm x_0^\top  \mathbf S_0 \bm x_0.
+ J_0^\star = \frac{1}{2}\bm x_0^\top  \mathbf S_0 \bm x_0.
 $$
 
 The same conclusion can be obtained for any time instant $k$ inside the interval $[0,N]$
 $$
 \boxed{
- J_k = \frac{1}{2}\bm x_k^\top  \mathbf S_k \bm x_k.
+ J_k^\star = \frac{1}{2}\bm x_k^\top  \mathbf S_k \bm x_k.
 }
 $$
 
@@ -596,4 +596,4 @@ The last outputs suggests that both $s_N$ and $K_k$ stay constant for most of th
 
 The observation in the example poses a question of how much is lost after replacing the optimal control represented by the sequence $\mathbf K_k$ by some constant value $\mathbf K$. A natural candidate is the steady-state value that $\mathbf K_k$  has as the beginning of the control interval, that is at $k=0$ in our case.     
 
-Obviously, on a finite-horizon there is not much to be investigated, the constant feedback gain is just *suboptimal*, but things are somewhat more involved as the control horizon stretches to infinity, that is, $N\rightarrow \infty$. 
+Obviously, on a finite time horizon there is not much to be investigated, the constant feedback gain is just *suboptimal* (even if the suboptimality can be negligible). Things will turn out fairly interesting as the time horizon stretches to infinity, that is, $N\rightarrow \infty$. 

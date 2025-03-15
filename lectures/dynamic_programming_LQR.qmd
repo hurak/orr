@@ -22,14 +22,12 @@ J_0(\bm x_0, \bm u_0, \bm u_1, \ldots, \bm u_{N-1}) = \frac{1}{2}\bm x_N^\top \m
 $$
 with $\mathbf S_N\succeq 0, \mathbf Q\succeq 0, \mathbf R\succ 0$, as usual. 
 
-We now invoke the principle of optimality, that is, we start at the end of the time interval and evaluate the optimal cost
+We now invoke the principle of optimality, that is, we start at the end of the time interval and find the optimal cost
 $$
 J_N^\star(\bm x_N) = \frac{1}{2}\bm x_N^\top \mathbf S_N \bm x_N.
 $$
 
-Obviously, here we did not even have to do any optimization since at the and of the interval the cost can no longer be influenced by any control. We just evaluated the cost. 
-
-We then proceed backwards in time, that is, we decrease the time to $k=N-1$. Here do have to optimize:
+Actually, we have nothing to minimize here, we just evaluate the cost. We then proceed backwards in time, that is, we decrease the time to $k=N-1$. Here we do have something to minimize:
 $$
  J^\star_{N-1}(\bm x_{N-1}) = \min_{\bm u_{N-1}\in\mathbb R^m} J_{N-1}(\bm x_{N-1},\bm u_{N-1}) = \min_{\bm u_{N-1}\in\mathbb R^m} \left[L(\bm x_{N-1},\bm u_{N-1}) + J^\star_{N}(\bm x_{N}) \right].
 $$
@@ -37,15 +35,15 @@ $$
 We now expand the expression for the cost  
 $$
 \begin{aligned}
-J_{N-1}(\bm x_{N-1},\bm u_{N-1}) &= \frac{1}{2} \left(\mathbf x_{N-1}^\top \mathbf Q \mathbf x_{N-1} + \mathbf u_{N-1}^\top \mathbf R \mathbf u_{N-1} \right) + J^\star_{N}(\bm x_{N}) \\
-&= \frac{1}{2} \left(\mathbf x_{N-1}^\top \mathbf Q \mathbf x_{N-1} + \mathbf u_{N-1}^\top \mathbf R \mathbf u_{N-1} \right) + \frac{1}{2}\mathbf x_N^\top \mathbf S_N \mathbf x_N\\
-&= \frac{1}{2} \left( \mathbf x_{N-1}^\top \mathbf Q \mathbf x_{N-1} + \mathbf u_{N-1}^\top \mathbf R \mathbf u_{N-1} + \mathbf x_N^\top \mathbf S_N \mathbf x_N \right)\\
-&= \frac{1}{2} \left[ \mathbf x_{N-1}^\top \mathbf Q \mathbf x_{N-1} + \mathbf u_{N-1}^\top \mathbf R \mathbf u_{N-1} + (\mathbf x_{N-1}^\top \mathbf A^\top + \mathbf u_{N-1}^\top \mathbf B^\top) \mathbf S_N (\mathbf A\mathbf x_{N-1} + \mathbf B\mathbf u_{N-1}) \right]\\
-&= \frac{1}{2} \left[\mathbf x_{N-1}^\top (\mathbf Q  + \mathbf A^\top\mathbf S_N \mathbf A)\mathbf x_{N-1} + 2\mathbf x^\top_{N-1}\mathbf A ^\top \mathbf S_N \mathbf B  \mathbf u_{N-1} + \mathbf u^\top_{N-1}(\mathbf R + \mathbf B^\top \mathbf S_n \mathbf B)\mathbf u_{N-1} \right]. 
+J_{N-1}(\bm x_{N-1},\bm u_{N-1}) &= \frac{1}{2} \left(\bm x_{N-1}^\top \mathbf Q \bm x_{N-1} + \bm u_{N-1}^\top \mathbf R \bm u_{N-1} \right) + J^\star_{N}(\bm x_{N}) \\
+&= \frac{1}{2} \left(\bm x_{N-1}^\top \mathbf Q \bm x_{N-1} + \bm u_{N-1}^\top \mathbf R \bm u_{N-1} \right) + \frac{1}{2}\mathbf x_N^\top \mathbf S_N \mathbf x_N\\
+&= \frac{1}{2} \left( \bm x_{N-1}^\top \mathbf Q \bm x_{N-1} + \bm u_{N-1}^\top \mathbf R \bm u_{N-1} + \mathbf x_N^\top \mathbf S_N \mathbf x_N \right)\\
+&= \frac{1}{2} \left[ \bm x_{N-1}^\top \mathbf Q \bm x_{N-1} + \bm u_{N-1}^\top \mathbf R \bm u_{N-1} + (\bm x_{N-1}^\top \mathbf A^\top + \bm u_{N-1}^\top \mathbf B^\top) \mathbf S_N (\mathbf A\bm x_{N-1} + \mathbf B\bm u_{N-1}) \right]\\
+&= \frac{1}{2} \left[\bm x_{N-1}^\top (\mathbf Q  + \mathbf A^\top\mathbf S_N \mathbf A)\bm x_{N-1} + 2\mathbf x^\top_{N-1}\mathbf A ^\top \mathbf S_N \mathbf B  \bm u_{N-1} + \mathbf u^\top_{N-1}(\mathbf R + \mathbf B^\top \mathbf S_n \mathbf B)\bm u_{N-1} \right]. 
 \end{aligned}
 $$
 
-We assumed no constraint on $\mathbf u_{N-1}$, hence finding the minimum of $J_{N-1}$ is as easy as setting its gradient to zero
+Since we assumed no constraint on $\bm u_{N-1}$, finding the minimum of $J_{N-1}$ is as easy as setting its gradient to zero
 $$
 \mathbf 0 = \nabla_{\bm u_{N-1}} J_{N-1} = (\mathbf R + \mathbf B^\top \mathbf S_n \mathbf B)\bm u_{N-1} + \mathbf B^\top \mathbf S_N\mathbf A\bm x_{N-1},
 $$
@@ -60,7 +58,7 @@ $$
 J_{N-1}^\star = \frac{1}{2}\bm x_{N-1}^\top \underbrace{\left[(\mathbf A-\mathbf B\mathbf K_{N-1})^\top \mathbf S_N(\mathbf A-\mathbf B\mathbf K_{N-1}) + \mathbf K_{N-1}^\top \mathbf R \mathbf K_{N-1} + \mathbf Q\right]}_{\mathbf S_{N-1}} \bm x_{N-1}.
 $$
 
-Note that the optimal cost $J^\star_{N-1}$ is also a quadratic function of the state as is the cost $J^\star_{N}$. We denote the matrix that defines this quadratic function as $\mathbf S_{N-1}$. We do this in anticipation of continuation of this recursive procedure to $k = N-2, N-3, \ldots$, which will give $\mathbf S_{N-2}, \mathbf S_{N-3}, \ldots$. The rest of the story is quite predictable, isn't it? Applying the Bellman's principle of optimality we (re)discovered the discrete-time Riccati equation in the *Joseph stabilized form*
+Note that the optimal cost $J^\star_{N-1}$ is also a quadratic function of the state as is the cost $J^\star_{N}$. We denote the matrix that defines this quadratic function as $\mathbf S_{N-1}$. We do this in anticipation of continuation of this procedure to $k = N-2, N-3, \ldots$, which will give $\mathbf S_{N-2}, \mathbf S_{N-3}, \ldots$. The rest of the story is quite predictable, isn't it? Applying the Bellman's principle of optimality we (re)discovered the discrete-time Riccati equation in the *Joseph stabilized form*
 $$
 \mathbf S_k = (\mathbf A-\mathbf B\mathbf K_{N-1})^\top \mathbf S_N(\mathbf A-\mathbf B\mathbf K_{N-1}) + \mathbf K_{N-1}^\top \mathbf R \mathbf K_{N-1} + \mathbf Q,
 $$

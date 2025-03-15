@@ -2,6 +2,8 @@
 title: "Discrete-time algebraic Riccati equation (DARE)"
 bibliography: 
     - "ref_optimal_control.bib"
+    - "ref_LQR_ARE.bib"
+    - "ref_linear_systems.bib"
 csl: ieee-control-systems.csl
 format:
     html:
@@ -25,14 +27,145 @@ $$
 
 called *discrete-time algebraic Riccati equation* (DARE) is instrumental in solving the infinite time horizon LQR problem. The equation must be solved for the matrix $\bm X$ in order to compute the state feedback gain.
 
+The key assumptions are that $\mathbf Q \succeq 0$, $\mathbf R \succ 0$, the pair $(\mathbf A, \mathbf B)$ is stabilizable, and the pair $(\mathbf A, \sqrt{\mathbf Q})$ is detectable. The solution to the DARE is unique, symmetric and positive semidefinite. If, furthermore, the pair $(\mathbf A, \mathbf Q)$ is observable, the solution is positive definite. 
+
 ::: {.callout-note}
 ## The matrix variable $\bm X$
 Note that here we have replaced the previous name for matrix variable $\bm S_\infty$ by the new $\bm X$ to emphasize that it is the unknown here.
 :::
 
-There are several approaches to solving the DARE, and the most reliable and accurate once have already been implemented in major computational packages (see the section on software). Here we do not aim at explaining them. 
+There are several approaches to solving the DARE, and the most reliable and accurate once have already been implemented in major computational packages (see the section on software). Some overviews and detailed explanations are provided in @simaAlgorithmsLinearQuadraticOptimization1996, @biniNumericalSolutionAlgebraic2012, and @dattaNumericalMethodsLinear2003. Here we only sketch one of them, that displays an important property.
 
+Recall the linear system that we have developed from the two-point boundary value problem under the assumption of invertability of the matrix $\mathbf A$: 
 
+$$
+\begin{bmatrix}
+ \mathbf x_{k}\\\boldsymbol\lambda_k
+\end{bmatrix}
+=
+\underbrace{\begin{bmatrix}
+ \mathbf A^{-1} & \mathbf A^{-1}\mathbf B\mathbf R^{-1}\mathbf B^\top\\\mathbf Q\mathbf A^{-1} & \mathbf A^\top+\mathbf Q\mathbf A^{-1}\mathbf B\mathbf R^{-1}\mathbf B^\top
+\end{bmatrix}}_{\mathbf H}
+\begin{bmatrix}
+ \mathbf x_{k+1} \\ \boldsymbol\lambda_{k+1}
+\end{bmatrix}
+$$
 
-#TODO 
+The matrix $H$ has a very special property. Defining the auxilliary matrix $\mathbf J$
+$$
+\mathbf J = \begin{bmatrix}\mathbf 0 & \mathbf I\\ -\mathbf I & \mathbf 0\end{bmatrix}, 
+$$
+the matrix $\mathbf H$ can be shown to satisfy the following:
+$$
+\mathbf H^\top\mathbf J\mathbf H = \mathbf J.
+$$
 
+Such matrices are called *symplectic* and they have several special properties. First, note that 
+$$
+\mathbf H^\top\mathbf J = \mathbf J\mathbf H^{-1},
+$$
+from which it follows that
+$$
+\mathbf J^{-1}\mathbf H^\top\mathbf J = \mathbf H^{-1}.
+$$
+
+Using the fact that $\mathbf J^{-1} = -\mathbf J$, we get the promised special property – a particularly simple way to compute the inverse of $\mathbf H$:
+$$
+\mathbf H^{-1} = -\mathbf J\mathbf H^\top\mathbf J.
+$$
+
+We can use this to obtain the inverse of our particular $\mathbf H$ matrix:
+
+$$
+\mathbf H^{-1}
+=
+\begin{bmatrix}
+ \mathbf A + \mathbf B \mathbf R^{-1} \mathbf B^\top \mathbf A^{-\top}\mathbf Q & \mathbf B\mathbf R^{-1}\mathbf B^\top \mathbf A^{-\top} \\
+ \mathbf A^{-\top} \mathbf Q & \mathbf A^{-\top}, 
+\end{bmatrix}
+$$
+where we used the shortand notation $\mathbf A^{-\top}$ for $(\mathbf A^{-1})^\top$.
+
+Now, it can be shown that if $\lambda$ is an eigenvalue of $\mathbf H$, so is $1/\lambda$. We are not going to prove it here, we refer an interested reader to [@lewisOptimalControl2012, p. 81]. 
+
+::: {#exm-dare-eigenvalues_of_H}
+## Eigenvalues of a symplectic matrix
+``` {julia}
+#| label: fig-dare-eigenvalues_of_H
+#| fig-cap: Eigenvalues of the symplectic (discrete-time Hamiltonian) matrix $\mathbf H$ are symmetric with respect to the unit circle
+using LinearAlgebra
+
+A = [0.225384  0.166015   0.60408
+    0.920342  0.0644107  0.354692
+    0.483302  0.536062   0.718341]
+B = [0.587251  0.29765
+    0.305953  0.616242  
+    0.400612  0.201951]
+
+q = [1.0, 2.0, 3.0]
+r = [1.0, 2.0]
+
+Q = diagm(0=>q)
+R = diagm(0=>r)
+
+H = [inv(A) A\B/R*B'; Q/A A'+Q/A*B/R*B']
+
+λ, V = eigen(H)
+
+using Plots
+scatter(λ, aspect_ratios = 1, label="")
+θ = range(0, 2π, length=100)
+x = cos.(θ)
+y = sin.(θ)
+plot!(x, y, label="")
+```
+:::
+
+Similarly, only without providing a proof we state here that if the eigenvectors of $\mathbf H$ corresponding to the unstable eigenvalue ($|\lambda|>1$) are denoted as $\mathbf v_1, \ldots, \mathbf v_n$, and are stacked together to form a matrix $\mathbf V^\mathrm{unstable} = \begin{bmatrix}\mathbf v_1 & \ldots & \mathbf v_n \end{bmatrix}$, and we name the two vertical $n\times n$ blocks in the matrix  $\mathbf V^\mathrm{unstable} = \begin{bmatrix} \mathbf X_1\\\mathbf X_2\end{bmatrix}$, the solution to the DARE can be expressed as
+$$
+\bm X = \mathbf X_2\mathbf X_1^{-1}.
+$$
+
+This method of solving the DARE is referred to as *the eigenvector method* and is regarded as a subset of a broader family of *invariant subspace methods*. It is not particularly reliable when the matrix $\mathbf H$ has eigenvalues close to the unit circle. And it also required invertibility of the matrix $\mathbf A$ in the first place. Still, we wanted to present it here because it displays a fundamental phenomenon often encountered in optimal control – the need to split some eigenvalues, eigenvectors, subspaces into stable and unstable ones.
+
+::: {#exm-dare-eigenvector_method}
+## Solving the DARE using the eigenvector method
+``` {julia}
+indices_unstable = findall(x -> abs(x) > 1, λ)
+Vᵘ = V[:,indices_unstable]
+X₁ = Vᵘ[1:3,:]
+X₂ = Vᵘ[4:6,:]
+
+X = X₂/X₁
+X = real(X) # We get rid of the negligible (≈ 10⁻¹⁶) imaginary parts.
+```
+We can compare against the solution provided by the specialized package [MatrixEquations.jl](https://github.com/andreasvarga/MatrixEquations.jl):
+``` {julia}
+using MatrixEquations
+X_ared, CLSEIG, F = ared(A,B,R,Q);
+X_ared
+```
+:::
+
+As a demonstration of this stable-unstable decomposition phenomenon, we show that the LQR state feedback places the closed loop poles into the stable eigenvalues of the symplectic $\mathbf H$ matrix. Again we provide no proof here, but an interested reader can find it in [@lewisOptimalControl2012, Section 2.5]. 
+
+::: {#exm-dare-pole-placement}
+``` {julia}
+#| label: fig-dare-pole-placement
+#| fig-cap: Eigenvalues of the symplectic (discrete-time Hamiltonian) matrix $\mathbf H$ and the poles of the state feedback loop closed by the LQR controller
+using ControlSystems
+
+K = lqr(Discrete, A,B,Q,R)
+p = eigvals(A-B*K)      # closed-loop poles
+
+scatter(λ, aspect_ratios = 1, label="Eigenvalues of H")
+scatter!(p, aspect_ratios = 1, label="LQR closed-loop poles")
+
+θ = range(0, 2π, length=100)
+x = cos.(θ)
+y = sin.(θ)
+plot!(x, y, label="")
+```
+:::
+
+The property demonstrated through the example suggests a naive method for designing an LQR controller – form the discrete-time Hamiltonina matrix $\mathbf H$, compute its eigenvalues, select the stable ones, and then use some pole-placement method to design a state feedback gains to places the closed-loop poles into the selected stable eigenvalues. The method is not recommendable, but it provides yet another insight into the LQR problem.
