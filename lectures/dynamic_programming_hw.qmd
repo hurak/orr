@@ -3,4 +3,125 @@ title: "Homework"
 format:
     html:
         html-math-method: katex
+engine: julia
 ---
+
+## Dynamic programming solver implementation
+
+In this homework, you will implement a dynamic programming solver for a general discrete-time optimal control problem in Julia. Specifically, you will solve the following problem:
+$$
+\begin{align*}
+    \underset{\mathbf{u}_k}{\text{minimize}} \quad & \phi(\mathbf{x}_N) + \sum_{k=1}^{N-1} L(\bm{x}_k, \bm{u}_k)\\
+    \text{subject to} \quad & \bm{x}_{k+1} = \mathbf{f}(\bm{x}_k, \bm{u}_k), \qquad k = 1, 2, \ldots, N-1,\\
+    & \mathbf{u}_{\text{min}} \leq \bm{u}_k \leq \mathbf{u}_{\text{max}}, \qquad k = 1, 2, \ldots, N-1,\\
+    & \mathbf{x}_{\text{min}} \leq \bm{x}_k \leq \mathbf{x}_{\text{max}}, \qquad k = 1, 2, \ldots, N.\\
+\end{align*}
+$$
+where $\phi$ is the terminal penalty function, $L$ is the additive cost, $\mathbf{f}$ is state transition function, $\bm{x}_k \in \mathbb{R}^{n}$ is the state, and $\bm{u}_k \in \mathbb{R}^{m}$ is the control input. The state and control input constraints are given by $\mathbf{x}_{\text{min}}$, $\mathbf{x}_{\text{max}}$, $\mathbf{u}_{\text{min}}$, and $\mathbf{u}_{\text{max}}$, respectively. The goal is to construct the optimal control policy $\bm{u}_k^*(\bm{x})$ that minimizes the cost-to-go function $J_k(\bm{x})$ for each state $\bm{x}$ at time $k$.
+
+Your solver will work with discretized state and control input spaces
+$$
+    X = X_1 \times X_2 \times \ldots \times X_n, \quad U = U_1 \times U_2 \times \ldots \times U_m,
+$$
+where each $X_i$ and $U_i$ are finite sets created by uniformly discretizing the intervals $[\mathbf{x}_{\text{min}}^{(i)}, \mathbf{x}_{\text{max}}^{(i)}]$ and $[\mathbf{u}_{\text{min}}^{(i)}, \mathbf{u}_{\text{max}}^{(i)}]$ into $n_{x}^{(i)}$ and $n_{u}^{(i)}$ points, respectively.
+
+
+
+### Task description
+- Implement the `dynprog` function in the code cell below by filling in the missing parts. Specifically, you need to:
+    - Initialize the cost-to-go function $J_N$ at the terminal time $N$.
+    - Implement the Bellman recursion to compute $J_k(\bm{x})$ and $\bm{u}_k^*(\bm{x})$ for all states $\bm{x} \in X$ at time $k$.
+
+### Handling off-grid states
+Since the next state $\bm{x}_{k+1} = \mathbf{f}(\bm{x}_k, \bm{u}_k)$ is generally not exactly on the discretized grid, interpolation is required. In the template below, we provide the function `ss_itp`, which creates an interpolator for a function (array) defined on the state space grid. This function can be used to interpolate the cost-to-go function $J$ to an arbitrary state $\bm{x}$. The optimal control policy $\bm{u}_k^*(\bm{x})$ is also interpolated in a similar way.
+
+
+```{julia}
+#| eval: false
+
+using LinearAlgebra, Interpolations
+
+"""
+    dynprog(L, ϕ, f, x_min, x_max, u_min, u_max, nxs, nus, N)
+
+Applies dynamic programming to solve the discrete-time optimal control problem:
+
+    minimize ∑ₖ L(xₖ, uₖ) + ϕ(x_N)
+    subject to xₖ₊₁ = f(xₖ, uₖ),  k = 1, ..., N-1
+               x_min ≤ xₖ ≤ x_max, k = 1, ..., N
+               u_min ≤ uₖ ≤ u_max, k = 1, ..., N-1.
+
+where
+- `x` is the state,
+- `u` is the control input,
+- `L(x, u)` is the stage cost function,
+- `ϕ(x)` is the terminal cost function,
+- `f(x, u)` is the state transition function,
+- `x_min` and `x_max` are vectors of the lower and upper bounds on the state,
+- `u_min` and `u_max` are vectors of the lower and upper bounds on the control input,
+- `nxs` is a tuple of the number of grid points along each axis of the state space,
+- `nus` is a tuple of the number of grid points along each axis of the control input space,
+- `N` is the number of time steps.
+
+# Output
+- `policy(x, k)`: A function that returns the optimal control action at state `x` and time `k`.
+  - This function uses interpolation to approximate the optimal control for continuous `x`.
+
+"""
+function dynprog(L, ϕ, f, x_min, x_max, u_min, u_max, nxs, nus, N)
+
+    n = length(nxs)
+    m = length(nus)
+
+    # Discretize each axis of the state space
+    xs = map(i -> LinRange(x_min[i], x_max[i], nxs[i]), 1:n)
+
+    # Take the Cartesian product of the axes
+    X = Iterators.product(xs...)
+
+    # Discretize each axis of the control input space
+    us = map(i -> LinRange(u_min[i], u_max[i], nus[i]), 1:m)
+
+    # Take the Cartesian product of the axes
+    U = Iterators.product(us...)
+
+    # Initialize the cost-to-go function
+    J = zeros(length(X), N) # J[i, k] is the cost-to-go at state X[i] and time k
+
+    # TODO Initialize the cost-to-go function at the terminal time
+    J[:, N] = zeros(length(X))
+
+    # Generates the optimal control policy
+    u_opt = zeros(m, length(X), N-1) # u_opt[:, i, k] is the optimal control at state X[i] and time k
+
+    # Creates an interpolator for an array defined on a grid onto the entire state space
+    function ss_itp(A)
+        itp = scale(extrapolate(interpolate(reshape(A, nxs...), BSpline(Cubic(Line(OnGrid())))), Flat()),Tuple(xs))
+        fun_itp(x) = itp(x...)
+        return fun_itp
+    end
+
+    for k = N-1:-1:1 # Backward recursion
+
+        # Interpolate the cost-to-go function outside of the grid points
+        Jₖ₊₁_itp = ss_itp(J[:, k+1]) # e.g. Jₖ₊₁_itp(x) returns Jₖ₊₁(x)
+
+        for (i, x) in enumerate(X) # Loop over the state space
+
+            x = collect(x) # Convert the iterator x from a tuple to an vector
+
+            # TODO: Implement the Bellman recursion to compute J[i, k] and u_opt[:, i, k] for all states x ∈ X.
+            J[i, k] = 0.0
+            u_opt[:, i, k] .= 0.0
+        end
+
+    end
+    
+    # Creates an interpolator for the optimal control policy
+    u_opt_itps = [extrapolate(interpolate(Tuple(xs), reshape(u_opt[i, :, k], nxs...), Gridded(Linear())), Flat()) for i in 1:m, k in 1:N-1]
+    policy(x, k) = map(i -> u_opt_itps[i, k](x...), 1:m)
+
+    return policy
+end
+
+```
