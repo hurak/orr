@@ -23,7 +23,7 @@ Your solver will work with discretized state and control input spaces
 $$
     X = X_1 \times X_2 \times \ldots \times X_n, \quad U = U_1 \times U_2 \times \ldots \times U_m,
 $$
-where each $X_i$ and $U_i$ are finite sets created by uniformly discretizing the intervals $[\mathbf{x}_{\text{min}}^{(i)}, \mathbf{x}_{\text{max}}^{(i)}]$ and $[\mathbf{u}_{\text{min}}^{(i)}, \mathbf{u}_{\text{max}}^{(i)}]$ into $n_{x}^{(i)}$ and $n_{u}^{(i)}$ points, respectively.
+where each $X_i$ and $U_i$ are finite sets created by uniformly discretizing intervals $[\mathbf{x}_{\text{min}}^{(i)}, \mathbf{x}_{\text{max}}^{(i)}]$ and $[\mathbf{u}_{\text{min}}^{(i)}, \mathbf{u}_{\text{max}}^{(i)}]$ into $n_{x}^{(i)}$ and $n_{u}^{(i)}$ points, respectively.
 
 
 
@@ -31,10 +31,12 @@ where each $X_i$ and $U_i$ are finite sets created by uniformly discretizing the
 - Implement the `dynprog` function in the code cell below by filling in the missing parts. Specifically, you need to:
     - Initialize the cost-to-go function $J_N$ at the terminal time $N$.
     - Implement the Bellman recursion to compute $J_k(\bm{x})$ and $\bm{u}_k^*(\bm{x})$ for all states $\bm{x} \in X$ at time $k$.
+- Your solution should be contained in a single file named `hw.jl`, which you will upload to the [BRUTE](https://cw.felk.cvut.cz/brute) system. 
 
-### Handling off-grid states
-Since the next state $\bm{x}_{k+1} = \mathbf{f}(\bm{x}_k, \bm{u}_k)$ is generally not exactly on the discretized grid, interpolation is required. In the template below, we provide the function `ss_itp`, which creates an interpolator for a function (array) defined on the state space grid. This function can be used to interpolate the cost-to-go function $J$ to an arbitrary state $\bm{x}$. The optimal control policy $\bm{u}_k^*(\bm{x})$ is also interpolated in a similar way.
+#### Handling off-grid states
+Since the next state $\bm{x}_{k+1} = \mathbf{f}(\bm{x}_k, \bm{u}_k)$ is generally not on the discretized grid, interpolation is required. In the template below, we provide the function `ss_itp`, which creates an interpolator for a function (array) defined on the state space grid. This function can be used to interpolate the cost-to-go function $J$ to an arbitrary state $\bm{x}$. The optimal control policy $\bm{u}_k^*(\bm{x})$ is also interpolated in a similar way.
 
+Interpolating $J$ introduces its own set of problems. For example, we cannot truly enforce the state constraints. This is due to the fact that if $\bm{x}_{k+1}$ lies outside the bounds for all possible $\bm{u}_k$, then we would like to evaluate $J_k$ as $\infty$ or appropropriately high value. However, this high value would, in time, propagate to the entire state space, leading to incorrect results. We, therefore, opt for evaluating $J_k$ for the out of bounds states by extrapolating the value from the nearest grid point. This is already implemented for you, but you should be aware of this limitation.
 
 ```{julia}
 #| eval: false
@@ -65,10 +67,23 @@ where
 
 # Output
 - `policy(x, k)`: A function that returns the optimal control action at state `x` and time `k`.
+- `J_opt`: The optimal cost-to-go function on the state space grid.
+- `u_opt`: The optimal control policy on the state space grid.
   - This function uses interpolation to approximate the optimal control for continuous `x`.
 
 """
-function dynprog(L, ϕ, f, x_min, x_max, u_min, u_max, nxs, nus, N)
+function dynprog(
+    L::Function,
+    ϕ::Function,
+    f::Function,
+    x_min::Vector{Float64},
+    x_max::Vector{Float64},
+    u_min::Vector{Float64},
+    u_max::Vector{Float64},
+    nxs::NTuple,
+    nus::NTuple,
+    N::Int64
+)
 
     n = length(nxs)
     m = length(nus)
@@ -85,13 +100,13 @@ function dynprog(L, ϕ, f, x_min, x_max, u_min, u_max, nxs, nus, N)
     # Take the Cartesian product of the axes
     U = Iterators.product(us...)
 
-    # Initialize the cost-to-go function
-    J = zeros(length(X), N) # J[i, k] is the cost-to-go at state X[i] and time k
+    # The optimal cost-to-go function
+    J_opt = zeros(length(X), N) # J[i, k] is the cost-to-go at state X[i] and time k
 
     # TODO Initialize the cost-to-go function at the terminal time
-    J[:, N] = zeros(length(X))
+    J_opt[:, N] = zeros(length(X))
 
-    # Generates the optimal control policy
+    # The optimal control policy
     u_opt = zeros(m, length(X), N-1) # u_opt[:, i, k] is the optimal control at state X[i] and time k
 
     # Creates an interpolator for an array defined on a grid onto the entire state space
@@ -102,26 +117,72 @@ function dynprog(L, ϕ, f, x_min, x_max, u_min, u_max, nxs, nus, N)
     end
 
     for k = N-1:-1:1 # Backward recursion
-
+     
         # Interpolate the cost-to-go function outside of the grid points
-        Jₖ₊₁_itp = ss_itp(J[:, k+1]) # e.g. Jₖ₊₁_itp(x) returns Jₖ₊₁(x)
-
+        next_cost_itp = ss_itp(J_opt[:, k+1]) # e.g. next_cost_itp(x) returns J_opt(x, k+1)
+        
         for (i, x) in enumerate(X) # Loop over the state space
+            x = collect(x) # tuple -> vector
 
-            x = collect(x) # Convert the iterator x from a tuple to an vector
-
-            # TODO: Implement the Bellman recursion to compute J[i, k] and u_opt[:, i, k] for all states x ∈ X.
-            J[i, k] = 0.0
-            u_opt[:, i, k] .= 0.0
+            # TODO: Implement the Bellman recursion to compute J_opt[i, k] and u_opt[:, i, k] for all states x ∈ X.
+            J_opt[i, k] = 0.0
+            u_opt[:, i, k] .= 0.0  
         end
 
     end
-    
-    # Creates an interpolator for the optimal control policy
-    u_opt_itps = [extrapolate(interpolate(Tuple(xs), reshape(u_opt[i, :, k], nxs...), Gridded(Linear())), Flat()) for i in 1:m, k in 1:N-1]
-    policy(x, k) = map(i -> u_opt_itps[i, k](x...), 1:m)
 
-    return policy
+    # Creates an interpolator for the optimal control policy
+    u_opt_itps = [ss_itp(u_opt[i, :, k]) for i in 1:m, k in 1:N-1]
+    policy(x, k) = map(i -> u_opt_itps[i, k](x), 1:m)
+
+    return J_opt, u_opt, policy
 end
+
+```
+
+For testing your implementation, you can use the following example problem:
+$$
+   \begin{align*}
+    \underset{u_k}{\text{minimize}} \quad & 2\lvert x_3 - 1 \rvert + \sum_{k=1}^{2} \lvert x_k \rvert + \lvert u_k \rvert\\
+    \text{subject to} \quad & x_{k+1} = x_k + u_k, \qquad k = 1, 2, 3,\\
+    & -2 \leq x_k \leq 2, \qquad k = 1, 2, 3,\\
+    & -1 \leq u_k \leq 1, \qquad k = 1, 2. 
+\end{align*} 
+$$
+Furthermore, $n_x = 5$, $n_u = 3$, leading to the discretized state and control input spaces $X = \{-2, -1, 0, 1, 2\}$ and $U = \{-1, 0, 1\}$, respectively. The problem is already implemented for you in the code cell below.
+
+```{julia}
+#| eval: false
+f(x,u) = [x[1] + u[1]]
+L(x,u) = abs(x[1]) + abs(u[1])
+ϕ(x) = 2.0abs(x[1] - 1.0)
+
+x_min = [-2.0]
+x_max = [2.0]
+u_min = [-1.0]
+u_max = [1.0]
+nxs = (5,)
+nus = (3,)
+
+N = 4
+
+J_opt, u_opt, policy = dynprog(L, ϕ, f, x_min, x_max, u_min, u_max, nxs, nus, N)
+
+x0 = [-1.0]
+xhist = zeros(1, N)
+xhist[1] = x0[1]
+uhist = zeros(1, N-1)
+
+for k = 1:N-1
+    uhist[:, k] = policy(xhist[:, k], k)
+    xhist[:, k+1] = f(xhist[:, k], uhist[:, k])
+end
+
+using Plots
+
+plot(0:N-1, xhist[1,:], linetype=:steppost)
+xlabel!("Time")
+ylabel!("State")
+title!("State trajectory")
 
 ```
