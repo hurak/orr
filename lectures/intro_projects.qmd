@@ -1,0 +1,63 @@
+---
+title: "Projects"
+bibliography: 
+    - ref_optimal_control.bib
+    - ref_reinforcement_learning_and_dynamic_programming.bib
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+execute:
+    enabled: false
+    warning: false
+engine: julia
+---
+
+The goal of the project is to experience a more complete procedure that what we can have within tightly focused weekly homework problems. It is an excellent opportunity to apply the knowledge and skills acquired during the course to a more complex problem. 
+
+## Organization
+
+- Team work allowed, in fact even encouraged, teams of 3-5. One suggestion for the organization of the team work is that every team member can design a different kind of a controller than the other members of the team. For instance, one member can design a reference tracking LQR, one an MPC and one a robust controller using Hinf optimization. The benefit of working in a team is that you can share unovoidable pain (or fun) of learning to operate the particular laboratory experiment. Later you can also share the load of writing the report.
+
+- Each team or individual has to submit a report organized as follows:
+    - A very brief description of the laboratory model and the mathematical model you used. No need to replicate the full description provided in the model repositories, but the description should be sufficient for the report to be understable withouth the need to consult the model repository.
+    - Documentation of the computational procedure leading to the design of a controller, actually several controllers. 
+    - Discussion of the performance of your controllers with the aid of figures showing and comparing the simulated and measured responses.
+
+- It is highly recommendable, that each project has their own repository within the [gitlab.fel.cvut.cz](https://gitlab.fel.cvut.cz). The final report (no longer than some 6 pages) should then refer to the content (scripts, models, data) of the repository to support reproducibility. 
+
+## Time
+
+While the project can be expected to demand higher time investment then a weekly homework, it should not be another diploma thesis. Admittedly, some of the assignments rather are open-ended, which means that it is perfectly appropriate to upper bound the total time invested into the project and include such timing information in the final report. 
+
+## Assessment
+
+The final report will be evaluated as either sufficient or insufficient, accepted or not. We will not assess individual controllers, we will consider the report as a whole. You will have two attempts to submit the report documenting your solution of the project, so even if your report fails to accepted when submitted for the first time, you will receive a feedback and have one more chance. 
+
+## Proposed projects
+
+The proposed project consists of laboratory experimental systems in our KN:E-26 laboratory. The essence of the projects is to demonstrate one or preferrably several control design methods using these systems. 
+
+### Quanser Active Suspension
+
+Gitlab repository: [https://gitlab.fel.cvut.cz/aa4cc/edu-ctrl-lab-models/quanser-active-suspension](https://gitlab.fel.cvut.cz/aa4cc/edu-ctrl-lab-models/quanser-active-suspension)
+
+![](figures/active_suspension_photo_with_details.png){width=90%}
+
+### Quanser Active Mass Dampers on Shake Table
+
+Gitlab repository: [https://gitlab.fel.cvut.cz/aa4cc/edu-ctrl-lab-models/quanser-amd](https://gitlab.fel.cvut.cz/aa4cc/edu-ctrl-lab-models/quanser-amd)
+
+![](figures/STII_2xAMD1.png){width=40%}
+
+### Quanser 2DOF Serial Flexible Link
+
+Gitlab repository: [https://gitlab.fel.cvut.cz/aa4cc/edu-ctrl-lab-models/quanser-2-dof-serial-flexible-link](https://gitlab.fel.cvut.cz/aa4cc/edu-ctrl-lab-models/quanser-2-dof-serial-flexible-link)
+
+![](figures/2-DOF-Serial-Flexible-Link-2-600x371.jpg){width=60%}
+
+### Quanser 3DOF Helicopter
+
+Gitlab repository: [https://gitlab.fel.cvut.cz/aa4cc/edu-ctrl-lab-models/quanser-3dof-helicopter](https://gitlab.fel.cvut.cz/aa4cc/edu-ctrl-lab-models/quanser-3dof-helicopter)
+
+![](figures/3-DOF-Helicopter_with_descriptions.png){width=90%}
