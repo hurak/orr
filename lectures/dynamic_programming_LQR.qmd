@@ -59,10 +59,15 @@ J_{N-1}^\star = \frac{1}{2}\bm x_{N-1}^\top \underbrace{\left[(\mathbf A-\mathbf
 $$
 
 Note that the optimal cost $J^\star_{N-1}$ is also a quadratic function of the state as is the cost $J^\star_{N}$. We denote the matrix that defines this quadratic function as $\mathbf S_{N-1}$. We do this in anticipation of continuation of this procedure to $k = N-2, N-3, \ldots$, which will give $\mathbf S_{N-2}, \mathbf S_{N-3}, \ldots$. The rest of the story is quite predictable, isn't it? Applying the Bellman's principle of optimality we (re)discovered the discrete-time Riccati equation in the *Joseph stabilized form*
-$$
-\mathbf S_k = (\mathbf A-\mathbf B\mathbf K_{N-1})^\top \mathbf S_N(\mathbf A-\mathbf B\mathbf K_{N-1}) + \mathbf K_{N-1}^\top \mathbf R \mathbf K_{N-1} + \mathbf Q,
+$$\boxed{
+\mathbf S_k = (\mathbf A-\mathbf B\mathbf K_{k})^\top \mathbf S_{k+1}(\mathbf A-\mathbf B\mathbf K_{k}) + \mathbf K_{k}^\top \mathbf R \mathbf K_{k} + \mathbf Q,}
 $$
 together with the prescription for the state feedback (Kalman) gain
+$$\boxed{
+\mathbf K_{k} = (\mathbf B^\top \mathbf S_{k+1}\mathbf B + \mathbf R)^{-1}\mathbf B^\top \mathbf S_{k+1} \mathbf A,}
 $$
-\mathbf K_{k} = (\mathbf B^\top \mathbf S_N\mathbf B + \mathbf R)^{-1}\mathbf B^\top \mathbf S_N \mathbf A.
+and with the expression for the optimal cost as a (quadratic) function of the initial state
+$$
+\boxed{
+J_k^\star = \frac{1}{2}\bm x_k^\top \mathbf S_k \bm x_k.}
 $$
