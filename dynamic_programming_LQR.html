@@ -1003,10 +1003,13 @@ J_{N-1}(\bm x_{N-1},\bm u_{N-1}) &amp;= \frac{1}{2} \left(\bm x_{N-1}^\top \math
 <p>The optimal cost <span class="math inline">J^\star_{N-1}</span> can be obtained by substituting <span class="math inline">\bm u_{N-1}^\star</span> into <span class="math inline">J_{N-1}</span> <span class="math display">
 J_{N-1}^\star = \frac{1}{2}\bm x_{N-1}^\top \underbrace{\left[(\mathbf A-\mathbf B\mathbf K_{N-1})^\top \mathbf S_N(\mathbf A-\mathbf B\mathbf K_{N-1}) + \mathbf K_{N-1}^\top \mathbf R \mathbf K_{N-1} + \mathbf Q\right]}_{\mathbf S_{N-1}} \bm x_{N-1}.
 </span></p>
-<p>Note that the optimal cost <span class="math inline">J^\star_{N-1}</span> is also a quadratic function of the state as is the cost <span class="math inline">J^\star_{N}</span>. We denote the matrix that defines this quadratic function as <span class="math inline">\mathbf S_{N-1}</span>. We do this in anticipation of continuation of this procedure to <span class="math inline">k = N-2, N-3, \ldots</span>, which will give <span class="math inline">\mathbf S_{N-2}, \mathbf S_{N-3}, \ldots</span>. The rest of the story is quite predictable, isn’t it? Applying the Bellman’s principle of optimality we (re)discovered the discrete-time Riccati equation in the <em>Joseph stabilized form</em> <span class="math display">
-\mathbf S_k = (\mathbf A-\mathbf B\mathbf K_{N-1})^\top \mathbf S_N(\mathbf A-\mathbf B\mathbf K_{N-1}) + \mathbf K_{N-1}^\top \mathbf R \mathbf K_{N-1} + \mathbf Q,
-</span> together with the prescription for the state feedback (Kalman) gain <span class="math display">
-\mathbf K_{k} = (\mathbf B^\top \mathbf S_N\mathbf B + \mathbf R)^{-1}\mathbf B^\top \mathbf S_N \mathbf A.
+<p>Note that the optimal cost <span class="math inline">J^\star_{N-1}</span> is also a quadratic function of the state as is the cost <span class="math inline">J^\star_{N}</span>. We denote the matrix that defines this quadratic function as <span class="math inline">\mathbf S_{N-1}</span>. We do this in anticipation of continuation of this procedure to <span class="math inline">k = N-2, N-3, \ldots</span>, which will give <span class="math inline">\mathbf S_{N-2}, \mathbf S_{N-3}, \ldots</span>. The rest of the story is quite predictable, isn’t it? Applying the Bellman’s principle of optimality we (re)discovered the discrete-time Riccati equation in the <em>Joseph stabilized form</em> <span class="math display">\boxed{
+\mathbf S_k = (\mathbf A-\mathbf B\mathbf K_{k})^\top \mathbf S_{k+1}(\mathbf A-\mathbf B\mathbf K_{k}) + \mathbf K_{k}^\top \mathbf R \mathbf K_{k} + \mathbf Q,}
+</span> together with the prescription for the state feedback (Kalman) gain <span class="math display">\boxed{
+\mathbf K_{k} = (\mathbf B^\top \mathbf S_{k+1}\mathbf B + \mathbf R)^{-1}\mathbf B^\top \mathbf S_{k+1} \mathbf A,}
+</span> and with the expression for the optimal cost as a (quadratic) function of the initial state <span class="math display">
+\boxed{
+J_k^\star = \frac{1}{2}\bm x_k^\top \mathbf S_k \bm x_k.}
 </span></p>
 
 
