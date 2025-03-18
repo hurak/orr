@@ -236,8 +236,6 @@ s₁, s₂ = (-p₁ + sqrt(p₁^2 - 4*p₂*p₀))/(2*p₂), (-p₁ - sqrt(p₁^2
 
 As a consequence, the optimal state-feedback gain is $k=0$. For an unstable system this would be unacceptable but for a stable system this makes sense: the system is stable even withouth the control, therefore, when the state is not penalized in the criterion at all ($q=0$), the optimal strategy is not to regulate at all. Mathematically correct. Nonethelesss, from an engineering viewpoint we may be quite unhappy because the role of the feedback regulator is also to attenuate the influence of external disturbances. Our optimal state-feedback regulator does not help at all in these situation. That is why we may want to require positive definite solution of ARE (by strengtheing the condition from detectability to observability of $(\mathbf A,\sqrt{\mathbf Q})$).
 
-The high time for an example of the whole LQR design procedure.
-
 ::: {#exm-dlqr-f16}
 ## LQR design for lateral-directional dynamics of the F16 aircraft
 This is Example 5.3-1 from [@stevensAircraftControlSimulation2015, page 407]. A linear model of lateral-directional dynamics of F16 trimmed at: VT=502ft/s, 302psf dynamic pressure, cg @ 0.35cbar. It also includes the dynamics of ailerons and rudders and washout filter. The system has two inputs (the commands to the control surfaces), four state variables corresponding to the lateral-directional dynamics of the aircraft, two state variables corresponding to the servo dynamics, and one more corresponding to the washout filter. We assume that all the state variables are available for state feedback (they are measured or estimated).
@@ -262,7 +260,7 @@ The two input and six state variables
 
 :::
 
-The code that defines the model
+The code that defines the discrete-time state-space model follows
 ``` {julia}
 #| code-fold: show
 A = [-0.3220  0.0640   0.0364    -0.9917    0.0003     0.0008   0;
@@ -313,7 +311,7 @@ r = [r_a, r_r]
 R = diagm(0=>r)
 ```
 
-Note how we do not penalize the fifth and sixth state variables, $\delta_\mathrm{a}$ and $\delta_\mathrm{r}$, respectively, because these are just low-pass filtered control inputs, and the control inputs are already penalized with the $\mathbf R$ matrix. But we must check, if the stabilizability and detectability, or actually controllability and observability conditions are satisfied:
+Note how we do not penalize the fifth and sixth state variables, $\delta_\mathrm{a}$ and $\delta_\mathrm{r}$, respectively, because these are just low-pass filtered control inputs, and the control inputs are already penalized with the $\mathbf R$ matrix. But we must check if the stabilizability and detectability – or actually controllability and observability – conditions are satisfied:
 ``` {julia}
 #| code-fold: show
 rank(ctrb(A,B)), rank(obsv(A,Q))
