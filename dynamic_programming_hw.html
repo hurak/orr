@@ -1145,7 +1145,7 @@ window.Quarto = {
 <p>For testing your implementation, you can use the following example problem: <span class="math display">
    \begin{align*}
     \underset{u_k}{\text{minimize}} \quad &amp; 2\lvert x_3 - 1 \rvert + \sum_{k=1}^{2} \lvert x_k \rvert + \lvert u_k \rvert\\
-    \text{subject to} \quad &amp; x_{k+1} = x_k + u_k, \qquad k = 1, 2, 3,\\
+    \text{subject to} \quad &amp; x_{k+1} = x_k + u_k, \qquad k = 1, 2,\\
     &amp; -2 \leq x_k \leq 2, \qquad k = 1, 2, 3,\\
     &amp; -1 \leq u_k \leq 1, \qquad k = 1, 2.
 \end{align*}
@@ -1162,7 +1162,7 @@ window.Quarto = {
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>nxs <span class="op">=</span> (<span class="fl">5</span>,)</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>nus <span class="op">=</span> (<span class="fl">3</span>,)</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="fl">4</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="fl">3</span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>J_opt, u_opt, policy <span class="op">=</span> <span class="fu">dynprog</span>(L, ϕ, f, x_min, x_max, u_min, u_max, nxs, nus, N)</span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
