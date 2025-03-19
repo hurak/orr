@@ -144,7 +144,7 @@ For testing your implementation, you can use the following example problem:
 $$
    \begin{align*}
     \underset{u_k}{\text{minimize}} \quad & 2\lvert x_3 - 1 \rvert + \sum_{k=1}^{2} \lvert x_k \rvert + \lvert u_k \rvert\\
-    \text{subject to} \quad & x_{k+1} = x_k + u_k, \qquad k = 1, 2, 3,\\
+    \text{subject to} \quad & x_{k+1} = x_k + u_k, \qquad k = 1, 2,\\
     & -2 \leq x_k \leq 2, \qquad k = 1, 2, 3,\\
     & -1 \leq u_k \leq 1, \qquad k = 1, 2. 
 \end{align*} 
@@ -164,7 +164,7 @@ u_max = [1.0]
 nxs = (5,)
 nus = (3,)
 
-N = 4
+N = 3
 
 J_opt, u_opt, policy = dynprog(L, ϕ, f, x_min, x_max, u_min, u_max, nxs, nus, N)
 
