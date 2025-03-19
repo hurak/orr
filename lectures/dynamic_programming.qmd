@@ -191,26 +191,26 @@ $$
     \bm u_k^\star(\bm x_k) = \arg \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\mathbf f_k(\bm x_k,\bm u_k))\right).}
 $$
 
-### Alternative formulation of dynamic programming using Q-factors
+### Alternative formulation of dynamic programming using Q-functions
 
-The cost function in @eq-cost_of_the_all_but_one_optimal_controls is sometimes called *Q-factor* and we denote it $Q_k^\star(\bm x_k,\bm u_k)$. We write its definition here for convenience
+The cost function in @eq-cost_of_the_all_but_one_optimal_controls is sometimes called *Q-function* and we denote it $Q_k^\star(\bm x_k,\bm u_k)$. We write its definition here for convenience
 $$
 Q^\star_k(\bm x_k,\bm u_k) = L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1}).
 $$
 
 It is a cost of choosing the control $\bm u_k$ at state $\bm x_k$ at time $k$ and then following the optimal control from the next time on.
 
-The optimal cost function $J_k^\star(\bm x_k)$ can be recovered from the optimal Q-factor $Q_k^\star(\bm x_k,\bm u_k)$ by taking the minimum over $\bm u_k$
+The optimal cost function $J_k^\star(\bm x_k)$ can be recovered from the optimal Q-function $Q_k^\star(\bm x_k,\bm u_k)$ by taking the minimum over $\bm u_k$
 $$
 J_k^\star(\bm x_k) = \min_{\bm u_k} Q_k^\star(\bm x_k,\bm u_k).
 $$
 
-Bellman's principle of optimality can be then expressed using the optimal Q-factor as
+Bellman's principle of optimality can be then expressed using the optimal Q-function as
 $$
 \boxed{Q_k^\star(\bm x_k,\bm u_k) = L_k(\bm x_k,\bm u_k) + \min_{\bm u_{k+1}} Q_{k+1}^\star(\bm x_{k+1},\bm u_{k+1})}.
 $$
 
-Optimal control is then obtained from the optimal Q-factor as the minimizing control
+Optimal control is then obtained from the optimal Q-function as the minimizing control
 $$
 \boxed{\bm u_k^\star(\bm x_k) = \arg \min_{\bm u_k} Q_k^\star(\bm x_k,\bm u_k).}
 $$
