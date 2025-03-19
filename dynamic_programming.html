@@ -957,7 +957,7 @@ window.Quarto = {
   <li><a href="#bellmans-principle-of-optimality-and-dynamic-programming" id="toc-bellmans-principle-of-optimality-and-dynamic-programming" class="nav-link active" data-scroll-target="#bellmans-principle-of-optimality-and-dynamic-programming">Bellman’s principle of optimality and dynamic programming</a></li>
   <li><a href="#bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem" id="toc-bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem" class="nav-link" data-scroll-target="#bellmans-principle-of-optimality-applied-to-the-discrete-time-optimal-control-problem">Bellman’s principle of optimality applied to the discrete-time optimal control problem</a>
   <ul class="collapse">
-  <li><a href="#alternative-formulation-of-dynamic-programming-using-q-factors" id="toc-alternative-formulation-of-dynamic-programming-using-q-factors" class="nav-link" data-scroll-target="#alternative-formulation-of-dynamic-programming-using-q-factors">Alternative formulation of dynamic programming using Q-factors</a></li>
+  <li><a href="#alternative-formulation-of-dynamic-programming-using-q-functions" id="toc-alternative-formulation-of-dynamic-programming-using-q-functions" class="nav-link" data-scroll-target="#alternative-formulation-of-dynamic-programming-using-q-functions">Alternative formulation of dynamic programming using Q-functions</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -1427,19 +1427,19 @@ J_k^\star(\bm x_k) = \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\m
 \boxed{
     \bm u_k^\star(\bm x_k) = \arg \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\mathbf f_k(\bm x_k,\bm u_k))\right).}
 </span></p>
-<section id="alternative-formulation-of-dynamic-programming-using-q-factors" class="level3">
-<h3 class="anchored" data-anchor-id="alternative-formulation-of-dynamic-programming-using-q-factors">Alternative formulation of dynamic programming using Q-factors</h3>
-<p>The cost function in <a href="#eq-cost_of_the_all_but_one_optimal_controls" class="quarto-xref">Equation&nbsp;2</a> is sometimes called <em>Q-factor</em> and we denote it <span class="math inline">Q_k^\star(\bm x_k,\bm u_k)</span>. We write its definition here for convenience <span class="math display">
+<section id="alternative-formulation-of-dynamic-programming-using-q-functions" class="level3">
+<h3 class="anchored" data-anchor-id="alternative-formulation-of-dynamic-programming-using-q-functions">Alternative formulation of dynamic programming using Q-functions</h3>
+<p>The cost function in <a href="#eq-cost_of_the_all_but_one_optimal_controls" class="quarto-xref">Equation&nbsp;2</a> is sometimes called <em>Q-function</em> and we denote it <span class="math inline">Q_k^\star(\bm x_k,\bm u_k)</span>. We write its definition here for convenience <span class="math display">
 Q^\star_k(\bm x_k,\bm u_k) = L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1}).
 </span></p>
 <p>It is a cost of choosing the control <span class="math inline">\bm u_k</span> at state <span class="math inline">\bm x_k</span> at time <span class="math inline">k</span> and then following the optimal control from the next time on.</p>
-<p>The optimal cost function <span class="math inline">J_k^\star(\bm x_k)</span> can be recovered from the optimal Q-factor <span class="math inline">Q_k^\star(\bm x_k,\bm u_k)</span> by taking the minimum over <span class="math inline">\bm u_k</span> <span class="math display">
+<p>The optimal cost function <span class="math inline">J_k^\star(\bm x_k)</span> can be recovered from the optimal Q-function <span class="math inline">Q_k^\star(\bm x_k,\bm u_k)</span> by taking the minimum over <span class="math inline">\bm u_k</span> <span class="math display">
 J_k^\star(\bm x_k) = \min_{\bm u_k} Q_k^\star(\bm x_k,\bm u_k).
 </span></p>
-<p>Bellman’s principle of optimality can be then expressed using the optimal Q-factor as <span class="math display">
+<p>Bellman’s principle of optimality can be then expressed using the optimal Q-function as <span class="math display">
 \boxed{Q_k^\star(\bm x_k,\bm u_k) = L_k(\bm x_k,\bm u_k) + \min_{\bm u_{k+1}} Q_{k+1}^\star(\bm x_{k+1},\bm u_{k+1})}.
 </span></p>
-<p>Optimal control is then obtained from the optimal Q-factor as the minimizing control <span class="math display">
+<p>Optimal control is then obtained from the optimal Q-function as the minimizing control <span class="math display">
 \boxed{\bm u_k^\star(\bm x_k) = \arg \min_{\bm u_k} Q_k^\star(\bm x_k,\bm u_k).}
 </span></p>
 

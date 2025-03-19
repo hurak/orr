@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Solving LQR via dynamic programming – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>Solving LQ regulation (LQR) via dynamic programming – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -957,7 +957,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dynamic_programming_goals.html">5. Discrete-time optimal control – dynamic programming (DP)</a></li><li class="breadcrumb-item"><a href="./dynamic_programming_LQR.html">Solving LQR via DP</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Solving LQR via dynamic programming</h1>
+<h1 class="title">Solving LQ regulation (LQR) via dynamic programming</h1>
 </div>
 
 
@@ -983,24 +983,37 @@ J_0(\bm x_0, \bm u_0, \bm u_1, \ldots, \bm u_{N-1}) = \frac{1}{2}\bm x_N^\top \m
 J_N^\star(\bm x_N) = \frac{1}{2}\bm x_N^\top \mathbf S_N \bm x_N.
 </span></p>
 <p>Actually, we have nothing to minimize here, we just evaluate the cost. We then proceed backwards in time, that is, we decrease the time to <span class="math inline">k=N-1</span>. Here we do have something to minimize: <span class="math display">
-J^\star_{N-1}(\bm x_{N-1}) = \min_{\bm u_{N-1}\in\mathbb R^m} J_{N-1}(\bm x_{N-1},\bm u_{N-1}) = \min_{\bm u_{N-1}\in\mathbb R^m} \left[L(\bm x_{N-1},\bm u_{N-1}) + J^\star_{N}(\bm x_{N}) \right].
-</span></p>
-<p>We now expand the expression for the cost<br>
+J^\star_{N-1}(\bm x_{N-1}) = \min_{\bm u_{N-1}\in\mathbb R^m} \left[\underbrace{L(\bm x_{N-1},\bm u_{N-1}) + J^\star_{N}(\bm x_{N})}_{Q_{N-1}^\star(\bm x_k, \bm u_k)} \right],
+</span> in which we recall our previously introduced notation for the function to be minimized as <span class="math inline">Q_{N-1}^\star</span>, also called a <em>Q-function</em>.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The notational clash between the function <span class="math inline">Q^\star</span> and the weighting matrix <span class="math inline">\mathbf Q</span> is unfortunate, but the use of both symbols is so much established in this area that we will have to live with it. We have to rely on the font and the symbol of <span class="math inline">\star</span> to distinguish between the two.</p>
+</div>
+</div>
+<p>We now expand the expression for the Q-function, with the obvious motivation to solve the optimization with respect to <span class="math inline">\bm u_{N-1}</span> analytically:<br>
 <span class="math display">
 \begin{aligned}
-J_{N-1}(\bm x_{N-1},\bm u_{N-1}) &amp;= \frac{1}{2} \left(\bm x_{N-1}^\top \mathbf Q \bm x_{N-1} + \bm u_{N-1}^\top \mathbf R \bm u_{N-1} \right) + J^\star_{N}(\bm x_{N}) \\
+Q_{N-1}^\star(\bm x_{N-1},\bm u_{N-1}) &amp;= \frac{1}{2} \left(\bm x_{N-1}^\top \mathbf Q \bm x_{N-1} + \bm u_{N-1}^\top \mathbf R \bm u_{N-1} \right) + J^\star_{N}(\bm x_{N}) \\
 &amp;= \frac{1}{2} \left(\bm x_{N-1}^\top \mathbf Q \bm x_{N-1} + \bm u_{N-1}^\top \mathbf R \bm u_{N-1} \right) + \frac{1}{2}\mathbf x_N^\top \mathbf S_N \mathbf x_N\\
 &amp;= \frac{1}{2} \left( \bm x_{N-1}^\top \mathbf Q \bm x_{N-1} + \bm u_{N-1}^\top \mathbf R \bm u_{N-1} + \mathbf x_N^\top \mathbf S_N \mathbf x_N \right)\\
 &amp;= \frac{1}{2} \left[ \bm x_{N-1}^\top \mathbf Q \bm x_{N-1} + \bm u_{N-1}^\top \mathbf R \bm u_{N-1} + (\bm x_{N-1}^\top \mathbf A^\top + \bm u_{N-1}^\top \mathbf B^\top) \mathbf S_N (\mathbf A\bm x_{N-1} + \mathbf B\bm u_{N-1}) \right]\\
 &amp;= \frac{1}{2} \left[\bm x_{N-1}^\top (\mathbf Q  + \mathbf A^\top\mathbf S_N \mathbf A)\bm x_{N-1} + 2\mathbf x^\top_{N-1}\mathbf A ^\top \mathbf S_N \mathbf B  \bm u_{N-1} + \mathbf u^\top_{N-1}(\mathbf R + \mathbf B^\top \mathbf S_n \mathbf B)\bm u_{N-1} \right].
 \end{aligned}
 </span></p>
-<p>Since we assumed no constraint on <span class="math inline">\bm u_{N-1}</span>, finding the minimum of <span class="math inline">J_{N-1}</span> is as easy as setting its gradient to zero <span class="math display">
-\mathbf 0 = \nabla_{\bm u_{N-1}} J_{N-1} = (\mathbf R + \mathbf B^\top \mathbf S_n \mathbf B)\bm u_{N-1} + \mathbf B^\top \mathbf S_N\mathbf A\bm x_{N-1},
+<p>Since we assumed no constraint on <span class="math inline">\bm u_{N-1}</span>, finding the minimum of <span class="math inline">Q_{N-1}^\star(\bm x_{N-1},\bm u_{N-1})</span> with respect to <span class="math inline">\bm u_{N-1}</span> (while regarding <span class="math inline">\bm x_{N-1}</span> fixed) is as easy as setting its gradient to zero <span class="math display">
+\nabla_{\bm u_{N-1}} Q_{N-1}^\star(\bm x_{N-1},\bm u_{N-1}) = (\mathbf R + \mathbf B^\top \mathbf S_N \mathbf B)\bm u_{N-1} + \mathbf B^\top \mathbf S_N\mathbf A\bm x_{N-1} = \mathbf 0,
 </span> which leads to <span class="math display">
 \bm u_{N-1}^\star = -\underbrace{(\mathbf B^\top \mathbf S_N\mathbf B + \mathbf R)^{-1}\mathbf B^\top \mathbf S_N \mathbf A}_{\mathbf K_{N-1}} \bm x_{N-1},
 </span> which amounts to solving a system of linear equations. We can also recognize the Kalman gain matrix <span class="math inline">\mathbf K_{N-1}</span>, which we derived using the indirect approach in the previous chapter.</p>
-<p>The optimal cost <span class="math inline">J^\star_{N-1}</span> can be obtained by substituting <span class="math inline">\bm u_{N-1}^\star</span> into <span class="math inline">J_{N-1}</span> <span class="math display">
+<p>The optimal cost <span class="math inline">J^\star_{N-1}</span> can be obtained by substituting <span class="math inline">\bm u_{N-1}^\star</span> into <span class="math inline">Q_{N-1}^\star</span> <span class="math display">
 J_{N-1}^\star = \frac{1}{2}\bm x_{N-1}^\top \underbrace{\left[(\mathbf A-\mathbf B\mathbf K_{N-1})^\top \mathbf S_N(\mathbf A-\mathbf B\mathbf K_{N-1}) + \mathbf K_{N-1}^\top \mathbf R \mathbf K_{N-1} + \mathbf Q\right]}_{\mathbf S_{N-1}} \bm x_{N-1}.
 </span></p>
 <p>Note that the optimal cost <span class="math inline">J^\star_{N-1}</span> is also a quadratic function of the state as is the cost <span class="math inline">J^\star_{N}</span>. We denote the matrix that defines this quadratic function as <span class="math inline">\mathbf S_{N-1}</span>. We do this in anticipation of continuation of this procedure to <span class="math inline">k = N-2, N-3, \ldots</span>, which will give <span class="math inline">\mathbf S_{N-2}, \mathbf S_{N-3}, \ldots</span>. The rest of the story is quite predictable, isn’t it? Applying the Bellman’s principle of optimality we (re)discovered the discrete-time Riccati equation in the <em>Joseph stabilized form</em> <span class="math display">\boxed{
@@ -1009,7 +1022,7 @@ J_{N-1}^\star = \frac{1}{2}\bm x_{N-1}^\top \underbrace{\left[(\mathbf A-\mathbf
 \mathbf K_{k} = (\mathbf B^\top \mathbf S_{k+1}\mathbf B + \mathbf R)^{-1}\mathbf B^\top \mathbf S_{k+1} \mathbf A,}
 </span> and with the expression for the optimal cost as a (quadratic) function of the initial state <span class="math display">
 \boxed{
-J_k^\star = \frac{1}{2}\bm x_k^\top \mathbf S_k \bm x_k.}
+J_k^\star(\bm x_{k}) = \frac{1}{2}\bm x_k^\top \mathbf S_k \bm x_k.}
 </span></p>
 
 
