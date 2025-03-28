@@ -4,13 +4,14 @@ bibliography:
     - ref_optimal_control.bib
     - ref_calculus_variations.bib
     - ref_calculus_variations_optimal_control.bib
+csl: ieee-control-systems.csl
 format:
     html:
         html-math-method: katex
         code-fold: true
-execute:
-    enabled: false
-    warning: false
+crossref:
+  fig-prefix: Fig. 
+  eq-prefix: Eq.
 engine: julia
 ---
 
@@ -28,11 +29,11 @@ Don't forget that when linearizing a nonlinear system $\dot{\bm x} = \mathbf f(\
 Having decided on an LQR framework, we can now come up with the three matrices $\mathbf Q$, $\mathbf R$ and $\mathbf S$ that set the quadratic cost function. Once this choice is made, we can just invoke the solver for continuous-time Riccati equation with the ultimate goal of finding the time-varying state feedback gain $\mathbf K(t)$. 
 
 ::: {.callout-note}
-## LQR for trajectory stabilization cab be done in discrete time
+## LQR for trajectory stabilization can be done in discrete time
 If discrete-time feedback control is eventually desired, which it mostly is, the whole LQR design for a time-varying linear system will have to be done using just periodically sampled state and control trajectories and applying recursive formulas for the discrete-time Riccati equation and state feedback gain.
 :::
 
-The three weighting matrices $\mathbf Q$, $\mathbf R$ and $\mathbf S$, if chosen arbitrarily, are not related to the original cost function that is minimized by the optimal state and control trajectories. The matrices just parameterize a new optimal control problem. It turns out, however, that there is a clever (and insightful) way of choosing these matrices so that the trajectory stabilization problem inherits the original cost function. In other words, even when the system fails to stay on the optimal trajectory perfectly, the LQR state-feedback controller will keep minimizing the same cost function when regulating the deviation from the optimal trajectory. 
+The three weighting matrices $\mathbf Q$, $\mathbf R$ and $\mathbf S$, if chosen arbitrarily, are not related to the original cost function that is minimized by the optimal state and control trajectories. The matrices just parameterize a new optimal control problem. And it can be acceptable. It turns out, however, that there is a clever (and insightful) way of choosing these matrices so that the trajectory stabilization problem inherits the original cost function. In other words, even when the system fails to stay on the optimal trajectory perfectly, the LQR state-feedback controller will keep minimizing the same cost function when regulating the deviation from the optimal trajectory. 
 
 Recall that using the conventional definition of Hamiltonian $H(\bm x, \bm u, \bm \lambda) = L(\bm x, \bm u) + \bm \lambda^\top \mathbf f(\bm x, \bm u)$, in which we now assume time invariance of both the system and the cost function for notational simplicity, the necessary conditions of optimality are
 $$
@@ -96,3 +97,5 @@ Assuming that $\nabla^2_{\bm{uu}} H$ is nonsingular, which can solve the third e
 $$
 \bm u = -\nabla^2_{\bm{uu}} H^{-1} \left( \nabla^2_{\bm{ux}} H \; \delta \bm x + (\nabla_{\bm u} \mathbf f)^\top \; \delta \bm \lambda\right ).
 $$
+
+#TODO: finish.

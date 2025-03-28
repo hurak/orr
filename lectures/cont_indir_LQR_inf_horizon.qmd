@@ -1,13 +1,32 @@
 ---
-title: "Indirect approach to LQR on an infinite horizon"
+title: "Indirect approach to LQR on an infinite time horizon"
 bibliography: 
     - ref_optimal_control.bib
+csl: ieee-control-systems.csl
 format:
     html:
         html-math-method: katex
         code-fold: true
-execute:
-    enabled: false
-    warning: false
+crossref:
+  fig-prefix: Fig. 
+  eq-prefix: Eq.
 engine: julia
 ---
+
+When solving the initial (actually final) value problem 
+$$
+ - \dot{\bm S}(t) =  \bm S(t) \mathbf A + \mathbf A^\top \bm S(t) + \mathbf Q - \bm S(t)\mathbf B\mathbf R^{-1}\mathbf B^\top \bm S(t), \qquad \bm S(t_\mathrm{f}) = \mathbf S_\mathrm{f}
+$$
+for $\bm S(t)$ at time $t\rightarrow -\infty$, we recall that a steady (or settled) solution does not evolve any further, that is, $\dot{\bm S}(t) = \bm 0$. Substituting this to the differential Riccati equation, we obtain the *continuous-time algebraic Riccati equation* (CARE) 
+$$\boxed{
+ \mathbf 0=  \bm S \mathbf A + \mathbf A^\text{T} \bm S + \mathbf Q - \bm S\mathbf B\mathbf R^{-1}\mathbf B^\text{T} \bm S.}
+$${#eq-algebraic-Riccati-equation}
+
+This is prominent equation in optimal control theory. Unline its discrete-time counterpart (the DARE), the CARE is obviously a quadratic equation in the matrix variable $\bm S$. 
+
+Numerical solution can be found using specialized solvers (see the section on software). But a surprisingly nontrivial question is: how does the solution to CARE relate to the limiting solution $\bm S_\infty = \lim_{t\rightarrow -\infty} \bm S(t)$? After all, the CARE is a quadratic equation, which even in the scalar case has more then one solution. For convenience, we write down the scalar version explicitly:
+$$\boxed{
+ 0 =  2as + q - \frac{b^2}{r}s^2.}
+$$
+
+Which of the (at maximum) two real solutions is the one that we are looking for? We can afford to be rather short in the remaining analysis since the similarity to the discrete-time case is truly very strong. Thus we can conclude this section by merely stating that a unique stabilizing solution of the ARE exists if and only if the artificial system modelled by $(\mathbf A,\sqrt{\mathbf Q})$ is detectable (or observable if we require positive definiteness of $\bm S(t)$).   

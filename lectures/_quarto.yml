@@ -71,8 +71,10 @@ website:
             href: dynamic_programming.qmd
           - text: "Tabular outcomes of DP"
             href: dynamic_programming_tabular.qmd
-          - text: "Solving LQR via DP"
+          - text: "LQR via DP"
             href: dynamic_programming_LQR.qmd
+          - text: "LQ tracking via DP"
+            href: dynamic_programming_LQT.qmd  
           - dynamic_programming_DDP.qmd
           - dynamic_programming_references.qmd
           - dynamic_programming_hw.qmd
@@ -86,12 +88,17 @@ website:
           - discr_dir_mpc_hw.qmd
       - section: "7. Continuous-time optimal control - indirect approach via calculus of variations"
         contents:
+          - cont_indir_goals.qmd
           - cont_indir_overview.qmd
           - cont_indir_calculus_of_variations.qmd
-          - cont_indir_via_calculus_of_variations.qmd
-          - cont_indir_LQR_fin_horizon.qmd
-          - cont_indir_LQR_inf_horizon.qmd
-          - cont_indir_CARE.qmd
+          - text: "General finite-horizon nonlinear optimal control as a TP-BVP"
+            href: cont_indir_via_calculus_of_variations.qmd
+          - text: "LQR on a finite time horizon"
+            href: cont_indir_LQR_fin_horizon.qmd
+          - text: "LQR on an infinite time horizon using CARE"
+            href: cont_indir_LQR_inf_horizon.qmd
+          #- cont_indir_CARE.qmd
+          - cont_indir_notation.qmd
           - cont_indir_trajectory_stabilization.qmd
           - cont_indir_references.qmd
           - cont_indir_hw.qmd
