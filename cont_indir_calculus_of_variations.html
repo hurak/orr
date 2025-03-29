@@ -69,6 +69,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -82,7 +125,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_overview.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">Calculus of variations</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_goals.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">Calculus of variations</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -420,7 +463,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dynamic_programming_LQR.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Solving LQR via DP</span></a>
+ <span class="menu-text">LQR via DP</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming_LQT.qmd" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LQ tracking via DP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -501,6 +550,12 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cont_indir_goals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning goals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./cont_indir_overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview of continuous-time optimal control</span></a>
   </div>
@@ -514,25 +569,25 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_via_calculus_of_variations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Indirect approach to optimal control</span></a>
+ <span class="menu-text">General finite-horizon nonlinear optimal control as a TP-BVP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_LQR_fin_horizon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Indirect approach to LQR on a finite horizon</span></a>
+ <span class="menu-text">LQR on a finite time horizon</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_LQR_inf_horizon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Indirect approach to LQR on an infinite horizon</span></a>
+ <span class="menu-text">LQR on an infinite time horizon using CARE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_CARE.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Continuous-time Riccati equation</span></a>
+  <a href="./cont_indir_notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">On notation for Hamiltonians and variations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -906,13 +961,29 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#strong-vs.-weak-minimum" id="toc-strong-vs.-weak-minimum" class="nav-link active" data-scroll-target="#strong-vs.-weak-minimum">Strong vs.&nbsp;weak minimum</a></li>
+  <li><a href="#variation-variational-derivative-and-first-order-conditions-of-optimality" id="toc-variation-variational-derivative-and-first-order-conditions-of-optimality" class="nav-link" data-scroll-target="#variation-variational-derivative-and-first-order-conditions-of-optimality">Variation, variational derivative and first-order conditions of optimality</a></li>
+  <li><a href="#some-examples-of-calculus-of-variations" id="toc-some-examples-of-calculus-of-variations" class="nav-link" data-scroll-target="#some-examples-of-calculus-of-variations">Some examples of calculus of variations</a>
+  <ul class="collapse">
+  <li><a href="#minimum-distance-between-two-points" id="toc-minimum-distance-between-two-points" class="nav-link" data-scroll-target="#minimum-distance-between-two-points">Minimum distance between two points</a></li>
+  <li><a href="#didos-problem" id="toc-didos-problem" class="nav-link" data-scroll-target="#didos-problem">Dido’s problem</a></li>
+  <li><a href="#brachistochrone-problem" id="toc-brachistochrone-problem" class="nav-link" data-scroll-target="#brachistochrone-problem">Brachistochrone problem</a></li>
+  </ul></li>
+  <li><a href="#basic-problem-of-calculus-of-variations-with-fixed-ends" id="toc-basic-problem-of-calculus-of-variations-with-fixed-ends" class="nav-link" data-scroll-target="#basic-problem-of-calculus-of-variations-with-fixed-ends">Basic problem of calculus of variations with fixed ends</a></li>
+  <li><a href="#sufficient-conditions-of-optimality-minimum" id="toc-sufficient-conditions-of-optimality-minimum" class="nav-link" data-scroll-target="#sufficient-conditions-of-optimality-minimum">Sufficient conditions of optimality (minimum)</a></li>
+  <li><a href="#constrained-problems-in-calculus-of-variations" id="toc-constrained-problems-in-calculus-of-variations" class="nav-link" data-scroll-target="#constrained-problems-in-calculus-of-variations">Constrained problems in calculus of variations</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_overview.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">Calculus of variations</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_goals.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_calculus_of_variations.html">Calculus of variations</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Calculus of variations</h1>
 </div>
@@ -931,8 +1002,385 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>Since in our quest for the optimal control we optimize over functions (trajectories), we can view our optimization as cast in an infinite-dimensional vector space. The mathematical discipline of <em>calculus of variations</em> provides concepts and tools for such optimization. The general task (in a scalar version) is to find</p>
+<p><span class="math display">
+\min_{y(x)\in\mathcal C^1[a,b]} J(y(x)),
+</span> where we relabelled the variables in the following sense: the optimization is performed over functions <span class="math inline">y(\cdot)</span>, which are functions of the independent scalar variable <span class="math inline">x</span>. The reason for this notational choice is that many of the results in calculus of variations were motivated by problems where the independent variable was length or position. This change of notation is reflected in <a href="#fig-many-ys" class="quarto-xref">Fig.&nbsp;1</a>, which shows a few members of the space in which we search for a minimizer.</p>
+<div id="fig-many-ys" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-many-ys-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/many_ys.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-many-ys-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The variables in calculus of variation are functions
+</figcaption>
+</figure>
+</div>
+<p>Having specified the optimization variable, we need to talk about the cost function. It is now a function of a function. An established name for such functions is <em>functional</em>.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Functional as a function of (not only) a function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Just minor warning about the usage of the concept of a functional in mathematics. While it is generally understood as a function that assigns a real (or complex) number to its argument, the arguments can be an element of any vectors space, not just a space of functions. But the established usage within the discipline of calculus of variations is that the argument is in a set of functions (for instance, <span class="math inline">\mathcal C^1[a,b]</span>, the set of of continuously differentiable functions).</p>
+</div>
+</div>
+<p>It is now important to reinvoke the very definition of <em>local minimum</em> that we introduced in the lecture on finite-dimensional optimization. The cost function has a local minimum at a given point if there exists some neighbourhood within which all the other points achieve equal or higher value. With our current notation, <span class="math inline">J</span> attains a local minimum at <span class="math inline">y^\star</span> if <span class="math display">
+J(y^\star) \leq J(y)
+</span> for all <span class="math inline">y</span> in some <em>neighbourhood</em> of <span class="math inline">y^\star</span>. The neighbourhood is given as a set of all those <span class="math inline">y</span> for which <span class="math display">
+\|y-y^\star\| \leq \epsilon.
+</span></p>
+<section id="strong-vs.-weak-minimum" class="level3">
+<h3 class="anchored" data-anchor-id="strong-vs.-weak-minimum">Strong vs.&nbsp;weak minimum</h3>
+<p>The question is, which norm is used in the expression above. In finite-dimensional spaces the choice of a norm did not have an impact on whether a given point was classified as a minimum or not. We could use 2-norm (the popular Euclidean norm), 1-norm (also called Manhattan norm) or <span class="math inline">\infty</span>-norm (also called max norm). But the situation is dramatically different in infinite dimensional vector spaces; and the spaces of function can be viewed as having an infinite dimension. Restricting ourselves to the space <span class="math inline">\mathcal{C}^1</span> of continuously differentiable functions, there are two main norms that are popular in calculus of variations. First, the so-called 0-norm, which is defined as <span class="math display">
+\|y\|_0=\max_{x\in [a,b]} |y(x)|.
+</span></p>
+<p>The second type of norm that we will use is called 1-norm</p>
+<p><span class="math display">
+\|y\|_1=\max_{x\in [a,b]} |y(x)| + \max_{x\in [a,b]} |y'(x)|.
+</span></p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="math inline">\|.\|_0</span> vs <span class="math inline">\|.\|_1</span> and <span class="math inline">\|.\|_1</span> vs <span class="math inline">\|.\|_\infty</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Admittedly, the notation might be (again) a bit confusing as <span class="math inline">\|.\|_1</span> is typically used for the sum-of-absolute-values and integral-of-absolute-values norms used elsewhere. But that’s how it is… Different disciplines adopted different conventions. Similarly, the definition of <span class="math inline">\|.\|_0</span> resembles the one of the <span class="math inline">\infty</span>-norm (also sup-norm) used elsewhere, but while the former is restricted to smooth functions, the latter is used for a broader family of functions – essentially bounded measurable function, also denoted as <span class="math inline">\mathcal L_\infty</span>.</p>
+</div>
+</div>
+<p>When <span class="math inline">\|.\|_0</span> norm is used to define the neighbourhood, we say that <span class="math inline">J</span> attains a <em>strong</em> minimum at <span class="math inline">y^\star</span>. When <span class="math inline">\|.\|_1</span> norm is used instead, the attained minimum is <em>weak</em>.</p>
+<p>It may take a few seconds to realize that if <span class="math inline">y^\star</span> is a strong minimum, it is automatically weak. The oposite is not true. If <span class="math inline">y^\star</span> is a weak minimum, it is not necessarily strong. In other words, for a fixed <span class="math inline">\varepsilon</span>, the set <span class="math inline">N_1=\{y:\|y-y^\star\|_0\leq \varepsilon\}</span> contains all the members of the set <span class="math inline">N_2=\{y:\|y-y^\star\|_1\leq \varepsilon\}</span> but the other direction does not hold. The visualization in <a href="#fig-strong-vs-weak" class="quarto-xref">Fig.&nbsp;2</a> may help see this.</p>
+<div id="fig-strong-vs-weak" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-strong-vs-weak-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/strong_vs_weak.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-strong-vs-weak-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Optimal function <span class="math inline">y^\star</span> and a neighbourhood in the sense of <span class="math inline">\|.\|_0</span> norm in the left and <span class="math inline">\|.\|_1</span> norm in the right. The difference is that in the left any smooth function can be considered that fits into the graphical bounds, whereas in the right not only the magnitude (the graphical boundary) matters but the rate of change is bounded as well.
+</figcaption>
+</figure>
+</div>
+<div id="exm-strong-vs-weak" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1</strong></span> Consider the minimization of the functional <span class="math inline">J(y)=\int_\mathrm{i}^1[(y'(x))^2(1-(y'(x))^2)]\text{d}x</span> for which it is requested that <span class="math inline">y(a)=y(b)=0</span>. Clearly <span class="math inline">y(x)=0</span> is a weak minimum but is not a strong minimum. Just observe that even for tiny perturbations in magnitude, if the derivative is high, that is, <span class="math inline">(y'(x))^2&gt;1</span>, the functional <span class="math inline">J</span> is negative.</p>
+</div>
+<p>What is the role of these two norms in our course? The former—the <span class="math inline">\|.\|_0</span> norm—and the related concept of strong minimum are what we would like to test for, while the latter—the <span class="math inline">\|.\|_1</span> norm—and the related concept of weak minimum are just mathematically more convenient. It is much easier to show that a point is a weak minimum. Nonetheless, the distinction between these two will only be relevant once we want to find sufficient conditions of optimality, and we are not there yet. First we need to find the (first-order) necessary conditions of optimality.</p>
+</section>
+<section id="variation-variational-derivative-and-first-order-conditions-of-optimality" class="level2">
+<h2 class="anchored" data-anchor-id="variation-variational-derivative-and-first-order-conditions-of-optimality">Variation, variational derivative and first-order conditions of optimality</h2>
+<p>Similarly as in the finite-dimensional optimization, we will build the necessary conditions of optimality by studying how the cost function changes if we perturb the independent variable a bit. Let’s denote the minimizing function as <span class="math inline">y^\star</span>. We denote the perturbed function as <span class="math inline">y</span> and we form it as <span class="math display">
+y(x) = y^\star(x) + \delta y(x),
+</span> where <span class="math inline">\delta y(\cdot)</span> is <em>variation of function</em> and it is a function itself. It plays the same role in calculus of variations as the term <span class="math inline">\mathrm{d}x</span> does in differential calculus.</p>
+<p>Recall that one aproach to deriving the first-order necessary conditions of optimality in the case of vector variables was based on fixing the direction first and then analyzing how the function evolves along this direction. Namely, we considered evolution of the cost function <span id="eq-variation-of-function"><span class="math display">
+f(\mathbf x^\star + \alpha\, \mathbf d)
+\tag{1}</span></span> for given <span class="math inline">\mathbf x^\star\in\mathbb{R}^n</span> and <span class="math inline">\mathbf d\in\mathbb{R}^n</span> while varying <span class="math inline">\alpha\in\mathbb{R}</span>. This enabled us to convert the vector problem into a scalar one. We can follow this procedure while perturbing a function. Namely, we can build the variation of a function by writing it as <span id="eq-alpha-eta"><span class="math display">
+\delta y(x) = \alpha \eta(x),
+\tag{2}</span></span> where <span class="math inline">\eta(x)</span> is a given (but arbitrary) function in <span class="math inline">\mathcal{C}^1</span> (playing the role of <span class="math inline">\mathbf d</span> in the finite-dimensional optimization) and <span class="math inline">\alpha\in\mathbb R</span>. This way we are about to convert optimization over functions to optimization over real numbers.</p>
+<p>Before we proceed, let’s elaborate a bit more on the above expression. Let’s assume that the function <span class="math inline">y(x)</span> in the neighbourhood of the minimizing function <span class="math inline">y^\star(x)</span> is actually parameterized by some real parameter <span class="math inline">\alpha</span>, and that for <span class="math inline">\alpha=0</span> it becomes the minimizing function <span class="math inline">y^\star(x)</span>. The Taylor expansion around <span class="math inline">\alpha = 0</span> is <span class="math display">
+y(x,\alpha) = \underbrace{y(x,0)}_{y^\star(x)} + \left.\frac{\partial y(x,\alpha)}{\partial \alpha}\right|_{\alpha=0} \alpha + \mathcal{O}(\alpha^2).
+</span></p>
+<p>The second term on the right is then the variation <span class="math inline">\delta y</span> of the function <span class="math inline">y</span>. We will write it down here for later reference <span id="eq-delta-y-as-a-differential-wrt-alpha"><span class="math display">
+\delta y(x) = \underbrace{\left.\frac{\partial y(x,\alpha)}{\partial \alpha}\right|_{\alpha=0}}_{\eta(x)} \alpha.
+\tag{3}</span></span></p>
+<p>This add an interpretation to <a href="#eq-alpha-eta" class="quarto-xref">Eq.&nbsp;2</a>. Note also that for a fixed <span class="math inline">x</span>, the variation is just a differential with respect to <span class="math inline">\alpha</span> (recall that a differential is the first-order approximation to the increment).</p>
+<p>So far, so good. We have now discussed in quite some detail the concept of variation of a function, that is, the concept that will be used to describe the perturbation of the input argument of a cost functional. But now we want to see if another analogy can be found with the differential calculus. Recall that the first-order necessary condition of optimality of a cost function <span class="math inline">f(x)</span> of a scalar real argument <span class="math inline">x</span> is that the differential of the cost function vanishes, that is, <span class="math display">
+\mathrm d f = 0.
+</span></p>
+<p>But we also know that that the differential is defined as the first-order approximation to the increment in the input argument, that is <span class="math display">
+\mathrm d f = \underbrace{f'}_{\frac{\mathrm d f}{\mathrm d x} } \mathrm d x=0,
+</span> from which it follows that if the variable <span class="math inline">x</span> is unconstrained, the first-order condition of optimality can be given as a condition on the derivative <span class="math display">
+f'(x) = 0.
+</span></p>
+<p>In case of a vector variables <span class="math inline">\mathbf x\in\mathbb R^n</span>, we rewrite the above condition on the differential as <span id="eq-vanishing-differential-vector-case"><span class="math display">
+\mathrm d f = (\nabla f)^\mathrm{T}\, \mathbf{d}\mathbf{x} = 0,
+\tag{4}</span></span> from which it follows that <span class="math display">
+\nabla f = \mathbf 0.
+</span></p>
+<p>Having recapitulated these basic facts from differential calculus, we are now curious if we can do similar development within calculus of variations. Namely, we would like to express the variation of the cost functional using the variation of the function, thus mimicking <a href="#eq-vanishing-differential-vector-case" class="quarto-xref">Eq.&nbsp;4</a>. Note that the product in <a href="#eq-vanishing-differential-vector-case" class="quarto-xref">Eq.&nbsp;4</a> is actually the <em>inner product</em> (some may even write it as <span class="math inline">\mathrm d f = \langle \nabla f, \mathbf{d}\mathbf{x} \rangle</span>). And inner products are also defined in other vector spaces, not just Euclidean spaces of <span class="math inline">n</span>-tuples. For continuous functions, they are defined using integrals instead of sums. Namely, we have <span class="math display">\boxed{
+\delta J = \int_a^b {\color{red}\frac{\delta J}{\delta y(x)}} \, \delta y(x)\mathrm d x, }
+</span> where the fraction in the above expression is called <em>variational derivative</em>.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The whole fraction should be regarded just as one symbol. You should not really treat it as a true ratio (and cancel the denominator term with the other <span class="math inline">\delta y</span> term). This is the same type of a trap that you can encounter in differential calculus using Leibniz’s notation.</p>
+</div>
+</div>
+<p>Now, following <a href="#eq-delta-y-as-a-differential-wrt-alpha" class="quarto-xref">Eq.&nbsp;3</a>, we may want to express the variation of <span class="math inline">J</span> as <span id="eq-delta-J-as-a-differential-wrt-alpha"><span class="math display">
+\delta J = \left.\frac{\mathrm{d} J}{\mathrm{d} \alpha}\right|_{\alpha=0}\alpha.
+\tag{5}</span></span></p>
+<p>We compute the derivative of the cost with respect to the real parameter <span class="math inline">\alpha</span> first (recall that both the <span class="math inline">y</span> and the <span class="math inline">\eta</span> functions are considered as fixed here) <span id="eq-partial-of-J-wrt-alpha"><span class="math display">
+\left.\frac{\mathrm{d}}{\mathrm{d} \alpha}J(y(x)+\alpha\eta(x))\right|_{\alpha=0} = \lim_{\alpha\rightarrow 0}\frac{J(y(x)+\alpha\eta(x))-J(y(x))}{\alpha},
+\tag{6}</span></span> and once we have it, we just multiply the result by <span class="math inline">\alpha</span>, and we have the desired variation of the cost.</p>
+<p>We are not going to consider completely arbitrary cost function(al)s, instead we are only going to consider a useful subset. We start by considering some concrete examples. We will then extract some common features and characterize some general and yet narrow enough family of cost functionals.</p>
+</section>
+<section id="some-examples-of-calculus-of-variations" class="level2">
+<h2 class="anchored" data-anchor-id="some-examples-of-calculus-of-variations">Some examples of calculus of variations</h2>
+<section id="minimum-distance-between-two-points" class="level3">
+<h3 class="anchored" data-anchor-id="minimum-distance-between-two-points">Minimum distance between two points</h3>
+<p>Consider two points in the plane. The task is to find the curve that connects these two points and minimizes the total length. Without a loss of generality, we consider the two ends on the <span class="math inline">x</span>-axis as in <a href="#fig-minimum-distance" class="quarto-xref">Fig.&nbsp;3</a>. Although the answer to this problem is trivial, the problem serves a good job of demonstrating the essence of calculus of variations.</p>
+<div id="fig-minimum-distance" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-minimum-distance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/minimum_distance.png" class="img-fluid figure-img" style="width:30.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-minimum-distance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Minimum distance between two points
+</figcaption>
+</figure>
+</div>
+<p>The total length of the curve is <span class="math inline">J(y) = \int_a^b \sqrt{(\mathrm d x)^2+(\mathrm d y)^2}= \int_a^b \sqrt{1+(y'(x))^2}\text{d}x</span>. The optimization problem is then <span class="math display">
+\operatorname*{minimize}_{y\in\mathcal{C}^1_{[a,b]}} \int_a^b \sqrt{1+(y'(x))^2}\text{d}x.
+</span></p>
+</section>
+<section id="didos-problem" class="level3">
+<h3 class="anchored" data-anchor-id="didos-problem">Dido’s problem</h3>
+<p>Given a rope of length <span class="math inline">c</span>, what is the maximum area this rope can circumscribe? Obviously, here we have a problem with an equality-type constraint <span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{y\in\mathcal{C}^1_{[a,b]}} &amp;\quad \int_a^b y(x)\text{d}x,\\
+\text{subject to} &amp;\quad \int_a^b \sqrt{1+(y'(x))^2}\text{d}x = c.
+\end{aligned}
+</span></p>
+</section>
+<section id="brachistochrone-problem" class="level3">
+<h3 class="anchored" data-anchor-id="brachistochrone-problem">Brachistochrone problem</h3>
+<p>Another classical problem mentioned in every textbook on calculus of variations is the problem of <em>brachistochrone</em>, where the task is to find a shape of a thin wire with a bead sliding along it (with no friction) in the shortest time, see <a href="#fig-brachistochrone" class="quarto-xref">Fig.&nbsp;4</a>.</p>
+<div id="fig-brachistochrone" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-brachistochrone-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/brachistochrone.png" class="img-fluid figure-img" style="width:40.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-brachistochrone-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Problem of brachistochrone
+</figcaption>
+</figure>
+</div>
+<p>You may also like watching the “no-equation” video by VSauce:</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/skvnj67YGmw" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p>The cost function is simply the total time, that is <span class="math display">
+J = \int_{t_\mathrm{i}}^{t_\mathrm{f}} \mathrm{d}t = t_\mathrm{f}-t_\mathrm{i}.
+</span></p>
+<p>It does not fit into the framework that we currently use because <em>time</em> enters here as the <em>independent variable</em>. But there is an easy fix to this. We will express time as a ratio of the distance and velocity. In particular, <span class="math display">
+J = \int_a^b \frac{\text{d}s}{v}.
+</span></p>
+<p>We are already well familiar with the numerator but the velocity in the denominator needs to be determined too. We will use a physical argument here: when the bead is in the initial position, the velocity is zero and the height (as measured along the <span class="math inline">y</span> axis) is zero. Therefore the total energy given as a sum of kinetic and potential energies <span class="math inline">\mathcal{T}+\mathcal{V}</span> is zero. And since we assume no friction, the total energy remains constant along the whole trajectory, that is, <span class="math display">
+\frac{1}{2}mv^2 - mgy = 0,
+</span> from which we can write <span class="math display">
+v(x) = \sqrt{2gy(x)}.
+</span></p>
+<p>We can then write the expression for the total time as <span class="math display">
+J = \int_a^b \frac{\text{d}s}{v}= \int_a^b \frac{\sqrt{1+(y'(x))^2}}{\sqrt{2gy(x)}}\text{d}x.
+</span></p>
+<p>The optimization problem is then <span class="math display">
+\operatorname*{minimize}_{y\in\mathcal{C}^1_{[a,b]}} \int_a^b \sqrt{\frac{1+(y'(x))^2}{2gy(x)}}\text{d}x.
+</span></p>
+</section>
+</section>
+<section id="basic-problem-of-calculus-of-variations-with-fixed-ends" class="level2">
+<h2 class="anchored" data-anchor-id="basic-problem-of-calculus-of-variations-with-fixed-ends">Basic problem of calculus of variations with fixed ends</h2>
+<p>The only motivation for including those few simple examples was to justify the following general problem. We will call this . We will keep considering <span class="math inline">\mathcal{C}^1</span> functions of <span class="math inline">x</span> defined on an interval <span class="math inline">[a,b]</span> with the values at the beginning and end of the interval fixed <span class="math display">
+y(a) = \mathrm y_a,\qquad y(a) = \mathrm y_b,
+</span> see <a href="#fig-fixed-ends" class="quarto-xref">Fig.&nbsp;5</a> and the task is to find <span class="math inline">y^\star\in\mathcal{C}^1_{[a,b]}</span> minimizing the functional of the following type<br>
+<span class="math display">
+J(y(\cdot)) = \int_a^b L(x,y(x),y'(x))\text{d}x.
+</span></p>
+<div id="fig-fixed-ends" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fixed-ends-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/fixed_ends.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fixed-ends-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Basic problem of calculus of variations with values of the function at both ends fixed
+</figcaption>
+</figure>
+</div>
+<p>The basic problem of calculus of variations is then <span class="math display">\boxed{
+\begin{aligned}
+\operatorname*{minimize}_{y\in\mathcal{C}^1_{[a,b]}} &amp;\quad \int_a^b L(x,y(x),y'(x))\text{d}x\\
+\text{subject to} &amp;\quad y(a) = \mathrm y_a,\\
+&amp;\quad y(b) = \mathrm y_b.
+\end{aligned}}
+</span></p>
+<p>It is possible to extend this basic problem formulation into something more complicated, for example by relaxing the ends and add constraints, but will only have a look at those extensions later. First, we solve the basic problem and see if we can use it within the optimal control framework.</p>
+<p>In order to state the first-order necessary condition of optimality, we need to find the variation of the cost functional. But we already know that we can form it from the partial derivative of the cost functional with respect to some real parameter as in <a href="#eq-partial-of-J-wrt-alpha" class="quarto-xref">Eq.&nbsp;6</a>, that is,</p>
+<p><span class="math display">
+\begin{aligned}
+\frac{\mathrm{d} J(y^\star(x)+\alpha\eta(x))}{\mathrm{d} \alpha} &amp;= \frac{\mathrm d}{\mathrm d \alpha}\int_a^b[L(x,y^\star+\alpha\eta,(y^\star)'+\alpha\eta')]\text{d}x,\nonumber\\
+&amp;= \int_a^b \frac{\mathrm d}{\mathrm d \alpha}[L(x,y^\star+\alpha\eta,(y^\star)'+\alpha\eta')]\text{d}x,\nonumber\\
+&amp;= \int_a^b \left[ \frac{\partial L(x,y,y')}{\partial y}\eta(x) + \frac{\partial L(x,y,y')}{\partial y'}\eta'(x)\right]\text{d}x
+\end{aligned}
+</span></p>
+<p>Now, setting this equal to zero, we do not learn much because the arbitrary <span class="math inline">\eta(\cdot)</span> and also its derivative appear in the conditions. It will be much better if we can modify this into something like <span class="math inline">\int_a^b \left[ (\qquad )\eta(x)\right]\text{d}x</span>. Why should we aim at this form? The <em>fundamental lemma of calculus of variations</em> says that if the following holds for <em>any</em> <span class="math inline">\eta\in\mathcal{C}^1_{[a,b]}</span> vanishing at <span class="math inline">a</span> and <span class="math inline">b</span> <span class="math display">
+\int_a^b \xi(x)\eta(x)\text{d}x = 0,
+</span> then necessarily <span class="math inline">\xi(x)\equiv 0</span> identically on the whole interval <span class="math inline">[a,b]</span>. The proof can be found elsewhere.</p>
+<p>Hence we are motivated to bring the formula for the variation into the format where the derivative of <span class="math inline">\eta</span> is missing. This will be accomplished by applying the <em>per-partes integration</em> to the term <span class="math inline">\int_a^b\frac{\partial L(x,y,y')}{\partial y'}\eta'(x)\text{d}x</span>: <span class="math display">
+\int_a^b\frac{\partial L(x,y,y')}{\partial y'}\eta'(x)\text{d}x = \left[\frac{\partial L(x,y,y')}{\partial y'}\eta(x)\right]_{a}^b-\int_a^b\frac{\text{d}}{\text{d}x}\frac{\partial L(x,y,y')}{\partial y'}\eta(x)\text{d}x.
+</span></p>
+<p>Substituting back to our expression for the variation, we get <span id="eq-first-variation-full"><span class="math display">
+\frac{\mathrm{d} J}{\mathrm{d} \alpha} = \left[\frac{\partial L(x,y,y')}{\partial y'}\eta(x)\right]_{a}^b + \int_a^b \left( \frac{\partial L(x,y,y')}{\partial y}-\frac{\text{d}}{\text{d}x}\frac{\partial L(x,y,y')}{\partial y'}\right)\eta(x)\text{d}x.
+\tag{7}</span></span></p>
+<p>The first term on the right is zero because we assumed at the very beginning that the function <span class="math inline">y(\cdot)</span> is fixed at both ends, hence the variation <span class="math inline">\delta y(\cdot)</span> is zero at both ends, hence <span class="math inline">\eta(a)=\eta(b)=0</span>. As a result, we have the following equation <span id="eq-EL"><span class="math display">\boxed{
+  \frac{\partial L(x,y,y')}{\partial y}-\frac{\text{d}}{\text{d}x}\frac{\partial L(x,y,y')}{\partial y'} = 0}
+\tag{8}</span></span> or <span id="eq-EL-alt"><span class="math display">\boxed{
+  \frac{\partial L(x,y,y')}{\partial y}=\frac{\text{d}}{\text{d}x}\frac{\partial L(x,y,y')}{\partial y'}.}
+\tag{9}</span></span></p>
+<p>This is the famous <em>Euler-Lagrange equation</em>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Euler-Lagrange equation in the top ten
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>My biased opinion is that Euler-Lagrage equation is a result that deserves its position in the list of top ten quations in applied mathematics.</p>
+</div>
+</div>
+<p>Smooth function which satisfy the Euler-Lagrange equation are called <em>extremals</em>. They play the same role within calculus of variations as stationary points do within differential calculus, that is, they are just candidate functions for a minimizer. This is another way of saying that the Euler-Lagrange equation provides <em>necessary conditions of optimality</em>.</p>
+<p>Finally, we format this result within the variational framework. We can now invoke <a href="#eq-variation-of-functional-for-integral-of-L" class="quarto-xref">Eq.&nbsp;10</a> and write it as <span id="eq-variation-of-functional-for-integral-of-L"><span class="math display">
+\delta J = \int_a^b \underbrace{\left[\frac{\partial L(x,y,y')}{\partial y}-\frac{\text{d}}{\text{d}x}\frac{\partial L(x,y,y')}{\partial y'}\right]}_{\frac{\delta J}{\delta y(x)}} \, \underbrace{\delta y(x)}_{\alpha \eta(x)}\mathrm d x,
+\tag{10}</span></span> from which we can see that the left hand side of the Euler-Lagrange equation gives us the variational derivative that we were looking for.</p>
+<p>You may now wonder why on earth did we actually bother to introduce the new concept of a variation (of a function and of a functional)? We were able to derive the Euler-Lagrange equation just using a partial derivative with respect to <span class="math inline">\alpha</span>. Good point. In fact, the major motivation was to develop a framework that would resemble that of differential calculus as closely as possible. Knowing now the resulting format of the first-order necessary conditions of optimality, let’s now try to rederive it in the fully variational style. That is, we want to find the variation <span class="math inline">\delta J</span> of the functional <span class="math inline">J(y(x))</span> that is given by the integral <span class="math display">
+\delta J = \delta\int_a^b L(x,y,y')\mathrm d x.
+</span></p>
+<p>The variation now constitutes an operation pretty much mimicking the differential when it comes to dealing with composite functions, products of two function and other situations. Namely, for constant lower and upper bounds in the integral we can move the variation operation into the integral <span class="math display">
+\delta J = \int_a^b \delta L(x,y,y')\mathrm d x
+</span> and then, following the standard rules (shared with operation of differentiation), we get <span class="math display">
+\delta J = \int_a^b \left[ \frac{\partial L(x,y,y')}{\partial x}\delta x + \frac{\partial L(x,y,y')}{\partial y}\delta y + \frac{\partial L(x,y,y')}{\partial y'}\delta y'\right]\mathrm d x.
+</span></p>
+<p>Now, <span class="math inline">x</span> is an independent variable, hence it does not vary and <span class="math inline">\delta x = 0</span>. Furthermore, the operations of variation and derivative with respect to <span class="math inline">x</span> commute, therefore <span class="math inline">\delta y'</span>, which is a shorthand notation for <span class="math inline">\delta\left(\frac{\mathrm d}{\mathrm d x} y(x)\right)</span> can be rewritten as <span class="math display">
+\delta y'(x)= \frac{\mathrm d}{\mathrm d x} (\delta y(x))
+</span> and we can write the variation of the cost function as <span class="math display">
+\delta J = \int_a^b \left[\frac{\partial L(x,y,y')}{\partial y}\delta y + \frac{\partial L(x,y,y')}{\partial y'} (\delta y(x))' \right]\mathrm d x.
+</span></p>
+<p>Identically as in our previous development, we can get rid of the derivative of the variation using integration , which gives <span id="eq-variation-of-functional-for-integral-of-L-using-variations"><span class="math display">\boxed{
+\delta J = \left[\frac{\partial L(x,y,y')}{\partial y'}\delta y(x)\right]_{a}^b + \int_a^b \left( \frac{\partial L(x,y,y')}{\partial y}-\frac{\text{d}}{\text{d}x}\frac{\partial L(x,y,y')}{\partial y'}\right)\delta y(x)\text{d}x,}
+\tag{11}</span></span> which under the assumption of fixed both ends, that is, <span class="math inline">\delta y(a) = \delta y(b) = 0</span>, gives the Euler-Lagrange equation. Elegant procedure, isn’t it?</p>
+<p>This can perhaps be regarded as culmination of our attempts to develop calculus of variations as an analogy to differential calculus.</p>
+<p>To make the notation a bit more compact, we will often write the partial derivative of <span class="math inline">L(x,y,y')</span> with respect to <span class="math inline">y(x)</span> as <span class="math inline">L_y</span>. Similarly, the partial of the same function with respect to <span class="math inline">y'(x)</span> as <span class="math inline">L_{y'}</span>. Using this notation, we can immediately show that Euler-Lagrange equation is actually a second-order ordinary differential equation <span id="eq-EL-second-order"><span class="math display">\boxed{
+L_y - L_{y'x} - L_{y'y}y' - L_{y'y'}y'' = 0.}
+\tag{12}</span></span></p>
+<p>In order to see how we got this, first recall that <span class="math inline">L</span> is a function of <span class="math inline">x</span>, <span class="math inline">y(x)</span> and <span class="math inline">y'(x)</span>. Let’s write it explicitly as <span class="math inline">L(x,y(x),y'(x))</span>. Then, in the Euler-Lagrange equation we need to find the <em>total derivative</em> of <span class="math inline">L_{y'}</span> with respect to <span class="math inline">x</span>, that is, we need <span class="math inline">\frac{\mathrm d}{\mathrm dx}L_{y'}</span>, and we invoke the <em>chain rule</em> for this. Remember, the function <span class="math inline">L_{y'}</span> is generally (!) a function of three arguments too: <span class="math inline">x</span>, <span class="math inline">y</span> and <span class="math inline">y'</span>. Therefore, applying the chain rule we will get three terms:</p>
+<p><span class="math display">
+\frac{\mathrm d}{\mathrm dx}L_{y'}(x,y,y') = \underbrace{\frac{\partial L_{y'}}{\partial x}}_{L_{y'x}} + \underbrace{\frac{\partial L_{y'}}{\partial y}}_{L_{y'y}} \underbrace{\frac{\mathrm d y(x)}{\mathrm d x}}_{y'} + \underbrace{\frac{\partial L_{y'}}{\partial y'}}_{L_{y'y'}} \underbrace{\frac{\mathrm d y'(x)}{\mathrm d x}}_{y''}.
+</span></p>
+<p>That is it. Combine it with the other term <span class="math inline">L_y</span> from the E.-L. equation and we are done.</p>
+<p>We know that in order to specify a solution of a second-order ODE completely, we need to provide two values. Sometimes we specify them at the beginning of the interval, in which case we would give the value of the function and its derivative. This is the well-known <em>initial value problem</em> (IVP). On some other occasions, we specify the values at two different points on the interval. And this is our case here. In particular, here we have <span class="math inline">y(a)=\mathrm y_a</span> and <span class="math inline">y(b)=\mathrm y_b</span>, which turns the problem into so-called <em>boundary value problem</em> (BVP). Both analysis and (numerical) methods for finding a solution of boundary value problems are a way more difficult that for initial value problems. But there are dedicated solvers (see the section on software).</p>
+<p>Nonetheless, before jumping into calling some numerical solvers, let’s get some insight for two special cases by analyzing the situations carefully. First, assume that <span class="math inline">L</span> does not depend on <span class="math inline">y</span>. We call this a “no <span class="math inline">y</span> case”. Then the Euler-Lagrange equation simplifies to <span class="math display">
+0 = \frac{\text{d}}{\text{d}x}L_{y'},
+</span> and, as a consequence, <span class="math inline">L_{y'}</span> is constant, independent of <span class="math inline">x</span>.</p>
+<p>The second special case is the “no <span class="math inline">x</span> case”. Then <span class="math display">
+L_y  - L_{y'y}y' - L_{y'y'}y'' = 0.
+</span></p>
+<p>By multiplying both sides by <span class="math inline">y'</span> (and some one-line work), the equation turns into <span class="math display">
+\frac{\text{d}}{\text{d}x}( L_{y'}y' - L ) = 0.
+</span></p>
+<p>As a consequence, <span class="math inline">L_{y'}y' - L</span> is constant along the optimal curve.</p>
+<p>The two new functions whose values are <em>preserved along the extremal</em> are so special that they deserve their own symbols and names: <span class="math display">\boxed{
+p(x) \coloneqq L_{y'},}
+</span> and you will see that the choice of the symbol <span class="math inline">p</span> is intentional becase this variable will be seen to play the role of <em>momentum</em> as you know it from physics, and <span class="math display">\boxed{
+H(x,y,y',p) \coloneqq py'-L}
+</span> and you will see that the choice of the symbol <span class="math inline">H</span> is intentional becase this variable will be seen to play the role of <em>Hamiltonian</em> as you know it from physics.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Unfortunately, we have to give a warning here, that while the above definitions are well accepted in the physics-related fields of science, most control theory books adopt a slightly different convention, which may be confusing. We will have more on that in a while (or see directly 3.4.4 in Liberzon’s book).</p>
+</div>
+</div>
+<p>Let us now see how <span class="math inline">y</span> and <span class="math inline">p</span> develop as functions of <span class="math inline">x</span>, and we will use Hamiltonian for that purpose. First, it is immediate from the definition of Hamiltonian that <span class="math display">
+y' = H_p.
+</span></p>
+<p>Similarly, the derivative of momentum is <span class="math display">
+p' = \frac{\text{d}}{\text{d}x} L_{y'} = L_y = -H_y,
+</span> where the second equality comes from Euler-Lagrange equation and the third one comes from the definition of <span class="math inline">H</span>. We format the two differential equations as one vector differential equation <span class="math display">\boxed{
+\begin{bmatrix}
+  y' \\ p'
+\end{bmatrix}
+=
+\begin{bmatrix}
+  H_p \\ -H_y
+\end{bmatrix}}
+</span></p>
+<p>This version of first-order necessary conditions is no less famous in physics and theoretical mechanics – <em>Hamilton’s canonical equations</em> – and some of our results on optimal control will come in this format.</p>
+<div id="exm-special-cases" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2</strong></span> Let us now see how the analysis of the special cases can be practically useful. We will only have a look at the minimum distance problem. The Lagrangian is <span class="math display">
+L(y') = \sqrt{1+(y')^2},
+</span> which is clearly independent of <span class="math inline">y</span> (and of <span class="math inline">x</span> as well). Therefore <span class="math display">
+L_{y'} = \frac{1}{2}\frac{2y'}{\sqrt{1+(y')^2}}
+</span> must be constant. The only way is to have <span class="math inline">y'(x)</span> constant, that is, the graph of the function <span class="math inline">y(x)</span> must be a line. Introducing the boundary conditions, it is now obvious that the solution is a line connecting the two points.</p>
+</div>
+<p>One important general property will be revealed if we differentiate <span class="math inline">H</span> with respect to <span class="math inline">y'</span> <span class="math display">
+H_{y'}(x,y,y',p) = p-L_{y'}.
+</span></p>
+<p>If <span class="math inline">p</span> is chosen as <span class="math inline">L_{y'}</span>, the derivative of Hamiltonian vanishes. In other words, when <span class="math inline">H</span> is evaluated on the curve, it has a stationary point with respect to the third variable. To support this mental step of regarding the third (input) argument as independent from the rest, we write the Hamiltonian for the extremal with the third variable relaxed as <span class="math inline">H(x,y,z,p)</span>. The above result says that <span class="math display">\boxed{
+\left.\frac{\partial H(x,y,z,p)}{\partial z}\right|_{z = y'} = 0}
+</span> when evaluated on the optimal trajectory. In fact, as we will see shortly, Hamiltonian is not only stationary along the optimal trajectory but it also achieves the maximum value! This will actually turn out the crucial property of a Hamiltonian – it is maximized along the optimal trajectory with respect to <span class="math inline">y'</span>. The fact that the derivative is zero is just a consequence in the special case when such derivative exists.</p>
+</section>
+<section id="sufficient-conditions-of-optimality-minimum" class="level2">
+<h2 class="anchored" data-anchor-id="sufficient-conditions-of-optimality-minimum">Sufficient conditions of optimality (minimum)</h2>
+<p>What remains to be done before we come to applying the Euler-Lagrange equation to control problems is to discuss how we can learn if the extremal is actually minimizing the cost functional. Or maximizing it? Or what if it is just a saddle “point”? The mathematics needed to answer these questions is quite delicate, we will only sketch the direction of reasoning and for complete proofs refer to the literature.</p>
+<p>Knowing that the first variation vanishes for an extremal, higher order terms need to be investigated, starting with the term in the Taylor’s expansion corresponding to the squared variations. Similarly as in the finite-dimensional optimization, we first argue that for small enough <span class="math inline">\alpha</span>, the second-order term dominates all the higher order terms and then we study under which conditions is the second order term nonnegative (for the second-order necessary condition) or positive (for the second-order sufficient condition).</p>
+<p>The answer for the necessity part, which relies heavily on the fact that we have decided to work with the <span class="math inline">\|.\|_1</span> norm, is that <span class="math display">
+L_{y'y'} \geq  0
+</span> needs to be satisfied. This is called the <em>Legendre necessary condition</em>. We have certainly skipped a lot of nontrivial work that needs to be done to show this result. Check the literature for details if you are interested.</p>
+<p>The sufficiency part is even more complicated. It turns out that merely sharpening the necessary Legendre condition into <span class="math display">
+L_{y'y'} &gt;  0
+</span> is not enough to guarantee the minimality. The additional constraint is quite convoluted even to be stated. It is called <em>Jacobi condition</em> and has something to do with absence of <em>conjugate points</em> on the interval of control. The only motivation for stating these terms here without actually providing any explanation is just to provide the keywords and search phrases for learning more elsewhere. Here we just state that the optimality is guaranteed if the inverval of <span class="math inline">x</span> is not “too long”… This is certainly too vague, but the reason why we are so easy-going here is that once we switch to optimal control, we will have other – and more convenient – tools to guarantee the optimality.</p>
+<p>We now move on to one crucial observation: <span class="math display">
+H_{y'y'} = -L_{y'y'}.
+</span></p>
+<p>Hence, if a given function <span class="math inline">y</span> minimizes <span class="math inline">J</span>, then <span class="math inline">L_{y'y'}\geq 0</span> and <span id="eq-Hamiltonian-negative"><span class="math display">
+H_{y'y'} \leq 0,
+\tag{13}</span></span> which reads that Hamiltonian achieves a maximum when evaluated on the optimal curve. It can be restated as <span class="math display">\boxed{
+H(t,y,y',p) \geq  H(t,y,z,p)}
+</span> for all <span class="math inline">z\in\mathcal{C}^1</span> on the interval <span class="math inline">[a,b]</span> and close to <span class="math inline">y'(t)</span> (in the sense of 1-norm).</p>
+<p>This is a key property and constitutes a prequel to the celebrated Pontryagin’s principle of maximum that we are going to study in the next chapter.</p>
+</section>
+<section id="constrained-problems-in-calculus-of-variations" class="level2">
+<h2 class="anchored" data-anchor-id="constrained-problems-in-calculus-of-variations">Constrained problems in calculus of variations</h2>
+<p>Now that we have covered the first-order and second-order necessary conditions of optimality and at least touched the second-order sufficient conditions of optimality, we should start discussing constraints. Here we will only investigate equality type-constraints. The inequality-type constraints are beyond the reach of basic methods of calculus of variations. But as we will see, an offspring of calculus of variations – the already mentioned Pontryagin’s principle – will handle these easily, at least in some cases.</p>
+<p>The constraints that we are going to encounter in optimal control come in the form of differential equations, and these constitute pointwise constraints <span class="math display">
+F(x,y,y')=0.
+</span></p>
+<p>For every value of the independent variable <span class="math inline">x</span>, we have one constraint. Since <span class="math inline">x</span> is real, we have a continuum of constraints. As a consequence, we will need an infinite number of Lagrange multipliers as well— in other words, the Lagrange multiplier will be a function of <span class="math inline">x</span> too. The <em>augmented cost function</em> is <span class="math display">
+J^\text{aug}(y(\cdot)) = \int_a^b L(x,y,y')\text{d}x + \int_a^b \lambda(x)\cdot F(x,y,y')\text{d}x,
+</span> where the symbol <span class="math inline">"\cdot``</span> is there to emphasize that in the case when both <span class="math inline">y</span> and <span class="math inline">\lambda</span> are vector functions (hence <span class="math inline">F</span> is a vector), the second integrand is obtained as an inner product. Rewriting the above expression for the augmented criterion of optimality as <span class="math display">
+J^\text{aug}(y) = \int_a^b \left [L(x,y,y')+\lambda(x)\cdot F(x,y,y')\right ]\text{d}x
+</span> suggests that we can introduce an augmented Lagrangian <span class="math display">
+L^\text{aug}(x,y,y',\lambda) = L(x,y,y')+\lambda(x)\cdot F(x,y,y')
+</span> and continue as we did in the unconstrained case. For completeness, let’s state here that in the case of vector functions, the augmented Lagrangian is given as <span class="math display">
+L^\text{aug}(x,y,y',\lambda) = L(x,y,y')+\lambda(x)^{\top} F(x,y,y'),
+</span> or, using the alternative notation for the inner product, <span class="math display">
+L^\text{aug}(x,y,y',\lambda) = L(x,y,y')+\langle \lambda(x), F(x,y,y')\rangle,
+</span></p>
+<p>A word of warning is needed here, though. Similarly as in the unconstrained case, it can happen that the constraints will be degenerate, in which case the Euler-Lagrange equation fails to be a necessary condition of optimality. We will not discuss this delicate issue here and rather direct the interested student to the literature.</p>
+<p>This is roughly it. This is what we need from calculus of variations to get started with optimal control in continuous-time setting.</p>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1359,8 +1807,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cont_indir_via_calculus_of_variations.html" class="pagination-link" aria-label="Indirect approach to optimal control">
-        <span class="nav-page-text">Indirect approach to optimal control</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cont_indir_via_calculus_of_variations.html" class="pagination-link" aria-label="General finite-horizon nonlinear optimal control as a TP-BVP">
+        <span class="nav-page-text">General finite-horizon nonlinear optimal control as a TP-BVP</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1372,7 +1820,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2025, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

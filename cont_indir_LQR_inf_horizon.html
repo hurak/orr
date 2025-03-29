@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Indirect approach to LQR on an infinite horizon – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>Indirect approach to LQR on an infinite time horizon – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./cont_indir_CARE.html" rel="next">
+<link href="./cont_indir_notation.html" rel="next">
 <link href="./cont_indir_LQR_fin_horizon.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -69,6 +69,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -82,7 +125,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_overview.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_LQR_inf_horizon.html">Indirect approach to LQR on an infinite horizon</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_goals.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_LQR_inf_horizon.html">LQR on an infinite time horizon using CARE</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -420,7 +463,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dynamic_programming_LQR.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Solving LQR via DP</span></a>
+ <span class="menu-text">LQR via DP</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming_LQT.qmd" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LQ tracking via DP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -501,6 +550,12 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cont_indir_goals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning goals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./cont_indir_overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview of continuous-time optimal control</span></a>
   </div>
@@ -514,25 +569,25 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_via_calculus_of_variations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Indirect approach to optimal control</span></a>
+ <span class="menu-text">General finite-horizon nonlinear optimal control as a TP-BVP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_LQR_fin_horizon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Indirect approach to LQR on a finite horizon</span></a>
+ <span class="menu-text">LQR on a finite time horizon</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_LQR_inf_horizon.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Indirect approach to LQR on an infinite horizon</span></a>
+ <span class="menu-text">LQR on an infinite time horizon using CARE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_CARE.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Continuous-time Riccati equation</span></a>
+  <a href="./cont_indir_notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">On notation for Hamiltonians and variations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -912,9 +967,9 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_overview.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_LQR_inf_horizon.html">Indirect approach to LQR on an infinite horizon</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_goals.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_LQR_inf_horizon.html">LQR on an infinite time horizon using CARE</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Indirect approach to LQR on an infinite horizon</h1>
+<h1 class="title">Indirect approach to LQR on an infinite time horizon</h1>
 </div>
 
 
@@ -931,6 +986,16 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>When solving the initial (actually final) value problem <span class="math display">
+- \dot{\bm S}(t) =  \bm S(t) \mathbf A + \mathbf A^\top \bm S(t) + \mathbf Q - \bm S(t)\mathbf B\mathbf R^{-1}\mathbf B^\top \bm S(t), \qquad \bm S(t_\mathrm{f}) = \mathbf S_\mathrm{f}
+</span> for <span class="math inline">\bm S(t)</span> at time <span class="math inline">t\rightarrow -\infty</span>, we recall that a steady (or settled) solution does not evolve any further, that is, <span class="math inline">\dot{\bm S}(t) = \bm 0</span>. Substituting this to the differential Riccati equation, we obtain the <em>continuous-time algebraic Riccati equation</em> (CARE) <span id="eq-algebraic-Riccati-equation"><span class="math display">\boxed{
+\mathbf 0=  \bm S \mathbf A + \mathbf A^\text{T} \bm S + \mathbf Q - \bm S\mathbf B\mathbf R^{-1}\mathbf B^\text{T} \bm S.}
+\tag{1}</span></span></p>
+<p>This is prominent equation in optimal control theory. Unline its discrete-time counterpart (the DARE), the CARE is obviously a quadratic equation in the matrix variable <span class="math inline">\bm S</span>.</p>
+<p>Numerical solution can be found using specialized solvers (see the section on software). But a surprisingly nontrivial question is: how does the solution to CARE relate to the limiting solution <span class="math inline">\bm S_\infty = \lim_{t\rightarrow -\infty} \bm S(t)</span>? After all, the CARE is a quadratic equation, which even in the scalar case has more then one solution. For convenience, we write down the scalar version explicitly: <span class="math display">\boxed{
+0 =  2as + q - \frac{b^2}{r}s^2.}
+</span></p>
+<p>Which of the (at maximum) two real solutions is the one that we are looking for? We can afford to be rather short in the remaining analysis since the similarity to the discrete-time case is truly very strong. Thus we can conclude this section by merely stating that a unique stabilizing solution of the ARE exists if and only if the artificial system modelled by <span class="math inline">(\mathbf A,\sqrt{\mathbf Q})</span> is detectable (or observable if we require positive definiteness of <span class="math inline">\bm S(t)</span>).</p>
 
 
 
@@ -1354,13 +1419,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cont_indir_LQR_fin_horizon.html" class="pagination-link" aria-label="Indirect approach to LQR on a finite horizon">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Indirect approach to LQR on a finite horizon</span>
+      <a href="./cont_indir_LQR_fin_horizon.html" class="pagination-link" aria-label="LQR on a finite time horizon">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">LQR on a finite time horizon</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cont_indir_CARE.html" class="pagination-link" aria-label="Continuous-time Riccati equation">
-        <span class="nav-page-text">Continuous-time Riccati equation</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cont_indir_notation.html" class="pagination-link" aria-label="On notation for Hamiltonians and variations">
+        <span class="nav-page-text">On notation for Hamiltonians and variations</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

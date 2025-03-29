@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Indirect approach to optimal control – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>Indirect approach to optimal control of a nonlinear system on a finite time horizon – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,6 +69,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -82,7 +125,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_overview.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_via_calculus_of_variations.html">Indirect approach to optimal control</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_goals.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_via_calculus_of_variations.html">General finite-horizon nonlinear optimal control as a TP-BVP</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -420,7 +463,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dynamic_programming_LQR.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Solving LQR via DP</span></a>
+ <span class="menu-text">LQR via DP</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming_LQT.qmd" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LQ tracking via DP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -501,6 +550,12 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cont_indir_goals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning goals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./cont_indir_overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview of continuous-time optimal control</span></a>
   </div>
@@ -514,25 +569,25 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_via_calculus_of_variations.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Indirect approach to optimal control</span></a>
+ <span class="menu-text">General finite-horizon nonlinear optimal control as a TP-BVP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_LQR_fin_horizon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Indirect approach to LQR on a finite horizon</span></a>
+ <span class="menu-text">LQR on a finite time horizon</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_LQR_inf_horizon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Indirect approach to LQR on an infinite horizon</span></a>
+ <span class="menu-text">LQR on an infinite time horizon using CARE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_CARE.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Continuous-time Riccati equation</span></a>
+  <a href="./cont_indir_notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">On notation for Hamiltonians and variations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -912,9 +967,9 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_overview.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_via_calculus_of_variations.html">Indirect approach to optimal control</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_goals.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_via_calculus_of_variations.html">General finite-horizon nonlinear optimal control as a TP-BVP</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Indirect approach to optimal control</h1>
+<h1 class="title">Indirect approach to optimal control of a nonlinear system on a finite time horizon</h1>
 </div>
 
 
@@ -931,6 +986,58 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>Now we finally seem to be ready for solving our optimal control problems stated at the beginning of the lecture/chapter. Equipped with the solution to the fixed-ends basic problem of calculus of variation, we start with the finite-horizon fixed-final-state version of the optimal control problem. We will extend the result for a free final state in due course. The problem to be solved is</p>
+<p><span class="math display">
+\begin{aligned}
+\operatorname*{minimize}_{\bm x(\cdot),\bm u(\cdot)} &amp;\quad \left[\int_{t_\mathrm{i}}^{t_\mathrm{f}}L(\bm x(t),\bm u(t),t)\text{d}t\right]\\
+\text{subject to} &amp;\quad \dot{\bm x}(t)= \mathbf f(\bm x(t),\bm u(t),t),\\
+&amp;\quad \bm x(t_\mathrm{i}) = \mathbf x_\mathrm{i},\\
+&amp;\quad \bm x(t_\mathrm{f}) = \mathbf x_\mathrm{f}.
+\end{aligned}
+</span></p>
+<p>There is, of course, no term in the cost function penalizing the state at the final time since it is requested that the system is brought to some prespecified state.</p>
+<p>The augmented cost function and the augmented Lagrangian are <span class="math display">
+J^\mathrm{aug}(t,\bm x(\cdot),\dot{\bm x}(\cdot),\bm u(\cdot),\boldsymbol \lambda(\cdot)) = \int_{t_\mathrm{i}}^{t_\mathrm{f}}\left[\underbrace{ L(\bm x,\bm u,t)+\boldsymbol \lambda^\top\left( \dot {\bm x}-\mathbf f(\bm x,\bm u,\mathbf t)\right)}_{L^\text{aug}}\right ]\text{d}t.
+</span></p>
+<p>Note also that compared to the original unconstrained calculus of variations setting, here we made a notational shift from <span class="math inline">x</span> to <span class="math inline">t</span> as the independent variable, and from <span class="math inline">y</span> to the triplet <span class="math inline">(\bm x,\bm u,\bm \lambda)</span> as the triplet of dependent variables (possibly vector ones). Finally, note that the only derivative appearing in the augmented Lagrangian is <span class="math inline">\dot{\bm x}</span>.</p>
+<p>Applying the Euler-Lagrange equation to this augmented Lagrangian, we obtain three equations (or three systems of equations), one for each dependent variable:</p>
+<p><span class="math display">
+\begin{aligned}
+L_{\bm{x}}^\text{aug} &amp;= \frac{\text{d}}{\text{d}t} L^\text{aug}_{\dot{\bm{x}}},\\
+L_{\bm{u}}^\text{aug} &amp;= 0,\\
+L_{\bm \lambda}^\text{aug} &amp;= 0.
+\end{aligned}
+</span></p>
+<p>These can be expanded in terms of the unconstrained Lagrangian. First, we assume scalar functions for notational simplicity: <span class="math display">
+\begin{aligned}
+\frac{\partial L}{\partial x} - \lambda \frac{\partial f}{\partial x}&amp;= \dot{\lambda},\\
+\frac{\partial L}{\partial u} - \lambda \frac{\partial f}{\partial u} &amp;= 0,\\
+\dot {x} - f(x,u,t) &amp;= 0.
+\end{aligned}
+</span></p>
+<p>In the vector case (when <span class="math inline">\bm x</span>, hence <span class="math inline">\mathbf f()</span>, and/or <span class="math inline">\bm u</span> are vectors): <span class="math display">
+\begin{aligned}
+\nabla_\mathbf{x}L - \sum_{i=1}^n\lambda_i\nabla_\mathbf{x} \mathbf{f}_i(\bm x, \bm u) &amp;= \dot{\boldsymbol\lambda},\\
+\nabla_\mathbf{u}L - \sum_{i=1}^n\lambda_i\nabla_\mathbf{u} \mathbf{f}_i(\bm x, \bm u) &amp;= \mathbf 0,\\
+\dot {\mathbf{x}} - \mathbf{f}(\bm x,\bm u,t) &amp;= \mathbf 0.
+\end{aligned}
+</span></p>
+<p>We can also write the same result in the compact vector form. Recall that we agreed in this course to regard gradients as column vectors and that <span class="math inline">\nabla \mathbf f</span> for a vector function <span class="math inline">\mathbf{f}</span> is a matrix whose columns are gradients <span class="math inline">\nabla_\mathbf{x} f_i</span> of the individual elements of the vector function. We can then write the first order conditions compactly as <span class="math display">
+\begin{aligned}
+\nabla_\mathbf{x}L - \nabla_\mathbf{x} \mathbf{f} \; \boldsymbol \lambda &amp;= \dot{\boldsymbol\lambda},\\
+\nabla_\mathbf{u}L - \nabla_\mathbf{u} \mathbf{f} \; \boldsymbol \lambda &amp;= \mathbf 0,\\
+\dot {\mathbf{x}} - \mathbf{f}(\bm x,\bm u,t) &amp;= \mathbf 0.
+\end{aligned}
+</span></p>
+<p>After reordering the equations and shuffling the terms within the equations, we get <span id="eq-first-order-conditions-optimal-control-nonlinear-vector"><span class="math display">\boxed{
+\begin{aligned}
+\dot {\mathbf{x}}(t) &amp;= \mathbf{f}(\bm x(t),\bm u(t),t),\\
+\dot{\boldsymbol\lambda}(t) &amp;= \nabla_\mathbf{x}L(\bm x(t),\bm u(t),t) - \nabla_\mathbf{x} \mathbf{f}(\bm x(t),\bm u(t),t) \; \boldsymbol \lambda(t),\\
+\mathbf 0 &amp;= \nabla_\mathbf{u}L(\bm x(t),\bm u(t),t) - \nabla_\mathbf{u} \mathbf{f}(\bm x(t),\bm u(t),t) \; \boldsymbol \lambda(t).
+\end{aligned}}
+\tag{1}</span></span></p>
+<p>These three (systems of) equations give the necessary conditions of optimality that we were looking for. We can immediately recognize the first one – the original state equation describing how the state vector <span class="math inline">\bm{x}</span> evolves in time. The other equations are new, though. The second one is called <em>costate equation</em> because the variable <span class="math inline">\bm\lambda</span>, originally introduced as a Lagrange multiplier, now evolves also according to a first-order differential equation. The last equation is called <em>equation of stationarity</em>. Unlike the previous two, it is not a differential equation, it is just a nonlinear equation. With the exception of some singular cases that we are going to mentions soon, it can be be solved for the control vector <span class="math inline">\bm u</span> as a function of the state <span class="math inline">\bm x</span> and the costate <span class="math inline">\bm \lambda</span>, in which case <span class="math inline">\bm u</span> can be eliminated from the two differential equations and we end up with differential equations just in <span class="math inline">\bm{x}</span> and <span class="math inline">\bm\lambda</span>.</p>
+<p>Recall that for differential equations we always need a sufficient number of boundary conditions to determine the solution uniquely. In particular, for a state vector of dimension <span class="math inline">n</span>, the costate is also of dimension <span class="math inline">n</span>, hence we need in total <span class="math inline">2n</span> boundary conditions. In our current setup these are given by the <span class="math inline">n</span> specified values of the state vector at the beginning and <span class="math inline">n</span> values at the end. This class of problems is called <em>two-point boundary value problem</em> (BVP) and generally it can only be solved numerically (dedicated solvers exist, see the section on software).</p>
 
 
 
@@ -1359,8 +1466,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cont_indir_LQR_fin_horizon.html" class="pagination-link" aria-label="Indirect approach to LQR on a finite horizon">
-        <span class="nav-page-text">Indirect approach to LQR on a finite horizon</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cont_indir_LQR_fin_horizon.html" class="pagination-link" aria-label="LQR on a finite time horizon">
+        <span class="nav-page-text">LQR on a finite time horizon</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

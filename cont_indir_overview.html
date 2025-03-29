@@ -31,7 +31,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./cont_indir_calculus_of_variations.html" rel="next">
-<link href="./discr_dir_mpc_hw.html" rel="prev">
+<link href="./cont_indir_goals.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -125,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_overview.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_overview.html">Overview of continuous-time optimal control</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_goals.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_overview.html">Overview of continuous-time optimal control</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -463,7 +463,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dynamic_programming_LQR.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Solving LQR via DP</span></a>
+ <span class="menu-text">LQR via DP</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming_LQT.qmd" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LQ tracking via DP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -544,6 +550,12 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cont_indir_goals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning goals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./cont_indir_overview.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Overview of continuous-time optimal control</span></a>
   </div>
@@ -557,25 +569,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_via_calculus_of_variations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Indirect approach to optimal control</span></a>
+ <span class="menu-text">General finite-horizon nonlinear optimal control as a TP-BVP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_LQR_fin_horizon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Indirect approach to LQR on a finite horizon</span></a>
+ <span class="menu-text">LQR on a finite time horizon</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_LQR_inf_horizon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Indirect approach to LQR on an infinite horizon</span></a>
+ <span class="menu-text">LQR on an infinite time horizon using CARE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_CARE.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Continuous-time Riccati equation</span></a>
+  <a href="./cont_indir_notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">On notation for Hamiltonians and variations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -963,7 +975,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_overview.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_overview.html">Overview of continuous-time optimal control</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_goals.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_overview.html">Overview of continuous-time optimal control</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Overview of continuous-time optimal control</h1>
 </div>
@@ -1080,13 +1092,13 @@ Classification of optimal control problems: Bolza, Mayer, and Lagrange problems
 <li>direct approaches,</li>
 <li>dynamic programming.</li>
 </ul>
-<div class="cell" data-layout-align="default">
+<div class="cell" data-fig-height="200px" data-layout-align="default">
 <div class="cell-output-display">
 <div id="fig-continuous-direct-indirect-dp" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-continuous-direct-indirect-dp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
-<svg width="672" height="480" viewbox="0.00 0.00 410.68 116.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<svg width="672" height="200" viewbox="0.00 0.00 410.68 116.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
 <title>G</title>
 <!-- discrete_time_optimal_control -->
@@ -1142,7 +1154,18 @@ Figure&nbsp;1: Three approaches to continuous-time optimal control
 </div>
 </div>
 </div>
-<p>In this chapter we start with the indirect approach. But first we need to introduce the framework of calculus of variations, which is what we do in the next section.</p>
+<p>Unlike in the chapters on optimal control of discrete-time systems, here we start with the indirect approach. We would like to mimic the methodology we introduced for discrete-time system, but note that here we are not optimizing over <span class="math inline">n</span>-tuples of real numbers (aka vectors or finite or even infinite sequences) but we are optimizing over functions (trajectories). Instances of such optimization “variables” are shown in <a href="#fig-xt-and-ut" class="quarto-xref">Figure&nbsp;2</a>.</p>
+<div id="fig-xt-and-ut" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-xt-and-ut-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./figures/xt_and_ut.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-xt-and-ut-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Two instances of state and input trajectories <span class="math inline">x(\cdot)</span> and <span class="math inline">u(\cdot)</span>, respectively
+</figcaption>
+</figure>
+</div>
+<p>In order to be able to analyze such optimization problem, we need to introduce the framework of <em>calculus of variations</em>, which is what we do next.</p>
 
 
 </section>
@@ -1567,8 +1590,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./discr_dir_mpc_hw.html" class="pagination-link" aria-label="Homework">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Homework</span>
+      <a href="./cont_indir_goals.html" class="pagination-link" aria-label="Learning goals">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Learning goals</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

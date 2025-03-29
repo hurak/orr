@@ -420,7 +420,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dynamic_programming_LQR.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Solving LQR via DP</span></a>
+ <span class="menu-text">LQR via DP</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming_LQT.qmd" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LQ tracking via DP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -501,6 +507,12 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cont_indir_goals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning goals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./cont_indir_overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview of continuous-time optimal control</span></a>
   </div>
@@ -514,25 +526,25 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_via_calculus_of_variations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Indirect approach to optimal control</span></a>
+ <span class="menu-text">General finite-horizon nonlinear optimal control as a TP-BVP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_LQR_fin_horizon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Indirect approach to LQR on a finite horizon</span></a>
+ <span class="menu-text">LQR on a finite time horizon</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_LQR_inf_horizon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Indirect approach to LQR on an infinite horizon</span></a>
+ <span class="menu-text">LQR on an infinite time horizon using CARE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_CARE.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Continuous-time Riccati equation</span></a>
+  <a href="./cont_indir_notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">On notation for Hamiltonians and variations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -946,27 +958,27 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The goal of the project is to experience a more complete procedure that what we can have within tightly focused weekly homework problems. It is an excellent opportunity to apply the knowledge and skills acquired during the course to a more complex problem.</p>
+<p>The motivation is to experience a more complete procedure than what we can have within tightly focused weekly homework problems. It is an excellent opportunity to apply the knowledge and skills acquired during the course to a more complex problem.</p>
 <section id="organization" class="level2">
 <h2 class="anchored" data-anchor-id="organization">Organization</h2>
 <ul>
-<li><p>Team work allowed, in fact even encouraged, teams of 3-5. One suggestion for the organization of the team work is that every team member can design a different kind of a controller than the other members of the team. For instance, one member can design a reference tracking LQR, one an MPC and one a robust controller using Hinf optimization. The benefit of working in a team is that you can share unovoidable pain (or fun) of learning to operate the particular laboratory experiment. Later you can also share the load of writing the report.</p></li>
+<li><p>Team work allowed, in fact even encouraged, teams of 3-5. One suggestion for the organization of the team work is that every team member can design a different kind of a controller than the other members of the team. For instance, one member can design a reference tracking LQR, another one can do an MPC and yet another can try a robust controller using Hinf optimization. The benefit of working in a team is that you can share the unavoidable pain (or fun) of learning to operate the particular laboratory experiment and possibly making sense of its model. Later you can also share the load of writing the report.</p></li>
 <li><p>Each team or individual has to submit a report organized as follows:</p>
 <ul>
-<li>A very brief description of the laboratory model and the mathematical model you used. No need to replicate the full description provided in the model repositories, but the description should be sufficient for the report to be understable withouth the need to consult the model repository.</li>
-<li>Documentation of the computational procedure leading to the design of a controller, actually several controllers.</li>
-<li>Discussion of the performance of your controllers with the aid of figures showing and comparing the simulated and measured responses.</li>
+<li>A very brief description of the laboratory model and the mathematical model you used. No need to replicate the full description provided in the model repositories, but the description should be sufficient for the report to be understandable without the need to consult the model repository. In particular, included should be the explicit enumeration of all the input, state, and output variables, their ranges, units, some characterization of uncertainty in the model and the measurements. The requirements on the control system shoud be clearly stated.</li>
+<li>Documentation of the computational procedure(s) leading to the design of controllers.</li>
+<li>Discussion of the performance of the designed controllers with the aid of figures showing and comparing the simulated and measured responses.</li>
 </ul></li>
-<li><p>It is highly recommendable, that each project has their own repository within the <a href="https://gitlab.fel.cvut.cz">gitlab.fel.cvut.cz</a>. The final report (no longer than some 6 pages) should then refer to the content (scripts, models, data) of the repository to support reproducibility.</p></li>
+<li><p>It is highly recommendable, that each project has their own repository within the <a href="https://gitlab.fel.cvut.cz">gitlab.fel.cvut.cz</a>. The final report (6 pages at maximum) should then refer to the content (scripts, models, data) of the repository to support reproducibility.</p></li>
 </ul>
 </section>
 <section id="time" class="level2">
 <h2 class="anchored" data-anchor-id="time">Time</h2>
-<p>While the project can be expected to demand higher time investment then a weekly homework, it should not be another diploma thesis. Admittedly, some of the assignments rather are open-ended, which means that it is perfectly appropriate to upper bound the total time invested into the project and include such timing information in the final report.</p>
+<p>While the project can be expected to demand higher time investment then a weekly homework, it should not be another diploma thesis. Admittedly, some of the assignments rather are open-ended, which means that it is perfectly appropriate to upper bound the total time invested into the project – just do what you can within the time. But then include the timing information in the final report.</p>
 </section>
 <section id="assessment" class="level2">
 <h2 class="anchored" data-anchor-id="assessment">Assessment</h2>
-<p>The final report will be evaluated as either sufficient or insufficient, accepted or not. We will not assess individual controllers, we will consider the report as a whole. You will have two attempts to submit the report documenting your solution of the project, so even if your report fails to accepted when submitted for the first time, you will receive a feedback and have one more chance.</p>
+<p>The final report will be evaluated as either sufficient or insufficient, it will be either accepted or not. We will not assess contributions of individual students to the report, we will consider the report as a whole. There will be two attempts to submit the report, so that even if the report fails to be accepted when submitted for the first time, some feedback will be given by the instructor and there will be one more chance to submit the report.</p>
 </section>
 <section id="proposed-projects" class="level2">
 <h2 class="anchored" data-anchor-id="proposed-projects">Proposed projects</h2>

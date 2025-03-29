@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Indirect approach to LQR on a finite horizon – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>Indirect approach to LQR on a finite time horizon – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,6 +69,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -82,7 +125,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_overview.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_LQR_fin_horizon.html">Indirect approach to LQR on a finite horizon</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_goals.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_LQR_fin_horizon.html">LQR on a finite time horizon</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -420,7 +463,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dynamic_programming_LQR.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Solving LQR via DP</span></a>
+ <span class="menu-text">LQR via DP</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming_LQT.qmd" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LQ tracking via DP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -501,6 +550,12 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cont_indir_goals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning goals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./cont_indir_overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview of continuous-time optimal control</span></a>
   </div>
@@ -514,25 +569,25 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_via_calculus_of_variations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Indirect approach to optimal control</span></a>
+ <span class="menu-text">General finite-horizon nonlinear optimal control as a TP-BVP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_LQR_fin_horizon.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Indirect approach to LQR on a finite horizon</span></a>
+ <span class="menu-text">LQR on a finite time horizon</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_LQR_inf_horizon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Indirect approach to LQR on an infinite horizon</span></a>
+ <span class="menu-text">LQR on an infinite time horizon using CARE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_CARE.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Continuous-time Riccati equation</span></a>
+  <a href="./cont_indir_notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">On notation for Hamiltonians and variations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -906,15 +961,26 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#lqr-on-a-finite-and-fixed-time-horizon-with-a-fixed-final-state" id="toc-lqr-on-a-finite-and-fixed-time-horizon-with-a-fixed-final-state" class="nav-link active" data-scroll-target="#lqr-on-a-finite-and-fixed-time-horizon-with-a-fixed-final-state">LQR on a finite and fixed time horizon with a fixed final state</a></li>
+  <li><a href="#optimal-control-on-a-finite-and-fixed-time-interval-with-a-free-final-state" id="toc-optimal-control-on-a-finite-and-fixed-time-interval-with-a-free-final-state" class="nav-link" data-scroll-target="#optimal-control-on-a-finite-and-fixed-time-interval-with-a-free-final-state">Optimal control on a finite and fixed time interval with a free final state</a>
+  <ul class="collapse">
+  <li><a href="#free-end-in-the-calculus-of-variations" id="toc-free-end-in-the-calculus-of-variations" class="nav-link" data-scroll-target="#free-end-in-the-calculus-of-variations">Free end in the calculus of variations</a></li>
+  </ul></li>
+  <li><a href="#lqr-on-a-finite-and-fixed-time-horizon-with-a-free-final-state" id="toc-lqr-on-a-finite-and-fixed-time-horizon-with-a-free-final-state" class="nav-link" data-scroll-target="#lqr-on-a-finite-and-fixed-time-horizon-with-a-free-final-state">LQR on a finite and fixed time horizon with a free final state</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_overview.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_LQR_fin_horizon.html">Indirect approach to LQR on a finite horizon</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_goals.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_LQR_fin_horizon.html">LQR on a finite time horizon</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Indirect approach to LQR on a finite horizon</h1>
+<h1 class="title">Indirect approach to LQR on a finite time horizon</h1>
 </div>
 
 
@@ -931,8 +997,210 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>To get some more insight and also to develop a practical design tool, let us consider the LQ version of this general problem. That is, the augmented Lagrangian is <span class="math display">
+L^\text{aug}(\bm x, \bm u, \bm \lambda) = \frac{1}{2}\left(\bm x^\top\mathbf Q \bm x + \bm u^\top\mathbf R\bm u\right) + \bm \lambda^\top\,(\dot{\bm x}-\mathbf A\bm x-\mathbf B\bm u).
+</span></p>
+<p>The three necessary conditions of optimality are <span id="eq-necessary-conditions-LQ"><span class="math display">\boxed{
+\begin{aligned}
+\dot {\bm x} &amp;= \mathbf A\bm x - \mathbf B\bm u,\\
+\dot{\boldsymbol\lambda} &amp;= \mathbf Q\bm x - \mathbf A^\top\boldsymbol\lambda,\\
+\bm 0 &amp;= \mathbf R\bm u - \mathbf B^\top\boldsymbol\lambda.
+\end{aligned}}
+\tag{1}</span></span></p>
+<p>Provided <span class="math inline">\mathbf R&gt;0</span>, we can express <span class="math inline">\bm u</span> from the third equation (aka the equation of stationarity) <span id="eq-u"><span class="math display">\boxed{
+\bm u = \mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda.}
+\tag{2}</span></span> and substitute into the first one. This leaves us with just two differential equations</p>
+<p><span class="math display">
+\begin{aligned}
+\dot {\bm x} &amp;= \mathbf A\bm x + \mathbf B\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda,\\
+\dot{\boldsymbol\lambda} &amp;= \mathbf Q\bm x - \mathbf A^\top\boldsymbol\lambda.
+\end{aligned}
+</span></p>
+<p>This is a set of 2<span class="math inline">n</span> differential equations of first order (we assume that <span class="math inline">\bm x\in \mathbb R^n</span>). We need <span class="math inline">2n</span> boundary values to fully specify the solution. Where do we get them?</p>
+<section id="lqr-on-a-finite-and-fixed-time-horizon-with-a-fixed-final-state" class="level2">
+<h2 class="anchored" data-anchor-id="lqr-on-a-finite-and-fixed-time-horizon-with-a-fixed-final-state">LQR on a finite and fixed time horizon with a fixed final state</h2>
+<p>For fixed initial and fixed final states, the boundary conditions are <span id="eq-boundary-conditions-LQ"><span class="math display">\boxed{
+\begin{aligned}
+\bm x(0) &amp;= \mathbf x_0,\\
+\bm x(t_\mathrm{f}) &amp;= \mathbf x_\mathrm{f}.
+\end{aligned}}
+\tag{3}</span></span></p>
+<p>Let’s now rewrite the equations as one large vector equation <span id="eq-IVP-LQ"><span class="math display">
+\underbrace{\begin{bmatrix}
+\dot {\bm x} \\ \dot{\boldsymbol\lambda}
+\end{bmatrix}}_{\dot{\bm{w}}}
+=
+\underbrace{\begin{bmatrix}
+\mathbf A &amp; \mathbf B\mathbf R^{-1}\mathbf B^\top\\
+\mathbf Q &amp; - \mathbf A^\top
+\end{bmatrix}}_{\mathbf{H}}
+\underbrace{\begin{bmatrix}
+\bm x \\ \boldsymbol\lambda
+\end{bmatrix}}_{\mathbf{w}}
+\tag{4}</span></span></p>
+<p>Similarly as in the discrete-time case, we can find the solution numerically by relating the the state and costate at both ends of the time interval. In the continuous-time setting, it is the exponential of the matrix in the above equation that will be used for that purpose. Let’s do it now. By labelling the block matrix in the above as <span class="math inline">\mathbf{H}</span> and the vector composed of the state and costate vectors as <span class="math inline">\mathbf{w}</span>, we can write <span class="math display">
+\mathbf{w}(t_\mathrm{f}) = \underbrace{\mathrm{e}^{\mathbf{H}t_\mathrm{f}}}_{\boldsymbol\Phi(t_\mathrm{f})}\mathbf{w}(0),
+</span> where <span class="math inline">\boldsymbol\Phi(t)</span> is a <em>state-costate transition matrix</em>. Labelling the blocks as in <span class="math display">
+\boldsymbol \Phi(t) = \begin{bmatrix}
+                        \boldsymbol\Phi_{11}(t) &amp; \boldsymbol\Phi_{12}(t)\\
+                        \boldsymbol\Phi_{21}(t) &amp; \boldsymbol\Phi_{22}(t)
+                       \end{bmatrix},
+</span> we can write from the equation for the state variable that <span class="math display">
+\bm \lambda(0) = \mathbf \Phi_{12}^{-1}\left(\bm x(t_\mathrm{f})-\mathbf \Phi_{11}\bm x(0)\right).
+</span></p>
+<p>Now, the initial value problem in <a href="#eq-IVP-LQ" class="quarto-xref">Eq.&nbsp;4</a> can be solved for both the state and the costate. Finally, the control signal can be computed using <a href="#eq-u" class="quarto-xref">Eq.&nbsp;2</a>.</p>
+<p>The procedure works, but we can get even more insight into the problem after setting <span class="math inline">\mathbf Q=\mathbf 0</span>, which will essentially decouple the second equation from the first. Then we can follow the same procedure we demonstrated in the discrete-time setting. The optimal control problem is often referred to as <em>minimum-energy problem</em> as its goal is to control the system from a given initial state to some given final state while minimizing the supplied “energy”.</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Integrals of squared states and or controls do not necessarily mean energy
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>While it is quite common to encounter references to integrals of squares of some variables evolving in time such as states or controls as energy, it is useful to keep some reservation here and perceive it more like a jargon. What if the control variable is a position or orientation of some movable part? Squaring it and integrating over time surely does not mean energy.</p>
+</div>
+</div>
+<p>The procedure for solving the problem <span class="math display">
+\begin{aligned}
+\dot {\bm x} &amp;= \mathbf A\bm x + \mathbf B\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda,\\
+\dot{\boldsymbol\lambda} &amp;= - \mathbf A^\top\boldsymbol\lambda
+\end{aligned}
+</span> then proceeds by expressing from the costate equation the solution for <span class="math inline">\bm \lambda</span> as a function of costate at the final time <span class="math display">
+\bm \lambda(t) = \mathrm{e}^{-\mathbf A^\top(t-t_\mathrm{f})}\bm \lambda(t_\mathrm{f}).
+</span></p>
+<p>We substitute into the state equation <span class="math display">
+\dot {\bm x}(t) = \mathbf A\bm x(t) + \mathbf B\mathbf R^{-1}\mathbf B^\top\mathrm{e}^{-\mathbf A^\top(t-t_\mathrm{f})}\bm \lambda(t_\mathrm{f})
+</span> and solve for <span class="math inline">\bm x(t)</span> <span class="math display">
+\bm x(t) = \mathrm{e}^{\mathbf A\mathbf(t-0)} \mathbf x_0 + \int_{0}^{t}\left[\mathrm{e}^{\mathbf A^\top(t-\tau)}\mathbf B\mathbf R^{-1}\mathbf B^\top\mathrm{e}^{-\mathbf A^\top(\tau-t_\mathrm{f})}\bm \lambda(t_\mathrm{f})\right]\text{d}\tau.
+</span></p>
+<p>Evaluating this at <span class="math inline">t=t_\mathrm{f}</span>, and moving the costate at the final time outside of the integral, we get <span class="math display">
+\mathbf x_\mathrm{f} = \mathrm{e}^{\mathbf A\mathbf(t_\mathrm{f}-0)} \mathbf x_0 + \underbrace{\int_{0}^{t_\mathrm{f}}\left[\mathrm{e}^{\mathbf A^\top(t_\mathrm{f}-\tau)}\mathbf B\mathbf R^{-1}\mathbf B^\top\mathrm{e}^{\mathbf A^\top(t_\mathrm{f}-\tau)}\right]\text{d}\tau}_{\mathbf G_R(0,t_\mathrm{f})}\bm \lambda(t_\mathrm{f}).
+</span></p>
+<p>The as of yet unknown <span class="math inline">\bm \lambda(t_\mathrm{f})</span> can finally be extracted <span class="math display">
+\bm \lambda(t_\mathrm{f}) = \mathbf G_R(0,t_1)^{-1}\left(\mathbf x_\mathrm{f} - \mathrm{e}^{\mathbf A t_\mathrm{f}} \mathbf x_0\right),
+</span> where <span class="math inline">\mathbf G_R(0,t_1)</span> is the <em>weighted controllability/reachability Gramian</em>. Remember that its inverse only exists if the system is controllable/reachable. The last step constitutes in bringing this value back into the formula for the optimal control <span class="math display">
+\begin{aligned}
+\bm u(t) &amp;= \mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda(t),\\
+              &amp;= \mathbf R^{-1}\mathbf B^\top\mathrm{e}^{-\mathbf A^\top(t-t_\mathrm{f})}\bm \lambda(t_\mathrm{f})\mathbf G_R(0,t_1)^{-1}\left(\bm x_\mathrm{f} - \mathrm{e}^{\mathbf A\mathbf(t_\mathrm{f}-0)} x_0\right).
+\end{aligned}
+</span></p>
+<p>The conclusions are similar if not identical to those in the discrete-time setting:</p>
+<ul>
+<li>The necessary condition for the existence of optimal control is controllability of the system.</li>
+<li>The minimum-energy control for a fixed final state assignment can be obtained in the form of a precomputed signal (well, in this case, if computation is to be performed numerically, a discrete-time approximation of the continuous-time variable could only be computed and stored).</li>
+</ul>
+<p>Honestly, from a practical viewpoint, it is hard to view the usefulness of the above procedure (exploiting the structure of the problem when <span class="math inline">\mathbf Q=\mathbf 0</span>) as anything else than just giving us some insight. We have already learnt during our previous treatment of discrete-time systems that much more useful kind of a control – feedback control – can be computed if we relax the final state constraint. We are going to show this for continuous-time systems too.</p>
+<p>Before we do that, we should address sufficiency. #TODO</p>
+<!-- For that we need to find $L^\text{aug}_{\dot x\dot x}$
+$$
+L^\text{aug}_{\dot x\dot x} = \mathbf R.
+$$
+
+Clearly by requesting $\mathbf R>0$ automatically guarantees that the necessary conditions are also sufficient. -->
+</section>
+<section id="optimal-control-on-a-finite-and-fixed-time-interval-with-a-free-final-state" class="level2">
+<h2 class="anchored" data-anchor-id="optimal-control-on-a-finite-and-fixed-time-interval-with-a-free-final-state">Optimal control on a finite and fixed time interval with a free final state</h2>
+<p>Apparently, the open-loop nature of the optimal control for the fixed-final-state scenario is not quite satisfactory in most engineering applications. Similarly as in the discrete-time situation we may suspect that by relaxing the final state we may obtain a more useful control scheme. Relaxing the final state does not mean that we resign at the task of controlling the system behavior at the end of the control interval. It is only that now we will have to use the terminal costs to make the regulation error <em>arbitrarily small</em> at the end of the time horizon. Starting with the general case, the optimal control criterion is then <span class="math display">
+J = \phi(\bm x(t_\mathrm{f}))+\int_{t_\mathrm{i}}^{t_\mathrm{f}}L(\bm x,\bm u,t)\text{d}t.
+</span></p>
+<p>First we need to go back to the basic problem of calculus of variations and see how the solution to the basic problem changes if we set one of the ends free. As we are going to see in a minute, the optimal solution will still have to satisfy the Euler-Lagrange equation, the boundary condition will change, however.</p>
+<section id="free-end-in-the-calculus-of-variations" class="level3">
+<h3 class="anchored" data-anchor-id="free-end-in-the-calculus-of-variations">Free end in the calculus of variations</h3>
+<p>Switching to the notation in the calculus of variations temporarily, the set of candidate trajectories among which we search for and extremal is described in <a href="#fig-free-end" class="quarto-xref">Fig.&nbsp;1</a>.</p>
+<div id="fig-free-end" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-free-end-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/free_end.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-free-end-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Basic problem of calculus of variations with a free end
+</figcaption>
+</figure>
+</div>
+<p>Let us repeat here the previously derived expression for the first variation <span class="math display">
+\delta J(x,y(\cdot),y'(\cdot)) = \left[\frac{\partial L(x,y,y')}{\partial y'}\delta(x)\right]_{a}^b + \int_a^b \left( \frac{\partial L(x,y,y')}{\partial y}-\frac{\text{d}}{\text{d}x}\frac{\partial L(x,y,y')}{\partial y'}\right)\delta(x)\text{d}x.
+</span></p>
+<p>This time, however, the first term on the right is not zero. In particular, <span class="math inline">\delta y(a) = 0</span> but <span class="math inline">\delta y(b) \neq 0</span>. Therefore the first variation is <span class="math display">
+\delta J = \left.\frac{\partial L(x,y,y')}{\partial y'}\delta y(x)\right|_{b} + \int_a^b \left( \frac{\partial L(x,y,y')}{\partial y}-\frac{\text{d}}{\text{d}x}\frac{\partial L(x,y,y')}{\partial y'}\right)\delta y(x)\text{d}x.  
+</span></p>
+<p>The sum must be equal to zero. Note that even though we relaxed the condition on one end of the curve, the family of perturbations still contains (also) the functions that vanish at the end point, that is <span class="math inline">\delta y(b)=0</span>. Such extremals must still satisfy the EL equation, hence the second term (the integral) must vanish too. But if the EL equation is satisfied for perturbations vanishing at the end, the the integral must be zero also for the perturbations not vanishing at the end. As a consequence, the first term on the right must be equal to zero as well. To conclude, setting one of the ends free, the necessary conditions of optimality are still given by the EL equation, but the boundary condition <span class="math inline">y(b)=\mathrm y_b</span> is replaced by <span id="eq-boundary-condition-free-end-calculus"><span class="math display">
+\left.\frac{\partial L(x,y,y')}{\partial y'}\right|_{b} = 0.
+\tag{5}</span></span></p>
+<p>This result can be immediately applied to the free-final-state optimal control problem. The only deficiency is that the cost <span class="math display">
+J = \int_{t_\mathrm{i}}^{t_\mathrm{f}}L(\bm x,\bm u,t)\text{d}t
+</span> does not include the term penalizing the final state. We will correct this in a moment. For the time being, note that the solution to the current problem is identical to the solution to the fixed final state problem with the final state condition <span class="math inline">\bm x(t_\mathrm{f}) = \mathbf x_\mathrm{f}</span> replaced by the condition <span class="math display">
+\bm \lambda(t_\mathrm{f}) = \mathbf 0.
+</span></p>
+<p>When deriving this, recall that we need to apply the condition <a href="#eq-boundary-condition-free-end-calculus" class="quarto-xref">Eq.&nbsp;5</a> to the augmented Lagrangian in the optimal control problem.</p>
+<p>Now let’s include the term penalizing the final state. This is actually quite easy: what we need to do is to bring that term under the integral sign <span class="math display">
+\begin{aligned}
+\phi(\bm x(t_\mathrm{f})) &amp;= \int_{t_\mathrm{i}}^{t_\mathrm{f}}\frac{\text{d}\phi}{\text{d}t}\text{d}t + \phi(\bm x(t_\mathrm{i})),\\
+              &amp;= \int_{t_\mathrm{i}}^{t_\mathrm{f}}\left[\frac{\partial \phi}{\partial t}+(\nabla_\mathbf{x} \phi)^\top\frac{\text{d}\bm x}{\text{d}t}\right]\text{d}t + \phi(\bm x(t_\mathrm{i})).
+\end{aligned}
+</span></p>
+<p>Note that the last term on the right (the one corresponding to <span class="math inline">\bm x(t_\mathrm{i})</span>) is constant and excluding it from the optimization has no impact on the optimal solution.</p>
+<p>Restricting our attention to time-invariant cases in favor of simplicity (assuming <span class="math inline">\frac{\partial \phi}{\partial t} = 0</span>), the augmented Lagrangian is modified to <span class="math display">
+J^\mathrm{aug}(t,\bm x(\cdot),\dot{\mathbf{x}}(\cdot),\bm u(\cdot),\bm \lambda(\cdot)) = \int_{t_\mathrm{i}}^{t_\mathrm{f}}\left[\underbrace{ L(\bm x,\bm u,t)+(\nabla_\mathbf{x} \phi)^\top\dot{\bm x}+ \bm \lambda^\top\left( \dot {\bm x}(t) - \mathbf f(\bm x,\bm u,\mathbf t)\right)}_{L^\text{aug}}\right ]\text{d}t.
+</span></p>
+<p>Substituting to <a href="#eq-boundary-condition-free-end-calculus" class="quarto-xref">Eq.&nbsp;5</a>, the new boundary condition corresponding to the final time is <span class="math display">\boxed{
+(\nabla_\mathbf{x} \phi)(t_\mathrm{f}) + \boldsymbol\lambda(t_\mathrm{f}) = 0. }
+</span></p>
+</section>
+</section>
+<section id="lqr-on-a-finite-and-fixed-time-horizon-with-a-free-final-state" class="level2">
+<h2 class="anchored" data-anchor-id="lqr-on-a-finite-and-fixed-time-horizon-with-a-free-final-state">LQR on a finite and fixed time horizon with a free final state</h2>
+<p>Specializing the result to the LQ case with the final state penalization <span class="math display">
+\phi(\bm x(t_\mathrm{f})) = \frac{1}{2}\bm x^\top(t_\mathrm{f})\mathbf S_\mathrm{f}\bm x(t_\mathrm{f}),
+</span></p>
+<p>we get the new boundary condition <span id="eq-boundary-free-final-LQ"><span class="math display">\boxed{
+\mathbf S_\mathrm{f} \bm x(t_\mathrm{f}) + \boldsymbol\lambda(t_\mathrm{f}) = 0.}
+\tag{6}</span></span></p>
+<p>This looks already familiar, doesn’t it? We found an identical relationship between the state and the costate at the final time in the discrete-time setting. The difference is in the sign, we will comment on this in a while. Suffice to say for now that this has (surprisingly) no impact on the solution.</p>
+<p>Restate here the full necessary conditions for the LQ problem. The state and the costate equations are <span class="math display">\boxed{
+\begin{aligned}
+\dot {\bm x} &amp;= \mathbf A\bm x + \mathbf B\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda,\\
+\dot{\boldsymbol\lambda} &amp;= \mathbf Q\bm x - \mathbf A^\top\boldsymbol\lambda.
+\end{aligned}}
+</span></p>
+<p>The stationarity equation is <span class="math display">\boxed{
+\bm u = \mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda.}
+</span></p>
+<p>The two sets of boundary equations are <a href="#eq-boundary-free-final-LQ" class="quarto-xref">Eq.&nbsp;6</a> and <span class="math inline">\bm x(0)=\mathbf x_0</span>.</p>
+<p>Similarly as in the previous scenario with fixed final state, here we can also proceed by numerically solving the linear boundary value problem. For completeness we describe it here, but in a few moments we will learn something more about this problem.</p>
+<p>Briefly, from the state-transition equation we have <span class="math display">
+\bm x(t_\mathrm{f}) = \boldsymbol \Phi_{11} \mathbf{x}(0) + \boldsymbol \Phi_{12} \bm \lambda (0),
+</span> which after multiplication by <span class="math inline">\mathbf S_\mathrm{f}</span> gives <span class="math display">
+\mathbf S_\mathrm{f} \bm x(t_\mathrm{f}) = \mathbf S_\mathrm{f} \boldsymbol \Phi_{11} \mathbf{x}(0) + \mathbf S_\mathrm{f} \boldsymbol \Phi_{12} \bm \lambda (0).
+</span></p>
+<p>The boundary condition in the free final state case is <span class="math display">
+\mathbf{S_\mathrm{f}}\mathbf{x}(t_\mathrm{f}) = -\boldsymbol\lambda(t_\mathrm{f}),
+</span> which immediately invites us to substitute to the right side the solution of the costate equation <span class="math display">
+-\boldsymbol \Phi_{21} \mathbf{x}(0) - \boldsymbol \Phi_{12} \bm \lambda (0) = \mathbf S_\mathrm{f} \boldsymbol \Phi_{11} \mathbf{x}(0) + \mathbf S_\mathrm{f} \boldsymbol \Phi_{12} \bm \lambda (0),
+</span> from which we can compute the initial value of the costate <span class="math display">
+\bm \lambda(0) = -(\mathbf S_\mathrm{f} \boldsymbol \Phi_{12}+\boldsymbol \Phi_{22})^{-1}(\mathbf S_\mathrm{f} \boldsymbol \Phi_{11}+\boldsymbol \Phi_{12})\bm x(0).
+</span></p>
+<p>Having computed the initial value of the costate, we can solve the state and costate (differential) equations for the state and costate variables throughout the time horizon. The optimal control then follows from the stationarity equation. Done.</p>
+<p>Nonetheless, computing the solution numerically, some important opportunity is escaping our attention. In order to discover it, we need to dig a bit deeper. First, we recall that the boundary condition at the end of the interval gives us a linear relation between the state and the costate. We now assume that this linear relation also holds throughout the time interval. This is the <em>sweep method</em> that we have already encountered in the discrete-time setting: <span id="eq-sweep"><span class="math display">\boxed{
+\bm S(t) \bm x(t) = - \boldsymbol\lambda(t).}
+\tag{7}</span></span></p>
+<p>We differentiate both sides to obtain <span class="math display">
+\dot{\bm S} \bm x + \bm S \dot{\bm x}= - \dot{\bm \lambda}.
+</span></p>
+<p>Substituting the state equation for <span class="math inline">\dot{\bm x}</span> on the left and for <span class="math inline">\dot{\boldsymbol\lambda}</span> on the right we get <span class="math display">
+\dot{\bm S} \bm x + \bm S (\mathbf A\bm x - \mathbf B\mathbf R^{-1}\mathbf B^\top \bm S\bm x) = -\mathbf Q\bm x - \mathbf A^\top \bm S\bm x,
+</span> which, since <span class="math inline">\bm x</span> can be arbitrary, translates to the condition on <span class="math inline">\bm S</span> <span id="eq-Riccati-differential-equation"><span class="math display">\boxed{
+- \dot{\bm S} =  \bm S \mathbf A + \mathbf A^\top \bm S + \mathbf Q - \bm S\mathbf B\mathbf R^{-1}\mathbf B^\top \bm S.}
+\tag{8}</span></span></p>
+<p>This is another classical result called <em>Riccati differential equation</em>. Initiated at the final time <span class="math inline">t_\mathrm{f}</span> by <span class="math inline">\bm S(t_\mathrm{f}) = \mathbf S_\mathrm{f}</span>, the differential equation is solved backwards to obtain a function (generally a matrix function) <span class="math inline">\bm S(t)</span>, which is then substituted into the stationarity equation to obtain the optimal control <span class="math inline">\bm u(t)</span> <span class="math display">\boxed{
+\bm u(t) = -\mathbf R^{-1}\mathbf B^\top\bm S(t)\bm x(t).}
+</span></p>
+<p>The story is now completely identical to the discrete-time case – the solution to the Riccati equation evolves in time, but it turns out that for a stabilizable system given by the matrices <span class="math inline">(\mathbf A,\mathbf B)</span>, it converges to some bounded limit. For a long enough time horizon it turns out that for major part of the time horizon <span class="math inline">\bm S(t)</span> rests around the limit value. Consequently, the state feedback gain <span class="math inline">\bm K(t)</span> also mostly remains constant and only changes towards the very end of the time horizon (towards the final time). The limit steady solution <span class="math inline">\lim_{t\rightarrow -\infty} \bm S(t)</span> can be found either by running and ODE solver long enough, or it can be determined by solving the <em>(continuous-time) algebraic Riccati equation</em> (CARE).</p>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1354,13 +1622,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cont_indir_via_calculus_of_variations.html" class="pagination-link" aria-label="Indirect approach to optimal control">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Indirect approach to optimal control</span>
+      <a href="./cont_indir_via_calculus_of_variations.html" class="pagination-link" aria-label="General finite-horizon nonlinear optimal control as a TP-BVP">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">General finite-horizon nonlinear optimal control as a TP-BVP</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cont_indir_LQR_inf_horizon.html" class="pagination-link" aria-label="Indirect approach to LQR on an infinite horizon">
-        <span class="nav-page-text">Indirect approach to LQR on an infinite horizon</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cont_indir_LQR_inf_horizon.html" class="pagination-link" aria-label="LQR on an infinite time horizon using CARE">
+        <span class="nav-page-text">LQR on an infinite time horizon using CARE</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1372,7 +1640,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2025, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

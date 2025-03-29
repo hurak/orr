@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Learning goals – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>On notation for Hamiltonians and variations – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -30,8 +50,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./opt_algo_derivatives.html" rel="next">
-<link href="./opt_theory_hw.html" rel="prev">
+<link href="./cont_indir_trajectory_stabilization.html" rel="next">
+<link href="./cont_indir_LQR_inf_horizon.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,6 +89,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -82,7 +145,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_algo_goals.html">2. Optimization – algorithms</a></li><li class="breadcrumb-item"><a href="./opt_algo_goals.html">Learning goals</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_goals.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_notation.html">On notation for Hamiltonians and variations</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -230,7 +293,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_algo_goals.html" class="sidebar-item-text sidebar-link active">
+  <a href="./opt_algo_goals.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Learning goals</span></a>
   </div>
 </li>
@@ -543,7 +606,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_notation.html" class="sidebar-item-text sidebar-link">
+  <a href="./cont_indir_notation.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">On notation for Hamiltonians and variations</span></a>
   </div>
 </li>
@@ -923,17 +986,17 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#knowledge-remember-and-understand" id="toc-knowledge-remember-and-understand" class="nav-link active" data-scroll-target="#knowledge-remember-and-understand">Knowledge (remember and understand)</a></li>
-  <li><a href="#skills-use-the-knowledge-to-solve-a-problem" id="toc-skills-use-the-knowledge-to-solve-a-problem" class="nav-link" data-scroll-target="#skills-use-the-knowledge-to-solve-a-problem">Skills (use the knowledge to solve a problem)</a></li>
+  <li><a href="#hamiltonian" id="toc-hamiltonian" class="nav-link active" data-scroll-target="#hamiltonian">Hamiltonian</a></li>
+  <li><a href="#variation" id="toc-variation" class="nav-link" data-scroll-target="#variation">Variation</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_algo_goals.html">2. Optimization – algorithms</a></li><li class="breadcrumb-item"><a href="./opt_algo_goals.html">Learning goals</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_goals.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_notation.html">On notation for Hamiltonians and variations</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Learning goals</h1>
+<h1 class="title">On notation for Hamiltonians and variations</h1>
 </div>
 
 
@@ -950,29 +1013,45 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="knowledge-remember-and-understand" class="level2">
-<h2 class="anchored" data-anchor-id="knowledge-remember-and-understand">Knowledge (remember and understand)</h2>
-<ul>
-<li>Explain the main principle of descent direction methods for unconstrained optimization. In particular, give the descent direction condition.</li>
-<li>Give an overview of approaches for line search, that is, a one-dimensional optimization.</li>
-<li>Explain the steepest descent (aka gradient) method. Discuss its shortcomings.</li>
-<li>Explain conditioning of a matrix and what impact it has on convergence of steepest descent algorithm. Propose a modification of a steepest descent method that includes scaling of the original matrix such that conditioning is improved.</li>
-<li>Explain the Newton method for unconstrained minimization. Give also the its interpretation as a method for root finding. Discuss its shortcomings.</li>
-<li>Discuss the issue of solving a set of linear equations (in matrix-vector form) as they appear in the Newton method. Which matrix factorization will be appropriate?</li>
-<li>Explain the key idea behind Quasi-Newton methods.</li>
-<li>Explain the key idea behind trust region methods for unconstrained optimization. What are the advantages with respect to descent direction methods?</li>
-</ul>
+<section id="hamiltonian" class="level2">
+<h2 class="anchored" data-anchor-id="hamiltonian">Hamiltonian</h2>
+<p>Note that there was some ambiguity in our derivation when we were forming the augmented Lagrangian. Somehow arbitrarily we decided to define the augmented Lagrangian as <span class="math display">
+L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  L(\bm x,\bm u,t)+\boldsymbol \lambda^\top (t)\left( \dot {\bm x}(t) - \mathbf f(\bm x,\bm u,\mathbf t)\right)
+</span> but we could easily formulated it also as <span class="math display">
+\hat L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  L(\bm x,\bm u,t)+\hat{\boldsymbol \lambda}^\top (t)\left(\mathbf f(\bm x,\bm u,\mathbf t)-\dot {\bm x}(t)\right).
+</span></p>
+<p>Both are clearly correct and perfectly equivalent. Indeed, although the intermediate steps differ, the final results (Riccati equation, state feedback gain) are identical. What is the motivation for introduction of two differing notations? The former (and the one used in this lecture) enables us to write the augmented Lagrangian using Hamiltonian as <span class="math display">
+L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  \boldsymbol \lambda^\top (t) \dot {\bm x}(t) - H(t,\bm x,\bm u,\boldsymbol\lambda)
+</span> where <span class="math display">
+H(\bm x,\bm u,\boldsymbol \lambda, t) = \boldsymbol \lambda^\top (t) \mathbf f(\bm x,\bm u,t) - L(\bm x,\bm u, t),
+</span> whereas the latter notation supports expressing the augmented Lagrangian as <span class="math display">
+\hat L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  \hat H(\bm x,\bm u,\hat{\boldsymbol \lambda}, t) - \hat{\boldsymbol \lambda}^\top (t) \dot {\bm x}(t),
+</span> where <span class="math display">
+\hat H(\bm x,\bm u,\hat{\boldsymbol \lambda},t) = L(\bm x,\bm u, t)+\hat{\boldsymbol \lambda}^\top (t) \mathbf f(\bm x,\bm u,t),\qquad\text{and}\qquad \hat{\boldsymbol \lambda} = -\boldsymbol \lambda,
+</span> which is the notation that we decided to use (again, somewhat arbitrarily, while paying no attention to being consistent) in our lecture on discrete-time systems.</p>
+<p>Whether one or the other, the canonical equations are identical. It is only that the second-order sufficiency conditions show maximization of the Hamiltonian in one case and minimization in the other. This can be concluded by observing that <span class="math display">
+H(\bm x,\bm u,\boldsymbol \lambda, t) = -\hat H(\bm x,\bm u,\hat{\boldsymbol \lambda}, t).
+</span></p>
+<p>One of a few discussions of this frequent source of notational confusion is in <span class="citation" data-cites="liberzonCalculusVariationsOptimal2011"><a href="#ref-liberzonCalculusVariationsOptimal2011" role="doc-biblioref">[1, Sec. 3.4.4]</a></span>.</p>
 </section>
-<section id="skills-use-the-knowledge-to-solve-a-problem" class="level2">
-<h2 class="anchored" data-anchor-id="skills-use-the-knowledge-to-solve-a-problem">Skills (use the knowledge to solve a problem)</h2>
+<section id="variation" class="level2">
+<h2 class="anchored" data-anchor-id="variation">Variation</h2>
+<p>Upon consulting numerous textbooks and monographs, it appears that the authors are far from the accord regarding the definition of <em>variation</em> (within the context of calculus of variations). Two main definitions appear</p>
 <ul>
-<li>Write a code implementing a Quasi-Newton method for minimization of a provided function.</li>
+<li><p>The one that we followed in this lecture defines the variation as an extension of the concept of a differential. That is, a variation <span class="math inline">\delta J</span> of a (cost) functional is the first-order approximation to the increment <span class="math inline">\Delta J</span> in the (cost) functional <span class="math inline">J</span>. This we discussed in quite some detail in the text.</p></li>
+<li><p>The other one defines variation as the derivative of the (cost) functional with respect to the real (perturbation) parameter. In our text, it is the <span class="math inline">\frac{\mathrm{d}J}{\mathrm{d}\alpha}</span> (for fixed <span class="math inline">y(x)</span> and <span class="math inline">\eta(x)</span>) that would be called a variation and labelled <span class="math inline">\delta J</span>. The increment in the (cost) functional would be then be approximated by <span class="math inline">\delta J\;\alpha</span>.</p></li>
 </ul>
+<p>Both definitions are often encountered in the literature, but we prefer the former because the definitions of variation of a functional <span class="math inline">\delta J</span> and variation of a function <span class="math inline">\delta y(x)</span> are consistent. Both serve as first-order approximations to increments.</p>
+
 
 
 </section>
 
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list">
+<div id="ref-liberzonCalculusVariationsOptimal2011" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">D. Liberzon, <em>Calculus of <span>Variations</span> and <span>Optimal Control Theory</span>: <span>A Concise Introduction</span></em>. Princeton University Press, 2011. Available: <a href="http://liberzon.csl.illinois.edu/teaching/cvoc/cvoc.html">http://liberzon.csl.illinois.edu/teaching/cvoc/cvoc.html</a></div>
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1392,13 +1471,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./opt_theory_hw.html" class="pagination-link" aria-label="Homework">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Homework</span>
+      <a href="./cont_indir_LQR_inf_horizon.html" class="pagination-link" aria-label="LQR on an infinite time horizon using CARE">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">LQR on an infinite time horizon using CARE</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./opt_algo_derivatives.html" class="pagination-link" aria-label="Computing the derivatives">
-        <span class="nav-page-text">Computing the derivatives</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cont_indir_trajectory_stabilization.html" class="pagination-link" aria-label="Trajectory stabilization and neigboring extremals">
+        <span class="nav-page-text">Trajectory stabilization and neigboring extremals</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

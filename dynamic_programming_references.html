@@ -440,7 +440,13 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dynamic_programming_LQR.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Solving LQR via DP</span></a>
+ <span class="menu-text">LQR via DP</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming_LQT.qmd" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LQ tracking via DP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -521,6 +527,12 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cont_indir_goals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning goals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./cont_indir_overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview of continuous-time optimal control</span></a>
   </div>
@@ -534,25 +546,25 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_via_calculus_of_variations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Indirect approach to optimal control</span></a>
+ <span class="menu-text">General finite-horizon nonlinear optimal control as a TP-BVP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_LQR_fin_horizon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Indirect approach to LQR on a finite horizon</span></a>
+ <span class="menu-text">LQR on a finite time horizon</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_LQR_inf_horizon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Indirect approach to LQR on an infinite horizon</span></a>
+ <span class="menu-text">LQR on an infinite time horizon using CARE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_CARE.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Continuous-time Riccati equation</span></a>
+  <a href="./cont_indir_notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">On notation for Hamiltonians and variations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -955,8 +967,8 @@ div.csl-indent {
 <p>Our introductory treatment was based almost exclusively on the (also just introductory) Chapter 6 in <span class="citation" data-cites="lewisOptimalControl2012"><a href="#ref-lewisOptimalControl2012" role="doc-biblioref">[1]</a></span>. Electronic version of the book is freely available on the author’s webpage.</p>
 <p>Comparable introduction is provided in <span class="citation" data-cites="kirkOptimalControlTheory2004"><a href="#ref-kirkOptimalControlTheory2004" role="doc-biblioref">[2]</a></span>. Although it does not appear to be legally available for free in an electronic form, its reprint by a low-cost publisher makes it an affordable (and recommendable) classic reference. Another classic <span class="citation" data-cites="andersonOptimalControlLinear2007"><a href="#ref-andersonOptimalControlLinear2007" role="doc-biblioref">[3]</a></span> actually uses dynamic programming as the key technique to derive all those LQ-optimal regulation and tracking results. A few copies of this book are available in the faculty library at NTK. The authors also made an electronic version available for free on their website.</p>
 <p>Fairly comprehensive treatment of control-oriented DP is in the two-volume monograph <span class="citation" data-cites="bertsekasDynamicProgrammingOptimal2017"><a href="#ref-bertsekasDynamicProgrammingOptimal2017" role="doc-biblioref">[4]</a></span> and <span class="citation" data-cites="bertsekasDynamicProgrammingOptimal2012"><a href="#ref-bertsekasDynamicProgrammingOptimal2012" role="doc-biblioref">[5]</a></span>. It is not available online for free, but the <a href="http://www.athenasc.com/dpbook.html">book webpage</a> contains links to other supporting materials including lecture notes. Furthermore, the latest book by the same author <span class="citation" data-cites="bertsekasCourseReinforcementLearning2023"><a href="#ref-bertsekasCourseReinforcementLearning2023" role="doc-biblioref">[6]</a></span>, which is available for free download, contains a decent introduction to dynamic programming.</p>
-<p>Having just referenced a book on <em>reinforcement learning</em> (RL), indeed, this popular concept — or at least some of its flavours — is closely related to dynamic programming. In fact, it offers a way to overcome some of the limitations of dynamic programming. In our introductory lecture we are not covering RL, but an interested student can take advantage of availability of high-quality resources such as the the <a href="https://www.mit.edu/~dimitrib/RLbook.html">RL-related books and other resources by D. Bertsekas</a>) and another recommendable introduction to RL from control systems perspective <span class="citation" data-cites="meynControlSystemsReinforcement2022"><a href="#ref-meynControlSystemsReinforcement2022" role="doc-biblioref">[7]</a></span>, which is also available for free download.</p>
-<p>The book <span class="citation" data-cites="suttonReinforcementLearningIntroduction2018"><a href="#ref-suttonReinforcementLearningIntroduction2018" role="doc-biblioref">[8]</a></span> often regarded as the bible of RL is nice (and freely available for download) but may be rather difficult to read for a control engineer because of major differences in terminology.</p>
+<p>Having just referenced a book on <em>reinforcement learning</em> (RL), indeed, this popular concept — or at least some of its flavours — is closely related to dynamic programming. In fact, it offers a way to overcome some of the limitations of dynamic programming. In our introductory lecture we are not covering RL, but an interested student can take advantage of availability of high-quality resources such as the the <a href="https://www.mit.edu/~dimitrib/RLbook.html">RL-related books and other resources by D. Bertsekas</a> and another recommendable introduction to RL from control systems perspective <span class="citation" data-cites="meynControlSystemsReinforcement2022"><a href="#ref-meynControlSystemsReinforcement2022" role="doc-biblioref">[7]</a></span>, which is also available for free download.</p>
+<p>The book <span class="citation" data-cites="suttonReinforcementLearningIntroduction2018"><a href="#ref-suttonReinforcementLearningIntroduction2018" role="doc-biblioref">[8]</a></span> often regarded as the bible of RL is nice (and freely available for download) but may be rather difficult to read for a control engineer because of major differences in terminology and notation.</p>
 
 
 
