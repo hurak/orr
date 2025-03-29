@@ -24,30 +24,46 @@ $$
  \hat L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  L(\bm x,\bm u,t)+\hat{\boldsymbol \lambda}^\top (t)\left(\mathbf f(\bm x,\bm u,\mathbf t)-\dot {\bm x}(t)\right).
 $$
 
-Both are clearly correct and perfectly equivalent. Indeed, although the intermediate steps differ, the final results (Riccati equation, state feedback gain) are identical. What is the motivation for introduction of two differing notations? The former (and the one used in this lecture) enables us to write the augmented Lagrangian using Hamiltonian as 
+Both are clearly correct and perfectly equivalent. Indeed, although the intermediate steps differ, the final results (Riccati equation, state feedback gain) are identical. 
+
+But was our choice really completely arbitrary? Well, not really. The former (the one used in this lecture) enables us to write the augmented Lagrangian using Hamiltonian as 
 $$
  L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  \boldsymbol \lambda^\top (t) \dot {\bm x}(t) - H(t,\bm x,\bm u,\boldsymbol\lambda)
 $$
-where 
+where the Hamiltonian is defined as
+$$\boxed{
+ H(\bm x,\bm u,\boldsymbol \lambda, t) = \boldsymbol \lambda^\top (t) \mathbf f(\bm x,\bm u,t) - L(\bm x,\bm u, t).}
 $$
- H(\bm x,\bm u,\boldsymbol \lambda, t) = \boldsymbol \lambda^\top (t) \mathbf f(\bm x,\bm u,t) - L(\bm x,\bm u, t),
+
+Recall that the concept of Hamiltonian was introduced in in the context of the (physics-motivated) [calculus of variations](cont_indir_calculus_of_variations.qmd): 
 $$
-whereas the latter notation supports expressing the augmented Lagrangian as
+H(x,y,y',p) = py'-L.
+$$ 
+
+Replacing the momentum $p$ with the costate $\boldsymbol \lambda$, and replacing $y'$ with the function $\mathbf f$ definining the state equation, we obtain the Hamiltonian in the context of optimal control. Indeed, this was admittedly our motivation: we wanted to adhere as much as possible to what had already been done well before the advent of optimal control theory. 
+
+For completeness we also show that the latter choice of the constraint function leads to expressing the augmented Lagrangian as
 $$
  \hat L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  \hat H(\bm x,\bm u,\hat{\boldsymbol \lambda}, t) - \hat{\boldsymbol \lambda}^\top (t) \dot {\bm x}(t),
 $$
 where 
+$$\boxed{
+ \hat H(\bm x,\bm u,\hat{\boldsymbol \lambda},t) = L(\bm x,\bm u, t)+\hat{\boldsymbol \lambda}^\top (t) \mathbf f(\bm x,\bm u,t).}
 $$
- \hat H(\bm x,\bm u,\hat{\boldsymbol \lambda},t) = L(\bm x,\bm u, t)+\hat{\boldsymbol \lambda}^\top (t) \mathbf f(\bm x,\bm u,t),\qquad\text{and}\qquad \hat{\boldsymbol \lambda} = -\boldsymbol \lambda,
-$$
-which is the notation that we decided to use (again, somewhat arbitrarily, while paying no attention to being consistent) in our lecture on discrete-time systems. 
+
+Does this definition of the Hamiltonian look familiar? Yep, this is the definition that we usee (again, somewhat arbitrarily) in our lecture on discrete-time systems. 
 
 Whether one or the other, the canonical equations are identical. It is only that the second-order sufficiency conditions show maximization of the Hamiltonian in one case and minimization in the other. This can be concluded by observing that 
 $$
  H(\bm x,\bm u,\boldsymbol \lambda, t) = -\hat H(\bm x,\bm u,\hat{\boldsymbol \lambda}, t).
 $$
 
-One of a few discussions of this frequent source of notational confusion is in [@liberzonCalculusVariationsOptimal2011, Section 3.4.4].
+Also
+$$
+\hat{\boldsymbol \lambda} = -\boldsymbol \lambda.
+$$
+
+While I confess I am hesitating whether or not this complication due to two different definitions of the Hamiltonian is worth mentioning in an introductory text, the reality is that both conventions can be encountered in the literature and one should be aware of it. Most standard books rarely warn the reader about it. One of a few discussions of this frequent source of notational confusion is in [@liberzonCalculusVariationsOptimal2011, Section 3.4.4].
 
 ## Variation
 
