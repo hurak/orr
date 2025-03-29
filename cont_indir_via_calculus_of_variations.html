@@ -398,7 +398,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./discr_indir_LQR_inf_horizon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Discrete-time LQR on an infinite horizon</span></a>
+ <span class="menu-text">Discrete-time LQR on an infinite horizon using the DARE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -581,7 +581,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_LQR_inf_horizon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">LQR on an infinite time horizon using CARE</span></a>
+ <span class="menu-text">LQR on an infinite time horizon using the CARE</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -961,8 +961,20 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#continuous-time-optimal-control-problem" id="toc-continuous-time-optimal-control-problem" class="nav-link active" data-scroll-target="#continuous-time-optimal-control-problem">Continuous-time optimal control problem</a></li>
+  <li><a href="#first-order-necessary-conditions-of-optimality" id="toc-first-order-necessary-conditions-of-optimality" class="nav-link" data-scroll-target="#first-order-necessary-conditions-of-optimality">First-order necessary conditions of optimality</a>
+  <ul class="collapse">
+  <li><a href="#boundary-value-problem-bvp-as-the-necessary-conditions-of-optimality" id="toc-boundary-value-problem-bvp-as-the-necessary-conditions-of-optimality" class="nav-link" data-scroll-target="#boundary-value-problem-bvp-as-the-necessary-conditions-of-optimality">Boundary value problem (BVP) as the necessary conditions of optimality</a></li>
+  <li><a href="#boundary-conditions" id="toc-boundary-conditions" class="nav-link" data-scroll-target="#boundary-conditions">Boundary conditions</a></li>
+  <li><a href="#first-order-necessary-conditions-of-optimality-using-the-hamiltonian-function" id="toc-first-order-necessary-conditions-of-optimality-using-the-hamiltonian-function" class="nav-link" data-scroll-target="#first-order-necessary-conditions-of-optimality-using-the-hamiltonian-function">First-order necessary conditions of optimality using the Hamiltonian function</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -986,7 +998,10 @@ window.Quarto = {
 </header>
 
 
-<p>Now we finally seem to be ready for solving our optimal control problems stated at the beginning of the lecture/chapter. Equipped with the solution to the fixed-ends basic problem of calculus of variation, we start with the finite-horizon fixed-final-state version of the optimal control problem. We will extend the result for a free final state in due course. The problem to be solved is</p>
+<p>Now we finally seem to be ready for solving our optimal control problems stated at the beginning of the lecture/chapter. Equipped with the solution to the fixed-ends basic problem of calculus of variation, we start with the finite-horizon fixed-final-state version of the optimal control problem. We will extend the result for a free final state in due course.</p>
+<section id="continuous-time-optimal-control-problem" class="level2">
+<h2 class="anchored" data-anchor-id="continuous-time-optimal-control-problem">Continuous-time optimal control problem</h2>
+<p>The problem to be solved is</p>
 <p><span class="math display">
 \begin{aligned}
 \operatorname*{minimize}_{\bm x(\cdot),\bm u(\cdot)} &amp;\quad \left[\int_{t_\mathrm{i}}^{t_\mathrm{f}}L(\bm x(t),\bm u(t),t)\text{d}t\right]\\
@@ -996,18 +1011,23 @@ window.Quarto = {
 \end{aligned}
 </span></p>
 <p>There is, of course, no term in the cost function penalizing the state at the final time since it is requested that the system is brought to some prespecified state.</p>
-<p>The augmented cost function and the augmented Lagrangian are <span class="math display">
+</section>
+<section id="first-order-necessary-conditions-of-optimality" class="level2">
+<h2 class="anchored" data-anchor-id="first-order-necessary-conditions-of-optimality">First-order necessary conditions of optimality</h2>
+<p>The augmented cost function and the augmented Lagrangian are <span id="eq-augmented-cost-function"><span class="math display">
 J^\mathrm{aug}(t,\bm x(\cdot),\dot{\bm x}(\cdot),\bm u(\cdot),\boldsymbol \lambda(\cdot)) = \int_{t_\mathrm{i}}^{t_\mathrm{f}}\left[\underbrace{ L(\bm x,\bm u,t)+\boldsymbol \lambda^\top\left( \dot {\bm x}-\mathbf f(\bm x,\bm u,\mathbf t)\right)}_{L^\text{aug}}\right ]\text{d}t.
-</span></p>
+\tag{1}</span></span></p>
 <p>Note also that compared to the original unconstrained calculus of variations setting, here we made a notational shift from <span class="math inline">x</span> to <span class="math inline">t</span> as the independent variable, and from <span class="math inline">y</span> to the triplet <span class="math inline">(\bm x,\bm u,\bm \lambda)</span> as the triplet of dependent variables (possibly vector ones). Finally, note that the only derivative appearing in the augmented Lagrangian is <span class="math inline">\dot{\bm x}</span>.</p>
+<section id="boundary-value-problem-bvp-as-the-necessary-conditions-of-optimality" class="level3">
+<h3 class="anchored" data-anchor-id="boundary-value-problem-bvp-as-the-necessary-conditions-of-optimality">Boundary value problem (BVP) as the necessary conditions of optimality</h3>
 <p>Applying the Euler-Lagrange equation to this augmented Lagrangian, we obtain three equations (or three systems of equations), one for each dependent variable:</p>
-<p><span class="math display">
+<p><span id="eq-euler-lagrange-augmented"><span class="math display">
 \begin{aligned}
 L_{\bm{x}}^\text{aug} &amp;= \frac{\text{d}}{\text{d}t} L^\text{aug}_{\dot{\bm{x}}},\\
 L_{\bm{u}}^\text{aug} &amp;= 0,\\
 L_{\bm \lambda}^\text{aug} &amp;= 0.
 \end{aligned}
-</span></p>
+\tag{2}</span></span></p>
 <p>These can be expanded in terms of the unconstrained Lagrangian. First, we assume scalar functions for notational simplicity: <span class="math display">
 \begin{aligned}
 \frac{\partial L}{\partial x} - \lambda \frac{\partial f}{\partial x}&amp;= \dot{\lambda},\\
@@ -1035,11 +1055,53 @@ L_{\bm \lambda}^\text{aug} &amp;= 0.
 \dot{\boldsymbol\lambda}(t) &amp;= \nabla_\mathbf{x}L(\bm x(t),\bm u(t),t) - \nabla_\mathbf{x} \mathbf{f}(\bm x(t),\bm u(t),t) \; \boldsymbol \lambda(t),\\
 \mathbf 0 &amp;= \nabla_\mathbf{u}L(\bm x(t),\bm u(t),t) - \nabla_\mathbf{u} \mathbf{f}(\bm x(t),\bm u(t),t) \; \boldsymbol \lambda(t).
 \end{aligned}}
-\tag{1}</span></span></p>
+\tag{3}</span></span></p>
 <p>These three (systems of) equations give the necessary conditions of optimality that we were looking for. We can immediately recognize the first one – the original state equation describing how the state vector <span class="math inline">\bm{x}</span> evolves in time. The other equations are new, though. The second one is called <em>costate equation</em> because the variable <span class="math inline">\bm\lambda</span>, originally introduced as a Lagrange multiplier, now evolves also according to a first-order differential equation. The last equation is called <em>equation of stationarity</em>. Unlike the previous two, it is not a differential equation, it is just a nonlinear equation. With the exception of some singular cases that we are going to mentions soon, it can be be solved for the control vector <span class="math inline">\bm u</span> as a function of the state <span class="math inline">\bm x</span> and the costate <span class="math inline">\bm \lambda</span>, in which case <span class="math inline">\bm u</span> can be eliminated from the two differential equations and we end up with differential equations just in <span class="math inline">\bm{x}</span> and <span class="math inline">\bm\lambda</span>.</p>
-<p>Recall that for differential equations we always need a sufficient number of boundary conditions to determine the solution uniquely. In particular, for a state vector of dimension <span class="math inline">n</span>, the costate is also of dimension <span class="math inline">n</span>, hence we need in total <span class="math inline">2n</span> boundary conditions. In our current setup these are given by the <span class="math inline">n</span> specified values of the state vector at the beginning and <span class="math inline">n</span> values at the end. This class of problems is called <em>two-point boundary value problem</em> (BVP) and generally it can only be solved numerically (dedicated solvers exist, see the section on software).</p>
+</section>
+<section id="boundary-conditions" class="level3">
+<h3 class="anchored" data-anchor-id="boundary-conditions">Boundary conditions</h3>
+<p>Recall that for differential equations we always need a sufficient number of boundary conditions to determine the solution uniquely. In particular, for a state vector of dimension <span class="math inline">n</span>, the costate is also of dimension <span class="math inline">n</span>, hence we need in total <span class="math inline">2n</span> boundary conditions. In our current setup these are given by the <span class="math inline">n</span> specified values of the state vector at the beginning and <span class="math inline">n</span> values at the end: <span id="eq-boundary-conditions"><span class="math display">\boxed{
+\begin{aligned}
+&amp;\quad \bm x(t_\mathrm{i}) = \mathbf x_\mathrm{i},\\
+&amp;\quad \bm x(t_\mathrm{f}) = \mathbf x_\mathrm{f}.
+\end{aligned}}
+\tag{4}</span></span></p>
+<p>Only after these equations are added to the above DAE systems, we have a full set of necessary conditions of optimality.</p>
+<p>This class of problems is called <em>two-point boundary value problem</em> (BVP) and generally it can only be solved numerically (dedicated solvers exist, see the section on software).</p>
+</section>
+<section id="first-order-necessary-conditions-of-optimality-using-the-hamiltonian-function" class="level3">
+<h3 class="anchored" data-anchor-id="first-order-necessary-conditions-of-optimality-using-the-hamiltonian-function">First-order necessary conditions of optimality using the Hamiltonian function</h3>
+<p>It is common to introduce an auxilliary function called <em>Hamiltonian</em> and defined as <span class="math display">
+H(\bm x,\bm u,\boldsymbol \lambda,t) = \boldsymbol \lambda^\top \mathbf f(\bm x,\bm u,t) - L(\bm x,\bm u,t).
+</span></p>
+<p>The augmented Lagrangian could be then written as <span class="math display">
+L^\mathrm{aug}(\bm x,\bm u,\boldsymbol \lambda,t) = \boldsymbol \lambda^\top \dot {\bm x}-H(\bm x,\bm u,\boldsymbol \lambda,t).
+</span></p>
+<p>The necessary conditions of optimality in <a href="#eq-euler-lagrange-augmented" class="quarto-xref">Eq.&nbsp;2</a> can be now rewritten in a more compact form: <span id="eq-first-order-conditions-optimal-control-nonlinear-vector-Hamiltonian"><span class="math display">\boxed{
+\begin{aligned}
+\dot {\mathbf{x}} &amp;= \nabla_{\bm \lambda} H(\bm x,\bm u,t),\\
+\dot{\boldsymbol\lambda} &amp;= - \nabla_{\bm x} H(\bm x,\bm u,t),\\
+\mathbf 0 &amp;= \nabla_\mathbf{u}H(\bm x,\bm u,t).
+\end{aligned}}
+\tag{5}</span></span></p>
+<p>Of course, we must not forget to add the boundary conditions <a href="#eq-boundary-conditions" class="quarto-xref">Eq.&nbsp;4</a> to have a full set of necessary conditions of optimality.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Two different conventions for defining the Hamiltonian in optimal control
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Our choice of the Hamiltonian function was determined by our somewhat arbitrary choice of formulating the constraint function (that is, the function that should be equal to zero) as <span class="math inline">\dot {\bm x}-\mathbf f(\bm x,\bm u,\mathbf t)</span> when defining the augmented Lagrangian <span class="math inline">L^\mathrm{aug}(\bm x,\bm u,\boldsymbol \lambda,t) = L(\bm x,\bm u,t)+\boldsymbol \lambda^\top\left( \dot {\bm x}-\mathbf f(\bm x,\bm u,\mathbf t)\right)</span>. If only we (equally arbitrarily) had chosen to define the constraint function as <span class="math inline">\mathbf f(\bm x,\bm u,\mathbf t)-\dot {\bm x}</span>, we would have ended up with a different augmented Lagrangian, for which the more appropriate auxilliary function would be defined as <span class="math inline">H(\bm x,\bm u,\boldsymbol \lambda,t) = L(\bm x,\bm u,t)+ \boldsymbol \lambda^\top \mathbf f(\bm x,\bm u,t)</span>. More on the implications of this in the <a href="./cont_indir_notation.html">dedicated section</a>.</p>
+</div>
+</div>
 
 
+</section>
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1479,7 +1541,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2025, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
