@@ -1020,19 +1020,29 @@ L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  L(\bm x,\bm u,t)+\boldsymbol
 </span> but we could easily formulated it also as <span class="math display">
 \hat L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  L(\bm x,\bm u,t)+\hat{\boldsymbol \lambda}^\top (t)\left(\mathbf f(\bm x,\bm u,\mathbf t)-\dot {\bm x}(t)\right).
 </span></p>
-<p>Both are clearly correct and perfectly equivalent. Indeed, although the intermediate steps differ, the final results (Riccati equation, state feedback gain) are identical. What is the motivation for introduction of two differing notations? The former (and the one used in this lecture) enables us to write the augmented Lagrangian using Hamiltonian as <span class="math display">
+<p>Both are clearly correct and perfectly equivalent. Indeed, although the intermediate steps differ, the final results (Riccati equation, state feedback gain) are identical.</p>
+<p>But was our choice really completely arbitrary? Well, not really. The former (the one used in this lecture) enables us to write the augmented Lagrangian using Hamiltonian as <span class="math display">
 L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  \boldsymbol \lambda^\top (t) \dot {\bm x}(t) - H(t,\bm x,\bm u,\boldsymbol\lambda)
-</span> where <span class="math display">
-H(\bm x,\bm u,\boldsymbol \lambda, t) = \boldsymbol \lambda^\top (t) \mathbf f(\bm x,\bm u,t) - L(\bm x,\bm u, t),
-</span> whereas the latter notation supports expressing the augmented Lagrangian as <span class="math display">
+</span> where the Hamiltonian is defined as <span class="math display">\boxed{
+H(\bm x,\bm u,\boldsymbol \lambda, t) = \boldsymbol \lambda^\top (t) \mathbf f(\bm x,\bm u,t) - L(\bm x,\bm u, t).}
+</span></p>
+<p>Recall that the concept of Hamiltonian was introduced in in the context of the (physics-motivated) <a href="./cont_indir_calculus_of_variations.html">calculus of variations</a>: <span class="math display">
+H(x,y,y',p) = py'-L.
+</span></p>
+<p>Replacing the momentum <span class="math inline">p</span> with the costate <span class="math inline">\boldsymbol \lambda</span>, and replacing <span class="math inline">y'</span> with the function <span class="math inline">\mathbf f</span> definining the state equation, we obtain the Hamiltonian in the context of optimal control. Indeed, this was admittedly our motivation: we wanted to adhere as much as possible to what had already been done well before the advent of optimal control theory.</p>
+<p>For completeness we also show that the latter choice of the constraint function leads to expressing the augmented Lagrangian as <span class="math display">
 \hat L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  \hat H(\bm x,\bm u,\hat{\boldsymbol \lambda}, t) - \hat{\boldsymbol \lambda}^\top (t) \dot {\bm x}(t),
-</span> where <span class="math display">
-\hat H(\bm x,\bm u,\hat{\boldsymbol \lambda},t) = L(\bm x,\bm u, t)+\hat{\boldsymbol \lambda}^\top (t) \mathbf f(\bm x,\bm u,t),\qquad\text{and}\qquad \hat{\boldsymbol \lambda} = -\boldsymbol \lambda,
-</span> which is the notation that we decided to use (again, somewhat arbitrarily, while paying no attention to being consistent) in our lecture on discrete-time systems.</p>
+</span> where <span class="math display">\boxed{
+\hat H(\bm x,\bm u,\hat{\boldsymbol \lambda},t) = L(\bm x,\bm u, t)+\hat{\boldsymbol \lambda}^\top (t) \mathbf f(\bm x,\bm u,t).}
+</span></p>
+<p>Does this definition of the Hamiltonian look familiar? Yep, this is the definition that we usee (again, somewhat arbitrarily) in our lecture on discrete-time systems.</p>
 <p>Whether one or the other, the canonical equations are identical. It is only that the second-order sufficiency conditions show maximization of the Hamiltonian in one case and minimization in the other. This can be concluded by observing that <span class="math display">
 H(\bm x,\bm u,\boldsymbol \lambda, t) = -\hat H(\bm x,\bm u,\hat{\boldsymbol \lambda}, t).
 </span></p>
-<p>One of a few discussions of this frequent source of notational confusion is in <span class="citation" data-cites="liberzonCalculusVariationsOptimal2011"><a href="#ref-liberzonCalculusVariationsOptimal2011" role="doc-biblioref">[1, Sec. 3.4.4]</a></span>.</p>
+<p>Also <span class="math display">
+\hat{\boldsymbol \lambda} = -\boldsymbol \lambda.
+</span></p>
+<p>While I confess I am hesitating whether or not this complication due to two different definitions of the Hamiltonian is worth mentioning in an introductory text, the reality is that both conventions can be encountered in the literature and one should be aware of it. Most standard books rarely warn the reader about it. One of a few discussions of this frequent source of notational confusion is in <span class="citation" data-cites="liberzonCalculusVariationsOptimal2011"><a href="#ref-liberzonCalculusVariationsOptimal2011" role="doc-biblioref">[1, Sec. 3.4.4]</a></span>.</p>
 </section>
 <section id="variation" class="level2">
 <h2 class="anchored" data-anchor-id="variation">Variation</h2>
