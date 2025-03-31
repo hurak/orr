@@ -286,4 +286,66 @@ $$\boxed{
  \bm u(t) = -\mathbf R^{-1}\mathbf B^\top\bm S(t)\bm x(t).}
 $$
 
+::: {#exm-scalar-riccati-differential-equation}
+## Scalar Riccati differential equation
+We now illustrate the these findings using a numerical example. For convenience we will use the scalar version of the Riccati differential equation. The scalar Riccati differential equation is given by
+$$
+ - \dot{s}(t) =  2as(t) + q - \frac{b^2}{r}s^2(t), \qquad s(t_\mathrm{f}) = s_\mathrm{f}.
+$${#eq-scalar-differential-riccati-equation}
+
+For some given values of the parameters $a,b,q,r,s_\mathrm{f}$, we can solve the Riccati differential equation using a numerical ODE solver. And we can also compute the optimal gain for the state feedback controller using
+$$
+k(t) = -\frac{b}{r}s(t).
+$$
+```{julia}
+#| fig-cap: The solution to a scalar Riccati differential equation and the corresponding state feedback gain.
+#| label: fig-scalar-riccati-differential-equation
+ 
+using DifferentialEquations
+
+function solve_scalar_continuous_time_differential_riccati_equation(a,b,q,r,s₁,tspan)
+    f(s, p, t) = -2 * a * s - q + b^2 / r * s^2
+    prob = ODEProblem(f, s₁, reverse(tspan))
+    sol = solve(prob, Tsit5(), reltol=1e-8, abstol=1e-8)
+    return reverse(sol.t), reverse(sol.u)
+end
+
+a = 1.0 
+b = 1.0 
+q = 1.0 
+r = 10.0 
+s₁ = 2.0;
+
+t₀ = 0.0
+t₁ = 30.0
+
+t,s = solve_scalar_continuous_time_differential_riccati_equation(a,b,q,r,s₁,(t₀,t₁)) 
+
+k = [b/r*s[i] for i in eachindex(s)]
+
+using Plots
+p1 = plot(t,s,linewidth=2,xlabel="t",ylabel="s(t)",label="")
+plot!([t₁],[s₁],marker=:circle,markersize=8,label="",legend=:topright)
+p2 = plot(t,k,linewidth=2,xlabel="t",ylabel="k(t)",label="")
+plot(p1,p2,layout=(2,1),size=(600,600),legend=:topright)
+```
+
+We can now simulate the response to some nonzero initial state using this time-varying proportional state feedback control.
+
+``` {julia}
+#| fig-cap: The simulated response of the system to a nonzero initial state using the time-varying LQR.
+#| label: fig-response-scalar-time-varying-LQR
+x₀ = 1.0
+
+using Interpolations
+Kintp = LinearInterpolation(t,k)
+
+fclosed(x,k,t) = (a - b*k(t))*x
+prob = ODEProblem(fclosed,x₀,[0,t₁],t->Kintp(t))
+sol = solve(prob)
+
+plot(sol.t,sol.u,linewidth=2,xlabel="t",ylabel="x(t)",label="")
+```
+:::
+
 The story is now completely identical to the discrete-time case – the solution to the Riccati equation evolves in time, but it turns out that for a stabilizable system given by the matrices $(\mathbf A,\mathbf B)$, it converges to some bounded limit. For a long enough time horizon it turns out that for major part of the time horizon $\bm S(t)$ rests around the limit value. Consequently, the state feedback gain $\bm K(t)$ also mostly remains constant and only changes towards the very end of the time horizon (towards the final time). The limit steady solution $\lim_{t\rightarrow -\infty} \bm S(t)$ can be found either by running and ODE solver long enough, or it can be determined by solving the *(continuous-time) algebraic Riccati equation* (CARE).

@@ -17,16 +17,16 @@ engine: julia
 
 Note that there was some ambiguity in our derivation when we were forming the augmented Lagrangian. Somehow arbitrarily we decided to define the augmented Lagrangian as 
 $$
- L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  L(\bm x,\bm u,t)+\boldsymbol \lambda^\top (t)\left( \dot {\bm x}(t) - \mathbf f(\bm x,\bm u,\mathbf t)\right)
+ L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  L(\bm x,\bm u,t)+\boldsymbol \lambda^\top (t)\left[ \dot {\bm x}(t) - \mathbf f(\bm x,\bm u,\mathbf t)\right]
 $$
-but we could easily formulated it also as
+but we could easily formulate it also as
 $$
- \hat L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  L(\bm x,\bm u,t)+\hat{\boldsymbol \lambda}^\top (t)\left(\mathbf f(\bm x,\bm u,\mathbf t)-\dot {\bm x}(t)\right).
+ \hat L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  L(\bm x,\bm u,t)+\hat{\boldsymbol \lambda}^\top (t)\left[\mathbf f(\bm x,\bm u,\mathbf t)-\dot {\bm x}(t)\right].
 $$
 
-Both are clearly correct and perfectly equivalent. Indeed, although the intermediate steps differ, the final results (Riccati equation, state feedback gain) are identical. 
+Both are clearly correct. Indeed, although the intermediate steps differ, the final results (Riccati equation, state feedback gain) are identical. 
 
-But was our choice really completely arbitrary? Well, not really. The former (the one used in this lecture) enables us to write the augmented Lagrangian using Hamiltonian as 
+But was our choice really completely arbitrary? Well, not really. The former (the one used in this lecture) enables us to write the augmented Lagrangian using a Hamiltonian as 
 $$
  L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  \boldsymbol \lambda^\top (t) \dot {\bm x}(t) - H(t,\bm x,\bm u,\boldsymbol\lambda)
 $$
@@ -35,7 +35,7 @@ $$\boxed{
  H(\bm x,\bm u,\boldsymbol \lambda, t) = \boldsymbol \lambda^\top (t) \mathbf f(\bm x,\bm u,t) - L(\bm x,\bm u, t).}
 $$
 
-Recall that the concept of Hamiltonian was introduced in in the context of the (physics-motivated) [calculus of variations](cont_indir_calculus_of_variations.qmd): 
+Recall that the concept of Hamiltonian was introduced in the context of the (physics-motivated) [calculus of variations](cont_indir_calculus_of_variations.qmd): 
 $$
 H(x,y,y',p) = py'-L.
 $$ 
