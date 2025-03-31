@@ -1016,17 +1016,17 @@ window.Quarto = {
 <section id="hamiltonian" class="level2">
 <h2 class="anchored" data-anchor-id="hamiltonian">Hamiltonian</h2>
 <p>Note that there was some ambiguity in our derivation when we were forming the augmented Lagrangian. Somehow arbitrarily we decided to define the augmented Lagrangian as <span class="math display">
-L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  L(\bm x,\bm u,t)+\boldsymbol \lambda^\top (t)\left( \dot {\bm x}(t) - \mathbf f(\bm x,\bm u,\mathbf t)\right)
-</span> but we could easily formulated it also as <span class="math display">
-\hat L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  L(\bm x,\bm u,t)+\hat{\boldsymbol \lambda}^\top (t)\left(\mathbf f(\bm x,\bm u,\mathbf t)-\dot {\bm x}(t)\right).
+L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  L(\bm x,\bm u,t)+\boldsymbol \lambda^\top (t)\left[ \dot {\bm x}(t) - \mathbf f(\bm x,\bm u,\mathbf t)\right]
+</span> but we could easily formulate it also as <span class="math display">
+\hat L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  L(\bm x,\bm u,t)+\hat{\boldsymbol \lambda}^\top (t)\left[\mathbf f(\bm x,\bm u,\mathbf t)-\dot {\bm x}(t)\right].
 </span></p>
-<p>Both are clearly correct and perfectly equivalent. Indeed, although the intermediate steps differ, the final results (Riccati equation, state feedback gain) are identical.</p>
-<p>But was our choice really completely arbitrary? Well, not really. The former (the one used in this lecture) enables us to write the augmented Lagrangian using Hamiltonian as <span class="math display">
+<p>Both are clearly correct. Indeed, although the intermediate steps differ, the final results (Riccati equation, state feedback gain) are identical.</p>
+<p>But was our choice really completely arbitrary? Well, not really. The former (the one used in this lecture) enables us to write the augmented Lagrangian using a Hamiltonian as <span class="math display">
 L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  \boldsymbol \lambda^\top (t) \dot {\bm x}(t) - H(t,\bm x,\bm u,\boldsymbol\lambda)
 </span> where the Hamiltonian is defined as <span class="math display">\boxed{
 H(\bm x,\bm u,\boldsymbol \lambda, t) = \boldsymbol \lambda^\top (t) \mathbf f(\bm x,\bm u,t) - L(\bm x,\bm u, t).}
 </span></p>
-<p>Recall that the concept of Hamiltonian was introduced in in the context of the (physics-motivated) <a href="./cont_indir_calculus_of_variations.html">calculus of variations</a>: <span class="math display">
+<p>Recall that the concept of Hamiltonian was introduced in the context of the (physics-motivated) <a href="./cont_indir_calculus_of_variations.html">calculus of variations</a>: <span class="math display">
 H(x,y,y',p) = py'-L.
 </span></p>
 <p>Replacing the momentum <span class="math inline">p</span> with the costate <span class="math inline">\boldsymbol \lambda</span>, and replacing <span class="math inline">y'</span> with the function <span class="math inline">\mathbf f</span> definining the state equation, we obtain the Hamiltonian in the context of optimal control. Indeed, this was admittedly our motivation: we wanted to adhere as much as possible to what had already been done well before the advent of optimal control theory.</p>
