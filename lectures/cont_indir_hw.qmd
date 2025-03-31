@@ -3,4 +3,89 @@ title: "Homework"
 format:
     html:
         html-math-method: katex
+engine: julia
 ---
+
+## Unconstrained pendulum swing-up problem
+In this homework, we will solve a simple continuous optimal control problem using the indirect method. The goal is to find the control input $u(t)$ that brings a simple pendulum from the origin to the upright position in a given time interval while minimizing the control effort. Formally, the problem can be stated as follows:
+$$
+\begin{align*}
+    \underset{u(t)}{\text{minimize}} \quad & \int_{0}^{5} u^2(t)\, \mathrm{d}t\\
+    \text{subject to} \quad & \dot{x}_1(t) = x_2(t), \quad t \in [0, 5],\\
+    & \dot{x}_2(t) = -a_1\sin{x_1(t)} - a_2x_2(t) + u(t), \quad t \in [0, 5],\\
+    & x_1(0) = 0,\\
+    & x_2(0) = 0,\\
+    & x_1(5) = \pi,\\
+    & x_2(5) = 0,
+\end{align*}
+$$
+where $x_1(t)$ is the angle of the pendulum, $x_2(t)$ is the angular velocity, and $u(t)$ is the control input, and $a_1$ and $a_2$ are positive constants. 
+
+### Tasks
+- Formulate the Hamiltonian for the problem above.
+- Use the Hamiltonian to derive the state, costate equations and the expression for the optimal control input.
+- Substitute the optimal control input into the state and costate equations to formulate a two-point boundary value problem (TPBVP).
+- Use the template code solve the TPBVP numerically using `DifferentialEquations.jl`. Specifically, take a look at [Boundary Value Problems](https://docs.sciml.ai/DiffEqDocs/stable/tutorials/bvp_example/) and `TwoPointBVProblem` in the documentation. 
+- Your solution should be contained in a single file named `hw.jl`, which you will upload to the [BRUTE](https://cw.felk.cvut.cz/brute) system. 
+
+
+```{julia}
+#| eval: false
+
+using DifferentialEquations
+
+const m = 1
+const l = 1
+const g = 9.81
+const b = 0.1
+const T = 5
+
+a₁ = g / l;
+a₂ = b / (m * l^2)
+a₃ = 1 / (m * l^2)
+
+
+function find_optimal_trajectory()
+
+    function dynamics!(du, u, p, t)
+        # u = [x₁, x₂, λ₁, λ₂]
+        # du = [ẋ₁, ẋ₂, λ̇₁, λ̇₂]
+        # TODO: implement the state and costate equations here
+    end
+
+    function bcl!(residual, u_l, p)
+        # u_l = [x₁(0), x₂(0), λ₁(0), λ₂(0)]
+        # TODO: enforce initial conditions for the state
+    end
+
+    function bcr!(residual, u_r, p)
+        # u_r = [x₁(T), x₂(T), λ₁(T), λ₂(T)]
+        # TODO: enforce final conditions for the state
+    end
+
+    # TODO: Set up time span and initial guess for the state+costate trajectory
+
+    # TODO: Create and solve the boundary value problem
+
+    # TODO: Extract state trajectory and reconstruct optimal control from λ₂(t)
+
+    return t, x_opt, u_opt  # where t is a N-length vector, x_opt is a 2×N matrix and u_opt is a 1×N matrix
+end
+
+```
+
+You can plot your results using the following code snippet:
+
+```{julia}
+#| eval: false
+using Plots
+
+t, x_opt, u_opt = find_optimal_trajectory()
+
+p1 = plot(t, x_opt[1, :], label="x₁")
+plot!(t, x_opt[2, :], label="x₂")
+
+p2 = plot(t, u_opt[1,:], label="u")
+
+plot(p1, p2, layout=(2, 1))
+```
