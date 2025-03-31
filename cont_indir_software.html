@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Learning goals – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>Software for continuous-time LQR and CARE – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./opt_theory_problems.html" rel="next">
-<link href="./intro_projects.html" rel="prev">
+<link href="./cont_indir_references.html" rel="next">
+<link href="./cont_indir_trajectory_stabilization.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_goals.html">1. Optimization – theory</a></li><li class="breadcrumb-item"><a href="./opt_theory_goals.html">Learning goals</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_goals.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_software.html">Software for continuous-time LQR and CARE</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -171,7 +171,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_theory_goals.html" class="sidebar-item-text sidebar-link active">
+  <a href="./opt_theory_goals.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Learning goals</span></a>
   </div>
 </li>
@@ -555,7 +555,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_software.html" class="sidebar-item-text sidebar-link">
+  <a href="./cont_indir_software.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Software for continuous-time LQR and CARE</span></a>
   </div>
 </li>
@@ -929,17 +929,18 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#knowledge-remember-and-understand" id="toc-knowledge-remember-and-understand" class="nav-link active" data-scroll-target="#knowledge-remember-and-understand">Knowledge (remember and understand)</a></li>
-  <li><a href="#skills-use-the-knowledge-to-solve-a-problem" id="toc-skills-use-the-knowledge-to-solve-a-problem" class="nav-link" data-scroll-target="#skills-use-the-knowledge-to-solve-a-problem">Skills (use the knowledge to solve a problem)</a></li>
+  <li><a href="#julia" id="toc-julia" class="nav-link active" data-scroll-target="#julia">Julia</a></li>
+  <li><a href="#matlab" id="toc-matlab" class="nav-link" data-scroll-target="#matlab">MATLAB</a></li>
+  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python">Python</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_goals.html">1. Optimization – theory</a></li><li class="breadcrumb-item"><a href="./opt_theory_goals.html">Learning goals</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_goals.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_software.html">Software for continuous-time LQR and CARE</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Learning goals</h1>
+<h1 class="title">Software for continuous-time LQR and CARE</h1>
 </div>
 
 
@@ -956,26 +957,38 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="knowledge-remember-and-understand" class="level2">
-<h2 class="anchored" data-anchor-id="knowledge-remember-and-understand">Knowledge (remember and understand)</h2>
+<section id="julia" class="level2">
+<h2 class="anchored" data-anchor-id="julia">Julia</h2>
 <ul>
-<li>Give a rigorous definition of a local minimum (and maximum) and explain how it differs from a global minimum (maximum).</li>
-<li>Define a convex function, convex set and convex optimization problem and explain the impact the convexity has on the optimization.</li>
-<li>State the Weierstrass (extreme value) theorem on the existence of a minimum (maximum).</li>
-<li>Explain the concepts of big O() and little o() within the framework of truncated Taylor series.</li>
-<li>Give first-order necessary conditions of optimality for a scalar function of a scalar argument, and define critical (or stationary) point. Extend these to the vector argument case. Formulate them both using a Fréchet and Gateaux derivatives. Specialize the result to quadratic functions.</li>
-<li>Give second-order sufficient conditions of optimality for a scalar function of a scalar argument. How can we distinguish between a minimum, maximum, and an inflection point? Extend these to the vector case. Define Hessian and show how it can be used to classify the critical points into minimum, maximum, saddle point, and singularity point. Specialize the results to quadratic functions.</li>
-<li>Give first-order necessary condition of optimality for an equality-constrained optimization problem using Lagrange multipliers. Specialize the results to quadratic cost functions and linear constraints.</li>
-<li>Characterize the regular point (for a given set of equality constraints). Give an example of equality constraints lacking regularity.</li>
-<li>Give second-order sufficient conditions of optimality for an equality-constrained optimization problem using the concept of a projected Hessian.</li>
-<li>State and explain the Karush-Kuhn-Tucker (KKT) conditions for inequality-constrained optimization problems.</li>
+<li><p><a href="https://github.com/JuliaControl/ControlSystems.jl">ControlSystems.jl</a></p>
+<ul>
+<li><a href="https://juliacontrol.github.io/ControlSystems.jl/stable/lib/synthesis/#ControlSystemsBase.lqr-Tuple%7BUnion%7BContinuous,%20Type%7BContinuous%7D%7D,%20Any,%20Any,%20Any,%20Any,%20Vararg%7BAny%7D%7D">lqr</a></li>
+<li><a href="https://juliacontrol.github.io/ControlSystems.jl/stable/lib/analysis/#ControlSystemsBase.are-Tuple%7BUnion%7BContinuous,%20Type%7BContinuous%7D%7D,%20AbstractMatrix,%20Any,%20Any,%20Any%7D">are</a> – actually uses MatrixEquations.jl.</li>
+</ul></li>
+<li><p><a href="https://github.com/andreasvarga/MatrixEquations.jl">MatrixEquations.jl</a></p>
+<ul>
+<li><a href="https://andreasvarga.github.io/MatrixEquations.jl/dev/riccati.html#MatrixEquations.arec">arec</a></li>
+</ul></li>
 </ul>
 </section>
-<section id="skills-use-the-knowledge-to-solve-a-problem" class="level2">
-<h2 class="anchored" data-anchor-id="skills-use-the-knowledge-to-solve-a-problem">Skills (use the knowledge to solve a problem)</h2>
+<section id="matlab" class="level2">
+<h2 class="anchored" data-anchor-id="matlab">MATLAB</h2>
 <ul>
-<li>Formulate a provided problem as an instance of mathematical optimization: identify the cost function, the constraints, decide if the problems fits into one of the (numerous) families of optimization problems such as linear program, quadratic program (with linear constraints, with quadratic constraints), (general) nonlinear program, …</li>
-<li>Solve a provided linear and/or quadratic programming problem using a solver of your choice.</li>
+<li><p><a href="https://www.mathworks.com/products/control.html">Control System Toolbox</a></p>
+<ul>
+<li><a href="https://www.mathworks.com/help/control/ref/icare.html">icare</a> (<a href="https://www.mathworks.com/help/control/ref/care.html">care</a> deprecated)</li>
+<li><a href="https://www.mathworks.com/help/control/ref/lti.lqr.html">lqr</a></li>
+</ul></li>
+</ul>
+</section>
+<section id="python" class="level2">
+<h2 class="anchored" data-anchor-id="python">Python</h2>
+<ul>
+<li><p><a href="https://github.com/python-control/python-control">Python Control</a></p>
+<ul>
+<li><a href="https://python-control.readthedocs.io/en/stable/generated/control.care.html">care</a></li>
+<li><a href="https://python-control.readthedocs.io/en/stable/generated/control.lqr.html">lqr</a></li>
+</ul></li>
 </ul>
 
 
@@ -1401,13 +1414,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./intro_projects.html" class="pagination-link" aria-label="Projects">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Projects</span>
+      <a href="./cont_indir_trajectory_stabilization.html" class="pagination-link" aria-label="Trajectory stabilization and neigboring extremals">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Trajectory stabilization and neigboring extremals</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./opt_theory_problems.html" class="pagination-link" aria-label="Optimization problems">
-        <span class="nav-page-text">Optimization problems</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cont_indir_references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
