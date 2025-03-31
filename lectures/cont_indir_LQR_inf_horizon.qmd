@@ -29,4 +29,44 @@ $$\boxed{
  0 =  2as + q - \frac{b^2}{r}s^2.}
 $$
 
-Which of the (at maximum) two real solutions is the one that we are looking for? We can afford to be rather short in the remaining analysis since the similarity to the discrete-time case is truly very strong. Thus we can conclude this section by merely stating that a unique stabilizing solution of the ARE exists if and only if the artificial system modelled by $(\mathbf A,\sqrt{\mathbf Q})$ is detectable (or observable if we require positive definiteness of $\bm S(t)$).   
+Which of the (at maximum) two real solutions is the one that we are looking for? We can afford to be rather short in the remaining analysis since the similarity to the discrete-time case is truly very strong. Thus we can conclude this section by merely stating that a unique stabilizing solution of the ARE exists if and only if the artificial system modelled by $(\mathbf A,\sqrt{\mathbf Q})$ is detectable (or observable if we require positive definiteness of $\bm S(t)$).  
+
+Once the solution $\bm S$ is found, the optimal control law is given by
+$$
+\boxed{
+ \bm u(t) = -\underbrace{\mathbf R^{-1}\mathbf B^\top\bm S}_{\bm K}\,\bm x(t).}
+$$
+
+::: {#exm-lqr_inf_horizon}
+## LQR on an infinite horizon
+```{julia}
+#| fig-cap: The simulated response of the system to a nonzero initial state using the time-invariant LQR computed by solving CARE
+#| label: fig-response-scalar-time-invariant-LQR
+using ControlSystems
+using LinearAlgebra
+
+n = 2
+m = 2
+
+A = rand(n,n)
+B = rand(n,m)
+C = Matrix{Float64}(I, n, n)
+
+Q = 100* Matrix{Float64}(I,n,n);
+R = Matrix{Float64}(I, m, m);
+
+K = lqr(A,B,Q,R)
+
+G = ss(A,B,C,0)
+
+u(x,t) = -K*x
+
+t = 0:0.1:5
+x₀ = [1,3]
+
+y, t, x, uout = lsim(G,u,t,x0=x₀)
+
+using Plots
+plot(t,x',xlabel="t",ylabel="x(t)", label=["x₁" "x₂"],linewidth=2)
+```
+:::
