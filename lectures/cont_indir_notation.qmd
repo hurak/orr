@@ -1,0 +1,76 @@
+---
+title: "On notation for Hamiltonians and variations"
+bibliography: 
+    - ref_optimal_control.bib
+csl: ieee-control-systems.csl
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+crossref:
+  fig-prefix: Fig. 
+  eq-prefix: Eq.
+engine: julia
+---
+
+## Hamiltonian
+
+Note that there was some ambiguity in our derivation when we were forming the augmented Lagrangian. Somehow arbitrarily we decided to define the augmented Lagrangian as 
+$$
+ L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  L(\bm x,\bm u,t)+\boldsymbol \lambda^\top (t)\left[ \dot {\bm x}(t) - \mathbf f(\bm x,\bm u,\mathbf t)\right]
+$$
+but we could easily formulate it also as
+$$
+ \hat L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  L(\bm x,\bm u,t)+\hat{\boldsymbol \lambda}^\top (t)\left[\mathbf f(\bm x,\bm u,\mathbf t)-\dot {\bm x}(t)\right].
+$$
+
+Both are clearly correct. Indeed, although the intermediate steps differ, the final results (Riccati equation, state feedback gain) are identical. 
+
+But was our choice really completely arbitrary? Well, not really. The former (the one used in this lecture) enables us to write the augmented Lagrangian using a Hamiltonian as 
+$$
+ L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  \boldsymbol \lambda^\top (t) \dot {\bm x}(t) - H(t,\bm x,\bm u,\boldsymbol\lambda)
+$$
+where the Hamiltonian is defined as
+$$\boxed{
+ H(\bm x,\bm u,\boldsymbol \lambda, t) = \boldsymbol \lambda^\top (t) \mathbf f(\bm x,\bm u,t) - L(\bm x,\bm u, t).}
+$$
+
+Recall that the concept of Hamiltonian was introduced in the context of the (physics-motivated) [calculus of variations](cont_indir_calculus_of_variations.qmd): 
+$$
+H(x,y,y',p) = py'-L.
+$$ 
+
+Replacing the momentum $p$ with the costate $\boldsymbol \lambda$, and replacing $y'$ with the function $\mathbf f$ definining the state equation, we obtain the Hamiltonian in the context of optimal control. Indeed, this was admittedly our motivation: we wanted to adhere as much as possible to what had already been done well before the advent of optimal control theory. 
+
+For completeness we also show that the latter choice of the constraint function leads to expressing the augmented Lagrangian as
+$$
+ \hat L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  \hat H(\bm x,\bm u,\hat{\boldsymbol \lambda}, t) - \hat{\boldsymbol \lambda}^\top (t) \dot {\bm x}(t),
+$$
+where 
+$$\boxed{
+ \hat H(\bm x,\bm u,\hat{\boldsymbol \lambda},t) = L(\bm x,\bm u, t)+\hat{\boldsymbol \lambda}^\top (t) \mathbf f(\bm x,\bm u,t).}
+$$
+
+Does this definition of the Hamiltonian look familiar? Yep, this is the definition that we usee (again, somewhat arbitrarily) in our lecture on discrete-time systems. 
+
+Whether one or the other, the canonical equations are identical. It is only that the second-order sufficiency conditions show maximization of the Hamiltonian in one case and minimization in the other. This can be concluded by observing that 
+$$
+ H(\bm x,\bm u,\boldsymbol \lambda, t) = -\hat H(\bm x,\bm u,\hat{\boldsymbol \lambda}, t).
+$$
+
+Also
+$$
+\hat{\boldsymbol \lambda} = -\boldsymbol \lambda.
+$$
+
+While I confess I am hesitating whether or not this complication due to two different definitions of the Hamiltonian is worth mentioning in an introductory text, the reality is that both conventions can be encountered in the literature and one should be aware of it. Most standard books rarely warn the reader about it. One of a few discussions of this frequent source of notational confusion is in [@liberzonCalculusVariationsOptimal2011, Section 3.4.4].
+
+## Variation
+
+Upon consulting numerous textbooks and monographs, it appears that the authors are far from the accord regarding the definition of *variation* (within the context of calculus of variations). Two main definitions appear 
+
+- The one that we followed in this lecture defines the variation as an extension of the concept of a differential. That is, a variation $\delta J$ of a (cost) functional is the first-order approximation to the increment $\Delta J$ in the (cost) functional $J$. This we discussed in quite some detail in the text.
+
+- The other one defines variation as the derivative of the (cost) functional with respect to the real (perturbation) parameter. In our text, it is the $\frac{\mathrm{d}J}{\mathrm{d}\alpha}$ (for fixed $y(x)$ and $\eta(x)$) that would be called a variation and labelled $\delta J$. The increment in the (cost) functional would be then be approximated by $\delta J\;\alpha$. 
+
+Both definitions are often encountered in the literature, but we prefer the former because the definitions of variation of a functional $\delta J$ and variation of a function $\delta y(x)$ are consistent. Both serve as first-order approximations to increments.

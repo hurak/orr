@@ -1,13 +1,351 @@
 ---
-title: "Indirect approach to LQR on a finite horizon"
+title: "Indirect approach to LQR on a finite time horizon"
 bibliography: 
     - ref_optimal_control.bib
+csl: ieee-control-systems.csl
 format:
     html:
         html-math-method: katex
         code-fold: true
-execute:
-    enabled: false
-    warning: false
+crossref:
+  fig-prefix: Fig. 
+  eq-prefix: Eq.
 engine: julia
 ---
+
+To get some more insight and also to develop a practical design tool, let us consider the LQ version of this general problem. That is, the augmented Lagrangian is
+$$
+ L^\text{aug}(\bm x, \bm u, \bm \lambda) = \frac{1}{2}\left(\bm x^\top\mathbf Q \bm x + \bm u^\top\mathbf R\bm u\right) + \bm \lambda^\top\,(\dot{\bm x}-\mathbf A\bm x-\mathbf B\bm u).
+$$
+
+The three necessary conditions of optimality are 
+$$\boxed{
+\begin{aligned}
+\dot {\bm x} &= \mathbf A\bm x - \mathbf B\bm u,\\
+\dot{\boldsymbol\lambda} &= \mathbf Q\bm x - \mathbf A^\top\boldsymbol\lambda,\\ 
+\bm 0 &= \mathbf R\bm u - \mathbf B^\top\boldsymbol\lambda.
+\end{aligned}}
+$${#eq-necessary-conditions-LQ}
+
+Provided $\mathbf R>0$, we can express $\bm u$ from the third equation (aka the equation of stationarity) 
+$$\boxed{
+ \bm u = \mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda.}
+$${#eq-u}
+and substitute into the first one. This leaves us with just two differential equations 
+
+$$
+\begin{aligned}
+\dot {\bm x} &= \mathbf A\bm x + \mathbf B\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda,\\
+\dot{\boldsymbol\lambda} &= \mathbf Q\bm x - \mathbf A^\top\boldsymbol\lambda.
+\end{aligned} 
+$$
+
+This is a set of 2$n$ differential equations of first order (we assume that $\bm x\in \mathbb R^n$). We need $2n$ boundary values to fully specify the solution. Where do we get them? 
+
+## LQR on a finite and fixed time horizon with a fixed final state
+
+For fixed initial and fixed final states, the boundary conditions are
+$$\boxed{
+\begin{aligned}
+ \bm x(0) &= \mathbf x_0,\\
+ \bm x(t_\mathrm{f}) &= \mathbf x_\mathrm{f}.
+\end{aligned}}
+$${#eq-boundary-conditions-LQ}
+
+Let's now rewrite the equations as one large vector equation
+$$
+\underbrace{\begin{bmatrix}
+ \dot {\bm x} \\ \dot{\boldsymbol\lambda}
+\end{bmatrix}}_{\dot{\bm{w}}}
+= 
+\underbrace{\begin{bmatrix}
+ \mathbf A & \mathbf B\mathbf R^{-1}\mathbf B^\top\\
+ \mathbf Q & - \mathbf A^\top
+\end{bmatrix}}_{\mathbf{H}}
+\underbrace{\begin{bmatrix}
+ \bm x \\ \boldsymbol\lambda
+\end{bmatrix}}_{\mathbf{w}}
+$${#eq-IVP-LQ}
+
+Similarly as in the discrete-time case, we can find the solution numerically by relating the the state and costate at both ends of the time interval. In the continuous-time setting, it is the exponential of the matrix in the above equation that will be used for that purpose. Let's do it now. By labelling the block matrix in the above as $\mathbf{H}$ and the vector composed of the state and costate vectors  as $\mathbf{w}$, we can write
+$$
+ \mathbf{w}(t_\mathrm{f}) = \underbrace{\mathrm{e}^{\mathbf{H}t_\mathrm{f}}}_{\boldsymbol\Phi(t_\mathrm{f})}\mathbf{w}(0),
+$$
+where $\boldsymbol\Phi(t)$ is a *state-costate transition matrix*. Labelling the blocks as in
+$$
+ \boldsymbol \Phi(t) = \begin{bmatrix}
+                        \boldsymbol\Phi_{11}(t) & \boldsymbol\Phi_{12}(t)\\
+                        \boldsymbol\Phi_{21}(t) & \boldsymbol\Phi_{22}(t)
+                       \end{bmatrix},
+$$
+we can write from the equation for the state variable that 
+$$
+ \bm \lambda(0) = \mathbf \Phi_{12}^{-1}\left(\bm x(t_\mathrm{f})-\mathbf \Phi_{11}\bm x(0)\right).
+$$
+
+Now, the initial value problem in @eq-IVP-LQ can be solved for both the state and the costate. Finally, the control signal can be computed using @eq-u. 
+
+The procedure works, but we can get even more insight into the problem after setting $\mathbf Q=\mathbf 0$, which will essentially decouple the second equation from the first. Then we can follow the same procedure we demonstrated in the discrete-time setting. The optimal control problem is often referred to as *minimum-energy problem* as its goal is to control the system from a given initial state to some given final state while minimizing the supplied "energy". 
+
+::: {.callout-caution}
+## Integrals of squared states and or controls do not necessarily mean energy
+While it is quite common to encounter references to integrals of squares of some variables evolving in time such as states or controls as energy, it is useful to keep some reservation here and perceive it more like a jargon. What if the control variable is a position or orientation of some movable part? Squaring it and integrating over time surely does not mean energy. 
+:::
+
+The procedure for solving the problem 
+$$
+\begin{aligned}
+\dot {\bm x} &= \mathbf A\bm x + \mathbf B\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda,\\
+\dot{\boldsymbol\lambda} &= - \mathbf A^\top\boldsymbol\lambda
+\end{aligned}
+$$
+then proceeds by expressing from the costate equation the solution for $\bm \lambda$ as a function of costate at the final time
+$$
+ \bm \lambda(t) = \mathrm{e}^{-\mathbf A^\top(t-t_\mathrm{f})}\bm \lambda(t_\mathrm{f}).
+$$
+ 
+We substitute into the state equation
+$$
+ \dot {\bm x}(t) = \mathbf A\bm x(t) + \mathbf B\mathbf R^{-1}\mathbf B^\top\mathrm{e}^{-\mathbf A^\top(t-t_\mathrm{f})}\bm \lambda(t_\mathrm{f})
+$$
+and solve for $\bm x(t)$
+$$
+ \bm x(t) = \mathrm{e}^{\mathbf A\mathbf(t-0)} \mathbf x_0 + \int_{0}^{t}\left[\mathrm{e}^{\mathbf A^\top(t-\tau)}\mathbf B\mathbf R^{-1}\mathbf B^\top\mathrm{e}^{-\mathbf A^\top(\tau-t_\mathrm{f})}\bm \lambda(t_\mathrm{f})\right]\text{d}\tau.
+$$
+
+Evaluating this at $t=t_\mathrm{f}$, and moving the costate at the final time outside of the integral, we get
+$$
+ \mathbf x_\mathrm{f} = \mathrm{e}^{\mathbf A\mathbf(t_\mathrm{f}-0)} \mathbf x_0 + \underbrace{\int_{0}^{t_\mathrm{f}}\left[\mathrm{e}^{\mathbf A^\top(t_\mathrm{f}-\tau)}\mathbf B\mathbf R^{-1}\mathbf B^\top\mathrm{e}^{\mathbf A^\top(t_\mathrm{f}-\tau)}\right]\text{d}\tau}_{\mathbf G_R(0,t_\mathrm{f})}\bm \lambda(t_\mathrm{f}).
+$$
+
+The as of yet unknown $\bm \lambda(t_\mathrm{f})$ can finally be extracted 
+$$
+ \bm \lambda(t_\mathrm{f}) = \mathbf G_R(0,t_1)^{-1}\left(\mathbf x_\mathrm{f} - \mathrm{e}^{\mathbf A t_\mathrm{f}} \mathbf x_0\right),
+$$
+where $\mathbf G_R(0,t_1)$ is the *weighted controllability/reachability Gramian*. Remember that its inverse only exists if the system is controllable/reachable. The last step constitutes in bringing this value back into the formula for the optimal control
+$$
+\begin{aligned}
+\bm u(t) &= \mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda(t),\\
+              &= \mathbf R^{-1}\mathbf B^\top\mathrm{e}^{-\mathbf A^\top(t-t_\mathrm{f})}\bm \lambda(t_\mathrm{f})\mathbf G_R(0,t_1)^{-1}\left(\bm x_\mathrm{f} - \mathrm{e}^{\mathbf A\mathbf(t_\mathrm{f}-0)} x_0\right).
+\end{aligned} 
+$$
+
+The conclusions are similar if not identical to those in the discrete-time setting: 
+
+- The necessary condition for the existence of optimal control is controllability of the system.
+- The minimum-energy control for a fixed final state assignment can be obtained in the form of a precomputed signal (well, in this case, if computation is to be performed numerically, a discrete-time approximation of the continuous-time variable could only be computed and stored). 
+
+Honestly, from a practical viewpoint, it is hard to view the usefulness of the above procedure (exploiting the structure of the problem when $\mathbf Q=\mathbf 0$) as anything else than just giving us some insight. We have already learnt during our previous treatment of discrete-time systems that much more useful kind of a control – feedback control – can be computed if we relax the final state constraint. We are going to show this for continuous-time systems too. 
+
+Before we do that, we should address sufficiency. #TODO
+
+<!-- For that we need to find $L^\text{aug}_{\dot x\dot x}$
+$$
+L^\text{aug}_{\dot x\dot x} = \mathbf R.
+$$
+
+Clearly by requesting $\mathbf R>0$ automatically guarantees that the necessary conditions are also sufficient. -->
+
+## Optimal control on a finite and fixed time interval with a free final state
+
+Apparently, the open-loop nature of the optimal control for the fixed-final-state scenario is not quite satisfactory in most engineering applications. Similarly as in the discrete-time situation we may suspect that by relaxing the final state we may obtain a more useful control scheme. Relaxing the final state does not mean that we resign at the task of controlling the system behavior at the end of the control interval. It is only that now we will have to use the terminal costs to make the regulation error *arbitrarily small* at the end of the time horizon. Starting with the general case, the optimal control criterion is then
+$$
+ J = \phi(\bm x(t_\mathrm{f}))+\int_{t_\mathrm{i}}^{t_\mathrm{f}}L(\bm x,\bm u,t)\text{d}t.
+$$  
+
+First we need to go back to the basic problem of calculus of variations and see how the solution to the basic problem changes if we set one of the ends free. As we are going to see in a minute, the optimal solution will still have to satisfy the Euler-Lagrange equation, the boundary condition will change, however.
+
+### Free end in the calculus of variations
+
+Switching to the notation in the calculus of variations temporarily, the set of candidate trajectories among which we search for and extremal is described in @fig-free-end. 
+
+![Basic problem of calculus of variations with a free end](figures/free_end.png){#fig-free-end width=50%}
+
+Let us repeat here the previously derived expression for the first variation 
+$$
+\delta J(x,y(\cdot),y'(\cdot)) = \left[\frac{\partial L(x,y,y')}{\partial y'}\delta(x)\right]_{a}^b + \int_a^b \left( \frac{\partial L(x,y,y')}{\partial y}-\frac{\text{d}}{\text{d}x}\frac{\partial L(x,y,y')}{\partial y'}\right)\delta(x)\text{d}x. 
+$$
+
+This time, however, the first term on the right is not zero. In particular, $\delta y(a) = 0$ but $\delta y(b) \neq 0$. Therefore the first variation is
+$$
+\delta J = \left.\frac{\partial L(x,y,y')}{\partial y'}\delta y(x)\right|_{b} + \int_a^b \left( \frac{\partial L(x,y,y')}{\partial y}-\frac{\text{d}}{\text{d}x}\frac{\partial L(x,y,y')}{\partial y'}\right)\delta y(x)\text{d}x.  
+$$
+
+The sum must be equal to zero. Note that even though we relaxed the condition on one end of the curve, the family of perturbations still contains (also) the functions that vanish at the end point, that is $\delta y(b)=0$. Such extremals must still satisfy the EL equation, hence the second term (the integral) must vanish too. But if the EL equation is satisfied for perturbations vanishing at the end, the the integral must be zero also for the perturbations not vanishing at the end. As a consequence, the first term on the right must be equal to zero as well. To conclude, setting one of the ends free, the necessary conditions of optimality are still given by the EL equation, but the boundary condition $y(b)=\mathrm y_b$ is replaced by
+$$
+ \left.\frac{\partial L(x,y,y')}{\partial y'}\right|_{b} = 0.
+$${#eq-boundary-condition-free-end-calculus}
+
+This result can be immediately applied to the free-final-state optimal control problem. The only deficiency is that the cost 
+$$
+ J = \int_{t_\mathrm{i}}^{t_\mathrm{f}}L(\bm x,\bm u,t)\text{d}t
+$$
+does not include the term penalizing the final state. We will correct this in a moment. For the time being, note that the solution to the current problem is identical to the solution to the fixed final state problem with the final state condition $\bm x(t_\mathrm{f}) = \mathbf x_\mathrm{f}$ replaced by the condition
+$$
+ \bm \lambda(t_\mathrm{f}) = \mathbf 0.
+$$
+
+When deriving this, recall that we need to apply the condition @eq-boundary-condition-free-end-calculus to the augmented Lagrangian in the optimal control problem. 
+
+Now let's include the term penalizing the final state. This is actually quite easy: what we need to do is to bring that term under the integral sign
+$$
+\begin{aligned}
+ \phi(\bm x(t_\mathrm{f})) &= \int_{t_\mathrm{i}}^{t_\mathrm{f}}\frac{\text{d}\phi}{\text{d}t}\text{d}t + \phi(\bm x(t_\mathrm{i})),\\
+              &= \int_{t_\mathrm{i}}^{t_\mathrm{f}}\left[\frac{\partial \phi}{\partial t}+(\nabla_\mathbf{x} \phi)^\top\frac{\text{d}\bm x}{\text{d}t}\right]\text{d}t + \phi(\bm x(t_\mathrm{i})).
+\end{aligned}
+$$
+
+Note that the last term on the right (the one corresponding to $\bm x(t_\mathrm{i})$) is constant and excluding it from the optimization has no impact on the optimal solution.
+
+Restricting our attention to time-invariant cases in favor of simplicity (assuming $\frac{\partial \phi}{\partial t} = 0$), the augmented Lagrangian is modified to
+$$
+ J^\mathrm{aug}(t,\bm x(\cdot),\dot{\mathbf{x}}(\cdot),\bm u(\cdot),\bm \lambda(\cdot)) = \int_{t_\mathrm{i}}^{t_\mathrm{f}}\left[\underbrace{ L(\bm x,\bm u,t)+(\nabla_\mathbf{x} \phi)^\top\dot{\bm x}+ \bm \lambda^\top\left( \dot {\bm x}(t) - \mathbf f(\bm x,\bm u,\mathbf t)\right)}_{L^\text{aug}}\right ]\text{d}t.
+$$
+
+Substituting to @eq-boundary-condition-free-end-calculus, the new boundary condition corresponding to the final time is
+$$\boxed{
+ (\nabla_\mathbf{x} \phi)(t_\mathrm{f}) + \boldsymbol\lambda(t_\mathrm{f}) = 0. }
+$$
+
+## LQR on a finite and fixed time horizon with a free final state
+
+Specializing the result to the LQ case with the final state penalization
+$$
+ \phi(\bm x(t_\mathrm{f})) = \frac{1}{2}\bm x^\top(t_\mathrm{f})\mathbf S_\mathrm{f}\bm x(t_\mathrm{f}),
+$$
+
+we get the new boundary condition
+$$\boxed{
+ \mathbf S_\mathrm{f} \bm x(t_\mathrm{f}) + \boldsymbol\lambda(t_\mathrm{f}) = 0.} 
+$${#eq-boundary-free-final-LQ}
+
+This looks already familiar, doesn't it? We found an identical relationship between the state and the costate at the final time in the discrete-time setting\footnote{Note that there was actually a difference in sign. This is due to our arbitrary choice while defining the augmented Lagrangian. See the discussion of this at the end of this text.}. The difference is in the sign, we will comment on this in a while. Suffice to say for now that this has (surprisingly) no impact on the solution.
+
+Restate here the full necessary conditions for the LQ problem. The state and the costate equations are
+$$\boxed{
+\begin{aligned}
+\dot {\bm x} &= \mathbf A\bm x + \mathbf B\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda,\\
+\dot{\boldsymbol\lambda} &= \mathbf Q\bm x - \mathbf A^\top\boldsymbol\lambda.
+\end{aligned}} 
+$$
+
+The stationarity equation is
+$$\boxed{
+ \bm u = \mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda.}
+$$
+
+The two sets of boundary equations are @eq-boundary-free-final-LQ and $\bm x(0)=\mathbf x_0$.
+
+Similarly as in the previous scenario with fixed final state, here we can also proceed by numerically solving the linear boundary value problem. For completeness we describe it here, but in a few moments we will learn something more about this problem.
+
+Briefly, from the state-transition equation we have 
+$$
+ \bm x(t_\mathrm{f}) = \boldsymbol \Phi_{11} \mathbf{x}(0) + \boldsymbol \Phi_{12} \bm \lambda (0), 
+$$
+which after multiplication by $\mathbf S_\mathrm{f}$ gives
+$$
+ \mathbf S_\mathrm{f} \bm x(t_\mathrm{f}) = \mathbf S_\mathrm{f} \boldsymbol \Phi_{11} \mathbf{x}(0) + \mathbf S_\mathrm{f} \boldsymbol \Phi_{12} \bm \lambda (0). 
+$$
+
+The boundary condition in the free final state case is
+$$
+ \mathbf{S_\mathrm{f}}\mathbf{x}(t_\mathrm{f}) = -\boldsymbol\lambda(t_\mathrm{f}),
+$$
+which immediately invites us to substitute to the right side the solution of the costate equation
+$$
+ -\boldsymbol \Phi_{21} \mathbf{x}(0) - \boldsymbol \Phi_{12} \bm \lambda (0) = \mathbf S_\mathrm{f} \boldsymbol \Phi_{11} \mathbf{x}(0) + \mathbf S_\mathrm{f} \boldsymbol \Phi_{12} \bm \lambda (0), 
+$$
+from which we can compute the initial value of the costate
+$$
+ \bm \lambda(0) = -(\mathbf S_\mathrm{f} \boldsymbol \Phi_{12}+\boldsymbol \Phi_{22})^{-1}(\mathbf S_\mathrm{f} \boldsymbol \Phi_{11}+\boldsymbol \Phi_{12})\bm x(0). 
+$$
+
+Having computed the initial value of the costate, we can solve the state and costate (differential) equations for the state and costate variables throughout the time horizon. The optimal control then follows from the stationarity equation. Done.
+
+Nonetheless, computing the solution numerically, some important opportunity is escaping our attention. In order to discover it, we need to dig a bit deeper. First, we recall that the boundary condition at the end of the interval gives us a linear relation between the state and the costate. We now assume that this linear relation also holds throughout the time interval. This is the *sweep method* that we have already encountered in the discrete-time setting:
+$$\boxed{
+ \bm S(t) \bm x(t) = - \boldsymbol\lambda(t).} 
+$${#eq-sweep}
+
+We differentiate both sides to obtain
+$$
+ \dot{\bm S} \bm x + \bm S \dot{\bm x}= - \dot{\bm \lambda}.
+$$
+
+Substituting the state equation for $\dot{\bm x}$ on the left and for $\dot{\boldsymbol\lambda}$ on the right we get
+$$
+ \dot{\bm S} \bm x + \bm S (\mathbf A\bm x - \mathbf B\mathbf R^{-1}\mathbf B^\top \bm S\bm x) = -\mathbf Q\bm x - \mathbf A^\top \bm S\bm x,
+$$
+which, since $\bm x$ can be arbitrary, translates to the condition on $\bm S$
+$$\boxed{
+ - \dot{\bm S} =  \bm S \mathbf A + \mathbf A^\top \bm S + \mathbf Q - \bm S\mathbf B\mathbf R^{-1}\mathbf B^\top \bm S.}
+$${#eq-Riccati-differential-equation}
+
+This is another classical result called *Riccati differential equation*. Initiated at the final time $t_\mathrm{f}$ by $\bm S(t_\mathrm{f}) = \mathbf S_\mathrm{f}$, the differential equation is solved backwards to obtain a function (generally a matrix function) $\bm S(t)$, which is then substituted into the stationarity equation to obtain the optimal control $\bm u(t)$
+$$\boxed{
+ \bm u(t) = -\mathbf R^{-1}\mathbf B^\top\bm S(t)\bm x(t).}
+$$
+
+::: {#exm-scalar-riccati-differential-equation}
+## Scalar Riccati differential equation
+We now illustrate the these findings using a numerical example. For convenience we will use the scalar version of the Riccati differential equation. The scalar Riccati differential equation is given by
+$$
+ - \dot{s}(t) =  2as(t) + q - \frac{b^2}{r}s^2(t), \qquad s(t_\mathrm{f}) = s_\mathrm{f}.
+$${#eq-scalar-differential-riccati-equation}
+
+For some given values of the parameters $a,b,q,r,s_\mathrm{f}$, we can solve the Riccati differential equation using a numerical ODE solver. And we can also compute the optimal gain for the state feedback controller using
+$$
+k(t) = -\frac{b}{r}s(t).
+$$
+```{julia}
+#| fig-cap: The solution to a scalar Riccati differential equation and the corresponding state feedback gain
+#| label: fig-scalar-riccati-differential-equation
+ 
+using DifferentialEquations
+
+function solve_scalar_continuous_time_differential_riccati_equation(a,b,q,r,s₁,tspan)
+    f(s, p, t) = -2 * a * s - q + b^2 / r * s^2
+    prob = ODEProblem(f, s₁, reverse(tspan))
+    sol = solve(prob, Tsit5(), reltol=1e-8, abstol=1e-8)
+    return reverse(sol.t), reverse(sol.u)
+end
+
+a = 1.0 
+b = 1.0 
+q = 1.0 
+r = 10.0 
+s₁ = 2.0;
+
+t₀ = 0.0
+t₁ = 30.0
+
+t,s = solve_scalar_continuous_time_differential_riccati_equation(a,b,q,r,s₁,(t₀,t₁)) 
+
+k = [b/r*s[i] for i in eachindex(s)]
+
+using Plots
+p1 = plot(t,s,linewidth=2,xlabel="t",ylabel="s(t)",label="")
+plot!([t₁],[s₁],marker=:circle,markersize=8,label="",legend=:topright)
+p2 = plot(t,k,linewidth=2,xlabel="t",ylabel="k(t)",label="")
+plot(p1,p2,layout=(2,1),size=(600,600),legend=:topright)
+```
+
+We can now simulate the response to some nonzero initial state using this time-varying proportional state feedback control.
+
+``` {julia}
+#| fig-cap: The simulated response of the system to a nonzero initial state using the time-varying LQR
+#| label: fig-response-scalar-time-varying-LQR
+x₀ = 1.0
+
+using Interpolations
+Kintp = LinearInterpolation(t,k)
+
+fclosed(x,k,t) = (a - b*k(t))*x
+prob = ODEProblem(fclosed,x₀,[0,t₁],t->Kintp(t))
+sol = solve(prob)
+
+plot(sol.t,sol.u,linewidth=2,xlabel="t",ylabel="x(t)",label="")
+```
+:::
+
+The story is now completely identical to the discrete-time case – the solution to the Riccati equation evolves in time, but it turns out that for a stabilizable system given by the matrices $(\mathbf A,\mathbf B)$, it converges to some bounded limit. For a long enough time horizon it turns out that for major part of the time horizon $\bm S(t)$ rests around the limit value. Consequently, the state feedback gain $\bm K(t)$ also mostly remains constant and only changes towards the very end of the time horizon (towards the final time). The limit steady solution $\lim_{t\rightarrow -\infty} \bm S(t)$ can be found either by running and ODE solver long enough, or it can be determined by solving the *(continuous-time) algebraic Riccati equation* (CARE).

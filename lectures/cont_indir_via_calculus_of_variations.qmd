@@ -1,15 +1,133 @@
 ---
-title: "Indirect approach to optimal control"
+title: "Indirect approach to optimal control of a nonlinear system on a finite time horizon"
 bibliography: 
     - ref_optimal_control.bib
     - ref_calculus_variations.bib
+csl: ieee-control-systems.csl
 format:
     html:
         html-math-method: katex
         code-fold: true
-execute:
-    enabled: false
-    warning: false
+crossref:
+  fig-prefix: Fig. 
+  eq-prefix: Eq.
 engine: julia
 ---
 
+Now we finally seem to be ready for solving our optimal control problems stated at the beginning of the lecture/chapter. Equipped with the solution to the fixed-ends basic problem of calculus of variation, we start with the finite-horizon fixed-final-state version of the optimal control problem. We will extend the result for a free final state in due course. 
+
+## Continuous-time optimal control problem
+
+The problem to be solved is
+
+$$
+\begin{aligned}
+ \operatorname*{minimize}_{\bm x(\cdot),\bm u(\cdot)} &\quad \left[\int_{t_\mathrm{i}}^{t_\mathrm{f}}L(\bm x(t),\bm u(t),t)\text{d}t\right]\\
+\text{subject to} &\quad \dot{\bm x}(t)= \mathbf f(\bm x(t),\bm u(t),t),\\ 
+&\quad \bm x(t_\mathrm{i}) = \mathbf x_\mathrm{i},\\
+&\quad \bm x(t_\mathrm{f}) = \mathbf x_\mathrm{f}.
+\end{aligned}
+$$
+
+There is, of course, no term in the cost function penalizing the state at the final time since it is requested that the system is brought to some prespecified state.
+
+## First-order necessary conditions of optimality
+
+The augmented cost function and the augmented Lagrangian are
+$$
+ J^\mathrm{aug}(t,\bm x(\cdot),\dot{\bm x}(\cdot),\bm u(\cdot),\boldsymbol \lambda(\cdot)) = \int_{t_\mathrm{i}}^{t_\mathrm{f}}\left[\underbrace{ L(\bm x,\bm u,t)+\boldsymbol \lambda^\top\left( \dot {\bm x}-\mathbf f(\bm x,\bm u,\mathbf t)\right)}_{L^\text{aug}}\right ]\text{d}t.
+$$ {#eq-augmented-cost-function}
+
+Note also that compared to the original unconstrained calculus of variations setting, here we made a notational shift from $x$ to $t$ as the independent variable, and from $y$ to the triplet $(\bm x,\bm u,\bm \lambda)$ as the triplet of dependent variables (possibly vector ones). Finally, note that the only derivative appearing in the augmented Lagrangian is $\dot{\bm x}$.
+
+### Boundary value problem (BVP) as the necessary conditions of optimality
+
+Applying the Euler-Lagrange equation to this augmented Lagrangian, we obtain three equations (or three systems of equations), one for each dependent variable:
+
+$$
+\begin{aligned}
+L_{\bm{x}}^\text{aug} &= \frac{\text{d}}{\text{d}t} L^\text{aug}_{\dot{\bm{x}}},\\ 
+L_{\bm{u}}^\text{aug} &= 0,\\
+L_{\bm \lambda}^\text{aug} &= 0.
+\end{aligned}
+$$ {#eq-euler-lagrange-augmented}
+
+These can be expanded in terms of the unconstrained Lagrangian. First, we assume scalar functions for notational simplicity: 
+$$
+\begin{aligned}
+\frac{\partial L}{\partial x} - \lambda \frac{\partial f}{\partial x}&= \dot{\lambda},\\ 
+\frac{\partial L}{\partial u} - \lambda \frac{\partial f}{\partial u} &= 0,\\
+\dot {x} - f(x,u,t) &= 0.
+\end{aligned}
+$$
+
+In the vector case (when $\bm x$, hence $\mathbf f()$, and/or $\bm u$ are vectors): 
+$$
+\begin{aligned}
+\nabla_\mathbf{x}L - \sum_{i=1}^n\lambda_i\nabla_\mathbf{x} \mathbf{f}_i(\bm x, \bm u) &= \dot{\boldsymbol\lambda},\\ 
+\nabla_\mathbf{u}L - \sum_{i=1}^n\lambda_i\nabla_\mathbf{u} \mathbf{f}_i(\bm x, \bm u) &= \mathbf 0,\\
+\dot {\mathbf{x}} - \mathbf{f}(\bm x,\bm u,t) &= \mathbf 0.
+\end{aligned}
+$$
+
+We can also write the same result in the compact vector form. Recall that we agreed in this course to regard gradients as column vectors and that $\nabla \mathbf f$ for a vector function $\mathbf{f}$ is a matrix whose columns are gradients $\nabla_\mathbf{x} f_i$ of the individual elements of the vector function. We can then write the first order conditions compactly as 
+$$
+\begin{aligned}
+\nabla_\mathbf{x}L - \nabla_\mathbf{x} \mathbf{f} \; \boldsymbol \lambda &= \dot{\boldsymbol\lambda},\\ 
+\nabla_\mathbf{u}L - \nabla_\mathbf{u} \mathbf{f} \; \boldsymbol \lambda &= \mathbf 0,\\
+\dot {\mathbf{x}} - \mathbf{f}(\bm x,\bm u,t) &= \mathbf 0.
+\end{aligned}
+$$
+
+After reordering the equations and shuffling the terms within the equations, we get
+$$\boxed{
+\begin{aligned}
+\dot {\mathbf{x}}(t) &= \mathbf{f}(\bm x(t),\bm u(t),t),\\
+\dot{\boldsymbol\lambda}(t) &= \nabla_\mathbf{x}L(\bm x(t),\bm u(t),t) - \nabla_\mathbf{x} \mathbf{f}(\bm x(t),\bm u(t),t) \; \boldsymbol \lambda(t),\\ 
+\mathbf 0 &= \nabla_\mathbf{u}L(\bm x(t),\bm u(t),t) - \nabla_\mathbf{u} \mathbf{f}(\bm x(t),\bm u(t),t) \; \boldsymbol \lambda(t).
+\end{aligned}}
+$${#eq-first-order-conditions-optimal-control-nonlinear-vector}
+
+These three (systems of) equations give the necessary conditions of optimality that we were looking for. We can immediately recognize the first one – the original state equation describing how the state vector $\bm{x}$ evolves in time. The other equations are new, though. The second one is called *costate equation* because the variable $\bm\lambda$, originally introduced as a Lagrange multiplier, now evolves also according to a first-order differential equation. The last equation is called *equation of stationarity*. Unlike the previous two, it is not a differential equation, it is just a nonlinear equation. With the exception of some singular cases that we are going to mentions soon, it can be be solved for the control vector $\bm u$ as a function of the state $\bm x$ and the costate $\bm \lambda$, in which case $\bm u$ can be eliminated from the two differential equations and we end up with differential equations just in $\bm{x}$ and $\bm\lambda$. 
+
+### Boundary conditions
+
+Recall that for differential equations we always need a sufficient number of boundary conditions to determine the solution uniquely. In particular, for a state vector of dimension $n$, the costate is also of dimension $n$, hence we need in total $2n$ boundary conditions. In our current setup these are given by the $n$ specified values of the state vector at the beginning and $n$ values at the end:
+$$\boxed{ 
+\begin{aligned}
+&\quad \bm x(t_\mathrm{i}) = \mathbf x_\mathrm{i},\\
+&\quad \bm x(t_\mathrm{f}) = \mathbf x_\mathrm{f}.
+\end{aligned}}
+$$ {#eq-boundary-conditions}
+
+Only after these equations are added to the above DAE systems, we have a full set of necessary conditions of optimality.
+
+This class of problems is called *two-point boundary value problem* (BVP) and generally it can only be solved numerically (dedicated solvers exist, see the section on software).
+
+### First-order necessary conditions of optimality using the Hamiltonian function
+
+It is common to introduce an auxilliary function called *Hamiltonian* and defined as
+$$
+H(\bm x,\bm u,\boldsymbol \lambda,t) = \boldsymbol \lambda^\top \mathbf f(\bm x,\bm u,t) - L(\bm x,\bm u,t).
+$$
+
+The augmented Lagrangian could be then written as 
+$$
+L^\mathrm{aug}(\bm x,\bm u,\boldsymbol \lambda,t) = \boldsymbol \lambda^\top \dot {\bm x}-H(\bm x,\bm u,\boldsymbol \lambda,t).
+$$ 
+
+The necessary conditions of optimality in @eq-euler-lagrange-augmented can be now rewritten in a more compact form:
+$$\boxed{
+\begin{aligned}
+\dot {\mathbf{x}} &= \nabla_{\bm \lambda} H(\bm x,\bm u,t),\\
+\dot{\boldsymbol\lambda} &= - \nabla_{\bm x} H(\bm x,\bm u,t),\\ 
+\mathbf 0 &= \nabla_\mathbf{u}H(\bm x,\bm u,t).
+\end{aligned}}
+$${#eq-first-order-conditions-optimal-control-nonlinear-vector-Hamiltonian}
+
+Of course, we must not forget to add the boundary conditions @eq-boundary-conditions to have a full set of necessary conditions of optimality.
+
+::: {.callout-warning}
+## Two different conventions for defining the Hamiltonian in optimal control
+Our choice of the Hamiltonian function was determined by our somewhat arbitrary choice of formulating the constraint function (that is, the function that should be equal to zero) as $\dot {\bm x}-\mathbf f(\bm x,\bm u,\mathbf t)$ when defining the augmented Lagrangian $L^\mathrm{aug}(\bm x,\bm u,\boldsymbol \lambda,t) = L(\bm x,\bm u,t)+\boldsymbol \lambda^\top\left( \dot {\bm x}-\mathbf f(\bm x,\bm u,\mathbf t)\right)$. If only we (equally arbitrarily) had chosen to define the constraint function as $\mathbf f(\bm x,\bm u,\mathbf t)-\dot {\bm x}$, we would have ended up with a different augmented Lagrangian, for which the more appropriate auxilliary function would be defined as $H(\bm x,\bm u,\boldsymbol \lambda,t) = L(\bm x,\bm u,t)+ \boldsymbol \lambda^\top \mathbf f(\bm x,\bm u,t)$. More on the implications of this in the [dedicated section](cont_indir_notation.qmd). 
+:::

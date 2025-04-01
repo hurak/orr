@@ -4,6 +4,7 @@ bibliography:
     - ref_optimal_control.bib
     - ref_calculus_variations.bib
     - ref_calculus_variations_optimal_control.bib
+csl: ieee-control-systems.csl
 format:
     html:
         html-math-method: katex
@@ -108,6 +109,7 @@ There are essentially the same three approaches to continuous-time optimal contr
 ```{dot}
 //| label: fig-continuous-direct-indirect-dp
 //| fig-cap: "Three approaches to continuous-time optimal control"
+//| fig-height: 200px
 digraph G {
     bgcolor = "transparent";
     node [shape = box];
@@ -121,7 +123,11 @@ digraph G {
 }
 ```
 
-In this chapter we start with the indirect approach. But first we need to introduce the framework of calculus of variations, which is what we do in the next section.
+Unlike in the chapters on optimal control of discrete-time systems, here we start with the indirect approach. We would like to mimic the methodology we introduced for discrete-time system, but note that here we are not optimizing over $n$-tuples of real numbers (aka vectors or finite or even infinite sequences) but we are optimizing over functions (trajectories). Instances of such optimization "variables" are shown in @fig-xt-and-ut.
+
+![Two instances of state and input trajectories $x(\cdot)$ and $u(\cdot)$, respectively](./figures/xt_and_ut.png){#fig-xt-and-ut width=50%}
+
+In order to be able to analyze such optimization problem, we need to introduce the framework of *calculus of variations*, which is what we do next. 
 
 
 

@@ -1,0 +1,40 @@
+---
+title: "Software for continuous-time LQR and CARE"
+bibliography: 
+    - "ref_optimal_control.bib"
+csl: ieee-control-systems.csl
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+        code-summary: "Show the code"
+crossref:
+  fig-prefix: Fig. 
+  eq-prefix: Eq.
+engine: julia
+---
+
+## Julia
+
+- [ControlSystems.jl](https://github.com/JuliaControl/ControlSystems.jl)
+
+  - [lqr](https://juliacontrol.github.io/ControlSystems.jl/stable/lib/synthesis/#ControlSystemsBase.lqr-Tuple{Union{Continuous,%20Type{Continuous}},%20Any,%20Any,%20Any,%20Any,%20Vararg{Any}})
+  - [are](https://juliacontrol.github.io/ControlSystems.jl/stable/lib/analysis/#ControlSystemsBase.are-Tuple{Union{Continuous,%20Type{Continuous}},%20AbstractMatrix,%20Any,%20Any,%20Any}) – actually uses MatrixEquations.jl.
+
+- [MatrixEquations.jl](https://github.com/andreasvarga/MatrixEquations.jl)
+
+  - [arec](https://andreasvarga.github.io/MatrixEquations.jl/dev/riccati.html#MatrixEquations.arec)
+
+## MATLAB
+
+- [Control System Toolbox](https://www.mathworks.com/products/control.html) 
+
+  - [icare](https://www.mathworks.com/help/control/ref/icare.html) ([care](https://www.mathworks.com/help/control/ref/care.html) deprecated)
+  - [lqr](https://www.mathworks.com/help/control/ref/lti.lqr.html)
+
+## Python 
+
+- [Python Control](https://github.com/python-control/python-control)
+
+  - [care](https://python-control.readthedocs.io/en/stable/generated/control.care.html)
+  - [lqr](https://python-control.readthedocs.io/en/stable/generated/control.lqr.html)
