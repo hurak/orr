@@ -38,7 +38,7 @@ A general nonlinear continuous-time optimal control problem (OCP) is then formul
 $$
 \begin{aligned}
  \operatorname*{minimize}_{\bm u(\cdot), \bm x(\cdot)}&\quad \left(\phi(\bm x(t_\mathrm{f}),t_\mathrm{f}) + \int_{t_\mathrm{i}}^{t_\mathrm{f}} L(\bm x(t),\bm u(t),t) \; \mathrm{d}t \right)\\
- \text{subject to}  &\quad \dot {\bm{x}}(t) = \mathbf f(\bm x(t),\bm u(t)),\quad t \in [t_\mathrm{i},t_\mathrm{f}],\\
+ \text{subject to}  &\quad \dot {\bm{x}}(t) = \mathbf f(\bm x(t),\bm u(t), t),\quad t \in [t_\mathrm{i},t_\mathrm{f}],\\
                     &\quad \bm u(t) \in \mathcal U(t),\\ 
                     &\quad \bm x(t) \in \mathcal X(t),
 \end{aligned}
@@ -55,7 +55,7 @@ Oftentimes it is convenient to handle the constraints of the initial and final s
 $$
 \begin{aligned}
  \operatorname*{minimize}_{\bm u(\cdot), \bm x(\cdot)}&\quad \left(\phi(\bm x(t_\mathrm{f}),t_\mathrm{f}) + \int_{t_\mathrm{i}}^{t_\mathrm{f}} L(\bm x(t),\bm u(t),t) \; \mathrm{d}t \right)\\
- \text{subject to}  &\quad \dot {\bm{x}}(t) = \mathbf f(\bm x(t),\bm u(t)),\quad t \in [t_\mathrm{i},t_\mathrm{f}],\\
+ \text{subject to}  &\quad \dot {\bm{x}}(t) = \mathbf f(\bm x(t),\bm u(t), t),\quad t \in [t_\mathrm{i},t_\mathrm{f}],\\
                     &\quad \bm u(t) \in \mathcal U(t),\\ 
                     &\quad \bm x(t) \in \mathcal X(t),\\
                     &\quad \bm x(t_\mathrm{i}) \in \mathcal X_\mathrm{init},\\

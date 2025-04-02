@@ -1,5 +1,5 @@
 ---
-title: "Indirect approach to LQR on a finite time horizon"
+title: "Indirect approach to LQR on a finite time horizon using differential Riccati equation"
 bibliography: 
     - ref_optimal_control.bib
 csl: ieee-control-systems.csl
@@ -21,7 +21,7 @@ $$
 The three necessary conditions of optimality are 
 $$\boxed{
 \begin{aligned}
-\dot {\bm x} &= \mathbf A\bm x - \mathbf B\bm u,\\
+\dot {\bm x} &= \mathbf A\bm x + \mathbf B\bm u,\\
 \dot{\boldsymbol\lambda} &= \mathbf Q\bm x - \mathbf A^\top\boldsymbol\lambda,\\ 
 \bm 0 &= \mathbf R\bm u - \mathbf B^\top\boldsymbol\lambda.
 \end{aligned}}
