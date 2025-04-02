@@ -1,5 +1,5 @@
 ---
-title: "Indirect approach to LQR on a finite time horizon"
+title: "Indirect approach to LQR on a finite time horizon using differential Riccati equation"
 bibliography: 
     - ref_optimal_control.bib
 csl: ieee-control-systems.csl
@@ -21,7 +21,7 @@ $$
 The three necessary conditions of optimality are 
 $$\boxed{
 \begin{aligned}
-\dot {\bm x} &= \mathbf A\bm x - \mathbf B\bm u,\\
+\dot {\bm x} &= \mathbf A\bm x + \mathbf B\bm u,\\
 \dot{\boldsymbol\lambda} &= \mathbf Q\bm x - \mathbf A^\top\boldsymbol\lambda,\\ 
 \bm 0 &= \mathbf R\bm u - \mathbf B^\top\boldsymbol\lambda.
 \end{aligned}}
@@ -84,6 +84,63 @@ $$
 $$
 
 Now, the initial value problem in @eq-IVP-LQ can be solved for both the state and the costate. Finally, the control signal can be computed using @eq-u. 
+
+::: {#exm-LQR-BVP-fixed-final-state}
+## LQR on a finite and fixed time horizon with a fixed final state approached as a two-poing BVP
+``` {julia}
+#| fig-cap: The solution to the LQR problem with a fixed final state approached as a two-point BVP. Plotted are the state, costate and control variables.
+#| label: fig-lqr-bvp-fixed-final-state
+using LinearAlgebra
+
+n = 2                  # order of the system
+A = rand(n,n)
+B = rand(n,1)
+
+Q = diagm(0=>rand(n))  # weighting matrices for the quadratic cost function
+R = rand(1,1)
+
+x0 = [1;2]             # initial states
+x1 = [0;3]             # final (desired) states
+
+t1 = 10                # final time
+
+# Building Hamiltonian system and solving for the missing boundary conditions using a state-transition matrix
+
+H = [A B/R*B'; Q -A']  # the combined matrix for the Hamiltonian cannonical equations
+P = exp(H*t1)          # "state"-transition matrix
+
+P11 = P[1:n,1:n]
+P12 = P[1:n,n+1:end]
+P21 = P[n+1:end,1:n]
+P22 = P[n+1:end,n+1:end]
+
+lambda0 = P12\(x1-P11*x0);  # solving for the initial value of costate
+
+# Solving for the states and costates during the time interval
+
+using ControlSystems
+
+G = ss(H,zeros(2n,1),Matrix{Float64}(I, 2n, 2n),0) # auxiliary system comprising the states and costates
+
+w0 = [x0; lambda0]
+t = 0:0.1:t1
+v(w,t) = [0]
+y, t, w, uout = lsim(G,v,t,x0=w0)
+x = w[1:n,:]            # state
+λ = w[n+1:end,:]        # costate
+u = (R\B'*λ)'           # optimal control from the stationarity equation
+
+# Plotting the responses
+
+using Plots
+
+p1 = plot(t,x',ylabel="x",label="",lw=2)
+p2 = plot(t,λ',ylabel="λ",label="",lw=2)
+p3 = plot(t,u,ylabel="u",label="",lw=2)
+
+plot(p1,p2,p3,layout=(3,1))
+```
+:::
 
 The procedure works, but we can get even more insight into the problem after setting $\mathbf Q=\mathbf 0$, which will essentially decouple the second equation from the first. Then we can follow the same procedure we demonstrated in the discrete-time setting. The optimal control problem is often referred to as *minimum-energy problem* as its goal is to control the system from a given initial state to some given final state while minimizing the supplied "energy". 
 
@@ -261,6 +318,63 @@ $$
 $$
 
 Having computed the initial value of the costate, we can solve the state and costate (differential) equations for the state and costate variables throughout the time horizon. The optimal control then follows from the stationarity equation. Done.
+
+::: {#exm-LQR-BVP-free-final-state}
+## LQR on a finite and fixed time horizon with a free final state approached as a two-point BVP
+``` {julia}
+#| fig-cap: The solution to the LQR problem with a free final state approached as a two-point BVP. Plotted are the state, costate and control variables.
+#| label: fig-lqr-bvp-free-final-state
+using LinearAlgebra
+
+n = 2                  # order of the system
+A = rand(n,n)
+B = rand(n,1)
+
+Q = diagm(0=>10*ones(n))    # weighting matrices for the quadratic cost function
+R = 1
+S = diagm(0=>10*ones(n))
+
+x0 = [1;2]             # initial states
+t1 = 10                # final time
+
+# Building Hamiltonian system and solving for the missing boundary conditions using a state-transition matrix
+
+H = [A B/R*B'; Q -A'] # the combined matrix for the Hamiltonian cannonical equations
+P = exp(H*t1)        # "state"-transition matrix
+
+P11 = P[1:n,1:n]
+P12 = P[1:n,n+1:end]
+P21 = P[n+1:end,1:n]
+P22 = P[n+1:end,n+1:end]
+
+λ0 = -(S*P12+P22)\(S*P11+P21)*x0  # solving for the initial value of costate
+
+# Solving for the states and costates during the time interval
+
+using ControlSystems
+
+G = ss(H,zeros(2n,1),Matrix{Float64}(I, 2n, 2n),0) # auxiliary system comprising the states and costates
+
+w0 = [x0; λ0]
+t = 0:0.1:t1
+v(w,t) = [0]
+y, t, w, uout = lsim(G,v,t,x0=w0)
+x = w[1:n,:]           # state
+λ = w[n+1:end,:]  # costate
+u = (R\B'*λ)'  # optimal control from the stationarity equation
+
+# Plotting the responses
+
+using Plots
+
+p1 = plot(t,x',ylabel="x",label="",lw=2)
+p2 = plot(t,λ',ylabel="λ",label="",lw=2)
+p3 = plot(t,u,ylabel="u",label="",lw=2)
+
+plot(p1,p2,p3,layout=(3,1))
+
+```
+:::
 
 Nonetheless, computing the solution numerically, some important opportunity is escaping our attention. In order to discover it, we need to dig a bit deeper. First, we recall that the boundary condition at the end of the interval gives us a linear relation between the state and the costate. We now assume that this linear relation also holds throughout the time interval. This is the *sweep method* that we have already encountered in the discrete-time setting:
 $$\boxed{
