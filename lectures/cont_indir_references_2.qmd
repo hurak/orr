@@ -1,6 +1,18 @@
 ---
 title: "References"
-format:
-    html:
-        html-math-method: katex
+bibliography: 
+    - ref_optimal_control.bib
+    - ref_calculus_variations.bib
+    - ref_calculus_variations_optimal_control.bib
+csl: ieee-control-systems.csl
 ---
+
+The content of this lecture is standard and is discussed by a number of books and online resources. When preparing our own material, we took much inspiration from @liberzonCalculusVariationsOptimal2011, in particular the chapters 3 (application of calculus of variations to general problem of optimal control) and chapter 4 (Pontryagin's principle), and @kirkOptimalControlTheory2004.
+
+We did not discuss the proof of Pontryagin's principle and we do not even command the students to go through the proof in the book. Admittedly, it is rather challenging. But understanding the result, its roots in calculus of variations, and how it removes the deficiencies of the calculus of variations will suffice for our purposes.
+
+The transition from the calculus of variations to the optimal control, especially when it comes to the definition of Hamiltonian, is somewhat tricky. Unfortunately, it is not discussed satisfactorily in the literature. Even @liberzonCalculusVariationsOptimal2011 leaves it as an (unsolved) exercise (3.5 and 3.6) to the student. Other major textbooks avoid the topic altogether. The only treatment can be found in the paper @sussmann300YearsOptimal1997, in particular in the section "The first fork in the road: Hamilton" on page 39. The issue is so delicate that they even propose to distinguish the two types of Hamiltonian by referring to one as control Hamiltonian. 
+
+The time-optimal control for linear systems, in particular bang-bang control for a double integrator is described in section 4.4.1 and 4.4.2 in @liberzonCalculusVariationsOptimal2011. But the material is quite standard and can be found in many books and lecture notes. What is often not emphasized in textbooks, however, is the fact that without any modifications, the bang bang control is rather troublesome from an implementation viewpoint – it leads to *chattering*. A dedicated research thread has evolved, driven by the needs of hard disk drive industry, which is called *(a)proximate time-optimal control* (PTOS). Many dozens of papers can be found with this keyword in the title.
+
+Among numerous online resources, the lecture notes @evansIntroductionMathematicalOptimal can be recommended.
