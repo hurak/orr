@@ -19,7 +19,7 @@ The techniques of calculus of variations introduced in the previous lecture/chap
 - the Hamiltonian is differentiable with respect to control, and 
 - the optimal control is inside the set of allowable controls (vanishing derivative of Hamiltonian on the boundary is not a necessary condition for the Hamiltonian to achieve a maximum value there). 
 
-It also appears that the classes of perturbations characterized by $1$-norm and even $0$-norm are not rich enough for practical applications. Just consider switched (on-off) controls which differ in the times of switching. 
+It also appears that the classes of perturbations modelled by $\mathcal C^1_{[a,b]}$ spaces of smooth functions defined on an interval and endowed with 1-norm or 0-norm are not rich enough for practical applications. Just consider switched (on-off) control trajectories that differ in the times of switching. 
 
 For all these reasons, some more advanced mathematical machinery has been developed. Unfortunately, it calls for a different and a bit more advanced mathematics than what we used in the calculus of variations. Therefore we will only state the most important result – the powerful *Pontryagin's principle of maximum* (PMP). 
 
@@ -60,7 +60,11 @@ $$
 \nabla_{\bm u} H(\bm x ,\bm u ,\bm \lambda) = \nabla_{\bm u}\mathbf f \, \bm \lambda - \nabla_{\bm u} L = 0.
 $$
 
-If we now denote the set of all allowable controls as $\mathcal{U}$, the result on maximization of Hamiltonian can then be written as
+Combined with the second-order necessary condition of minimum 
+$$
+  \nabla_{\bm u \bm u}L(\bm x ,\bm u) \succeq 0,
+$$
+which reads that the Hessian of the integrand $L$ with respect to $\bm u$ is positive semi-definite, we conclude that the Hamiltonian is not only stationary *on the extremal*, it is actually *maximized on the extremal*. If we now denote the set of all allowable controls as $\mathcal{U}$, the result on maximization of Hamiltonian can then be written as
 $$\boxed{
  H(\bm x^\star ,\bm u^\star ,\boldsymbol\lambda^\star ) \geq  H(\bm x^\star ,{\color{blue}\bm u} , \boldsymbol\lambda^\star ),\quad \forall {\color{blue}\bm u} \in\mathcal{U},}
 $${#eq-pontryagins-principle-of-maximum-inequality}
@@ -84,12 +88,12 @@ To summarize, the celebrated Pontryagin's principle of maximum just replaces the
 
 ::: {#thm-pontryagins-principle-of-maximum}
 ## Pontryagin's principle of maximum 
- For a given optimal control problem, let $\bm u^\star \in \mathcal{U}$ be *an* optimal control, then there is a variable called costate which together with the state satisfies the Hamilton canonical equations
+ For a given optimal control problem, let $\bm u^\star \in \mathcal{U}$ be *an* optimal control, then there is a variable called costate which together with the state variable satisfies the Hamilton canonical equations
 $$
 \begin{aligned}
- \dot{\bm x} &= \nabla_{\bm \lambda}H,\\
- \dot{\bm \lambda} &= -\nabla_{\bm{x}}H,\\
- H(\bm x^\star ,\bm u^\star ,\boldsymbol\lambda^\star, t) &\geq  H(\bm x^\star ,{\color{blue}\bm u} , \boldsymbol\lambda^\star, t), \; {\color{blue}\bm u} \in \mathcal{U}
+ \dot{\bm x} &= \left.\nabla_{\bm \lambda}H\right|_{\bm x = \bm x^\star, \bm u = \bm u^\star, \bm \lambda = \bm \lambda^\star},\\
+ \dot{\bm \lambda} &= \left.-\nabla_{\bm{x}}H\right|_{\bm x = \bm x^\star, \bm u = \bm u^\star, \bm \lambda = \bm \lambda^\star},\\
+ H(\bm x^\star ,\bm u^\star ,\boldsymbol\lambda^\star, t) &\geq  H(\bm x^\star ,{\color{blue}\bm u} , \boldsymbol\lambda^\star, t), \; {\color{blue}\bm u} \in \mathcal{U},
 \end{aligned}
 $$
 where 
@@ -98,6 +102,19 @@ $$
 $$
 
 Moreover, the corresponding boundary conditions must hold.
+:::
+
+In other words, Pontryagin's principle just replaces the equation of stationarity $\nabla_{\bm u} H = \bm 0$ in the necessary conditions of optimality by @eq-pontryagins-principle-of-maximum-inequality or @eq-pontryagins-principle-of-maximum-argmax.
+
+Although we opt to skip the proof of the theorem in our course (it is really rather advanced), we must certainly at least mention that it does not relly on the smoothness of the function as the calculus of variations did. Less regular function are allowed. In particular, the set of admissible control trajectories $\bm u(\cdot)$ also contains piecewise continuous functions (technically speaking, the set contains measurable functions). This can also be used as at least a partial justification of our hand-wavy approach to introducing the calculus of variations.
+
+::: {.callout-important}
+## Pontryagin's principle of minimum
+If we used the alternative definition of the Hamiltonian
+$$
+ H(\bm x ,\bm u ,\bm \lambda, t) = L(\bm x,\bm u,t) + \bm \lambda^\top \, \mathbf f(\bm x,\bm u,t),
+$$
+then the Hessian of the Hamiltonian with respect to $\bm u$ evaluated on the extremal would be positive semi-definite, and the necessary condition of optimality would be that the Hamiltonian is minimized on the extremal. We would then call the result *Pontryagin's principle of minimum*. While our guess is that the this "minimum version" of Pontryagin's principle prevails in the literature (perhaps to emphasize its striking similarity with the continuous-time version of dynamica programming – HJB equation), the originally published result uses maximum of Hamiltonian.
 :::
 
 We could certainly rederive our previous results on LQ-optimal control with fixed and free final states. Nonetheless, this would be an overkill unless we want to explore the bounded controls case. 
