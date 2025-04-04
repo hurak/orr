@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -949,10 +969,29 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>The content of this lecture is standard and is discussed by a number of books and online resources. When preparing our own material, we took much inspiration from <span class="citation" data-cites="liberzonCalculusVariationsOptimal2011"><a href="#ref-liberzonCalculusVariationsOptimal2011" role="doc-biblioref">[1]</a></span>, in particular the chapters 3 (application of calculus of variations to general problem of optimal control) and chapter 4 (Pontryagin’s principle), and <span class="citation" data-cites="kirkOptimalControlTheory2004"><a href="#ref-kirkOptimalControlTheory2004" role="doc-biblioref">[2]</a></span>.</p>
+<p>We did not discuss the proof of Pontryagin’s principle and we do not even command the students to go through the proof in the book. Admittedly, it is rather challenging. But understanding the result, its roots in calculus of variations, and how it removes the deficiencies of the calculus of variations will suffice for our purposes.</p>
+<p>The transition from the calculus of variations to the optimal control, especially when it comes to the definition of Hamiltonian, is somewhat tricky. Unfortunately, it is not discussed satisfactorily in the literature. Even <span class="citation" data-cites="liberzonCalculusVariationsOptimal2011"><a href="#ref-liberzonCalculusVariationsOptimal2011" role="doc-biblioref">[1]</a></span> leaves it as an (unsolved) exercise (3.5 and 3.6) to the student. Other major textbooks avoid the topic altogether. The only treatment can be found in the paper <span class="citation" data-cites="sussmann300YearsOptimal1997"><a href="#ref-sussmann300YearsOptimal1997" role="doc-biblioref">[3]</a></span>, in particular in the section “The first fork in the road: Hamilton” on page 39. The issue is so delicate that they even propose to distinguish the two types of Hamiltonian by referring to one as control Hamiltonian.</p>
+<p>The time-optimal control for linear systems, in particular bang-bang control for a double integrator is described in section 4.4.1 and 4.4.2 in <span class="citation" data-cites="liberzonCalculusVariationsOptimal2011"><a href="#ref-liberzonCalculusVariationsOptimal2011" role="doc-biblioref">[1]</a></span>. But the material is quite standard and can be found in many books and lecture notes. What is often not emphasized in textbooks, however, is the fact that without any modifications, the bang bang control is rather troublesome from an implementation viewpoint – it leads to <em>chattering</em>. A dedicated research thread has evolved, driven by the needs of hard disk drive industry, which is called <em>(a)proximate time-optimal control</em> (PTOS). Many dozens of papers can be found with this keyword in the title.</p>
+<p>Among numerous online resources, the lecture notes <span class="citation" data-cites="evansIntroductionMathematicalOptimal"><a href="#ref-evansIntroductionMathematicalOptimal" role="doc-biblioref">[4]</a></span> can be recommended.</p>
 
 
 
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list">
+<div id="ref-liberzonCalculusVariationsOptimal2011" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">D. Liberzon, <em>Calculus of <span>Variations</span> and <span>Optimal Control Theory</span>: <span>A Concise Introduction</span></em>. <span>Princeton University Press</span>, 2011. Available: <a href="http://liberzon.csl.illinois.edu/teaching/cvoc/cvoc.html">http://liberzon.csl.illinois.edu/teaching/cvoc/cvoc.html</a></div>
+</div>
+<div id="ref-kirkOptimalControlTheory2004" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">D. E. Kirk, <em>Optimal <span>Control Theory</span>: <span>An Introduction</span></em>, Reprint of the 1970 edition. Dover Publications, 2004.</div>
+</div>
+<div id="ref-sussmann300YearsOptimal1997" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">H. J. Sussmann and J. C. Willems, <span>“300 years of optimal control: From the brachystochrone to the maximum principle,”</span> <em>IEEE Control Systems</em>, vol. 17, no. 3, pp. 32–44, Jun. 1997, doi: <a href="https://doi.org/10.1109/37.588098">10.1109/37.588098</a>.</div>
+</div>
+<div id="ref-evansIntroductionMathematicalOptimal" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">L. C. Evans, <span>“An <span>Introduction</span> to <span>Mathematical Optimal Control Theory</span>,”</span> Department of Mathematics, University of California, Berkeley. Available: <a href="https://math.berkeley.edu/~evans/control.course.pdf">https://math.berkeley.edu/~evans/control.course.pdf</a></div>
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
