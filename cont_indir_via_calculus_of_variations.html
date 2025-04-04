@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.6.43">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -37,7 +37,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-50b4abff8b0f30bb501ab99a3cda6e79.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -628,13 +628,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_Pontryagin.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pontryagin’s maximum principle</span></a>
+ <span class="menu-text">Pontryagin’s maximum (or minimum) principle</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_constrained.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Constrained optimal control</span></a>
+  <a href="./cont_indir_free_final_time.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Optimal control with a free final time</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -1021,7 +1021,7 @@ window.Quarto = {
 <section id="first-order-necessary-conditions-of-optimality" class="level2">
 <h2 class="anchored" data-anchor-id="first-order-necessary-conditions-of-optimality">First-order necessary conditions of optimality</h2>
 <p>The augmented cost function and the augmented Lagrangian are <span id="eq-augmented-cost-function"><span class="math display">
-J^\mathrm{aug}(t,\bm x(\cdot),\dot{\bm x}(\cdot),\bm u(\cdot),\boldsymbol \lambda(\cdot)) = \int_{t_\mathrm{i}}^{t_\mathrm{f}}\left[\underbrace{ L(\bm x,\bm u,t)+\boldsymbol \lambda^\top\left( \dot {\bm x}-\mathbf f(\bm x,\bm u,\mathbf t)\right)}_{L^\text{aug}}\right ]\text{d}t.
+J^\mathrm{aug}(t,\bm x(\cdot),\dot{\bm x}(\cdot),\bm u(\cdot),\bm\lambda(\cdot)) = \int_{t_\mathrm{i}}^{t_\mathrm{f}}\left[\underbrace{ L(\bm x,\bm u,t)+\bm\lambda^\top\left( \dot {\bm x}-\mathbf f(\bm x,\bm u,\mathbf t)\right)}_{L^\text{aug}}\right ]\text{d}t.
 \tag{1}</span></span></p>
 <p>Note also that compared to the original unconstrained calculus of variations setting, here we made a notational shift from <span class="math inline">x</span> to <span class="math inline">t</span> as the independent variable, and from <span class="math inline">y</span> to the triplet <span class="math inline">(\bm x,\bm u,\bm \lambda)</span> as the triplet of dependent variables (possibly vector ones). Finally, note that the only derivative appearing in the augmented Lagrangian is <span class="math inline">\dot{\bm x}</span>.</p>
 <section id="boundary-value-problem-bvp-as-the-necessary-conditions-of-optimality" class="level3">
@@ -1041,28 +1041,30 @@ L_{\bm \lambda}^\text{aug} &amp;= 0.
 \dot {x} - f(x,u,t) &amp;= 0.
 \end{aligned}
 </span></p>
-<p>In the vector case (when <span class="math inline">\bm x</span>, hence <span class="math inline">\mathbf f()</span>, and/or <span class="math inline">\bm u</span> are vectors): <span class="math display">
+<p>In the vector case (wherein <span class="math inline">\bm x</span>, hence <span class="math inline">\mathbf f()</span>, and/or <span class="math inline">\bm u</span> are vectors): <span class="math display">
 \begin{aligned}
-\nabla_\mathbf{x}L - \sum_{i=1}^n\lambda_i\nabla_\mathbf{x} \mathbf{f}_i(\bm x, \bm u) &amp;= \dot{\boldsymbol\lambda},\\
-\nabla_\mathbf{u}L - \sum_{i=1}^n\lambda_i\nabla_\mathbf{u} \mathbf{f}_i(\bm x, \bm u) &amp;= \mathbf 0,\\
-\dot {\mathbf{x}} - \mathbf{f}(\bm x,\bm u,t) &amp;= \mathbf 0.
+\nabla_{\bm{x}} L - \sum_{i=1}^n \lambda_i \nabla_{\bm{x}} f_i(\bm x, \bm u) &amp;= \dot{\bm{\lambda}},\\
+\nabla_{\bm{u}} L - \sum_{i=1}^n \lambda_i \nabla_{\bm{u}} f_i(\bm x, \bm u) &amp;= \mathbf 0,\\
+\dot{\bm{x}} - \mathbf{f}(\bm x,\bm u,t) &amp;= \mathbf 0.
 \end{aligned}
 </span></p>
 <p>We can also write the same result in the compact vector form. Recall that we agreed in this course to regard gradients as column vectors and that <span class="math inline">\nabla \mathbf f</span> for a vector function <span class="math inline">\mathbf{f}</span> is a matrix whose columns are gradients <span class="math inline">\nabla_\mathbf{x} f_i</span> of the individual elements of the vector function. We can then write the first order conditions compactly as <span class="math display">
 \begin{aligned}
-\nabla_\mathbf{x}L - \nabla_\mathbf{x} \mathbf{f} \; \boldsymbol \lambda &amp;= \dot{\boldsymbol\lambda},\\
-\nabla_\mathbf{u}L - \nabla_\mathbf{u} \mathbf{f} \; \boldsymbol \lambda &amp;= \mathbf 0,\\
+\nabla_\mathbf{x}L - \nabla_\mathbf{x} \mathbf{f} \; \bm\lambda &amp;= \dot{\bm\lambda},\\
+\nabla_\mathbf{u}L - \nabla_\mathbf{u} \mathbf{f} \; \bm\lambda &amp;= \mathbf 0,\\
 \dot {\mathbf{x}} - \mathbf{f}(\bm x,\bm u,t) &amp;= \mathbf 0.
 \end{aligned}
 </span></p>
 <p>After reordering the equations and shuffling the terms within the equations, we get <span id="eq-first-order-conditions-optimal-control-nonlinear-vector"><span class="math display">\boxed{
 \begin{aligned}
 \dot {\mathbf{x}}(t) &amp;= \mathbf{f}(\bm x(t),\bm u(t),t),\\
-\dot{\boldsymbol\lambda}(t) &amp;= \nabla_\mathbf{x}L(\bm x(t),\bm u(t),t) - \nabla_\mathbf{x} \mathbf{f}(\bm x(t),\bm u(t),t) \; \boldsymbol \lambda(t),\\
-\mathbf 0 &amp;= \nabla_\mathbf{u}L(\bm x(t),\bm u(t),t) - \nabla_\mathbf{u} \mathbf{f}(\bm x(t),\bm u(t),t) \; \boldsymbol \lambda(t).
+\dot{\bm\lambda}(t) &amp;= \nabla_\mathbf{x}L(\bm x(t),\bm u(t),t) - \nabla_\mathbf{x} \mathbf{f}(\bm x(t),\bm u(t),t) \, \bm\lambda(t),\\
+\mathbf 0 &amp;= \nabla_\mathbf{u}L(\bm x(t),\bm u(t),t) - \nabla_\mathbf{u} \mathbf{f}(\bm x(t),\bm u(t),t) \, \bm\lambda(t).
 \end{aligned}}
 \tag{3}</span></span></p>
-<p>These three (systems of) equations give the necessary conditions of optimality that we were looking for. We can immediately recognize the first one – the original state equation describing how the state vector <span class="math inline">\bm{x}</span> evolves in time. The other equations are new, though. The second one is called <em>costate equation</em> because the variable <span class="math inline">\bm\lambda</span>, originally introduced as a Lagrange multiplier, now evolves also according to a first-order differential equation. The last equation is called <em>equation of stationarity</em>. Unlike the previous two, it is not a differential equation, it is just a nonlinear equation. With the exception of some singular cases that we are going to mentions soon, it can be be solved for the control vector <span class="math inline">\bm u</span> as a function of the state <span class="math inline">\bm x</span> and the costate <span class="math inline">\bm \lambda</span>, in which case <span class="math inline">\bm u</span> can be eliminated from the two differential equations and we end up with differential equations just in <span class="math inline">\bm{x}</span> and <span class="math inline">\bm\lambda</span>.</p>
+<p>These three (systems of) equations give the necessary conditions of optimality that we were looking for. We can immediately recognize the first one – the original state equation describing how the <em>state</em> vector variable <span class="math inline">\bm{x}</span> evolves in time.</p>
+<p>The other two equations are new, though. The second one is called <em>costate equation</em> because the variable <span class="math inline">\bm\lambda</span>, originally introduced as a Lagrange multiplier, now evolves also according to a first-order differential equation; we call it a <em>costate</em> variable.</p>
+<p>The last equation is called <em>equation of stationarity</em>. Unlike the previous two, it is not a differential equation, it is just a nonlinear equation. With the exception of some singular cases that we are going to mentions soon, it can be be solved for the control vector <span class="math inline">\bm u</span> as a function of the state <span class="math inline">\bm x</span> and the costate <span class="math inline">\bm \lambda</span>, in which case <span class="math inline">\bm u</span> can be eliminated from the two differential equations and we end up with differential equations just in <span class="math inline">\bm{x}</span> and <span class="math inline">\bm\lambda</span>.</p>
 </section>
 <section id="boundary-conditions" class="level3">
 <h3 class="anchored" data-anchor-id="boundary-conditions">Boundary conditions</h3>
@@ -1077,19 +1079,27 @@ L_{\bm \lambda}^\text{aug} &amp;= 0.
 </section>
 <section id="first-order-necessary-conditions-of-optimality-using-the-hamiltonian-function" class="level3">
 <h3 class="anchored" data-anchor-id="first-order-necessary-conditions-of-optimality-using-the-hamiltonian-function">First-order necessary conditions of optimality using the Hamiltonian function</h3>
-<p>It is common to introduce an auxilliary function called <em>Hamiltonian</em> and defined as <span class="math display">
-H(\bm x,\bm u,\boldsymbol \lambda,t) = \boldsymbol \lambda^\top \mathbf f(\bm x,\bm u,t) - L(\bm x,\bm u,t).
+<p>We now introduce an auxilliary function called <em>Hamiltonian</em>, which not only makes the conditions of optimality even more compact, but also – and even more importantly – it strengthens the link with the physics-motivated calculus of variations. Recall that the Hamiltonian function in the calculus of variations is defined as <span class="math inline">H(x,y,y') = py'-L</span>. In the optimal control setting, since we consider constraints in the form of the state equation, we need to use the augmented Lagrangian, which we defined as</p>
+<p><span class="math display">
+L^\mathrm{aug}(\bm x,\bm u,\bm \lambda,t) = L(\bm x,\bm u,t)+\bm \lambda^\top\left( \dot {\bm x}-\mathbf f(\bm x,\bm u,\mathbf t)\right).
 </span></p>
-<p>The augmented Lagrangian could be then written as <span class="math display">
-L^\mathrm{aug}(\bm x,\bm u,\boldsymbol \lambda,t) = \boldsymbol \lambda^\top \dot {\bm x}-H(\bm x,\bm u,\boldsymbol \lambda,t).
-</span></p>
-<p>The necessary conditions of optimality in <a href="#eq-euler-lagrange-augmented" class="quarto-xref">Eq.&nbsp;2</a> can be now rewritten in a more compact form: <span id="eq-first-order-conditions-optimal-control-nonlinear-vector-Hamiltonian"><span class="math display">\boxed{
+<p>We now define the optimal control related Hamiltonian in the same way – product of the auxillary variable and the state variable minus the (augmented) Lagrangian: <span class="math display">
 \begin{aligned}
-\dot {\mathbf{x}} &amp;= \nabla_{\bm \lambda} H(\bm x,\bm u,t),\\
-\dot{\boldsymbol\lambda} &amp;= - \nabla_{\bm x} H(\bm x,\bm u,t),\\
-\mathbf 0 &amp;= \nabla_\mathbf{u}H(\bm x,\bm u,t).
-\end{aligned}}
+H(\bm x,\bm u,\dot{\bm{x}},\bm\lambda,t) &amp;= \bm\lambda^\top \, \dot{\bm x} - L^\text{aug},\nonumber\\
+&amp;= \bm\lambda^\top \,\dot{\mathbf{x}}-L(\bm x,\bm u,t) - \bm\lambda^\top \, \dot{\bm x}+\bm\lambda^\top \, \mathbf f(\bm x,\bm u, t),\nonumber\\
+&amp;=\bm\lambda^\top \, \mathbf f(\bm x,\bm u, t)-L(\bm x,\bm u,t).
+\end{aligned}
+</span></p>
+<p>Realizing that through the state equation <span class="math inline">\dot{\bm x}=\mathbf f(\bm x,\bm u, t)</span> the derivative <span class="math inline">\dot{\bm x}</span> at a given state <span class="math inline">x</span> (and time <span class="math inline">t</span>) is uniquelly determined by <span class="math inline">u</span>, we can consider the control-related Hamiltonian as a function of <span class="math inline">t, \mathbf x, \mathbf u</span> and <span class="math inline">\bm\lambda</span> (and discard the <span class="math inline">\dot{\bm x}</span> argument): <span id="eq-control-hamiltonian"><span class="math display">\boxed{
+H(\bm x,\bm u,\bm\lambda,t) = \bm\lambda^\top \mathbf f(\bm x,\bm u,t) - L(\bm x,\bm u,t).}
 \tag{5}</span></span></p>
+<p>The necessary conditions of optimality in <a href="#eq-first-order-conditions-optimal-control-nonlinear-vector" class="quarto-xref">Eq.&nbsp;3</a> can be rewritten in a more compact form: <span id="eq-first-order-conditions-optimal-control-nonlinear-vector-Hamiltonian"><span class="math display">\boxed{
+\begin{aligned}
+\dot {\mathbf{x}} &amp;= \nabla_{\bm \lambda} H(\bm x,\bm u,\bm \lambda, t),\\
+\dot{\bm\lambda} &amp;= - \nabla_{\bm x} H(\bm x,\bm u,\bm \lambda,t),\\
+\mathbf 0 &amp;= \nabla_\mathbf{u}H(\bm x,\bm u,\bm \lambda,t).
+\end{aligned}}
+\tag{6}</span></span></p>
 <p>Of course, we must not forget to add the boundary conditions <a href="#eq-boundary-conditions" class="quarto-xref">Eq.&nbsp;4</a> to have a full set of necessary conditions of optimality.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1101,7 +1111,7 @@ Two different conventions for defining the Hamiltonian in optimal control
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Our choice of the Hamiltonian function was determined by our somewhat arbitrary choice of formulating the constraint function (that is, the function that should be equal to zero) as <span class="math inline">\dot {\bm x}-\mathbf f(\bm x,\bm u,\mathbf t)</span> when defining the augmented Lagrangian <span class="math inline">L^\mathrm{aug}(\bm x,\bm u,\boldsymbol \lambda,t) = L(\bm x,\bm u,t)+\boldsymbol \lambda^\top\left( \dot {\bm x}-\mathbf f(\bm x,\bm u,\mathbf t)\right)</span>. If only we (equally arbitrarily) had chosen to define the constraint function as <span class="math inline">\mathbf f(\bm x,\bm u,\mathbf t)-\dot {\bm x}</span>, we would have ended up with a different augmented Lagrangian, for which the more appropriate auxilliary function would be defined as <span class="math inline">H(\bm x,\bm u,\boldsymbol \lambda,t) = L(\bm x,\bm u,t)+ \boldsymbol \lambda^\top \mathbf f(\bm x,\bm u,t)</span>. More on the implications of this in the <a href="./cont_indir_notation.html">dedicated section</a>.</p>
+<p>Our choice of the Hamiltonian function was determined by our somewhat arbitrary choice of formulating the constraint function (that is, the function that should be equal to zero) as <span class="math inline">\dot {\bm x}-\mathbf f(\bm x,\bm u,\mathbf t)</span> when defining the augmented Lagrangian <span class="math inline">L^\mathrm{aug}(\bm x,\bm u,\bm\lambda,t) = L(\bm x,\bm u,t)+\bm\lambda^\top\left( \dot {\bm x}-\mathbf f(\bm x,\bm u,\mathbf t)\right)</span>. If only we (equally arbitrarily) had chosen to define the constraint function as <span class="math inline">\mathbf f(\bm x,\bm u,\mathbf t)-\dot {\bm x}</span>, we would have ended up with a different augmented Lagrangian, for which the more appropriate definition of the Hamiltonian function would be <span class="math inline">H(\bm x,\bm u,\bm\lambda,t) = L(\bm x,\bm u,t)+ \bm\lambda^\top \mathbf f(\bm x,\bm u,t)</span>. More on the implications of this in the <a href="./cont_indir_notation.html">dedicated section</a>.</p>
 </div>
 </div>
 

@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.6.43">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Pontryagin’s maximum principle – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>Pontryagin’s maximum (or minimum) principle – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -30,14 +50,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./cont_indir_constrained.html" rel="next">
+<link href="./cont_indir_free_final_time.html" rel="next">
 <link href="./cont_indir_hw.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-50b4abff8b0f30bb501ab99a3cda6e79.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -69,6 +89,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -82,7 +145,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_Pontryagin.html">8. Continuous-time optimal control - indirect approach via Pontryagin’s maximum principle</a></li><li class="breadcrumb-item"><a href="./cont_indir_Pontryagin.html">Pontryagin’s maximum principle</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_Pontryagin.html">8. Continuous-time optimal control - indirect approach via Pontryagin’s maximum principle</a></li><li class="breadcrumb-item"><a href="./cont_indir_Pontryagin.html">Pontryagin’s maximum (or minimum) principle</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -585,13 +648,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_Pontryagin.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Pontryagin’s maximum principle</span></a>
+ <span class="menu-text">Pontryagin’s maximum (or minimum) principle</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_constrained.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Constrained optimal control</span></a>
+  <a href="./cont_indir_free_final_time.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Optimal control with a free final time</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -924,15 +987,21 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#pontryagins-principle-of-maximum" id="toc-pontryagins-principle-of-maximum" class="nav-link active" data-scroll-target="#pontryagins-principle-of-maximum">Pontryagin’s principle of maximum</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_Pontryagin.html">8. Continuous-time optimal control - indirect approach via Pontryagin’s maximum principle</a></li><li class="breadcrumb-item"><a href="./cont_indir_Pontryagin.html">Pontryagin’s maximum principle</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_Pontryagin.html">8. Continuous-time optimal control - indirect approach via Pontryagin’s maximum principle</a></li><li class="breadcrumb-item"><a href="./cont_indir_Pontryagin.html">Pontryagin’s maximum (or minimum) principle</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Pontryagin’s maximum principle</h1>
+<h1 class="title">Pontryagin’s maximum (or minimum) principle</h1>
 </div>
 
 
@@ -949,10 +1018,70 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>The techniques of calculus of variations introduced in the previous lecture/chapter significantly extended our toolset for solving optimal control problems – instead of optimizing over (finite) sequences of real numbers we are now able to optimize over functions (or continuous-time trajectories if you like). Nonetheless, the methods were also subject to severe restrictions. For example, the property that the optimal control maximizes the Hamiltonian were checked by testing the derivative of the Hamiltonian, which only makes sense if</p>
+<ul>
+<li>the Hamiltonian is differentiable with respect to control, and</li>
+<li>the optimal control is inside the set of allowable controls (vanishing derivative of Hamiltonian on the boundary is not a necessary condition for the Hamiltonian to achieve a maximum value there).</li>
+</ul>
+<p>It also appears that the classes of perturbations characterized by <span class="math inline">1</span>-norm and even <span class="math inline">0</span>-norm are not rich enough for practical applications. Just consider switched (on-off) controls which differ in the times of switching.</p>
+<p>For all these reasons, some more advanced mathematical machinery has been developed. Unfortunately, it calls for a different and a bit more advanced mathematics than what we used in the calculus of variations. Therefore we will only state the most important result – the powerful <em>Pontryagin’s principle of maximum</em> (PMP).</p>
+<p>Although PMP sort of supersedes some of the previous results (and you might even start complaining why on earth we spent time with calculus of variations), thanks to having been introduced to the calculus of variations-style of reasoning, we are now certainly well-equipped to digest at least the very statement of the powerful result by Pontryagin. A motivated (and courageous) reader will find a proof elsewhere (see the recommended literature).</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Bxc4iy2xUjc?si=KEFjkliCcdn7J_7k" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<section id="pontryagins-principle-of-maximum" class="level2">
+<h2 class="anchored" data-anchor-id="pontryagins-principle-of-maximum">Pontryagin’s principle of maximum</h2>
+<p>We have already seen in the calculus of variations that the Hamiltonian when evaluated along the extremal, has the property that <span id="eq-derivative-of-Hamiltonian-vanishing-in-calculus-of-variations"><span class="math display">
+\left.\frac{\partial H(x,y,y',p)}{\partial y'}\right|_{p = \frac{\partial L(x,y,y')}{\partial y'}} = 0.
+\tag{1}</span></span></p>
+<p>Combining this result with the second-order necessary condition of minimum</p>
+<p><span class="math display">
+L_{y'y'} \geq 0,
+</span> we concluded that Hamiltonian is not only stationary <em>on the extremal</em>, it is actually <em>maximized on the extremal</em> since <span class="math display">
+H_{y'y'} = -L_{y'y'} \leq 0.
+</span></p>
+<p>This result can be written as <span class="math display">
+H(x,y^\star,(y^\star)',p^\star) \geq  H(x,y^\star,y',p^\star).
+</span></p>
+<p>This is a major observation and would probably never be obtained without viewing <span class="math inline">y'</span> as a separate variable (see <span class="citation" data-cites="sussmann300YearsOptimal1997"><a href="#ref-sussmann300YearsOptimal1997" role="doc-biblioref">[1]</a></span> for an insightful discussion).</p>
+<p>After the (now surely familiar) notational transition to the optimal control setting (<span class="math inline">t</span> instead of <span class="math inline">x</span>, <span class="math inline">\bm x(\cdot)</span> instead of <span class="math inline">y(\cdot)</span>, <span class="math inline">\bm u(\cdot)</span> instead of <span class="math inline">y'(\cdot)</span>, <span class="math inline">\bm \lambda(\cdot)</span> instead of <span class="math inline">p(\cdot)</span>), and invoking the definition of the Hamiltonian <span class="math display">
+H(\bm x ,\bm u ,\bm \lambda) = \bm \lambda^\top \, \mathbf f- L,
+</span> we make an important observation that as <span class="math inline">\bm u</span> now plays the role of <span class="math inline">y'</span> in calculus of variations, the optimal control analog of <a href="#eq-derivative-of-Hamiltonian-vanishing-in-calculus-of-variations" class="quarto-xref">Eq.&nbsp;1</a> is given by the equation of stationarity <span class="math display">
+\nabla_{\bm u} H(\bm x ,\bm u ,\bm \lambda) = \nabla_{\bm u}\mathbf f \, \bm \lambda - \nabla_{\bm u} L = 0.
+</span></p>
+<p>If we now denote the set of all allowable controls as <span class="math inline">\mathcal{U}</span>, the result on maximization of Hamiltonian can then be written as <span id="eq-pontryagins-principle-of-maximum-inequality"><span class="math display">\boxed{
+H(\bm x^\star ,\bm u^\star ,\boldsymbol\lambda^\star ) \geq  H(\bm x^\star ,{\color{blue}\bm u} , \boldsymbol\lambda^\star ),\quad \forall {\color{blue}\bm u} \in\mathcal{U},}
+\tag{2}</span></span> where <span class="math inline">\bm x^\star</span> is the optimal state trajectory, <span class="math inline">\bm u^\star</span> is the optimal control, and <span class="math inline">\boldsymbol\lambda^\star</span> is the costate.</p>
+<p>where <span class="math inline">\bm u^\star</span> is the optimal control. or, equivalently (and emphasizing that it holds at every time <span class="math inline">t</span>) as <span id="eq-pontryagins-principle-of-maximum-argmax"><span class="math display">\boxed{
+\bm u^\star(t)  = \operatorname*{argmax}_{\color{blue}\bm u(t)  \in\mathcal{U}} H(\bm x^\star(t) ,{\color{blue}\bm u(t)}, \boldsymbol\lambda^\star(t)).}
+\tag{3}</span></span></p>
+<p>The essence of the celebrated Pontryagin’s principle is that actually the maximization of the Hamiltonian that is the fundamental necessary condition of optimality. The fact that <span class="math display">
+\nabla_{\bm u}H = 0
+</span> is just a consequence in the situation when <span class="math inline">\nabla_{\bm u}H</span> exists and the set of allowable controls <span class="math inline">u</span> is not bounded.</p>
+<p>And that is it!</p>
+<p>To summarize, the celebrated Pontryagin’s principle of maximum just replaces the equation of stationarity <span class="math inline">\nabla_{\bm u} H = \bm 0</span> in the necessary conditions of optimality by <a href="#eq-pontryagins-principle-of-maximum-inequality" class="quarto-xref">Eq.&nbsp;2</a> or <a href="#eq-pontryagins-principle-of-maximum-argmax" class="quarto-xref">Eq.&nbsp;3</a>. Let’s now summarize the necessary conditions of optimality in the form of a theorem for later reference</p>
+<div id="thm-pontryagins-principle-of-maximum" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1 (Pontryagin’s principle of maximum)</strong></span> For a given optimal control problem, let <span class="math inline">\bm u^\star \in \mathcal{U}</span> be <em>an</em> optimal control, then there is a variable called costate which together with the state satisfies the Hamilton canonical equations <span class="math display">
+\begin{aligned}
+\dot{\bm x} &amp;= \nabla_{\bm \lambda}H,\\
+\dot{\bm \lambda} &amp;= -\nabla_{\bm{x}}H,\\
+H(\bm x^\star ,\bm u^\star ,\boldsymbol\lambda^\star, t) &amp;\geq  H(\bm x^\star ,{\color{blue}\bm u} , \boldsymbol\lambda^\star, t), \; {\color{blue}\bm u} \in \mathcal{U}
+\end{aligned}
+</span> where <span class="math display">
+H(\bm x ,\bm u ,\boldsymbol\lambda, t) = \boldsymbol\lambda^\top(t)\, \mathbf f(\bm x,\bm u, t) - L(\bm x,\bm u,t).
+</span></p>
+<p>Moreover, the corresponding boundary conditions must hold.</p>
+</div>
+<p>We could certainly rederive our previous results on LQ-optimal control with fixed and free final states. Nonetheless, this would be an overkill unless we want to explore the bounded controls case.</p>
+<p>There is another scenario, where the Pontryagin’s principle is immediately needed, and that is the <em>minimum-time problem</em>. The task is to bring the system to a given state in the shortest time possible. Apparently, with no bounds on controls, the time can be shrunk to zero (the control signal assuming the shape of a Dirac impulse). Therefore, bounds need to be imposed on the magnitudes of control signals in order to compute realistic outcomes. In order to investigate this situation, we must first know how our necessary conditions change if we relax the final time, that is, the final time becomes one of the optimization variables.</p>
 
 
 
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list">
+<div id="ref-sussmann300YearsOptimal1997" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">H. J. Sussmann and J. C. Willems, <span>“300 years of optimal control: From the brachystochrone to the maximum principle,”</span> <em>IEEE Control Systems</em>, vol. 17, no. 3, pp. 32–44, Jun. 1997, doi: <a href="https://doi.org/10.1109/37.588098">10.1109/37.588098</a>.</div>
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1377,8 +1506,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cont_indir_constrained.html" class="pagination-link" aria-label="Constrained optimal control">
-        <span class="nav-page-text">Constrained optimal control</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cont_indir_free_final_time.html" class="pagination-link" aria-label="Optimal control with a free final time">
+        <span class="nav-page-text">Optimal control with a free final time</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1390,7 +1519,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2025, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

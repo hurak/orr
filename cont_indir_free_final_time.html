@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>References – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>Optimal control with a free final time – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -50,8 +30,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./limitations_hw.html" rel="next">
-<link href="./limitations_MIMO.html" rel="prev">
+<link href="./cont_indir_time_optimal.html" rel="next">
+<link href="./cont_indir_Pontryagin.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -102,7 +82,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./limitations_SISO.html">13. Limitations of achievable performance</a></li><li class="breadcrumb-item"><a href="./limitations_references.html">References</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_Pontryagin.html">8. Continuous-time optimal control - indirect approach via Pontryagin’s maximum principle</a></li><li class="breadcrumb-item"><a href="./cont_indir_free_final_time.html">Optimal control with a free final time</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -610,7 +590,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_free_final_time.html" class="sidebar-item-text sidebar-link">
+  <a href="./cont_indir_free_final_time.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Optimal control with a free final time</span></a>
   </div>
 </li>
@@ -886,7 +866,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./limitations_references.html" class="sidebar-item-text sidebar-link active">
+  <a href="./limitations_references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -950,9 +930,9 @@ div.csl-indent {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./limitations_SISO.html">13. Limitations of achievable performance</a></li><li class="breadcrumb-item"><a href="./limitations_references.html">References</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_Pontryagin.html">8. Continuous-time optimal control - indirect approach via Pontryagin’s maximum principle</a></li><li class="breadcrumb-item"><a href="./cont_indir_free_final_time.html">Optimal control with a free final time</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">References</h1>
+<h1 class="title">Optimal control with a free final time</h1>
 </div>
 
 
@@ -969,28 +949,11 @@ div.csl-indent {
 </header>
 
 
-<p>The material here is mostly based on the chapters 5 (SISO systems) and 6 (MIMO systems) of <span class="citation" data-cites="skogestadMultivariableFeedbackControl2005"><a href="#ref-skogestadMultivariableFeedbackControl2005" role="doc-biblioref">[1]</a></span>.</p>
-<p>While the treatment of the book is more than sufficient for our course, we list here some other resources for further reading. The popular paper <span class="citation" data-cites="steinRespectUnstable2003"><a href="#ref-steinRespectUnstable2003" role="doc-biblioref">[2]</a></span> provides a nice explanation of the waterbed effect(s).</p>
-<p>Interested readers may want to consult the specialized monograph <span class="citation" data-cites="seronFundamentalLimitationsFiltering1997"><a href="#ref-seronFundamentalLimitationsFiltering1997" role="doc-biblioref">[3]</a></span>, but it is certainly not necessary for our course.</p>
-<p>More recent results are surveyed in <span class="citation" data-cites="chenFundamentalLimitationsIntrinsic2019"><a href="#ref-chenFundamentalLimitationsIntrinsic2019" role="doc-biblioref">[4]</a></span>.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/s4rZSKVdFdU?si=4GroZs9GR-wbYURY" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 
 
 
-
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list">
-<div id="ref-skogestadMultivariableFeedbackControl2005" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[1] </div><div class="csl-right-inline">S. Skogestad and I. Postlethwaite, <em>Multivariable <span>Feedback Control</span>: <span>Analysis</span> and <span>Design</span></em>, 2nd ed. Wiley, 2005. Available: <a href="https://folk.ntnu.no/skoge/book/">https://folk.ntnu.no/skoge/book/</a></div>
-</div>
-<div id="ref-steinRespectUnstable2003" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[2] </div><div class="csl-right-inline">G. Stein, <span>“Respect the unstable,”</span> <em>IEEE Control Systems</em>, vol. 23, no. 4, pp. 12–25, Aug. 2003, doi: <a href="https://doi.org/10.1109/MCS.2003.1213600">10.1109/MCS.2003.1213600</a>.</div>
-</div>
-<div id="ref-seronFundamentalLimitationsFiltering1997" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[3] </div><div class="csl-right-inline">M. M. Seron, J. H. Braslavsky, and G. C. Goodwin, <em>Fundamental <span>Limitations</span> in <span>Filtering</span> and <span>Control</span></em>. in Communications and <span>Control Engineering</span>. London: Springer, 1997. Available: <a href="https://doi.org/10.1007/978-1-4471-0965-5">https://doi.org/10.1007/978-1-4471-0965-5</a></div>
-</div>
-<div id="ref-chenFundamentalLimitationsIntrinsic2019" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[4] </div><div class="csl-right-inline">J. Chen, S. Fang, and H. Ishii, <span>“Fundamental limitations and intrinsic limits of feedback: <span>An</span> overview in an information age,”</span> <em>Annual Reviews in Control</em>, vol. 47, pp. 155–177, Jan. 2019, doi: <a href="https://doi.org/10.1016/j.arcontrol.2019.03.011">10.1016/j.arcontrol.2019.03.011</a>.</div>
-</div>
-</div></section></div></main> <!-- /main -->
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1410,13 +1373,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./limitations_MIMO.html" class="pagination-link" aria-label="Limitations for MIMO systems">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Limitations for MIMO systems</span>
+      <a href="./cont_indir_Pontryagin.html" class="pagination-link" aria-label="Pontryagin's maximum (or minimum) principle">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Pontryagin’s maximum (or minimum) principle</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./limitations_hw.html" class="pagination-link" aria-label="Homework">
-        <span class="nav-page-text">Homework</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cont_indir_time_optimal.html" class="pagination-link" aria-label="Time-optimal control">
+        <span class="nav-page-text">Time-optimal control</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
