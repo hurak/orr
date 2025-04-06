@@ -69,6 +69,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -924,8 +967,24 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#free-final-time-and-free-final-state" id="toc-free-final-time-and-free-final-state" class="nav-link active" data-scroll-target="#free-final-time-and-free-final-state">Free final time and free final state</a>
+  <ul class="collapse">
+  <li><a href="#free-end-in-calculus-of-variations" id="toc-free-end-in-calculus-of-variations" class="nav-link" data-scroll-target="#free-end-in-calculus-of-variations">Free end in calculus of variations</a></li>
+  <li><a href="#optimal-control-setting" id="toc-optimal-control-setting" class="nav-link" data-scroll-target="#optimal-control-setting">Optimal control setting</a></li>
+  <li><a href="#the-boundary-condition-for-the-other-definition-of-hamiltonian" id="toc-the-boundary-condition-for-the-other-definition-of-hamiltonian" class="nav-link" data-scroll-target="#the-boundary-condition-for-the-other-definition-of-hamiltonian">The boundary condition for the other definition of Hamiltonian</a></li>
+  </ul></li>
+  <li><a href="#free-final-time-but-the-final-state-on-a-prescribed-curve" id="toc-free-final-time-but-the-final-state-on-a-prescribed-curve" class="nav-link" data-scroll-target="#free-final-time-but-the-final-state-on-a-prescribed-curve">Free final time but the final state on a prescribed curve</a>
+  <ul class="collapse">
+  <li><a href="#calculus-of-variations-setting" id="toc-calculus-of-variations-setting" class="nav-link" data-scroll-target="#calculus-of-variations-setting">Calculus of variations setting</a></li>
+  <li><a href="#optimal-control-setting-1" id="toc-optimal-control-setting-1" class="nav-link" data-scroll-target="#optimal-control-setting-1">Optimal control setting</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -950,8 +1009,211 @@ ul.task-list li input[type="checkbox"] {
 
 
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/s4rZSKVdFdU?si=4GroZs9GR-wbYURY" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<section id="free-final-time-and-free-final-state" class="level2">
+<h2 class="anchored" data-anchor-id="free-final-time-and-free-final-state">Free final time and free final state</h2>
+<p>We start by considering the optimal control problem where both the final time and the state at this final time are subject to optimization. Later we will consider modification in which the final state is constrained in one way or another.</p>
+<section id="free-end-in-calculus-of-variations" class="level3">
+<h3 class="anchored" data-anchor-id="free-end-in-calculus-of-variations">Free end in calculus of variations</h3>
+<p>We adhere to our style of developing the results within the framework of calculus of variations first. The problem we are going to solve is visualized in <a href="#fig-free-end-of-interval" class="quarto-xref">Fig.&nbsp;1</a>.</p>
+<div id="fig-free-end-of-interval" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-free-end-of-interval-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/free_end_of_interval.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-free-end-of-interval-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Optimizing over functions with one of the end points of the interval set free
+</figcaption>
+</figure>
+</div>
+<p>The key trick is that stretching or shrinking the interval of the independent variable is done by perturbing the stationary value of the right end <span class="math inline">b</span> of the interval in proportion to the same <span class="math inline">\alpha</span> we use to perturb the functions <span class="math inline">y</span> and <span class="math inline">y'</span>. That is, <span class="math inline">b</span> is perturbed by <span class="math inline">\Delta b = \alpha \Delta x</span> and the perturbed cost functional is then <span class="math display">
+J(y^\star+{\color{blue}\alpha} \eta) = \int_a^{{\color{red}b}+{\color{blue}\alpha}\Delta x} L(x,y^\star +{\color{blue}\alpha} \eta,(y^\star )'+{\color{blue}\alpha} \eta')\text{d}x.
+</span></p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="math inline">b</span> is the stationary value of the right end of the interval
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We do not use <span class="math inline">b^\star</span> for the stationary value of the right end of the interval in favour of notational simplicity. But this comes at the cost of losing a bit of consistency in the notation.</p>
+</div>
+</div>
+<p>Note that we have a minor technical problem here since the function <span class="math inline">y^\star</span> is only defined on the interval <span class="math inline">[a,b]</span>. But there is an easy fix: we define a continuation of the function to the right of <span class="math inline">b</span> in the form of a linear approximation given by the derivative of <span class="math inline">y^\star</span> at <span class="math inline">b</span>. We will exploit it in a while.</p>
+<p>Now, in order to find the variation <span class="math inline">\delta J</span>, we can proceed by fitting the Taylor’s expansion of the above perturbed cost function to the general Taylor’s expansion and identifying the first-order term in <span class="math inline">\alpha</span>. Equivalently, we can use the earlier stated fact that <span class="math display">
+\delta J = \left.\frac{\text{d}}{\text{d}\alpha}J(y^\star +\alpha\eta)\right|_{\alpha=0}\alpha.
+</span></p>
+<p>In order to find the derivative, we observe that the variable with respect to which we are differentiating is included in the upper bound of the integral. Therefore we cannot just change the order of differentiation and integration. This situation is handled by the well-known <em>Leibniz rule for differentiation under the integral sign</em> (look it up yourself in the full generality). In our case it leads to <span class="math display">
+\left.\frac{\text{d}}{\text{d}\alpha}J(y^\star +\alpha\eta)\right|_{\alpha=0} = \int_a^{b} \left( L_y-\frac{\text{d}}{\text{d}x}L_{y'}\right)\eta(x)\text{d}x + \left.L_{y'}\right|_{b}\eta(b) + \left.L\right|_{b}\Delta x,
+</span> which after multiplication by <span class="math inline">\alpha</span> gives the variation of the functional <span class="math display">\boxed{
+\delta J = \int_a^{b} \left( L_y-\frac{\text{d}}{\text{d}x}L_{y'}\right)\delta y(x)\text{d}x + \left.L_{y'}\right|_{b}\delta y(x) + \left.L\right|_{b}\underbrace{\Delta x\alpha}_{\Delta b},}
+</span> where the first two terms on the right are already known to us, and the only new term is the third one. The reasoning now is pretty much the same as it was in the fixed-interval free-end case. We argue that among the variations <span class="math inline">\delta y</span> there are also those that vanish at <span class="math inline">b</span>, hence the conditions must be satisfied even if the last two terms are zero. But then the integral must be zero, which gives rise to the familiar Euler-Lagrange equation. The last two terms must together be zero and it does not hurt to rewrite them in a complete notation to dispell any ambiquity <span id="eq-boundary-conditions-free-final-time-and-state"><span class="math display">\boxed{
+\left.\frac{\partial L(x,y(x),y'(x))}{\partial y'}\right|_{x=b}\delta y(b) + \left.L(x,y(x),y'(x))\right|_{x=b}\Delta b = 0.}
+\tag{1}</span></span></p>
+<p>Now, in order to get some more insight into the above condition, the relation between the participating objects can be further explored. We will do it using <a href="#fig-free-end-of-interval" class="quarto-xref">Fig.&nbsp;1</a> but we augment it a bit with a few labels, see <a href="#fig-free-end-of-interval-augmented" class="quarto-xref">Fig.&nbsp;2</a> below.</p>
+<div id="fig-free-end-of-interval-augmented" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-free-end-of-interval-augmented-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/free_end_of_interval_augmented.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-free-end-of-interval-augmented-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Optimizing over curves with one end of the interval of the independent variable <span class="math inline">x</span> set free and relaxing also the value of the function there
+</figcaption>
+</figure>
+</div>
+<p>Note that we have included a brand new label here, namely, <span class="math inline">\mathrm{d}y_\mathrm{f}</span> for the perturbation of the value of the function <span class="math inline">y()</span> at the end of the interval (taking into consideration that the length of the interval can change as well). We can now write <span class="math display">
+y^\star (b+\Delta b) + \delta y(b+\Delta b) = y^\star (b)+\mathrm{d}y_\mathrm{f},
+</span> which after approximating each term with the first two terms of its Taylor expansion gives <span class="math display">
+\cancel{y^\star (b)}+{y^\star }'(b)\Delta b + \delta y(b)+\cancel{\delta'(b) \Delta b} = \cancel{y^\star (b)}+\mathrm{d}y_\mathrm{f}.
+</span></p>
+<p>Note that the third product on the left can be neglected since it contains two terms that are both of order one in the perturbation variable <span class="math inline">\alpha</span>. In other words, we approximate <span class="math inline">\delta y(b+\Delta b)</span> by <span class="math inline">\delta y(b)</span>. In addition, the term <span class="math inline">y^\star (b)</span> can be subtracted from both sides. From what remains after these cancelations, we can conclude that <span class="math display">
+{y^\star }'(b)\Delta b + \delta y(b) = \mathrm{d}y_\mathrm{f},
+</span> or, equivalently, <span class="math display">
+\delta y(b) = \mathrm{d}y_\mathrm{f} - {y^\star }'(b)\Delta b.
+</span></p>
+<p>We will now substitute this into the general form of the boundary equation in () <span id="eq-transversality-free-state"><span class="math display">
+L_{y'}(b,y(b),y'(b))\,\left[\mathrm{d}y_\mathrm{f} - {y^\star }'(b)\Delta b\right] + L(b,y(b),y'(b))\Delta b = 0.
+\tag{2}</span></span></p>
+<p>Collecting now the terms with the two perturbation variables <span class="math inline">\mathrm d y_\mathrm{f}</span> and <span class="math inline">\Delta b</span>, we reformat the above expression into <span id="eq-transversality-free-state-collected"><span class="math display">\boxed{
+L_{y'}(b,y(b),y'(b))\mathrm{d}y_\mathrm{f} + \left[L(b,y(b),y'(b))-L_{y'}(b,y(b),y'(b)) {y^\star }'(b)\right]\Delta b = 0.}
+\tag{3}</span></span></p>
+<p>Now, since <span class="math inline">\mathrm d y_\mathrm{f}</span> and <span class="math inline">\Delta b</span> are assumed independent, the corresponding terms must be simultaneously and independently equal zero, that is, <span class="math display">
+\begin{aligned}
+L_{y'}(b,y(b),y'(b)) &amp;= 0,\\
+L(b,y(b),y'(b))-L_{y'}(b,y(b),y'(b)) {y^\star }'(b) &amp;= 0.
+\end{aligned}
+</span></p>
+<p>Note that the first condition actually constitutes <span class="math inline">n</span> scalar conditions whereas the second one is just a scalar condition itself, hence, <span class="math inline">n+1</span> boundary conditions.</p>
+</section>
+<section id="optimal-control-setting" class="level3">
+<h3 class="anchored" data-anchor-id="optimal-control-setting">Optimal control setting</h3>
+<p>Let’s now switch back to the optimal control setting with <span class="math inline">t</span> as the independent variable. Recall that the optimal control problem is <span class="math display">
+\min_{\bm x(),\bm u(),t_\mathrm{f}} \left[\phi(\bm x(t_\mathrm{f}))+\int_{t_\mathrm{i}}^{t_\mathrm{f}}L(\bm x,\bm u,t)\text{d}t\right].
+</span> subject to <span class="math display">
+\dot{\bm x}(t)= \mathbf f(\bm x,\bm u,t),\qquad  \bm x(t_\mathrm{i}) = \mathbf x_\mathrm{i}.
+</span></p>
+<p>We have already seen that the integrand of the augmented cost function now contains not only the term that corresponds to the Lagrange multiplier but also the term that penalizes the state at the final time, that is, <span id="eq-augmented-lagrangian-free-final-state"><span class="math display">
+L^\mathrm{aug}(\bm x,\bm u,\boldsymbol \lambda, t) = L(\bm x,\bm u,t) + \underbrace{\frac{\partial \phi}{\partial t} + (\nabla_{\bm x}\phi)^\top \frac{\mathrm d \bm x }{\mathrm d t}}_{\frac{\mathrm d \phi(\bm x(t), t)}{\mathrm d t}} + \boldsymbol{\lambda}^\top (\dot{\bm{x}} - \mathbf f(\bm x,\bm u,t))
+\tag{4}</span></span></p>
+<p>We then rewrite the boundary conditions <a href="#eq-transversality-free-state-collected" class="quarto-xref">Eq.&nbsp;3</a> as <span class="math display">\boxed{
+\left.(\nabla_\mathbf{x}\phi+\boldsymbol \lambda)\right|_{t=t_\mathrm{f}}^\top \mathrm{d}\mathbf{x}_\mathrm{f} + \left.\left(L+\frac{\partial \phi}{\partial t}-\boldsymbol \lambda^\top  f(\bm x, \bm u, t)\right)\right|_{t=t_\mathrm{f}}\mathrm d t_\mathrm{f}.}
+</span></p>
+<p>Since here we assume that the final time and the state at the final time are independent, this single conditions breaks down into two boundary conditions</p>
+<p><span class="math display">
+\begin{aligned}
+\nabla_\mathbf{x}\phi(x(t_\mathrm{f}),t_\mathrm{f})+\boldsymbol \lambda(t_\mathrm{f}) &amp;=0\\
+L(x(t_\mathrm{f}),u(t_\mathrm{f}),t_\mathrm{f})+\frac{\partial \phi(\mathbf{x}(t_\mathrm{f}),t_\mathrm{f})}{\partial t}-\boldsymbol \lambda^\top (t_\mathrm{f}) f(\bm x(t_\mathrm{f}), \bm u(t_\mathrm{f}), t_\mathrm{f}) &amp;=0.
+\end{aligned}
+</span></p>
+<p>The first one is actually representing <span class="math inline">n</span> scalar conditions, the second one is just a single scalar condition. Hence, altogether we have <span class="math inline">n+1</span> boundary conditions.</p>
+<p>Let’s try to get some more insight into this. Let’s assume now that the term penalizing the state at the final time does not explicitly depend on time, that is, <span class="math inline">\frac{\partial \phi}{\partial t}=0</span>. Then the boundary condition modifies to <span class="math display">
+\left.(\nabla_\mathbf{x}\phi+\boldsymbol \lambda)\right|_{t=t_\mathrm{f}}^\top \mathrm{d}\mathbf{x}_\mathrm{f} + \left.\left(L-\boldsymbol \lambda^\top  f(\bm x, \bm u, t)\right)\right|_{t=t_\mathrm{f}}\mathrm d t_\mathrm{f},
+</span> which can be rewritten as <span class="math display">
+\left.(\nabla_\mathbf{x}\phi+\boldsymbol \lambda)\right|_{t=t_\mathrm{f}}^\top \mathrm{d}\mathbf{x}_\mathrm{f} - \left.H(\bm x,\bm u,\boldsymbol \lambda,t)\right|_{t=t_\mathrm{f}}\mathrm d t_\mathrm{f},
+</span> which, in turn, enforces the scalar boundary condition (on top of those other <span class="math inline">n</span> conditions) <span class="math display">\boxed{
+\left.H(\bm x(t),\bm u(t),\boldsymbol \lambda(t),t)\right|_{t=t_\mathrm{f}}\mathrm d t_\mathrm{f}=0}.
+</span></p>
+<p>This is an observation that is worth memorizing—for a free final time optimal control problem, Hamiltonian vanishes at the end of the time interval.</p>
+<p>Let’s now add one more observation. We could have mentioned it even in the previous lecture since it is a general property of a Hamiltonian evaluated along the optimal solution—the total derivative of a Hamiltonian (evaluated along the solution) with respect to time is equal to its partial derivative with respect to time: <span class="math display">
+\frac{\mathrm{d}H}{\mathrm{d}t} = \underbrace{\frac{\partial H}{\partial \bm x}}_{-\dot{\boldsymbol \lambda}}\frac{\mathrm{d}\bm x}{\mathrm{d}t} + \underbrace{\frac{\partial H}{\partial \boldsymbol \lambda}}_{\dot{\mathbf{x}}}\frac{\mathrm{d}\boldsymbol \lambda}{\mathrm{d}t} + \underbrace{\frac{\partial H}{\partial \bm u}}_{0}\frac{\mathrm{d}\bm u}{\mathrm{d}t} + \frac{\partial H}{\partial t} = \frac{\partial H}{\partial t}.
+</span></p>
+<p>Now, if neither the system equations nor the optimal control cost function depend on time, that is, if <span class="math inline">\frac{\partial H}{\partial t}=0</span>, the Hamiltonian remains constant along the optimal solution (trajectory), that is, <span class="math display">\boxed{
+H(\bm x(t),\bm u(t),\boldsymbol \lambda(t)) = \mathrm{const.}\quad \forall t}
+</span></p>
+<p>Combined with the previous result (boundary value of <span class="math inline">H</span> at the end of the free time interval is zero), we obtain the powerful conclusion that the Hamiltonian evaluated alon the optimal trajectory is always zero in the free final time scenario: <span class="math display">\boxed{
+H(\bm x(t),\bm u(t),\boldsymbol \lambda(t)) = 0\quad \forall t}
+</span></p>
+<p>This is a pretty insightful piece of information. Since some (numerical) techniques for optimal control are based on iterative minimization of a Hamiltonian, here we already know the minimum value.</p>
+</section>
+<section id="the-boundary-condition-for-the-other-definition-of-hamiltonian" class="level3">
+<h3 class="anchored" data-anchor-id="the-boundary-condition-for-the-other-definition-of-hamiltonian">The boundary condition for the other definition of Hamiltonian</h3>
+<p>In the previous lecture/chapter we already discussed the unfortunate discrepancy in the definition of Hamiltonian in the literature. Perhaps there is no need to come back to this topic because you are now aware of the problem, but we just want to have the formulas corresponding to the other definition of the Hamiltonian at hand. So, if instead of <a href="#eq-augmented-lagrangian-free-final-state" class="quarto-xref">Eq.&nbsp;4</a> we write the augmented Lagrangian as <span class="math display">
+\hat L^\mathrm{aug}(\bm x,\bm u,\hat{\boldsymbol \lambda}, t) = L(\bm x,\bm u,t) + \underbrace{\frac{\partial \phi}{\partial t} + (\nabla_{\bm x}\phi)^\top \frac{\mathrm d \bm x }{\mathrm d t}}_{\left.\frac{\mathrm d \phi(\bm x(t), t)}{\mathrm d t}\right|_{t=t_{\mathrm f}}} + \hat{\boldsymbol{\lambda}}^\top  (f(\bm x,\bm u,t) - \dot{\mathbf{x}}),
+</span> the boundary condition would then modify to <span class="math display">\boxed{
+\left.(\nabla_\mathbf{x}\phi-\hat{\boldsymbol \lambda})\right|_{t=t_\mathrm{f}}^\top \mathrm{d}\mathbf{x}_\mathrm{f} + \left.\left(L+\frac{\partial \phi}{\partial t}+\hat{\boldsymbol \lambda}^\top  f(\bm x, \bm u, t)\right)\right|_{t=t_\mathrm{f}}\mathrm d t_\mathrm{f},}
+</span> which can be rewritten in the case of <span class="math inline">\frac{\partial \phi(\mathbf{x}(t_\mathrm{f}),t_\mathrm{f})}{\partial t}=0</span> and using the alternative definition of the Hamiltonian <span class="math inline">\hat H = L+\hat{\boldsymbol \lambda}^\top  \mathbf f</span> as <span class="math display">
+\left.(\nabla_\mathbf{x}\phi-\hat{\boldsymbol \lambda})\right|_{t=t_\mathrm{f}}^\top \mathrm{d}\mathbf{x}_\mathrm{f} + \left.\hat H(\bm x,\bm u,\hat{\boldsymbol \lambda},t)\right|_{t=t_\mathrm{f}}\mathrm d t_\mathrm{f},
+</span></p>
+</section>
+</section>
+<section id="free-final-time-but-the-final-state-on-a-prescribed-curve" class="level2">
+<h2 class="anchored" data-anchor-id="free-final-time-but-the-final-state-on-a-prescribed-curve">Free final time but the final state on a prescribed curve</h2>
+<section id="calculus-of-variations-setting" class="level3">
+<h3 class="anchored" data-anchor-id="calculus-of-variations-setting">Calculus of variations setting</h3>
+<p>We will now investigate the case when the final value of the solution <span class="math inline">y(x)</span> is to be on the curve described by <span class="math inline">\psi(x)</span>, that is <span id="eq-y-should-be-on-psi-at-the-final-time"><span class="math display">
+y^\star (b+\Delta b) + \delta y(b+\Delta b) = \psi(b+\Delta b).
+\tag{5}</span></span></p>
+<p>This corresponds to the situation depicted in <a href="#fig-free-end-of-interval-on-curve" class="quarto-xref">Fig.&nbsp;3</a>.</p>
+<div id="fig-free-end-of-interval-on-curve" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-free-end-of-interval-on-curve-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/free_end_of_interval_on_curve.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-free-end-of-interval-on-curve-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: The value of the function at the free end of the interval is constrained by another function
+</figcaption>
+</figure>
+</div>
+<p>% The key idea for deriving the necessary conditions with one of the ends lying on a curve prescribed by the function <span class="math inline">\psi(x)</span> is described in the proof of Weierstrass-Erdmann corner conditions in Chapter three of . We already discussed the terms on the left. What is new here is the term on the right. It can also be approximated by the first two terms in Taylor’s expansion <span class="math display">
+\psi(b+\Delta b) = \psi(b) + \psi'(b)\Delta b.
+</span></p>
+<p>Therefore, we can expand () into <span class="math display">
+\cancel{y^\star (b)} + (y^\star )'(b)\Delta b + \delta y(b) = \underbrace{\cancel{y^\star (b)}}_{\psi(b)}+\psi'(b)\Delta b,
+</span> from which we can express <span class="math inline">\delta y(b)</span> as <span class="math display">
+\delta y(b) = \psi'(b)\Delta b - (y^\star )'(b)\Delta b
+</span> and substitute to the boundary condition (), which after cancelling the common <span class="math inline">\Delta b</span> term yields <span id="eq-transversality"><span class="math display">\boxed{
+L_{y'}(b,y(b),y'(b))\,\left[\psi'(b)-y'(b)\right] + L(b,y(b),y'(b)) = 0.}
+\tag{6}</span></span></p>
+<p>This is just one scalar boundary conditions. But the original <span class="math inline">n</span> conditions that the state that <span class="math inline">y(x) = \psi(x)</span> at the right end of the interval must be added. Altogether, we have <span class="math inline">n+1</span> boundary conditions.</p>
+<p>The above single equation <a href="#eq-transversality" class="quarto-xref">Eq.&nbsp;6</a> is called <em>transversality condition</em> for the reason to be illuminated by the next example.</p>
+<div id="exm-transversality" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1</strong></span> To get an insight, consider again the minimum distance problem. This time we want to find the shortest distance from a point to a curve given by <span class="math inline">\phi(x)</span>. The answer is intuitive, but let us see what our rigorous tools offer here. The EL equation stays intact, therefore we know that the shortest path is a line. It starts at <span class="math inline">(a,0)</span> but in order to determine its end, we need to invoke the other boundary condition. Remember that the Lagrangian is <span class="math display">
+L = \sqrt{1+(y')^2}\text{d}x
+</span> and <span class="math display">
+L_{y'} = \frac{y'}{\sqrt{1+(y')^2}}\text{d}x.
+</span></p>
+<p>The transversality condition boils down to <span class="math display">
+1+y'(b)\psi'(b)=0,
+</span> which can also be visualized using vectors in the plane <span class="math display">
+\begin{bmatrix}1 &amp; y'(b)\end{bmatrix}\, \begin{bmatrix}1 \\ \psi'(b)\end{bmatrix} = 0.
+</span></p>
+<p>The interpretation of this result is that our desired curve <span class="math inline">y</span> hits the target curve <span class="math inline">\phi</span> in a perpendicular (transverse) direction.</p>
+</div>
+<p>Understanding the boundary conditions is crucial. Let us have yet another look at the result just derived. It can be written as <span class="math display">\boxed{
+\left.L_{y'}\psi'\right|_{b} - \left.H\right|_{b} = 0.}
+</span></p>
+<p>It follows that for a free length of the interval and fixed value of the variable at the end of the interval, in which <span class="math display">
+\psi(x) = c,\; c\in\mathbb R,
+</span> the transversality condition simplifies to <span class="math display">\boxed{
+H(b) = 0.}
+</span></p>
+</section>
+<section id="optimal-control-setting-1" class="level3">
+<h3 class="anchored" data-anchor-id="optimal-control-setting-1">Optimal control setting</h3>
+<p>Once again, let’s recall that the optimal control problem is <span class="math display">
+\min_{\bm x(\cdot),\bm u(\cdot),t_\mathrm{f}} \left[\phi(\bm x(t_\mathrm{f}))+\int_{t_\mathrm{i}}^{t_\mathrm{f}}L(\bm x,\bm u,t)\text{d}t\right].
+</span> subject to <span class="math display">
+\begin{aligned}
+\dot{\bm x}(t)&amp;= \mathbf f(\bm x,\bm u,t),\\  
+\bm x(t_\mathrm{i}) &amp;= \mathbf x_\mathrm{i}\\
+\bm x(t_\mathrm{f}) &amp;= \boldsymbol \psi(t_\mathrm{f}).
+\end{aligned}
+</span></p>
+<p>Translating the above derived transversality condition from the domain (and notation) of calculus of variations into the optimal control setting gives <span class="math display">\boxed{
+\left.(\nabla_\mathbf{x}\phi+\boldsymbol \lambda)^\top \dot{\boldsymbol\psi}(t) + L+\frac{\partial \phi}{\partial t}-\boldsymbol \lambda^\top  f(\bm x, \bm u, t)\right|_{t=t_\mathrm{f}}=0.}
+</span></p>
+<p>Of course, on top of this single condition, the <span class="math inline">2n</span> boundary conditions shown above must be added <span class="math display">\boxed{
+\begin{aligned}
+\bm x(t_\mathrm{i}) &amp;= \mathbf x_\mathrm{i}\\
+\bm x(t_\mathrm{f}) &amp;= \boldsymbol \psi(t_\mathrm{f}).
+\end{aligned}}
+</span></p>
 
 
+</section>
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1391,7 +1653,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2025, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
