@@ -95,6 +95,8 @@ Now, the initial value problem in @eq-IVP-LQ can be solved for both the state an
 #| fig-cap: The solution to the LQR problem with a fixed final state approached as a two-point BVP. Plotted are the state, costate and control variables.
 #| label: fig-lqr-bvp-fixed-final-state
 using LinearAlgebra
+using Random
+Random.seed!(1234)
 
 n = 2                  # order of the system
 A = rand(n,n)
@@ -329,6 +331,8 @@ Having computed the initial value of the costate, we can solve the state and cos
 #| fig-cap: The solution to the LQR problem with a free final state approached as a two-point BVP. Plotted are the state, costate and control variables.
 #| label: fig-lqr-bvp-free-final-state
 using LinearAlgebra
+using Random
+Random.seed!(1234)
 
 n = 2                  # order of the system
 A = rand(n,n)
