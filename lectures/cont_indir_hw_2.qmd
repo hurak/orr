@@ -16,12 +16,12 @@ During this period, the colony must allocate its foraging effort between two key
 
 At any time $t \in \left[0, t_\mathrm{f}\right]$, the colony allocates a fraction $u(t) \in [0, 1]$ of its foraging effort toward hive expansion, with the remaining fraction $1 - u(t)$ used for nectar collection. The hive’s ability to perform either task depends on its current size, and bees die at a natural rate proportional to their population.
 
-Let:
+Let
 
 - $x_1(t)$ denote the effective hive size (i.e., the number of active foragers), and
 - $x_2(t)$ the cumulative amount of nectar collected by time $t$.
 
-The system dynamics are governed by:
+The system dynamics are governed by
 
 $$
 \begin{aligned}
@@ -30,16 +30,36 @@ $$
 \end{aligned}
 $$
 
-**Your objective**  
+#### Your objective
 Find the optimal allocation strategy $u(t)$ that maximizes the total nectar stored by the end of the season, i.e., maximize $x_2(t_\mathrm{f})$.
 
-**Your tasks**
 
+#### Your tasks
 1. Formulate the Hamiltonian, derive the state and co-state equations.
 2. Use Pontryagin's maximum principle to determine the optimal control strategy $u^*$ as a function of the co-states, i.e.,  $u^*(\lambda_1(t), \lambda_2(t))$.
-3. Solve the co-state equation.
-   - Hint 1: You know $\boldsymbol{\lambda}(t_\mathrm{f})$.
-   - Hint 2: Knowing $\boldsymbol{\lambda}(t_\mathrm{f})$ allows you to directly write down the value of one of the co-states.
-   - Hint 3: Knowing $\boldsymbol{\lambda}(t_\mathrm{f})$, also means knowing $u^*(t_\mathrm{f})$.
-   - Hint 4: Since you know everything you need, but at the end of the control interval instead of the start, you need to solve the co-state equations backwards in time. This can be done by "reversing" time and solving the equations as a standard initial value problem.
-4. Use the co-states to express $u^*$ as purely a function of time.
+3. Solve the co-state equations.
+   - Hint #1: You know $\boldsymbol{\lambda}(t_\mathrm{f})$.
+   - Hint #2: Knowing $\boldsymbol{\lambda}(t_\mathrm{f})$ allows you to directly write down the value of one of the co-states.
+   - Hint #3: Knowing $\boldsymbol{\lambda}(t_\mathrm{f})$, also means knowing $u^*(t_\mathrm{f})$.
+   - Hint #4: Since you know everything you need, but at the end of the control interval instead of the start, you need to solve the co-state equations backwards in time. This can be done by "reversing" time and solving the equations as a standard initial value problem.
+4. Use the co-states to express $u^*$ as purely a function of time (and $t_\mathrm{f}$).
+
+::: {.callout-tip}
+##  Tip
+Problems like this one may appear on the **final exam**, so focus on understanding the full derivation process—not just getting the correct implementation.
+:::
+
+Upload the following files as a single *.zip* file to [BRUTE](https://cw.felk.cvut.cz/brute) system.
+
+- `hw.pdf` containing your derivation of the problem solution. We do not require a $\LaTeX$ report; handwritten notes suffice, but they **must be readable**.
+- `hw.jl` containing your Julia code with implementation of the optimal control based on the template below.
+
+```{julia}
+#| eval: false
+
+function u_opt(t, tf)
+    return 1
+end
+```
+
+Your homework will be automatically evaluated by the BRUTE system based on your Julia implementation, so you can immediately see if you have arrived at the correct solution. However, points will be awarded only after a manual review of the derivation by us.
