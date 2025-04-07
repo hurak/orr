@@ -13,21 +13,25 @@ crossref:
 engine: julia
 ---
 
-To get some more insight and also to develop a practical design tool, let us consider the LQ version of this general problem. That is, the augmented Lagrangian is
-$$
+To get some more insight and also to develop a practical design tool, let us consider the LQR version of this general problem. The Hamiltonian is
+<!-- $$
  L^\text{aug}(\bm x, \bm u, \bm \lambda) = \frac{1}{2}\left(\bm x^\top\mathbf Q \bm x + \bm u^\top\mathbf R\bm u\right) + \bm \lambda^\top\,(\dot{\bm x}-\mathbf A\bm x-\mathbf B\bm u).
+$$ -->
 $$
+ H(\bm x, \bm u, \bm \lambda) = \bm \lambda^\top\, (\mathbf A\bm x+\mathbf B\bm u) - \frac{1}{2}\left(\bm x^\top\mathbf Q \bm x + \bm u^\top\mathbf R\bm u\right), 
+$$
+in which we note that it does not explicitly depend on time.
 
-The three necessary conditions of optimality are 
+The three necessary conditions of optimality (the state, costate and stationarity equations) are then 
 $$\boxed{
 \begin{aligned}
-\dot {\bm x} &= \mathbf A\bm x + \mathbf B\bm u,\\
-\dot{\boldsymbol\lambda} &= \mathbf Q\bm x - \mathbf A^\top\boldsymbol\lambda,\\ 
-\bm 0 &= \mathbf R\bm u - \mathbf B^\top\boldsymbol\lambda.
+\dot {\bm x} &= \nabla_{\bm \lambda} H(\bm x,\bm u,\bm \lambda) = \mathbf A\bm x + \mathbf B\bm u,\\
+\dot{\boldsymbol\lambda} &= -\nabla_{\bm x} H(\bm x,\bm u,\bm \lambda) = \mathbf Q\bm x - \mathbf A^\top\boldsymbol\lambda,\\ 
+\bm 0 &= \nabla_{\bm u} H(\bm x,\bm u,\bm \lambda) = \mathbf R\bm u - \mathbf B^\top\boldsymbol\lambda.
 \end{aligned}}
 $${#eq-necessary-conditions-LQ}
 
-Provided $\mathbf R>0$, we can express $\bm u$ from the third equation (aka the equation of stationarity) 
+Provided $\mathbf R>0$, we can express $\bm u$ from the third equation (aka the stationarity equation) 
 $$\boxed{
  \bm u = \mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda.}
 $${#eq-u}
@@ -40,7 +44,7 @@ $$
 \end{aligned} 
 $$
 
-This is a set of 2$n$ differential equations of first order (we assume that $\bm x\in \mathbb R^n$). We need $2n$ boundary values to fully specify the solution. Where do we get them? 
+This is a set of 2$n$ differential equations of the first order (we assume that $\bm x\in \mathbb R^n$). We need $2n$ boundary values to fully specify the solution. Where do we get them? 
 
 ## LQR on a finite and fixed time horizon with a fixed final state
 
@@ -91,6 +95,8 @@ Now, the initial value problem in @eq-IVP-LQ can be solved for both the state an
 #| fig-cap: The solution to the LQR problem with a fixed final state approached as a two-point BVP. Plotted are the state, costate and control variables.
 #| label: fig-lqr-bvp-fixed-final-state
 using LinearAlgebra
+using Random
+Random.seed!(1234)
 
 n = 2                  # order of the system
 A = rand(n,n)
@@ -325,6 +331,8 @@ Having computed the initial value of the costate, we can solve the state and cos
 #| fig-cap: The solution to the LQR problem with a free final state approached as a two-point BVP. Plotted are the state, costate and control variables.
 #| label: fig-lqr-bvp-free-final-state
 using LinearAlgebra
+using Random
+Random.seed!(1234)
 
 n = 2                  # order of the system
 A = rand(n,n)
