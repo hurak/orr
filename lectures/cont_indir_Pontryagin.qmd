@@ -121,31 +121,32 @@ We could certainly rederive our previous results on LQ-optimal control with fixe
 
 ::: {#exm-pontryagins-principle-of-maximum-constrained-lqr}
 ## Constrained LQR
-We consider a system modelled by $\dot{\bm x} = \mathbf A \bm x + \mathbf b u$, in which we consider scalar control inputs for conveniene. The task is to find a control $u$ on the fixed interval $[0,t_mathrm{f}]$ such that the system is brought from a given initial state to a given final state, while the control satisfies $\mathrm u^\min\leq u\leq \mathrm u^\max$. The two-point boundary value problem is
+We consider a system modelled by $\dot{\bm x} = \mathbf A \bm x + \mathbf b u$, in which we consider scalar control inputs for conveniene. The task is to find a control $u$ on the fixed interval $[0,t_\mathrm{f}]$ such that the system is brought from a given initial state to a given final state, while the control satisfies $\mathrm{u}^{\min}\leq u\leq \mathrm{u}^{\max}$. The two-point boundary value problem is
 $$
 \begin{aligned}
-\dot {\bm x} &= \mathbf A\bm x + \mathbf b u,\\
-\dot{\boldsymbol\lambda} &= \mathbf Q\bm x - \mathbf A^\top\boldsymbol\lambda,\\ 
-u^\star &= \operatorname*{arg max}_{u\in[\mathrm u^\min,\mathrm u^\max]}\cancel{-\frac{1}{2}\bm x^\top\mathbf Q\bm x} - \frac{\mathbf r}{2}u^2 + \bm\lambda^\top (\cancel{\mathbf A \bm x} + \mathbf b u),\\
+\dot{\bm{x}} &= \mathbf A\bm x + \mathbf b u,\\
+\dot{\bm{\lambda}} &= \mathbf Q\bm x - \mathbf A^\top\bm\lambda,\\ 
+u^\star &= \operatorname*{arg max}_{u\in[\mathrm u^{\min},\mathrm u^{\max}]}\cancel{-\frac{1}{2}\bm x^\top\mathbf Q\bm x} - \frac{\mathbf r}{2}u^2 + \bm\lambda^\top (\cancel{\mathbf A \bm x} + \mathbf b u),\\
  \bm x(0) &= \mathbf x_0,\\
- \bm x(t_\mathrm{f}) &= \mathbf x_\mathrm{f}.
+ \bm x(t_{\mathrm{f}}) &= \mathbf x_{\mathrm{f}}.
 \end{aligned}
 $$
 
 In the maximization above we could cancel the two terms that do not depend on $u$. It is just a maximization of a quadratic (in $u$) function with an interval constraint. We can write its solution as
 $$
 \begin{aligned}
-u^\star &= \operatorname*{argmax}_{u\in[\mathrm u^\min,\mathrm u^\max]} \left(\bm\lambda^\top \mathbf b u - \frac{1}{2}\mathrm{r} u^2\right)\\
-&= \operatorname*{sat}_{u^\min}^{u^\max}\frac{\bm\lambda^\top \mathbf b}{\mathrm{r}},
+u^\star &= \operatorname*{argmax}_{u\in[\mathrm u^{\min},\mathrm u^{\max}]} \left(\bm\lambda^\top \mathbf b u - \frac{1}{2}\mathrm{r} u^2\right)\\
+&= \operatorname{sat}_{\mathrm u^{\min}}^{\mathrm u^{\max}}\frac{\bm\lambda^\top \mathbf b}{\mathrm{r}},
+\end{aligned}
 $$
-where the $\operatorname{sat}()$ operator has the usual meaning of a saturation function.
+where the $\operatorname{sat}()$ has the usual meaning of a *saturation* function with the lower and upper saturation bounds.
 
 The BVP problem that needs to be solved is then
 $$
 \begin{aligned}
-\dot {\bm x} &= \mathbf A\bm x + \mathbf b u,\\
-\dot{\boldsymbol\lambda} &= \mathbf Q\bm x - \mathbf A^\top\boldsymbol\lambda,\\ 
-u^\star &= \operatorname*{sat}_{u^\min}^{u^\max}\frac{\bm\lambda^\top \mathbf b}{\mathrm{r}},\\
+\dot{\bm{x}} &= \mathbf A\bm x + \mathbf b u,\\
+\dot{\bm{\lambda}} &= \mathbf Q\bm x - \mathbf A^\top\bm\lambda,\\ 
+u^\star &= \operatorname{sat}_{u^{\min}}^{u^{\max}}\frac{\bm\lambda^\top \mathbf b}{\mathrm{r}},\\
  \bm x(0) &= \mathbf x_0,\\
  \bm x(t_\mathrm{f}) &= \mathbf x_\mathrm{f}.
 \end{aligned}
@@ -182,30 +183,26 @@ function cont_indir_constrained_lqr_via_pontryagin_bvp()
         λ = w[3:4]                          # Costate vector.
         u = min.(max.(R\B'*λ,umin),umax)    # Optimal control (Pontryagin).
         dw[1:2] .= A*x + B*u                # State equation.
-        dw[3:4] .= Q*x - A'*λ                # Co-state equation.
+        dw[3:4] .= Q*x - A'*λ               # Co-state equation.
     end
     function bc!(res, w, p,t)               
-        res[1:2] .= w(t₀)[1:2] - xinit       # Initial state boundary condition.
-        res[3:4] .= w(t₁)[1:2] - xfinal      # Final state boundary condition.
+        res[1:2] .= w(t₀)[1:2] - xinit      # Initial state boundary condition.
+        res[3:4] .= w(t₁)[1:2] - xfinal     # Final state boundary condition.
     end
 
     w0 = [xinit[1], xinit[2], 0.0, 0.0]     # Use the initial state and guess at the initial costate.
     
     bvprob = BVProblem(statecostateeq!, bc!, w0, (t₀, t₁)) # Boundary value problem.
-    sol = solve(bvprob, MIRK4(), dt=0.1)   # Solve the BVP.
+    sol = solve(bvprob, MIRK4(), dt=0.1)    # Solve the BVP.
     
-    x = hcat(sol.u...)[1:2,:]                   # State trajectory.
-    λ = hcat(sol.u...)[3:4,:]                   # Costate trajectory.
-    u = min.(max.(R\B'*λ,umin),umax)            # Optimal control.
+    x = hcat(sol.u...)[1:2,:]               # State trajectory.
+    λ = hcat(sol.u...)[3:4,:]               # Costate trajectory.
+    u = min.(max.(R\B'*λ,umin),umax)        # Optimal control.
     t = sol.t
     return (x,λ,u,t)
 end
 
 x,λ,u,t = cont_indir_constrained_lqr_via_pontryagin_bvp()
-
-#x = hcat(sol.u...)[1:2,:]                   # State trajectory.
-#λ = hcat(sol.u...)[3:4,:]                   # Costate trajectory.
-#u = min.(max.(R\B'*λ,umin),umax)            # Optimal control.
 
 using Plots
 p1 = plot(t,x',ylabel="x",label="",lw=2)
