@@ -6,13 +6,13 @@ format:
 engine: julia
 ---
 
-## Nectar Storage vs. Hive Expansion in a Bee Colony
+## Nectar storage vs. hive expansion in a bee colony
 
 A bee colony operates throughout a flowering season of length $t_\mathrm{f}$.
-During this period, the colony must allocate its foraging effort between two key activities:
+During this period, the colony must allocate its foraging effort between two key activities
 
-- **Hive Expansion:** Increasing the number of worker bees to support future nectar collection (e.g., raising brood and constructing comb).
-- **Nectar Collection:** Gathering nectar to convert into honey, which serves as the colony's energy reserve for the coming non-flowering season.
+- **Hive expansion:** Increasing the number of worker bees to support future nectar collection (e.g., raising brood and constructing comb).
+- **Nectar collection:** Gathering nectar to convert into honey, which serves as the colony's energy reserve for the coming non-flowering season.
 
 At any time $t \in \left[0, t_\mathrm{f}\right]$, the colony allocates a fraction $u(t) \in [0, 1]$ of its foraging effort toward hive expansion, with the remaining fraction $1 - u(t)$ used for nectar collection. The hive’s ability to perform either task depends on its current size, and bees die at a natural rate proportional to their population.
 
@@ -30,29 +30,35 @@ $$
 \end{aligned}
 $$
 
-#### Your objective
-Find the optimal allocation strategy $u(t)$ that maximizes the total nectar stored by the end of the season, i.e., maximize $x_2(t_\mathrm{f})$.
+The hive size and nectar reserves are assumed to remain non-negative throughout the season, consistent with their physical interpretation.
+Also assume nonzero hive size at the beginning of the season, i.e., $x_1(0) > 0$.
+
+### Your objective
+Find the optimal allocation strategy $u(t)$ that maximizes the total nectar stored by the end of the season, i.e., maximize $x_2(t_\mathrm{f})$ for a fixed $t_\mathrm{f}$.
+
+::: {.callout-note} 
+Similar problems may appear on the **final exam**, so focus on understanding what you are doing and why.
+:::
 
 
-#### Your tasks
+### Your tasks
 1. Formulate the Hamiltonian, derive the state and co-state equations.
-2. Use Pontryagin's maximum principle to determine the optimal control strategy $u^*$ as a function of the co-states, i.e.,  $u^*(\lambda_1(t), \lambda_2(t))$.
-3. Solve the co-state equations.
-   - Hint #1: You know $\boldsymbol{\lambda}(t_\mathrm{f})$.
-   - Hint #2: Knowing $\boldsymbol{\lambda}(t_\mathrm{f})$ allows you to directly write down the value of one of the co-states.
-   - Hint #3: Knowing $\boldsymbol{\lambda}(t_\mathrm{f})$, also means knowing $u^*(t_\mathrm{f})$.
-   - Hint #4: Since you know everything you need, but at the end of the control interval instead of the start, you need to solve the co-state equations backwards in time. This can be done by "reversing" time and solving the equations as a standard initial value problem.
-4. Use the co-states to express $u^*$ as purely a function of time (and $t_\mathrm{f}$).
+2. Use Pontryagin's maximum principle to determine the optimal control strategy $u^\star$ as a function of the co-states, i.e.,  $u^\star(\lambda_1, \lambda_2)$. What can be immediately concluded about the optimal control? 
+3. Solve the co-state equations, to determine the co-states $\boldsymbol{\lambda}(t)$ on the interval $[0, t_\mathrm{f}]$.
+4. Use the co-states to express $u^\star$ as purely a function of time (and $t_\mathrm{f}$).
 
-::: {.callout-tip}
-##  Tip
-Problems like this one may appear on the **final exam**, so focus on understanding the full derivation process—not just getting the correct implementation.
+::: {.callout-tip} 
+## Hints for solving the co-state equations
+1. There is a way to determine the terminal condition $\boldsymbol{\lambda}(t_\mathrm{f})$.
+2. This allows you to immediately determine the value of one of the co-states.
+3. From $\boldsymbol{\lambda}(t_\mathrm{f})$, you can also determine $u^\star(t_\mathrm{f})$ using your earlier result.
+4. Since all necessary information is given at the end of the control interval rather than the beginning, you’ll need to solve the co-state equations backwards in time. This can be done by reversing time and solving the system as a standard initial value problem.
 :::
 
 Upload the following files as a single *.zip* file to [BRUTE](https://cw.felk.cvut.cz/brute) system.
 
 - `hw.pdf` containing your derivation of the problem solution. We do not require a $\LaTeX$ report; handwritten notes suffice, but they **must be readable**.
-- `hw.jl` containing your Julia code with implementation of the optimal control based on the template below.
+- `hw.jl`, based on the template below, containing a function `u_opt(t, tf)` that implements the **final closed-form expression** for your derived optimal control $u^\star(t)$. 
 
 ```{julia}
 #| eval: false
@@ -62,4 +68,4 @@ function u_opt(t, tf)
 end
 ```
 
-Your homework will be automatically evaluated by the BRUTE system based on your Julia implementation, so you can immediately see if you have arrived at the correct solution. However, points will be awarded only after a manual review of the derivation by us.
+Your homework will be automatically evaluated by the BRUTE system based on your Julia implementation, so you can immediately see if you have arrived at the correct solution. However, full point will be awarded only after a manual review of the derivation by us.
