@@ -125,7 +125,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_Pontryagin.html">8. Continuous-time optimal control - indirect approach via Pontryagin’s maximum principle</a></li><li class="breadcrumb-item"><a href="./cont_indir_free_final_time.html">Optimal control with a free final time</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_goals_2.html">8. Continuous-time optimal control - indirect approach via Pontryagin’s maximum principle</a></li><li class="breadcrumb-item"><a href="./cont_indir_free_final_time.html">Optimal control with a free final time</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -627,6 +627,12 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cont_indir_goals_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning goals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./cont_indir_Pontryagin.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Pontryagin’s maximum (or minimum) principle</span></a>
   </div>
@@ -989,7 +995,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_Pontryagin.html">8. Continuous-time optimal control - indirect approach via Pontryagin’s maximum principle</a></li><li class="breadcrumb-item"><a href="./cont_indir_free_final_time.html">Optimal control with a free final time</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_goals_2.html">8. Continuous-time optimal control - indirect approach via Pontryagin’s maximum principle</a></li><li class="breadcrumb-item"><a href="./cont_indir_free_final_time.html">Optimal control with a free final time</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Optimal control with a free final time</h1>
 </div>
@@ -1156,20 +1162,20 @@ Figure&nbsp;3: The value of the function at the free end of the interval is cons
 </figcaption>
 </figure>
 </div>
-<p>% The key idea for deriving the necessary conditions with one of the ends lying on a curve prescribed by the function <span class="math inline">\psi(x)</span> is described in the proof of Weierstrass-Erdmann corner conditions in Chapter three of . We already discussed the terms on the left. What is new here is the term on the right. It can also be approximated by the first two terms in Taylor’s expansion <span class="math display">
+<p>We already discussed the terms on the left. What is new here is the term on the right. It can also be approximated by the first two terms in the Taylor’s expansion <span class="math display">
 \psi(b+\Delta b) = \psi(b) + \psi'(b)\Delta b.
 </span></p>
-<p>Therefore, we can expand () into <span class="math display">
+<p>Therefore, we can expand <a href="#eq-y-should-be-on-psi-at-the-final-time" class="quarto-xref">Eq.&nbsp;5</a> into <span class="math display">
 \cancel{y^\star (b)} + (y^\star )'(b)\Delta b + \delta y(b) = \underbrace{\cancel{y^\star (b)}}_{\psi(b)}+\psi'(b)\Delta b,
 </span> from which we can express <span class="math inline">\delta y(b)</span> as <span class="math display">
-\delta y(b) = \psi'(b)\Delta b - (y^\star )'(b)\Delta b
-</span> and substitute to the boundary condition (), which after cancelling the common <span class="math inline">\Delta b</span> term yields <span id="eq-transversality"><span class="math display">\boxed{
+\delta y(b) = \psi'(b)\Delta b - (y^\star )'(b)\Delta b,
+</span> and substitute to the boundary condition <a href="#eq-boundary-conditions-free-final-time-and-state" class="quarto-xref">Eq.&nbsp;1</a>, which after cancelling the common <span class="math inline">\Delta b</span> term yields <span id="eq-transversality"><span class="math display">\boxed{
 L_{y'}(b,y(b),y'(b))\,\left[\psi'(b)-y'(b)\right] + L(b,y(b),y'(b)) = 0.}
 \tag{6}</span></span></p>
 <p>This is just one scalar boundary conditions. But the original <span class="math inline">n</span> conditions that the state that <span class="math inline">y(x) = \psi(x)</span> at the right end of the interval must be added. Altogether, we have <span class="math inline">n+1</span> boundary conditions.</p>
 <p>The above single equation <a href="#eq-transversality" class="quarto-xref">Eq.&nbsp;6</a> is called <em>transversality condition</em> for the reason to be illuminated by the next example.</p>
 <div id="exm-transversality" class="theorem example">
-<p><span class="theorem-title"><strong>Example 1</strong></span> To get an insight, consider again the minimum distance problem. This time we want to find the shortest distance from a point to a curve given by <span class="math inline">\phi(x)</span>. The answer is intuitive, but let us see what our rigorous tools offer here. The EL equation stays intact, therefore we know that the shortest path is a line. It starts at <span class="math inline">(a,0)</span> but in order to determine its end, we need to invoke the other boundary condition. Remember that the Lagrangian is <span class="math display">
+<p><span class="theorem-title"><strong>Example 1</strong></span> To get an insight, consider again the minimum distance problem. This time we want to find the shortest distance from a point to a curve given by <span class="math inline">\psi(x)</span>. The answer is intuitive, but let us see what our rigorous tools offer here. The EL equation stays intact, therefore we know that the shortest path is a line. It starts at <span class="math inline">(a,0)</span> but in order to determine its end, we need to invoke the other boundary condition. Remember that the Lagrangian is <span class="math display">
 L = \sqrt{1+(y')^2}\text{d}x
 </span> and <span class="math display">
 L_{y'} = \frac{y'}{\sqrt{1+(y')^2}}\text{d}x.
@@ -1179,7 +1185,7 @@ L_{y'} = \frac{y'}{\sqrt{1+(y')^2}}\text{d}x.
 </span> which can also be visualized using vectors in the plane <span class="math display">
 \begin{bmatrix}1 &amp; y'(b)\end{bmatrix}\, \begin{bmatrix}1 \\ \psi'(b)\end{bmatrix} = 0.
 </span></p>
-<p>The interpretation of this result is that our desired curve <span class="math inline">y</span> hits the target curve <span class="math inline">\phi</span> in a perpendicular (transverse) direction.</p>
+<p>The interpretation of this result is that our desired curve <span class="math inline">y</span> hits the target curve <span class="math inline">\psi</span> in a perpendicular (transverse) direction.</p>
 </div>
 <p>Understanding the boundary conditions is crucial. Let us have yet another look at the result just derived. It can be written as <span class="math display">\boxed{
 \left.L_{y'}\psi'\right|_{b} - \left.H\right|_{b} = 0.}

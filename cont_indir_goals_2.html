@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Limitations for MIMO systems – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>Learning goals – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./limitations_references.html" rel="next">
-<link href="./limitations_SISO.html" rel="prev">
+<link href="./cont_indir_Pontryagin.html" rel="next">
+<link href="./cont_indir_hw.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,49 +69,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -125,7 +82,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./limitations_SISO.html">13. Limitations of achievable performance</a></li><li class="breadcrumb-item"><a href="./limitations_MIMO.html">Limitations for MIMO systems</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_goals_2.html">8. Continuous-time optimal control - indirect approach via Pontryagin’s maximum principle</a></li><li class="breadcrumb-item"><a href="./cont_indir_goals_2.html">Learning goals</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -627,7 +584,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_goals_2.html" class="sidebar-item-text sidebar-link">
+  <a href="./cont_indir_goals_2.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Learning goals</span></a>
   </div>
 </li>
@@ -909,7 +866,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./limitations_MIMO.html" class="sidebar-item-text sidebar-link active">
+  <a href="./limitations_MIMO.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Limitations for MIMO systems</span></a>
   </div>
 </li>
@@ -978,29 +935,17 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#directions-in-mimo-systems" id="toc-directions-in-mimo-systems" class="nav-link active" data-scroll-target="#directions-in-mimo-systems">Directions in MIMO systems</a></li>
-  <li><a href="#conditioning-of-mimo-systems" id="toc-conditioning-of-mimo-systems" class="nav-link" data-scroll-target="#conditioning-of-mimo-systems">Conditioning of MIMO systems</a></li>
-  <li><a href="#relative-gain-array-rga" id="toc-relative-gain-array-rga" class="nav-link" data-scroll-target="#relative-gain-array-rga">Relative gain array (RGA)</a></li>
-  <li><a href="#functional-controllability" id="toc-functional-controllability" class="nav-link" data-scroll-target="#functional-controllability">Functional controllability</a></li>
-  <li><a href="#interpolation-conditions-for-mimo-systems" id="toc-interpolation-conditions-for-mimo-systems" class="nav-link" data-scroll-target="#interpolation-conditions-for-mimo-systems">Interpolation conditions for MIMO systems</a></li>
-  <li><a href="#bandwidth-limitations-due-to-unstable-poles-and-zeros" id="toc-bandwidth-limitations-due-to-unstable-poles-and-zeros" class="nav-link" data-scroll-target="#bandwidth-limitations-due-to-unstable-poles-and-zeros">Bandwidth limitations due to unstable poles and zeros</a></li>
-  <li><a href="#limits-given-by-presence-of-disturbance-andor-reference" id="toc-limits-given-by-presence-of-disturbance-andor-reference" class="nav-link" data-scroll-target="#limits-given-by-presence-of-disturbance-andor-reference">Limits given by presence of disturbance and/or reference</a></li>
-  <li><a href="#disturbance-rejection-by-a-plant-with-rhp-zero" id="toc-disturbance-rejection-by-a-plant-with-rhp-zero" class="nav-link" data-scroll-target="#disturbance-rejection-by-a-plant-with-rhp-zero">Disturbance rejection by a plant with RHP zero</a></li>
-  <li><a href="#limits-given-by-the-input-constraints-saturation" id="toc-limits-given-by-the-input-constraints-saturation" class="nav-link" data-scroll-target="#limits-given-by-the-input-constraints-saturation">Limits given by the input constraints (saturation)</a></li>
-  <li><a href="#limits-given-by-uncertainty-in-the-model-in-open-loop" id="toc-limits-given-by-uncertainty-in-the-model-in-open-loop" class="nav-link" data-scroll-target="#limits-given-by-uncertainty-in-the-model-in-open-loop">Limits given by uncertainty in the model: in open loop</a>
-  <ul class="collapse">
-  <li><a href="#in-open-loop" id="toc-in-open-loop" class="nav-link" data-scroll-target="#in-open-loop">In open loop</a></li>
-  <li><a href="#in-closed-loop" id="toc-in-closed-loop" class="nav-link" data-scroll-target="#in-closed-loop">In closed loop</a></li>
-  </ul></li>
+  <li><a href="#knowledge-remember-and-understand" id="toc-knowledge-remember-and-understand" class="nav-link active" data-scroll-target="#knowledge-remember-and-understand">Knowledge (remember and understand)</a></li>
+  <li><a href="#skills-use-the-knowledge-to-solve-a-problem" id="toc-skills-use-the-knowledge-to-solve-a-problem" class="nav-link" data-scroll-target="#skills-use-the-knowledge-to-solve-a-problem">Skills (use the knowledge to solve a problem)</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./limitations_SISO.html">13. Limitations of achievable performance</a></li><li class="breadcrumb-item"><a href="./limitations_MIMO.html">Limitations for MIMO systems</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_goals_2.html">8. Continuous-time optimal control - indirect approach via Pontryagin’s maximum principle</a></li><li class="breadcrumb-item"><a href="./cont_indir_goals_2.html">Learning goals</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Limitations for MIMO systems</h1>
+<h1 class="title">Learning goals</h1>
 </div>
 
 
@@ -1017,73 +962,21 @@ window.Quarto = {
 </header>
 
 
-<p>Multiple-input-multiple-output (MIMO) systems are subject to limitations of the same origin as single-input-single-output (SISO) systems: unstable poles, “unstable” zeros, delays, disturbances, saturation, etc. However, the vector character of inputs and outputs introduces both opportunities to mitigate those limitations, and… new limitations.</p>
-<section id="directions-in-mimo-systems" class="level2">
-<h2 class="anchored" data-anchor-id="directions-in-mimo-systems">Directions in MIMO systems</h2>
-<p>With vector inputs and vector outputs, the input-output model of an LTI MIMO system is a <em>matrix</em> (of transfer functions). As such, it can be characterized not only by various scalar quantities (like poles, zeros, etc.), but also by the associated <em>directions</em> in the input and output spaces.</p>
-<div id="exm-mimo-zeros-directions" class="theorem example">
-<p><span class="theorem-title"><strong>Example 1</strong></span> Consider the transfer function matrix (or matrix of transfer functions) <span class="math display">
-G(s) = \frac{1}{(0.2s+1)(s+1)}\begin{bmatrix}1 &amp; 1\\ 1+2s&amp; 2\end{bmatrix}.
-</span></p>
-<p>Recall that a complex number <span class="math inline">z\in\mathbb C</span> is a zero of <span class="math inline">G</span> if the rank of <span class="math inline">G(z)</span> is less than the rank of <span class="math inline">G(s)</span> for most <span class="math inline">s</span>. While reliable numerical algorithms for computing zeros of MIMO systems work with state-space realizations, in this simple case we can easily verify that there is only one zero <span class="math inline">z=1/2</span>.</p>
-<p>Zeros in the RHP only exhibit themselves in some directions.</p>
-</div>
-</section>
-<section id="conditioning-of-mimo-systems" class="level2">
-<h2 class="anchored" data-anchor-id="conditioning-of-mimo-systems">Conditioning of MIMO systems</h2>
-<p><span class="math display">\boxed{
-\gamma (G) = \frac{\bar{\sigma}(G)}{\underline{\sigma}(G)}
-}
-</span></p>
+<section id="knowledge-remember-and-understand" class="level2">
+<h2 class="anchored" data-anchor-id="knowledge-remember-and-understand">Knowledge (remember and understand)</h2>
 <ul>
-<li>Ill-conditioned for <span class="math inline">\gamma&gt;10</span></li>
-<li>But depends on scaling!</li>
-</ul>
-<p>Therefore minimized conditioning number <span class="math display">\boxed{
-\gamma^\star(G) = \min_{D_1, D_2}\gamma(D_1GD_2)
-}
-</span> but difficult do compute (=upper bound on <span class="math inline">\mu</span>)</p>
-<p>RGA can be used to give a reasonable estimate.</p>
-</section>
-<section id="relative-gain-array-rga" class="level2">
-<h2 class="anchored" data-anchor-id="relative-gain-array-rga">Relative gain array (RGA)</h2>
-<p>Relative Gain Array (RGA) as an indicator of difficulties with control <span class="math display">\boxed{\Lambda(G) = G \circ (G^{-1})^T}</span></p>
-<ul>
-<li>independent of scaling,</li>
-<li>sum of elements in rows and columns is 1,</li>
-<li>sum of absolute values of elements of RGA is very close to the minimized sensitivity number <span class="math inline">\gamma^\star</span>, hence a system with large RGA entries is always ill-conditioned (but system with large <span class="math inline">\gamma</span> can have small RGA),</li>
-<li>RGA for a triangular system is an identity matrix,</li>
-<li>relative uncertainty of an element of a transfer function matrix equal to (negative) inverse of the corresponding RGA entry makes the system singular.</li>
+<li>Discuss what kind of changes to the necessary conditions of optimality in the form of Euler-Lagrange equations must be made if the final time is relaxed. Consider two cases: first, the state at the final time is free, second, the state at the final time must be on some (hyper)surface.</li>
+<li>Explain the essence of Pontryagin’s principle of maximum. Give the full first-order necessary conditions of optimality (for optimal control) using Pontryagin’s principle (instead of the equation of stationarity).</li>
+<li>Give (a sketch of) the derivation of time-optimal control for a double integrator with bounds on the control signal – bang-bang control. Discuss the key properties of the resulting controller. Discuss also the practical issues related to implementation. What kind of heuristics could be used to compensate those issues?</li>
 </ul>
 </section>
-<section id="functional-controllability" class="level2">
-<h2 class="anchored" data-anchor-id="functional-controllability">Functional controllability</h2>
-</section>
-<section id="interpolation-conditions-for-mimo-systems" class="level2">
-<h2 class="anchored" data-anchor-id="interpolation-conditions-for-mimo-systems">Interpolation conditions for MIMO systems</h2>
-</section>
-<section id="bandwidth-limitations-due-to-unstable-poles-and-zeros" class="level2">
-<h2 class="anchored" data-anchor-id="bandwidth-limitations-due-to-unstable-poles-and-zeros">Bandwidth limitations due to unstable poles and zeros</h2>
-</section>
-<section id="limits-given-by-presence-of-disturbance-andor-reference" class="level2">
-<h2 class="anchored" data-anchor-id="limits-given-by-presence-of-disturbance-andor-reference">Limits given by presence of disturbance and/or reference</h2>
-</section>
-<section id="disturbance-rejection-by-a-plant-with-rhp-zero" class="level2">
-<h2 class="anchored" data-anchor-id="disturbance-rejection-by-a-plant-with-rhp-zero">Disturbance rejection by a plant with RHP zero</h2>
-</section>
-<section id="limits-given-by-the-input-constraints-saturation" class="level2">
-<h2 class="anchored" data-anchor-id="limits-given-by-the-input-constraints-saturation">Limits given by the input constraints (saturation)</h2>
-</section>
-<section id="limits-given-by-uncertainty-in-the-model-in-open-loop" class="level2">
-<h2 class="anchored" data-anchor-id="limits-given-by-uncertainty-in-the-model-in-open-loop">Limits given by uncertainty in the model: in open loop</h2>
-<section id="in-open-loop" class="level3">
-<h3 class="anchored" data-anchor-id="in-open-loop">In open loop</h3>
-</section>
-<section id="in-closed-loop" class="level3">
-<h3 class="anchored" data-anchor-id="in-closed-loop">In closed loop</h3>
+<section id="skills-use-the-knowledge-to-solve-a-problem" class="level2">
+<h2 class="anchored" data-anchor-id="skills-use-the-knowledge-to-solve-a-problem">Skills (use the knowledge to solve a problem)</h2>
+<ul>
+<li>Design a constrained optimal (possibly minimum-time) controller for a continuous-time systems by invoking Pontryagin’s principle of maximum.</li>
+</ul>
 
 
-</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
@@ -1506,13 +1399,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./limitations_SISO.html" class="pagination-link" aria-label="Limitations for SISO systems">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Limitations for SISO systems</span>
+      <a href="./cont_indir_hw.html" class="pagination-link" aria-label="Homework">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Homework</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./limitations_references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cont_indir_Pontryagin.html" class="pagination-link" aria-label="Pontryagin's maximum (or minimum) principle">
+        <span class="nav-page-text">Pontryagin’s maximum (or minimum) principle</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
