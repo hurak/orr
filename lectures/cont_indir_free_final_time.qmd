@@ -188,22 +188,21 @@ $${#eq-y-should-be-on-psi-at-the-final-time}
 This corresponds to the situation depicted in @fig-free-end-of-interval-on-curve.
 
 ![The value of the function at the free end of the interval is constrained by another function](figures/free_end_of_interval_on_curve.png){#fig-free-end-of-interval-on-curve width=60%}
-
-% The key idea for deriving the necessary conditions with one of the ends lying on a curve prescribed by the function $\psi(x)$ is described\footnote{Do not be frustrated that it was also assigned as an Exercise 2.6 earlier in the book. I seriously doubt it could be solved with a modest effort without seeing the trick first.} in the proof of Weierstrass-Erdmann corner conditions in Chapter three of \cite{liberzon_calculus_2011}. 
-We already discussed the terms on the left. What is new here is the term on the right. It can also be approximated by the first two terms in Taylor's expansion
+ 
+We already discussed the terms on the left. What is new here is the term on the right. It can also be approximated by the first two terms in the Taylor's expansion
 $$
  \psi(b+\Delta b) = \psi(b) + \psi'(b)\Delta b.
 $$
 
-Therefore, we can expand (\ref{eq:y_should_be_on_psi_at_the_final_time}) into 
+Therefore, we can expand @eq-y-should-be-on-psi-at-the-final-time into 
 $$
  \cancel{y^\star (b)} + (y^\star )'(b)\Delta b + \delta y(b) = \underbrace{\cancel{y^\star (b)}}_{\psi(b)}+\psi'(b)\Delta b,
 $$
 from which we can express $\delta y(b)$ as
 $$
- \delta y(b) = \psi'(b)\Delta b - (y^\star )'(b)\Delta b 
+ \delta y(b) = \psi'(b)\Delta b - (y^\star )'(b)\Delta b, 
 $$
-and substitute to the boundary condition (\ref{eq:boundary_conditions_free_final_time_and_state}), which after cancelling the common $\Delta b$ term yields
+and substitute to the boundary condition @eq-boundary-conditions-free-final-time-and-state, which after cancelling the common $\Delta b$ term yields
 $$\boxed{
  L_{y'}(b,y(b),y'(b))\,\left[\psi'(b)-y'(b)\right] + L(b,y(b),y'(b)) = 0.}
 $${#eq-transversality}
@@ -213,7 +212,7 @@ This is just one scalar boundary conditions. But the original $n$ conditions tha
 The above single equation @eq-transversality is called *transversality condition* for the reason to be illuminated by the next example.
 
 ::: {#exm-transversality}
-To get an insight, consider again the minimum distance problem. This time we want to find the shortest distance from a point to a curve given by $\phi(x)$. The answer is intuitive, but let us see what our rigorous tools offer here. The EL equation stays intact, therefore we know that the shortest path is a line. It starts at $(a,0)$ but in order to determine its end, we need to invoke the other boundary condition. Remember that the Lagrangian is
+To get an insight, consider again the minimum distance problem. This time we want to find the shortest distance from a point to a curve given by $\psi(x)$. The answer is intuitive, but let us see what our rigorous tools offer here. The EL equation stays intact, therefore we know that the shortest path is a line. It starts at $(a,0)$ but in order to determine its end, we need to invoke the other boundary condition. Remember that the Lagrangian is
 $$
  L = \sqrt{1+(y')^2}\text{d}x
 $$
@@ -231,7 +230,7 @@ $$
  \begin{bmatrix}1 & y'(b)\end{bmatrix}\, \begin{bmatrix}1 \\ \psi'(b)\end{bmatrix} = 0.
 $$
 
-The interpretation of this result is that our desired curve $y$ hits the target curve $\phi$ in a perpendicular (transverse) direction. 
+The interpretation of this result is that our desired curve $y$ hits the target curve $\psi$ in a perpendicular (transverse) direction. 
 :::
 
 Understanding the boundary conditions is crucial. Let us have yet another look at the result just derived. It can be written as
