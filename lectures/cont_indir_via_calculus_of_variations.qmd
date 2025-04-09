@@ -8,6 +8,7 @@ format:
     html:
         html-math-method: katex
         code-fold: true
+        code-summary: "Show the code"
 crossref:
   fig-prefix: Fig. 
   eq-prefix: Eq.
@@ -144,4 +145,59 @@ Of course, we must not forget to add the boundary conditions @eq-boundary-condit
 ::: {.callout-warning}
 ## Two different conventions for defining the Hamiltonian in optimal control
 Our choice of the Hamiltonian function was determined by our somewhat arbitrary choice of formulating the constraint function (that is, the function that should be equal to zero) as $\dot {\bm x}-\mathbf f(\bm x,\bm u,\mathbf t)$ when defining the augmented Lagrangian $L^\mathrm{aug}(\bm x,\bm u,\bm\lambda,t) = L(\bm x,\bm u,t)+\bm\lambda^\top\left( \dot {\bm x}-\mathbf f(\bm x,\bm u,\mathbf t)\right)$. If only we (equally arbitrarily) had chosen to define the constraint function as $\mathbf f(\bm x,\bm u,\mathbf t)-\dot {\bm x}$, we would have ended up with a different augmented Lagrangian, for which the more appropriate definition of the Hamiltonian function would be $H(\bm x,\bm u,\bm\lambda,t) = L(\bm x,\bm u,t)+ \bm\lambda^\top \mathbf f(\bm x,\bm u,t)$. More on the implications of this in the [dedicated section](cont_indir_notation.qmd). 
+:::
+
+::: {#exm-two-point-boundary-value-problem-for-pendulum-swingup}
+## Pendulum swingup problem approached as an optimal control problem and solved as a two-point boundary value problem
+We consider a pendulum on a horizontally moving cart. The only control input is the reference acceleration of the cart – it is assumed that a feedback controller is already implemented that tracks this reference acceleration. The resulting model of dynamics is
+$$
+\ddot \theta =  \frac{\mathrm g}{l}\sin\theta + \frac{1}{l}\cos\theta \;u, 
+$$
+where $u$ is the reference acceleration of the cart, $l$ is the length of the pendulum, and $g$ is the gravitational constant, $\theta(t)$ is the angular deviation from the upright vertical, positive in the counterclockwise direction. 
+
+The pendulum is initially at rest in the downward vertical position, that is, $\bm x(0) = \begin{bmatrix}\pi\\ 0\end{bmatrix}$. The desired final state is $\bm x(t_\mathrm{f}) = \begin{bmatrix}0\\ 0\end{bmatrix}$, that is, the pendulum should be upright and at rest. The final time $t_\mathrm{f}$ is fixed, we must specify it before solving the optimal control problem (in the next chapter we will learn how to consider it an optimization variable too). 
+
+``` {julia}
+#| label: fig-pendulum-swingup-solved-as-bvp
+#| fig-cap: Optimal trajectories of state, costate and control for the pendulum swingup problem.
+using DifferentialEquations
+function pendulum_swingup_bvp()
+    g = 9.81                                                        # Gravitational acceleration.
+    l = 1.0                                                         # Length of the pendulum.
+    q = [1.0, 1.0]                                                  # State weights.
+    r = 100.0                                                       # Control weight.  
+    #f(x,u) = [x[2]; g/l*sin(x[1]) + 1/l*cos(x[1])*u]
+    #L(x,u) = 1/2(q[1]*x[1]^2 + q[2]*x[2]^2 + u^2)
+    #H(x,u,λ) = L(x,u) + λ[1]*f(x,u)[1] + λ[2]*f(x,u)[2]
+    tinit = 0.0                                                     # Initial time.
+    tfinal = 1.0                                                    # Final time.
+    xinit = [pi, 0.0]                                               # Initial state.
+    xfinal = [0.0, 0.0]                                             # Final state.
+    function statecostateeq!(dw, w, p, t)
+        x = w[1:2]                                                  # State vector [θ, ω].
+        λ = w[3:4]                                                  # Costate vector.
+        u = -1/(r*l)*cos(x[1])*λ[2]                                 # Optimal control from the stationarity equation.
+        dw[1] = x[2]                                                # State equation 1.
+        dw[2] = g/l*sin(x[1]) + 1/l*cos(x[1])*u                     # State equation 2. Damping: - b/(m*l^2)*x[2]
+        dw[3] = -q[1]*x[1] -( g/l*cos(x[1]) - 1/l*sin(x[1])*u)*λ[2] # Costate equation 1.
+        dw[4] = -q[2]*x[2] - λ[1]                                   # Costate equation 2.
+    end
+    function bc!(res, w, p,t)
+        res[1:2] = w(tinit)[1:2] - xinit
+        res[3:4] = w(tfinal)[1:2] - xfinal   
+    end
+    w0 = [xinit[1], xinit[2], 0.0, 0.0]                             # Guess at the initial state and costate.
+    tspan = (tinit, tfinal)                                         # Initial and final time.
+    bvprob = BVProblem(statecostateeq!, bc!, w0, tspan)
+    sol = solve(bvprob, MIRK4(), dt=0.05)                           # Solve the BVP.
+    u = -1/(r*l)*cos.(sol[1,:]).*sol[4,:]
+    return sol.t, sol[1:2,:], sol[3:4,:], u
+end
+t, x, λ, u = pendulum_swingup_bvp()
+using Plots
+p1 = plot(t, x', ylabel="States", label=["θ" "ω"], lw=2)
+p2 = plot(t, λ', ylabel="Costates", label=["λ₁" "λ₂"], lw=2)
+p3 = plot(t, u, ylabel="Control", label="u", lw=2)
+plot(p1, p2, p3, layout=(3,1), size=(600, 600))
+```
 :::
