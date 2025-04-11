@@ -102,7 +102,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_numerical_indirect.html">9. Numerical methods for continuous-time optimal control - both indirect and direct approaches</a></li><li class="breadcrumb-item"><a href="./cont_numerical_references.html">References</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_numerical_goals.html">9. Numerical methods for continuous-time optimal control - both indirect and direct approaches</a></li><li class="breadcrumb-item"><a href="./cont_numerical_references.html">References</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -651,6 +651,12 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cont_numerical_goals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning goals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./cont_numerical_indirect.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Numerical methods for indirect approach</span></a>
   </div>
@@ -956,7 +962,7 @@ div.csl-indent {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_numerical_indirect.html">9. Numerical methods for continuous-time optimal control - both indirect and direct approaches</a></li><li class="breadcrumb-item"><a href="./cont_numerical_references.html">References</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_numerical_goals.html">9. Numerical methods for continuous-time optimal control - both indirect and direct approaches</a></li><li class="breadcrumb-item"><a href="./cont_numerical_references.html">References</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">References</h1>
 </div>
@@ -975,9 +981,11 @@ div.csl-indent {
 </header>
 
 
-<p>The indirect approach to the continuous-time optimal control problem (OCP) formulates the necessary conditions of optimality as a two-point boundary value problem (TP-BVP), which generally requires <em>numerical methods</em>. The direct approach to the continuous-time OCP relies heavily on numerical methods too, namely the methods for solving nonlinear programs (NLP) and methods for solving ordinary differential equations (ODE). Numerical methods for both approaches share a lot of common principles and tools, and these are collectively presented in the literature as called <em>numerical optimal control</em>. A recommendable (and freely online available) introduction to these methods is <span class="citation" data-cites="grosNumericalOptimalControl2022"><a href="#ref-grosNumericalOptimalControl2022" role="doc-biblioref">[1]</a></span>. Shorter version of this is in chapter 8 of <span class="citation" data-cites="rawlingsModelPredictiveControl2017"><a href="#ref-rawlingsModelPredictiveControl2017" role="doc-biblioref">[2]</a></span>, which is also available online. A more comprehensive treatment is in <span class="citation" data-cites="bettsPracticalMethodsOptimal2020"><a href="#ref-bettsPracticalMethodsOptimal2020" role="doc-biblioref">[3]</a></span>.</p>
+<p>The indirect approach to the continuous-time optimal control problem (OCP), which formulates the necessary conditions of optimality as a two-point boundary value problem (TP-BVP), generally calls for <em>numerical methods</em> that iterate over trajectories. Besides some simple textbook problems allowing closed-form solutions, an regular exception is the LQR problem, for which a proportional feedback control is determined by solving (albeit also numerically) the continuous-time algebraic Riccati equation (CARE).</p>
+<p>The direct approach to the continuous-time OCP proceeds by transcribing (discretizing) the continuous-time problem into a nonlinear programming problem (NLP), which is then solved <em>numerically</em> for the optimal (discretized) trajectories.</p>
+<p>Numerical methods for both direct and indirect approaches share a lot of common principles and tools. These are collectively presented in the literature as called <em>numerical optimal control</em>. A recommendable (and freely online available) introduction to these methods is <span class="citation" data-cites="grosNumericalOptimalControl2022"><a href="#ref-grosNumericalOptimalControl2022" role="doc-biblioref">[1]</a></span>. Shorter version of this is in <span class="citation" data-cites="rawlingsModelPredictiveControl2017"><a href="#ref-rawlingsModelPredictiveControl2017" role="doc-biblioref">[2, Ch. 8]</a></span>, which is also freely available online. A more comprehensive treatment by another authors is in <span class="citation" data-cites="bettsPracticalMethodsOptimal2020"><a href="#ref-bettsPracticalMethodsOptimal2020" role="doc-biblioref">[3]</a></span>.</p>
 <p>Some survey papers such as <span class="citation" data-cites="raoSurveyNumericalMethods2009"><a href="#ref-raoSurveyNumericalMethods2009" role="doc-biblioref">[4]</a></span> and <span class="citation" data-cites="vonstrykDirectIndirectMethods1992"><a href="#ref-vonstrykDirectIndirectMethods1992" role="doc-biblioref">[5]</a></span> can also be useful, although now primarily as historical accounts. Similarly with the classics <span class="citation" data-cites="kirkOptimalControlTheory2004"><a href="#ref-kirkOptimalControlTheory2004" role="doc-biblioref">[6]</a></span> and <span class="citation" data-cites="brysonAppliedOptimalControl1975"><a href="#ref-brysonAppliedOptimalControl1975" role="doc-biblioref">[7]</a></span>, which cover the indirect approach only.</p>
-<p>Another name under which the numerical methods for the direct approach are presented is trajectory optimization. There are quite a few tutorials and surveys such as <span class="citation" data-cites="kellyIntroductionTrajectoryOptimization2017"><a href="#ref-kellyIntroductionTrajectoryOptimization2017" role="doc-biblioref">[8]</a></span> and <span class="citation" data-cites="kellyTranscriptionMethodsTrajectory2017"><a href="#ref-kellyTranscriptionMethodsTrajectory2017" role="doc-biblioref">[9]</a></span>.</p>
+<p>Another name under which the numerical methods for the direct approach are presented is trajectory optimization. There are quite a few tutorials and surveys such as <span class="citation" data-cites="kellyIntroductionTrajectoryOptimization2017"><a href="#ref-kellyIntroductionTrajectoryOptimization2017" role="doc-biblioref">[8]</a></span> and <span class="citation" data-cites="kellyTranscriptionMethodsTrajectory2017"><a href="#ref-kellyTranscriptionMethodsTrajectory2017" role="doc-biblioref">[9]</a></span>. Recommendable is surely the dedicated chapter of the popular course <span class="citation" data-cites="tedrakeUnderactuatedRoboticsAlgorithms2024"><a href="#ref-tedrakeUnderactuatedRoboticsAlgorithms2024" role="doc-biblioref">[10, Ch. 10]</a></span>.</p>
 
 
 
@@ -1009,6 +1017,9 @@ div.csl-indent {
 </div>
 <div id="ref-kellyTranscriptionMethodsTrajectory2017" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[9] </div><div class="csl-right-inline">M. P. Kelly, <span>“Transcription <span>Methods</span> for <span>Trajectory Optimization</span>: A beginners tutorial,”</span> <em>arXiv:1707.00284 [math]</em>, Jul. 2017, Accessed: Apr. 06, 2021. [Online]. Available: <a href="http://arxiv.org/abs/1707.00284">http://arxiv.org/abs/1707.00284</a></div>
+</div>
+<div id="ref-tedrakeUnderactuatedRoboticsAlgorithms2024" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[10] </div><div class="csl-right-inline">R. Tedrake, <span>“Underactuated <span>Robotics</span>: <span>Algorithms</span> for <span>Walking</span>, <span>Running</span>, <span>Swimming</span>, <span>Flying</span>, and <span>Manipulation</span> (<span>Course Notes</span> for <span>MIT</span> 6.832),”</span> 2024. Accessed: Apr. 11, 2025. [Online]. Available: <a href="https://underactuated.mit.edu/">https://underactuated.mit.edu/</a></div>
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
