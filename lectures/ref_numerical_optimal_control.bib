@@ -44,8 +44,7 @@
 @book{bettsPracticalMethodsOptimal2009,
   title = {Practical {{Methods}} for {{Optimal Control}} and {{Estimation Using Nonlinear Programming}}},
   author = {Betts, John T.},
-  year = {2009},
-  month = nov,
+  year = {2010},
   edition = {2},
   publisher = {Society for Industrial \& Applied Mathematics},
   address = {Philadelphia},
@@ -106,7 +105,20 @@
   url = {http://arxiv.org/abs/2304.06130},
   urldate = {2023-04-18},
   abstract = {A new method is developed for accurately approximating the solution to state-variable inequality path constrained optimal control problems using a multiple-domain adaptive Legendre-Gauss-Radau collocation method. The method consists of the following parts. First, a structure detection method is developed to estimate switch times in the activation and deactivation of state-variable inequality path constraints. Second, using the detected structure, the domain is partitioned into multiple-domains where each domain corresponds to either a constrained or an unconstrained segment. Furthermore, additional decision variables are introduced in the multiple-domain formulation, where these additional decision variables represent the switch times of the detected active state-variable inequality path constraints. Within a constrained domain, the path constraint is differentiated with respect to the independent variable until the control appears explicitly, and this derivative is set to zero along the constrained arc while all preceding derivatives are set to zero at the start of the constrained arc. The time derivatives of the active state-variable inequality path constraints are computed using automatic differentiation and the properties of the chain rule. The method is demonstrated on two problems, the first being a benchmark optimal control problem which has a known analytical solution and the second being a challenging problem from the field of aerospace engineering in which there is no known analytical solution. When compared against previously developed adaptive Legendre-Gauss-Radau methods, the results show that the method developed in this paper is capable of computing accurate solutions to problems whose solution contain active state-variable inequality path constraints.},
-  archiveprefix = {arxiv}
+  archiveprefix = {arXiv}
+}
+
+@book{canutoSpectralMethodsFundamentals2010,
+  title = {Spectral {{Methods}}: {{Fundamentals}} in {{Single Domains}}},
+  shorttitle = {Spectral {{Methods}}},
+  author = {Canuto, Claudio and Hussaini, M. Yousuff and Quarteroni, Alfio and Zang, Thomas A.},
+  year = {2010},
+  month = oct,
+  edition = {Softcover reprint of hardcover 1st ed. 2006 edition},
+  publisher = {Springer},
+  abstract = {Since the publication of "Spectral Methods in Fluid Dynamics", spectral methods, particularly in their multidomain version, have become firmly established as a mainstream tool for scientific and engineering computation. While retaining the tight integration between the theoretical and practical aspects of spectral methods that was the hallmark of the earlier book, Canuto et al. now incorporate the many improvements in the algorithms and the theory of spectral methods that have been made since 1988. The initial treatment Fundamentals in Single Domains discusses the fundamentals of the approximation of solutions to ordinary and partial differential equations on single domains by expansions in smooth, global basis functions. The first half of the book provides the algorithmic details of orthogonal expansions, transform methods, spectral discretization of differential equations plus their boundary conditions, and solution of the discretized equations by direct and iterative methods. The second half furnishes a comprehensive discussion of the mathematical theory of spectral methods on single domains, including approximation theory, stability and convergence, and illustrative applications of the theory to model boundary-value problems. Both the algorithmic and theoretical discussions cover spectral methods on tensor-product domains, triangles and tetrahedra. All chapters are enhanced with material on the Galerkin with numerical integration version of spectral methods. The discussion of direct and iterative solution methods is greatly expanded as are the set of numerical examples that illustrate the key properties of the various types of spectral approximations and the solution algorithms.A companion book "Evolution to Complex Geometries and Applications to Fluid Dynamics" contains an extensive survey of the essential algorithmic and theoretical aspects of spectral methods for complex geometries and provides detailed discussions of spectral algorithms forfluid dynamics in simple and complex geometries.},
+  isbn = {978-3-642-06800-3},
+  langid = {english}
 }
 
 @article{conwaySurveyMethodsAvailable2011,
@@ -127,6 +139,44 @@
   annotation = {00067}
 }
 
+@misc{devakumarthammisettyDevelopmentMultiphaseOptimal2020,
+  title = {{{MPOPT}} : {{Optimal}} Control Problem Solver},
+  author = {{Devakumar Thammisetty}},
+  year = {2020},
+  url = {https://mpopt.readthedocs.io/en/latest/},
+  urldate = {2025-04-10},
+  howpublished = {Unpublished}
+}
+
+@article{elnagarPseudospectralLegendreMethod1995,
+  title = {The Pseudospectral {{Legendre}} Method for Discretizing Optimal Control Problems},
+  author = {Elnagar, G. and Kazemi, M.A. and Razzaghi, M.},
+  year = {1995},
+  month = oct,
+  journal = {IEEE Transactions on Automatic Control},
+  volume = {40},
+  number = {10},
+  pages = {1793--1796},
+  issn = {1558-2523},
+  doi = {10.1109/9.467672},
+  url = {https://ieeexplore.ieee.org/abstract/document/467672?casa_token=wO0pPSNF5cUAAAAA:4VwWiXD7e8Ft4RxBGNM_xBilL77umwzizKoaJmWqZrJ2O7oWu98F50NeZZvWqKOAB3hID15NhQ},
+  urldate = {2024-04-16},
+  abstract = {This paper presents a computational technique for optimal control problems including state and control inequality constraints. The technique is based on spectral collocation methods used in the solution of differential equations. The system dynamics are collocated at Legendre-Gauss-Lobatto points. The derivative x/spl dot/(t) of the state x(t) is approximated by the analytic derivative of the corresponding interpolating polynomial. State and control inequality constraints are collocated at Legendre-Gauss-Lobatto nodes. The integral involved in the definition of the performance index is discretized based on the Gauss-Lobatto quadrature rule. The optimal control problem is thereby converted into a mathematical programming program. Thus existing, well-developed optimization algorithms may be used to solve the transformed problem. The method is easy to implement, capable of handling various types of constraints, and yields very accurate results. Illustrative examples are included to demonstrate the capability of the proposed method, and a comparison is made with existing methods in the literature.{$<>$}}
+}
+
+@inproceedings{fahrooAdvancesPseudospectralMethods2008,
+  title = {Advances in {{Pseudospectral Methods}} for {{Optimal Control}}},
+  booktitle = {{{AIAA Guidance}}, {{Navigation}} and {{Control Conference}} and {{Exhibit}}},
+  author = {Fahroo, Fariba and Ross, I. Michael},
+  year = {2008},
+  month = aug,
+  publisher = {{American Institute of Aeronautics and Astronautics}},
+  address = {Honolulu, Hawaii},
+  doi = {10.2514/6.2008-7309},
+  url = {https://arc.aiaa.org/doi/abs/10.2514/6.2008-7309},
+  urldate = {2024-04-16}
+}
+
 @article{febboNLOptControlModelingLanguage2020,
   title = {{{NLOptControl}}: {{A}} Modeling Language for Solving Optimal Control Problems},
   shorttitle = {{{NLOptControl}}},
@@ -139,7 +189,7 @@
   url = {http://arxiv.org/abs/2003.00142},
   urldate = {2021-04-07},
   abstract = {Current direct-collocation-based optimal control software is either easy to use or fast, but not both. This is a major limitation for users that are trying to formulate complex optimal control problems (OCPs) for use in on-line applications. This paper introduces NLOptControl, an open-source modeling language that allows users to both easily formulate and quickly solve nonlinear OCPs using direct-collocation methods. To achieve these attributes, NLOptControl (1) is written in an efficient, dynamically-typed computing language called Julia, (2) extends an optimization modeling language called JuMP to provide a natural algebraic syntax for modeling nonlinear OCPs; and (3) uses reverse automatic differentiation with the acrylic-coloring method to exploit sparsity in the Hessian matrix. This work explores the novel design features of NLOptControl and compares its syntax and speed to those of PROPT. The syntax comparisons shows that NLOptControl models OCPs more concisely than PROPT. The speeds of various collocation methods within PROPT and NLOptControl are benchmarked over a range of collocation points using performance profiles; overall, NLOptControl's single, two, and four interval pseudospectral methods are roughly \$14\$, \$26\$, and \$36\$ times faster than PROPT's, respectively. NLOptControl is well-suited to improve existing off-line and on-line control systems and to engender new ones.},
-  archiveprefix = {arxiv}
+  archiveprefix = {arXiv}
 }
 
 @inproceedings{filoFunctionSpaceApproach2018,
@@ -151,6 +201,47 @@
   pages = {3447--3453},
   doi = {10.23919/ACC.2018.8430794},
   abstract = {We develop an iterative numerical method for open-loop optimal control problems based on constrained-gradient descent in function space. The descent algorithm uses a projection of the gradient onto the tangent space of the manifold representing the constraints of the dynamical equation. A key feature of our algorithm is preconditioning of the quadratic portion of the cost functional with a relatively simple procedure. This preconditioning has a simple geometric interpretation, which gives intuitive reasoning for the rapid convergence of the iterations in neighborhoods of local optima. We give two illustrative examples including a continuous stirred-tank chemical reactor, and a bilinear quantum system. The relation of this algorithm to earlier proposed Banach space projection algorithms is outlined.}
+}
+
+@article{foehnTimeoptimalPlanningQuadrotor2021,
+  title = {Time-Optimal Planning for Quadrotor Waypoint Flight},
+  author = {Foehn, Philipp and Romero, Angel and Scaramuzza, Davide},
+  year = {2021},
+  month = jul,
+  journal = {Science Robotics},
+  volume = {6},
+  number = {56},
+  pages = {eabh1221},
+  publisher = {American Association for the Advancement of Science},
+  doi = {10.1126/scirobotics.abh1221},
+  url = {https://www.science.org/doi/full/10.1126/scirobotics.abh1221},
+  urldate = {2024-09-26},
+  abstract = {Quadrotors are among the most agile flying robots. However, planning time-optimal trajectories at the actuation limit through multiple waypoints remains an open problem. This is crucial for applications such as inspection, delivery, search and rescue, and drone racing. Early works used polynomial trajectory formulations, which do not exploit the full actuator potential because of their inherent smoothness. Recent works resorted to numerical optimization but require waypoints to be allocated as costs or constraints at specific discrete times. However, this time allocation is a priori unknown and renders previous works incapable of producing truly time-optimal trajectories. To generate truly time-optimal trajectories, we propose a solution to the time allocation problem while exploiting the full quadrotor's actuator potential. We achieve this by introducing a formulation of progress along the trajectory, which enables the simultaneous optimization of the time allocation and the trajectory itself. We compare our method against related approaches and validate it in real-world flights in one of the world's largest motion-capture systems, where we outperform human expert drone pilots in a drone-racing task.}
+}
+
+@article{freyMultiPhaseOptimalControl2025,
+  title = {Multi-{{Phase Optimal Control Problems}} for {{Efficient Nonlinear Model Predictive Control With}} Acados},
+  author = {Frey, Jonathan and Baumg{\"a}rtner, Katrin and Frison, Gianluca and Diehl, Moritz},
+  year = {2025},
+  month = mar,
+  journal = {Optimal Control Applications and Methods},
+  volume = {46},
+  number = {2},
+  pages = {827--845},
+  issn = {0143-2087},
+  doi = {10.1002/oca.3234},
+  url = {https://doi.org/10.1002/oca.3234},
+  abstract = {Computationally efficient nonlinear model predictive control (NMPC) relies on elaborate discrete-time optimal control problem (OCP) formulations trading off accuracy with respect to the continuous-time problem and online computational burden. Such formulations, however, are in general not easy to implement within specialized software frameworks tailored to numerical optimal control. This article introduces a new multi-phase optimal control problem (MOCP) interface for the open-source software acados allowing to conveniently formulate such problems and generate fast solvers that can be used for NMPC. While multi-phase OCP formulations occur naturally in many applications, such as, for example, walking robots, this work focuses on MOCP formulations that can be used to efficiently approximate standard continuous-time OCPs in the context of NMPC. To this end, the article discusses advanced control parametrizations, such as closed-loop costing and piecewise polynomials with varying degree, as well as partial tightening and formulations that leverage models of different fidelity. An introductory example is presented to showcase the usability of the new interface. Finally, three numerical experiments demonstrate that NMPC controllers based on multi-phase formulations can efficiently trade off computation time and control performance.}
+}
+
+@unpublished{gargOverviewThreePseudospectral2017,
+  title = {An Overview of Three Pseudospectral Methods for the Numerical Solution of Optimal Control Problems},
+  author = {Garg, Divya and Patterson, Michael and Hager, William and Rao, Anil and Benson, David R. and Huntington, Geoffrey T},
+  year = {2017},
+  month = oct,
+  url = {https://hal.science/hal-01615132},
+  urldate = {2024-04-16},
+  abstract = {An overview is presented of three different pseudospectral methods based on collocation at Legendre-Gauss (LG), Legendre-Gauss-Radau (LGR), and Legendre-Gauss-Lobatto (LGL) points. For each of the schemes presented here, (1) the state at the final time can be expressed in terms of a quadrature rule associated with the collocation points, (2) the state at the initial time is approximated by interpolation, and (3) the control and the state are approximated at the collocation points. The LG-based and LGR-based schemes presented here employ polynomials to approximate the state that are the same degree as the number of collocation points. In the corresponding LGL scheme, the state approximation is a polynomial that is one degree lower than the number of collocation points. Each of these scheme can be expressed in either a differential or an integral formulation. The LG and LGR differentiation and integration matrices are invertible, and the differential and integral versions are equivalent. The LGL differentiation matrix is singular and the equivalence between the differential and integral version is lost. For each scheme, the transformation between the KKT multipliers of the discrete nonlinear programming problem and costates of the continuous optimal control problem is developed. The LGL collocation is the only scheme for which the differentiation matrices for the state and the costate dynamics are the same. Two examples are used to assess the accuracy and features of each collocation scheme.}
 }
 
 @article{gargUnifiedFrameworkNumerical2010,
@@ -196,6 +287,21 @@
   abstract = {Sequential quadratic programming (SQP) methods have proved highly effective for solving constrained optimization problems with smooth nonlinear functions in the objective and constraints. Here we consider problems with general inequality constraints (linear and nonlinear). We assume that first derivatives are available and that the constraint gradients are sparse. Second derivatives are assumed to be unavailable or too expensive to calculate.  We discuss an SQP algorithm that uses a smooth augmented Lagrangian merit function and makes explicit provision for infeasibility in the original problem and the QP subproblems. The Hessian of the Lagrangian is approximated using a limited-memory quasi-Newton method.  SNOPT is a particular implementation that uses a reduced-Hessian semidefinite QP solver (SQOPT) for the QP subproblems. It is designed for problems with many thousands of constraints and variables but is best suited for problems with a moderate number of degrees of freedom (say, up to 2000). Numerical results are given for most of the CUTEr and COPS test collections (about 1020 examples of all sizes up to 40000 constraints and variables, and up to 20000 degrees of freedom).}
 }
 
+@article{gongSpectralAlgorithmPseudospectral2008,
+  title = {Spectral {{Algorithm}} for {{Pseudospectral Methods}} in {{Optimal Control}}},
+  author = {Gong, Qi and Fahroo, Fariba and Ross, I. Michael},
+  year = {2008},
+  journal = {Journal of Guidance, Control, and Dynamics},
+  volume = {31},
+  number = {3},
+  pages = {460--471},
+  publisher = {{American Institute of Aeronautics and Astronautics}},
+  issn = {0731-5090},
+  doi = {10.2514/1.32908},
+  url = {https://doi.org/10.2514/1.32908},
+  urldate = {2024-04-16}
+}
+
 @misc{grosNumericalOptimalControl2020,
   title = {Numerical {{Optimal Control}} (Draft)},
   author = {Gros, S{\'e}bastien and Diehl, Moritz},
@@ -232,6 +338,20 @@
   url = {http://www.sciencedirect.com/science/article/pii/S2405896317307796},
   urldate = {2019-12-17},
   abstract = {Ball and hoop system is a well-known model for the education of linear control systems. In this paper, we have a look at this system from another perspective and show that it is also suitable for demonstration of more advanced control techniques. In contrast to the standard use, we describe the dynamics of the system at full length; in addition to the mode where the ball rolls on the (outer) hoop we also consider the mode where the ball drops out of the hoop and enters a free-fall mode. Furthermore, we add another (inner) hoop in the center upon which the ball can land from the free-fall mode. This constitutes another mode of the hybrid description of the system. We present two challenging tasks for this model and show how they can be solved by trajectory generation and stabilization. We also describe how such a model can be built and experimentally verify the validity of our approach solving the proposed tasks. **All codes and drawings are available at http://github.com/aa4cc/flying-ball-in-hoop},
+  langid = {english}
+}
+
+@book{hagerComputationalMethodsOptimal2025,
+  title = {Computational {{Methods}} in {{Optimal Control}}: {{Theory}} and {{Practice}}},
+  shorttitle = {Computational {{Methods}} in {{Optimal Control}}},
+  author = {Hager, William W.},
+  year = {2025},
+  series = {{{CBMS-NSF Regional Conference Series}} in {{Applied Mathematics}}},
+  publisher = {SIAM},
+  address = {Philadelphia, PA},
+  url = {https://doi.org/10.1137/1.9781611978261},
+  urldate = {2025-02-26},
+  isbn = {978-1-61197-825-4},
   langid = {english}
 }
 
@@ -273,6 +393,21 @@
   school = {UNIVERSIDADE DE LISBOA INSTITUTO SUPERIOR T{\'E}CNICO}
 }
 
+@book{hesthavenSpectralMethodsTimeDependent2007,
+  title = {Spectral {{Methods}} for {{Time-Dependent Problems}}},
+  author = {Hesthaven, Jan S. and Gottlieb, Sigal and Gottlieb, David},
+  year = {2007},
+  month = jan,
+  series = {Cambridge {{Monographs}} on {{Applied}} and {{Computational Mathematics}}},
+  number = {21},
+  publisher = {Cambridge University Press},
+  address = {Cambridge; New York},
+  url = {https://doi.org/10.1017/CBO9780511618352},
+  abstract = {Spectral methods are well-suited to solve problems modeled by time-dependent partial differential equations: they are fast, efficient and accurate and widely used by mathematicians and practitioners. This class-tested 2007 introduction, the first on the subject, is ideal for graduate courses, or self-study. The authors describe the basic theory of spectral methods, allowing the reader to understand the techniques through numerous examples as well as more rigorous developments. They provide a detailed treatment of methods based on Fourier expansions and orthogonal polynomials (including discussions of stability, boundary conditions, filtering, and the extension from the linear to the nonlinear situation). Computational solution techniques for integration in time are dealt with by Runge-Kutta type methods. Several chapters are devoted to material not previously covered in book form, including stability theory for polynomial methods, techniques for problems with discontinuous solutions, round-off errors and the formulation of spectral methods on general grids. These will be especially helpful for practitioners.},
+  isbn = {978-0-521-79211-0},
+  langid = {english}
+}
+
 @inproceedings{howellALTROFastSolver2019,
   title = {{{ALTRO}}: {{A Fast Solver}} for {{Constrained Trajectory Optimization}}},
   shorttitle = {{{ALTRO}}},
@@ -286,6 +421,20 @@
   abstract = {Trajectory optimization is a widely used tool for robot motion planning and control. Existing solvers for these problems either rely on off-the-shelf nonlinear programming solvers that are numerically robust and capable of handling arbitrary constraints, but tend to be slow because they are general purpose; or they use custom numerical methods that take advantage of the problem structure to be fast, but often lack robustness and have limited or no ability to reason about constraints. This paper presents ALTRO (Augmented Lagrangian TRajectory optimizer), a solver for constrained trajectory optimization problems that handles general nonlinear state and input constraints and offers fast convergence and numerical robustness thanks to careful exploitation of problem structure. We demonstrate its performance on a set of benchmark motion-planning problems and offer comparisons to the standard direct collocation method with large-scale sequential quadratic programming and interior-point solvers.}
 }
 
+@inproceedings{huntingtonComparisonGlobalLocal2007,
+  title = {A {{Comparison}} between {{Global}} and {{Local Orthogonal Collocation Methods}} for {{Solving Optimal Control Problems}}},
+  booktitle = {2007 {{American Control Conference}}},
+  author = {Huntington, Geoffrey T. and Rao, Anil V.},
+  year = {2007},
+  month = jul,
+  pages = {1950--1957},
+  issn = {2378-5861},
+  doi = {10.1109/ACC.2007.4282393},
+  url = {https://ieeexplore.ieee.org/document/4282393},
+  urldate = {2024-06-04},
+  abstract = {A comparison is made between local and global orthogonal collocation methods for solving optimal control problems. The study is performed using an orthogonal collocation method called the Gauss pseudospectral method. In particular, this method is employed in two different ways. In the first approach, the method is applied globally and solutions are computed for various numbers of collocation points. In the second approach, the Gauss pseudospectral method is applied locally, meaning the problem is segmented, with each segment containing a small, fixed number of collocation points. Solutions are then computed for various numbers of equal-width segments. These two different approaches are then compared in terms of their accuracy and computational efficiency. The results of this study indicate that, for a given number of collocation points, global collocation is much more accurate than local collocation for smooth problems and can provide comparable results for problems with discontinuities. Furthermore, the results obtained in this paper indicate that for a desired accuracy on smooth problems the global approach is computationally more efficient. In order to substantiate the analysis, the comparison is performed on two examples with vastly different characteristics.}
+}
+
 @misc{johnsonNLopt2021,
   title = {{{NLopt}}},
   author = {Johnson, Steven G.},
@@ -295,6 +444,34 @@
   urldate = {2021-04-08},
   abstract = {library for nonlinear optimization, wrapping many algorithms for global and local, constrained or unconstrained, optimization},
   copyright = {View license         ,                 View license}
+}
+
+@article{kangConvergenceNonlinearOptimal2007,
+  title = {On the Convergence of Nonlinear Optimal Control Using Pseudospectral Methods for Feedback Linearizable Systems},
+  author = {Kang, W. and Gong, Q. and Ross, I. M. and Fahroo, F.},
+  year = {2007},
+  journal = {International Journal of Robust and Nonlinear Control},
+  volume = {17},
+  number = {14},
+  pages = {1251--1277},
+  issn = {1099-1239},
+  doi = {10.1002/rnc.1166},
+  url = {https://onlinelibrary.wiley.com/doi/abs/10.1002/rnc.1166},
+  urldate = {2024-04-16},
+  abstract = {We consider the optimal control of feedback linearizable dynamic systems subject to mixed state and control constraints. In contrast to the existing results, the optimal controller addressed in this paper is allowed to be discontinuous. This generalization requires a substantial modification to the existing convergence analysis in terms of both the framework as well as the notion of convergence around points of discontinuity. Although the nonlinear system is assumed to be feedback linearizable, the optimal control does not necessarily linearize the dynamics. Such problems frequently arise in astronautical applications where stringent performance requirements demand optimality over feedback linearizing controls. We prove that a sequence of solutions obtained using the Legendre pseudospectral method converges to the optimal solution of the continuous-time problem under mild conditions. Published in 2007 by John Wiley \& Sons, Ltd.},
+  copyright = {This article is a U.S. Government work and is in the public domain in the U.S.A. Published in 2007 by John Wiley \& Sons, Ltd.},
+  langid = {english}
+}
+
+@article{kangPseudospectralOptimalControl2007,
+  title = {Pseudospectral {{Optimal Control Theory Makes Debut Flight}}, {{Saves NASA}} \${{1M}} in {{Under Three Hours}}},
+  author = {Kang, Wei and Bedrossian, Nazareth},
+  year = {2007},
+  month = sep,
+  journal = {SIAM News},
+  volume = {40},
+  number = {7},
+  abstract = {This paper describes the use of a feedforward fuel-optimal trajectory to command the International Space Station (ISS) and perform a large angle attitude maneuver using only CMGs without saturating them during the maneuver. As large angle maneuvers on ISS were only performed using thrusters before this innovation, significant amount of propellant was saved. This paper is part of a family of papers that describe the development and flight demonstration of Zero Propellant Maneuver (ZPM) that performs large angle rotations without saturating CMG's, Optimal Propellant Maneuver (OPM) that reduces by up to 95\% propellant use during large angle rotations with thrusters, and Shortest Time Maneuver (STM) that speeds up by {$>$}15\% large angle slews compared to eigenaxis logic. From 2006 to 2020, ZPMs and OPMs have saved NASA, {\textasciitilde}5,000kg of propellant which works up to about \$100M savings.}
 }
 
 @article{kelleyGradientTheoryOptimal1960,
@@ -339,7 +516,22 @@
   url = {http://arxiv.org/abs/1707.00284},
   urldate = {2021-04-06},
   abstract = {This report is an introduction to transcription methods for trajectory optimization techniques. The first few sections describe the two classes of transcription methods (shooting {\textbackslash}\& simultaneous) that are used to convert the trajectory optimization problem into a general constrained optimization form. The middle of the report discusses a few extensions to the basic methods, including how to deal with hybrid systems (such as walking robots). The final section goes over a variety of implementation details.},
-  archiveprefix = {arxiv}
+  archiveprefix = {arXiv}
+}
+
+@article{kouzoupisDirectMultipleShooting2023,
+  title = {Direct Multiple Shooting for Computationally Efficient Train Trajectory Optimization},
+  author = {Kouzoupis, Dimitris and Pendharkar, Ishan and Frey, Jonathan and Diehl, Moritz and Corman, Francesco},
+  year = {2023},
+  month = jul,
+  journal = {Transportation Research Part C: Emerging Technologies},
+  volume = {152},
+  pages = {104170},
+  issn = {0968-090X},
+  doi = {10.1016/j.trc.2023.104170},
+  url = {https://www.sciencedirect.com/science/article/pii/S0968090X23001596},
+  urldate = {2025-03-27},
+  abstract = {Energy efficient train control has been an active field of research for several decades, with Pontryagin's maximum principle and dynamic programming being the two most common approaches for the computation of optimal trajectories. In this paper, we detail how direct multiple shooting can be used in the same context and highlight its two main advantages: the flexibility in the problem formulation and the availability of computationally efficient open-source software. Using the proposed framework, which is made publicly available, we are able to solve particularly challenging train trajectory optimization problems within only a few seconds.}
 }
 
 @article{malyutaAdvancesTrajectoryOptimization2021,
@@ -367,7 +559,7 @@
   url = {http://arxiv.org/abs/2106.09125},
   urldate = {2021-12-03},
   abstract = {Reliable and efficient trajectory generation methods are a fundamental need for autonomous dynamical systems of tomorrow. The goal of this article is to provide a comprehensive tutorial of three major convex optimization-based trajectory generation methods: lossless convexification (LCvx), and two sequential convex programming algorithms known as SCvx and GuSTO. In this article, trajectory generation is the computation of a dynamically feasible state and control signal that satisfies a set of constraints while optimizing key mission objectives. The trajectory generation problem is almost always nonconvex, which typically means that it is not readily amenable to efficient and reliable solution onboard an autonomous vehicle. The three algorithms that we discuss use problem reformulation and a systematic algorithmic strategy to nonetheless solve nonconvex trajectory generation tasks through the use of a convex optimizer. The theoretical guarantees and computational speed offered by convex optimization have made the algorithms popular in both research and industry circles. To date, the list of applications includes rocket landing, spacecraft hypersonic reentry, spacecraft rendezvous and docking, aerial motion planning for fixed-wing and quadrotor vehicles, robot motion planning, and more. Among these applications are high-profile rocket flights conducted by organizations like NASA, Masten Space Systems, SpaceX, and Blue Origin. This article aims to give the reader the tools and understanding necessary to work with each algorithm, and to know what each method can and cannot do. A publicly available source code repository supports the provided numerical examples. By the end of the article, the reader should be ready to use the methods, to extend them, and to contribute to their many exciting modern applications.},
-  archiveprefix = {arxiv}
+  archiveprefix = {arXiv}
 }
 
 @article{malyutaConvexOptimizationTrajectory2022,
@@ -477,6 +669,14 @@
   urldate = {2021-04-08}
 }
 
+@misc{PSOPT,
+  title = {{PSOPT}},
+  url = {https://www.psopt.net/home},
+  urldate = {2024-04-16},
+  abstract = {PSOPT is an open-source optimal control software package that uses direct collocation methods, including pseudospectral and local discretizations. As PSOPT is implemented in C++ using state-of-the-art numerical and symbolic libraries, and therefore it is very fast. Pseudospectral methods solve},
+  langid = {czech}
+}
+
 @article{raoSurveyNumericalMethods2009,
   title = {A Survey of Numerical Methods for Optimal Control},
   author = {Rao, Anil V.},
@@ -509,7 +709,7 @@
   url = {http://arxiv.org/abs/2005.12136},
   urldate = {2021-04-01},
   abstract = {This paper deals with time-optimal control of nonlinear continuous-time systems based on direct collocation. The underlying discretization grid is variable in time, as the time intervals are subject to optimization. This technique differs from approaches that are usually based on a time transformation. Hermite-Simpson collocation is selected as common representative in the field of optimal control and trajectory optimization. Hereby, quadratic splines approximate the system dynamics. Several splines of different order are suitable for the control parameterization. A comparative analysis reveals that increasing the degrees of freedom in control, e.g. quadratic splines, is not suitable for time-optimal control problems due to constraint violation and inherent oscillations. However, choosing constant or linear control splines points out to be very effective. A major advantage is that the implicit solution of the system dynamics is suited for stiff systems and often requires smaller grid sizes in practice.},
-  archiveprefix = {arxiv}
+  archiveprefix = {arXiv}
 }
 
 @article{sacconOptimalControlLie2013,
@@ -525,6 +725,54 @@
   issn = {0018-9286},
   doi = {10.1109/TAC.2013.2258817},
   abstract = {Many nonlinear systems of practical interest evolve on Lie groups or on manifolds acted upon by Lie groups. Examples range from aircraft and underwater vehicles to quantum mechanical systems. In this paper, we develop an algorithm for solving continuous-time optimal control problems for systems evolving on (noncompact) Lie groups. This algorithm generalizes the projection operator approach for trajectory optimization originally developed for systems on vector spaces. Notions for generalizing system theoretic tools such as Riccati equations and linear and quadratic system approximations are developed. In this development, the covariant derivative of a map between two manifolds plays a key role in providing a chain rule for the required Lie group computations. An example optimal control problem on SO(3) is provided to highlight implementation details and to demonstrate the effectiveness of the method.}
+}
+
+@article{songReachingLimitAutonomous2023,
+  title = {Reaching the Limit in Autonomous Racing: {{Optimal}} Control versus Reinforcement Learning},
+  shorttitle = {Reaching the Limit in Autonomous Racing},
+  author = {Song, Yunlong and Romero, Angel and M{\"u}ller, Matthias and Koltun, Vladlen and Scaramuzza, Davide},
+  year = {2023},
+  month = sep,
+  journal = {Science Robotics},
+  volume = {8},
+  number = {82},
+  pages = {eadg1462},
+  publisher = {American Association for the Advancement of Science},
+  doi = {10.1126/scirobotics.adg1462},
+  url = {https://www.science.org/doi/full/10.1126/scirobotics.adg1462},
+  urldate = {2024-09-26},
+  abstract = {A central question in robotics is how to design a control system for an agile mobile robot. This paper studies this question systematically, focusing on a challenging setting: autonomous drone racing. We show that a neural network controller trained with reinforcement learning (RL) outperformed optimal control (OC) methods in this setting. We then investigated which fundamental factors have contributed to the success of RL or have limited OC. Our study indicates that the fundamental advantage of RL over OC is not that it optimizes its objective better but that it optimizes a better objective. OC decomposes the problem into planning and control with an explicit intermediate representation, such as a trajectory, that serves as an interface. This decomposition limits the range of behaviors that can be expressed by the controller, leading to inferior control performance when facing unmodeled effects. In contrast, RL can directly optimize a task-level objective and can leverage domain randomization to cope with model uncertainty, allowing the discovery of more robust control responses. Our findings allowed us to push an agile drone to its maximum performance, achieving a peak acceleration greater than 12 times the gravitational acceleration and a peak velocity of 108 kilometers per hour. Our policy achieved superhuman control within minutes of training on a standard workstation. This work presents a milestone in agile robotics and sheds light on the role of RL and OC in robot control.}
+}
+
+@unpublished{tedrakeUnderactuatedRoboticsAlgorithms2024,
+  title = {Underactuated {{Robotics}}: {{Algorithms}} for {{Walking}}, {{Running}}, {{Swimming}}, {{Flying}}, and {{Manipulation}} ({{Course Notes}} for {{MIT}} 6.832)},
+  author = {Tedrake, Russ},
+  year = {2024},
+  url = {https://underactuated.mit.edu/},
+  urldate = {2025-04-11}
+}
+
+@mastersthesis{thammisettyDevelopmentMultiphaseOptimal2020,
+  title = {Development of a {{Multi-phase Optimal Control Software}} for {{Aerospace}} Applications ({{MPOPT}})},
+  author = {Thammisetty, Devakumar},
+  year = {2020},
+  month = jul,
+  address = {Lausanne, CH},
+  doi = {10.13140/RG.2.2.19519.79528},
+  url = {http://dx.doi.org/10.13140/RG.2.2.19519.79528},
+  abstract = {An open source, extensible pseudo-spectral collocation based multi-phase nonlinear optimal control problem (OCP) solver package named MPOPT is developed as part of the thesis. While a number of OCP solvers already exist, the present package takes advantage of the latest developments in Nonlinear programming problem (NLP) formulation methods. The package written in the Python programming language, transcribes a given OCP into an NLP that is compatible with another open source tool (CasADi) and solves the NLP using various available solver plugins. CasADi is a non-linear optimization tool that is gaining popularity due to its algorithmic di erentiation capability. The MPOPT package is validated with multiple test cases covering single-phase, multi-phase OCPs including a standard multi-stage launch vehicle ascent trajectory optimization problem. The package is further extended with three custom developed adaptive grid re nement techniques to produce robust solutions. A unique feature of the proposed grid adaptation techniques is that the number of collocation nodes remain the same throughout the grid re nement process barring the need for NLP reformulation in between iterations. While the rst two proposed grid re nement techniques are iterative in nature, the third method optimizes the segment widths along with the original optimization problem itself. The proposed algorithms have been tested on standard test cases for grid adaption techniques namely moon lander OCP and hypersensitive problem. Although all of the proposed methods are found to be successful in solving the test cases, the choice of the total number of collocation nodes is still a parameter chosen by the user.},
+  school = {EPFL}
+}
+
+@misc{thammisettyDevelopmentMultiphaseOptimal2020a,
+  type = {Master Thesis Presentation},
+  title = {Development of a {{Multi-phase Optimal Control Software}} for {{Aerospace}} Applications},
+  author = {Thammisetty, Devakumar},
+  year = {2020},
+  month = jul,
+  doi = {10.13140/RG.2.2.14486.63040},
+  url = {http://dx.doi.org/10.13140/RG.2.2.14486.63040},
+  abstract = {Description of MPOPT optimal control problem solver package}
 }
 
 @article{verschuerenAcadosModularOpensource2022,
@@ -560,6 +808,22 @@
   urldate = {2021-04-08},
   abstract = {In this paper we present acados, a new software package for model predictive control. It provides a collection of embedded optimization algorithms written in C, with a strong focus on computational efficiency. Its modular structure makes it useful for rapid prototyping, i.e. designing a control algorithm by putting together different algorithmic components that are readily connected and interchanged. The usefulness of the software is demonstrated with a closed-loop simulation experiment of an inverted pendulum, which shows acados attaining sub-millisecond computation times per iteration. Furthermore, we showcase a new algorithmic idea in the context of embedded nonlinear model predictive control (NMPC), namely sequential convex quadratic programming (SCQP), along with an efficient implementation of it.},
   langid = {english}
+}
+
+@article{vlassenbroeckChebyshevTechniqueSolving1988,
+  title = {A {{Chebyshev}} Technique for Solving Nonlinear Optimal Control Problems},
+  author = {Vlassenbroeck, J. and Van Dooren, R.},
+  year = {1988},
+  month = apr,
+  journal = {IEEE Transactions on Automatic Control},
+  volume = {33},
+  number = {4},
+  pages = {333--340},
+  issn = {1558-2523},
+  doi = {10.1109/9.192187},
+  url = {https://ieeexplore.ieee.org/document/192187},
+  urldate = {2024-04-16},
+  abstract = {A numerical technique for solving nonlinear optimal control problems is introduced. The state and control variables are expanded in the Chebyshev series, and an algorithm is provided for approximating the system dynamics, boundary conditions, and performance index. Application of this method results in the transformation of differential and integral expressions into systems of algebraic or transcendental expressions in the Chebyshev coefficients. The optimum condition is obtained by applying the method of constrained extremum. For linear-quadratic optimal control problems, the state and control variables are determined by solving a set of linear equations in the Chebyshev coefficients. Applicability is illustrated with the minimum-time and maximum-radius orbit transfer problems.{$<>$}}
 }
 
 @article{vonstrykDirectIndirectMethods1992,
