@@ -33,7 +33,8 @@ where
 
 You control the system by applying a horizontal force $F_x$ to the cart.
 
-Let $\mathbf{x} = (x, \dot{x}, \theta, \dot{\theta})$ be the state of the system. Your objective is to drive the system from the initial state ${\mathbf{x}_\text{initial} = (0, 0, 0, 0)}$ (cart at rest at the origin, pole hanging down) to the final state ${\mathbf{x}_\text{final} = (0, 0, \pi, 0)}$ (cart at rest at the origin, pole upright).
+Formally, let $\mathbf{x} = (x, \dot{x}, \theta, \dot{\theta})$ be the state of the system, and $u = F_x$ be the control input. 
+Your objective is to drive the system from the initial state ${\mathbf{x}_\text{initial} = (0, 0, 0, 0)}$ (cart at rest at the origin, pole hanging down) to the final state ${\mathbf{x}_\text{final} = (0, 0, \pi, 0)}$ (cart at rest at the origin, pole upright).
 
 The cart is constrained to move within bounds, and the force is subject to actuator limits, i.e, ${\lvert x \rvert \leq 1\,\text{m}}$ and ${\lvert F_x \rvert \leq 3\,\text{N}}$. You should get the system to the final state under 10 seconds.
 
@@ -53,7 +54,7 @@ Formulate the swing-up task as an optimal control problem (OCP). Specifically, y
 
     - `x_opt` (4 x `N` matrix) for the state trajectory, and
     - `u_opt` (1 x `N-1` matrix) for the control input trajectory. 
-    where `N` corresponds to the number of simulation steps (e.g., `N = 1000` for 10 seconds with time step `Δt = 0.01`).
+    where `N` corresponds to the number of simulation steps (e.g., `N = 1001` for 10 seconds with time step `Δt = 0.01`).
 
     Complete this part in the `plan_cartpole_swingup` function.
 
@@ -199,7 +200,7 @@ end
 
 ### Testing
 
-Your controller and planner will be used in the BRUTE system in a similar way as the snippet below.
+Your planner and controller  will be used in the BRUTE system in a similar way as the snippet below.
 
 ```{julia}
 #| eval: false
@@ -288,7 +289,7 @@ cart_patch = poly!(ax, cart_obs, color = :blue)
 xlims!(ax, -1.2, 1.2)
 ylims!(ax, -0.5, 0.5)
 
-# === ANIMATION ===
+# Animation parameters
 frames = length(ts_sim)
 framerate = Int(round(frames / 10))  # approximate real-time
 
