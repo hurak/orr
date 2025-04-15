@@ -3,4 +3,306 @@ title: "Homework"
 format:
     html:
         html-math-method: katex
+engine: julia
 ---
+
+## Cart-pole swing-up
+In this week’s homework, you will plan and stabilize a swing-up trajectory for a cart-pole system. The cart-pole is a classic control problem in which a pole is attached to a cart that moves along a horizontal track. 
+
+The system is show on the figure
+
+![Cart-pole system](figures/cart-pole.svg){width=40%}
+
+The dynamics of the system are given by the equations
+$$
+\begin{align}
+\ddot{x} &= \frac{1}{m_\text{c} + m_\text{p}\sin^2{\theta}} \left[F_x + m_\text{p}\sin{\theta}\left(l\dot{\theta}^2+g\cos{\theta}\right)\right],\\
+\ddot{\theta} &= \frac{1}{l(m_\text{c} + m_\text{p}\sin^2{\theta})} \left[-F_x\cos{\theta} - m_\text{p}l\dot{\theta}^2\sin{\theta}\cos{\theta} - (m_\text{c}+m_\text{p})g\sin{\theta}\right],
+\end{align}
+$$
+where
+
+- $x$ is the position of the cart,  
+- $\dot{x}$ is the velocity of the cart,  
+- $\theta$ is the angle of the pole (with $\theta = 0$ when the pole is hanging downward),  
+- $\dot{\theta}$ is the angular velocity of the pole,  
+- $m_\text{c}$ is the mass of the cart,  
+- $m_\text{p}$ is the mass of the pole,  
+- $l$ is the length of the pole,  
+- $g$ is the gravitational acceleration.
+
+You control the system by applying a horizontal force $F_x$ to the cart.
+
+Let $\mathbf{x} = (x, \dot{x}, \theta, \dot{\theta})$ be the state of the system. Your objective is to drive the system from the initial state ${\mathbf{x}_\text{initial} = (0, 0, 0, 0)}$ (cart at rest at the origin, pole hanging down) to the final state ${\mathbf{x}_\text{final} = (0, 0, \pi, 0)}$ (cart at rest at the origin, pole upright).
+
+The cart is constrained to move within bounds, and the force is subject to actuator limits, i.e, ${\lvert x \rvert \leq 1\,\text{m}}$ and ${\lvert F_x \rvert \leq 3\,\text{N}}$. You should get the system to the final state under 10 seconds.
+
+### Tasks
+Base your implementation on the template provided below. Upload your solution as a single file named `hw.jl` to the [BRUTE](https://cw.felk.cvut.cz/brute) system.
+
+Your task are the following
+
+#### 1. Trajectory planning
+Formulate the swing-up task as an optimal control problem (OCP). Specifically, you need to
+
+- Choose a suitable cost functional.
+- Formulate the OCP as a Nonlinear program (NLP) (e.g., using direct transcription, collocation, pseudo-spectral methods, etc.).
+- Model the NLP in `JuMP` and use `Ipopt` to solve it.
+- The planned trajectory must reach the final state in under 10 seconds, and respect the state contraints and actuator limits.
+- Return the planned trajectory as
+
+    - `x_opt` (4 x `N` matrix) for the state trajectory, and
+    - `u_opt` (1 x `N-1` matrix) for the control input trajectory. 
+    where `N` corresponds to the number of simulation steps (e.g., `N = 1000` for 10 seconds with time step `Δt = 0.01`).
+
+    Complete this part in the `plan_cartpole_swingup` function.
+
+::: {.callout-important}
+The OCP does not need to be "discretized" using the simulation time step `Δt = 0.01`. If you use, for example, direct collocation you may solve the OCP with a different number or spacing of knot points. For global pseudo-spectral methods, time steps do not make sense at all, as you evalute the dynamics at the Chebyshev/Legendre nodes.
+
+However, the resulting trajectory must be resampled to produce `x_opt` and `u_opt` on a uniform grid with time step `Δt = 0.01`, as this is what the controller and simulator expect.
+:::
+
+#### 2. Trajectory stabilization
+Your next task is to design a controller that tracks and stabilizes the planned trajectory. Specifically, complete the `step!` function in the provided template.
+
+You must
+
+- Implement feedback around the nominal trajectory `(x_opt, u_opt)`. The controller should correct for deviations from the planned path using the current state.
+
+- You may use any stabilizing strategy. However, we recommend time-varying state feedback obtained by solving the LQR problem along the planned trajectory.
+
+- Near the target state, you should switch to a simpler static controller (e.g., LQR-based state feedback designed at the upright equilibrium). This improves stability and reduces sensitivity to trajectory mismatches.
+
+- The applied control input must respect the actuator limits of ±3 N. You may clamp the input if necessary.
+
+- The cart should also not exceed the bounds of ±1 m. 
+
+You may extend the `CartPoleController` struct to store any data your feedback controller needs (e.g., gain matrices, thresholds, linearized models, etc.).
+
+::: {.callout-important} 
+Your controller will be tested on a simulation with slightly perturbed system parameters (e.g., different masses or pole length) to reflect real-world model uncertainty.
+Your design should be robust enough to handle such variations and still stabilize the system. 
+:::
+
+#### 3. Competition (optional)
+To wrap up the assignment, your controllers will compete in a **swing-up challenge**.
+
+- Each submission will be evaluated in closed-loop on a perturbed version of the cart-pole system (i.e., with slightly different parameters than those used for planning).
+
+- **The goal is simple---Swing the pole up and stabilize it in the shortest time possible.**
+
+- Controllers will be ranked based on how quickly they reach a small neighborhood of the upright equilibrium and remain there without violating constraints.
+
+- The authors of the top three fastest controllers will receive +10% to the practical part of the exam.
+
+::: {.callout-tip} 
+You are free to tune everything — be it the NLP formulation, cost function, or feedback design.
+:::
+
+
+### Remarks
+- Regarding the translation of the OCP into NLP, you may find find usefull Russ Tedrake's lecture notes from his *Underactuated Robotics* course @ MIT, which can be found [here](https://underactuated.csail.mit.edu/trajopt.html). 
+We also recommend Matthew Kelly's tutorial paper dubbed *An Introduction to Trajectory Optimization: How to Do Your Own Direct Collocation* (available [here](https://epubs.siam.org/doi/10.1137/16M1062569)).
+- When designing the time-varying LQR state feedback controller, you will need to linearize the system dynamics around the planned trajectory. We discourage you from doing this by hand. Instead, use the `Zygote` package to compute the Jacobians of the system dynamics using automatic differentiation.
+
+### Template
+```{julia}
+#| eval: false
+ 
+using LinearAlgebra
+using JuMP, Ipopt, Zygote
+using ControlSystemsBase
+
+const Δt = 0.01 # Time step for the simulation
+x0 = [0.0, 0.0, 0.0, 0.0] # Initial state (cart at rest, pole hanging down)
+xf = [0.0, 0.0, π, 0.0] # Final state (cart at rest, pole upright)
+
+# Cart-pole dynamics function
+function dynamics(x, p, t, u)
+    mc, mp, l, g = p
+
+    dx₁ = x[2]
+    dx₂ = 1 / (mc + mp * sin(x[3])^2) * (u[1] .- mp * sin(x[3]) * (l * x[4]^2 + g * cos(x[3])))
+    dx₃ = x[4]
+    dx₄ = 1 / (l * (mc + mp * sin(x[3])^2)) * (-u[1] * cos(x[3]) .- mp * l * x[4]^2 * sin(x[3]) * cos(x[3]) .- (mc + mp) * g * sin(x[3]))
+
+    return [dx₁, dx₂, dx₃, dx₄]
+end
+
+# Wrapper with nominal parameters (You may find this useful for modeling the NLP)
+function f(x, u)
+    mc = 0.5
+    mp = 0.2
+    l = 0.3
+    g = 9.81
+
+    p = [mc, mp, l, g]
+
+    return dynamics(x, p, 0.0, u)
+end
+
+
+# Function for trajectory planning (to be completed by the student)
+function plan_cartpole_swingup()
+
+    model = Model(Ipopt.Optimizer)
+
+    # TODO: Use JuMP to define the NLP model and Ipopt to solve it
+
+    # TODO: Extract the optimal trajectory from the solution (e.g. sample the trajectory at Δt intervals)
+
+    N = 100  # Number of time steps (can be adjusted, e.g., computed from minimum time formulation)
+
+    # These will be filled with the planned trajectory
+    x_opt = zeros(4, N)
+    u_opt = zeros(1, N-1)
+
+    return x_opt, u_opt
+end
+
+
+# Controller structure to store trajectory and any additional data (e.g. feedback gains)
+mutable struct CartPoleController
+    x_opt::Matrix{Float64}
+    u_opt::Matrix{Float64}
+    # TODO: Add any other variables you may need (e.g. gain matrices, thresholds)
+end
+
+# Constructor for the controller
+function CartPoleController(x_opt::Matrix{Float64}, u_opt::Matrix{Float64})
+    # TODO: Initialize and store anything else you need here
+    return CartPoleController(x_opt, u_opt)
+end
+
+# Evaluate the controller at state x and time step k
+function step!(controller::CartPoleController, x::Vector{Float64}, k::Int64)
+    # Nominal state and input from the planned trajectory
+    x_nom = controller.x_opt[:, k]
+    u_nom = controller.u_opt[:, k]
+
+    # TODO: Implement feedback to stabilize the trajectory.
+    # You may use time-varying LQR, constant gain, or another strategy.
+    #
+    # Consider switching to a simpler static controller (e.g., LQR around the upright equilibrium)
+    # once the system is sufficiently close to the target state.
+    #
+    # The input should not exceed the actuator limits of ± 3 N (you may clamp it if necessary).
+
+    # You may also update `controller` struct if needed (e.g., for gain scheduling)
+
+    u = u_nom  # Replace with your feedback control law
+
+    return u
+end
+```
+
+### Testing
+
+Your controller and planner will be used in the BRUTE system in a similar way as the snippet below.
+
+```{julia}
+#| eval: false
+
+using OrdinaryDiffEq
+
+x_opt, u_opt = plan_cartpole_swingup()
+controller = CartPoleController(x_opt, u_opt)
+
+ts_sim = 0:Δt:Δt*1000
+x_sim = zeros(4, length(ts_sim))
+u_sim = zeros(1, length(ts_sim)-1)
+
+for (k, t) in enumerate(ts_sim[1:end-1])
+    u_sim[:, k] = step!(controller, x_sim[:, k], k)
+
+    polecart(x, p, t)  = dynamics(x, p, t, u_sim[:, k])
+    prob = ODEProblem(polecart, x_sim[:, k], (0, Δt), [0.50, 0.3, 0.3, 9.81])
+    sol = solve(prob, Tsit5())
+
+    x_sim[:, k+1] = sol[:, end]
+
+end
+```
+
+The following code snippet shows how to visualize the results of your simulation. You can also edit this to visualize your planned trajectory.
+
+```{julia}
+#| eval: false
+
+using CairoMakie
+
+fig = Figure( size = (600, 500))
+
+ax = Axis(fig[1, 1], title = "Cart-Pole Trajectory", xlabel = "Time (s)")
+lines!(ax, ts_sim, x_sim[1, :], label = "x")
+lines!(ax, ts_sim, x_sim[2, :], label = "ẋ")
+lines!(ax, ts_sim, x_sim[3, :], label = "θ")
+lines!(ax, ts_sim, x_sim[4, :], label = "θ̇")
+
+axislegend(ax)
+
+
+ax = Axis(fig[2, 1], title = "Control Input", xlabel = "Time", ylabel = "Force")
+lines!(ax, ts_sim[1:end-1], u_sim[1, :], label = "Control Input")
+
+
+fig
+```
+
+Last but not least, you can animate the cart-pole system using the following code snippet.
+```{julia}
+#| eval: false
+
+l = 0.3 # pendulum length
+
+x = x_sim[1, :]
+θ = x_sim[3, :]
+
+px = x .+ l .* sin.(θ)
+py = .-l .* cos.(θ)
+
+fig = Figure(resolution = (800, 300))
+ax = Axis(fig[1, 1]; xlabel = "x", ylabel = "y", aspect = DataAspect())
+
+# Cart dimensions
+cart_width = 0.2
+cart_height = 0.1
+
+x_line = Observable([x[1], px[1]])
+y_line = Observable([cart_height, py[1]])
+
+x_blob = Observable(px[1])
+y_blob = Observable(py[1])
+
+# Initial shapes
+cart_obs = Observable(Rect(x[1] - cart_width/2, 0.0, cart_width, cart_height))
+
+pendulum_line = lines!(ax, x_line, y_line, color=:black)
+pendulum_bob = scatter!(ax, x_blob, y_blob; markersize=15, color=:red)
+
+# Cart patch
+cart_patch = poly!(ax, cart_obs, color = :blue)
+
+# Set axis limits
+xlims!(ax, -1.2, 1.2)
+ylims!(ax, -0.5, 0.5)
+
+# === ANIMATION ===
+frames = length(ts_sim)
+framerate = Int(round(frames / 10))  # approximate real-time
+
+for i in 1:frames
+    # Update pendulum
+    x_line[] = [x[i], px[i]]
+    y_line[] = [cart_height, py[i]]
+    x_blob[] = px[i]
+    y_blob[] = py[i]
+    cart_obs[] = Rect(x[i] - cart_width/2, 0.0, cart_width, cart_height)
+
+    display(fig)
+
+    sleep(1/framerate)
+end
+
+```
