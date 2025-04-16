@@ -16,7 +16,7 @@ execute:
 engine: julia
 ---
 
-The indirect approach to optimal control reformulates the optimal control problem as a system of differential and algebraic equations (DAE) with the values of some variables specified at both ends of the time interval – the two-point boundary value problem (TP–BVP). It is only in special cases that we are able to reformulate the TP–BVP as an initial value problem (IVP), the prominent example of which is the LQR problem and the associate differential Riccati equation solved backwards in time. However, generally we need to solve the TP–BVP DAE and the only way to do it is by numerical methods. Here we give some.
+The indirect approach to optimal control reformulates the optimal control problem as a system of differential and algebraic equations (DAE) with the values of some variables specified at both ends of the time interval – the two-point boundary value problem (TP–BVP). It is only in special cases that we are able to reformulate the TP–BVP as an initial value problem (IVP), the prominent example of which is the LQR problem and the associate differential Riccati equation solved backwards in time. However, generally we need to solve the TP–BVP DAE and the only way to do it is by numerical methods. Here we discuss them in some detail.
 
 ## Gradient method for the TP-BVP DAE for free final state
 
@@ -224,6 +224,8 @@ Standard LQR optimal control for a second-order system on a fixed finite interva
 using LinearAlgebra
 using DifferentialEquations
 using NLsolve
+using Random
+Random.seed!(1234)                                       # For reproducibility.
 
 function shoot_lq_fixed(A,B,Q,R,xinitial,xfinal,tfinal)
     n = size(A)[1]
