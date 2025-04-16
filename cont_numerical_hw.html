@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -69,6 +103,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -936,8 +1013,20 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#cart-pole-swing-up" id="toc-cart-pole-swing-up" class="nav-link active" data-scroll-target="#cart-pole-swing-up">Cart-pole swing-up</a>
+  <ul class="collapse">
+  <li><a href="#tasks" id="toc-tasks" class="nav-link" data-scroll-target="#tasks">Tasks</a></li>
+  <li><a href="#remarks" id="toc-remarks" class="nav-link" data-scroll-target="#remarks">Remarks</a></li>
+  <li><a href="#template" id="toc-template" class="nav-link" data-scroll-target="#template">Template</a></li>
+  <li><a href="#testing" id="toc-testing" class="nav-link" data-scroll-target="#testing">Testing</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -961,8 +1050,325 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="cart-pole-swing-up" class="level2">
+<h2 class="anchored" data-anchor-id="cart-pole-swing-up">Cart-pole swing-up</h2>
+<p>In this week’s homework, you will plan and stabilize a swing-up trajectory for a cart-pole system. The cart-pole is a classic control problem in which a pole is attached to a cart that moves along a horizontal track.</p>
+<p>The system is show on the figure</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/cart-pole.svg" class="img-fluid figure-img" style="width:40.0%"></p>
+<figcaption>Cart-pole system</figcaption>
+</figure>
+</div>
+<p>The dynamics of the system are given by the equations <span class="math display">
+\begin{align}
+\ddot{x} &amp;= \frac{1}{m_\text{c} + m_\text{p}\sin^2{\theta}} \left[F_x + m_\text{p}\sin{\theta}\left(l\dot{\theta}^2+g\cos{\theta}\right)\right],\\
+\ddot{\theta} &amp;= \frac{1}{l(m_\text{c} + m_\text{p}\sin^2{\theta})} \left[-F_x\cos{\theta} - m_\text{p}l\dot{\theta}^2\sin{\theta}\cos{\theta} - (m_\text{c}+m_\text{p})g\sin{\theta}\right],
+\end{align}
+</span> where</p>
+<ul>
+<li><span class="math inline">x</span> is the position of the cart,<br>
+</li>
+<li><span class="math inline">\dot{x}</span> is the velocity of the cart,<br>
+</li>
+<li><span class="math inline">\theta</span> is the angle of the pole (with <span class="math inline">\theta = 0</span> when the pole is hanging downward),<br>
+</li>
+<li><span class="math inline">\dot{\theta}</span> is the angular velocity of the pole,<br>
+</li>
+<li><span class="math inline">m_\text{c}</span> is the mass of the cart,<br>
+</li>
+<li><span class="math inline">m_\text{p}</span> is the mass of the pole,<br>
+</li>
+<li><span class="math inline">l</span> is the length of the pole,<br>
+</li>
+<li><span class="math inline">g</span> is the gravitational acceleration.</li>
+</ul>
+<p>You control the system by applying a horizontal force <span class="math inline">F_x</span> to the cart.</p>
+<p>Formally, let <span class="math inline">\mathbf{x} = (x, \dot{x}, \theta, \dot{\theta})</span> be the state of the system, and <span class="math inline">u = F_x</span> be the control input. Your objective is to drive the system from the initial state <span class="math inline">{\mathbf{x}_\text{initial} = (0, 0, 0, 0)}</span> (cart at rest at the origin, pole hanging down) to the final state <span class="math inline">{\mathbf{x}_\text{final} = (0, 0, \pi, 0)}</span> (cart at rest at the origin, pole upright).</p>
+<p>The cart is constrained to move within bounds, and the force is subject to actuator limits, i.e, <span class="math inline">{\lvert x \rvert \leq 1\,\text{m}}</span> and <span class="math inline">{\lvert F_x \rvert \leq 3\,\text{N}}</span>. You should get the system to the final state under 10 seconds.</p>
+<section id="tasks" class="level3">
+<h3 class="anchored" data-anchor-id="tasks">Tasks</h3>
+<p>Base your implementation on the template provided below. Upload your solution as a single file named <code>hw.jl</code> to the <a href="https://cw.felk.cvut.cz/brute">BRUTE</a> system.</p>
+<p>Your task are the following</p>
+<section id="trajectory-planning" class="level4">
+<h4 class="anchored" data-anchor-id="trajectory-planning">1. Trajectory planning</h4>
+<p>Formulate the swing-up task as an optimal control problem (OCP), and numerically solve it. Specifically, you need to</p>
+<ul>
+<li><p>Choose a suitable cost functional.</p></li>
+<li><p>Formulate the OCP as a Nonlinear program (NLP) (e.g., using direct transcription, collocation, pseudo-spectral methods, etc.).</p></li>
+<li><p>Model the NLP in <code>JuMP</code> and use <code>Ipopt</code> to solve it.</p></li>
+<li><p>The planned trajectory must reach the final state in under 10 seconds, and respect the state contraints and actuator limits.</p></li>
+<li><p>Return the planned trajectory as</p>
+<ul>
+<li><code>x_opt</code> (4 x <code>N</code> matrix) for the state trajectory, and</li>
+<li><code>u_opt</code> (1 x <code>N-1</code> matrix) for the control input trajectory. where <code>N</code> corresponds to the number of simulation steps (e.g., <code>N = 1001</code> for 10 seconds with time step <code>Δt = 0.01</code>).</li>
+</ul>
+<p>Complete this part in the <code>plan_cartpole_swingup</code> function.</p></li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The OCP does not need to be “discretized” using the simulation time step <code>Δt = 0.01</code>. If you use, for example, direct collocation you may solve the OCP with a different number or spacing of knot points. For global pseudo-spectral methods, time steps do not make sense at all, as you evalute the dynamics at the Chebyshev/Legendre nodes.</p>
+<p>However, the resulting trajectory must be resampled to produce <code>x_opt</code> and <code>u_opt</code> on a uniform grid with time step <code>Δt = 0.01</code>, as this is what the controller and simulator expect.</p>
+</div>
+</div>
+</section>
+<section id="trajectory-stabilization" class="level4">
+<h4 class="anchored" data-anchor-id="trajectory-stabilization">2. Trajectory stabilization</h4>
+<p>Your next task is to design a controller that tracks and stabilizes the planned trajectory. Specifically, complete the <code>step!</code> function in the provided template.</p>
+<p>You must</p>
+<ul>
+<li><p>Implement feedback around the nominal trajectory <code>(x_opt, u_opt)</code>. The controller should correct for deviations from the planned path using the current state.</p></li>
+<li><p>You may use any stabilizing strategy. However, we recommend time-varying state feedback obtained by solving the LQR problem along the planned trajectory.</p></li>
+<li><p>Near the target state, you should switch to a simpler static controller (e.g., LQR-based state feedback designed at the upright equilibrium). This improves stability and reduces sensitivity to trajectory mismatches.</p></li>
+<li><p>The applied control input must respect the actuator limits of ±3 N. You may clamp the input if necessary.</p></li>
+<li><p>The cart should also not exceed the bounds of ±1 m.</p></li>
+</ul>
+<p>You may extend the <code>CartPoleController</code> struct to store any data your feedback controller needs (e.g., gain matrices, thresholds, linearized models, etc.).</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Your controller will be tested on a simulation with slightly perturbed system parameters (e.g., different masses or pole length) to reflect real-world model uncertainty. Your design should be robust enough to handle such variations and still stabilize the system.</p>
+</div>
+</div>
+</section>
+<section id="competition-optional" class="level4">
+<h4 class="anchored" data-anchor-id="competition-optional">3. Competition (optional)</h4>
+<p>To wrap up the assignment, your controllers will compete in a <strong>swing-up challenge</strong>.</p>
+<ul>
+<li><p>Each submission will be evaluated in closed-loop on a perturbed version of the cart-pole system (i.e., with slightly different parameters than those used for planning).</p></li>
+<li><p><strong>The goal is simple—Swing the pole up and stabilize it in the shortest time possible.</strong></p></li>
+<li><p>Controllers will be ranked based on how quickly they reach a small neighborhood of the upright equilibrium and remain there without violating constraints.</p></li>
+<li><p>The authors of the top three fastest controllers will receive +10% to the practical part of the exam.</p></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You are free to tune everything — be it the NLP formulation, cost function, or feedback design.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="remarks" class="level3">
+<h3 class="anchored" data-anchor-id="remarks">Remarks</h3>
+<ul>
+<li>Regarding the translation of the OCP into NLP, you may find find usefull Russ Tedrake’s lecture notes from his <em>Underactuated Robotics</em> course @ MIT, which can be found <a href="https://underactuated.csail.mit.edu/trajopt.html">here</a>. We also recommend Matthew Kelly’s tutorial paper dubbed <em>An Introduction to Trajectory Optimization: How to Do Your Own Direct Collocation</em> (available <a href="https://epubs.siam.org/doi/10.1137/16M1062569">here</a>).</li>
+<li>When designing the time-varying LQR state feedback controller, you will need to linearize the system dynamics around the planned trajectory. We discourage you from doing this by hand. Instead, use the <code>Zygote</code> package to compute the Jacobians of the system dynamics using automatic differentiation.</li>
+</ul>
+</section>
+<section id="template" class="level3">
+<h3 class="anchored" data-anchor-id="template">Template</h3>
+<div id="2" class="cell" data-execution_count="0">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">JuMP</span>, <span class="bu">Ipopt</span>, <span class="bu">Zygote</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ControlSystemsBase</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> Δt <span class="op">=</span> <span class="fl">0.01</span> <span class="co"># Time step for the simulation</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> [<span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>] <span class="co"># Initial state (cart at rest, pole hanging down)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>xf <span class="op">=</span> [<span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="cn">π</span>, <span class="fl">0.0</span>] <span class="co"># Final state (cart at rest, pole upright)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Cart-pole dynamics function</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">dynamics</span>(x, p, t, u)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    mc, mp, l, g <span class="op">=</span> p</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    dx₁ <span class="op">=</span> x[<span class="fl">2</span>]</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    dx₂ <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> (mc <span class="op">+</span> mp <span class="op">*</span> <span class="fu">sin</span>(x[<span class="fl">3</span>])<span class="op">^</span><span class="fl">2</span>) <span class="op">*</span> (u[<span class="fl">1</span>] <span class="op">.-</span> mp <span class="op">*</span> <span class="fu">sin</span>(x[<span class="fl">3</span>]) <span class="op">*</span> (l <span class="op">*</span> x[<span class="fl">4</span>]<span class="op">^</span><span class="fl">2</span> <span class="op">+</span> g <span class="op">*</span> <span class="fu">cos</span>(x[<span class="fl">3</span>])))</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    dx₃ <span class="op">=</span> x[<span class="fl">4</span>]</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    dx₄ <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> (l <span class="op">*</span> (mc <span class="op">+</span> mp <span class="op">*</span> <span class="fu">sin</span>(x[<span class="fl">3</span>])<span class="op">^</span><span class="fl">2</span>)) <span class="op">*</span> (<span class="op">-</span>u[<span class="fl">1</span>] <span class="op">*</span> <span class="fu">cos</span>(x[<span class="fl">3</span>]) <span class="op">.-</span> mp <span class="op">*</span> l <span class="op">*</span> x[<span class="fl">4</span>]<span class="op">^</span><span class="fl">2</span> <span class="op">*</span> <span class="fu">sin</span>(x[<span class="fl">3</span>]) <span class="op">*</span> <span class="fu">cos</span>(x[<span class="fl">3</span>]) <span class="op">.-</span> (mc <span class="op">+</span> mp) <span class="op">*</span> g <span class="op">*</span> <span class="fu">sin</span>(x[<span class="fl">3</span>]))</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [dx₁, dx₂, dx₃, dx₄]</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Wrapper with nominal parameters (You may find this useful for modeling the NLP)</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">f</span>(x, u)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    mc <span class="op">=</span> <span class="fl">0.5</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    mp <span class="op">=</span> <span class="fl">0.2</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    l <span class="op">=</span> <span class="fl">0.3</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    g <span class="op">=</span> <span class="fl">9.81</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> [mc, mp, l, g]</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">dynamics</span>(x, p, <span class="fl">0.0</span>, u)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Function for trajectory planning (to be completed by the student)</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">plan_cartpole_swingup</span>()</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> <span class="fu">Model</span>(Ipopt.Optimizer)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span><span class="al">TODO</span><span class="co">: Use JuMP to define the NLP model and Ipopt to solve it</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span><span class="al">TODO</span><span class="co">: Extract the optimal trajectory from the solution (e.g. sample the trajectory at Δt intervals)</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> <span class="fl">100</span>  <span class="co"># Number of time steps (can be adjusted, e.g., computed from minimum time formulation)</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="co"># These will be filled with the planned trajectory</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    x_opt <span class="op">=</span> <span class="fu">zeros</span>(<span class="fl">4</span>, N)</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    u_opt <span class="op">=</span> <span class="fu">zeros</span>(<span class="fl">1</span>, N<span class="op">-</span><span class="fl">1</span>)</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x_opt, u_opt</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Controller structure to store trajectory and any additional data (e.g. feedback gains)</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="kw">mutable struct</span> CartPoleController</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>    x_opt<span class="op">::</span><span class="dt">Matrix{Float64}</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    u_opt<span class="op">::</span><span class="dt">Matrix{Float64}</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span><span class="al">TODO</span><span class="co">: Add any other variables you may need (e.g. gain matrices, thresholds)</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="co"># Constructor for the controller</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">CartPoleController</span>(x_opt<span class="op">::</span><span class="dt">Matrix{Float64}</span>, u_opt<span class="op">::</span><span class="dt">Matrix{Float64}</span>)</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span><span class="al">TODO</span><span class="co">: Initialize and store anything else you need here</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">CartPoleController</span>(x_opt, u_opt)</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the controller at state x and time step k</span></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">step!</span>(controller<span class="op">::</span><span class="dt">CartPoleController</span>, x<span class="op">::</span><span class="dt">Vector{Float64}</span>, k<span class="op">::</span><span class="dt">Int64</span>)</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Nominal state and input from the planned trajectory</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>    x_nom <span class="op">=</span> controller.x_opt[<span class="op">:</span>, k]</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>    u_nom <span class="op">=</span> controller.u_opt[<span class="op">:</span>, k]</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span><span class="al">TODO</span><span class="co">: Implement feedback to stabilize the trajectory.</span></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>    <span class="co"># You may use time-varying LQR, constant gain, or another strategy.</span></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>    <span class="co">#</span></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Consider switching to a simpler static controller (e.g., LQR around the upright equilibrium)</span></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>    <span class="co"># once the system is sufficiently close to the target state.</span></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>    <span class="co">#</span></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The input should not exceed the actuator limits of ± 3 N (you may clamp it if necessary).</span></span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>    <span class="co"># You may also update `controller` struct if needed (e.g., for gain scheduling)</span></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>    u <span class="op">=</span> u_nom  <span class="co"># Replace with your feedback control law</span></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> u</span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="testing" class="level3">
+<h3 class="anchored" data-anchor-id="testing">Testing</h3>
+<p>Your planner and controller will be used in the BRUTE system in a similar way as the snippet below.</p>
+<div id="4" class="cell" data-execution_count="0">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">OrdinaryDiffEq</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>x_opt, u_opt <span class="op">=</span> <span class="fu">plan_cartpole_swingup</span>()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>controller <span class="op">=</span> <span class="fu">CartPoleController</span>(x_opt, u_opt)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>ts_sim <span class="op">=</span> <span class="fl">0</span><span class="op">:</span>Δt<span class="op">:</span>Δt<span class="op">*</span><span class="fl">1000</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>x_sim <span class="op">=</span> <span class="fu">zeros</span>(<span class="fl">4</span>, <span class="fu">length</span>(ts_sim))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>u_sim <span class="op">=</span> <span class="fu">zeros</span>(<span class="fl">1</span>, <span class="fu">length</span>(ts_sim)<span class="op">-</span><span class="fl">1</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k, t) <span class="kw">in</span> <span class="fu">enumerate</span>(ts_sim[<span class="fl">1</span><span class="op">:</span><span class="kw">end</span><span class="op">-</span><span class="fl">1</span>])</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    u_sim[<span class="op">:</span>, k] <span class="op">=</span> <span class="fu">step!</span>(controller, x_sim[<span class="op">:</span>, k], k)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">polecart</span>(x, p, t)  <span class="op">=</span> <span class="fu">dynamics</span>(x, p, t, u_sim[<span class="op">:</span>, k])</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    prob <span class="op">=</span> <span class="fu">ODEProblem</span>(polecart, x_sim[<span class="op">:</span>, k], (<span class="fl">0</span>, Δt), [<span class="fl">0.50</span>, <span class="fl">0.3</span>, <span class="fl">0.3</span>, <span class="fl">9.81</span>])</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    sol <span class="op">=</span> <span class="fu">solve</span>(prob, <span class="fu">Tsit5</span>())</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    x_sim[<span class="op">:</span>, k<span class="op">+</span><span class="fl">1</span>] <span class="op">=</span> sol[<span class="op">:</span>, <span class="kw">end</span>]</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The following code snippet shows how to visualize the results of your simulation. You can also edit this to visualize your planned trajectory.</p>
+<div id="6" class="cell" data-execution_count="0">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CairoMakie</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> <span class="fu">Figure</span>( size <span class="op">=</span> (<span class="fl">600</span>, <span class="fl">500</span>))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> <span class="fu">Axis</span>(fig[<span class="fl">1</span>, <span class="fl">1</span>], title <span class="op">=</span> <span class="st">"Cart-Pole Trajectory"</span>, xlabel <span class="op">=</span> <span class="st">"Time (s)"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines!</span>(ax, ts_sim, x_sim[<span class="fl">1</span>, <span class="op">:</span>], label <span class="op">=</span> <span class="st">"x"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines!</span>(ax, ts_sim, x_sim[<span class="fl">2</span>, <span class="op">:</span>], label <span class="op">=</span> <span class="st">"ẋ"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines!</span>(ax, ts_sim, x_sim[<span class="fl">3</span>, <span class="op">:</span>], label <span class="op">=</span> <span class="st">"θ"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines!</span>(ax, ts_sim, x_sim[<span class="fl">4</span>, <span class="op">:</span>], label <span class="op">=</span> <span class="st">"θ̇"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">axislegend</span>(ax)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> <span class="fu">Axis</span>(fig[<span class="fl">2</span>, <span class="fl">1</span>], title <span class="op">=</span> <span class="st">"Control Input"</span>, xlabel <span class="op">=</span> <span class="st">"Time"</span>, ylabel <span class="op">=</span> <span class="st">"Force"</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">lines!</span>(ax, ts_sim[<span class="fl">1</span><span class="op">:</span><span class="kw">end</span><span class="op">-</span><span class="fl">1</span>], u_sim[<span class="fl">1</span>, <span class="op">:</span>], label <span class="op">=</span> <span class="st">"Control Input"</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>fig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Last but not least, you can animate the cart-pole system using the following code snippet.</p>
+<div id="8" class="cell" data-execution_count="0">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> <span class="fl">0.3</span> <span class="co"># pendulum length</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> x_sim[<span class="fl">1</span>, <span class="op">:</span>]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>θ <span class="op">=</span> x_sim[<span class="fl">3</span>, <span class="op">:</span>]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>px <span class="op">=</span> x <span class="op">.+</span> l <span class="op">.*</span> <span class="fu">sin</span>.(θ)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>py <span class="op">=</span> <span class="op">.-</span>l <span class="op">.*</span> <span class="fu">cos</span>.(θ)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> <span class="fu">Figure</span>(resolution <span class="op">=</span> (<span class="fl">800</span>, <span class="fl">300</span>))</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> <span class="fu">Axis</span>(fig[<span class="fl">1</span>, <span class="fl">1</span>]; xlabel <span class="op">=</span> <span class="st">"x"</span>, ylabel <span class="op">=</span> <span class="st">"y"</span>, aspect <span class="op">=</span> <span class="fu">DataAspect</span>())</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Cart dimensions</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>cart_width <span class="op">=</span> <span class="fl">0.2</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>cart_height <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>x_line <span class="op">=</span> <span class="fu">Observable</span>([x[<span class="fl">1</span>], px[<span class="fl">1</span>]])</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>y_line <span class="op">=</span> <span class="fu">Observable</span>([cart_height, py[<span class="fl">1</span>]])</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>x_blob <span class="op">=</span> <span class="fu">Observable</span>(px[<span class="fl">1</span>])</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>y_blob <span class="op">=</span> <span class="fu">Observable</span>(py[<span class="fl">1</span>])</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial shapes</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>cart_obs <span class="op">=</span> <span class="fu">Observable</span>(<span class="fu">Rect</span>(x[<span class="fl">1</span>] <span class="op">-</span> cart_width<span class="op">/</span><span class="fl">2</span>, <span class="fl">0.0</span>, cart_width, cart_height))</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>pendulum_line <span class="op">=</span> <span class="fu">lines!</span>(ax, x_line, y_line, color<span class="op">=:</span>black)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>pendulum_bob <span class="op">=</span> <span class="fu">scatter!</span>(ax, x_blob, y_blob; markersize<span class="op">=</span><span class="fl">15</span>, color<span class="op">=:</span>red)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Cart patch</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>cart_patch <span class="op">=</span> <span class="fu">poly!</span>(ax, cart_obs, color <span class="op">=</span> <span class="op">:</span>blue)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Set axis limits</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="fu">xlims!</span>(ax, <span class="op">-</span><span class="fl">1.2</span>, <span class="fl">1.2</span>)</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="fu">ylims!</span>(ax, <span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Animation parameters</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>frames <span class="op">=</span> <span class="fu">length</span>(ts_sim)</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>framerate <span class="op">=</span> <span class="fu">Int</span>(<span class="fu">round</span>(frames <span class="op">/</span> <span class="fl">10</span>))  <span class="co"># approximate real-time</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>frames</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Update pendulum</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    x_line[] <span class="op">=</span> [x[i], px[i]]</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    y_line[] <span class="op">=</span> [cart_height, py[i]]</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    x_blob[] <span class="op">=</span> px[i]</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    y_blob[] <span class="op">=</span> py[i]</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    cart_obs[] <span class="op">=</span> <span class="fu">Rect</span>(x[i] <span class="op">-</span> cart_width<span class="op">/</span><span class="fl">2</span>, <span class="fl">0.0</span>, cart_width, cart_height)</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display</span>(fig)</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sleep</span>(<span class="fl">1</span><span class="op">/</span>framerate)</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
+</section>
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1402,7 +1808,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2025, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
