@@ -1290,7 +1290,7 @@ Tip
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    u_sim[<span class="op">:</span>, k] <span class="op">=</span> <span class="fu">step!</span>(controller, x_sim[<span class="op">:</span>, k], k)</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">polecart</span>(x, p, t)  <span class="op">=</span> <span class="fu">dynamics</span>(x, p, t, u_sim[<span class="op">:</span>, k])</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    prob <span class="op">=</span> <span class="fu">ODEProblem</span>(polecart, x_sim[<span class="op">:</span>, k], (<span class="fl">0</span>, Δt), [<span class="fl">0.50</span>, <span class="fl">0.3</span>, <span class="fl">0.3</span>, <span class="fl">9.81</span>])</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    prob <span class="op">=</span> <span class="fu">ODEProblem</span>(polecart, x_sim[<span class="op">:</span>, k], (<span class="fl">0</span>, Δt), [<span class="fl">0.50</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">9.81</span>])</span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    sol <span class="op">=</span> <span class="fu">solve</span>(prob, <span class="fu">Tsit5</span>())</span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    x_sim[<span class="op">:</span>, k<span class="op">+</span><span class="fl">1</span>] <span class="op">=</span> sol[<span class="op">:</span>, <span class="kw">end</span>]</span>
