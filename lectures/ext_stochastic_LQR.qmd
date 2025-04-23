@@ -2,6 +2,7 @@
 title: "LQR for stochastic systems"
 bibliography: 
     - ref_optimal_control.bib
+    - ref_robust_control.bib
 csl: ieee-control-systems.csl
 format:
     html:
@@ -13,3 +14,242 @@ crossref:
   eq-prefix: Eq.
 engine: julia
 ---
+
+We now consider an extension to the standard LQR problem, namely, the plant is subject to random disturbances and the initial state is also random. The question for which we seek an answer is: how does this affect the design of the optimal LQR controller? The question surely makes sense in both discrete- and continuous-time cases, but here we only focus on continuous-time systems.
+
+We consider the following model
+$$
+\dot{\bm{x}}(t) = \mathbf{A}\bm{x}(t) + \mathbf{B}\bm{u}(t) + {\color{red}\mathbf{B}_w\bm{w}(t)},
+$$
+in which the initial state is a normally distributed zero-mean random vector of prescribed covariance, that is,  
+$$
+\begin{aligned}
+\mathbb E\left\{\bm{x}(0)\right\} &= \mathbf 0,\\
+\mathbb E\left\{\bm{x}(0)\bm{x}^\top(0)\right\} &= \mathbf P_{x}(0),
+\end{aligned}
+$$
+and the random disturbance $w(\cdot)$ is (modelled as) a white noise of spectral density $\mathbf S_{w}$ 
+$$
+\begin{aligned}
+\mathbb E\left\{\bm{w}(t)\right\} &= \mathbf 0,\\
+\mathbb E\left\{\bm{w}(t)\bm{w}^\top(t+\tau)\right\} &= \mathbf S_w\delta(\tau),
+\end{aligned}
+$$
+where $\delta(\cdot)$ is a Dirac delta "function".
+
+Before we proceed to analyzing the impact of these assumptions on the solution, we must discuss the very problem statement. Note that since the initial state and the disturbance are random, the const function is random too. It then makes sense to modify the cost function to use the expected value as in
+$$
+J = \frac{1}{2}{\color{red}\mathbb{E}}\left\{\bm{x}^\top (t_\mathrm{f})\mathbf{S}\bm{x}(t_\mathrm{f}) + \int_{0}^{t_\mathrm{f}}\left[\bm{x}^\top(t)\mathbf{Q}\bm{x}(t) + \bm{u}^\top (t)\mathbf{R}\bm{u}(t)\right]dt \right\}
+$$
+
+This was straightforward. But what if $t_\mathrm{f} = \infty$? The problem is that 
+
+$$
+J = \frac{1}{2}\mathbb{E}\left\{\int_{0}^{\infty}\left[\bm{x}^\top(t)\mathbf{Q}\bm{x}(t) + \bm{u}^\top (t)\mathbf{R}\bm{u}(t)\right]dt \right\}
+$$
+does not generally converge (neither $x$ nor $u$ settle).
+
+But we can scale the cost by $\frac{2}{t_\mathrm{f}}$
+$$
+J' = \frac{1}{2}\mathbb{E}\left\{\lim_{t_\mathrm{f}\rightarrow \infty} \frac{2}{t_\mathrm{f}}\int_{0}^{t_\mathrm{f}}\left[\bm{x}^\top(t)\mathbf{Q}\bm{x}(t) + \bm{u}^\top (t)\mathbf{R}\bm{u}(t)\right]dt \right\},
+$$
+in which we used the prime to emphasize that the cost function is modified/scaled.
+
+For a growing $t_\mathrm{f}$, the modified cost function converges to a finite value corresponding to the steady state. With some abuse of notation (by understanding that $\bm x(\infty)$ and $\bm u(\infty)$ correspond to the steady-state values of the state and control vector), we can write the cost function as
+$$\boxed{
+J'= \mathbb{E}\left\{\bm{x}^\top(\infty)\mathbf{Q}\bm{x}(\infty) + \bm{u}^\top (\infty)\mathbf{R}\bm{u}(\infty)\right\}}
+$$
+
+Now that we have adjusted the LQR problem statement to the stochastic case, we could proceed to the solution. But we skip the derivation (it can be found elsewhere) and provide the results instead. 
+
+The optimal control must necessarily come in the form of a feedback controller because of the random initial states and disturbances (recall that in the deterministic case we optimized over $u(\cdot)$ and it only turned out as the outcome of some theoretical derivations that the optimal control is provided by a linear state feedback).
+
+And can be shown that if a Gaussian white noise disturbances is assumed, the optimal controller is a linear state feedback.
+
+The solution is found via algebraic Riccati equation exactly as in the deterministic case. 
+
+The optimal controller is independent of the initial state covariance matrix and the disturbance spectral density matrix. This can be understood intuitively as follows: in the deterministic case, the optimal controller does not depend on the initial state, and apparently nothing changes about this if the initial state is characterized as a random vector. The impact of the disturbance can be seen as if it was resetting the system to a new initial state at each time instant. The optimal controller is then independent of the disturbance spectral density matrix. 
+
+::: {.callout-caution}
+## The controller is independent of the initial state covariance matrix and the disturbance spectral density matrix, but the control trajectory is not
+It is the matrix $\mathbf K$ of feedback gains that does not depend on the initial state covariance matrix and the disturbance spectral density matrix, but the control $\bm u(t) = \mathbf K \bm x(t)$ apparently does depend on the initial state covariance matrix and the disturbance spectral density matrix, because the state trajectory $\bm x(t)$ is surely affected by them. 
+:::
+
+### Steady-state covariance matrix
+
+A useful result is that the covariance matrix $\bm P(t)$ for the state vector as it evolves in time can be found by solving the differential Lyapunov equation. If we are interested in the steady-state covariance matrix $\bm P(\infty)$, we can use the algebraic Lyapunov equation
+$$\boxed{
+(\mathbf A-\mathbf B\mathbf K)\bm P_x(\infty) + \bm P_x(\infty)(\mathbf A-\mathbf B\mathbf K)^\top +  \mathbf B_w\mathbf S_w\mathbf B_w^\top = 0}
+$${#eq-lyap-alg}
+
+::: {#exm-stochastic-LQR-for-a-satellite-tracking-antenna}
+## Stochastic LQR for a satellite tracking antenna
+Pointing antenna subject to random wind torque
+$$
+\begin{bmatrix}
+ \dot \theta(t)\\\ddot\theta(t)
+\end{bmatrix}
+=
+\begin{bmatrix}
+ 0 & 1\\ 0 & -0.1
+\end{bmatrix}
+\underbrace{\begin{bmatrix}
+ \theta(t) \\ \dot \theta(t)
+\end{bmatrix}}_{\bm x}
++
+\begin{bmatrix}
+ 0 \\ 0.001
+\end{bmatrix}
+u(t)
++
+\begin{bmatrix}
+ 0 \\ 0.001
+\end{bmatrix}
+w(t)
+$$
+where $\theta(t)$ is a pointing error $(^\circ)$, $u(t)$ is a control torque $(\text{Nm})$ and $w(t)$ is a random wind torque $(\text{Nm})$.
+
+The wind torque is modelled as white noise with a spectral density $S_w=500 \text{N}^2\text{m}^2/\text{Hz}$.
+
+We parameterize the cost function to
+$$
+J = \mathbb E\left[\begin{bmatrix}\theta(\infty)&\dot\theta(\infty)\end{bmatrix}\begin{bmatrix}180 & 0\\ 0 & 0\end{bmatrix}\begin{bmatrix}\theta(\infty)\\\dot\theta(\infty)\end{bmatrix}+u^2(\infty)\right]
+$$
+
+``` {julia}
+using LinearAlgebra # For identity matrix I
+using Plots
+using ControlSystems # For lqr
+using DifferentialEquations
+using Random
+Random.seed!(1235)
+
+A = [0 1; 0 -0.1]
+B = [0; 0.001]
+Bw = [0; 0.001]
+Q = [180.0 0; 0 0]
+R = I
+Sw = 500
+
+x0 = [2.0, 0.0]
+tspan = (0.0, 100.0)
+
+K = lqr(Continuous,A,B,Q,R)
+
+Acl = A-B*K
+function f!(dx, x, p, t) 
+   dx .= Acl * x
+end
+function g!(dx, x, p, t)
+   dx .= Bw*sqrt(Sw)
+end
+
+prob = SDEProblem(f!, g!, x0, tspan)    # dx/dt = f(x,t) + g(x,t)*w(t)
+dt = 1 // 2^(4)
+sol = solve(prob, SRIW1(), dt = dt)
+
+using Plots
+p1 = plot(sol.t,sol[1,:],lw=2, lab="", xlabel="Time [s]", ylabel="Angle", title="")
+p2 = plot(sol.t,sol[2,:],lw=2, lab="", xlabel="Time [s]", ylabel="Angular rate (rad/s)", title="")
+plot(p1, p2, layout = (2, 1), size=(600, 400), title="", label="")
+```
+
+The steady-state covariance matrix $\bm P_x(\infty)$ can be computed by solving the algebraic Lyapunov equation
+``` {julia}
+#| code-fold: false
+using MatrixEquations
+P = lyap(Acl, Bw*Sw*Bw')
+```
+
+The standard deviation for the steady-state angle (in degrees) is 
+``` {julia}
+#| code-fold: false
+stdev_theta = sqrt(P[1,1])
+```
+<!-- ``` {julia}
+ensembleprob = EnsembleProblem(prob)
+sol = solve(ensembleprob, EnsembleThreads(), trajectories = 100)
+plot(sol, lab=["Position" "Velocity"], xlabel="Time [s]", ylabel="State", title="Stochastic LQR Ensemble")
+using DifferentialEquations.EnsembleAnalysis
+summ = EnsembleSummary(sol, 0:0.01:10)
+plot(summ, labels = "Middle 95%")
+``` -->
+:::
+
+## Alternative input-output interpretation of stochastic LQR
+
+We now formulate the stochastic LQR problem as an input-output problem. Consider the block diagram in @fig-stochastic-LQR-as-input-output. 
+
+![Stochastic LQR problem formulated as an interconnection of a (state) feedback controller and an artificial (also called generalized) plant](figures/stochastic_LQR_as_input-output.png){#fig-stochastic-LQR-as-input-output width=60%}
+
+The grey block in @fig-stochastic-LQR-as-input-output  is our first instance of the so-called *generalized plant*. It has two inputs:
+
+- the white noise input $\bm w(t)$,
+- the control input $\bm u(t)$.
+
+and two outputs:
+
+- the regulated output $\bm z(t)$, here composed of two parts $\bm z_1(t)$ and $\bm z_2(t)$,
+- the measured output $\bm y(t)$.
+
+The optimal control problem is then formulated as
+$$
+\operatorname*{minimize}_{\mathbf K} \mathbb E\left\{\begin{bmatrix}\bm  z_1^\top(\infty)&\bm  z_2^\top(\infty)\end{bmatrix}\begin{bmatrix}\bm  z_1(\infty)\\ \bm  z_2(\infty)\end{bmatrix}\right\}.
+$$
+
+If this is not immediately visible, just use the fact that $\bm z_1 = \sqrt{\mathbf R} \bm u$ and $\bm z_2 = \sqrt{\mathbf Q} \bm x$, and then $\bm z_1^\top \bm z_1 = \bm u^\top \mathbf R \bm u$ and $\bm z_2^\top \bm z_2 = \bm x^\top \mathbf Q \bm x$.
+
+The motivation for this reformulation will become clear in a moment.
+
+## $\mathcal{H}_2$ system norm
+
+For a stable and strictly proper LTI system modelled by the (matrix) transfer function $\mathbf G$, the $\mathcal{H}_2$ norm is defined as
+$$\boxed{
+\|\mathbf G\|_2 = \sqrt{\frac{1}{2\pi}\int_{-\infty}^\infty \text{Tr}\left[\mathbf G^\ast(j\omega)\mathbf G(j\omega)\right]\text{d}\omega},
+}
+$$
+where $\text{Tr}$ is a *trace* of a matrix, that is, a sum of its diagonal elements.
+
+Using Parseval's theorem (relating inner products in time and frequency domains), we can rewrite the $\mathcal{H}_2$ norm as
+$$
+\boxed{
+\|\mathbf G\|_2 = \sqrt{\int_{0}^\infty \text{Tr}\left[\mathbf g^\top(t)\mathbf g(t)\right]\text{d}t},}
+$$
+where $\mathbf g(t)$ is the impulse response of the system with the transfer function $\mathbf G(s)$. Clearly, it is equal to the $\mathcal{L}_2$ norm of the impulse response.
+
+And why did we bother to introduce the $\mathcal{H}_2$ norm? 
+
+## $\mathcal{H}_2$ norm as a gain of a system subject to a stationary white noise input
+
+When presenting the following result, we restrict ourselves just to a single white noise input with the spectral density $S_w$. Equivalently, we can also consider a vector white noise with the spectral density matrix parameterized by a single parameter as in $\mathbf S_w = S_w \mathbf I$. The following result is useful:
+
+$$\boxed{
+\mathbb E\left\{\bm y^\top(\infty)\bm y(\infty)\right\}  = \|\mathbf G\|_2^2 \;S_w}.
+$$
+
+For convenience, we also rewrite it using a square root
+
+$$\boxed{
+\sqrt{\mathbb E\left\{\bm y^\top(\infty)\bm y(\infty)\right\}}  = \|\mathbf G\|_2 \;\sqrt{S_w}}.
+$$
+
+It shows that the $\mathcal H_2$ system norm determines the root mean square (RMS) value of the steady-state output of the system subject to a white noise input. If the white noise input is of nonunit spectral density, the result is scaled by the square root of the spectral density of the input.
+
+
+## LQR viewed as $\mathcal{H}_2$-optimal control
+
+Assembling the pieces together, we can now see that the reformulated LQR problem can be viewed as a special case of the $\mathcal{H}_2$ optimal control problem, for which the goal is to find a controller that minimizes the $\mathcal{H}_2$ norm of the closed-loop system.
+
+![Stochastic LQR as $\mathcal{H}_2$ optimal control problem (the controller is restricted to a matrix of gains)](figures/LQR_as_H2_optimal_control.png){#fig-LQR-as-H2-optimal-control width=40%}
+
+This is certainly interesting, but once again – what is the point in all this? So far we have only reformulated our good old LQR problem in a new framework, but when it comes to solving the problem, we already know that the optimal solution can be found by solving the algebraic Riccati equation. We also know that the unique optimal controller is just a linear (proportional) state feedback controller.
+
+Here comes the crucial fact: for a generalized plant (satisfying some minor technical conditions), not only the one in @fig-stochastic-LQR-as-input-output corresponding to the LQR problem, there exists optimization solvers capable of finding a stabilizing feedback controller that minimizes the $\mathcal H_2$ norm of the closed-loop transfer function; see the section on software. Having been informed about this availability of solvers, how about modifying the generalized plant by changing the existing or adding some new blocks? Perhaps this could cover some new types of optimal control problem other than the LQR problem. For example, instead of the identity matrix $\mathbf I$ in @fig-stochastic-LQR-as-input-output, we can use a general output matrix $\mathbf C$, which would allow us to use only a subset of the state variables for feedback control. Or we could add some first- or second-order filters right after the input $\bm w$, so that we can *color* the white noise input (to turn its flat spectral density into something frequency-dependent). 
+
+Indeed, this line of reasoning leads to a new broad family of optimal control problems, which is called *$\mathcal{H}_2$ optimal control*, diagrammed in @fig-H2-optimal-control. We emphasize that the controller is not restricted to a matrix of gains, but can also contain some dynamics, and as such can be modelled as a (matrix) transfer function.
+
+![General $\mathcal{H}_2$ optimal control problem (the controller can also contain some dynamics)](figures/H2_optimal_control.png){#fig-H2-optimal-control width=35%}
+
+Although useful on its own, we get perhaps even better benefit from it by learning about the possibility to formulate an optimal control problem as a minimization of some system norm. We will encounter another system norm – the $\mathcal{H}_\infty$ norm – in the next chapter, which will open up a whole new world of optimal control problems. 
+
+But before we do that, we are going to discuss another extension of the LQR problem – the popular LQG problem, which can also be formulated within the unified framework of $\mathcal{H}_2$ optimal control.

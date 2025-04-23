@@ -1,0 +1,182 @@
+---
+title: "Guaranteed gain and phase margins for LQR"
+bibliography: 
+    - ref_optimal_control.bib
+    - ref_robust_control.bib
+csl: ieee-control-systems.csl
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+        code-summary: "Show the code"
+crossref:
+  fig-prefix: Fig. 
+  eq-prefix: Eq.
+engine: julia
+---
+
+There is one important and fairly plausible property of the LQR state-feedback controller that we have not yet mentioned: its robustness to perturbations in the system model. Although we will postpone the introduction of a general robustness framework until the next chapter, here we can already refer to the classical concepts of gain and phase margins (GM and PM, respectively) as introduced in introductory courses on automatic control. The aformentioned property of an LQR is that it guarantees very nice GM and PM. For an arbitrary linear system parameterized by the matrices $\mathbf A$ and $\mathbf B$ and arbitrary cost function parameterized by the matrices $\mathbf Q$ and $\mathbf R$ – as long as the standard LQR conditions are satisfied – the LQR controller guarantees some decent values of GM and PM.
+
+In order to see this, we consider the feedback interconnection of a plant whose all state variables are available at the output, and a proportional (state) feedback controller. The system is depicted in @fig-return-difference. 
+
+![Feedback interconnection of a plant whose all state variables are available at the output, and a proportional (state) feedback controller](figures/return_difference.png){#fig-return-difference width=50%}
+
+The plant is described by the state-space model
+$$
+\mathbf G(s) = (s\mathbf I-\mathbf A)^{-1}\mathbf B,
+$$
+in which the output matrix $\mathbf C$ is implicitly assumed to be the identity matrix, and the feedthrough matrix $\mathbf D$ is assumed to be zero. 
+
+We now need to break the loop to get an open-loop transfer function. We can break the loop either at the input or at the output of the plant, leading to input and output open-loop transfer functions, respectively. For the purpose of stability analysis, both are acceptable, and we have the freedom to choose the one that is more convenient to work with. We choose to break the loop at the input to the plant as sketched in @fig-return-difference, which leads to the the (input) open-loop transfer function
+$$
+\mathbf L(s) = \mathbf K\mathbf G(s) = \mathbf K(s\mathbf I-\mathbf A)^{-1}\mathbf B.
+$$
+
+The convenience is in that if the control $u$ is just a scalar variable, then $\mathbf L$ is a scalar transfer function.  
+
+## Return difference
+
+Starting with the scalar (input) open-loop transfer function, the term 
+$$
+1+L(s),
+$$
+whose zeros are the closed-loop poles, is known as the *return difference*. 
+
+We analyze it on the imaginary axis, that is, for $s=j\omega$, $\omega\in\mathbb R$. The magnitude 
+$$
+|1+L(j\omega)| = |-1-L(j\omega)|
+$$
+can be interpreted as the distance of the Nyquist plot of the open-loop transfer function evaluated at some $\omega \in \mathbb R$ from the point -1 in the complex plane. It turns out, that it is better from an analysis viewpoint to evaluate the squared magnitude instead, that is,  
+$$
+|1+L(j\omega)|^2 =\overline{(1+L(j\omega))}(1+L(j\omega)).
+$$
+
+
+## Paraconjugate system
+
+In order to compute the squared magnitude, we used a complex conjugate of a function evaluated on the imaginary axis. Given a transfer function, say $L(s)$, we now define an auxiliary transfer function called *paraconjugate transfer function* as
+$$\boxed{
+\tilde{L}(s) \coloneqq L(-s).}
+$$
+
+The crucial property of a paraconjugate transfer function is exhibited when it is evaluated on the imaginary axis
+$$
+  \tilde L(j\omega) = L(-j \omega) = \overline{L(j \omega)}.
+$$
+
+Usefulness of this property for evaluating the square of the magnitude of the frequency response is now perhaps obvious
+$$
+|L(j\omega)|^2 = \overline{L(j\omega)}L(j\omega)| = \left.\tilde L(s) L(s)\right |_{s = j\omega}. 
+$$
+
+An obvious question might pop up here: why not introducing a transfer function $\bar{L}$ such that $\bar{L}(s) = \overline{L(s)}$? For a real-parameter transfer function this would require complex conjugation of the powers of $s$ only. The trouble of this approach is, however, that $\bar s$ is not analytic in the complex-variable sense, while $-s$ is (this may not be obvious, but here we only state it as a fact). This also explains the terminology: the term conjugate, which generally means that two things are related in some sense, is often used to denote a complex conjugate number (either a bar over the number or an asterisk next to it). Therefore calling our $\tilde L$ just a conjugate transfer function might be misleading (although some people do it), because it would suggest that it is equal to $\overline{L(s)}$ , which is only the case on the imaginary axis but not anywhere else! That is why there is the "para" prefix in the name. But the fact is that neither the terminology nor the notation is not standard here.
+
+In the complex-coefficient case, the definition must be modified to 
+$$\boxed{
+  \tilde L(s) \coloneqq \bar L(-s),} 
+$$  
+where $\bar L$ denotes complex conjugation of the coefficients only (note that here we use the symbol in a different way than in the discussion above).
+
+In the case of a real-coefficient matrix transfer function, the paraconjugation also contains a *transpose* of the matrix, that is,
+$$
+  \widetilde{\mathbf L}(s) \coloneqq \mathbf L^\top(-s).
+$$
+
+The case of a complex-coefficient matrix transfer function, (complex) conjugate transpose instead of a transpose must be used
+$$\boxed{
+  \widetilde{\mathbf L}(s) \coloneqq \mathbf L^\ast(-s) = \overline{\mathbf L}^\top(-s).}
+$$ 
+
+## Kalman's identity for return difference for LQR
+
+Now we are ready to state the Kalman's identity for the return difference of the LQR controller. For simplicity we now restrict ourselves to $\mathbf R=\rho I$, but the result is available for a general $\mathbf R$ too. 
+
+$$
+\left(\mathbf I+\widetilde{\mathbf L}\right) \left(\mathbf I+\mathbf L\right) = \mathbf I + \frac{1}{\rho} \mathbf B^\top (-sI-\mathbf A)^{-\top} \mathbf Q (sI-\mathbf A)^{-1} \mathbf B. 
+$$
+
+The proof can be found elsewhere. Here we focus on the implications – relying on the positive semidefiniteness of $\mathbf Q$ and positive definiteness of $\mathbf R$ (positiveness of $\rho$), we argue that the second matrix on the right is positive semidefinite. Hence
+$$\boxed{
+\left(\mathbf I+\widetilde{\mathbf L}\right) \left(\mathbf I+\mathbf L\right) \succeq \mathbf I.} 
+$$
+
+We may develop better appreciation for the result if we consider its SISO version. Restricting the function arguments to the imaginary axis we get
+$$
+\boxed{
+|1+KG(j\omega)|\geq 1,\quad \forall \omega.
+}
+$$
+
+This is powerful, isn't it? This reads that the distance between the Nyquist plot of the open-loop transfer function and the point -1 in the complex plane is at least 1. The interpretation of this result is visualized in the series of figures @fig-guaranteed-margins-LQR-nyquist-1, @fig-guaranteed-margins-LQR-nyquist-2, @fig-guaranteed-margins-LQR-nyquist-3 below. In words, there is a circle of radius 1 centered at the point -1 in the complex plane, which is guaranteed not to be entered by the Nyquist curve.
+
+<!-- Denoting $\sigma_i(M)$ the $i$th singular value of $M$, by definition
+$$
+\sigma_i(M) = \sqrt{\lambda_i(M^*M)}
+$$
+and
+$$
+\begin{aligned}
+\sigma_i(I+KG(j\omega)) &= \sqrt{\lambda_i\left(I+\frac{1}{\rho} B^\top (-j\omega I-A)^{-\tp} Q (j\omega I-A) B\right)}\\
+&= \sqrt{I+\frac{1}{\rho}\lambda_i\left(B^\top (-j\omega I-A)^{-\tp} Q (j\omega I-A) B\right)} 
+\end{aligned}
+$$
+or
+$$\boxed{
+\sigma_i(I+KG(j\omega)) = \sqrt{1+\frac{1}{\rho}\sigma_i^2(H(j\omega))}
+}
+$$
+where 
+$$
+H(s) = H(sI-A)^{-1}B
+$$
+and 
+$$
+Q = H^\top H
+$$ -->
+
+
+![Guaranteed gain and phase margins for LQR](figures/guaranteed_margins_LQR_nyquist_1.png){#fig-guaranteed-margins-LQR-nyquist-1 width=40%}
+
+![Guaranteed gain and phase margins for LQR](figures/guaranteed_margins_LQR_nyquist_2.png){#fig-guaranteed-margins-LQR-nyquist-2 width=40%}
+
+![Guaranteed gain and phase margins for LQR](figures/guaranteed_margins_LQR_nyquist_3.png){#fig-guaranteed-margins-LQR-nyquist-3 width=40%}
+
+Recalling the definitions of GM and PM, and using some straightforward trigonometry, it follows that the following lower and upper bounds on the GM and PM hold
+
+$$\boxed{
+GM_+ = \infty,\quad GM_- \leq \frac{1}{2},\quad PM_+ \geq 60^\circ,\quad PM_- \leq -60^\circ.
+}
+$$
+
+Finally, this can be checked using the following code. 
+
+``` {julia}
+#| fig-cap: "Bode plot of a system with an LQR feedback controller – GM and PM indeed comply with the theoretically guaranteed bounds"
+#| label: fig-guaranteed-margins-LQR-bode
+using LinearAlgebra
+using ControlSystems
+using Plots
+using Random
+Random.seed!(1234)
+
+n = 5
+G = ssrand(n,1,n)
+A,B,C,D = ssdata(G)
+C = Matrix{Float64}(I, n, n)
+D = 0.0 
+G = ss(A,B,C,D) # Recreate the state-space system with the new C matrix
+
+Q = 5I
+R = I
+K = lqr(G,Q,R)
+
+L = K*G # Open-loop system
+
+marginplot(L)
+
+#nyquistplot(L)
+```
+
+Even after running the code a few times, for different models and weighting matrices, the GM and PM are always satisfying the bounds stated above. What a convenience! Recall that when designing a PID controller, it can easily happen that for some values of the controller parameters, the GM and PM are poor. In fact, the controller can even destabilize the system. This is not the case for LQR controllers. For arbitrary values of the weighting matrices, the LQR controller guarantees very decent GM and PM.
+
+We will see later in this chapter, that this property is far from common for other kinds of controllers. Namely, it is lost in the case of the LQR controller, which is just the LQR combined with a Kalman filter.
