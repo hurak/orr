@@ -37,7 +37,7 @@ $$
 $$
 where $\delta(\cdot)$ is a Dirac delta "function".
 
-Before we proceed to analyzing the impact of these assumptions on the solution, we must discuss the very problem statement. Note that since the initial state and the disturbance are random, the const function is random too. It then makes sense to modify the cost function to use the expected value as in
+Before we proceed to analyzing the impact of these assumptions on the solution, we must discuss the very problem statement. Note that since the initial state and the disturbance are random, the cost function is random too. It then makes sense to modify the cost function to use the expected value as in
 $$
 J = \frac{1}{2}{\color{red}\mathbb{E}}\left\{\bm{x}^\top (t_\mathrm{f})\mathbf{S}\bm{x}(t_\mathrm{f}) + \int_{0}^{t_\mathrm{f}}\left[\bm{x}^\top(t)\mathbf{Q}\bm{x}(t) + \bm{u}^\top (t)\mathbf{R}\bm{u}(t)\right]dt \right\}
 $$
@@ -111,12 +111,15 @@ where $\theta(t)$ is a pointing error $(^\circ)$, $u(t)$ is a control torque $(\
 
 The wind torque is modelled as white noise with a spectral density $S_w=500 \text{N}^2\text{m}^2/\text{Hz}$.
 
-We parameterize the cost function to
+The requirement is to keep the pointing (angular) error below $1^\circ$. We parameterize the cost function as
 $$
-J = \mathbb E\left[\begin{bmatrix}\theta(\infty)&\dot\theta(\infty)\end{bmatrix}\begin{bmatrix}180 & 0\\ 0 & 0\end{bmatrix}\begin{bmatrix}\theta(\infty)\\\dot\theta(\infty)\end{bmatrix}+u^2(\infty)\right]
+J = \mathbb E\left\{\begin{bmatrix}\theta(\infty)&\dot\theta(\infty)\end{bmatrix}\begin{bmatrix}180 & 0\\ 0 & 0\end{bmatrix}\begin{bmatrix}\theta(\infty)\\\dot\theta(\infty)\end{bmatrix}+u^2(\infty)\right\},
 $$
+in which we obviously do not to penalize the second state variable – the angular ratem, and we will have to check if the conditions of the existence and uniqueness of a stabilizing LQR are satisfied. 
 
 ``` {julia}
+#| fig-cap: "Simulated response of a satellite tracking antenna to nonzero initial conditions and random wind torque"
+#| label: fig-stochastic-LQR-satellite-tracking-antenna
 using LinearAlgebra # For identity matrix I
 using Plots
 using ControlSystems # For lqr
@@ -133,6 +136,9 @@ Sw = 500
 
 x0 = [2.0, 0.0]
 tspan = (0.0, 100.0)
+
+rank(ctrb(A,B))
+rank(obsv(A,sqrt(Q)))
 
 K = lqr(Continuous,A,B,Q,R)
 
@@ -166,14 +172,18 @@ The standard deviation for the steady-state angle (in degrees) is
 #| code-fold: false
 stdev_theta = sqrt(P[1,1])
 ```
-<!-- ``` {julia}
+which is below the requirement of $1^\circ$ (even when two or three standard deviations are considered). This can be also confirmed by some Monte Carlo simulations.
+
+``` {julia}
+#| fig-cap: "Ensemble of simulated responses of a satellite tracking antenna to nonzero initial conditions and several realizoations of random wind torque"
+#| label: fig-ensemble-stochastic-LQR-satellite-tracking-antenna
 ensembleprob = EnsembleProblem(prob)
 sol = solve(ensembleprob, EnsembleThreads(), trajectories = 100)
-plot(sol, lab=["Position" "Velocity"], xlabel="Time [s]", ylabel="State", title="Stochastic LQR Ensemble")
-using DifferentialEquations.EnsembleAnalysis
-summ = EnsembleSummary(sol, 0:0.01:10)
-plot(summ, labels = "Middle 95%")
-``` -->
+plot(sol, lab=["Position" "Velocity"], xlabel="Time [s]", ylabel="State", title="",size=(600, 400))
+#using DifferentialEquations.EnsembleAnalysis
+#summ = EnsembleSummary(sol, 0:0.1:100)
+#plot(summ, xlabel="Time [s]", ylabel="State", label = "Middle 95%")
+```
 :::
 
 ## Alternative input-output interpretation of stochastic LQR
