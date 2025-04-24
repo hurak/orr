@@ -40,7 +40,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-50b4abff8b0f30bb501ab99a3cda6e79.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-92159f50b03f4d406098b5fba7c1f700.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -69,6 +69,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -725,6 +768,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./ext_LQR_margins.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Guaranteed GM and PM for LQR</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./ext_stochastic_LQR.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">LQR for stochastic systems</span></a>
   </div>
@@ -942,8 +991,16 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#lqg-optimal-control" id="toc-lqg-optimal-control" class="nav-link active" data-scroll-target="#lqg-optimal-control">LQG optimal control</a></li>
+  <li><a href="#mathcal-h_2-optimal-control" id="toc-mathcal-h_2-optimal-control" class="nav-link" data-scroll-target="#mathcal-h_2-optimal-control"><span class="math inline">\mathcal H_2</span>-optimal control</a></li>
+  <li><a href="#loop-transfer-recovery-ltr" id="toc-loop-transfer-recovery-ltr" class="nav-link" data-scroll-target="#loop-transfer-recovery-ltr">Loop Transfer Recovery (LTR)</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -967,8 +1024,37 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="lqg-optimal-control" class="level2">
+<h2 class="anchored" data-anchor-id="lqg-optimal-control">LQG optimal control</h2>
+<p>Matlab (<a href="https://www.mathworks.com/help/control">Control Systems Toolbox</a>):</p>
+<ul>
+<li><a href="https://www.mathworks.com/help/control/ref/ss.lqg.html">lqg</a>, <a href="https://www.mathworks.com/help/control/ref/ss.lqgreg.html">lqgreg</a>, <a href="https://www.mathworks.com/help/control/ref/ss.lqgtrack.html">lqgtrack</a>, <a href="https://www.mathworks.com/help/control/ref/ss.kalman.html">kalman</a> (and some more description in <a href="https://www.mathworks.com/help/control/getstart/linear-quadratic-gaussian-lqg-design.html">Linear-Quadratic-Gaussian (LQG) Design</a>)</li>
+</ul>
+<p>Julia (<a href="https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/">RobustAndOptimalControl.jl</a>):</p>
+<ul>
+<li><a href="https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/api/#RobustAndOptimalControl.LQGProblem">LQGProblem</a></li>
+</ul>
+</section>
+<section id="mathcal-h_2-optimal-control" class="level2">
+<h2 class="anchored" data-anchor-id="mathcal-h_2-optimal-control"><span class="math inline">\mathcal H_2</span>-optimal control</h2>
+<p>Matlab (<a href="https://www.mathworks.com/help/robust/">Robust Control Toolbox</a>):</p>
+<ul>
+<li><a href="https://www.mathworks.com/help/robust/ref/dynamicsystem.h2syn.html">h2syn</a></li>
+</ul>
+<p>Julia (<a href="https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/">RobustAndOptimalControl.jl</a>):</p>
+<ul>
+<li><a href="https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/api/#RobustAndOptimalControl.h2synthesize">h2synthesize</a></li>
+</ul>
+</section>
+<section id="loop-transfer-recovery-ltr" class="level2">
+<h2 class="anchored" data-anchor-id="loop-transfer-recovery-ltr">Loop Transfer Recovery (LTR)</h2>
+<p>Matlab (<a href="https://www.mathworks.com/help/robust/">Robust Control Toolbox</a>):</p>
+<ul>
+<li><a href="https://www.mathworks.com/help/robust/ref/dynamicsystem.ltrsyn.html">ltrsyn</a></li>
+</ul>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1408,7 +1494,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2025, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
