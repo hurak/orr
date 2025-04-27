@@ -173,8 +173,12 @@ K = lqr(G,Q,R)
 L = K*G # Open-loop system
 
 marginplot(L)
+```
 
-#nyquistplot(L)
+``` {julia}
+#| fig-cap: "Nyquist plot of a system with an LQR feedback controller – GM and PM indeed comply with the theoretically guaranteed bounds"
+#| label: fig-guaranteed-margins-LQR-nyquist
+nyquistplot(L,lw=2,legend=false,xlabel="Real",ylabel="Imaginary",title="",aspect_ratio=1)
 ```
 
 Even after running the code a few times, for different models and weighting matrices, the GM and PM are always satisfying the bounds stated above. What a convenience! Recall that when designing a PID controller, it can easily happen that for some values of the controller parameters, the GM and PM are poor. In fact, the controller can even destabilize the system. This is not the case for LQR controllers. For arbitrary values of the weighting matrices, the LQR controller guarantees very decent GM and PM.
