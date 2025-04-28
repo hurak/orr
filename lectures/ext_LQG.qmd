@@ -248,12 +248,14 @@ We have seen previously that the LQR enjoys remarkable guarantees on the gain an
 ![Screenshot of "the shortest abstract in any IEEE journal ever"](figures/doyle_1978.png){#fig-doyle-1978 width=60%}
 
 ::: {#exm-doyle-1978}
+## GM and PM of LQG can be arbitrarily small
 
+This is the example from @doyleGuaranteedMarginsLQG1978. 
 $$
 \begin{aligned}
-    \dot{\mathbf{x}}(t) &= \begin{bmatrix}1 & 1\\0 & 1\end{bmatrix}\mathbf x(t)+\begin{bmatrix}0\\1\end{bmatrix}u(t)
+    \dot{\bm{x}}(t) &= \begin{bmatrix}1 & 1\\0 & 1\end{bmatrix}\bm x(t)+\begin{bmatrix}0\\1\end{bmatrix}u(t)
                         +\begin{bmatrix}1\\1\end{bmatrix}w(t),\\
-                   y(t) &= \begin{bmatrix}1 & 0\end{bmatrix}\mathbf x(t)+v(t)\\
+                   y(t) &= \begin{bmatrix}1 & 0\end{bmatrix}\bm x(t)+v(t)\\
                \mathbf Q&=\begin{bmatrix}10&10\\10&10\end{bmatrix},\quad R=1,\\
                      S_w&=10,\quad S_v=1.
 \end{aligned}
@@ -302,7 +304,8 @@ And the Nyquist plot of the closed-loop system is
 ``` {julia}
 #| fig-cap: "Nyquist plot of the closed-loop system with LQG controller that demonstrates mediocre gain and phase margins"
 #| label: "fig-doyle-1978-nyquist"
-nyquistplot(L_lqg,title="",xlabel="Real",ylabel="Imaginary",legend=false,lw=2,aspect_ratio=1)
+nyquistplot(L_lqg,title="",xlabel="Real",ylabel="Imaginary",label="",lw=2,aspect_ratio=1)
 ```
-
 :::
+
+We have just seen by means of an example that the gain and phase margins of the closed-loop system with LQG controller can be arbitrarily small. After learning the nearly magical property of the LQR, it may be disappointing to see that LQG does not share it. This lead to developments of new methods that would guarantee the stability margins, or robustness in a broader sense. We start with a minor modification of the LQG controller, which is known as a *Loop Transfer Recovery (LTR)* controller. 
