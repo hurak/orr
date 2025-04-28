@@ -2,18 +2,19 @@
 title: "Numerical methods for direct approach"
 bibliography: 
     - ref_numerical_optimal_control.bib
+csl: ieee-control-systems.csl
 format:
     html:
         html-math-method: katex
         code-fold: true
         code-summary: "Show the code"
-execute:
-    enabled: false
-    warning: false
+crossref:
+  fig-prefix: Fig. 
+  eq-prefix: Eq.
 engine: julia
 ---
 
-We have already seen that direct methods for discrete-time optimal control problems essentially just regroup and reshape the problem data so that a nonlinear programming solver can accept them. In order to follow the same approach with continous-time optimal control problems, some kind of discretization is inevitable in order to formulate a nonlinear program. Depending of what is discretized and how, several groups of methods can be identified
+We have already seen that direct methods for discrete-time optimal control problems essentially just regroup and reshape the problem data so that a nonlinear programming (NLP) solver can accept them. In order to follow the same approach with continuous-time optimal control problems, some kind of discretization is inevitable in order to formulate a nonlinear program. Depending of what is discretized and how, several groups of methods can be identified
 
 - direct shooting and direct multiple shooting,
 - direct transcription (aka direct discretization),
@@ -25,7 +26,7 @@ The core principles behind the methods are identical to those discussed in the p
 
 In contrast with the application of shooting methods to the TP-BVP originating from the indirect approach, here the variables through whose values we aim the fictitious cannon are not the initial co-state vector but the (possibly long) vector parameterizing the whole control trajectory.
 
-In the simplest – and fairly practical – case of a piecewise contstant control trajectory, which is motivated by the eventual discrete-time implementation using a zero-order hold (ZOH), the control trajectory is parameterized just by the sequence of values $u_0, u_1, \ldots, u_{N-1}$.
+In the simplest – and fairly practical – case of a piecewise constant control trajectory, which is motivated by the eventual discrete-time implementation using a *zero-order hold (ZOH)*, the control trajectory is parameterized just by the sequence of values $u_0, u_1, \ldots, u_{N-1}$.
 
 ![Direct shooting – only the control trajectory is discretized and the parameters of this discretization serve as optimization variables](figures/direct_shooting.png){width=80% #fig-direct-shooting}
 
@@ -109,7 +110,7 @@ using Interpolations
 
 function river_crossing_direct_transcription()
     wmax = 1.0                                          # One half of the width of the river.
-    Rmax = 3.0                                          # Can set opposite direction of flow With MINUS sign.
+    Rmax = 3.0                                          # Can set opposite direction of flow with MINUS sign.
     R(w) = Rmax*exp(-(w/wmax)^2)                        # Velocity of the river as a function of the distance from the center.
     u(x,y) = R(y-sin(x))/sqrt(1+cos(x)^2)               # x-component of the velocity of the flow.
     v(x,y) = R(y-sin(x))*cos(x)/sqrt(1+cos(x)^2)        # y-component of the velocity of the flow.
@@ -124,7 +125,7 @@ function river_crossing_direct_transcription()
     f₂(x,y,V,θ) = V*sin(θ) + v(x,y)
     model = Model(Ipopt.Optimizer)
     set_silent(model)
-    @variable(model,tfinal>=0,start=tfinal_0)           # Final time as an optimizaiton variable.
+    @variable(model,tfinal>=0,start=tfinal_0)           # Final time as an optimization variable.
     h = tfinal/N                                        # Time step.
     @variable(model, x[1:N+1])                          # N+1 values, because needed at the initial and final times.
     @variable(model, y[1:N+1])                          # N+1 values, because needed at the initial and final conditions.

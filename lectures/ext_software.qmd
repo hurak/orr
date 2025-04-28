@@ -2,8 +2,40 @@
 title: "Software"
 bibliography: 
     - ref_optimal_control.bib
+csl: ieee-control-systems.csl
 format:
     html:
         html-math-method: katex
         code-fold: true
+        code-summary: "Show the code"
+crossref:
+  fig-prefix: Fig. 
+  eq-prefix: Eq.
+engine: julia
 ---
+
+## LQG optimal control
+
+Matlab ([Control Systems Toolbox](https://www.mathworks.com/help/control)):
+
+- [lqg](https://www.mathworks.com/help/control/ref/ss.lqg.html), [lqgreg](https://www.mathworks.com/help/control/ref/ss.lqgreg.html), [lqgtrack](https://www.mathworks.com/help/control/ref/ss.lqgtrack.html), [kalman](https://www.mathworks.com/help/control/ref/ss.kalman.html)  (and some more description in [Linear-Quadratic-Gaussian (LQG) Design](https://www.mathworks.com/help/control/getstart/linear-quadratic-gaussian-lqg-design.html))
+
+Julia ([RobustAndOptimalControl.jl](https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/)): 
+
+- [LQGProblem](https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/api/#RobustAndOptimalControl.LQGProblem)
+
+## $\mathcal H_2$-optimal control
+
+Matlab ([Robust Control Toolbox](https://www.mathworks.com/help/robust/)): 
+
+- [h2syn](https://www.mathworks.com/help/robust/ref/dynamicsystem.h2syn.html) 
+
+Julia ([RobustAndOptimalControl.jl](https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/)): 
+
+- [h2synthesize](https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/api/#RobustAndOptimalControl.h2synthesize) 
+
+## Loop Transfer Recovery (LTR)
+
+Matlab ([Robust Control Toolbox](https://www.mathworks.com/help/robust/)):
+
+- [ltrsyn](https://www.mathworks.com/help/robust/ref/dynamicsystem.ltrsyn.html)

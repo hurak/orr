@@ -218,7 +218,7 @@ for (k, t) in enumerate(ts_sim[1:end-1])
     u_sim[:, k] = step!(controller, x_sim[:, k], k)
 
     polecart(x, p, t)  = dynamics(x, p, t, u_sim[:, k])
-    prob = ODEProblem(polecart, x_sim[:, k], (0, Δt), [0.50, 0.3, 0.3, 9.81])
+    prob = ODEProblem(polecart, x_sim[:, k], (0, Δt), [0.50, 0.2, 0.3, 9.81])
     sol = solve(prob, Tsit5())
 
     x_sim[:, k+1] = sol[:, end]

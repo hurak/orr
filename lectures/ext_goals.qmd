@@ -1,0 +1,18 @@
+---
+title: Learning goals
+format: html
+---
+
+## Knowledge (remember and understand)
+
+- Explain the necessary changes to the LQR framework in the case when the system is exposed to some random disturbances and the initial state is random as well (this is called stochastic LQR problem). The answer is that actually no changes are needed, the same formulas for the optimal state-feedback gain can be used as in the deterministic case.
+- State the guarantees on the stability margins (GM and PM) for the LQR state-feedback regulator.
+- Discuss the possible extensions of the LQR framework in the situation when not all the states are measured. In particular, explain the idea behind the LQG controller, that is, a combination of a LQR state-feedback controller and a Kalman filter.
+- Discuss the guarantees on the stability margins for an LQG controller. Here, John Doyle's famously short abstract gives the answer...
+- Explain the key idea behind the Loop Transfer Recovery (LTR) control strategy as a heuristic means of restoring the robustness of an LQG controller.
+- Reformulate both the LQR and the LQG problems within the new configuration featuring a generalized system and a feedback controller in the feedback loop.
+- Give the definition of the H2 system norm and explain how its minimization relates to the LQR/LQG-optimal control.
+
+## Skills (use the knowledge to solve a problem)
+
+- Design an LQG/LTR regulator/controller.
