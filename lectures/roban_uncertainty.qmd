@@ -19,7 +19,7 @@ Through this chapter we are stepping into the domain of robust control. We need 
 
 ::: {#def-uncertainty}
 ## Uncertainty
-Deviation of the mathematical model of the system from the real (mechanical, electrial, chemical, biological, ...) system.
+Deviation of the mathematical model of the system from the real (mechanical, electrical, chemical, biological, ...) system.
 :::
 
 ::: {#def-robustness}
@@ -38,22 +38,22 @@ Not a single type of a control but rather a class of control design methods that
 
 - Physical parameters are not known exactly (say, they are known to be within ±10% or ±3σ interval around the nominal value). 
 - Even if the physical parameters are initially known with a high accuracy, they can evolve in time, unmeasured. 
-- There may be variations among the individual units of the same product.
-- If a nonlinear system is planned to be operated around a given operating point, it can be linearized aroud that operating point, which gives a nominal linear model. If the system is then operated in a significantly different operating point, the corresponding linear model is different from the nominal one.
-- Our understanding of the underlying physics (or chemistry or biology or ...) is imperfect, hence our model is imperfect too. In fact, our understading can even be incorrect, in which case the model contains some discrepancies too. The imperfections of the model are typically observed at higher frequencies (referring to the frequency-domain modeling such as transfer functions).
-- Even if we are able to eventually capture full dynamics of the system in a model, we may opt not to do so. We may want to keep the model simple, even if less accurate, because time invested into modelling is not for free. 
-- Even if we can get a high-fidelity model with a reasonable effort, we may still prefer using a simpler (and less accurate) model for a controller design. The reason is that very often the complexity of the model used for model-based control design is reflected by the complexity of the controller – and high-complexity controllers are not particularly appreciated in industry.
+- There may be variations among the individual products of the same kind.
+- If a nonlinear system is planned to be operated around a given operating point, it can be linearized at that operating point, which gives a nominal linear model. If the system is then operated at a significantly different operating point, the corresponding linear model differs from the nominal one.
+- Our understanding of the underlying physics (or chemistry or biology or ...) is imperfect, hence our model is imperfect too. In fact, our understanding can even be incorrect, in which case the model contains some discrepancies too. The imperfections of the model are typically observed at higher frequencies, while at low frequencies or at least at the model of the steady-state response the accuracy is typically better (referring to the frequency-domain modeling such as transfer functions).
+- Even if we are able to eventually capture full dynamics of the system in a model, we may opt not to do so. We may want to keep the model simple, even if less accurate, because time invested into modelling is not for free, of course. 
+- Even if we can get a high-fidelity model with a reasonable effort, we may still prefer using a simpler (and less accurate) model for a controller design. The reason is that very often the complexity of the model used for model-based control design is reflected by the complexity of the controller; and high-complexity controllers are not particularly appreciated in industry.
 
-## Models of uncertainty
+## Models of uncertainty (uncertainty in models)
 
-There are several approaches to model the uncertainty (or, in other words, to characterize the uncertainty in the model). They all aim – in one way or another – to express that the controller has to deal no only with the single nominal system, for which it was designed, but a family of systems. Depending on the mathematical frameworks used for characterization of such a family, there are two major classes of approaches. 
+There are several approaches to modelling (characterizing) of the uncertainty. They all aim – in one way or another – to expressing that instead of only a single (nominal) system, a whole family of systems needs to be considered. Depending on the mathematical frameworks used for characterization of such a family, there are two major classes of approaches. 
 
 - Worst-case models of uncertainty
 - Probabilistic models of uncertainty
 
-The former assumes sets of systems with no additional information about the structure of such sets. The latter imposes some probability structure on the set of systems – in other words, although in principle any member of the set possible, some may be more probable than the others. In this course we are focusing on the former, which is also the mainstream in the robust control literature, but note that the latter we already encountered while considering control for systems exposed to random disturbances, namely the LQG control. A possible viewpoint is that as a consequence of the random disturbance, the controller has to deal with a family of systems.
+The former assumes sets of systems with no additional information about the structure of such sets. The latter imposes some probability structure on the set of systems – in other words, although in principle any member of the set possible, some may be more probable than the others. In this course we are focusing on the former, which is also the mainstream in the robust control literature, but note that the latter we already encountered while considering control for systems exposed to random disturbances, namely the LQG control. A possible viewpoint is that the random disturbance represents the uncertainty in the system.
 
-Another classification of models of uncertainty is according to the actual quantity that is uncertain. We distinguish these two
+Another classification of models of uncertainty is according to the actual aspect of the (model of the) system that is uncertain. We distinguish these two
 
 - Parametric uncertainty
 - Frequency-dependent (aka dynamical) uncertainty
@@ -62,18 +62,12 @@ Another classification of models of uncertainty is according to the actual quant
 
 ### Parametric uncertainty
 
-This is obviously straightforward to state: some (real/physical) parameters are uncertain. The conceptually simplest way to characterize such uncertain parameters is by considering intervals instead of just single (nominal) values.
+This is obviously straightforward to state: some real (physical) parameters are uncertain. The conceptually simplest way to characterize such uncertain parameters is by considering intervals instead of just single (nominal) values.
 
 ::: {#exm-pendulum-on-cart}
 ## A pendulum on a cart
 
-$$
-\begin{aligned}
-{\color{red} m_\mathrm{l}} & \in [m_\mathrm{l}^{-},m_\mathrm{l}^{+}],\\
-{\color{red} l} & \in [l^{-}, l^{+}],
-\end{aligned}
-$$
-
+Within the state equation
 $$
 \dot{\bm x}(t) =
 \begin{bmatrix}
@@ -90,37 +84,49 @@ $$
 0\\
 -\frac{1}{m_\mathrm{c}\textcolor{red}{l}}
 \end{bmatrix}
-u(t).
+u(t),
+$$
+two parameters are known to have their values within some intervals:
+$$
+\begin{aligned}
+{\color{red} m_\mathrm{l}} & \in [m_\mathrm{l}^{-},m_\mathrm{l}^{+}],\\
+{\color{red} l} & \in [l^{-}, l^{+}].
+\end{aligned}
 $$
 :::
 
 ### Unstructured frequency-dependent uncertainty
 
-Not only some enumerated physical parameters but even the order of the system can be uncertain. In other words, there may be some phenomena exhibitted by the system that is not captured by the model at all. Possibly some lightly damped modes, possibly some time delay here and there. The system contains uncertain dynamics. In the linear case, all this can be expressed by regarding the magnitude and phase responses uncertain without mapping these to actual physical parameters.  
+There may be some phenomena exhibited by the system that cannot be explained by perturbation of physical parameters of the model. Possibly some lightly damped modes should be included in the model, possinly some fast pole or non-minimum phase zero, possibly some time delay here and there, in which case it is not only some enumerated physical parameters, but even the order of the system that is uncertain. In other words, the system contains *uncertain dynamics*. In the linear case, all this can be expressed by regarding the magnitude and phase responses uncertain without the need to map these to actual physical parameters.  
 
-![A whole subsystem is uncertain](figures/unstructured_uncertainty.png){#fig-unstructured-uncertainty width=40%}
+![A subsystem is uncertain](figures/unstructured_uncertainty.png){#fig-unstructured-uncertainty width=40%}
 
-A popular model for the uncertain subsystem is that of a transfer function $\Delta(s)$, about which we know only that it is stable and that its magnitude is bounded by 1
+A popular model for an uncertain subsystem is that of a transfer function $\Delta(s)$, about which we know only that it is stable and that its magnitude is bounded by 1
 $$\boxed
 {\sup_{\omega}|\Delta(j\omega)|\leq 1,\;\;\Delta \;\text{stable}. }
 $$
 
-But typically the uncertainty is higher at higher frequencies. This can be expressed by using some weighting function $w(\omega)$. 
-
-For later theoretical and computational purposes we approximate the real weighting function using a low-order rational stable transfer function $W(s)$. That is, $W(j\omega)\approx w(\omega)$ for $\omega \in \mathbb R$, that is for $s=j\omega$ on the imaginary axis.
+Typically the uncertainty is higher at higher frequencies. This can be expressed by using some weighting function $w(\omega)$. For later theoretical and computational purposes we approximate the real weighting function using a magnitude of a low-order rational stable transfer function $W(s)$. That is, $|W(j\omega)|\approx w(\omega)$ for $\omega \in \mathbb R$, that is for $s=j\omega$ on the imaginary axis.
 
 The ultimate transfer function model of the uncertainty is then  
 $$\boxed{
 W(s)\;\Delta(s),\quad \max_{\omega}|\Delta(j\omega)|\leq 1,\;\;\Delta\; \text{stable}. }
 $$
 
+::: {.callout-tip}
+## Rational function $W(s)$ distorts the phase but we do not care because $\Delta(s)$ does it anyway
+If you start worrying that by considering a rational function $W(s)$ we inevitably distort the phase too (by $\angle W(j\omega)$), you can relax, because $\Delta(s)$ does it anyway. The only responsibility of $W(s)$ is to model the magnitude well.  
+:::
+
 #### $\mathcal H_\infty$ norm of an LTI system
+
+A useful concept for characterizing the magnitude of a transfer function is the $\mathcal H_\infty$ norm. There are two (equivalent) definitions. One in the frequency domain, and the other in the time domain. We start with the former.
 
 ##### H-infinity norm of an LTI system interpreted in frequency domain
 
 ::: {#def-hinf-norm-siso-system}
 ## $\mathcal H_\infty$ norm of a SISO LTI system
-For a stable LTI system $G$ with a single input and single output, the $\mathcal H_\infty$ norm is defined as 
+For a stable LTI system modelled by the transfer function $G$ with a single input and single output, the $\mathcal H_\infty$ norm is defined as 
 $$
 \|G\|_{\infty} = \sup_{\omega\in\mathbb{R}}|G(j\omega)|.
 $$
@@ -128,7 +134,7 @@ $$
 
 ::: {.callout-note}
 ## Why supremum and not maximum?
-Supremum is uses in the definition because it is not guaranteed that the peak value of the magnitude frequency response is attained at a single frequency. Consider an example of a first-order system $G(s) = \frac{s}{Ts+1}$. The peak gain of $1/T$ is not attained at a single finite frequency.
+Supremum is used in the definition because it is not guaranteed that the peak value of the magnitude frequency response is attained at a finite frequency. Consider, for example, the first-order system $G(s) = \frac{s}{Ts+1}$. The peak gain of $1/T$ is not attained at any finite frequency.
 :::
 
 Having just defined the $\mathcal H_\infty$ norm, the uncertainty model can be expressed compactly as
@@ -141,11 +147,11 @@ $$
 $\mathcal H_\infty$ denotes a normed vector space of functions that are analytic in the closed extended right half plane (of the complex plane). In parlance of control systems, $\mathcal H_\infty$ is the space of proper and stable transfer functions. Poles on the imaginary axis are not allowed. The functions do not need to be rational, but very often we do restrict ourselves to rational functions, in which case we typically write such space as $\mathcal{RH}_\infty$.
 :::
 
-We now extend the concept of the $\mathcal H_\infty$ norm to MIMO systems. The extension is perhaps not quite intuitive – certainly it is not computed as the maximum of the norms of individual transfer functions, which may be the first guess.
+We now extend the concept of the $\mathcal H_\infty$ norm to MIMO systems. The extension is perhaps not quite intuitive – certainly it is not computed as the maximum of the norms of individual transfer functions, which is what newcomers might guess.
 
 ::: {#def-hinf-norm-mimo-system}
 ## $\mathcal H_\infty$ norm of a MIMO LTI system
-For a stable LTI system $\mathbf G$ with multiple inputs and/or multiple outputs, the $\mathcal H_\infty$ norm is defined as 
+For a stable LTI system modelled by a matrix transfer function $\mathbf G$ with multiple inputs and/or multiple outputs, the $\mathcal H_\infty$ norm is defined as 
 $$
 \|\mathbf G\|_{\infty} = \sup_{\omega\in\mathbb{R}}\bar{\sigma}(\mathbf{G}(j\omega))
 $$
@@ -186,20 +192,36 @@ It is also a common notation to denote the largest singular value as $\bar \sigm
 
 ##### $\mathcal{H}_{\infty}$ norm of an LTI system interpreted in time domain
 
-We can also view the dynamical system $G$ with inputs and outputs as an operator mapping from some chosen space of functions to another space of functions. A popular model for these spaces are the spaces of square-integrable functions, denoted as $\mathcal{L}_2$, and sometimes interpreted as *bounded-energy* signals
+We can also view the dynamical system with inputs and outputs as an operator $G$ mapping from some chosen space of functions (signals) to another space of functions (signals). A popular model for these function/signal spaces are the spaces of square-integrable functions, denoted as $\mathcal{L}_2$, and sometimes interpreted as *bounded-energy* signals
 $$
 G:\;\mathcal{L}_2\rightarrow \mathcal{L}_2.
 $$ 
 
-It is a powerful fact that the $\mathcal{H}_{\infty}$ norm of the system is then defined as the induced norm of the corresponding operator
+It is a powerful fact that the induced operator norm is equal to the $\mathcal{H}_{\infty}$ norm of the corresponding transfer function
 $$\boxed{
-\|G(s)\|_{\infty} = \sup_{u(t)\in\mathcal{L}_2\setminus 0}\frac{\|y(t)\|_2}{\|u(t)\|_2}}.
+\|G\|_{\infty} = \sup_{u(\cdot)\in\mathcal{L}_2\setminus 0}\frac{\|y(\cdot)\|_2}{\|u(\cdot)\|_2}}. 
 $$
 
-With the energy interpretation of the input and output variables, this system norm can also be interpreted as the worst-case *energy gain* of the system.
+Recall the definition of the $\mathcal{L}_2$ norm of a signal $u(\cdot)$ (here we assume that the signal starts at time 0)
+$$
+\|u(\cdot)\|_2 = \sqrt{\int_{0}^{+\infty}|u(t)|^2dt}.
+$$
 
-Scaling necessary to get any useful info from MIMO models! See Skogestad's book, section 1.4, pages 5--8. \url{https://folk.ntnu.no/skoge/book/ps/book1-3.pdf}
+In some cases the $\mathcal{L}_2$ norm of a signal $u(\cdot)$ can be interpreted as (proportional to) the energy (when $u(\cdot)$ is voltage, current, velocity, force, ...). The system norm can then be interpreted as the worst-case *energy gain* of the system.
 
+If the input or output signals are vector valued, we extend the definition to
+$$\boxed{
+\|\mathbf G(s)\|_{\infty} = \sup_{\bm u(\cdot)\in\mathcal{L}_2\setminus 0}\frac{\|\bm y(\cdot)\|_2}{\|\bm u(\cdot)\|_2}},
+$$
+in which the absolute value must be replaced by some norm, typically the Euclidean norm is used
+$$
+\|\bm u(\cdot)\|_2 = \sqrt{\int_{0}^{+\infty}\|u(t)\|_2^2dt}.
+$$
+
+::: {.callout-important}
+## Scaling necessary for MIMO systems
+*Scaling* of the model is necessary to get any useful info from MIMO models! See [@skogestadMultivariableFeedbackControl2005, Section 1.4, pages 5-8], which is contained in the online available part.
+:::
 
 #### How does the uncertainty enter the model of the system?
 
@@ -210,7 +232,7 @@ $$
 G(s) = \underbrace{G_0(s)}_{\text{nominal model}}+\underbrace{W(s)\Delta(s)}_{\text{additive uncertainty}}.
 $$
 
-The block diagram interpretation is in
+The block diagram interpretation is inb@fig-fig-additive-uncertainty.
 
 ![Additive uncertainty](figures/additive_uncertainty.png){#fig-additive-uncertainty width=40%}
 
@@ -231,7 +253,7 @@ The block diagram interpretation is in
 
 ::: {.callout-caution}
 ## For SISO transfer functions no need to bother about the order of terms in the products
-Sice we are considering SISO transfer functions, the order of terms in the products is not important. We will have to be more alert to the order of terms when we move to MIMO systems.
+Sice we are considering SISO transfer functions, the order of terms in the products is not important. We will have to be more alert to the ordering of terms when we move to MIMO systems. We then have to distinguish between the input and output multiplicative uncertainties.
 :::
 
 The magnitude frequency response of the weighting filter $W(s)$ then serves as an upper bound on the relative error in the magnitude frequency responses
@@ -246,9 +268,11 @@ $$
 G(s) = \frac{k}{T s+1}e^{-\theta s}, \qquad 2\leq k,\tau,\theta,\leq 3.
 $$
 
-We now need to choose the nominal model $G_0(s)$ and then the uncertainty weighting filter $W(s)$. The nominal model corresponds to the nominal values of the parameters, therefore we must choose these. There is no single correct way to do this. Perhaps the most intuitive way is to choose the nominal values as the average of the bounds. But we can also choose the nominal values in a way that makes the nominal system simple. For example, for this system with a delay, we can even choose the nominal value of the delay as zero, which makes the nominal system a first-order system without delay, hence simple enough for application of some basic linear control system design methods. Of course, the price to pay is that the resulting model of an uncertain system, which is actually a set of systems, contains even models of a plant that were not prescribed. 
+We now need to choose the nominal model $G_0(s)$ and then the uncertainty weighting filter $W(s)$. The nominal model corresponds to the nominal values of the parameters, therefore we must choose these. There is no single correct way to do this. Perhaps the most intuitive way is to choose the nominal values as the average of the bounds. But we can also choose the nominal values in a way that makes the nominal system simple. For example, for this system with a delay, we can even choose the nominal value of the delay as zero, which makes the nominal system a first-order system without delay, hence simple enough for application of some basic linear control system design methods. Of course, the price to pay is that the resulting model of an uncertain system, which is actually a family (a set) of systems, contains even models that were not prescribed. 
 
 ``` {julia}
+#| fig-cap: "Magnitude of the relative error for a grid of parameters as a function of frequency"
+#| label: fig-uncertain-first-order-system
 using ControlSystems
 using Plots
 
@@ -292,12 +316,14 @@ uncertain_first_order_delayed()
 Now we need to find some upper bound on the relative error. Simplicity is a virtue here too, hence we are looking for a rational filter of very low order, say 1 or 2. Speaking of the first-order filter, one useful way to format it is
 $$
 \boxed{
-W(s) = \frac{\tau s+r_0}{(\tau/r_{\infty})s+1}}
+W(s) = \frac{\tau s+r_0}{(\tau/r_{\infty})s+1},}
 $$
 where $r_0$ is uncertainty at steady state, $1/\tau$ is the frequency, where the relative uncertainty reaches 100\%, $r_{\infty}$ is relative uncertainty at high frequencies, often $r_{\infty}\geq 2$.
 
 For our example, the parameters of the filter are in the code below and the frequency response follows.
 ``` {julia}
+#| fig-cap: "(Approximate) upper bound on the magnitude of the relative error(s)"
+#| label: fig-upper_bound_on_relative_error
 using ControlSystems
 using Plots
 
@@ -352,16 +378,13 @@ uncertain_first_order_delayed_with_weights()
 Obviously the filter does not capture the family of systems perfectly. It is now up to the control engineer to decide if this is a problem. If yes, if the control design should be really robust against all uncertainties in the considered set, some more complex (higher-order) filter is needed to described the uncertainty more accurately. The source code shows (in commented lines) one particular candidate, but in general the whole problem boils down to designing a stable filter with a prescribed magnitude frequency response. 
 :::
 
-
-
-
 ##### Inverse additive uncertainty
 
-...
+#TODO
 
 ##### Inverse multiplicative uncertainty
 
-...
+#TODO
 
 ##### Linear fractional transformation (LFT)
 
@@ -381,7 +404,7 @@ $$
 
 It can be viewed as a feedback interconnection of the plant $\mathbf P$ and the controller $\mathbf K$, in which not all plant inputs are used as control inputs and not all plant outputs are measured, as depicted in @fig-lower-LFT
 
-![Lower LFT of $\mathbf P$ with respect to $\mathbf K$](figures/lower_LFT.png){#fig-lower-LFT width=30%}
+![Lower LFT of $\mathbf P$ with respect to $\mathbf K$](figures/lower_LFT.png){#fig-lower-LFT width=40%}
 
 Similarly, for a matrix $\mathbf N$ sized $(n_1+n_2)\times(m_1+m_2)$ and a matrix $\boldsymbol\Delta$ sized $m_1\times n_1$, the *upper LFT* of $\mathbf N$ with respect to $\mathbf K$ is
 $$
@@ -391,7 +414,7 @@ $$
 
 It can be viewed as a feedback interconnection of the nominal plant $\mathbf N$ and the uncertainty block $\boldsymbol\Delta$, as depicted in @fig-upper-LFT
 
-![Upper LFT of $\mathbf N$ with respect to $\boldsymbol \Delta$](figures/upper_LFT.png){#fig-upper-LFT width=30%}
+![Upper LFT of $\mathbf N$ with respect to $\boldsymbol \Delta$](figures/upper_LFT.png){#fig-upper-LFT width=40%}
 
 Here we already anticipated MIMO uncertainty blocks. One motivation for them is explained in the very next section on structured uncertainties, another one is appearing once we start formulating robust performance within the same analytical framework as robust stability.
 
@@ -400,7 +423,7 @@ Here we already anticipated MIMO uncertainty blocks. One motivation for them is 
 ## Which is lower and which is upper is a matter of convention, but a useful one
 Our usage of the lower LFT for a feedback interconnection of a (generalized) plant and a controller and the upper LFT for a feedback interconnection of a nominal system and and uncertainty is completely arbitrary. We could easily use the lower LFT for the uncertainty. But it is a convenient convention to adhere to. The more so that it allows for the combination of both as in the diagram @fig-lower-upper-LFT below, which corresponds to composition of the two LFTs.
 
-![Combination of the lower and upper LFT](figures/lower_upper_LFT.png){#fig-lower-upper-LFT width=30%}
+![Combination of the lower and upper LFT](figures/lower_upper_LFT.png){#fig-lower-upper-LFT width=40%}
 :::
 
 ### Structured frequency-domain uncertainty
@@ -420,8 +443,4 @@ $$
 with each block (including the MIMO blocks) satisfying the usual condition
 $$
 \|\Delta_i\|_{\infty}\leq 1, \; i=1,\ldots, n.
-$$
-
-#### Structured singular value (SSV, $\mu$, mu)
-
-With this structured uncertainty, how does the small gain theorem look like?  
+$$ 
