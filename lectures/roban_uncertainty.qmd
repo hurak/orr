@@ -232,7 +232,7 @@ $$
 G(s) = \underbrace{G_0(s)}_{\text{nominal model}}+\underbrace{W(s)\Delta(s)}_{\text{additive uncertainty}}.
 $$
 
-The block diagram interpretation is inb@fig-fig-additive-uncertainty.
+The block diagram interpretation is in @fig-additive-uncertainty.
 
 ![Additive uncertainty](figures/additive_uncertainty.png){#fig-additive-uncertainty width=40%}
 
@@ -378,17 +378,19 @@ uncertain_first_order_delayed_with_weights()
 Obviously the filter does not capture the family of systems perfectly. It is now up to the control engineer to decide if this is a problem. If yes, if the control design should be really robust against all uncertainties in the considered set, some more complex (higher-order) filter is needed to described the uncertainty more accurately. The source code shows (in commented lines) one particular candidate, but in general the whole problem boils down to designing a stable filter with a prescribed magnitude frequency response. 
 :::
 
-##### Inverse additive uncertainty
+##### Inverse additive uncertainty, inverse multiplicative uncertainty
 
-#TODO
+We can also consider the configuration in which the uncertainty enters in a feedback manner as in @fig-inverse-additive-uncertainty and @fig-inverse-multiplicative-uncertainty. 
 
-##### Inverse multiplicative uncertainty
+![Inverse additive uncertainty](figures/inverse_additive_uncertainty.png){#fig-inverse-additive-uncertainty width=40%}
 
-#TODO
+![Inverse multiplicative uncertainty](figures/inverse_multiplicative_uncertainty.png){#fig-inverse-multiplicative-uncertainty width=55%}
+
+Through these feedback configurations we can also model unstable uncertain dynamics even if $W$ and $\Delta$ are stable. 
 
 ##### Linear fractional transformation (LFT)
 
-For a matrix $\mathbf P$ sized $(n_1+n_2)\times(m_1+m_2)$ and divided into blocks like
+Finally, we are going to introduce a framework within which all the above described configurations can be expressed in a unified way. The framework is called *linear fractional transformation* (LFT). For a matrix $\mathbf P$ sized $(n_1+n_2)\times(m_1+m_2)$ and divided into blocks like
 $$
 \mathbf P=
 \begin{bmatrix}
@@ -402,7 +404,7 @@ $$
 \mathcal{F}_\mathbf{l}(\mathbf P,\mathbf K) = \mathbf P_{11}+\mathbf P_{12}\mathbf K(\mathbf I-\mathbf P_{22}\mathbf K)^{-1}\mathbf P_{21}}.
 $$
 
-It can be viewed as a feedback interconnection of the plant $\mathbf P$ and the controller $\mathbf K$, in which not all plant inputs are used as control inputs and not all plant outputs are measured, as depicted in @fig-lower-LFT
+If the matrices $\mathbf P$ and $\mathbf K$ are input-ouutput models (matrix transfer functions) of the plant and the controller, respectively, the LFT can be viewed as their interconnection in which not all plant inputs are used as control inputs and not all plant outputs are measured, as depicted in @fig-lower-LFT.
 
 ![Lower LFT of $\mathbf P$ with respect to $\mathbf K$](figures/lower_LFT.png){#fig-lower-LFT width=40%}
 
@@ -412,18 +414,33 @@ $$
 \mathcal{F}_\mathbf{u}(\mathbf N,\boldsymbol\Delta) = \mathbf N_{22}+\mathbf N_{21}\boldsymbol\Delta(\mathbf I-\mathbf N_{11}\boldsymbol\Delta)^{-1}\mathbf N_{12}}.
 $$
 
-It can be viewed as a feedback interconnection of the nominal plant $\mathbf N$ and the uncertainty block $\boldsymbol\Delta$, as depicted in @fig-upper-LFT
+It can be viewed as a feedback interconnection of the nominal plant $\mathbf N$ and the uncertainty block $\boldsymbol\Delta$, as depicted in @fig-upper-LFT.
 
 ![Upper LFT of $\mathbf N$ with respect to $\boldsymbol \Delta$](figures/upper_LFT.png){#fig-upper-LFT width=40%}
 
-Here we already anticipated MIMO uncertainty blocks. One motivation for them is explained in the very next section on structured uncertainties, another one is appearing once we start formulating robust performance within the same analytical framework as robust stability.
-
+Here we already anticipated a MIMO uncertainty block. One motivation is explained in the next section on structured uncertainties, another one appears once we start formulating robust performance within the same analytical framework as robust stability.
 
 ::: {.callout-note}
 ## Which is lower and which is upper is a matter of convention, but a useful one
 Our usage of the lower LFT for a feedback interconnection of a (generalized) plant and a controller and the upper LFT for a feedback interconnection of a nominal system and and uncertainty is completely arbitrary. We could easily use the lower LFT for the uncertainty. But it is a convenient convention to adhere to. The more so that it allows for the combination of both as in the diagram @fig-lower-upper-LFT below, which corresponds to composition of the two LFTs.
 
 ![Combination of the lower and upper LFT](figures/lower_upper_LFT.png){#fig-lower-upper-LFT width=40%}
+:::
+
+::: {#exm-input-multiplicative-uncertainty-as-LFT}
+## Input multiplicative uncertainty formulated as an upper LFT
+We advertized the LFT as a unifying modelling tool. Here comes an example. We consider the (input) multiplicative uncertainty and reformulate it as and  upper LFT.
+
+![Input multiplicative uncertainty formulated as an upper LFT](figures/input_multiplicative_as_LFT.png){#fig-multiplicative-as-LFT width=40%}
+
+We can read from @fig-multiplicative-as-LFT that the generalized plant $\mathbf P$ is modelled by the matrix transfer function
+$$
+\mathbf P =
+\begin{bmatrix}
+0 & W\\
+G_0 & G_0
+\end{bmatrix}.
+$$
 :::
 
 ### Structured frequency-domain uncertainty
