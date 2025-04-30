@@ -199,7 +199,7 @@ WT
 = \sup_{\omega\in\mathbb{R}}\sqrt{|W_p(j\omega)S(j\omega)|^{2}+|W(j\omega)T(j\omega)|^{2}}.
 $$
 
-This can be seen by using the known relation between the singular values and eigenvalues. Consider a matrix $\mathbf A \in \mathbb R^{n\times m}$. It holds that 
+This can be seen by using the known relation between singular values and eigenvalues. Consider a matrix $\mathbf A \in \mathbb R^{n\times m}$, it holds that 
 $$
 \sigma_i(\mathbf A) = \sqrt{\lambda_i(\mathbf A^\top \mathbf A)},
 $$
@@ -223,7 +223,7 @@ $${#eq-hinf-mixed-sensitivity-as-frequencywise-2-norm}
 
 ::: {.callout-caution}
 ## The $\mathcal H_\infty$ norm deals with transfer functions, the 2- (and 1- and $\infty$-) norms deal with constant vectors
-In the above equation, the norm on the left is a norm of a transfer function, the norm on the right is a norm of a constant vector (evaluated at a particular frequency $\omega$). In order to emphasize it, some authors use the notation $\|\cdot\|_{\mathcal H_\infty}$ to distinguish the $\mathcal H_\infty$ norm of a transfer function from the $\infty$ norm $\|\cdot\|_\infty$ of a constant vector.
+In the above equation, the norm on the left is a norm of a transfer function, the norm on the right is a norm of a constant vector (evaluated at a particular frequency $\omega$). In order to emphasize it, some authors use the notation $\|\cdot\|_{\mathcal H_\infty}$ to distinguish the $\mathcal H_\infty$ norm of a transfer function from the $\infty$- (also called max-) norm $\|\cdot\|_\infty$ of a constant vector.
 :::
 
 The condition of robust performance in @eq-robust-performance-frequencywise uses the 1-norm of a vector evaluated at a particular frequency $\omega$. We can rewrite it as
@@ -236,7 +236,7 @@ W(j\omega)T(j\omega)
 \right\|_{1} < 1.
 $${#eq-robust-performance-frequencywise-1-norm}
 
-Recall the definitions of various norms of a planar vector $\bm x\in \mathbb R^2$:
+Now what? The condition of robust performance enforces frequency-wise upper bound on the 1-norm, but the $\mathcal H_\infty$ system norm can be interpreted as a frequency-wise upper bound on the 2-norm. The good news is that these norms are related. For notational convenience, we consider just some vector $\bm x = \begin{bmatrix} x_1 \\ x_2 \end{bmatrix}$. Here come definitions of three most popular vector norms:
 $$
 \|\bm x\|_2 = \sqrt{x_1^2+x_2^2},\quad \|\bm x\|_1 = |x_1| + |x_2|,\quad \|\bm x\|_{\infty} = \max\{|x_1|,|x_2|\}.
 $$
@@ -258,9 +258,8 @@ W_\mathrm{p}S_0\\
 WT_0
 \end{bmatrix}
 \right\|_{\infty}
-<\frac{1}{\sqrt{2}},}
+<\frac{1}{\sqrt{2}}.}
 $$
-where the augmented closed-loop system $\begin{bmatrix} W_\mathrm{p}S\\ WT_0 \end{bmatrix}$ is called *mixed sensitivity function*.
 
 In the MIMO case we do not have a useful upper bound, but at least we have received a hint that it may be useful to minimize the $\mathcal H_\infty$ norm of the mixed sensitivity function. This observation will directly lead to a control design method.
 
