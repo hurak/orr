@@ -1223,7 +1223,7 @@ WT
 \right\|_{\infty}
 = \sup_{\omega\in\mathbb{R}}\sqrt{|W_p(j\omega)S(j\omega)|^{2}+|W(j\omega)T(j\omega)|^{2}}.
 </span></p>
-<p>This can be seen by using the known relation between the singular values and eigenvalues. Consider a matrix <span class="math inline">\mathbf A \in \mathbb R^{n\times m}</span>. It holds that <span class="math display">
+<p>This can be seen by using the known relation between singular values and eigenvalues. Consider a matrix <span class="math inline">\mathbf A \in \mathbb R^{n\times m}</span>, it holds that <span class="math display">
 \sigma_i(\mathbf A) = \sqrt{\lambda_i(\mathbf A^\top \mathbf A)},
 </span> where <span class="math inline">\sigma_i</span> is the <span class="math inline">i</span>-th singular value of a matrix, and <span class="math inline">\lambda_i</span> is the <span class="math inline">i</span>-th eigenvalue. Although this is not how singular values are computed numerically (there are more reliable ways), we can use this result for our theoretical derivation. Note that if <span class="math inline">\mathbf A</span> is a one-column matrix (a column vector), the product <span class="math inline">\mathbf A^\top \mathbf A</span> is a scalar; it is equal to the square of the Euclidean norm of <span class="math inline">\mathbf A</span>. Hence, the only (nonzero) singular value of a one-column matrix is the Euclidean norm of the one-column <span class="math inline">\mathbf A</span>.</p>
 <p>We have just learnt that <span id="eq-hinf-mixed-sensitivity-as-frequencywise-2-norm"><span class="math display">
@@ -1250,7 +1250,7 @@ The <span class="math inline">\mathcal H_\infty</span> norm deals with transfer 
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In the above equation, the norm on the left is a norm of a transfer function, the norm on the right is a norm of a constant vector (evaluated at a particular frequency <span class="math inline">\omega</span>). In order to emphasize it, some authors use the notation <span class="math inline">\|\cdot\|_{\mathcal H_\infty}</span> to distinguish the <span class="math inline">\mathcal H_\infty</span> norm of a transfer function from the <span class="math inline">\infty</span> norm <span class="math inline">\|\cdot\|_\infty</span> of a constant vector.</p>
+<p>In the above equation, the norm on the left is a norm of a transfer function, the norm on the right is a norm of a constant vector (evaluated at a particular frequency <span class="math inline">\omega</span>). In order to emphasize it, some authors use the notation <span class="math inline">\|\cdot\|_{\mathcal H_\infty}</span> to distinguish the <span class="math inline">\mathcal H_\infty</span> norm of a transfer function from the <span class="math inline">\infty</span>- (also called max-) norm <span class="math inline">\|\cdot\|_\infty</span> of a constant vector.</p>
 </div>
 </div>
 <p>The condition of robust performance in <a href="#eq-robust-performance-frequencywise" class="quarto-xref">Eq.&nbsp;2</a> uses the 1-norm of a vector evaluated at a particular frequency <span class="math inline">\omega</span>. We can rewrite it as <span id="eq-robust-performance-frequencywise-1-norm"><span class="math display">
@@ -1261,7 +1261,7 @@ W(j\omega)T(j\omega)
 \end{bmatrix}
 \right\|_{1} &lt; 1.
 \tag{4}</span></span></p>
-<p>Recall the definitions of various norms of a planar vector <span class="math inline">\bm x\in \mathbb R^2</span>: <span class="math display">
+<p>Now what? The condition of robust performance enforces frequency-wise upper bound on the 1-norm, but the <span class="math inline">\mathcal H_\infty</span> system norm can be interpreted as a frequency-wise upper bound on the 2-norm. The good news is that these norms are related. For notational convenience, we consider just some vector <span class="math inline">\bm x = \begin{bmatrix} x_1 \\ x_2 \end{bmatrix}</span>. Here come definitions of three most popular vector norms: <span class="math display">
 \|\bm x\|_2 = \sqrt{x_1^2+x_2^2},\quad \|\bm x\|_1 = |x_1| + |x_2|,\quad \|\bm x\|_{\infty} = \max\{|x_1|,|x_2|\}.
 </span></p>
 <p>These definitions are also visualized in <a href="#fig-norms-in-the-euclidean-plane" class="quarto-xref">Fig.&nbsp;7</a> a.</p>
@@ -1285,8 +1285,8 @@ W_\mathrm{p}S_0\\
 WT_0
 \end{bmatrix}
 \right\|_{\infty}
-&lt;\frac{1}{\sqrt{2}},}
-</span> where the augmented closed-loop system <span class="math inline">\begin{bmatrix} W_\mathrm{p}S\\ WT_0 \end{bmatrix}</span> is called <em>mixed sensitivity function</em>.</p>
+&lt;\frac{1}{\sqrt{2}}.}
+</span></p>
 <p>In the MIMO case we do not have a useful upper bound, but at least we have received a hint that it may be useful to minimize the <span class="math inline">\mathcal H_\infty</span> norm of the mixed sensitivity function. This observation will directly lead to a control design method.</p>
 </section>
 <section id="robust-stability-for-mimo-multiplicative-uncertainty" class="level2">
