@@ -468,22 +468,22 @@ G(s;p_1,p_2) = \frac{1}{(s+p_1)(s+p_2)},
 $$
 where $p_1$ and $p_2$ are uncertain parameters satisfying $p_1\in[0.9,1.1], p_2\in[3,5]$.
 
-After choosing the nominal values of the parateres to be, say, in the middle of the intervals, we can express the uncertain parameters as 
+After choosing the nominal values of the paratemeters to be, say, in the middle of the intervals, we can express the uncertain parameters as 
 
 $$
 p_1 = 1+0.1\delta_1,\quad p_2 = 4+\delta_2,
 $$
 where the uncertain real parameters satisfy $|\delta_1|\leq 1$ and $|\delta_2|\leq 1$. We can then model the uncertain system as in @fig-multiple-uncertain-parameters-1.
 
-![The two-real-pole system with uncertain location of poles modelled as two integrators with uncertain gain in the feedback](figures/multiple_uncertain_parameters_as_structured_uncertainty_1.png){#fig-multiple-uncertain-parameters-1 width=70%}
+![The two-real-pole system with uncertain location of poles modelled as two integrators with uncertain gain in the feedback](figures/multiple_uncertain_parameters_as_structured_uncertainty_1.png){#fig-multiple-uncertain-parameters-1 width=60%}
 
 We can then isolate the uncertain parameters as in @fig-multiple-uncertain-parameters-2.
 
-![Modification of @fig-multiple-uncertain-parameters-1 so that the uncertain parameters are isolated](figures/multiple_uncertain_parameters_as_structured_uncertainty_2.png){#fig-multiple-uncertain-parameters-2 width=70%}
+![Modification of @fig-multiple-uncertain-parameters-1 so that the uncertain parameters are isolated](figures/multiple_uncertain_parameters_as_structured_uncertainty_2.png){#fig-multiple-uncertain-parameters-2 width=60%}
 
 And finally we can manipulate the block diagram in the form of a lower LFT as in @fig-multiple-uncertain-parameters-3. Note that we have approximated the uncertain real parameters $\delta_1$ and $\delta_2$ conservatively by uncertain complex parameters $\Delta_1$ and $\Delta_2$. This surely introduces some conservatism into the model.
 
-![Reformatting @fig-multiple-uncertain-parameters-2 into the lower LFT (with the uncertain real parameters $\delta_1$ and $\delta_2$ approximated conservatively by uncertain complex parameters $\Delta_1$ and $\Delta_2$)](figures/multiple_uncertain_parameters_as_structured_uncertainty_3.png){#fig-multiple-uncertain-parameters-3 width=80%}
+![Reformatting @fig-multiple-uncertain-parameters-2 into the lower LFT (with the uncertain real parameters $\delta_1$ and $\delta_2$ approximated conservatively by uncertain complex parameters $\Delta_1$ and $\Delta_2$)](figures/multiple_uncertain_parameters_as_structured_uncertainty_3.png){#fig-multiple-uncertain-parameters-3 width=65%}
 
 The blue block in @fig-multiple-uncertain-parameters-3 is the uncertain block $\bm\Delta = \begin{bmatrix}\Delta_1 & 0\\ 0& \Delta_2\end{bmatrix}$. The orange block is the nominal system $\mathbf N$, which has three inputs and three outputs. The last two inputs and the last two outputs are related to the uncertainty, we label them $\bm u_\Delta$ and $\bm y_\Delta$, respectively. The matrix transfer function is
 
