@@ -21,11 +21,11 @@ This chosen framework has two benefits. First, having being **formulated in freq
 
 Second, by formulating the requirements on robust stability, nominal stability and robust performance as constraints on $\mathcal H_\infty$ norms of some closed-loop systems, an immediate extension from analysis to **automated synthesis** (control design) is enabled by availability of numerical methods for $\mathcal H_\infty$ **optimization**. This enhances the classical frequency-domain control design techniques in that while the classical methods require that we know what we want and we also know how to achieve it, the $\mathcal H_\infty$ optimization based methods require that we only know what we want (and express our requirements in frequency domain). We don't have to bother with how to achieve it because there are numerical solvers that will do the job for us.
 
-Let's introduce the first instance of such methodology. We have learnt that the robust performance condition in presence of multiplicative uncertainty is formulated as a bound on the $\mathcal H_\infty$ norm of the *mixed sensitivity function* $\begin{bmatrix}W_pS\\WT\end{bmatrix}$, namely
+Let's introduce the first instance of such methodology. We have learnt that the robust performance condition in presence of multiplicative uncertainty is formulated as a bound on the $\mathcal H_\infty$ norm of the *mixed sensitivity function* $\begin{bmatrix}W_\mathrm{p}S\\WT\end{bmatrix}$, namely
 $$
 \left\|
 \begin{bmatrix}
-W_pS\\WT
+W_\mathrm{p}S\\WT
 \end{bmatrix}
 \right\|_{\infty}
 < \frac{1}{\sqrt{2}}.
@@ -38,7 +38,7 @@ $$
 \operatorname*{minimize}_{K \text{ stabilizing}}
 \left\|
 \begin{bmatrix}
-W_pS\\WT
+W_\mathrm{p}S\\WT
 \end{bmatrix}
 \right\|_{\infty}.
 $$
@@ -72,6 +72,69 @@ W_1S\\W_2KS\\W_3T
 \right\|_{\infty}.}
 $$
 
-The middle term penalizes control (similarly as $R$ term in LQ optimality criterion $\int(x^TQx+u^TRu)dt$). Typically it is sufficient to set it equal to a nonnegative constant.
+The middle term penalizes control (it is a closed-loop transfer function from the output disturbance to the control). It resembles the role of the $\mathbf R$ term in the LQR cost $\int(\bm x^\top \mathbf Q\bm x+\bm u^\top \mathbf R\bm u)\text{d}t$. Typically we set $W_2$ equal to a small  nonnegative constant.
 
 An important property of this method is that it extends to the multiple-input-multiple-output (MIMO) case. Nothing needs to be changes in the formal problem statement as the $\mathcal H_\infty$ norm is defined for MIMO systems as well. 
+
+::: {#exm-himat-mixed-sensitivity}
+## Mixed sensitivity design for the HIMAT aircraft
+
+``` {julia}
+#| label: fig-himat-mixed-sensitivity
+#| fig-cap: "Several magnitude frequency responses of the closed-loop system: sensitivity $S$, complementary sensitivity $T$, and input sensitivity functions $U=KS$"
+using ControlSystems
+using RobustAndOptimalControl
+using LinearAlgebra
+using Plots
+
+A = [
+-2.2567e-02  -3.6617e+01  -1.8897e+01  -3.2090e+01   3.2509e+00  -7.6257e-01;
+9.2572e-05  -1.8997e+00   9.8312e-01  -7.2562e-04  -1.7080e-01  -4.9652e-03;
+1.2338e-02   1.1720e+01  -2.6316e+00   8.7582e-04  -3.1604e+01   2.2396e+01;
+0            0   1.0000e+00            0            0            0;
+0            0            0            0  -3.0000e+01            0;
+0            0            0            0            0  -3.0000e+01];
+
+B = [0     0;
+     0     0;
+     0     0;
+     0     0;
+    30     0;
+     0    30];
+
+C = [0     1     0     0     0     0;
+     0     0     0     1     0     0];
+
+D = [0     0;
+     0     0];
+
+G₀ = ss(A,B,C,D);
+#set(G0,'InputName',{'\delta_e','\delta_c'},'OutputName',{'\alpha','\theta'})
+
+Mₛ = 2; 
+Aₛ = 0.003;   
+ωₛ = 5;
+W₁=tf([1/Mₛ,ωₛ],[1,Aₛ*ωₛ])
+
+W₂ = 0.05;
+
+τ = 1/50; 
+r₀ = 0.3; 
+r∞ = 10;
+W₃ = tf([τ,r₀],[τ/r∞,1]);
+
+P = hinfpartition(G₀, W₁, W₂, W₃);
+hinfassumptions(P, verbose=true)
+
+K, γ = hinfsynthesize(P, γrel=1.05)
+
+L₀ = G₀*K
+
+Pcl, S, KS, T = hinfsignals(P, G₀, K)
+
+Pcl == lft(P, K)
+isapprox(hinfnorm2(Pcl)[1], γ, rtol=1e-5)
+
+specificationplot([S, KS, T], [W₁, W₂, W₃], γ, ylabel="Magnitude (-)", title="", lw=2, nsigma=1, s_labels=["σ̄(S)", "σ̄(KS)", "σ̄(T)"], w_labels=["γ/|W₁|", "γ/|W₂|", "γ/|W₃|"])
+```
+:::
