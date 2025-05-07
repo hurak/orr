@@ -7,10 +7,100 @@ csl: ieee-control-systems.csl
 format:
     html:
         html-math-method: katex
-        code-fold: true
+        code-fold: false 
         code-summary: "Show the code"
 crossref:
   fig-prefix: Fig. 
   eq-prefix: Eq.
 engine: julia
 ---
+## Base neutralization process
+In this homework, you will design a controller for a base neutralization system that operates in two stages, as illustrated in the figure below.
+
+![Neutralization process](figures/neutralization_process.svg){width=50%}
+
+The bulk of the neutralization takes place in the first tank, where a large amount of acid ($u_1$) is mixed with the basic solution ($d$) to reduce the pH ($y_1$) to approximately 10. In the second tank, the pH ($y_2$) is further adjusted to a target value of around 7 by adding a smaller amount of acid ($u_2$).
+
+The system can be modeled using the following signal flow diagram
+
+![Signal flow diagram](figures/neutralization_process_flow.svg){width=50%}
+
+Where the transfer functions are given as
+
+$$
+G_1(s) = \frac{1.5}{100s+1}, \quad G_2(s) = \frac{1.0}{50s+1}.
+$$
+
+Your goal is to design a controller which ensures $y_2 \approx r$ with a closed-loop bandwidth $\omega_b = 1.0$ rad/s, while also keeping $u_2$ small at low frequencies. The controller $\bm{K}$ should be of the form
+$$
+\begin{bmatrix}
+u_1 \\
+u_2
+\end{bmatrix} = \bm{K}(s) \begin{bmatrix}
+-y_1 \\
+r - y_2
+\end{bmatrix}.
+$$
+
+You should use the $H_\infty$ signal-based design method to achieve this goal, that is, design the controller by solving
+$$
+\operatorname*{minimize}_{\bm{K} \text{ stabilizing}}  \lVert \operatorname{LFT}(\bm{P}, \bm{K}) \rVert_{\infty},
+$$
+where $\bm{P}$ is the generalized plant, which includes the dynamics of the base neutralization process along with weighting functions used to express performance objectives. It maps the exogenous inputs (e.g., reference $r$, disturbance $d$) and the control inputs $(u_1, u_2)$ to the performance outputs (such as tracking error and control effort) and to the measured signals used by the controller. 
+
+The operator $\operatorname{LFT}(\bm{P}, \bm{K})$ denotes the lower linear fractional transformation, which represents the closed-loop transfer function from the exogenous inputs to the performance outputs when the controller $\bm{K}$ is connected to the generalized plant $\bm{P}$ via feedback.
+
+### Tasks
+You should follow these steps to complete the homework
+
+1. Create the generalized plant $\bm{P}$ using the transfer functions $G_1(s)$ and $G_2(s)$, along with your chosen exogenous inputs, performance outputs, and weighting filters. The weighting filters should be designed to ensure that the closed-loop system meets the performance objectives, such as reference tracking and control effort requirements. 
+
+2. Use the [`hinfsyn_lmi`](https://juliacomputing.github.io/JuliaSimControl.jl/stable/api/#JuliaSimControl.hinfsyn_lmi-Union{Tuple{ExtendedStateSpace{Continuous,%20T}},%20Tuple{T}}%20where%20T) function from [`JuliaSimControl`](https://juliacomputing.github.io/JuliaSimControl.jl/stable/) to solve the $H_\infty$ optimization problem. This function will compute the optimal controller $\bm{K}$ and the appropriate $\gamma$ upper bound on the $H_\infty$ norm of the LFT. We suggest using `γrel = 1.05` as the relative tolerance for the optimization.
+
+3. Prepare a concise report (`hw.pdf`) and include the controller design code (`hw.jl`). Compress the report and code into a zip file named `hw.zip` and submit it to the [BRUTE](https://cw.felk.cvut.cz/brute) system.
+
+
+::: {.callout-important}
+## JuliaSim
+`JuliaSimControl` is not a package that is available in the Julia package registry because it is not a free software. It is a commercial package that is part of the JuliaSim suite, which is a collection of modeling and simulation tools for Julia. However, to our luck, it is for non-commercial academic teaching and research purposes.
+
+Installing `JuliaSimControl` is more involved than your run of the mill Julia package, but not by much. 
+
+First, you need to register yourself on the [JuliaHub](https://juliahub.com) website. 
+
+After that, follow the instruction on [Using JuliaSim Packages Locally via the JuliaHub Registry](https://help.juliahub.com/juliasim/stable/gettingstarted/juliahubregistry/) to add the JuliaHub registry to your Julia installation. 
+
+Once you have done that, you can install `JuliaSimControl`  in the standard way using the Julia package manager.
+
+:::
+
+### Report instructions
+Your report should contain the following
+
+1. A description of the generalized plant $\bm{P}$, including your choice of exogenous inputs, performance outputs, and weighting functions. Briefly explain the reasoning behind your design choices.
+
+2. Closed-loop performance analysis, namely show 
+    - the time response of the output $y_2$ and control input $u_2$ to a step change in the reference $r$.
+    - the frequency response for a transfer function from the reference $r$ to the output $y_2$, and from the reference $r$ to the control input $u_2$.
+
+3. Brief comment on whether the bandwidth and low-frequency control objectives were met, based on your plots.
+
+
+### Template
+```{julia}
+#| eval: false
+
+using JuliaSimControl
+using LinearAlgebra, Plots
+
+s = tf("s")
+
+G₁ = 1.5/(100s+1) |> ss
+G₂ = 1/(50s+1) |> ss
+
+## TODO: Form the generalized plant P
+
+## TODO: Find the controller K using hinfsyn_lmi
+
+## TODO: Simulate the closed-loop system
+```
