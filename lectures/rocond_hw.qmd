@@ -53,12 +53,12 @@ The operator $\operatorname{LFT}(\bm{P}, \bm{K})$ denotes the lower linear fract
 ### Tasks
 You should follow these steps to complete the homework
 
-1. Create the generalized plant $\bm{P}$,
-using the transfer functions $G_1(s)$ and $G_2(s)$, and the weighting functions of your choice. The weighting functions should be designed to ensure that the closed-loop system meets the performance objectives, such as tracking.
+1. Create the generalized plant $\bm{P}$ using the transfer functions $G_1(s)$ and $G_2(s)$, along with your chosen exogenous inputs, performance outputs, and weighting filters. The weighting filters should be designed to ensure that the closed-loop system meets the performance objectives, such as reference tracking and control effort requirements. 
+
 2. Use the [`hinfsyn_lmi`](https://juliacomputing.github.io/JuliaSimControl.jl/stable/api/#JuliaSimControl.hinfsyn_lmi-Union{Tuple{ExtendedStateSpace{Continuous,%20T}},%20Tuple{T}}%20where%20T) function from [`JuliaSimControl`](https://juliacomputing.github.io/JuliaSimControl.jl/stable/) to solve the $H_\infty$ optimization problem. This function will compute the optimal controller $\bm{K}$ and the appropriate $\gamma$ upper bound on the $H_\infty$ norm of the LFT. We suggest using `γrel = 1.05` as the relative tolerance for the optimization.
-3. Save the found controller $\bm{K}$ to a file name `K.jld` using the `JLD` package.
-4. Compress the file `K.jld` as well as the code used to generate the controller, preferably named `hw.jl` into a zip file named `hw.zip`.
-5. Submit the zip file `hw.zip` to [BRUTE](https://cw.felk.cvut.cz/brute) system.
+
+3. Prepare a concise report (`hw.pdf`) and include the controller design code (`hw.jl`). Compress the report and code into a zip file named `hw.zip` and submit it to the [BRUTE](https://cw.felk.cvut.cz/brute) system.
+
 
 ::: {.callout-important}
 ## JuliaSim
@@ -74,6 +74,17 @@ Once you have done that, you can install `JuliaSimControl`  in the standard way 
 
 :::
 
+### Report instructions
+Your report should contain the following
+
+1. A description of the generalized plant $\bm{P}$, including your choice of exogenous inputs, performance outputs, and weighting functions. Briefly explain the reasoning behind your design choices.
+
+2. Closed-loop performance analysis, namely show 
+    - the time response of the output $y_2$ and control input $u_2$ to a step change in the reference $r$.
+    - the frequency response for a transfer function from the reference $r$ to the output $y_2$, and from the reference $r$ to the control input $u_2$.
+
+3. Brief comment on whether the bandwidth and low-frequency control objectives were met, based on your plots.
+
 
 ### Template
 ```{julia}
@@ -81,7 +92,6 @@ Once you have done that, you can install `JuliaSimControl`  in the standard way 
 
 using JuliaSimControl
 using LinearAlgebra, Plots
-using JLD
 
 s = tf("s")
 
@@ -92,9 +102,5 @@ G₂ = 1/(50s+1) |> ss
 
 ## TODO: Find the controller K using hinfsyn_lmi
 
-K = ss(1.0I(2), 1.0I(2), 1.0I(2), 1.0I(2)) # Placeholder 
-
-## Save the controller K to a file
-save("K.jld", "K", K)
-
+## TODO: Simulate the closed-loop system
 ```
