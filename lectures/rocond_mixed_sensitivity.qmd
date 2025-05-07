@@ -15,11 +15,12 @@ crossref:
 engine: julia
 ---
 
-In the previous chapter we mentioned that there are several ways to capture uncertainty in the model and analyze robustness with respect to the uncertainty. We have chosen the worst-case approach based on the *small gain theorem* for analysis of robust stability, which in the case of linear systems has an intuitive frequency-domain interpretation. 
+In the previous chapter we mentioned that there are several ways to characterize the uncertainty in the model and analyze robustness with respect to the uncertainty. We have chosen the worst-case approach based on the *small gain theorem* for analysis of robust stability, which in the case of linear systems has an intuitive frequency-domain interpretation. 
 
-This chosen framework has two benefits. First, having being **formulated in frequency domain**, it offers us to take advantage of the insight developed in introductory courses on automatic control, that typically invest quite some effort into developing frequency doman concepts such as magnitude and phase Bode plots, Nyquist plot, and sensitivity and complementary sensitivity functions. Generations of control engineers have contributed to the collective know-how carried by these classical concepts and techniques.
+This chosen framework has two benefits: 
 
-Second, by formulating the requirements on robust stability, nominal stability and robust performance as constraints on $\mathcal H_\infty$ norms of some closed-loop systems, an immediate extension from analysis to **automated synthesis** (control design) is enabled by availability of numerical methods for $\mathcal H_\infty$ **optimization**. This enhances the classical frequency-domain control design techniques in that while the classical methods require that we know what we want and we also know how to achieve it, the $\mathcal H_\infty$ optimization based methods require that we only know what we want (and express our requirements in frequency domain). We don't have to bother with how to achieve it because there are numerical solvers that will do the job for us.
+- First, having being **formulated in frequency domain**, it offers us to take advantage of the insight developed in introductory courses on automatic control, that typically invest quite some effort into developing frequency domain concepts such as magnitude and phase Bode plots, Nyquist plot, and sensitivity and complementary sensitivity functions. Generations of control engineers have contributed to the collective know-how carried by these classical concepts and techniques.
+- Second, by formulating the requirements on robust stability, nominal stability and robust performance as constraints on $\mathcal H_\infty$ norms of some closed-loop systems, an immediate extension from analysis to **automated synthesis** (control design) is enabled by availability of numerical methods for $\mathcal H_\infty$ **optimization**. This enhances the classical frequency-domain control design techniques in that while the classical methods require that we know **what** we want and we also know **how** to achieve it, the $\mathcal H_\infty$ optimization based methods require that we **only know what we want** (and express our requirements in frequency domain). We don't have to bother with how to achieve it because there are numerical solvers that will do the job for us.
 
 Let's introduce the first instance of such methodology. We have learnt that the robust performance condition in presence of multiplicative uncertainty is formulated as a bound on the $\mathcal H_\infty$ norm of the *mixed sensitivity function* $\begin{bmatrix}W_\mathrm{p}S\\WT\end{bmatrix}$, namely
 $$
@@ -33,7 +34,7 @@ $$
 
 Evaluating this condition can be done in a straightforward way, either at a grid of frequencies (inefficient) or by invoking a method for computing the norm.
 
-But the major god news of this chapter is that we can also turn this into an optimization problem
+But the major message of this chapter is that we can also formulate the following optimization problem
 $$
 \operatorname*{minimize}_{K \text{ stabilizing}}
 \left\|
@@ -43,7 +44,7 @@ W_\mathrm{p}S\\WT
 \right\|_{\infty}.
 $$
 
-In words, we are looking for a controller $K$ that guaranees stability of the closed-loop system and it also minimizes the $\mathcal H_\infty$ norm of the mixed sensitivity function. 
+In words, we are looking for a controller $K$ that guaranees stability of the closed-loop system and also minimizes the $\mathcal H_\infty$ norm of the mixed sensitivity function. 
 
 Such optimization solvers are indeed [available](rocond_software.qmd).
 
@@ -79,9 +80,23 @@ An important property of this method is that it extends to the multiple-input-mu
 ::: {#exm-himat-mixed-sensitivity}
 ## Mixed sensitivity design for the HIMAT aircraft
 
+This is a frequent example in the literature. We can trace its first appearance in the paper @safonovFeedbackPropertiesMultivariable1981. It is also used in the [documentation for Loop-shaping controller design using Robust Control Toolbox for Matlab](https://www.mathworks.com/help/robust/gs/loop-shaping-controller-synthesis.html).
+
+The example is based on a (scaled) linear(ized) model of longitudinal dynamics of the HiMAT aircraft. The control inputs are 
+
+- elevator deflection $\delta_e$
+- canard deflection $\delta_c$
+
+and the measured outputs are
+
+- angle of attack $\alpha$
+- pitch angle $\theta$.
+
+If you are not familiar with these and feel uneasy about it, you can consult the original paper. But here we view them as fairly generic input and output variables.
+
 ``` {julia}
 #| label: fig-himat-mixed-sensitivity
-#| fig-cap: "Several magnitude frequency responses of the closed-loop system: sensitivity $S$, complementary sensitivity $T$, and input sensitivity functions $U=KS$"
+#| fig-cap: "Several magnitude frequency responses of the closed-loop system: sensitivity $S$, complementary sensitivity $T$, and input sensitivity $KS$"
 using ControlSystems
 using RobustAndOptimalControl
 using LinearAlgebra
@@ -89,11 +104,11 @@ using Plots
 
 A = [
 -2.2567e-02  -3.6617e+01  -1.8897e+01  -3.2090e+01   3.2509e+00  -7.6257e-01;
-9.2572e-05  -1.8997e+00   9.8312e-01  -7.2562e-04  -1.7080e-01  -4.9652e-03;
-1.2338e-02   1.1720e+01  -2.6316e+00   8.7582e-04  -3.1604e+01   2.2396e+01;
-0            0   1.0000e+00            0            0            0;
-0            0            0            0  -3.0000e+01            0;
-0            0            0            0            0  -3.0000e+01];
+ 9.2572e-05  -1.8997e+00   9.8312e-01  -7.2562e-04  -1.7080e-01  -4.9652e-03;
+ 1.2338e-02   1.1720e+01  -2.6316e+00   8.7582e-04  -3.1604e+01   2.2396e+01;
+ 0            0            1.0000e+00   0            0            0;
+ 0            0            0            0           -3.0000e+01   0;
+ 0            0            0            0            0           -3.0000e+01];
 
 B = [0     0;
      0     0;
@@ -109,32 +124,38 @@ D = [0     0;
      0     0];
 
 G₀ = ss(A,B,C,D);
-#set(G0,'InputName',{'\delta_e','\delta_c'},'OutputName',{'\alpha','\theta'})
+#G₀ = named_ss(G₀, u=[:δ_e, :δ_c], y =[:α, :θ])
 
-Mₛ = 2; 
-Aₛ = 0.003;   
-ωₛ = 5;
+Mₛ = 2; Aₛ = 0.003; ωₛ = 5;
 W₁=tf([1/Mₛ,ωₛ],[1,Aₛ*ωₛ])
 
 W₂ = 0.05;
 
-τ = 1/50; 
-r₀ = 0.3; 
-r∞ = 10;
+τ = 1/50; r₀ = 0.3; r∞ = 100;
 W₃ = tf([τ,r₀],[τ/r∞,1]);
 
 P = hinfpartition(G₀, W₁, W₂, W₃);
-hinfassumptions(P, verbose=true)
+hinfassumptions(P, verbose=false)
 
-K, γ = hinfsynthesize(P, γrel=1.05)
+K, γ = hinfsynthesize(P, γrel=1.05);
 
-L₀ = G₀*K
+Pcl, S, KS, T = hinfsignals(P, G₀, K);
 
-Pcl, S, KS, T = hinfsignals(P, G₀, K)
-
-Pcl == lft(P, K)
-isapprox(hinfnorm2(Pcl)[1], γ, rtol=1e-5)
-
-specificationplot([S, KS, T], [W₁, W₂, W₃], γ, ylabel="Magnitude (-)", title="", lw=2, nsigma=1, s_labels=["σ̄(S)", "σ̄(KS)", "σ̄(T)"], w_labels=["γ/|W₁|", "γ/|W₂|", "γ/|W₃|"])
+specificationplot([S, KS, T], [W₁, W₂, W₃], γ, ylabel="Magnitude (-)", title="", lw=2, nsigma=1, s_labels=["σ̄(S)", "σ̄(KS)", "σ̄(T)"], w_labels=["γ/|W₁|", "γ/|W₂|", "γ/|W₃|"],hz=false, xticks=10.0.^[-3:5...],ylims=(10^(-6),100))
 ```
+
+``` {julia}
+#| label: fig-himat-mixed-sensitivity-step-response-alpha
+#| fig-cap: "Response of the closed-loop system to a unit step at the reference value of the angle of attack"
+step1_response = step(T*ss([1.0 0; 0 0]))
+plot(step1_response, title="", xlabel="Time (s)", ylabel="Output", lw=2, label=["α" "θ"], legend=:topright)
+```
+
+``` {julia}
+#| label: fig-himat-mixed-sensitivity-step-response-theta
+#| fig-cap: "Response of the closed-loop system to a unit step at the reference value of the pitch angle"
+step1_response = step(T*ss([0 0; 0 1.0]))
+plot(step1_response, title="", xlabel="Time (s)", ylabel="Output", lw=2, label=["α" "θ"], legend=:topright)
+```
+
 :::

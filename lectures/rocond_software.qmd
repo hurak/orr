@@ -15,21 +15,30 @@ crossref:
 engine: julia
 ---
 
+## Julia
+
+### RobustAndOptimalControl.jl
+
+The main package for robust and optimal control in Julia. Documentation at [RobustAndOptimalControl.jl](https://juliacontrol.github.io/RobustAndOptimalControl.jl/stable/). There is a [dedicated section](https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/#H_\\infty-and-H_2-design) in the manual on the $\mathcal H_\infty$ control design.
+
+  - [hinfsynthesize](https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/api/#RobustAndOptimalControl.hinfsynthesize-Union{Tuple{ExtendedStateSpace{Continuous,%20T}},%20Tuple{T}}%20where%20T): control design by minimizing the $\mathcal{H}_\infty$ norm the the mixed-sensitivity function.
+  - [hinfpartition](https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/api/#RobustAndOptimalControl.hinfpartition-NTuple{4,%20Any})
+  - [specificationsplot](https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/api/#RobustAndOptimalControl.specificationplot): plotting the sensitivity, complementary sensitivity and input sensitivity functions and corresponding weighting filters relevant in the mixed sensitivity design.
+  - [glover_mcfarlane](https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/api/#RobustAndOptimalControl.glover_mcfarlane): Glover-McFarlane method of robust stabilization of a loop-shaping design based on $\mathcal{H}_\infty$ optimal control.
+  - [glover_mcfarlane_2dof](https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/api/#RobustAndOptimalControl.glover_mcfarlane_2dof): the same as above, but yielding a two-degree-of-freedom controller.
+  - [hanus](https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/api/#RobustAndOptimalControl.hanus-Tuple{Any}): a technique for antiwindup.
+
 ## Matlab 
 
 ### Robust Control Toolbox
 
-- [mixsyn](https://www.mathworks.com/help/robust/ref/dynamicsystem.mixsyn.html): control design by minimnizing the $\mathcal{H}_\infty$ norm the the mixed-sensitivity function.
+- [mixsyn](https://www.mathworks.com/help/robust/ref/dynamicsystem.mixsyn.html): control design by minimizing the $\mathcal{H}_\infty$ norm the the mixed-sensitivity function.
 
 - [hinfsyn](https://www.mathworks.com/help/robust/ref/dynamicsystem.hinfsyn.html): control design by minimizing the $\mathcal{H}_\infty$ norm of a closed-loop transfer function formulated using an LFT.
 
-- [ncfsyn](https://www.mathworks.com/help/robust/ref/lti.ncfsyn.html): another control design based on $\mathcal{H}_\infty$ optimization, but this one considers a different uncertainty model not covered in our course. Although this uncertainty model does not have as intuitive an interpretation as the multiplicative uncertainty model use in mixed sensitivity synthesis, it captures a broad class of uncertainties. Furtheremore, the resulting controller enjoys the same decomposition into a state feedback and an observer as the popular LQG controller, which can be an advantage from an implementation viewpoint. Highly recommended method. 
+- [ncfsyn](https://www.mathworks.com/help/robust/ref/lti.ncfsyn.html): Glover-McFarlane method of robust stabilization of a loop-shaping design based on $\mathcal{H}_\infty$ optimal control. 
 
-- [musyn](https://www.mathworks.com/help/robust/ref/uss.musyn.html): similar general setup as the hinfsyn method, but it considers a structure in the $\Delta$ term. It is regarded by some as the culmination of the $\mathcal{H}_\infty$ control design methods. The disadvantage is that it is the most computationaly intensive of the methods we covered, and the resulting controller is typically of rather high order.
-
-## Julia
-
-- [RobustAndOptimalControl.jl](https://juliacontrol.github.io/RobustAndOptimalControl.jl/stable/)
+- [musyn](https://www.mathworks.com/help/robust/ref/uss.musyn.html): similar general setup as the hinfsyn method, but it considers a structure in the $\Delta$ term. It is regarded by some as the culmination of the $\mathcal{H}_\infty$ control design methods. The disadvantage is that it is the most computationally intensive of the methods we covered, and the resulting controller is typically of rather high order.
 
 ## Python
 
