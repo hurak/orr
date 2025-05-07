@@ -92,15 +92,11 @@ and the measured outputs are
 - angle of attack $\alpha$
 - pitch angle $\theta$.
 
-If you are not familiar with these and feel uneasy about it, you can consult the original paper. But here we view them as fairly generic input and output variables.
+If you are not familiar with these and feel uneasy about it, you can consult the original paper. But here we view them as generic inputs and outputs of a MIMO system.
 
+The following code defines the (model of the) system.
 ``` {julia}
-#| label: fig-himat-mixed-sensitivity
-#| fig-cap: "Several magnitude frequency responses of the closed-loop system: sensitivity $S$, complementary sensitivity $T$, and input sensitivity $KS$"
 using ControlSystems
-using RobustAndOptimalControl
-using LinearAlgebra
-using Plots
 
 A = [
 -2.2567e-02  -3.6617e+01  -1.8897e+01  -3.2090e+01   3.2509e+00  -7.6257e-01;
@@ -124,8 +120,10 @@ D = [0     0;
      0     0];
 
 G₀ = ss(A,B,C,D);
-#G₀ = named_ss(G₀, u=[:δ_e, :δ_c], y =[:α, :θ])
-
+```
+The weights for the mixed sensitivity designed are defined in the following code.
+``` {julia}
+#| code-fold: false
 Mₛ = 2; Aₛ = 0.003; ωₛ = 5;
 W₁=tf([1/Mₛ,ωₛ],[1,Aₛ*ωₛ])
 
@@ -133,29 +131,35 @@ W₂ = 0.05;
 
 τ = 1/50; r₀ = 0.3; r∞ = 100;
 W₃ = tf([τ,r₀],[τ/r∞,1]);
+```
+
+Now, we form the generalized plant, check if the solvability conditions are satisfied, and call the solver of the general $\mathcal H_\infty$ optimal control problem. Finally, we form the three closed-loop sensitivity functions.
+``` {julia}
+#| code-fold: false
+using RobustAndOptimalControl
 
 P = hinfpartition(G₀, W₁, W₂, W₃);
 hinfassumptions(P, verbose=false)
 
 K, γ = hinfsynthesize(P, γrel=1.05);
-
 Pcl, S, KS, T = hinfsignals(P, G₀, K);
+```
 
+The magnitude (actually the largest singular values) frequency responses of the closed-loop transfer functions of interest are shown in @fig-himat-mixed-sensitivity.
+``` {julia}
+#| label: fig-himat-mixed-sensitivity
+#| fig-cap: "Several magnitude frequency responses of the closed-loop system: sensitivity $S$, complementary sensitivity $T$, and input sensitivity $KS$"
+using Plots
 specificationplot([S, KS, T], [W₁, W₂, W₃], γ, ylabel="Magnitude (-)", title="", lw=2, nsigma=1, s_labels=["σ̄(S)", "σ̄(KS)", "σ̄(T)"], w_labels=["γ/|W₁|", "γ/|W₂|", "γ/|W₃|"],hz=false, xticks=10.0.^[-3:5...],ylims=(10^(-6),100))
 ```
 
+The responses to steps in the reference value of the two angles are shown in @fig-himat-mixed-sensitivity-step-response-alpha.
 ``` {julia}
 #| label: fig-himat-mixed-sensitivity-step-response-alpha
-#| fig-cap: "Response of the closed-loop system to a unit step at the reference value of the angle of attack"
-step1_response = step(T*ss([1.0 0; 0 0]))
-plot(step1_response, title="", xlabel="Time (s)", ylabel="Output", lw=2, label=["α" "θ"], legend=:topright)
+#| fig-cap: "Response of the closed-loop system to a unit step at the reference values of the two angles"
+T = named_ss(T, u=[:α_ref, :θ_ref], y =[:α, :θ])
+step_response = step(T)
+#plot(step_response, title="", xlabel="Time (s)", ylabel=["α" "θ"], lw=2, label=["α_ref", "θ_ref"], legend=:topright)
+plot(step_response, title="", xlabel="Time (s)", lw=2, legend=:topright)
 ```
-
-``` {julia}
-#| label: fig-himat-mixed-sensitivity-step-response-theta
-#| fig-cap: "Response of the closed-loop system to a unit step at the reference value of the pitch angle"
-step1_response = step(T*ss([0 0; 0 1.0]))
-plot(step1_response, title="", xlabel="Time (s)", ylabel="Output", lw=2, label=["α" "θ"], legend=:topright)
-```
-
 :::
