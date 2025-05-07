@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.7.30">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -38,7 +38,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-de070a7b0ab54f8780927367ac907214.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-ad9cdf946c13169808b0c0b074b5f63d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -70,6 +70,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -851,13 +894,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rocond_H_infinity_control.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Hinfinity-optimal control</span></a>
+ <span class="menu-text">H-infinity optimal control</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rocond_mu_synthesis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Mu synthesis</span></a>
+ <span class="menu-text">mu synthesis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rocond_H_infinity_loopshaping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">H-infinity loop-shaping</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -995,6 +1044,17 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="robust-stability-with-a-structured-uncertainty" class="level2">
 <h2 class="anchored" data-anchor-id="robust-stability-with-a-structured-uncertainty">Robust stability with a structured uncertainty</h2>
+<p>In <span class="math inline">\mathbf M\boldsymbol \Delta</span> configuration, with <span class="math inline">\boldsymbol \Delta</span> having some structure <span class="math display">
+\boldsymbol\Delta =
+\begin{bmatrix}
+\Delta_1&amp; 0 &amp; \ldots &amp; 0\\
+0 &amp; \Delta_2 &amp; \ldots &amp; 0\\
+\vdots\\
+0 &amp; 0 &amp; \ldots &amp; \boldsymbol\Delta_n
+\end{bmatrix}
+</span> <span class="math display">
+\|\Delta_i\|_{\infty}\leq 1, \; i=1,\ldots, n
+</span></p>
 </section>
 <section id="robust-performance-with-a-structured-uncertainty" class="level2">
 <h2 class="anchored" data-anchor-id="robust-performance-with-a-structured-uncertainty">Robust performance with a structured uncertainty</h2>

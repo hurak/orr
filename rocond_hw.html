@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.7.30">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -38,7 +73,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-de070a7b0ab54f8780927367ac907214.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-ad9cdf946c13169808b0c0b074b5f63d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -70,6 +105,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -851,13 +929,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rocond_H_infinity_control.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Hinfinity-optimal control</span></a>
+ <span class="menu-text">H-infinity optimal control</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rocond_mu_synthesis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Mu synthesis</span></a>
+ <span class="menu-text">mu synthesis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rocond_H_infinity_loopshaping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">H-infinity loop-shaping</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -961,8 +1045,19 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#base-neutralization-process" id="toc-base-neutralization-process" class="nav-link active" data-scroll-target="#base-neutralization-process">Base neutralization process</a>
+  <ul class="collapse">
+  <li><a href="#tasks" id="toc-tasks" class="nav-link" data-scroll-target="#tasks">Tasks</a></li>
+  <li><a href="#report-instructions" id="toc-report-instructions" class="nav-link" data-scroll-target="#report-instructions">Report instructions</a></li>
+  <li><a href="#template" id="toc-template" class="nav-link" data-scroll-target="#template">Template</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -986,8 +1081,100 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="base-neutralization-process" class="level2">
+<h2 class="anchored" data-anchor-id="base-neutralization-process">Base neutralization process</h2>
+<p>In this homework, you will design a controller for a base neutralization system that operates in two stages, as illustrated in the figure below.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/neutralization_process.svg" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption>Neutralization process</figcaption>
+</figure>
+</div>
+<p>The bulk of the neutralization takes place in the first tank, where a large amount of acid (<span class="math inline">u_1</span>) is mixed with the basic solution (<span class="math inline">d</span>) to reduce the pH (<span class="math inline">y_1</span>) to approximately 10. In the second tank, the pH (<span class="math inline">y_2</span>) is further adjusted to a target value of around 7 by adding a smaller amount of acid (<span class="math inline">u_2</span>).</p>
+<p>The system can be modeled using the following signal flow diagram</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/neutralization_process_flow.svg" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption>Signal flow diagram</figcaption>
+</figure>
+</div>
+<p>Where the transfer functions are given as</p>
+<p><span class="math display">
+G_1(s) = \frac{1.5}{100s+1}, \quad G_2(s) = \frac{1.0}{50s+1}.
+</span></p>
+<p>Your goal is to design a controller which ensures <span class="math inline">y_2 \approx r</span> with a closed-loop bandwidth <span class="math inline">\omega_b = 1.0</span> rad/s, while also keeping <span class="math inline">u_2</span> small at low frequencies. The controller <span class="math inline">\bm{K}</span> should be of the form <span class="math display">
+\begin{bmatrix}
+u_1 \\
+u_2
+\end{bmatrix} = \bm{K}(s) \begin{bmatrix}
+-y_1 \\
+r - y_2
+\end{bmatrix}.
+</span></p>
+<p>You should use the <span class="math inline">H_\infty</span> signal-based design method to achieve this goal, that is, design the controller by solving <span class="math display">
+\operatorname*{minimize}_{\bm{K} \text{ stabilizing}}  \lVert \operatorname{LFT}(\bm{P}, \bm{K}) \rVert_{\infty},
+</span> where <span class="math inline">\bm{P}</span> is the generalized plant, which includes the dynamics of the base neutralization process along with weighting functions used to express performance objectives. It maps the exogenous inputs (e.g., reference <span class="math inline">r</span>, disturbance <span class="math inline">d</span>) and the control inputs <span class="math inline">(u_1, u_2)</span> to the performance outputs (such as tracking error and control effort) and to the measured signals used by the controller.</p>
+<p>The operator <span class="math inline">\operatorname{LFT}(\bm{P}, \bm{K})</span> denotes the lower linear fractional transformation, which represents the closed-loop transfer function from the exogenous inputs to the performance outputs when the controller <span class="math inline">\bm{K}</span> is connected to the generalized plant <span class="math inline">\bm{P}</span> via feedback.</p>
+<section id="tasks" class="level3">
+<h3 class="anchored" data-anchor-id="tasks">Tasks</h3>
+<p>You should follow these steps to complete the homework</p>
+<ol type="1">
+<li><p>Create the generalized plant <span class="math inline">\bm{P}</span> using the transfer functions <span class="math inline">G_1(s)</span> and <span class="math inline">G_2(s)</span>, along with your chosen exogenous inputs, performance outputs, and weighting filters. The weighting filters should be designed to ensure that the closed-loop system meets the performance objectives, such as reference tracking and control effort requirements.</p></li>
+<li><p>Use the <a href="https://juliacomputing.github.io/JuliaSimControl.jl/stable/api/#JuliaSimControl.hinfsyn_lmi-Union%7BTuple%7BExtendedStateSpace%7BContinuous,%20T%7D%7D,%20Tuple%7BT%7D%7D%20where%20T"><code>hinfsyn_lmi</code></a> function from <a href="https://juliacomputing.github.io/JuliaSimControl.jl/stable/"><code>JuliaSimControl</code></a> to solve the <span class="math inline">H_\infty</span> optimization problem. This function will compute the optimal controller <span class="math inline">\bm{K}</span> and the appropriate <span class="math inline">\gamma</span> upper bound on the <span class="math inline">H_\infty</span> norm of the LFT. We suggest using <code>γrel = 1.05</code> as the relative tolerance for the optimization.</p></li>
+<li><p>Prepare a concise report (<code>hw.pdf</code>) and include the controller design code (<code>hw.jl</code>). Compress the report and code into a zip file named <code>hw.zip</code> and submit it to the <a href="https://cw.felk.cvut.cz/brute">BRUTE</a> system.</p></li>
+</ol>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+JuliaSim
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>JuliaSimControl</code> is not a package that is available in the Julia package registry because it is not a free software. It is a commercial package that is part of the JuliaSim suite, which is a collection of modeling and simulation tools for Julia. However, to our luck, it is for non-commercial academic teaching and research purposes.</p>
+<p>Installing <code>JuliaSimControl</code> is more involved than your run of the mill Julia package, but not by much.</p>
+<p>First, you need to register yourself on the <a href="https://juliahub.com">JuliaHub</a> website.</p>
+<p>After that, follow the instruction on <a href="https://help.juliahub.com/juliasim/stable/gettingstarted/juliahubregistry/">Using JuliaSim Packages Locally via the JuliaHub Registry</a> to add the JuliaHub registry to your Julia installation.</p>
+<p>Once you have done that, you can install <code>JuliaSimControl</code> in the standard way using the Julia package manager.</p>
+</div>
+</div>
+</section>
+<section id="report-instructions" class="level3">
+<h3 class="anchored" data-anchor-id="report-instructions">Report instructions</h3>
+<p>Your report should contain the following</p>
+<ol type="1">
+<li><p>A description of the generalized plant <span class="math inline">\bm{P}</span>, including your choice of exogenous inputs, performance outputs, and weighting functions. Briefly explain the reasoning behind your design choices.</p></li>
+<li><p>Closed-loop performance analysis, namely show</p>
+<ul>
+<li>the time response of the output <span class="math inline">y_2</span> and control input <span class="math inline">u_2</span> to a step change in the reference <span class="math inline">r</span>.</li>
+<li>the frequency response for a transfer function from the reference <span class="math inline">r</span> to the output <span class="math inline">y_2</span>, and from the reference <span class="math inline">r</span> to the control input <span class="math inline">u_2</span>.</li>
+</ul></li>
+<li><p>Brief comment on whether the bandwidth and low-frequency control objectives were met, based on your plots.</p></li>
+</ol>
+</section>
+<section id="template" class="level3">
+<h3 class="anchored" data-anchor-id="template">Template</h3>
+<div id="2" class="cell" data-execution_count="0">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">JuliaSimControl</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span>, <span class="bu">Plots</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> <span class="fu">tf</span>(<span class="st">"s"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>G₁ <span class="op">=</span> <span class="fl">1.5</span><span class="op">/</span>(<span class="fl">100</span>s<span class="op">+</span><span class="fl">1</span>) <span class="op">|&gt;</span> ss</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>G₂ <span class="op">=</span> <span class="fl">1</span><span class="op">/</span>(<span class="fl">50</span>s<span class="op">+</span><span class="fl">1</span>) <span class="op">|&gt;</span> ss</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">## </span><span class="al">TODO</span><span class="co">: Form the generalized plant P</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">## </span><span class="al">TODO</span><span class="co">: Find the controller K using hinfsyn_lmi</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">## </span><span class="al">TODO</span><span class="co">: Simulate the closed-loop system</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
+</section>
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1409,7 +1596,7 @@ ul.task-list li input[type="checkbox"] {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2025, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.7.30">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -58,7 +58,7 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-de070a7b0ab54f8780927367ac907214.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-ad9cdf946c13169808b0c0b074b5f63d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -914,13 +914,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rocond_H_infinity_control.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Hinfinity-optimal control</span></a>
+ <span class="menu-text">H-infinity optimal control</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rocond_mu_synthesis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Mu synthesis</span></a>
+ <span class="menu-text">mu synthesis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rocond_H_infinity_loopshaping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">H-infinity loop-shaping</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -1049,8 +1055,9 @@ window.Quarto = {
 </header>
 
 
-<p>The literature for <span class="math inline">\mathcal H_\infty</span> control is essentially identical to the one we gave in the previous chapter on analysis of robustness. In particular, we stick to our primary textbook <span class="citation" data-cites="skogestadMultivariableFeedbackControl2005"><a href="#ref-skogestadMultivariableFeedbackControl2005" role="doc-biblioref">[1]</a></span>, in which the material is discussed in the forty-page Chapter 9.</p>
-<p>While discussing the analysis of robustness in the previous chapter, we omited discussion of <em>structured uncertainties</em> using the <em>structured singular values</em> (SSU, mu, <span class="math inline">\mu</span>). Similarly here we did not delve into the extension of that framework towards control synthesis. Purely because of time constraints. But should you find some time, have a look at section 8.12, which discusses the methodology called <span class="math inline">\mu</span> synthesis.</p>
+<p>The literature for <span class="math inline">\mathcal H_\infty</span> control is essentially identical to the one we gave in the previous chapter on analysis of robustness. In particular, we stick to our primary textbook <span class="citation" data-cites="skogestadMultivariableFeedbackControl2005"><a href="#ref-skogestadMultivariableFeedbackControl2005" role="doc-biblioref">[1]</a></span>, in which the material is discussed in the forty-page Chapter 9 (but not the full chapter needs to be read as it also includes LQG and <span class="math inline">\mathcal H_2</span> methods, which we have already covered elsewhere).</p>
+<p>Namely, the general <span class="math inline">\mathcal H_\infty</span> optimal control problem is introduced in sections 9.3.4 and 9.3.6. The interleaved section 9.3.5 covers the mixed sensitivity design procedure. The loop-shaping method is thoroughly explained in 9.3.6. It also contains a detailed discussion of an extension to the 2DOF case, implementation in the observer-state-feedback form, and some sort of antiwindup technique.</p>
+<p>While discussing the analysis of robustness in the previous chapter, we omitted a discussion of <em>structured uncertainties</em> using the <em>structured singular values</em> (SSU, mu, <span class="math inline">\mu</span>). Similarly here we did not delve into the extension of that framework towards control synthesis. Purely because of time constraints. But should you find some time, have a look at section 8.12, which discusses the methodology called <span class="math inline">\mu</span> synthesis.</p>
 
 
 
