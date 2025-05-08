@@ -64,18 +64,29 @@ $$
 This gives another motivation for our $\mathcal{H}_\infty$ optimization endeavor – through minimization we shape the closed-loop magnitude frequency responses. This automatic/automated *loopshaping* is the second benefit promised at the beginning of this section. But we emphasize that for practical pursposes it is only useful to minimize the norm of the mixed sensitivity function, in which case more than just simultaneous shaping of $W_\mathrm{p}S$ and $WT$ must be achieved. 
 
 With this new interpretation, we can feel free to include other terms in the optimization criterion. In particular, the criterion can be extended to include the control effort as in (after reindexing the weighting filters)
-$$\boxed
-{\operatorname*{minimize}_{K \text{ stabilizing}}  
+$$
+\operatorname*{minimize}_{K \text{ stabilizing}}  
 \left\|
 \begin{bmatrix}
 W_1S\\W_2KS\\W_3T
 \end{bmatrix}
-\right\|_{\infty}.}
+\right\|_{\infty}.
 $$
 
 The middle term penalizes control (it is a closed-loop transfer function from the output disturbance to the control). It resembles the role of the $\mathbf R$ term in the LQR cost $\int(\bm x^\top \mathbf Q\bm x+\bm u^\top \mathbf R\bm u)\text{d}t$. Typically we set $W_2$ equal to a small  nonnegative constant.
 
-An important property of this method is that it extends to the multiple-input-multiple-output (MIMO) case. Nothing needs to be changes in the formal problem statement as the $\mathcal H_\infty$ norm is defined for MIMO systems as well. 
+An important property of this method is that it extends to the multiple-input-multiple-output (MIMO) case. Nothing needs to be changes in the formal problem statement as the $\mathcal H_\infty$ norm is defined for MIMO systems as well. For completeness, we state the MIMO version of the problem (well, the statement only differs in the fonts)
+
+$$\boxed
+{\operatorname*{minimize}_{\mathbf K \text{ stabilizing}}  
+\left\|
+\begin{bmatrix}
+\mathbf W_1\mathbf S\\\mathbf W_2\mathbf K\mathbf S\\\mathbf W_3\mathbf T
+\end{bmatrix}
+\right\|_{\infty}.}
+$$
+
+While in pricinple the weighting filters could be MIMO as well, it is common to restrict ourselves just to scalar filters, or diagonal filters.
 
 ::: {#exm-himat-mixed-sensitivity}
 ## Mixed sensitivity design for the HIMAT aircraft
@@ -145,7 +156,7 @@ K, γ = hinfsynthesize(P, γrel=1.05);
 Pcl, S, KS, T = hinfsignals(P, G₀, K);
 ```
 
-The magnitude (actually the largest singular values) frequency responses of the closed-loop transfer functions of interest are shown in @fig-himat-mixed-sensitivity.
+The magnitude (actually the largest singular values) frequency responses of the closed-loop transfer functions $\mathbf S$, $\mathbf T$ and $\mathbf{KS}$ are shown in @fig-himat-mixed-sensitivity.
 ``` {julia}
 #| label: fig-himat-mixed-sensitivity
 #| fig-cap: "Several magnitude frequency responses of the closed-loop system: sensitivity $S$, complementary sensitivity $T$, and input sensitivity $KS$"
@@ -153,13 +164,21 @@ using Plots
 specificationplot([S, KS, T], [W₁, W₂, W₃], γ, ylabel="Magnitude (-)", title="", lw=2, nsigma=1, s_labels=["σ̄(S)", "σ̄(KS)", "σ̄(T)"], w_labels=["γ/|W₁|", "γ/|W₂|", "γ/|W₃|"],hz=false, xticks=10.0.^[-3:5...],ylims=(10^(-6),100))
 ```
 
-The responses to steps in the reference value of the two angles are shown in @fig-himat-mixed-sensitivity-step-response-alpha.
+Besides the achieved closed-loop transfer functions $\mathbf S$, $\mathbf T$ and $\mathbf{KS}$ , the figure also shows the bounds, which are given by reciprocal values of the weighting filters. There is an important implementation detail here: the bounds in the plot are not given just by $\frac{1}{|W_i(j\omega)|}$, which we may expect after having developed the conditions of robust performance, but rather by $\frac{\gamma}{|W_i(j\omega)|}$. Why is that? The algorithm implements the so-called $\gamma$ iteration, which means that it starts with some value of $\gamma$, attempts to solve the corresponding $\mathcal H_\infty$ optimal control problem, if it succeeds, it tries the same for a smaller $\gamma$, it it fails, it increases $\gamma$ and tries again. This is then repeated untill the smallest possible $\gamma$ is found for which the problem is solvable. Here the smallest $\gamma$ is
+
+``` {julia}
+#| code-fold: false
+γ    
+```
+It is up to us to decide whether the resulting closed-loop responses are satisfactory. The minimization of $\gamma$ was just a tool to shape the closed-loop magnitude frequency responses. Now that we included also the $\mathbf{KS}$ in the mixed sensitivity function, the particular value of $\gamma$ has no longer a direct interpretation.
+
+The time responses to steps in the reference value of the two angles are shown in @fig-himat-mixed-sensitivity-step-response-alpha.
 ``` {julia}
 #| label: fig-himat-mixed-sensitivity-step-response-alpha
 #| fig-cap: "Response of the closed-loop system to a unit step at the reference values of the two angles"
-T = named_ss(T, u=[:α_ref, :θ_ref], y =[:α, :θ])
 step_response = step(T)
-#plot(step_response, title="", xlabel="Time (s)", ylabel=["α" "θ"], lw=2, label=["α_ref", "θ_ref"], legend=:topright)
-plot(step_response, title="", xlabel="Time (s)", lw=2, legend=:topright)
+plot(step_response, title="", xlabel="Time (s)", ylabel=["α" "θ"], lw=2, label=["From α_ref" "From α_ref" "From θ_ref" "From θ_ref"], legend=:topright)
 ```
+
+We can observe in @fig-himat-mixed-sensitivity-step-response-alpha decent tracking of step changes in the two angles. But we can also see some cross-coupling – it is up to us to decide whether or not it is acceptable. 
 :::
