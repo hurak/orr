@@ -254,17 +254,17 @@ K, γ, info = glover_mcfarlane(G, 1.1; W1);
 ```
 
 ``` {julia}
-bodeplot([G, info.Gs, G*K], lab=["G" "" "Initial GK" "" "Robustified GK"])
+bodeplot([G, info.Gs, G*K], lab=["G" "" "Initial GK" "" "Robustified GK" ""],lw=2)
 ```
 
 ``` {julia}
 Gcl = extended_gangoffour(G, K)
-bodeplot(Gcl, lab=["S" "KS" "PS" "T"], plotphase=false)
+bodeplot(Gcl, lab=["S" "KS" "PS" "T"], plotphase=false,lw=2)
 ```
 
 ``` {julia}
-plot(step(Gd*feedback(1, info.Gs), 3), lab="Initial controller")
-plot!(step(Gd*feedback(1, G*K), 3), lab="Robustified controller")
+plot(step(Gd*feedback(1, info.Gs), 3), lab="Initial controller",lw=2)
+plot!(step(Gd*feedback(1, G*K), 3), lab="Robustified controller",lw=2)
 ```
 
 :::

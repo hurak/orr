@@ -160,6 +160,16 @@ $$\boxed
 {\|W_\mathrm{p}S_0\|_{\infty}<1.}
 $$
 
+Simple (low-order) weighting filter usually suffices, such as 
+$$
+W_{\mathrm{p}}(s) = \frac{s/M+\omega_\mathrm{B}^*}{s+\omega_\mathrm{B}^*A},
+$$
+or
+$$
+W_\mathrm{p}(s) = \frac{(s/\sqrt{M}+\omega_\mathrm{B}^*)^2}{(s+\omega_\mathrm{B}^*\sqrt{A})^2},
+$$
+where $M$ is allowed peak in the sensitivity function, $\omega_\mathrm{B}^*$ is the bandwidth, that is, the frequency up to which the disturbance is attenuated, and $A$ is the attenuation of the disturbance at low frequencies. In particular, if $A=0$, the steady-state error is zero.
+
 It lends some insight if we visualize this condition in the complex plane. First, recall that $S_0 = \frac{1}{1+L_0}$. @eq-nominal-performance-frequencywise then translates to
 $$
 |W_\mathrm{p}(j\omega)|<|1+L_0(j\omega)|\;\;\forall \omega,
@@ -192,11 +202,11 @@ Its $\mathcal H_\infty$ norm can be written as
 $$
 \left\|
 \begin{bmatrix}
-W_pS\\
+W_\mathrm{p}S\\
 WT
 \end{bmatrix}
 \right\|_{\infty}
-= \sup_{\omega\in\mathbb{R}}\sqrt{|W_p(j\omega)S(j\omega)|^{2}+|W(j\omega)T(j\omega)|^{2}}.
+= \sup_{\omega\in\mathbb{R}}\sqrt{|W_\mathrm{p}(j\omega)S(j\omega)|^{2}+|W(j\omega)T(j\omega)|^{2}}.
 $$
 
 This can be seen by using the known relation between singular values and eigenvalues. Consider a matrix $\mathbf A \in \mathbb R^{n\times m}$, it holds that 
@@ -209,13 +219,13 @@ We have just learnt that
 $$
 \left\|
 \begin{bmatrix}
-W_pS\\
+W_\mathrm{p}S\\
 WT
 \end{bmatrix}
 \right\|_{\infty}
 = \sup_{\omega\in\mathbb{R}} \left\|
 \begin{bmatrix}
-W_p(j\omega)S(j\omega)\\
+W_\mathrm{p}(j\omega)S(j\omega)\\
 W(j\omega)T(j\omega)
 \end{bmatrix}
 \right\|_{2}.
@@ -230,7 +240,7 @@ The condition of robust performance in @eq-robust-performance-frequencywise uses
 $$
 \sup_{\omega\in\mathbb{R}} \left\|
 \begin{bmatrix}
-W_p(j\omega)S(j\omega)\\
+W_\mathrm{p}(j\omega)S(j\omega)\\
 W(j\omega)T(j\omega)
 \end{bmatrix}
 \right\|_{1} < 1.
