@@ -1183,6 +1183,11 @@ Figure&nbsp;4: Performance specifications through the shape of the magnitude fre
 <p>where <span class="math inline">S_0 = \frac{1}{1+L_0}</span> is the sensitivity function of the nominal closed-loop system. which can be compactly written as <span class="math display">\boxed
 {\|W_\mathrm{p}S_0\|_{\infty}&lt;1.}
 </span></p>
+<p>Simple (low-order) weighting filter usually suffices, such as <span class="math display">
+W_{\mathrm{p}}(s) = \frac{s/M+\omega_\mathrm{B}^*}{s+\omega_\mathrm{B}^*A},
+</span> or <span class="math display">
+W_\mathrm{p}(s) = \frac{(s/\sqrt{M}+\omega_\mathrm{B}^*)^2}{(s+\omega_\mathrm{B}^*\sqrt{A})^2},
+</span> where <span class="math inline">M</span> is allowed peak in the sensitivity function, <span class="math inline">\omega_\mathrm{B}^*</span> is the bandwidth, that is, the frequency up to which the disturbance is attenuated, and <span class="math inline">A</span> is the attenuation of the disturbance at low frequencies. In particular, if <span class="math inline">A=0</span>, the steady-state error is zero.</p>
 <p>It lends some insight if we visualize this condition in the complex plane. First, recall that <span class="math inline">S_0 = \frac{1}{1+L_0}</span>. <a href="#eq-nominal-performance-frequencywise" class="quarto-xref">Eq.&nbsp;1</a> then translates to <span class="math display">
 |W_\mathrm{p}(j\omega)|&lt;|1+L_0(j\omega)|\;\;\forall \omega,
 </span> which can be visualized as in <a href="#fig-nyquist-nominal-performance" class="quarto-xref">Fig.&nbsp;5</a>.</p>
@@ -1223,11 +1228,11 @@ WT_0
 <p>Its <span class="math inline">\mathcal H_\infty</span> norm can be written as <span class="math display">
 \left\|
 \begin{bmatrix}
-W_pS\\
+W_\mathrm{p}S\\
 WT
 \end{bmatrix}
 \right\|_{\infty}
-= \sup_{\omega\in\mathbb{R}}\sqrt{|W_p(j\omega)S(j\omega)|^{2}+|W(j\omega)T(j\omega)|^{2}}.
+= \sup_{\omega\in\mathbb{R}}\sqrt{|W_\mathrm{p}(j\omega)S(j\omega)|^{2}+|W(j\omega)T(j\omega)|^{2}}.
 </span></p>
 <p>This can be seen by using the known relation between singular values and eigenvalues. Consider a matrix <span class="math inline">\mathbf A \in \mathbb R^{n\times m}</span>, it holds that <span class="math display">
 \sigma_i(\mathbf A) = \sqrt{\lambda_i(\mathbf A^\top \mathbf A)},
@@ -1235,13 +1240,13 @@ WT
 <p>We have just learnt that <span id="eq-hinf-mixed-sensitivity-as-frequencywise-2-norm"><span class="math display">
 \left\|
 \begin{bmatrix}
-W_pS\\
+W_\mathrm{p}S\\
 WT
 \end{bmatrix}
 \right\|_{\infty}
 = \sup_{\omega\in\mathbb{R}} \left\|
 \begin{bmatrix}
-W_p(j\omega)S(j\omega)\\
+W_\mathrm{p}(j\omega)S(j\omega)\\
 W(j\omega)T(j\omega)
 \end{bmatrix}
 \right\|_{2}.
@@ -1262,7 +1267,7 @@ The <span class="math inline">\mathcal H_\infty</span> norm deals with transfer 
 <p>The condition of robust performance in <a href="#eq-robust-performance-frequencywise" class="quarto-xref">Eq.&nbsp;2</a> uses the 1-norm of a vector evaluated at a particular frequency <span class="math inline">\omega</span>. We can rewrite it as <span id="eq-robust-performance-frequencywise-1-norm"><span class="math display">
 \sup_{\omega\in\mathbb{R}} \left\|
 \begin{bmatrix}
-W_p(j\omega)S(j\omega)\\
+W_\mathrm{p}(j\omega)S(j\omega)\\
 W(j\omega)T(j\omega)
 \end{bmatrix}
 \right\|_{1} &lt; 1.
