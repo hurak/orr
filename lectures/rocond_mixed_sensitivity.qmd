@@ -182,3 +182,5 @@ plot(step_response, title="", xlabel="Time (s)", ylabel=["α" "θ"], lw=2, label
 
 We can observe in @fig-himat-mixed-sensitivity-step-response-alpha decent tracking of step changes in the two angles. But we can also see some cross-coupling – it is up to us to decide whether or not it is acceptable. 
 :::
+
+Admittedly, in this section we have provided no details regarding the numerical methods used to solved the problem of minimizing the $\mathcal H_\infty$ norm of the mixed sensitivity function; we relied on the availability of dedicated software tools. But in the next section we will have a look under the hood of these solvers. It turns out that the mixed sensitivity problem is just a special case of the general $\mathcal H_\infty$ optimal control problem, and that is why we are going to discuss it next.
