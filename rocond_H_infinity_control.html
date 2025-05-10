@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -1017,7 +1052,9 @@ window.Quarto = {
   <ul>
   <li><a href="#mixed-sensitivity-problem-reformulated-as-the-standard-mathcalh_infty-optimization-problem" id="toc-mixed-sensitivity-problem-reformulated-as-the-standard-mathcalh_infty-optimization-problem" class="nav-link active" data-scroll-target="#mixed-sensitivity-problem-reformulated-as-the-standard-mathcalh_infty-optimization-problem">Mixed-sensitivity problem reformulated as the standard <span class="math inline">\mathcal{H}_\infty</span> optimization problem</a></li>
   <li><a href="#signal-based-mathcalh_infty-optimal-control-problem" id="toc-signal-based-mathcalh_infty-optimal-control-problem" class="nav-link" data-scroll-target="#signal-based-mathcalh_infty-optimal-control-problem">Signal-based <span class="math inline">\mathcal{H}_\infty</span>-optimal control problem</a></li>
-  <li><a href="#what-is-behind-the-mathcalh_infty-solver" id="toc-what-is-behind-the-mathcalh_infty-solver" class="nav-link" data-scroll-target="#what-is-behind-the-mathcalh_infty-solver">What is behind the <span class="math inline">\mathcal{H}_\infty</span> solver?</a></li>
+  <li><a href="#solving-the-mathcalh_infty-optimal-control-problem" id="toc-solving-the-mathcalh_infty-optimal-control-problem" class="nav-link" data-scroll-target="#solving-the-mathcalh_infty-optimal-control-problem">Solving the <span class="math inline">\mathcal{H}_\infty</span> optimal control problem</a></li>
+  <li><a href="#all-mathcal-h_infty-optimal-controllers" id="toc-all-mathcal-h_infty-optimal-controllers" class="nav-link" data-scroll-target="#all-mathcal-h_infty-optimal-controllers">All <span class="math inline">\mathcal H_\infty</span> optimal controllers</a></li>
+  <li><a href="#conditions-of-existence-of-the-mathcal-h_infty-optimal-controller" id="toc-conditions-of-existence-of-the-mathcal-h_infty-optimal-controller" class="nav-link" data-scroll-target="#conditions-of-existence-of-the-mathcal-h_infty-optimal-controller">Conditions of existence of the <span class="math inline">\mathcal H_\infty</span> optimal controller</a></li>
   <li><a href="#structure-of-the-mathcalh_infty-optimal-controller" id="toc-structure-of-the-mathcalh_infty-optimal-controller" class="nav-link" data-scroll-target="#structure-of-the-mathcalh_infty-optimal-controller">Structure of the <span class="math inline">\mathcal{H}_\infty</span>-optimal controller</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -1044,10 +1081,15 @@ window.Quarto = {
 </header>
 
 
-<p>Here we formulate the general problem of <span class="math inline">\mathcal{H}_\infty</span>-optimal control. There are two motivations for this. First, it gives the general framework within which we can <strong>formulate and solve the mixed-sensitivity problem</strong> defined in the frequency domain that we discused previously. Second, it allows us to consider <strong>exploit the time-domain (or signal)</strong> interpretation of the <span class="math inline">\mathcal{H}_\infty</span> norm of a system to formulate a new class of problems that can be solved with these optimization tools. For the latter, recall that <span class="math display">
+<p>Here we formulate the general problem of <span class="math inline">\mathcal{H}_\infty</span>-optimal control. There are two motivations for this:</p>
+<ul>
+<li>First, it gives the general framework within which we can <strong>formulate and solve the mixed-sensitivity problem</strong> defined in the frequency domain that we discussed previously.</li>
+<li>Second, it allows us to consider <strong>exploit the time-domain (or signal)</strong> interpretation of the <span class="math inline">\mathcal{H}_\infty</span> norm of a system to formulate a new class of problems that can be solved with these optimization tools.</li>
+</ul>
+<p>For the latter, recall that <span class="math display">
 \|\mathbf G\|_{\infty} = \sup_{u\in\mathcal{L}_{2}\backslash \emptyset}\frac{\|\bm y\|_2}{\|\bm u\|_2},
-</span> in which we allow for vector input and output signals, hence MIMO systems, from the very beginning.</p>
-<p>Now, for particular control requirements, we build the generalized plant <span class="math inline">\mathbf P</span> such that after forming the feedback interconnection with the controller <span class="math inline">\mathbf K</span> as in <a href="#fig-lower-LFT-with-named-variables" class="quarto-xref">Fig.&nbsp;1</a></p>
+</span> in which we allow for vector input and output signals, hence MIMO systems.</p>
+<p>Now, for particular control requirements, we build the generalized plant <span class="math inline">\mathbf P</span> such that after closing the feedback loop with the controller <span class="math inline">\mathbf K</span> as in <a href="#fig-lower-LFT-with-named-variables" class="quarto-xref">Fig.&nbsp;1</a>,</p>
 <div id="fig-lower-LFT-with-named-variables" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-lower-LFT-with-named-variables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1058,15 +1100,13 @@ Figure&nbsp;1: Lower LFT of the generalized plant and the controller
 </figcaption>
 </figure>
 </div>
-<p>it makes sense require the stabilizing controller to minimize the amplification of the exogenous inputs (disturbances, references, noises) into the regulated outputs. We want to make the regulated outputs as insensitive as possible to the exogenous inputs and to quantify the sizes of the inputs and outputs, we use the <span class="math inline">\mathcal L_2</span> norm.</p>
-<p>But then what we have is really the standard <span class="math inline">\mathcal{H}_\infty</span> optimization problem <span class="math display">\boxed
+<p>these requirements are satisfied if the stabilizing controller minimizes the amplification of the exogenous inputs (disturbances, references, noises) into the regulated outputs. In other words, we want to make the regulated outputs as insensitive as possible to the exogenous inputs. When the sizes of the inputs and outputs are quantified using the <span class="math inline">\mathcal L_2</span> norm, what we have is the <span class="math inline">\mathcal{H}_\infty</span> optimization problem <span class="math display">\boxed
 {\operatorname*{minimize}_{\mathbf K \text{ stabilizing}}\|\mathcal{F}_{\mathrm l}(\mathbf P,\mathbf K)\|_{\infty}.}
 </span></p>
-<p>Numerical solvers <a href="./rocond_software.html">exist</a> in various software environments.</p>
+<p>Numerical solvers <a href="./rocond_software.html">exist</a> in various software environments. Before we at least comment on what is under the hood of these solvers, we first how the mixed-sensitivity problem can be formulated as a standard <span class="math inline">\mathcal{H}_\infty</span> optimization problem. After all, this was one of the two motivations for this section.</p>
 <section id="mixed-sensitivity-problem-reformulated-as-the-standard-mathcalh_infty-optimization-problem" class="level3">
 <h3 class="anchored" data-anchor-id="mixed-sensitivity-problem-reformulated-as-the-standard-mathcalh_infty-optimization-problem">Mixed-sensitivity problem reformulated as the standard <span class="math inline">\mathcal{H}_\infty</span> optimization problem</h3>
-<p>We now show how the mixed-sensitivity problem discussed previously can be reformulated within as the standard <span class="math inline">\mathcal{H}_\infty</span> optimization problem. We consider the full mixed-sensitivity problem for a SISO plant</p>
-<p><span class="math display">
+<p>We now show how the mixed-sensitivity problem discussed previously can be reformulated within as the standard <span class="math inline">\mathcal{H}_\infty</span> optimization problem. We consider the full (containing all the three components) mixed-sensitivity problem. At first, we restrict ourselves to SISO plants, but this is purely for notational convenience as the extension to the MIMO case is seamless. The mixed-sensitivity problem is formulated as <span class="math display">
 \operatorname*{minimize}_{K \text{ stabilizing}}  
 \left\|
 \begin{bmatrix}
@@ -1080,11 +1120,11 @@ W_1S\\W_2KS\\W_3T
 <img src="figures/mixed_sensitivity_as_standard_H_infinity.png" class="img-fluid figure-img" style="width:50.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mixed-sensitivity-as-standard-H-infinity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Mixed-sensitivity problem interpreted as the standard <span class="math inline">\mathcal{H}_\infty</span> optimization problem
+Figure&nbsp;2: Mixed-sensitivity problem interpreted as the standard <span class="math inline">\mathcal{H}_\infty</span> optimization problem with the reference as the only exogenous input
 </figcaption>
 </figure>
 </div>
-<p>The matrix transfer function for generalized plant <span class="math inline">\mathbf P</span> has two inputs and four outputs and it can then be written as <span class="math display">
+<p>The matrix transfer function for generalized plant <span class="math inline">\mathbf P</span> has two inputs and four outputs and it can then be written as <span id="eq-generalized-plant-mixed-sensitivity"><span class="math display">
 \mathbf P = \left[\begin{array}{c|c}
 W_1 &amp; -W_1G\\
 0 &amp; W_2\\
@@ -1092,18 +1132,139 @@ W_1 &amp; -W_1G\\
 \hline
 1 &amp; -G
 \end{array}\right].
-</span></p>
-<p>A state space realization of this plant <span class="math inline">\mathbf P</span> is then used as the input argument to the solver for the <span class="math inline">\mathcal{H}_\infty</span> optimization problem. In fact, we must also tell the solver how the inputs and outputs are structured. In this case, the solver must know that of the two inputs, only the second one can be used by the controller, and of the four outputs, only the fourth one is measured.</p>
+\tag{1}</span></span></p>
+<p>A state space realization of this plant <span class="math inline">\mathbf P</span> is then used as the input argument to the solver for the <span class="math inline">\mathcal{H}_\infty</span> optimization problem. But note we must also tell the solver how the inputs and outputs are structured (the information provided by the internal horizontal and vertical lines in <a href="#eq-generalized-plant-mixed-sensitivity" class="quarto-xref">Eq.&nbsp;1</a>). In this case, the solver must be given the information that out of the two inputs, only the second one can be used by the controller, and out of the four outputs, only the fourth one is measured.</p>
+<p>By the way, how would the block diagram and the generalized plant <span class="math inline">\mathbf P</span> change if the output disturbance <span class="math inline">d</span> was the only exogenous input instead? Hint: the change is minor.</p>
 </section>
 <section id="signal-based-mathcalh_infty-optimal-control-problem" class="level3">
 <h3 class="anchored" data-anchor-id="signal-based-mathcalh_infty-optimal-control-problem">Signal-based <span class="math inline">\mathcal{H}_\infty</span>-optimal control problem</h3>
-<p>Being able to solve the <span class="math inline">\mathcal{H}_\infty</span> optimization problem, indeed we do not have to restrict ourselves to the generalized plants <span class="math inline">\mathbf P</span> that correspond to the mixed-sensitivity problem. We can consider any plant <span class="math inline">\mathbf P</span>, for which the problem makes sense. For example, if we want to consider not only references but also disturbances, and possibly even noises, there is no way to formulate this within the mixed-sensitivity framework. But we can still formulate this as the standard <span class="math inline">\mathcal{H}_\infty</span> optimal control problem.</p>
+<p>The mixed-sensitivity problem only considers a single exogenous input (albeit a vector one). As a consequence, we cannot formulate the problem of simultaneous reference tracking and disturbance rejection within the mixed-sensitivity framework.</p>
+<p>But now that we have seen that the mixed-sensitivity problem is reformulated/reformatted as the general <span class="math inline">\mathcal{H}_\infty</span> optimal control problem, nothing prevents us from adding more inputs, outputs and whatever internal blocks to the generalized plants <span class="math inline">\mathbf P</span>. Numerical solvers for the <span class="math inline">\mathcal{H}_\infty</span> optimal control problem can also accept other types of generalized plants than those that correspond to the mixed-sensitivity problem.</p>
+<p>For example, consider not only the reference input <span class="math inline">r</span> but also the disturbance <span class="math inline">d_\mathrm{i}</span> acting at the input to the plant <span class="math inline">G</span>. This we can’t really express as a mixed-sensitivity problem. But we can express it as a standard <span class="math inline">\mathcal{H}_\infty</span> optimal control problem. The block diagram is shown in <a href="#fig-signal-based-H-infinity-with_r-and-d" class="quarto-xref">Fig.&nbsp;3</a>.</p>
+<div id="fig-signal-based-H-infinity-with_r-and-d" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-signal-based-H-infinity-with_r-and-d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/signal-based_H_infinity_with_r_and_d.png" class="img-fluid figure-img" style="width:55.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-signal-based-H-infinity-with_r-and-d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Signal-based <span class="math inline">\mathcal{H}_\infty</span> optimal control problem corresponding to the reference tracking in presence of input disturbance
+</figcaption>
+</figure>
+</div>
+<p>The generalized plant <span class="math inline">\mathbf P</span> is now <span class="math display">
+\mathbf P = \left[\begin{array}{cc|c}
+-W_1G &amp; W_1 &amp; -W_1G\\
+0 &amp; 0 &amp; W_2\\
+W_3G &amp; 0 &amp; W_3G\\
+\hline
+-G &amp; 1 &amp; -G
+\end{array}\right].
+</span></p>
+<p>No surprise, the first column is equal to the third column as the input disturbance <span class="math inline">d_\mathrm{i}</span> enters the plant in the same way as the control input <span class="math inline">u</span>.</p>
+<p>What if the measurement noise (corrupting additively the measured output <span class="math inline">y</span>) needs to be added to the model? How would the block diagram and consequently the generalized plant <span class="math inline">\mathbf P</span> change?</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Get the minimal realization of the generalized plant <span class="math inline">\mathbf P</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When forming the generalized plant <span class="math inline">\mathbf P</span> using a software tool of our choice, we typically get a realization that is not minimal. For example, if the plant <span class="math inline">G</span> and all the three weighting filters are first-order systems, the state-space model of the generalized plant <span class="math inline">\mathbf P</span> in <a href="#eq-generalized-plant-mixed-sensitivity" class="quarto-xref">Eq.&nbsp;1</a> obtained just by stacking the individual transfer functions horizontally and vertically into a matrix, is a seventh-order system (there are seven first-order systems in the generalized plant). However, if we take into consideration that out of the seven transfer function, only four are distinct, we can suspect that the generalized plant <span class="math inline">\mathbf P</span> can be realized as a state-space model of a lower order.</p>
+<div id="2" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ControlSystems</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> <span class="fu">tf</span>(<span class="fl">1</span>, [<span class="fl">2</span>, <span class="fl">3</span>])</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>W1 <span class="op">=</span> <span class="fu">tf</span>(<span class="fl">4</span>, [<span class="fl">5</span>, <span class="fl">6</span>])</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>W2 <span class="op">=</span> <span class="fu">tf</span>(<span class="fl">7</span>, [<span class="fl">8</span>, <span class="fl">9</span>])</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>W3 <span class="op">=</span> <span class="fu">tf</span>(<span class="fl">10</span>, [<span class="fl">11</span>, <span class="fl">12</span>])</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> [W1 <span class="op">-</span>W1<span class="op">*</span>G; <span class="fl">0</span> W2; <span class="fl">0</span> W3<span class="op">*</span>G; <span class="fl">1</span> <span class="op">-</span>G]</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> <span class="fu">ss</span>(P)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">size</span>(P.A,<span class="fl">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>7</code></pre>
+</div>
+</div>
+<div id="4" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Pmin <span class="op">=</span> <span class="fu">minreal</span>(P, atol<span class="op">=</span><span class="fl">1e-13</span>, rtol<span class="op">=</span><span class="fl">1e-13</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">size</span>(Pmin.A,<span class="fl">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>4</code></pre>
+</div>
+</div>
+</div>
+</div>
 </section>
-<section id="what-is-behind-the-mathcalh_infty-solver" class="level3">
-<h3 class="anchored" data-anchor-id="what-is-behind-the-mathcalh_infty-solver">What is behind the <span class="math inline">\mathcal{H}_\infty</span> solver?</h3>
+<section id="solving-the-mathcalh_infty-optimal-control-problem" class="level3">
+<h3 class="anchored" data-anchor-id="solving-the-mathcalh_infty-optimal-control-problem">Solving the <span class="math inline">\mathcal{H}_\infty</span> optimal control problem</h3>
+<p>In our course have have no ambitions to derive the solution to the optimal control at the same level of detail as we did for the LQR problem. Here we only state the results.</p>
+<p>The important difference between the <span class="math inline">\mathcal H_\infty</span> optimal control problem and the LQR, LQG, and <span class="math inline">\mathcal H_2</span> optimal control problems is that for the former we have no closed-form formula for the optimal controller. We can only find a (stabilizing) controller that guarantees that the <span class="math inline">\mathcal{H}_\infty</span> norm of the closed-loop system is less than a given threshold <span class="math inline">\gamma</span>:</p>
+<p><span class="math display">
+\operatorname*{find}_{\mathbf K \text{ stabilizing}}\|\mathcal{F}_{\mathrm l}(\mathbf P,\mathbf K)\|_{\infty} \leq \gamma.
+</span></p>
+<p>For solving this problem of <span class="math inline">\mathcal H_\infty</span> suboptimal control, several approaches exist. Here we only discuss the one known as Doyle–Glover-Khargonekar-Francis (DGKF) method, which based on solving two Riccati equations. This is frequently the default method in available solvers.</p>
+<p>For a given LTI system modelled by the quadruple of matrices <span class="math inline">(\mathbf A, \mathbf B, \mathbf C, \mathbf D)</span>, and for a given <span class="math inline">\gamma &gt; 0</span>, search for positive definite <span class="math inline">\bm{X}\succ 0</span> and <span class="math inline">\bm{Y}\succ 0</span> solving two Riccati equations <span class="math display">
+\begin{aligned}
+\mathbf{A}^\top \bm{X} + \bm{X}\mathbf{A} + \mathbf{C}_1^\top \mathbf{C}_1 + \bm{X}(\gamma^{-2}\mathbf{B}_1\mathbf{B}_1^\top -\mathbf{B}_2\mathbf{B}_2^\top )\bm{X} &amp;= \mathbf 0,\\
+\mathbf{A}\bm{Y} + \bm{Y}\mathbf{A}^\top  + \mathbf{B}_1\mathbf{B}_1^\top  + \bm{Y}(\gamma^{-2}\mathbf{C}_1^\top \mathbf{C}_1-\mathbf{C}_2^\top \mathbf{C}_2)\bm{Y} &amp;= \mathbf 0,
+\end{aligned}  
+</span> such that <span class="math display">
+\begin{aligned}
+\text{Re}\;\lambda_i(\mathbf{A}+(\gamma^{-2}\mathbf{B}_1\mathbf{B}_1^\top -\mathbf{B}_2\mathbf{B}_2^\top )\bm{X})&amp;&lt;0, \;\forall i,\\
+\text{Re}\;\lambda_i(\mathbf A+\bm{Y}(\gamma^{-2}\mathbf{C}_1^\top \mathbf{C}_1-\mathbf{C}_2^\top \mathbf{C}_2)) &amp;&lt;0 ,\;\forall i,
+\end{aligned}
+</span> and <span class="math display">
+\rho(\bm{X}\bm{Y})&lt;\gamma^2.
+</span></p>
+</section>
+<section id="all-mathcal-h_infty-optimal-controllers" class="level3">
+<h3 class="anchored" data-anchor-id="all-mathcal-h_infty-optimal-controllers">All <span class="math inline">\mathcal H_\infty</span> optimal controllers</h3>
+<p>All stabilizing controllers that guarantee that the norm is <span class="math inline">&lt;\gamma</span> are given by the lower linear fractional transformation <span class="math display">\mathbf K=\mathcal F_\mathrm{l}(\mathbf K_\mathrm{c},\bm Q),</span> where <span class="math inline">\mathbf K_\mathrm{c}</span> is given by <span class="math display">
+\begin{aligned}
+\mathbf K_\mathrm{c}(s) &amp;= \left[
+\begin{array}{l|ll}
+\mathbf A + \gamma^{-2}\mathbf{B}_1\mathbf{B}_1^\top \bm{X}+\mathbf{B}_2\mathbf{F}+\mathbf{Z}\mathbf{L}\mathbf{C}_2 &amp; -\mathbf{Z}\mathbf{L} &amp; \mathbf{Z}\mathbf{B}_2\\
+\hline
+\mathbf{F} &amp; \mathbf{0} &amp; \mathbf{I}\\
+-\mathbf{C}_2 &amp; \mathbf{I} &amp; \mathbf{0}
+\end{array}
+\right]\\
+\mathbf{F} &amp;= -\mathbf{B}_2^\top \bm{X},\\
+\mathbf{L} &amp;=-\bm{Y}\mathbf{C}_2^\top,\\
+\mathbf{Z} &amp;= (\mathbf{I}  -\gamma^{-2}\bm{Y}\bm{X})^{-1},
+\end{aligned}
+</span> and <span class="math inline">\mathbf Q(s)</span> is an arbitrary stable transfer function satisfying <span class="math inline">\|\mathbf Q\|_{\infty}&lt;\gamma</span>.</p>
+<p>This Q-parameterization of a controller in the form of a lower LFT is visualized in <a href="#fig-Q-parameterization-of-Hinf-controllers" class="quarto-xref">Fig.&nbsp;4</a>.</p>
+<div id="fig-Q-parameterization-of-Hinf-controllers" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-Q-parameterization-of-Hinf-controllers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/Q_parameterization_of_Hinf_controllers.png" class="img-fluid figure-img" style="width:25.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-Q-parameterization-of-Hinf-controllers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Q-parameterization of all stabilizing controllers that quarantee that the <span class="math inline">\mathcal H_\infty</span> norm is below a given threshold
+</figcaption>
+</figure>
+</div>
+<p>For <span class="math inline">\mathbf Q=\bm 0</span>, we get the <em>central controller</em> <span class="math display">
+\mathbf K(s) = \mathbf K_{\mathrm{c}_{11}}(s) = -\mathbf{Z}\mathbf{L}\left(s\mathbf{I}-(\mathbf A + \gamma^{-2}\mathbf{B}_1\mathbf{B}_1^\top \bm{X}+\mathbf{B}_2\mathbf{F}+\mathbf{Z}\mathbf{L}\mathbf{C}_2)\right)^{-1}\mathbf{F}.
+</span></p>
+<p>It is useful to note that the order of the central regulator is that same as that of the generalized plant <span class="math inline">\mathbf P</span>.</p>
+</section>
+<section id="conditions-of-existence-of-the-mathcal-h_infty-optimal-controller" class="level3">
+<h3 class="anchored" data-anchor-id="conditions-of-existence-of-the-mathcal-h_infty-optimal-controller">Conditions of existence of the <span class="math inline">\mathcal H_\infty</span> optimal controller</h3>
+<p>#TODO</p>
 </section>
 <section id="structure-of-the-mathcalh_infty-optimal-controller" class="level3">
 <h3 class="anchored" data-anchor-id="structure-of-the-mathcalh_infty-optimal-controller">Structure of the <span class="math inline">\mathcal{H}_\infty</span>-optimal controller</h3>
+<p>We are now well aware that the LQG/<span class="math inline">\mathcal H_2</span> optimal controller can be separated into an observer and a state feedback controller. This fundamental property is beyond useful from both theoretical and practical points of view.</p>
+<p>Can we get anything like that for the <span class="math inline">\mathcal H_\infty</span> optimal controller? It turns out that this is the closest we can get: the central controller can be separated into an observer <span class="math display">
+\dot{\hat{\bm x}}  = \mathbf A\hat{\bm x} + \mathbf B_1\underbrace{\gamma^{-2}\mathbf B_1^\top \bm X\hat{\bm x}}_{\hat{\bm w}_{\text{worst}}} + \mathbf B_2\bm u + \mathbf Z\mathbf L(\mathbf C_2\hat{\bm x}-\bm y),
+</span> and a state feedback <span class="math display">
+\bm u=\mathbf F\hat{\bm x}.
+</span></p>
+<p>Compared to a Kalman filter, here we have the extra term <span class="math inline">\mathbf B_1\hat{\bm w}_{\text{worst}}</span>, where <span class="math inline">\hat{\bm w}_{\text{worst}}</span> can be interpreted as an estimate of the worst-case disturbance. Consequently, this separation into an observer and a state feedback controller is of very limited use, which is unfortunate.</p>
+<p>We will see later, however, that there is one particular setting (the robust <span class="math inline">\mathcal H_\infty</span> loop-shaping), in which the <span class="math inline">\mathcal H_\infty</span> optimal controller can be separated into an observer and a state feedback controller in the LQG sense.</p>
 
 
 </section>
