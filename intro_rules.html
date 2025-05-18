@@ -70,35 +70,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -1004,7 +975,7 @@ window.Quarto = {
   <li><a href="#studying-starts-before-the-lecture" id="toc-studying-starts-before-the-lecture" class="nav-link active" data-scroll-target="#studying-starts-before-the-lecture">Studying starts before the lecture</a></li>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning goals</a></li>
   <li><a href="#online-quizzes" id="toc-online-quizzes" class="nav-link" data-scroll-target="#online-quizzes">Online quizzes</a></li>
-  <li><a href="#howework-problems" id="toc-howework-problems" class="nav-link" data-scroll-target="#howework-problems">Howework problems</a></li>
+  <li><a href="#homework-problems" id="toc-homework-problems" class="nav-link" data-scroll-target="#homework-problems">Homework problems</a></li>
   <li><a href="#semestral-project" id="toc-semestral-project" class="nav-link" data-scroll-target="#semestral-project">Semestral project</a></li>
   <li><a href="#grading" id="toc-grading" class="nav-link" data-scroll-target="#grading">Grading</a>
   <ul class="collapse">
@@ -1044,7 +1015,7 @@ window.Quarto = {
 </section>
 <section id="learning-goals" class="level2">
 <h2 class="anchored" data-anchor-id="learning-goals">Learning goals</h2>
-<p>To guide you in your self-study before the lecture, we always provide a set of learning goals for the given (weakly) block. These learning goals are structured into two parts – <em>knowledge and understading</em>, and <em>problem-solving skills</em>. These are formulated in a way that guides you while studying. Always start by reading this list and only then proceed to the study material. Then come back to the learning goals and check if you can tick them off.</p>
+<p>To guide you in your self-study before the lecture, we always provide a set of learning goals for the given (weakly) block. These learning goals are structured into two parts – <strong>knowledge and understanding</strong>, and <strong>problem-solving skills</strong>. These are formulated in a way that guides you while studying. Always start by reading this list and only then proceed to the study material. Then come back to the learning goals and check if you can tick them off.</p>
 </section>
 <section id="online-quizzes" class="level2">
 <h2 class="anchored" data-anchor-id="online-quizzes">Online quizzes</h2>
@@ -1065,12 +1036,12 @@ Deadlines for online quizzes
 <p>These quizzes will not test if you achieved all the learning goals – you are not certainly not expected to learn everything by yourself. Typically only some easier learning goals of the “knowledge and understanding” type will be tested.</p>
 <p>The role of such quizzes in the overall grading is described later on this page.</p>
 </section>
-<section id="howework-problems" class="level2">
-<h2 class="anchored" data-anchor-id="howework-problems">Howework problems</h2>
+<section id="homework-problems" class="level2">
+<h2 class="anchored" data-anchor-id="homework-problems">Homework problems</h2>
 <p>In our course, homework problems are assigned weekly. Homework problems are typically related to the “skills” part of the learning goals, and as such they will almost exclusively consist of writing some computer code.</p>
-<p>The second (<span class="math inline">\(\approx\)</span>) half of the exercises session will be always dedicated to the homework problem(s). Ideally you will be able to solved the problems before leaving the classroom, but at least you will have an opportunity to get started with solving the problem, while taking advantage of having a lecturer and other students nearby.</p>
+<p>Approximately the second half of the exercises session will always be dedicated to the homework problem(s). Ideally you will be able to solve the problems before leaving the classroom. But even if not, you will at least have an opportunity to get started with solving the problem, while taking advantage of having a lecturer and other students nearby.</p>
 <p>A challenging – but certainly rewarding as well – attribute of our homework problems is that their solutions are expected to be programmed in Julia language (see <a href="./intro_software.html">Software for the course</a>).</p>
-<p>Similarly as the online quizzes, you will be expected to submit the solutions through the <a href="https://cw.felk.cvut.cz/brute/">Brute system</a>, which will give an immediate feedback if the submitted solution is accepted or not. #TODO: what if the submitted solution is evaluated as incorrect? Can it be resubmitted? Immediately? How many times?</p>
+<p>Similarly as the online quizzes, you will be expected to submit the solutions through the <a href="https://cw.felk.cvut.cz/brute/">Brute system</a>, which will give an immediate feedback if the submitted solution is accepted or not. If the submitted solution is automatically evaluated as incorrect, students can resubmit it (the number of allowed uploads is set reasonably high, but do not treat the system as a <em>unit test</em>).</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1088,8 +1059,8 @@ Deadlines for submission of solutions to homework problems
 <section id="semestral-project" class="level2">
 <h2 class="anchored" data-anchor-id="semestral-project">Semestral project</h2>
 <p>Students aiming at the final grading A must work on one project from our list during the semester (details will be made available shortly after the beginning of the semester). Students with no ambitions for the A grade do not have to work on the projects.</p>
-<p>Although students are encouraged to collaborate, no need to hide it, the submitted . #TODO: this should be made more precise.</p>
-<p>At the end of the semester, a short report will have to be presented to the teacher. #TODO: students are typically finishing it during the exam period, do they have to do it before their own exam?</p>
+<p>Although students are encouraged to collaborate, the submitted report must state the names of all the collaborating students.</p>
+<p>As an outcome of the project, a short report should be presented to the teacher. Any time before or at their own exam.</p>
 <p>An ideal format of such report is a git repository within the <a href="https://gitlab.fel.cvut.cz">FEE Gitlab</a> containing a short text, software code, possibly data sets (from simulations or experiments), and graphs, photos, videos (from experiments).</p>
 <p>Its grading is binary too –⁠ either it is accepted by the teacher or not. In case the report is not accepted, details will be given and the student can correct/improve/extend the report and resubmit. Note however, that at least one week (5 working days) is needed for the teacher to evaluate the report. A report submitted a few days before the deadline stands no chance to be modified and resubmitted.</p>
 </section>
@@ -1098,11 +1069,13 @@ Deadlines for submission of solutions to homework problems
 <section id="online-quizzes-and-homework-problems" class="level3">
 <h3 class="anchored" data-anchor-id="online-quizzes-and-homework-problems">Online quizzes and homework problems</h3>
 <p>The primary motivation for introduction of the online quizzes and homework problems is to help your learning process (you receive feedback in real time). Your performance in quizzes and homework problems does not affect the final grade. Feel free to make some mistakes while learning.</p>
-<p>However, some thresholds do have to be passed in quizzes and homework problems to earn the credit (“zápočet” in Czech), and to be allowed to take an exam. The bar is not high, but if you are neglecting the quizzes and homework assignments, your passing will be in danger. Namely, <strong>at least 70%</strong> of competences (demonstrated in quizzes and homework problems) must be provably mastered. #TODO: how about retaking the quizzes and resubmitting the hw solutions?</p>
+<p>However, some thresholds do have to be passed in quizzes and homework problems to earn the credit (“zápočet” in Czech), and to be allowed to take an exam. The bar is not high, but if you are neglecting the quizzes and homework assignments, your passing will be in danger. Namely, <strong>at least 70%</strong> of competences (demonstrated in quizzes and homework problems) must be provably mastered.</p>
 </section>
 <section id="final-exam" class="level3">
 <h3 class="anchored" data-anchor-id="final-exam">Final exam</h3>
-<p>The final grade will be based on the exam organized at the end of the semester (in the exam period). The final exam will have both an open-book and closed-book parts. #TODO: details will be added.</p>
+<p>The final grade will be based on the exam organized at the end of the semester (in the exam period). The final exam will have both an open-book and closed-book parts.</p>
+<p>The open-book part will test the problem solving skills, and it will be done in the form of a written test. An example test will be made available in advance.</p>
+<p>The closed-book part will be done in the form of an oral exam. A few questions from the battery of the online quiz questions will be asked. Their wording will be nearly identical as in the quizzes, but instead of the multiple-choice answers, the students will be asked to provide a short answer by themselves.</p>
 </section>
 <section id="overall-grade" class="level3">
 <h3 class="anchored" data-anchor-id="overall-grade">Overall grade</h3>
