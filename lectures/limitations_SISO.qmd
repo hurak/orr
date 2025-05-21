@@ -39,7 +39,7 @@ $$
 
 Using the generic Nyquist plot in @fig-gm-and-pm-vs-peak-s, we define the smallest distance of the Nyquist plot to the critical point $-1$ as $\alpha_{\min}$. We can show that it is equal to the reciprocal value of the peak of the magnitude of the sensitivity function $S(s)$, that is,
 $$
-\alpha_{\min}=\inf_{\omega}\left|-1-K(j\omega)G(j\omega)\right|=\frac{1}{\|S(s)\|_{\infty}}
+\alpha_{\min}=\inf_{\omega}\left|-1-K(j\omega)G(j\omega)\right|=\frac{1}{\|S(s)\|_{\infty}}.
 $$
 
 ![Three different notions of distance of the Nyquist plot from the critical point -1: two are related to GM and PM, the third one is related to the peak in the magnitude of S](figures/GM_and_PM_vs_peak_in_S.png){#fig-gm-and-pm-vs-peak-s width=50%} 
@@ -52,7 +52,7 @@ and as these distances lower-bounded by $\alpha_{\min}$, we get the following us
 $$
 \mathrm{GM}\geq\frac{M_S}{M_S-1},\qquad \mathrm{PM}\geq 2\arcsin\frac{1}{2M_S},
 $$
-where $M_S \coloneqq \|S\|_\infty$. For commonly required values GM=2 a PM=$30\circ$, we get $M_S=2$, which corresponds to 6 dB.
+where $M_S \coloneqq \|S\|_\infty$. For commonly required values GM=2 a PM=$30^\circ$, we get $M_S=2$, which corresponds to 6 dB.
 
 
 ## Clarification of the definition of bandwidth
@@ -390,7 +390,7 @@ $$
 In words, the gain of the plant must be larger than the gain of the disturbance model. We cannot overemphasize that scaling is crucial here.
 
 ::: {#exm-saturation-stable}
-## Avoiding saturation of control inputs can conflict with the necessity to attenuate disturbances
+## Avoiding saturation of control inputs due to disturbance can conflict with the necessity to attenuate disturbances
 In @fig-saturation-stable we can see the magnitude frequency responses of a stable plant and a disturbance model. The condition that control is not saturated is satisfied up to the frequency below 1 rad/s ($\approx$ 0.38 rad). But the disturbance model has the magnitude larger than 1 up to the frequency slightly above 10 rad/s ($\approx$ 15 rad/s). This means that within the frequency range [0.38, 15] rad/s, saturation may occur. The danger of saturation is present at higher frequencies, but taking into consideration that the magnitude of the disturbance model is smaller than 1, there is no need to design the controller such that the bandwidth extends above 15 rad/s.
 ``` {julia}
 #| code-fold: false
@@ -405,12 +405,14 @@ Gd = 3*tf([50, 1],[10, 1])*tf(1,[1, 1])
 ω = logrange(1e-2, 1e2, 100)
 bodeplot(G, ω, plotphase=false, label="G", lw=2, xticks=10.0.^[-2:2...])
 bodeplot!(Gd, ω, plotphase=false, label="Gd", lw=2)
+vline!([0.38], linestyle=:dash, label = "|G|=|Gd|")
+vline!([15], linestyle=:dash, label = "|Gd|=1")
 ```
 :::
 
 ::: {#exm-saturation-unstable}
-## Avoiding saturation of control inputs can conflict with the necessity to stabilize the system
-In @fig-saturation-unstable we can see the magnitude frequency responses of an unstable plant and a disturbance model. If it weren't for the unstable pole, we could even decide not to design the controller at all, as the magnitude of the disturbance model is smaller than 1, which for scaled model reads that no control is needed. But we do have to design a feedback controller in order to stabilize the system in the first place. The unstable pole at $s=1$ then imposes a constraint the bandwidth must be above 2 rad/s. Hélas, the disturbance model is stronger at this frequency range, which means that the control input may saturate. 
+## Avoiding saturation of control inputs due to disturbance can conflict with the necessity to stabilize the system
+In @fig-saturation-unstable we can see the magnitude frequency responses of an unstable plant and a disturbance model. If it weren't for the unstable pole, we could even decide not to design the controller at all, as the magnitude of the disturbance model is smaller than 1, which for scaled model reads that no control is needed. But we do have to design a feedback controller in order to stabilize the system in the first place. The unstable pole at $s=1$ then imposes a constraint the bandwidth must be above 2 rad/s. Hélas, the disturbance model is stronger at this frequency range [0.62, 2], which means that the control input may saturate. 
 ``` {julia}
 #| code-fold: false
 #| fig-cap: "Magnitude frequency response of the plant and disturbance model"
@@ -424,5 +426,7 @@ Gd = 0.8*tf(1,[1, 1])*tf(1,[0.2, 1])
 ω = logrange(1e-2, 1e1, 100)
 bodeplot(G, ω, plotphase=false, label="G", lw=2, xticks=10.0.^[-2:1...])    
 bodeplot!(Gd, ω, plotphase=false, label="Gd", lw=2)
+vline!([0.62], linestyle=:dash, label = "|G|=|Gd|")
+vline!([2], linestyle=:dash, label = "2p")
 ```
 :::
