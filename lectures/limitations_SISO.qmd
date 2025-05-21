@@ -396,16 +396,21 @@ In words, the gain of the plant must be larger than the gain of the disturbance 
 
 ::: {#exm-saturation-stable}
 ## Avoiding saturation of control inputs due to disturbance can conflict with the necessity to attenuate disturbances
-In @fig-saturation-stable we can see the magnitude frequency responses of a stable plant and a disturbance model. The condition that control is not saturated is satisfied up to the frequency below 1 rad/s ($\approx$ 0.38 rad). But the disturbance model has the magnitude larger than 1 up to the frequency slightly above 10 rad/s ($\approx$ 15 rad/s). This means that within the frequency range [0.38, 15] rad/s, saturation may occur. The danger of saturation is present at higher frequencies, but taking into consideration that the magnitude of the disturbance model is smaller than 1, there is no need to design the controller such that the bandwidth extends above 15 rad/s.
+
+We consider a stable plant transfer functions $G(s)$ and the disturbance model $G_\mathrm{d}(s)$ as in the code below. 
 ``` {julia}
 #| code-fold: false
+using ControlSystems
+
+G = 40*tf(1,[5, 1])*tf(1,[2.5, 1]);
+Gd = 3*tf([50, 1],[10, 1])*tf(1,[1, 1]);
+```
+
+In @fig-saturation-stable we can see the magnitude frequency responses of a stable plant and a disturbance model. The condition that control is not saturated is satisfied up to the frequency below 1 rad/s ($\approx$ 0.38 rad). But the disturbance model has the magnitude larger than 1 up to the frequency slightly above 10 rad/s ($\approx$ 15 rad/s). This means that within the frequency range [0.38, 15] rad/s, saturation may occur. The danger of saturation is present at higher frequencies, but taking into consideration that the magnitude of the disturbance model is smaller than 1, there is no need to design the controller such that the bandwidth extends above 15 rad/s.
+``` {julia}
 #| fig-cap: "Magnitude frequency response of the plant and disturbance model"
 #| label: fig-saturation-stable
-using ControlSystems
 using Plots
-
-G = 40*tf(1,[5, 1])*tf(1,[2.5, 1])
-Gd = 3*tf([50, 1],[10, 1])*tf(1,[1, 1])
 
 ω = logrange(1e-2, 1e2, 100)
 bodeplot(G, ω, plotphase=false, label="G", lw=2, xticks=10.0.^[-2:2...])
@@ -418,17 +423,21 @@ vline!([15], linestyle=:dash, label = "|Gd|=1")
 
 ::: {#exm-saturation-unstable}
 ## Avoiding saturation of control inputs due to disturbance can conflict with the necessity to stabilize the system
-In @fig-saturation-unstable we can see the magnitude frequency responses of an unstable plant and a disturbance model. If it weren't for the unstable pole, we could even decide not to design the controller at all, as the magnitude of the disturbance model is smaller than 1, which for scaled model reads that no control is needed. But we do have to design a feedback controller in order to stabilize the system in the first place. The unstable pole at $s=1$ then imposes a constraint the bandwidth must be above 2 rad/s. Hélas, the disturbance model is stronger at this frequency range [0.62, 2], which means that the control input may saturate. 
+
+We consider an unstable plant transfer functions $G(s)$ and the disturbance model $G_\mathrm{d}(s)$ as in the code below. 
 ``` {julia}
 #| code-fold: false
+using ControlSystems
+
+G = 5*tf(1,[10, 1])*tf(1,[1, -1]);
+Gd = 0.8*tf(1,[1, 1])*tf(1,[0.2, 1]);
+```
+
+In @fig-saturation-unstable we can then see their magnitude frequency responses. If it weren't for the unstable pole in the plant transfer function, we could even decide not to design the controller at all, as the magnitude of the disturbance model is smaller than 1, which for a scaled model implies that no control is needed. But we do have to design a feedback controller in order to stabilize the system in the first place. The unstable pole at $s=1$ then imposes a constraint the bandwidth – it must be at least 2 rad/s. Hélas, the disturbance model is stronger at the frequency range [0.62, 2], which means that the control input may saturate.
+``` {julia}
 #| fig-cap: "Magnitude frequency response of the plant and disturbance model"
 #| label: fig-saturation-unstable
-using ControlSystems
 using Plots
-
-G = 5*tf(1,[10, 1])*tf(1,[1, -1])
-Gd = 0.8*tf(1,[1, 1])*tf(1,[0.2, 1])
-
 ω = logrange(1e-2, 1e1, 100)
 bodeplot(G, ω, plotphase=false, label="G", lw=2, xticks=10.0.^[-2:1...])    
 bodeplot!(Gd, ω, plotphase=false, label="Gd", lw=2)
