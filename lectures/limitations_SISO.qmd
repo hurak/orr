@@ -84,6 +84,8 @@ T = L/(1+L)
 
 bodeplot(S, label="S", lw=2, xticks=10.0.^[-3:2...])
 bodeplot!(T, label="T", lw=2)
+vline!([0.036], linestyle=:dash, label="ωₛ")
+vline!([1], linestyle=:dash, label="ωₜ")
 ```
 
 When determined from the magnitude frequency response $|T(j\omega)|$, the bandwidth is $\approx$ 1 rad/s. But note that at this frequency the phase is already lagging by $\approx$ 200 degrees. This means that even if the frequency content of the reference is not attenuated, the reference will be distorted so much that we can hardly claim that the system is still tracking it.
@@ -153,7 +155,7 @@ The interpolation conditions that we have just derived constitute the basis on w
 ::: {#thm-max-modulus}
 ## Maximum modulus principle
 
-For a stable transfer function $F(s)$, that is, for a function with no pole in the closed right half-plane (RHP) it holds that   
+For a function $F(\cdot)$ of a complex variable $s$ that is analytic in the closed right half-plane (RHP), it holds that   
 $$
 \sup_{\omega}|F(j\omega)|\geq |F(s_0)|\;\;\; \forall s_0\in \text{RHP}.
 $$
@@ -164,7 +166,9 @@ $$
 $$
 :::
 
-Now instead of some general $F(s)$ we consider the weighted sensitivity function $W_\mathrm{p}(s)S(s)$. And the complex number $s$ in the RHP equals to a zero $z$ of the plant transfer function $G(s)$, that is, $G(z)=0, \; z\in\mathbb C, \; \Re(z)\geq 0$. Then the maximum modulus principle together with the interpolation condition $S(z)=1$ implies that
+When restricted to rational (transfer) functions, the requirement of analyticity in the closer RHP is equivalent to the requirement that the transfer function has no poles in the RHP. In the control systems lingo these are stable transfer functions.
+
+Now instead of some general stable transfer function $F(s)$ we consider the weighted sensitivity function $W_\mathrm{p}(s)S(s)$. And we restrict our attention to one particular complex number $s$ in the RHP, namely, a RHP zero $z$ of the plant transfer function $G(s)$, that is, $G(z)=0, \; z\in\mathbb C, \; \Re(z)\geq 0$. Then the maximum modulus principle together with the interpolation condition $S(z)=1$ implies that
 
 $$
 \|W_\mathrm{p}S\|_{\infty}\geq |W_\mathrm{p}(z)|.
@@ -347,6 +351,7 @@ the upper bound on the magnitude frequency response of the sensitivity function 
 using ControlSystems
 Gd = tf(10,[100, 1])
 bodeplot(inv(Gd),plotphase=false, label="1/Gd", lw=2)
+vline!([0.1], linestyle=:dash, label="|Gd|=1")
 ``` 
 :::
 
