@@ -1,11 +1,17 @@
 ---
 title: "Limitations for MIMO systems"
+bibliography: 
+    - ref_optimal_control.bib
+    - ref_robust_control.bib
+csl: ieee-control-systems.csl
 format:
     html:
         html-math-method: katex
         code-fold: true
-execute:
-    enabled: false
+        code-summary: "Show the code"
+crossref:
+  fig-prefix: Fig. 
+  eq-prefix: Eq.
 engine: julia
 ---
 
@@ -16,62 +22,394 @@ Multiple-input-multiple-output (MIMO) systems are subject to limitations of the 
 With vector inputs and vector outputs, the input-output model of an LTI MIMO system is a *matrix* (of transfer functions). As such, it can be characterized not only by various scalar quantities (like poles, zeros, etc.), but also by the associated *directions* in the input and output spaces.
 
 ::: {#exm-mimo-zeros-directions}
+## Direction associated with a RHP zero
 Consider the transfer function matrix (or matrix of transfer functions)
 $$
-G(s) = \frac{1}{(0.2s+1)(s+1)}\begin{bmatrix}1 & 1\\ 1+2s& 2\end{bmatrix}.
+\mathbf G(s) = \frac{1}{(0.2s+1)(s+1)}\begin{bmatrix}1 & 1\\ 1+2s& 2\end{bmatrix}.
 $$
 
-Recall that a complex number $z\in\mathbb C$ is a zero of $G$ if the rank of $G(z)$ is less than the rank  of $G(s)$ for most $s$. While reliable numerical algorithms for computing zeros of MIMO systems work with state-space realizations, in this simple case we can easily verify that there is only one zero $z=1/2$.
+Recall that a complex number $z\in\mathbb C$ is a zero of $\mathbf G$ if the rank of $\mathbf G(z)$ is less than the rank of $\mathbf G(s)$ for most $s$. While reliable numerical algorithms for computing zeros of MIMO systems work with state-space realizations, in this simple case we can easily verify that there is only one zero $z=1/2$. But we can verify this numerically anyway:
 
+``` {julia}
+#| code-fold: false
+using ControlSystems
+s = tf("s")
+G = [1 1; 1+2*s 2].*(1/((0.2*s+1)*(s+1)))     # Cannot do just N/d. Must do N*(1/d).
+z = tzeros(G) 
+z = z[1]
+```
 
+The transfer function matrix, when evaluated at $z=1/2$, obviously looses the rank:
 
-Zeros in the RHP only exhibit themselves in some directions.
+``` {julia}
+#| code-fold: false
+Gz = evalfr(G,z)
+using LinearAlgebra
+rank(Gz)
+```
 
+The input direction, in which this zero exhibit itself can be obtain as the right singular vector: 
+``` {julia} 
+#| code-fold: false
+F = svd(Gz)
+U,S,V = F
+v2 = V[:,end]
+```
+
+We now demonstrate that indeed, the RHP zero exhibits in the response of the system through the undershoot if the step input is applied in the direction of the given right singular vector $\begin{bmatrix}1\\-1\end{bmatrix}$, which is to say that the vector input signal is given by $\bm u(t) = \begin{bmatrix}1\\-1\end{bmatrix}\underline{1}(t)$, where $\underline{1}(t)$ is the (Heaviside) unit step function. The response is in @fig-step-response-mimo-rhp-1. The second output $y_2$ exhibits the undershoot, which is an indicator that there is a RHP zero in the system.
+``` {julia}
+#| fig-cap: "Response of a MIMO system with an RHP zero to a (vector) unit step input in the direction [1; -1]"
+#| label: fig-step-response-mimo-rhp-1
+using Plots
+step_response = step(G*tf([1,-1])) # Cannot just multiply a matrix of tf's by a vector.
+plot(step_response, title="", xlabel="Time (s)", ylabel=["y₁" "y₂"], lw=2, label="", legend=:topright)
+```
+
+If the step input is applied in some other direction, say, the direction of $\begin{bmatrix}1\\0\end{bmatrix}$, the undershoot associated with a RHP zero is not observed, see @fig-step-response-mimo-rhp-zero-2.
+
+``` {julia}
+#| fig-cap: "Response of a MIMO system with an RHP zero to a (vector) unit step input in the direction [1; 0]"
+#| label: fig-step-response-mimo-rhp-zero-2
+step_response = step(G*tf([1,0])) # Cannot just multiply a matrix of tf's by a vector.
+plot(step_response, title="", xlabel="Time (s)", ylabel=["y₁" "y₂"], lw=2, label="", legend=:topright)
+```
+
+Similarly for the direction of $\begin{bmatrix}0\\1\end{bmatrix}$ – the undershoot associated with a RHP zero is also not observed, see @fig-step-response-mimo-rhp-zero-3.
+``` {julia}
+#| fig-cap: "Response of a MIMO system with an RHP zero to a (vector) unit step input in the direction [0; 1]"
+#| label: fig-step-response-mimo-rhp-zero-3
+step_response = step(G*tf([0,1])) # Cannot just multiply a matrix of tf's by a vector.
+plot(step_response, title="", xlabel="Time (s)", ylabel=["y₁" "y₂"], lw=2, label="", legend=:topright)
+```
+
+To conclude, we have learnt here that a phenomenon of a RHP zero in a MIMO system can be observed only if the input is applied in a certain direction. This is an encouraging result, because have seen previously, that the RHP zero imposes a limitation on the achievable closed-loop bandwidth. We now have hope that perhaps this limitation is only restricted to some direction in the input space. Let's see if this is indeed the case.
+
+We consider the mixed-sensitivity problem 
+$$
+\operatorname*{minimize}_{\mathbf K}\left\|\begin{bmatrix}\mathbf W_1\mathbf S\\ \mathbf W_2 \mathbf K\mathbf S\\ \mathbf W_3 \mathbf T\end{bmatrix}\right\|_{\infty}, 
+$$
+in which we choose the weighting filter $\mathbf W_1$ as a scalar one, or, equivalently as as a diagonal one with identical elements on the diagonal, that is, $\mathbf W_1(s) = W_1(s) \mathbf I$. We choose the popular parameterization 
+
+$$
+W_1(s) = \frac{s/M+\omega_\mathrm{B}}{s+\omega_\mathrm{B}A},
+$$
+where we set $M=1.5, \; \omega_{B}=z/2=0.25, \; A=10^{-3}$.
+
+We set the second weighting filter $\mathbf W_2$ to be a scalar too, but even frequency-independent, that is, $\mathbf W_2(s) = W_2(s) \mathbf I$, with $W_2(s)$ set to some small constant, say, $W_2(s) = 0.05$ (later we can tune it). 
+
+The third weighting filter $\mathbf W_3$ we decide to set to zero, that is, $\mathbf W_3(s) = 0$. 
+
+The mixed-sensitivity problem is then solved using the $\mathcal H_\infty$ synthesis algorithm. The frequency response of the resulting sensitivity function and the weighting filter are shown in @fig-sensitivity-weights-1.
+``` {julia}
+#| code-fold: false
+M = 1.5 
+A = 1e-3 
+ω = z/2
+
+W₁=tf([1/M,ω],[1,A*ω])
+
+W₂ = 0.05;
+
+W₃ = []
+
+using RobustAndOptimalControl
+
+P = hinfpartition(G, W₁, W₂, W₃);
+hinfassumptions(P, verbose=false)
+
+K, γ = hinfsynthesize(P, γrel=1.05);
+Pcl1, S1, KS1, T1 = hinfsignals(P, G, K);
+```
+``` {julia}
+#| fig-cap: "Singular values of the sensitivity function and the inverse of the corresponding weighting filter (scaled by γ) as functions of frequency"
+#| label: fig-sensitivity-weights-1
+using Plots
+ω_range = logrange(1e-5, 1e3, length=100)
+sigmaplot(S1, ω_range, title="", lw=2, label="σ₁(S), σ₂(S)", xticks=10.0.^[-5:3...])
+bodeplot!(γ/W₁, ω_range, title="", lw=2, plotphase=false, label="γ/|W₁|")
+```
+
+We can see that both singular values are below the given bound on the bandwidth imposed by the RHP zero. But knowing that this restriction is only restricted to some direction, we can now try to increase our requirements on the bandwidth for one of the two output channels. Say, we set it two orders of magnitude higher. In SISO systems this would be a no-go, but here we can try our luck. Maybe the optimization algorithm will find a controller that exploits the directionality of the RHP zero.
+``` {julia}
+#| code-fold: false
+M = 1.5 
+A = 1e-3 
+ω₁ = z/2 
+ω₂ = 25
+
+W₁=[tf([1/M,ω₁],[1,A*ω₁]) 0; 0 tf([1/M,ω₂],[1,A*ω₂])]
+
+W₂ = 0.05;
+
+W₃ = []
+
+using RobustAndOptimalControl
+
+P = hinfpartition(G, W₁, W₂, W₃);
+hinfassumptions(P, verbose=false)
+
+K, γ = hinfsynthesize(P, γrel=1.05);
+Pcl2, S2, KS2, T2 = hinfsignals(P, G, K);
+```
+``` {julia}
+#| fig-cap: "Singular values of the sensitivity function as functions of frequency. The bandwidth of them is well above the bound imposed by the RHP zero."
+#| label: fig-sensitivity-weights-2
+using Plots
+ω_range = logrange(1e-5, 1e3, length=100)
+sigmaplot(S2, ω_range, title="", lw=2, label="σ₁(S), σ₂(S)", xticks=10.0.^[-5:3...])
+#bodeplot!(γ/W₁, ω_range, title="", lw=2, plotphase=false, label="γ/|W₁|")
+```
+
+From @fig-sensitivity-weights-2 we can see that one of the two singular values stays below 0 dB up to well above the the upper bound of 0.25 rad/s imposed by the RHP zero. Obviously the MIMO controller succeeded in isolating the impact of the RHP zero to just one output channel. We can also see this in the time domain in @fig-step-response-closed_mimo-rhp. 
+
+``` {julia}
+#| fig-cap: "Response of a closed feedback loop containing a MIMO plant with an RHP zero to a (vector) unit step input in the direction of a RHP zero"
+#| label: fig-step-response-closed_mimo-rhp
+using Plots
+step_response_1 = step(T1*tf([1,-1]))
+step_response_2 = step(T2*tf([1,-1]))
+plot(step_response_1, title="", xlabel="Time (s)", ylabel=["y₁" "y₂"], lw=2, label="Design 1", legend=:topright)
+plot!(step_response_2, title="", xlabel="Time (s)", ylabel=["y₁" "y₂"], lw=2, label="Design 2", legend=:topright)
+```
+
+In the step responses in @fig-step-response-closed_mimo-rhp we can see that in the second design the second output not only does not exhibit the undershoot, but also its response is much faster that the all the other responses.
 :::
 
-## Conditioning of MIMO systems
+## Input and output directions, directions of poles and zeros
 
-$$\boxed{
-\gamma (G) = \frac{\bar{\sigma}(G)}{\underline{\sigma}(G)}
-}
-$$
+It is not only the RHP zeros with which directions are associated. Directions can also be associated with unstable poles, and also with disturbances (we will explain this later). Furthermore, we can consider input and output directions (we will explain this later too). We state that in control analysis and synthesis, the output variants are a bit more useful. To summarize, we have::
 
-- Ill-conditioned for $\gamma>10$
-- But depends on scaling!
-
-Therefore minimized conditioning number
-$$\boxed{
-\gamma^\star(G) = \min_{D_1, D_2}\gamma(D_1GD_2)
-}
-$$
-but difficult do compute (=upper bound on $\mu$)
-
-RGA can be used to give a reasonable estimate.
-
-## Relative gain array (RGA)
-
-Relative Gain Array (RGA) as an indicator of difficulties with control
-$$\boxed{\Lambda(G) = G \circ (G^{-1})^T}$$
-
-- independent of scaling,
-- sum of elements in rows and columns is 1,
-- sum of absolute values of elements of RGA is very close to the minimized sensitivity number $\gamma^\star$, hence a system with large RGA entries is always ill-conditioned (but system with large $\gamma$ can have small RGA),
-- RGA for a triangular system is an identity matrix,
-- relative uncertainty of an element of a transfer function matrix equal to (negative) inverse of the corresponding RGA entry makes the system singular.
-
-## Functional controllability
+- output direction $\bm y_z$ of an RHP zero $z$ (constant),
+- output direction $\bm y_p$ of an unstable pole $p$ (constant),
+- output direction $\bm y_d(s)$ of a disturbance $d$ (frequency dependent),
+- the $i$-th output direction (left singular vector) $\bm u_i(s)$ of the system (frequency dependent).
 
 ## Interpolation conditions for MIMO systems
 
+We will now find use for the first two types of directions.
+
+### Interpolation conditions: RHP zeros and their directions
+
+The sensitivity $\mathbf S$ and complementary sensitivity functions $\mathbf T$ of a stable closed feedback loop are constrained not only by poles and zeros of the MIMO plant $\mathbf G$ (as they are in the SISO case), but also by their directions. Namely, if the plant $\mathbf G$ has a RHP zero $z$, then the sensitivity and complementary sensitivity functions satisfy the interpolation conditions
+$$\boxed{
+\bm y_z^*\mathbf T(z)=0, \qquad \bm y_z^*\mathbf S(z)=\bm y_z^*.}
+$$
+
+If the plant $\mathbf G$ has an unstable pole $p$, then the sensitivity and complementary sensitivity functions satisfy the interpolation conditions
+$$\boxed{
+\mathbf S(p)\bm y_p = 0, \qquad \mathbf T(p)\bm y_p = \bm y_p.}
+$$
+
+Note that here we used the *output sensitivity* and *output complementary sensitivity* functions.
+
+::: {.callout-important}
+## Input and output variants of sensitivity and complementary sensitivity functions
+Depending on where we cut the feedback loop open, we define the input and output open-loop transfer functions. If we cut the loop at the plant input, the input open-loop transfer function is
+$$
+\mathbf L_\mathrm{i}(s) = \mathbf K(s)\mathbf G(s),$$
+and if we cut the loop at the plant output, the output open-loop transfer function is
+$$
+\mathbf L_\mathrm{o}(s) = \mathbf G(s)\mathbf K(s).
+$$
+
+The input and output variants of sensitivity and complementary sensitivity functions are defined as
+$$
+\mathbf S_\mathrm{i}(s) = (1+\mathbf L_\mathrm{i}(s))^{-1}, \qquad \mathbf T_\mathrm{i}(s) = \mathbf L_\mathrm{i}(s)(1+\mathbf L_\mathrm{i}(s))^{-1},
+$$
+and
+$$
+\mathbf S_\mathrm{o}(s) = (1+\mathbf L_\mathrm{o}(s))^{-1}, \qquad \mathbf T_\mathrm{o}(s) = \mathbf L_\mathrm{o}(s)(1+\mathbf L_\mathrm{o}(s))^{-1}.
+$$ 
+
+As we mostly work with the output variants, we typically drop the subscript $\mathrm o$ and write $\mathbf S$ and $\mathbf T$ instead of $\mathbf S_\mathrm{o}$ and $\mathbf T_\mathrm{o}$.
+:::
+
 ## Bandwidth limitations due to unstable poles and zeros
 
-## Limits given by presence of disturbance and/or reference
+Similarly as for SISO systems we have the constraint (and in the following we consider scalar weights)
+$$
+\|W_\mathrm{p}\mathbf S\|_{\infty} = \sup_{\omega} |W_\mathrm{p}(j\omega)|\bar{\sigma}(\mathbf S(j\omega))\geq |W_\mathrm{p}(z)|,
+$$
+from which the limitation on the achievable bandwidth $\omega_\mathrm{B}<z/2$ (or $\omega_\mathrm{B}>2z$) follows. But this constraint only holds for the worst direction, which corresponds to the largest singular value of $\mathbf S$.
+
+The same holds for the complementary sensitivity function
+$$
+\|W\mathbf T\|_{\infty} = \sup_{\omega} |W(j\omega)|\bar{\sigma}(\mathbf T(j\omega))\geq |W(p)|,
+$$
+implying that $\omega_\mathrm{B}>2|p|$, but once again, this only holds for the worst direction.
+
+In the case of one unstable pole $p$ and one RHP zero $z$, the combined constraint is
+$$
+\|\mathbf S\|_{\infty} \geq c,\qquad \|\mathbf T\|_{\infty} \geq c,\quad c = \sqrt{\sin^2\phi+\frac{|z+p|^2}{|z-p|^2}\cos^2\phi},
+$$
+where $\phi=\arccos|\bm y_z^*\bm y_p|$ is the angle between the directions of the pole and the zero.
+
+## Limitations given by presence of disturbance and/or reference
+ 
+<!-- We consider a single disturbance at a time – the column vector $\mathbf g_\mathrm{d}(s)$ of transfer functions models its effect on the output via $\bm y=\mathbf g_\mathrm{d} \bm d$.
+
+We define the *disturbance direction* as 
+$$
+\bm y_\mathrm{d} = \frac{1}{\|\mathbf g_\mathrm{d}\|_2}\mathbf g_\mathrm{d}.
+$$
+
+We also define the *disturbance condition number*
+$$
+\gamma_\mathrm{d}(\mathbf G) = \bar{\sigma}(\mathbf G)\bar{\sigma}(\mathbf G^\dagger \bm y_\mathrm{d}),
+$$
+where $\mathbf G^\dagger$ is the pseudo-inverse of $\mathbf G$, which is $\mathbf G^{-1}$ for a square and nonsingular $\mathbf G$. 
+
+The disturbance condition number is a measure of how much the disturbance can be amplified in the direction of the disturbance direction.
+If the disturbance direction is aligned with good (strong) output direction of the plant, the amplification of the disturbance is 1. If the disturbance is aligned with the bad (weak) output direction of the plant, the amplification is $\gamma(G)$.
+
+
+
+\frametitle{Limitations given by presence of disturbance and/or reference}
+Assumed scaled model: worst-case disturbance is $|d(j\omega)|= 1\forall\omega$ and the error expected $\|e(j\omega)\|_2 < 1\forall \omega$ (whether 2-norm or $\infty$-norm... does not matter).
+
+With feedback control $e=Sg_dd$:
+
+$$
+\|Sg_d\|_{2} = \bar{\sigma}(Sg_d)<1\;\;\forall \omega\;\;\;\Longleftrightarrow \;\;\;\|Sg_d\|_{\infty}<1
+$$
+
+Equivalent to 
+
+$$\boxed{
+\|Sy_d\|_{2} <\frac{1}{\|g_d\|_{2}}\;\;\forall \omega
+}
+$$
+
+Hence sensitivity $S$ must be less then $1/\|g_d\|_{2}$ \textbf{in the disturbance direction $y_d$ only.}
+
+$$
+\underline{\sigma}(S)\|g_d\|_{2} \leq \|Sg_d\|_{2} \leq \bar{\sigma}(S)\|g_d\|_{2}
+$$
+At least $\bar{\sigma}(I+L)>\|g_d\|_{2}$ and perhaps $\underline{\sigma}(I+L)>\|g_d\|_{2}$.
+\end{frame}
+
+\begin{frame}
+\frametitle{Disturbance rejection by a plant with RHP zero}
+Consider the interpolation condition $y_z^HS(z)=y_z^H$ and apply \textit{maximum modulus theorem} to $f(s)=y_z^HSg_d$
+$$
+\|Sg_d\|_{\infty} \geq |y_z^Hg_d(z)| = |y_z^Hy_d|\|g_d\|_{2}
+$$
+To safisfy $\|Sg_d\|_{\infty}<1$ must have at least
+$$
+|y_z^Hg_d(z)|<1
+$$
+(which is a generalization of $G_d(z)<1$ for SISO systems).
+\end{frame}
+
+\begin{frame}
+\frametitle{Example: Disturbance rejection by a plant with RHP zero}
+Consider the system 
+$$
+G(s) = \frac{1}{s+2}\begin{bmatrix}
+			s-1 & 4\\ 4.5 & 2(s-1)
+                    \end{bmatrix},\;\;\;
+g_d(s) = \frac{6}{s+2}\begin{bmatrix}
+			k\\1
+                      \end{bmatrix}, \;\;\;|k|\leq 1
+$$
+Is it possible to get $\|Sg_d\|_{\infty}<1$ for arbitrary $|k|\leq 1$? The RHP zero is at $s=4$.
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{}
+\begin{lstlisting}
+>> G = sdf([s-1, 4; 4.5, 2*(s-1)],(s+2))
+G =                  
+    -1 + s     4     
+     4.5      -2 + 2s
+    -----------------
+          2 + s  
+	      
+>> roots(G)
+ans =
+     4
+     
+>> Gz = value(G,4)
+Gz =
+    0.5000    0.6667
+    0.7500    1.0000
+    
+>> [U,S,V] = svd(Gz)
+U =
+   -0.5547   -0.8321
+   -0.8321    0.5547
+S =
+    1.5023         0
+         0    0.0000
+V =
+   -0.6000   -0.8000
+   -0.8000    0.6000
+
+>> Uz = U(:,2)
+Uz =
+   -0.8321
+    0.5547
+\end{lstlisting} 
+\end{frame}
+
+\begin{frame}
+\frametitle{}
+Then condition for attenuation of disturbances is then 
+$$
+\left|\begin{bmatrix}
+-0.8321 & 0.5547
+\end{bmatrix} 
+\begin{bmatrix}
+k \\ 1
+\end{bmatrix}\right|<1
+$$
+The \textbf{necessary} condition is then $k>-0.54$. (Other factor as well, input saturation, uncertainty, ...)
+\end{frame} -->
 
 ## Disturbance rejection by a plant with RHP zero
 
-## Limits given by the input constraints (saturation)
+## Limitations given by the input constraints (saturation)
 
-## Limits given by uncertainty in the model: in open loop
+
+## Conditioning of MIMO systems
+
+We have just seen that the fact that (linear) models of MIMO systems can be viewed as matrices of transfer functions can be exploited to isolate certain upleasant phenomena to certain directions. Unfortunately, besides such opportunities, some challenges arise as well.
+
+We are now going to discuss the phenomenon of *conditioning* of MIMO systems. Recall that the *condition number* of a matrix $\mathbf G$ is defined as 
+$$\boxed{
+\gamma (\mathbf G) = \frac{\bar{\sigma}(\mathbf G)}{\underline{\sigma}(\mathbf G)}.
+}
+$$
+
+A matrix is regarded as ill-conditioned for $\gamma>10$. 
+
+If $\mathbf G$ is a transfer function matrix of a MIMO system, its conditioning obviously depend on scaling! Just imagine that one of the inputs is expressed in centimeters instead of meters. The corresponding entries in $\mathbf G$ must change accordingly and so does the condition number. If scaling helps improve the condition number, it is a good idea to find the best scaling – we define the *minimized condition number*
+$$\boxed{
+\gamma^\star(\mathbf G) = \min_{\mathbf D_1, \mathbf D_2}\gamma(\mathbf D_1\mathbf G\mathbf D_2).
+}
+$$
+
+However, computing this is computationally difficult (it can be computed using the same ideas as those used for computing the upper bound on the structured singular value $\mu$).
+
+A practically useful approximation is called *relative gain array* (RGA).
+
+## Relative gain array (RGA)
+
+*Relative gain array* (RGA) is a very useful matrix that, among other purposes, can be used as an indicator of difficulties with control
+$$\boxed{\Lambda(\mathbf G) = \mathbf G \circ (\mathbf G^{-1})^\top,}$$
+where $\circ$ denotes the Hadamard product, that is, a matrix formed by the products of corresponding elements.
+ 
+RGA enjoys a number of properties: 
+
+- it is independent of scaling,
+- the sum of elements in rows and columns is 1,
+- the sum of absolute values of elements of RGA is very close to the minimized sensitivity number $\gamma^\star$, hence a system with large RGA entries is always ill-conditioned (but system with large $\gamma$ can have small RGA),
+- the RGA for a triangular system is an identity matrix,
+- the relative uncertainty of an element of a transfer function matrix equal to (negative) inverse of the corresponding RGA entry makes the system singular.
+
+## Functional controllability
+
+## Limitations given by uncertainty in the model: in open loop
 
 ### In open loop
 

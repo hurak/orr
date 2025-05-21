@@ -1,35 +1,112 @@
 ---
 title: "Limitations for SISO systems"
+bibliography: 
+    - ref_optimal_control.bib
+    - ref_robust_control.bib
+csl: ieee-control-systems.csl
 format:
     html:
         html-math-method: katex
         code-fold: true
-execute:
-    enabled: false
+        code-summary: "Show the code"
+crossref:
+  fig-prefix: Fig. 
+  eq-prefix: Eq.
 engine: julia
 ---
 
-For a given system, there may be some inherent limitations of achievable performance. However hard we try to design/tune a feedback controller, certain closed-loop performance indicators such as bandwidth, steady-state accuracy, or resonant peaks may have inherent limits. We are going to explore these. The motivation is that once we know what is achievable, we do not have to waste time by trying to achieve the impossible.
+For a given system, there may be some inherent limitations of achievable performance. However hard we try to design/tune a feedback controller, certain closed-loop performance indicators such as bandwidth, steady-state accuracy, or resonant peaks may have inherent limitations. We are going to explore these. The motivation is that once we know what is achievable, we do not have to waste time by chasing the unachievable.
 
-At first it may look confusing that we are only formulating this problem of learning the limits towards the end of our course, since one view of the whole optimal control theory is that is that it provides a systematic methodology for learning what is possible to achieve. Shall we need to know the shortest possible time in which the drone can be brought from one position and orientation to another, we just formulate the minimum-time optimal control problem and solve it. Even if at the end of the day we intend to use a different controller – perhaps one supplied commercially with a fixed structure like a PID controller – at least we can assess the suboptimality of such controller by comparing its performance with the optimal one. 
+At first it may look confusing that we are only formulating this problem of learning the limitations towards the end of our course. After all, one view of the optimal control theory is that is that it provides a systematic methodology for learning what is possible to achieve. Shall we need to know the shortest possible time in which the quadrotor can fly from one position and orientation to another, we just formulate the minimum-time optimal control problem and solve it. Even if at the end of the day we intend to use a different controller – perhaps one supplied commercially with a fixed structure like a PID controller – at least we can assess the suboptimality of such controller by comparing its performance with the optimal one. 
 
 ::: {.callout-important}
-## Optimal control theory may help reveal the limits
+## Optimal control theory may help reveal the limitations
 Indeed, this is certainly a fair and practical motivation for studying even those parts of optimal control theory that do not provide very practical controllers, such as the $\mu$ synthesis returning controllers of rather high order even for low-order plants. 
 :::
 
+But we have also seen that the optimal control theory can also be used as a convenient tool to achieve certain performance requirements. For example, should we have some requirements on the closed-loop bandwidth and the attenuation of disturbances at low frequencies, the $\mathcal H_\infty$ optimal control methods can be used to search for a controller that shapes the closed-loop transfer functions accordingly. It is then useful to be able to tell if the requirements are achievable or not.
+
 In this section we are going to restrict ourselves to SISO systems. Then in the next section we will extend the results to MIMO systems.
 
+## Fundamental trade-off
 
+The first limitation is captured by the following relation between the sensitivity function $S(s)$ and the complementary sensitivity function $T(s)$ 
+$$\boxed{
+S+T = 1.}
 $$
-S+T = 1
+
+## Magnitude and phase margins vs. sensitivity function
+
+Using the generic Nyquist plot in @fig-gm-and-pm-vs-peak-s, we define the smallest distance of the Nyquist plot to the critical point $-1$ as $\alpha_{\min}$. We can show that it is equal to the reciprocal value of the peak of the magnitude of the sensitivity function $S(s)$, that is,
 $$
+\alpha_{\min}=\inf_{\omega}\left|-1-K(j\omega)G(j\omega)\right|=\frac{1}{\|S(s)\|_{\infty}}
+$$
+
+![Three different notions of distance of the Nyquist plot from the critical point -1: two are related to GM and PM, the third one is related to the peak in the magnitude of S](figures/GM_and_PM_vs_peak_in_S.png){#fig-gm-and-pm-vs-peak-s width=50%} 
+
+We can relate the gain margin (GM) and phase margin (PM) to other two distances $\alpha_1$ and $\alpha_2$ sketched in @fig-gm-and-pm-vs-peak-s:
+$$
+\mathrm{GM}=\frac{1}{1-\alpha_1}, \qquad \mathrm{PM}=2\arcsin\frac{\alpha_2}{2},
+$$ 
+and as these distances lower-bounded by $\alpha_{\min}$, we get the following useful inequalities
+$$
+\mathrm{GM}\geq\frac{M_S}{M_S-1},\qquad \mathrm{PM}\geq 2\arcsin\frac{1}{2M_S},
+$$
+where $M_S \coloneqq \|S\|_\infty$. For commonly required values GM=2 a PM=$30\circ$, we get $M_S=2$, which corresponds to 6 dB.
+
 
 ## Clarification of the definition of bandwidth
 
+The definition of the bandwidth that is often promoted in circuit and filter theory uses the complementary sensitivity function $T(s)$, and it defined as the frequency $\omega_\mathrm{B}$ up to which the magnitude $|T(j\omega)|$ of the complementary sensitivity function is $\approx 1$ (typically the value of $1/\sqrt{2}$ is used). The motivation for this definition might be that the system can track references with the frequency content up to this frequency. 
+
+We state here another definition of bandwidth that is more appropriate for control systems – the frequency $\omega_\mathrm{B}$ up to which the magnitude $|S(j\omega)|$ of the sensitivity function is  smaller than $\approx 1$ (again, typically the value of $1/\sqrt{2}$ is used). The motivation for this definition is that the system can reject disturbances with the frequency content up to this frequency.
+
+While mostly the two definitions give similar values of the bandwidth, they can be quite different in some cases, as illustrated with the following example.
+
+::: {#exm-bandwidth-definition}
+## Two definitions of bandwidth
+We consider the following open-loop transfer function
+$$
+L(s) = \frac{-s + 0.1}{s(s+2.1)}.
+$$
+
+The magnitude and phase frequency responses for the sensitivity and complementary sensitivity functions are in @fig-bandwidth-definition. 
+``` {julia}
+#| code-fold: false
+#| fig-cap: "Bode plot of the sensitivity and complementary sensitivity functions"
+#| label: fig-bandwidth-definition
+using ControlSystems
+using Plots
+
+L = tf([-1, 0.1],[1, 2.1, 0])
+S = 1/(1+L) 
+T = L/(1+L)
+
+bodeplot(S, label="S", lw=2, xticks=10.0.^[-3:2...])
+bodeplot!(T, label="T", lw=2)
+```
+
+When determined from the magnitude frequency response $|T(j\omega)|$, the bandwidth is $\approx$ 1 rad/s. But note that at this frequency the phase is already lagging by $\approx$ 200 degrees. This means that even if the frequency content of the reference is not attenuated, the reference will be distorted so much that we can hardly claim that the system is still tracking it.
+
+In contrast, the bandwidth determined from the magnitude frequency response $|S(j\omega)|$ is well below 0.1 rad/s (it is $\approx$ 0.036 rad/s). This means that the system can reject disturbances with the frequency content up to this frequency. And the phase is completely irrelevant here. 
+
+The step response of the system in @fig-bandwidth-definition-step-response supports this preference for the latter definition. The bandwidth determined from the complementary sensitivity function would suggest that the time constant recognizable in the step response is $\approx$ 1 second, while we can observe a time constant $\approx$ 30 s, which is in much better agreement with 1/0.036.
+
+``` {julia}
+#| code-fold: false
+#| fig-cap: "Step response of the closed-loop system that demonstrates the difference between the two definitions of bandwidth"
+#| label: fig-bandwidth-definition-step-response
+
+step_response_T = step(T,60)
+plot(step_response_T, label="", lw=2)
+```
+
+:::
+
+
 ## Interpolation conditions of internal stability
 
-Consider that the plant modelled by the transfer function $G(s)$ has a zero in the right half-plane (RHP), that is,
+Consider that the plant modelled by the transfer function $G(s)$ has a zero in the *right half-plane* (RHP), that is,
 
 $$
 G(z) = 0, \; z\in \text{RHP}.
@@ -42,7 +119,6 @@ S(z)=1,\;\;\;T(z)=0
 $$
 
 ::: {.proof}
-
 Showing this is straightforward and insightful: since no unstable pole-zero cancellation is allowed if internal stability is to be guaranteed, the open-loop transfer function $L=KG$ must inherit the RHP zero of $G$, that is, 
 
 $$
@@ -121,7 +197,7 @@ $$
 $$
 :::
 
-## Limitations of the achievable bandwidth due to zeros in the right half-plane
+## Limitations of the achievable bandwidth due to RHP zeros
 
 There are now two requirements on the weighted sensitivity function that must be reconciled. First, the performance requirements
 $$
@@ -155,30 +231,41 @@ $$
 
 For complex conjugate pair
 $$
-\omega_\mathrm{B}=|z|\sqrt{1-\frac{1}{M^2}}
+\omega_\mathrm{B}=|z|\sqrt{1-\frac{1}{M^2}},
 $$
-$M=2$: $\omega_\mathrm{B}<0.86|z|$.
+and $M=2$, it follows that $\omega_\mathrm{B}<0.86|z|$.
 
-## Limitation of the achievable bandwidth due to poles in the right half-plane
+## Limitation on the achievable bandwidth due to unstable poles
 
-Using
+Using the robust stability condition 
 $$
 |T(j\omega)|<\frac{1}{|W(j\omega)|}\;\;\;\forall\omega\;\;\;\Longleftrightarrow \|WT\|_{\infty}<1
 $$
-and the interpolation condition $\|WT\|_{\infty}\geq |W(p)|$:
+and the interpolation condition 
 $$
-|W(p)|<1
+\|WT\|_{\infty}\geq |W(p)|,
 $$
-With weight 
+it follows that the only way to satisfy both is to guarantee that
 $$
-W(s)= \frac{s}{\omega_{BT}^*}+\frac{1}{M_T} 
+|W(p)|<1.
+$$
+With the weight 
+$$
+W(s)= \frac{s}{\omega_\mathrm{BT}}+\frac{1}{M_\mathrm{T}} 
 $$
 we get a lower bound on the bandwidth
 $$
-\omega_{BT}^* > p\frac{M_T}{M_T-1}
+\omega_\mathrm{BT} > p\frac{M_\mathrm{T}}{M_\mathrm{T}-1},
 $$
-$M_T=2$: {\color{red}$\omega_{BT}^*>2p$}\\ 
-For complex conjugate pair: $\omega_{BT}^*>1.15|p|$.
+from which it follows that for $M_\mathrm{T}=2$, 
+$$\boxed
+{\omega_\mathrm{BT}>2p.}
+$$ 
+
+For complex conjugate pair: 
+$$
+\omega_\mathrm{BT}>1.15|p|.
+$$
 
 ## Limitations due to time delay
 
@@ -191,7 +278,7 @@ $$
 S(s) = 1-e^{-\theta s}.
 $$
 
-In order to make the analysis simpler, we approximate the sensitivity function by the first-order Taylor expansion
+We now approximate the sensitivity function by the first-order Taylor expansion
 $$
 S(s) \approx \theta s,
 $$
@@ -200,13 +287,104 @@ from which we can see that the magnitude frequency response of the sensitivity f
 $$
 \omega_{c}=1/\theta.
 $$ 
-From this approximation, we can see that the bandwidth of the system is limited by the time delay $\theta$ as
+From this approximation, we can see that the crossover frequency, hence the bandwidth of the system is limited by the time delay $\theta$ as
 
 $$\boxed{
 \omega_c < \frac{1}{\theta}.
 }
 $$
 
+## Scaling of the model
+
+Before we move on, we need to introduce the important concept of *scaling*. We consider the input-output model of the plant whose output is additively disturbed by the disturbance. Abusing the notation a bit (by using the same symbols for time-domain signals as well as their Laplace transform), we write the model as 
+$$
+\hat y(s) = \hat G(s)\hat u(s)+\hat G_\mathrm{d}(s) \hat d(t),\qquad \hat e(s) = \hat r(s)-\hat y(s). 
+$$
+
+We now collect the lower and upper bounds on the amplitude of the control input $\hat u(t)$, estimates of the lower and upper bounds on the disturbance $\hat d(t)$, and possibly the reference $\hat r(t)$, and we also determine the lower and upper bounds on the amplitude of the regulation error $\hat e(t)$, which guarantee satisfactory performance of the system. Once we have them, we can modify (scale) the original model so that it assumes that for the new (scaled) model, the amplitudes of all the variables are bounded by 1. The fact that after scaling all the above mentioned variables are bounded by 1, is also reflected in the notation as we remove the hats from the symbols, as in @fig-plant-with-disturbance-model. Note that scaling with respect to the reference will generally call for introduction of a scaling gain $R$ in the model of the plant.
+
+![Model of a plant with a disturbance model and a reference. The block R represents a scaling gain that is generally needed for scaling.](figures/plant_with_disturbance_model.png){#fig-plant-with-disturbance-model width=40%}
+
+The procedure for modifying the original model is straigthforward, and since it is described on some two or three pages in the freely available part of [@skogestadMultivariableFeedbackControl2005, page 5], we skip the details here.
+
+From now on, we assume that the model of the plant and the disturbace is scaled.
+
 ## Limitations due presence of disturbance
 
+Disturbances also impose some limitations on the achievable performance. But we have to simplify a bit (actually quite a lot) here. In particular, we assume that the disturbance is a harmonic (sinusoidal) signal, or close to it. Since we also assume that the model is scaled, we write the disturbance as
+$$
+d(t)=\sin(\omega t).
+$$
+
+It is only for this class of inputs that the transfer function model predicts easily the amplitude of the output. In absence of control, and if $r=0$, the regulation error due to the disturbance $d(t)$ is a harmonic signal too, that is, 
+$$
+e(t)=e_0\sin(\omega t+\phi),
+$$
+where $e_0$ is the gain and $\phi$ is the phase shift. Since we assume that the model is scaled, the amplitude $e_0$ of the regulation error must be bounded by one and hence 
+$$
+|G_\mathrm{d}(j\omega)|<1.
+$$
+
+If this is not satisfied, we need a feedback. Since then the regulation error is given by
+$$
+e(s)=S(s)G_\mathrm{d}(s)d(s),
+$$
+we can express the requirement of an acceptably small regulation error as
+$$
+|S(j\omega)G_\mathrm{d}(j\omega)|<1\; \forall \omega \quad \Longleftrightarrow \quad |S(j\omega)|<\frac{1}{G_\mathrm{d}(j\omega)}\; \forall \omega \quad \Longleftrightarrow \quad \|SG_\mathrm{d}\|_{\infty}<1.
+$$
+
+::: {#exm-disturbance-as-limitation}
+## Disturbance enforcing an upper bound on the sensitivity function
+For the disturbance model
+$$
+G_\mathrm{d}(s)=\frac{10}{100s+1},
+$$
+the upper bound on the magnitude frequency response of the sensitivity function is in @fig-inv-gd. This also enforces that the bandwidth of the system is at least 0.1 rad/s.
+``` {julia}
+#| fig-cap: "Magnitude frequency response of the (reciprocal) of the disturbance model"
+#| label: fig-inv-gd
+using ControlSystems
+Gd = tf(10,[100, 1])
+bodeplot(inv(Gd),plotphase=false, label="1/Gd", lw=2)
+``` 
+:::
+
+We formally state the result as
+$$\boxed{
+\omega_\mathrm{B}>\omega_\mathrm{d},
+}
+$$
+where $\omega_\mathrm{d$ is frequency where $|G_\mathrm{d}(j\omega)|=1$.
+
+We can get additional limitation if the system has an RHP zero. Invoking the interpolation conditions of internal stability, we get the constraint
+$$
+|G_\mathrm{d}(z)|<1.
+$$
+ 
 ## Limitations due to saturation of actuators
+
+``` {julia}
+using ControlSystems
+using Plots
+
+G = 40*tf(1,[5, 1])*tf(1,[2.5, 1])
+Gd = 3*tf([50, 1],[10, 1])*tf(1,[1, 1])
+
+bodeplot(G,plotphase=false, label="G", lw=2)
+bodeplot!(Gd, plotphase=false, label="Gd", lw=2)
+```
+
+``` {julia}
+using ControlSystems
+using Plots
+
+G = 5*tf(1,[10, 1])*tf(1,[1, -1])
+
+k = 0.8                             # should be less than 1
+Gd = k*tf(1,[1, 1])*tf(1,[0.2, 1])
+
+bodeplot(G,plotphase=false, label="G", lw=2)    
+bodeplot!(Gd, plotphase=false, label="Gd", lw=2)
+
+```
