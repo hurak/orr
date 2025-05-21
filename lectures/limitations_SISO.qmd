@@ -303,7 +303,7 @@ $$
 
 We now collect the lower and upper bounds on the amplitude of the control input $\hat u(t)$, estimates of the lower and upper bounds on the disturbance $\hat d(t)$, and possibly the reference $\hat r(t)$, and we also determine the lower and upper bounds on the amplitude of the regulation error $\hat e(t)$, which guarantee satisfactory performance of the system. Once we have them, we can modify (scale) the original model so that it assumes that for the new (scaled) model, the amplitudes of all the variables are bounded by 1. The fact that after scaling all the above mentioned variables are bounded by 1, is also reflected in the notation as we remove the hats from the symbols, as in @fig-plant-with-disturbance-model. Note that scaling with respect to the reference will generally call for introduction of a scaling gain $R$ in the model of the plant.
 
-![Model of a plant with a disturbance model and a reference. The block R represents a scaling gain that is generally needed for scaling.](figures/plant_with_disturbance_model.png){#fig-plant-with-disturbance-model width=40%}
+![Model of a plant with a disturbance model and a reference. The block R represents a scaling gain that is generally needed for scaling.](figures/plant_with_disturbance_model.png){#fig-plant-with-disturbance-model width=50%}
 
 The procedure for modifying the original model is straigthforward, and since it is described on some two or three pages in the freely available part of [@skogestadMultivariableFeedbackControl2005, page 5], we skip the details here.
 
@@ -350,12 +350,12 @@ bodeplot(inv(Gd),plotphase=false, label="1/Gd", lw=2)
 ``` 
 :::
 
-We formally state the result as
+In words, the system must be able to attenuate the disturbances at the frequency range where the disturbance is strong enough (magnitude higher than one for a normalized model). We formally state the result as
 $$\boxed{
 \omega_\mathrm{B}>\omega_\mathrm{d},
 }
 $$
-where $\omega_\mathrm{d$ is frequency where $|G_\mathrm{d}(j\omega)|=1$.
+where $\omega_\mathrm{d}$ is frequency where $|G_\mathrm{d}(j\omega)|=1$. 
 
 We can get additional limitation if the system has an RHP zero. Invoking the interpolation conditions of internal stability, we get the constraint
 $$
@@ -364,27 +364,65 @@ $$
  
 ## Limitations due to saturation of actuators
 
+We assume the standard input-output model including the disturbance model 
+$$
+y(s) = G(s)u(s)+G_\mathrm{d}(s)d(t),\qquad e(s) = r(s)-y(s),
+$$
+and we assume that the model has already been scaled, that is, the control input is constrained by
+$$
+|u(t)|<1.
+$$
+
+We now refer to the ideal control
+$$
+u(s)=G^{-1}(s)r(s)-G^{-1}(s)G_\mathrm{d}(s)d(s).
+$$
+
+If we now assume that the disturbance is a harmonic signal (or close to it), the ideal control input is then also harmonic. And relying on the fact that the model has already been scaled so that a unit-amplitude disturbance can be assumed, the condition to avoid saturation is
+$$
+|G^{-1}(j\omega)G_d(j\omega)|<1\;\;\;\forall \omega, 
+$$
+which we can rewrite as
+$$\boxed{
+|G(j\omega)|>|G_d(j\omega)|\quad \forall \omega.} 
+$$
+
+In words, the gain of the plant must be larger than the gain of the disturbance model. We cannot overemphasize that scaling is crucial here.
+
+::: {#exm-saturation-stable}
+## Avoiding saturation of control inputs can conflict with the necessity to attenuate disturbances
+In @fig-saturation-stable we can see the magnitude frequency responses of a stable plant and a disturbance model. The condition that control is not saturated is satisfied up to the frequency below 1 rad/s ($\approx$ 0.38 rad). But the disturbance model has the magnitude larger than 1 up to the frequency slightly above 10 rad/s ($\approx$ 15 rad/s). This means that within the frequency range [0.38, 15] rad/s, saturation may occur. The danger of saturation is present at higher frequencies, but taking into consideration that the magnitude of the disturbance model is smaller than 1, there is no need to design the controller such that the bandwidth extends above 15 rad/s.
 ``` {julia}
+#| code-fold: false
+#| fig-cap: "Magnitude frequency response of the plant and disturbance model"
+#| label: fig-saturation-stable
 using ControlSystems
 using Plots
 
 G = 40*tf(1,[5, 1])*tf(1,[2.5, 1])
 Gd = 3*tf([50, 1],[10, 1])*tf(1,[1, 1])
 
-bodeplot(G,plotphase=false, label="G", lw=2)
-bodeplot!(Gd, plotphase=false, label="Gd", lw=2)
+ω = logrange(1e-2, 1e2, 100)
+bodeplot(G, ω, plotphase=false, label="G", lw=2, xticks=10.0.^[-2:2...])
+bodeplot!(Gd, ω, plotphase=false, label="Gd", lw=2)
 ```
+:::
 
+::: {#exm-saturation-unstable}
+## Avoiding saturation of control inputs can conflict with the necessity to stabilize the system
+In @fig-saturation-unstable we can see the magnitude frequency responses of an unstable plant and a disturbance model. If it weren't for the unstable pole, we could even decide not to design the controller at all, as the magnitude of the disturbance model is smaller than 1, which for scaled model reads that no control is needed. But we do have to design a feedback controller in order to stabilize the system in the first place. The unstable pole at $s=1$ then imposes a constraint the bandwidth must be above 2 rad/s. Hélas, the disturbance model is stronger at this frequency range, which means that the control input may saturate. 
 ``` {julia}
+#| code-fold: false
+#| fig-cap: "Magnitude frequency response of the plant and disturbance model"
+#| label: fig-saturation-unstable
 using ControlSystems
 using Plots
 
 G = 5*tf(1,[10, 1])*tf(1,[1, -1])
+Gd = 0.8*tf(1,[1, 1])*tf(1,[0.2, 1])
 
-k = 0.8                             # should be less than 1
-Gd = k*tf(1,[1, 1])*tf(1,[0.2, 1])
-
-bodeplot(G,plotphase=false, label="G", lw=2)    
-bodeplot!(Gd, plotphase=false, label="Gd", lw=2)
-
+ω = logrange(1e-2, 1e1, 100)
+bodeplot(G, ω, plotphase=false, label="G", lw=2, xticks=10.0.^[-2:1...])    
+bodeplot!(Gd, ω, plotphase=false, label="Gd", lw=2)
 ```
+:::
