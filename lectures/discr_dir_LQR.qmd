@@ -114,6 +114,8 @@ using BlockArrays
 using LinearAlgebra
 using LinearSolve
 using QDLDL
+using Random
+Random.seed!(1234)
 using SparseArrays
 
 function direct_dlqr_simultaneous(A,B,x₀,Q,R,S,N)
@@ -194,6 +196,8 @@ While developing the model all the way down to the individual matrices and vecto
 using LinearAlgebra
 using JuMP
 using OSQP
+using Random
+Random.seed!(1234)
 
 n = 2               # Number of state variables.
 m = 1               # Number of (control) input variables. 
@@ -325,6 +329,9 @@ $$
 ::: {#exm-direct-sequential}
 ## Reformulating the unconstrained LQR problem as a system of linear equations – sequential approach
 ``` {julia}
+using Random
+Random.seed!(1234)
+
 function direct_dlqr_sequential(A,B,x₀,Q,R,S,N)
     n = size(A)[1]
     m = size(B)[2]
@@ -429,6 +436,8 @@ using BlockArrays
 using SparseArrays
 using JuMP
 using OSQP
+using Random
+Random.seed!(1234)
 
 function direct_dlqr_sequential(A,B,x₀,Q,R,S,N,(umin,umax))
     n = size(A)[1]
