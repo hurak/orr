@@ -263,8 +263,8 @@ $$
 \begin{aligned}
  \bm x_1 &= \mathbf A\mathbf x_0 + \mathbf B\bm u_0\\
  \bm x_2 &= \mathbf A\mathbf x_1 + \mathbf B\bm u_1\\
-     &= \mathbf A(\mathbf A\mathbf x_0 + \mathbf B\bm u_0)+ \mathbf B\bm u_0\\
-     &= \mathbf A^2\mathbf x_0 + \mathbf A\mathbf B\bm u_0 + \mathbf B\bm u_0\\
+     &= \mathbf A(\mathbf A\mathbf x_0 + \mathbf B\bm u_0)+ \mathbf B\bm u_1\\
+     &= \mathbf A^2\mathbf x_0 + \mathbf A\mathbf B\bm u_0 + \mathbf B\bm u_1\\
      &\vdots\\
  \bm x_k &= \mathbf A^k\mathbf x_0 + \mathbf A^{k-1}\mathbf B\bm u_0 +\mathbf A^{k-2}\mathbf B\bm u_1 +\ldots \mathbf B\bm u_{k-1}.
 \end{aligned}
@@ -423,7 +423,7 @@ $$
                  \end{bmatrix}
                  \leq
                  \begin{bmatrix}
-                  \mathbf u^\mathbf{max} \\ \mathbf u^\mathrm{max} \\ \vdots \\ \mathbf u^\mathrm{max}\\ -\mathbf u^\mathrm{min} \\ -\mathbf u^\mathrm{min} \\ \vdots \\ -\mathbf u^\mathrm{min}
+                  \mathbf u^\mathrm{max} \\ \mathbf u^\mathrm{max} \\ \vdots \\ \mathbf u^\mathrm{max}\\ -\mathbf u^\mathrm{min} \\ -\mathbf u^\mathrm{min} \\ \vdots \\ -\mathbf u^\mathrm{min}
                  \end{bmatrix}.
  \end{aligned}
 $$ 
