@@ -19,7 +19,7 @@ Given a function $f(\bm x)$, we can maximize it by minimizing $-f(\bm x)$.
 
 ## Equality into inequality constraints
 
-As a matter of fact, we can declare an NLP problem only inequality constraints as the most general one. This is because we can always transform an equality constraint into two inequality constraints. Given an equality constraint $h(\bm x) = 0$, we can write it as $h(\bm x) \leq 0$ and $-h(\bm x) \leq 0$, that is, 
+As a matter of fact, we can declare an NLP problem with only inequality constraints as the most general one. This is because we can always transform an equality constraint into two inequality constraints. Given an equality constraint $h(\bm x) = 0$, we can write it as $h(\bm x) \leq 0$ and $-h(\bm x) \leq 0$, that is, 
 
 $$
 \underbrace{\begin{bmatrix}
@@ -32,13 +32,18 @@ On the other hand, it is typically useful to keep the equality constraints expli
 
 ## Inequality into "sort-of" equality constraints
 
-Consider the inequality constraint $g(\bm x) \leq 0$. By introducing a *slack variable* $s$ and imposing the nonnegativity condition, we can turn the inequality into the equality $g(\bm x) + s = 0$. Well, we have not completely discarded an inequality because now we have $s \geq 0$. But this new problem may be better suited for some theoretical analysis or numerical methods. 
+Consider the inequality constraint $g(\bm x) \leq 0$. By introducing a *slack variable* $s$ and imposing the nonnegativity condition, we can turn the inequality into the equality 
 
-It is also possible to express the nonnegativity constraint implicitly by considering an unrestricted variable $s$ and using it within the inequality through its square $s^2$:
+$$g(\bm x) + s = 0.$$
+
+Well, we have not completely discarded an inequality because now we have $s \geq 0$. But this new problem may be better suited for some theoretical analysis or numerical methods. 
+
+It is also possible to express the nonnegativity constraint implicitly by considering an unrestricted variable $s$ and using it within the inequality through its square $s^2$
 
 $$
-g(\bm x) + s^2 = 0.
+g(\bm x) + s^2 = 0,
 $$ 
+but this reformulation suffers from a few drawbacks such as nonconvexity, and failure to satisfy *constraint qualifications* (we will explain later what that means) and is not used often. 
 
 ## Linear cost function always possible
 

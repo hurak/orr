@@ -16,3 +16,59 @@ crossref:
   eq-prefix: Eq.
 engine: julia
 ---
+
+\begin{frame}
+\frametitle{LQG as $\mathcal{H}_2$-optimal control}
+\pause
+\begin{center}
+ \includegraphics[scale=0.5]{./figures/LQG_as_H2.pdf}
+ % LQG_as_H2.pdf: 595x842 pixel, 72dpi, 20.99x29.70 cm, bb=0 0 595 842
+\end{center}
+\pause
+Generalized plant
+\pause
+\begin{itemize}
+ \item two types of inputs: \pause
+  \begin{itemize}
+   \item exogenous inputs: random disturbance $w(t)$ and noise $v(t)$ \pause
+   \item control inputs: control command $u(t)$ \pause
+  \end{itemize}
+ \item two types of outputs: \pause
+  \begin{itemize}
+   \item regulated outputs: $z_1(t)$ and $z_2(t)$ to be beaten to zero\pause
+   \item measured outputs: $y(t)$
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{$\mathcal{H}_2$-optimal control in full generality}
+\pause
+\begin{center}
+ \includegraphics[scale=0.6]{./figures/H2.pdf}
+ % H2.pdf: 595x842 pixel, 72dpi, 20.99x29.70 cm, bb=0 0 595 842
+\end{center}
+\pause 
+
+$$\boxed{
+\minimize_{K(s)\text{ stabilizing}}\|N(P,K)\|_{2}
+}
+$$
+\end{frame}
+
+% \begin{frame}
+% \frametitle{Ex.: $\mathcal{H}_2$-optimal control}
+% 
+% \end{frame}
+
+\begin{frame}
+\frametitle{To conclude the LQ story}
+\pause
+\begin{enumerate}
+\item design usable controllers by minimizing the integral of some functions of the states and the inputs
+\item minimization of an LQ integral cost can be reformulated as H2 system norm minization
+\end{enumerate} 
+\pause
+
+How about using other system norms?
+\end{frame}

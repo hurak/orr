@@ -49,7 +49,7 @@ Indeed, for named sets such as $\mathbb R$ or $\mathbb Z$, it is common to place
 
 ::: {.callout-tip}
 ## Integer optimization not included in this course
-In this course we are only going to consider optimization problems with real-valued variables. This decision does not suggest that optimization with integer variables is less relevant for optimal control, quite the opposite! It is just that the theory and algorithms for integer or mixed integer optimization are based on different principles than those for real variables. And they can hardly fit into a single course. Good news for the interested students is that a graduate course named [Combinatorial algorithms (B3B35KOA)](https://rtime.ciirc.cvut.cz/~hanzalek/KO/) covering integer optimization in detail is offered by our Cybernetics and Robotics study program at CTU FEE. Additionally, applications of integer optimization to optimal control are partly discussed in the course on [Hybrid systems (B3B39HYS)](https://moodle.fel.cvut.cz/course/view.php?id=7973).
+In this course we are only going to consider optimization problems with real-valued variables. This decision does not suggest that optimization with integer variables is less relevant for optimal control, quite the opposite! It is just that the theory and algorithms for integer or mixed integer optimization are based on different principles than those for real variables. And they can hardly fit into a single course. Good news for the interested students is that a graduate course named [Combinatorial algorithms (B3B35KOA)](https://rtime.ciirc.cvut.cz/~hanzalek/KO/) covering integer optimization in detail is offered by our Cybernetics and Robotics study program at CTU FEE. Additionally, applications of integer optimization to optimal control are partly discussed in the course on [Hybrid systems (B(E)3B35HYS)](https://hurak.github.io/hys/).
 :::
 
 The form of an optimization problem that we are going to use in our course most often than not is
@@ -82,7 +82,7 @@ Smooth vs nonsmooth
 : Efficient algorithms for optimization over real variables benefit heavily from knowledge of the derivatives of the objective and constraint functions. If the functions are differentiable (aka smooth), we say that the whole optimization problem is smooth. Nonsmooth problems are typically more difficult to analyze and solve (but again, see the discussion of the role of convexity below).
 
 Convex vs nonconvex
-: If the objective function and the feasible set are convex (the latter holds when the functions defining the inequality constraints are convex and the functions defining the equality constrains are affine), the whole optimization problem is convex. Convex optimization problems are very well understood and there are efficient algorithms for solving them. In contrast, nonconvex problems are typically more difficult to solve. It is not becomming a common knowledge that convexity is a lot more important property than linearity and smoothness when it comes to solving optimization problems efficiently. 
+: If the objective function and the feasible set are convex (the latter holds when the functions defining the inequality constraints are convex and the functions defining the equality constrains are affine), the whole optimization problem is convex. Convex optimization problems are very well understood and there are efficient algorithms for solving them. In contrast, nonconvex problems are typically more difficult to solve. It is now becoming a common knowledge that convexity is a lot more important property than linearity and smoothness when it comes to solving optimization problems efficiently. 
 
 ## Classes of optimization problems
 
@@ -120,7 +120,7 @@ $$
 \end{aligned}
 $$
 
-Even though the QP is nonlinear, it is smooth and if the matrix $\mathbf Q$ is positive semidefinite, it is convex. Its analysis and numerical solution are not much more difficult than those of an LP problem.
+Even though the QP is nonlinear, it is smooth, and if the matrix $\mathbf Q$ is positive semidefinite, it is convex. Its analysis and numerical solution are not much more difficult than those of an LP problem.
 
 #### Quadratically constrained quadratic program (QCQP)
 
@@ -166,7 +166,7 @@ where $\mathcal{K}$ is a cone in $\mathbb R^n$.
 A fundamental idea unrolled here: the inequality $\bm x\geq 0$ can be interpreted as $\bm x$ belonging to a componentwise nonegative cone, that is $\bm x \in \mathbb R_+^n$. What if some other cone $\mathcal K$ is considered? What would be the interpretation of the inequality then?
 :::
 
-Sometimes in order to emphasize that the inequality is induced by the cone $\mathcal K$, we write it as $\geq_\mathcal{K}$. Another convention – the one we actually adopt here – is to use another symbol for the inequality $\succeq$ to distinguish it from the componentwise meaning, assuming that the cone is understood from the context. We then interpret conic inequalities such as
+Sometimes in order to emphasize that the inequality is induced by the cone $\mathcal K$, we write it as $\geq_\mathcal{K}$. Another convention – the one we actually adopt here – is to use another symbol $\succeq$ for the inequality to distinguish it from the componentwise meaning, assuming that the cone is understood from the context. We then interpret conic inequalities such as
 $$
 \mathbf A_\mathrm{ineq}\bm x \succeq \mathbf b_\mathrm{ineq}
 $$

@@ -13,3 +13,81 @@ crossref:
   eq-prefix: Eq.
 engine: julia
 ---
+
+\begin{frame}
+\frametitle{LTR control - Heuristic way to improve robustness of LQG}
+\pause
+Make it similar to LQR $\Longrightarrow$ make the Kalman filter rely less on $u$
+\pause
+\begin{center}
+ \includegraphics[scale=0.6]{./figures/ltr.pdf}
+ % ltr.pdf: 595x842 pixel, 72dpi, 20.99x29.70 cm, bb=0 0 595 842
+\end{center}
+\pause
+But how?
+\end{frame}
+
+\begin{frame}
+\frametitle{}
+Introduce fictitious noise $w_f(t)$ during the design (not in reality) that enters the system in the same way as the control signal
+\pause
+\begin{align*}
+ \dot{\mathbf{x}}(t) &= \mathbf A\mathbf x(t) + \mathbf B_u\mathbf u(t) + \mathbf B_w\mathbf w(t) + \mathbf B_u{\color{red}\mathbf w_f(t)}\\
+           &= \mathbf A\mathbf x(t) + \mathbf B_u\mathbf u(t) + \begin{bmatrix}\mathbf B_w & \mathbf B_u\end{bmatrix}\begin{bmatrix}\mathbf w(t)\\{\color{red}\mathbf w_f(t)}\end{bmatrix}
+\end{align*}
+\pause
+Spectral density of the white noise disturbance is then
+$$
+\mathbf S = \begin{bmatrix}\mathbf S_w & 0\\ 0 & {\color{blue}S_{w_f}I}\end{bmatrix}
+$$
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Ex.: LQG/LTR for a robot arm}
+\pause
+Single link robotic arm is to be held vertical
+$$
+J\ddot{\theta}(t) = mg\sin\theta(t) + u(t)
+$$
+\pause
+Linearizing and submitting some numbers yields
+$$
+\begin{bmatrix}
+ \dot\theta \\ \ddot\theta
+\end{bmatrix}
+=
+\begin{bmatrix}
+ 0 & 1\\ 0.5 & 0
+\end{bmatrix}
+\begin{bmatrix}
+ \theta \\ \dot\theta
+\end{bmatrix}
++
+\begin{bmatrix}
+ 0 \\ 0.1
+\end{bmatrix}
+u
++
+\begin{bmatrix}
+ 0 \\ 0.1
+\end{bmatrix}
+w
+$$
+where $w$ is a random disturbance by a torquer circuit with a spectral density $S_w = 1$. \pause The angular position of the arm is measured
+$$
+y(t) = 
+\begin{bmatrix}
+ 1 & 0
+\end{bmatrix}
+\begin{bmatrix}
+ \theta \\ \dot \theta
+\end{bmatrix}
++v
+$$
+where the measurement noise spectral density is $S_v=1$. \pause Steady state LQG controller should minimizes
+$$
+J = \mathbf E\left\{\theta^2 + 16u^2\right\}
+$$
+\end{frame}

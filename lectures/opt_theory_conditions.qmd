@@ -1,5 +1,5 @@
 ---
-title: Theory for unconstrained optimization
+title: Conditions of optimality for unconstrained and constrained optimization
 bibliography: 
     - ref_optimization.bib
 format:
@@ -12,6 +12,8 @@ crossref:
   eq-prefix: Eq.
 engine: julia
 ---
+
+# Unconstrained optimization
 
 We are going to analyze the optimization problem with no constraints
 $$
@@ -400,3 +402,187 @@ contour(x1_data,x2_data,f_data)
 display(plot!([0.0], [0.0], marker=:circle, label="Stationary point"))
 ```
 :::
+
+# Constrained optimization
+
+## Equality constraints
+
+### Lagrange multipliers and Lagrangian function
+
+We consider the following optimization problem with equality constraints
+$$
+\begin{aligned}
+ \operatorname*{minimize}_{\bm x\in\mathbb{R}^n} &\quad f(\bm x)\\
+ \text{subject to} &\quad \mathbf h(\bm x) = \mathbf 0,
+\end{aligned}
+$$
+where $\mathbf h(\bm x) \in \mathbb R^m$ defines a set of $m$ equations 
+$$
+\begin{aligned}
+h_1(\bm x) &= 0\\ 
+h_2(\bm x) &= 0\\
+\vdots\\
+h_m(\bm x) &= 0.
+\end{aligned}
+$$
+
+Augmenting the original cost function $f$ with the constraint functions $h_i$ scaled by Lagrange variables $\lambda_i$ gives the Lagrangian function
+$$
+ \mathcal{L}(\bm x,\boldsymbol\lambda) \coloneqq f(\bm x) + \sum_{i=1}^m \lambda_i h_i(\bm x) = f(\bm x) + \boldsymbol \lambda^\top \mathbf h(\bm x).
+$$
+
+### First-order necessary condition of optimality
+
+{{< video https://www.youtube.com/embed/QjLcsCnMoRo?si=FvEz39x6MsX3_xpI >}}
+
+The first-order necessary condition of optimality is
+$$
+ \nabla \mathcal{L}(\bm x,\boldsymbol\lambda) = \mathbf 0,
+$$
+which amounts to two (generally vector) equations
+$$
+\boxed{
+\begin{aligned}
+ \nabla f(\bm x) + \sum_{i=1}^m \lambda_i \nabla h_i(\bm x) &= \mathbf 0\\
+ \mathbf{h}(\bm x) &= \mathbf 0.
+\end{aligned}}
+$$
+
+Defining a matrix $\nabla \mathbf h(\bm x) \in \mathbb R^{n\times m}$ as horizontally stacked gradients of the constraint functions
+$$
+ \nabla \mathbf h(\bm x) \coloneqq \begin{bmatrix}
+                                 \nabla h_1(\bm x) && \nabla h_2(\bm x) && \ldots && \nabla h_m(\bm x)
+                            \end{bmatrix},
+$$
+in fact, a transpose of the Jacobian matrix, the necessary condition can be rewritten in a vector form as
+$$\boxed
+{\begin{aligned}
+\nabla f(\bm x) + \nabla \mathbf h(\bm x)\boldsymbol \lambda &= \mathbf 0\\
+ \mathbf{h}(\bm x) &= \mathbf 0.
+\end{aligned}}
+$$
+
+Beware of the nonregularity issue! The \textit{Jacobian} $(\nabla \mathbf h(\bm x))^\mathrm T$ is regular at a given $\bm x$ (the $\bm x$ is a regular point) if it has a full column rank. Rank-deficiency reveals a defect in formulation. 
+
+:::{#exm-equality_constrained_qp} 
+## Equality-constrained quadratic program
+
+$$
+\begin{aligned}
+ \operatorname*{minimize}_{\bm x \in \mathbb{R}^n} &\quad \frac{1}{2}\bm{x}^\top\mathbf{Q}\bm{x} + \mathbf{r}^\top\bm{x}\\
+ \text{subject to} &\quad \mathbf A \bm x + \mathbf b = \mathbf 0. 
+\end{aligned}
+$$
+
+The first-order necessary condition of optimality is
+
+$$
+\begin{bmatrix}
+  \mathbf Q & \mathbf A^\top\\\mathbf A & \mathbf 0
+ \end{bmatrix}
+ \begin{bmatrix}
+  \bm x \\ \boldsymbol \lambda
+ \end{bmatrix}
+=
+ \begin{bmatrix}
+  -\mathbf r\\\mathbf b
+ \end{bmatrix}.
+$$
+:::
+
+### Second-order sufficient conditions
+
+{{< video https://www.youtube.com/embed/c0MoCHBYlCU?si=2jJlfRF8mfWHDKcS >}}
+
+Using the unconstrained Hessian $\nabla^2_{\mathbf{x}\bm{x}} \mathcal{L}(\bm x,\boldsymbol \lambda)$ is too conservative. Instead, use projected Hessian
+
+$$
+ \mathbf{Z}^\mathrm{T}\;\nabla^2_{\bm{x}\bm{x}} \mathcal{L}(\bm x,\boldsymbol \lambda)\;\mathbf Z > 0,
+$$
+where $\mathbf Z$ is an (orthonormal) basis of the nullspace of the Jacobian $(\nabla \mathbf h(\bm x))^\top$.
+
+
+## Inequality constraints
+
+{{< video https://www.youtube.com/embed/BwqaNf__6Tc?si=oqhOZK4P7BHlpd6V >}}
+$$
+\begin{aligned}
+\operatorname*{minimize}_{\bm x\in\mathbb{R}^n} &\quad f(\bm x)\\
+\text{subject to} &\quad \mathbf g(\bm x) \leq \mathbf 0,
+\end{aligned}
+$$
+where $\mathbf g(\bm x) \in \mathbb R^p$ defines a set of $p$ inequalities.
+
+### First-order necessary condition of optimality
+
+Karush-Kuhn-Tucker (KKT) conditions of optimality are then composed of these four (sets of) conditions
+$$
+\begin{aligned}
+ \nabla f(\bm x) + \sum_{i=1}^p \mu_i \nabla g_i(\bm x) &= \mathbf 0,\\
+ \mathbf{g}(\bm{x}) &\leq \mathbf 0,\\
+ \mu_i g_i(\bm x) &= 0,\quad i = 1,2,\ldots, m\\
+ \mu_i &\geq 0,\quad   i = 1,2,\ldots, m.
+\end{aligned}
+$$
+
+## Equality and inequality constraints
+$$ 
+\begin{aligned}
+\operatorname*{minimize}_{\bm x\in\mathbb{R}^n} &\quad f(\bm x)\\
+ \text{subject to} &\quad \mathbf h(\bm x) = \mathbf 0,\\
+                    &\quad \mathbf g(\bm x) \leq \mathbf 0.
+\end{aligned}
+$$
+
+### First-order necessary condition of optimality
+
+The KKT conditions
+
+$$
+\begin{aligned}
+ \nabla f(\bm x) + \sum_{i=1}^m \lambda_i \nabla h_i(\bm x) + \sum_{i=1}^p \mu_i \nabla g_i(\bm x) &= \mathbf 0\\
+ \mathbf{h}(\mathbf{x}) &= \mathbf 0\\
+ \mathbf{g}(\mathbf{x}) &\leq \mathbf 0\\
+ \mu_i g_i(\bm x) &= 0,\quad i = 1,\ldots, m\\
+ \mu_i &\geq 0,\quad   i = 1,\ldots, m.
+\end{aligned}
+$$
+
+## Duality
+
+Duality theory offers another view of the original optimization problem by bringing in another but related one. 
+
+Corresponding to the general optimization problem 
+$$
+  \begin{aligned}
+  \operatorname*{minimize}\;&f(\bm x)\\
+  \text{subject to}\; & \mathbf g(\bm x)\leq \mathbf 0\\
+  & \mathbf h(\bm x) = \mathbf 0,
+  \end{aligned}
+$$ 
+
+we form the *Lagrangian* function
+$$\mathcal L(\bm x,\bm \lambda,\bm \mu) = f(\bm x) + \bm \lambda^\top \mathbf h(\bm x) + \bm \mu^\top \mathbf g(\bm x)$$ 
+
+For any (fixed) values of $(\bm \lambda,\bm \mu)$ such that $\bm \mu\geq 0$, we define the *Lagrange dual function* through the following unconstrained optimization problem 
+$$
+q(\bm\lambda,\bm\mu) = \inf_{\bm x}\mathcal L(\bm x,\bm \lambda,\bm \mu).
+$$ 
+
+Obviously, it is alway possible to pick a feasible solution $\bm x$, in which case the value of the Lagrangian and the original function coincide, and so the result of this minimization is no worse (larger) than the minimum for the original optimization problem. It can thus serve as a lower bound
+$$q(\bm \lambda,\bm \mu) \leq f(\bm x^\star).$$ 
+
+This result is called *weak duality*. A natural idea is to find the values of $\bm \lambda$ and $\bm \mu$ such that this lower bound is tightest, that is,
+$$
+\begin{aligned}
+  \operatorname*{maximize}_{\bm\lambda, \bm\mu}\; & q(\bm\lambda,\bm\mu)\\
+  \text{subject to}\;& \bm\mu \geq \mathbf 0.
+\end{aligned}
+$$ 
+
+Under some circumstances the result can be tight, which leads to *strong duality*, which means that the minimum of the original (primal) problem and the maximum of the dual problem coincide. 
+$$
+q(\bm \lambda^\star,\bm \mu^\star) = f(\bm x^\star).
+$$ 
+
+This related dual optimization problem can have some advantages for development of both theory and algorithms. 
