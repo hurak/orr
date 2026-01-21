@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Learning goals – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>References – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -30,18 +50,19 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./opt_theory_problems.html" rel="next">
-<link href="./intro_projects.html" rel="prev">
+<link href="./opt_theory_hw.html" rel="next">
+<link href="./opt_algo_solvers.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-19a3c66a9aca0786b50e3569c3292bf3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-c30451789a0a2bcd5e941535c675cd30.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -83,7 +104,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_goals.html">1. Optimization – theory</a></li><li class="breadcrumb-item"><a href="./opt_theory_goals.html">Learning goals</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_and_algo_goals.html">1. Optimization – theory and algorithms</a></li><li class="breadcrumb-item"><a href="./opt_theory_and_algo_references.html">References</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -164,7 +185,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">1. Optimization – theory</span></a>
+ <span class="menu-text">1. Optimization – theory and algorithms</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -172,7 +193,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_theory_goals.html" class="sidebar-item-text sidebar-link active">
+  <a href="./opt_theory_and_algo_goals.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Learning goals</span></a>
   </div>
 </li>
@@ -190,14 +211,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_theory_unconstrained.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Unconstrained optimization</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./opt_theory_constrained.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Constrained optimization</span></a>
+  <a href="./opt_theory_conditions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Conditions of optimality</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -208,7 +223,25 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_theory_references.html" class="sidebar-item-text sidebar-link">
+  <a href="./opt_algo_derivatives.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Computing the derivatives</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./opt_algo_numerical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Numerical algorithms</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./opt_algo_solvers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Numerical solvers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./opt_theory_and_algo_references.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -223,65 +256,12 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">2. Optimization – algorithms</span></a>
+ <span class="menu-text">2. Discrete-time optimal control – direct approach</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./opt_algo_goals.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Learning goals</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./opt_algo_derivatives.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Computing the derivatives</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./opt_algo_unconstrained.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Unconstrained optimization</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./opt_algo_constrained.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Constrained optimization</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./opt_algo_solvers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Numerical solvers</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./opt_algo_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./opt_algo_hw.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Homework</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">3. Discrete-time optimal control – direct approach</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./discr_dir_goals.html" class="sidebar-item-text sidebar-link">
@@ -328,13 +308,13 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">4. Discrete-time optimal control – indirect approach</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">3. Discrete-time optimal control – indirect approach</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./discr_indir_goals.html" class="sidebar-item-text sidebar-link">
@@ -393,13 +373,13 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">5. Discrete-time optimal control – dynamic programming (DP)</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">4. Discrete-time optimal control – dynamic programming (DP)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dynamic_programming_goals.html" class="sidebar-item-text sidebar-link">
@@ -426,7 +406,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dynamic_programming_LQT.qmd" class="sidebar-item-text sidebar-link">
+  <a href="./dynamic_programming_LQT.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">LQ tracking via DP</span></a>
   </div>
 </li>
@@ -452,13 +432,13 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
- <span class="menu-text">6. More on MPC</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">5. More on MPC</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./discr_dir_mpc_stability.html" class="sidebar-item-text sidebar-link">
@@ -499,13 +479,13 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
- <span class="menu-text">7. Continuous-time optimal control - indirect approach via calculus of variations</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">6. Continuous-time optimal control - indirect approach via calculus of variations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_goals.html" class="sidebar-item-text sidebar-link">
@@ -576,13 +556,13 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
- <span class="menu-text">8. Continuous-time optimal control - indirect approach via Pontryagin’s maximum principle</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">7. Continuous-time optimal control - indirect approach via Pontryagin’s maximum principle</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_goals_2.html" class="sidebar-item-text sidebar-link">
@@ -623,13 +603,13 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text">9. Numerical methods for continuous-time optimal control - both indirect and direct approaches</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">8. Numerical methods for continuous-time optimal control - both indirect and direct approaches</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_numerical_goals.html" class="sidebar-item-text sidebar-link">
@@ -670,13 +650,13 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
- <span class="menu-text">9.X. Continuous-time optimal control – dynamic programming</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">8.X. Continuous-time optimal control – dynamic programming</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_dp_HJB.html" class="sidebar-item-text sidebar-link">
@@ -711,13 +691,13 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
- <span class="menu-text">10. Some extensions: LQG, LTR, H2</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">9. Some extensions: LQG, LTR, H2</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ext_goals.html" class="sidebar-item-text sidebar-link">
@@ -776,13 +756,13 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
- <span class="menu-text">11. Uncertainty modelling and robustness analysis</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text">10. Uncertainty modelling and robustness analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./roban_goals.html" class="sidebar-item-text sidebar-link">
@@ -829,13 +809,13 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true">
- <span class="menu-text">12. Robust control</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
+ <span class="menu-text">11. Robust control</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rocond_goals.html" class="sidebar-item-text sidebar-link">
@@ -852,6 +832,41 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="./rocond_H_infinity_control.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H-infinity optimal control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rocond_software.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Software</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rocond_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rocond_hw.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true">
+ <span class="menu-text">12. Robust control II.</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rocond_goals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning goals</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -979,22 +994,15 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#knowledge-remember-and-understand" id="toc-knowledge-remember-and-understand" class="nav-link active" data-scroll-target="#knowledge-remember-and-understand">Knowledge (remember and understand)</a></li>
-  <li><a href="#skills-use-the-knowledge-to-solve-a-problem" id="toc-skills-use-the-knowledge-to-solve-a-problem" class="nav-link" data-scroll-target="#skills-use-the-knowledge-to-solve-a-problem">Skills (use the knowledge to solve a problem)</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_goals.html">1. Optimization – theory</a></li><li class="breadcrumb-item"><a href="./opt_theory_goals.html">Learning goals</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./opt_theory_and_algo_goals.html">1. Optimization – theory and algorithms</a></li><li class="breadcrumb-item"><a href="./opt_theory_and_algo_references.html">References</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Learning goals</h1>
+<h1 class="title">References</h1>
 </div>
 
 
@@ -1011,32 +1019,48 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="knowledge-remember-and-understand" class="level2">
-<h2 class="anchored" data-anchor-id="knowledge-remember-and-understand">Knowledge (remember and understand)</h2>
-<ul>
-<li>Give a rigorous definition of a local minimum (and maximum) and explain how it differs from a global minimum (maximum).</li>
-<li>Define a convex function, convex set and convex optimization problem and explain the impact the convexity has on the optimization.</li>
-<li>State the Weierstrass (extreme value) theorem on the existence of a minimum (maximum).</li>
-<li>Explain the concepts of big O() and little o() within the framework of truncated Taylor series.</li>
-<li>Give first-order necessary conditions of optimality for a scalar function of a scalar argument, and define critical (or stationary) point. Extend these to the vector argument case. Formulate them both using a Fréchet and Gateaux derivatives. Specialize the result to quadratic functions.</li>
-<li>Give second-order sufficient conditions of optimality for a scalar function of a scalar argument. How can we distinguish between a minimum, maximum, and an inflection point? Extend these to the vector case. Define Hessian and show how it can be used to classify the critical points into minimum, maximum, saddle point, and singularity point. Specialize the results to quadratic functions.</li>
-<li>Give first-order necessary condition of optimality for an equality-constrained optimization problem using Lagrange multipliers. Specialize the results to quadratic cost functions and linear constraints.</li>
-<li>Characterize the regular point (for a given set of equality constraints). Give an example of equality constraints lacking regularity.</li>
-<li>Give second-order sufficient conditions of optimality for an equality-constrained optimization problem using the concept of a projected Hessian.</li>
-<li>State and explain the Karush-Kuhn-Tucker (KKT) conditions for inequality-constrained optimization problems.</li>
-</ul>
-</section>
-<section id="skills-use-the-knowledge-to-solve-a-problem" class="level2">
-<h2 class="anchored" data-anchor-id="skills-use-the-knowledge-to-solve-a-problem">Skills (use the knowledge to solve a problem)</h2>
-<ul>
-<li>Formulate a provided problem as an instance of mathematical optimization: identify the cost function, the constraints, decide if the problems fits into one of the (numerous) families of optimization problems such as linear program, quadratic program (with linear constraints, with quadratic constraints), (general) nonlinear program, …</li>
-<li>Solve a provided linear and/or quadratic programming problem using a solver of your choice.</li>
-</ul>
+<p>If a single reference book on nonlinear optimization is to be recommended, be it <span class="citation" data-cites="nocedalNumericalOptimization2006"><a href="#ref-nocedalNumericalOptimization2006" role="doc-biblioref">[1]</a></span> that sits on your bookshelf.</p>
+<p>If one or two more can still fit, <span class="citation" data-cites="bertsekasNonlinearProgramming2016"><a href="#ref-bertsekasNonlinearProgramming2016" role="doc-biblioref">[2]</a></span>, <span class="citation" data-cites="luenbergerLinearNonlinearProgramming2021"><a href="#ref-luenbergerLinearNonlinearProgramming2021" role="doc-biblioref">[3]</a></span> are classical comprehensive references on nonlinear programming (the latter covers linear programming too).</p>
+<p>While all the three books are true classics, they are only available for purchase. Fortunately, there is a wealth of resources that are freely available online such as the notes <span class="citation" data-cites="grosNumericalOptimalControl2022"><a href="#ref-grosNumericalOptimalControl2022" role="doc-biblioref">[4]</a></span> accompanying a <a href="https://www.syscop.de/teaching/ss2023/numerical-optimal-control">course on optimal control</a>, which do a decent job of introduction to a nonlinear programming, and beautifully typeset modern textbooks <span class="citation" data-cites="kochenderferAlgorithmsOptimization2019"><a href="#ref-kochenderferAlgorithmsOptimization2019" role="doc-biblioref">[5]</a></span> and <span class="citation" data-cites="martinsEngineeringDesignOptimization2022"><a href="#ref-martinsEngineeringDesignOptimization2022" role="doc-biblioref">[6]</a></span>. The former is even based on Julia language, while the latter has also its online <a href="https://mdobook.github.io/html/">html version</a>. Yet another high-quality textbook that is freely available online is <span class="citation" data-cites="bierlaireOptimizationPrinciplesAlgorithms2018"><a href="#ref-bierlaireOptimizationPrinciplesAlgorithms2018" role="doc-biblioref">[7]</a></span>.</p>
+<p>When restricting to convex optimization, the bible of this field <span class="citation" data-cites="boydConvexOptimization2004"><a href="#ref-boydConvexOptimization2004" role="doc-biblioref">[8]</a></span> is also freely available online. It is a <em>must-have</em> for everyone interested in optimization. Yet another advanced treatment of convex optimization is <span class="citation" data-cites="ben-talLecturesModernConvex2023"><a href="#ref-ben-talLecturesModernConvex2023" role="doc-biblioref">[9]</a></span>, which is also freely available online.</p>
+<p>Maybe a bit unexpected resources on the optimization theory are materials accompanying some optimization software. Particularly recommendable is <span class="citation" data-cites="MOSEKModelingCookbook2024"><a href="#ref-MOSEKModelingCookbook2024" role="doc-biblioref">[10]</a></span>, it is very useful even if you do not intend to use their software. In particular, their introduction to conic optimization is very well written and easy to follow.</p>
+<p>Some practical aspects are discussed in <a href="https://www.gurobi.com/documentation/current/refman/guidelines_for_numerical_i.html">Guidelines for Numerical Issues</a> for Gurobi Optimizer.</p>
 
 
-</section>
 
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list">
+<div id="ref-nocedalNumericalOptimization2006" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">J. Nocedal and S. Wright, <em>Numerical <span>Optimization</span></em>, 2nd ed. in Springer <span>Series</span> in <span>Operations Research</span> and <span>Financial Engineering</span>. New York: Springer, 2006. Available: <a href="https://doi.org/10.1007/978-0-387-40065-5">https://doi.org/10.1007/978-0-387-40065-5</a></div>
+</div>
+<div id="ref-bertsekasNonlinearProgramming2016" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">D. Bertsekas, <em>Nonlinear <span>Programming</span></em>, 3rd ed. Belmont, Mass: Athena Scientific, 2016. Available: <a href="http://www.athenasc.com/nonlinbook.html">http://www.athenasc.com/nonlinbook.html</a></div>
+</div>
+<div id="ref-luenbergerLinearNonlinearProgramming2021" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">D. G. Luenberger and Y. Ye, <em>Linear and <span>Nonlinear Programming</span></em>, 5th ed. in International <span>Series</span> in <span>Operations Research</span> &amp; <span>Management Science</span>, no. 228. Cham, Switzerland: Springer, 2021. Available: <a href="https://doi.org/10.1007/978-3-030-85450-8">https://doi.org/10.1007/978-3-030-85450-8</a></div>
+</div>
+<div id="ref-grosNumericalOptimalControl2022" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">S. Gros and M. Diehl, <span>“Numerical <span>Optimal Control</span> (<span>Draft</span>).”</span> Systems Control; Optimization Laboratory IMTEK, Faculty of Engineering, University of Freiburg, Apr. 2022. Available: <a href="https://www.syscop.de/files/2020ss/NOC/book-NOCSE.pdf">https://www.syscop.de/files/2020ss/NOC/book-NOCSE.pdf</a></div>
+</div>
+<div id="ref-kochenderferAlgorithmsOptimization2019" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">M. J. Kochenderfer and T. A. Wheeler, <em>Algorithms for <span>Optimization</span></em>. The MIT Press, 2019. Accessed: Dec. 29, 2020. [Online]. Available: <a href="https://algorithmsbook.com/optimization/">https://algorithmsbook.com/optimization/</a></div>
+</div>
+<div id="ref-martinsEngineeringDesignOptimization2022" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">J. R. R. A. Martins and A. Ning, <em>Engineering <span>Design Optimization</span></em>. Cambridge ; New York, NY: Cambridge University Press, 2022. Available: <a href="https://mdobook.github.io/">https://mdobook.github.io/</a></div>
+</div>
+<div id="ref-bierlaireOptimizationPrinciplesAlgorithms2018" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">M. Bierlaire, <em>Optimization: <span>Principles</span> and <span>Algorithms</span></em>, 2nd ed. Lausanne: EPFL Press, 2018. Available: <a href="https://transp-or.epfl.ch/books/optimization/html/OptimizationPrinciplesAlgorithms2018.pdf">https://transp-or.epfl.ch/books/optimization/html/OptimizationPrinciplesAlgorithms2018.pdf</a></div>
+</div>
+<div id="ref-boydConvexOptimization2004" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[8] </div><div class="csl-right-inline">S. Boyd and L. Vandenberghe, <em>Convex <span>Optimization</span></em>, Seventh printing with corrections 2009. Cambridge, UK: Cambridge University Press, 2004. Available: <a href="https://web.stanford.edu/~boyd/cvxbook/">https://web.stanford.edu/~boyd/cvxbook/</a></div>
+</div>
+<div id="ref-ben-talLecturesModernConvex2023" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[9] </div><div class="csl-right-inline">A. Ben-Tal and A. Nemirovski, <span>“Lectures on <span>Modern Convex Optimization</span> - 2020/2021/2022/2023 <span>Analysis</span>, <span>Algorithms</span>, <span>Engineering Applications</span>,”</span> Technion &amp; Georgia Institute of Technology, 2023. Available: <a href="https://www2.isye.gatech.edu/~nemirovs/LMCOLN2023Spring.pdf">https://www2.isye.gatech.edu/~nemirovs/LMCOLN2023Spring.pdf</a></div>
+</div>
+<div id="ref-MOSEKModelingCookbook2024" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[10] </div><div class="csl-right-inline"><span>“<span>MOSEK Modeling Cookbook</span>.”</span> Mosek ApS, Sep. 2024. Available: <a href="https://docs.mosek.com/MOSEKModelingCookbook-a4paper.pdf">https://docs.mosek.com/MOSEKModelingCookbook-a4paper.pdf</a></div>
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -1088,13 +1112,14 @@ ul.task-list li input[type="checkbox"] {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1438,13 +1463,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./intro_projects.html" class="pagination-link" aria-label="Projects">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Projects</span>
+      <a href="./opt_algo_solvers.html" class="pagination-link" aria-label="Numerical solvers">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Numerical solvers</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./opt_theory_problems.html" class="pagination-link" aria-label="Optimization problems">
-        <span class="nav-page-text">Optimization problems</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./opt_theory_hw.html" class="pagination-link" aria-label="Homework">
+        <span class="nav-page-text">Homework</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1456,7 +1481,7 @@ ul.task-list li input[type="checkbox"] {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2025, Zdeněk Hurák</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

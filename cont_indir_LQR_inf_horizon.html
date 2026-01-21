@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -58,7 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -69,14 +69,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./cont_indir_LQR_fin_horizon.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-19a3c66a9aca0786b50e3569c3292bf3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-c30451789a0a2bcd5e941535c675cd30.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -104,7 +105,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
@@ -136,7 +137,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -164,7 +165,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_goals.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_LQR_inf_horizon.html">LQR on an infinite time horizon using the CARE</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_goals.html">6. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_LQR_inf_horizon.html">LQR on an infinite time horizon using the CARE</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -245,7 +246,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">1. Optimization – theory</span></a>
+ <span class="menu-text">1. Optimization – theory and algorithms</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -253,7 +254,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_theory_goals.html" class="sidebar-item-text sidebar-link">
+  <a href="./opt_theory_and_algo_goals.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Learning goals</span></a>
   </div>
 </li>
@@ -271,14 +272,8 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_theory_unconstrained.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Unconstrained optimization</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./opt_theory_constrained.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Constrained optimization</span></a>
+  <a href="./opt_theory_conditions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Conditions of optimality</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -289,7 +284,25 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./opt_theory_references.html" class="sidebar-item-text sidebar-link">
+  <a href="./opt_algo_derivatives.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Computing the derivatives</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./opt_algo_numerical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Numerical algorithms</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./opt_algo_solvers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Numerical solvers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./opt_theory_and_algo_references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -304,65 +317,12 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">2. Optimization – algorithms</span></a>
+ <span class="menu-text">2. Discrete-time optimal control – direct approach</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./opt_algo_goals.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Learning goals</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./opt_algo_derivatives.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Computing the derivatives</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./opt_algo_unconstrained.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Unconstrained optimization</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./opt_algo_constrained.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Constrained optimization</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./opt_algo_solvers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Numerical solvers</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./opt_algo_references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./opt_algo_hw.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Homework</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">3. Discrete-time optimal control – direct approach</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./discr_dir_goals.html" class="sidebar-item-text sidebar-link">
@@ -409,13 +369,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">4. Discrete-time optimal control – indirect approach</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">3. Discrete-time optimal control – indirect approach</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./discr_indir_goals.html" class="sidebar-item-text sidebar-link">
@@ -474,13 +434,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">5. Discrete-time optimal control – dynamic programming (DP)</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">4. Discrete-time optimal control – dynamic programming (DP)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./dynamic_programming_goals.html" class="sidebar-item-text sidebar-link">
@@ -507,7 +467,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dynamic_programming_LQT.qmd" class="sidebar-item-text sidebar-link">
+  <a href="./dynamic_programming_LQT.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">LQ tracking via DP</span></a>
   </div>
 </li>
@@ -533,13 +493,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
- <span class="menu-text">6. More on MPC</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">5. More on MPC</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./discr_dir_mpc_stability.html" class="sidebar-item-text sidebar-link">
@@ -580,13 +540,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
- <span class="menu-text">7. Continuous-time optimal control - indirect approach via calculus of variations</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">6. Continuous-time optimal control - indirect approach via calculus of variations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_goals.html" class="sidebar-item-text sidebar-link">
@@ -657,13 +617,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
- <span class="menu-text">8. Continuous-time optimal control - indirect approach via Pontryagin’s maximum principle</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">7. Continuous-time optimal control - indirect approach via Pontryagin’s maximum principle</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_indir_goals_2.html" class="sidebar-item-text sidebar-link">
@@ -704,13 +664,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text">9. Numerical methods for continuous-time optimal control - both indirect and direct approaches</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">8. Numerical methods for continuous-time optimal control - both indirect and direct approaches</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_numerical_goals.html" class="sidebar-item-text sidebar-link">
@@ -751,13 +711,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
- <span class="menu-text">9.X. Continuous-time optimal control – dynamic programming</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">8.X. Continuous-time optimal control – dynamic programming</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cont_dp_HJB.html" class="sidebar-item-text sidebar-link">
@@ -792,13 +752,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
- <span class="menu-text">10. Some extensions: LQG, LTR, H2</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">9. Some extensions: LQG, LTR, H2</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ext_goals.html" class="sidebar-item-text sidebar-link">
@@ -857,13 +817,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
- <span class="menu-text">11. Uncertainty modelling and robustness analysis</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text">10. Uncertainty modelling and robustness analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./roban_goals.html" class="sidebar-item-text sidebar-link">
@@ -910,13 +870,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true">
- <span class="menu-text">12. Robust control</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
+ <span class="menu-text">11. Robust control</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./rocond_goals.html" class="sidebar-item-text sidebar-link">
@@ -933,6 +893,41 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./rocond_H_infinity_control.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">H-infinity optimal control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rocond_software.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Software</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rocond_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rocond_hw.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true">
+ <span class="menu-text">12. Robust control II.</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rocond_goals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning goals</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -1066,7 +1061,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_goals.html">7. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_LQR_inf_horizon.html">LQR on an infinite time horizon using the CARE</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cont_indir_goals.html">6. Continuous-time optimal control - indirect approach via calculus of variations</a></li><li class="breadcrumb-item"><a href="./cont_indir_LQR_inf_horizon.html">LQR on an infinite time horizon using the CARE</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Indirect approach to LQR on an infinite time horizon using CARE</h1>
 </div>
@@ -1104,7 +1099,7 @@ window.Quarto = {
 <div id="cell-fig-response-scalar-time-invariant-LQR" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ControlSystems</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ControlSystems</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="fl">2</span></span>
@@ -1129,59 +1124,12 @@ window.Quarto = {
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>y, t, x, uout <span class="op">=</span> <span class="fu">lsim</span>(G,u,t,x0<span class="op">=</span>x₀)</span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t,x<span class="op">'</span>,xlabel<span class="op">=</span><span class="st">"t"</span>,ylabel<span class="op">=</span><span class="st">"x(t)"</span>, label<span class="op">=</span>[<span class="st">"x₁"</span> <span class="st">"x₂"</span>],linewidth<span class="op">=</span><span class="fl">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t,x<span class="op">'</span>,xlabel<span class="op">=</span><span class="st">"t"</span>,ylabel<span class="op">=</span><span class="st">"x(t)"</span>, label<span class="op">=</span>[<span class="st">"x₁"</span> <span class="st">"x₂"</span>],linewidth<span class="op">=</span><span class="fl">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="fig-response-scalar-time-invariant-lqr" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="1">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-response-scalar-time-invariant-lqr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<!--?xml version="1.0" encoding="utf-8"?-->
-<svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="672" height="480" viewbox="0 0 2688 1920">
-<defs>
-  <clippath id="clip710">
-    <rect x="0" y="0" width="2688" height="1920"></rect>
-  </clippath>
-</defs>
-<path clip-path="url(#clip710)" d="M0 1920 L2688 1920 L2688 0 L0 0  Z" fill="#ffffff" fill-rule="evenodd" fill-opacity="1"></path>
-<defs>
-  <clippath id="clip711">
-    <rect x="537" y="0" width="1883" height="1883"></rect>
-  </clippath>
-</defs>
-<path clip-path="url(#clip710)" d="M180.423 1734.12 L2640.76 1734.12 L2640.76 47.2441 L180.423 47.2441  Z" fill="#ffffff" fill-rule="evenodd" fill-opacity="1"></path>
-<defs>
-  <clippath id="clip712">
-    <rect x="180" y="47" width="2461" height="1688"></rect>
-  </clippath>
-</defs>
-<polyline clip-path="url(#clip712)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="250.055,1734.12 250.055,47.2441 "></polyline>
-<polyline clip-path="url(#clip712)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="714.269,1734.12 714.269,47.2441 "></polyline>
-<polyline clip-path="url(#clip712)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="1178.48,1734.12 1178.48,47.2441 "></polyline>
-<polyline clip-path="url(#clip712)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="1642.7,1734.12 1642.7,47.2441 "></polyline>
-<polyline clip-path="url(#clip712)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="2106.91,1734.12 2106.91,47.2441 "></polyline>
-<polyline clip-path="url(#clip712)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="2571.12,1734.12 2571.12,47.2441 "></polyline>
-<polyline clip-path="url(#clip712)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="180.423,1594.74 2640.76,1594.74 "></polyline>
-<polyline clip-path="url(#clip712)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="180.423,1094.82 2640.76,1094.82 "></polyline>
-<polyline clip-path="url(#clip712)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="180.423,594.903 2640.76,594.903 "></polyline>
-<polyline clip-path="url(#clip712)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="180.423,94.9858 2640.76,94.9858 "></polyline>
-<polyline clip-path="url(#clip710)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="180.423,1734.12 2640.76,1734.12 "></polyline>
-<polyline clip-path="url(#clip710)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="250.055,1734.12 250.055,1715.22 "></polyline>
-<polyline clip-path="url(#clip710)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="714.269,1734.12 714.269,1715.22 "></polyline>
-<polyline clip-path="url(#clip710)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="1178.48,1734.12 1178.48,1715.22 "></polyline>
-<polyline clip-path="url(#clip710)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="1642.7,1734.12 1642.7,1715.22 "></polyline>
-<polyline clip-path="url(#clip710)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="2106.91,1734.12 2106.91,1715.22 "></polyline>
-<polyline clip-path="url(#clip710)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="2571.12,1734.12 2571.12,1715.22 "></polyline>
-<path clip-path="url(#clip710)" d="M250.055 1767.34 Q246.444 1767.34 244.615 1770.9 Q242.81 1774.45 242.81 1781.58 Q242.81 1788.68 244.615 1792.25 Q246.444 1795.79 250.055 1795.79 Q253.69 1795.79 255.495 1792.25 Q257.324 1788.68 257.324 1781.58 Q257.324 1774.45 255.495 1770.9 Q253.69 1767.34 250.055 1767.34 M250.055 1763.64 Q255.865 1763.64 258.921 1768.24 Q262 1772.83 262 1781.58 Q262 1790.3 258.921 1794.91 Q255.865 1799.49 250.055 1799.49 Q244.245 1799.49 241.166 1794.91 Q238.111 1790.3 238.111 1781.58 Q238.111 1772.83 241.166 1768.24 Q244.245 1763.64 250.055 1763.64 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip710)" d="M704.651 1794.89 L712.29 1794.89 L712.29 1768.52 L703.98 1770.19 L703.98 1765.93 L712.244 1764.26 L716.919 1764.26 L716.919 1794.89 L724.558 1794.89 L724.558 1798.82 L704.651 1798.82 L704.651 1794.89 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip710)" d="M1173.14 1794.89 L1189.45 1794.89 L1189.45 1798.82 L1167.51 1798.82 L1167.51 1794.89 Q1170.17 1792.13 1174.76 1787.5 Q1179.36 1782.85 1180.54 1781.51 Q1182.79 1778.98 1183.67 1777.25 Q1184.57 1775.49 1184.57 1773.8 Q1184.57 1771.04 1182.63 1769.31 Q1180.7 1767.57 1177.6 1767.57 Q1175.4 1767.57 1172.95 1768.34 Q1170.52 1769.1 1167.74 1770.65 L1167.74 1765.93 Q1170.57 1764.79 1173.02 1764.21 Q1175.47 1763.64 1177.51 1763.64 Q1182.88 1763.64 1186.08 1766.32 Q1189.27 1769.01 1189.27 1773.5 Q1189.27 1775.63 1188.46 1777.55 Q1187.67 1779.45 1185.57 1782.04 Q1184.99 1782.71 1181.89 1785.93 Q1178.78 1789.12 1173.14 1794.89 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip710)" d="M1646.94 1780.19 Q1650.3 1780.9 1652.18 1783.17 Q1654.07 1785.44 1654.07 1788.77 Q1654.07 1793.89 1650.56 1796.69 Q1647.04 1799.49 1640.56 1799.49 Q1638.38 1799.49 1636.06 1799.05 Q1633.77 1798.64 1631.32 1797.78 L1631.32 1793.27 Q1633.26 1794.4 1635.58 1794.98 Q1637.89 1795.56 1640.42 1795.56 Q1644.81 1795.56 1647.11 1793.82 Q1649.42 1792.08 1649.42 1788.77 Q1649.42 1785.72 1647.27 1784.01 Q1645.14 1782.27 1641.32 1782.27 L1637.29 1782.27 L1637.29 1778.43 L1641.5 1778.43 Q1644.95 1778.43 1646.78 1777.06 Q1648.61 1775.67 1648.61 1773.08 Q1648.61 1770.42 1646.71 1769.01 Q1644.84 1767.57 1641.32 1767.57 Q1639.4 1767.57 1637.2 1767.99 Q1635 1768.4 1632.36 1769.28 L1632.36 1765.12 Q1635.02 1764.38 1637.34 1764.01 Q1639.68 1763.64 1641.74 1763.64 Q1647.06 1763.64 1650.16 1766.07 Q1653.26 1768.47 1653.26 1772.59 Q1653.26 1775.46 1651.62 1777.46 Q1649.98 1779.42 1646.94 1780.19 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip710)" d="M2109.92 1768.34 L2098.11 1786.78 L2109.92 1786.78 L2109.92 1768.34 M2108.69 1764.26 L2114.57 1764.26 L2114.57 1786.78 L2119.5 1786.78 L2119.5 1790.67 L2114.57 1790.67 L2114.57 1798.82 L2109.92 1798.82 L2109.92 1790.67 L2094.32 1790.67 L2094.32 1786.16 L2108.69 1764.26 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip710)" d="M2561.4 1764.26 L2579.76 1764.26 L2579.76 1768.2 L2565.68 1768.2 L2565.68 1776.67 Q2566.7 1776.32 2567.72 1776.16 Q2568.74 1775.97 2569.76 1775.97 Q2575.55 1775.97 2578.92 1779.15 Q2582.3 1782.32 2582.3 1787.73 Q2582.3 1793.31 2578.83 1796.41 Q2575.36 1799.49 2569.04 1799.49 Q2566.86 1799.49 2564.6 1799.12 Q2562.35 1798.75 2559.94 1798.01 L2559.94 1793.31 Q2562.03 1794.45 2564.25 1795 Q2566.47 1795.56 2568.95 1795.56 Q2572.95 1795.56 2575.29 1793.45 Q2577.63 1791.34 2577.63 1787.73 Q2577.63 1784.12 2575.29 1782.02 Q2572.95 1779.91 2568.95 1779.91 Q2567.07 1779.91 2565.2 1780.33 Q2563.35 1780.74 2561.4 1781.62 L2561.4 1764.26 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip710)" d="M1409.65 1837.53 L1409.65 1847.65 L1421.71 1847.65 L1421.71 1852.2 L1409.65 1852.2 L1409.65 1871.56 Q1409.65 1875.92 1410.83 1877.16 Q1412.04 1878.4 1415.7 1878.4 L1421.71 1878.4 L1421.71 1883.3 L1415.7 1883.3 Q1408.92 1883.3 1406.34 1880.79 Q1403.76 1878.24 1403.76 1871.56 L1403.76 1852.2 L1399.47 1852.2 L1399.47 1847.65 L1403.76 1847.65 L1403.76 1837.53 L1409.65 1837.53 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><polyline clip-path="url(#clip710)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="180.423,1734.12 180.423,47.2441 "></polyline>
-<polyline clip-path="url(#clip710)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="180.423,1594.74 199.321,1594.74 "></polyline>
-<polyline clip-path="url(#clip710)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="180.423,1094.82 199.321,1094.82 "></polyline>
-<polyline clip-path="url(#clip710)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="180.423,594.903 199.321,594.903 "></polyline>
-<polyline clip-path="url(#clip710)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="180.423,94.9858 199.321,94.9858 "></polyline>
-<path clip-path="url(#clip710)" d="M128.159 1580.54 Q124.548 1580.54 122.719 1584.1 Q120.913 1587.64 120.913 1594.77 Q120.913 1601.88 122.719 1605.44 Q124.548 1608.99 128.159 1608.99 Q131.793 1608.99 133.599 1605.44 Q135.427 1601.88 135.427 1594.77 Q135.427 1587.64 133.599 1584.1 Q131.793 1580.54 128.159 1580.54 M128.159 1576.83 Q133.969 1576.83 137.025 1581.44 Q140.103 1586.02 140.103 1594.77 Q140.103 1603.5 137.025 1608.11 Q133.969 1612.69 128.159 1612.69 Q122.349 1612.69 119.27 1608.11 Q116.214 1603.5 116.214 1594.77 Q116.214 1586.02 119.27 1581.44 Q122.349 1576.83 128.159 1576.83 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip710)" d="M120.196 1108.17 L127.835 1108.17 L127.835 1081.8 L119.525 1083.47 L119.525 1079.21 L127.788 1077.54 L132.464 1077.54 L132.464 1108.17 L140.103 1108.17 L140.103 1112.1 L120.196 1112.1 L120.196 1108.17 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip710)" d="M123.784 608.248 L140.103 608.248 L140.103 612.183 L118.159 612.183 L118.159 608.248 Q120.821 605.493 125.404 600.864 Q130.011 596.211 131.191 594.869 Q133.437 592.345 134.316 590.609 Q135.219 588.85 135.219 587.16 Q135.219 584.406 133.275 582.67 Q131.353 580.933 128.251 580.933 Q126.052 580.933 123.599 581.697 Q121.168 582.461 118.39 584.012 L118.39 579.29 Q121.214 578.156 123.668 577.577 Q126.122 576.998 128.159 576.998 Q133.529 576.998 136.724 579.683 Q139.918 582.369 139.918 586.859 Q139.918 588.989 139.108 590.91 Q138.321 592.808 136.214 595.401 Q135.636 596.072 132.534 599.29 Q129.432 602.484 123.784 608.248 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip710)" d="M132.974 93.6316 Q136.33 94.3492 138.205 96.6177 Q140.103 98.8862 140.103 102.22 Q140.103 107.335 136.585 110.136 Q133.066 112.937 126.585 112.937 Q124.409 112.937 122.094 112.497 Q119.802 112.081 117.349 111.224 L117.349 106.71 Q119.293 107.845 121.608 108.423 Q123.923 109.002 126.446 109.002 Q130.844 109.002 133.136 107.266 Q135.45 105.53 135.45 102.22 Q135.45 99.164 133.298 97.451 Q131.168 95.7149 127.349 95.7149 L123.321 95.7149 L123.321 91.8724 L127.534 91.8724 Q130.983 91.8724 132.812 90.5066 Q134.64 89.1178 134.64 86.5252 Q134.64 83.8632 132.742 82.4511 Q130.867 81.0159 127.349 81.0159 Q125.427 81.0159 123.228 81.4326 Q121.029 81.8493 118.39 82.7289 L118.39 78.5623 Q121.052 77.8215 123.367 77.4512 Q125.705 77.0808 127.765 77.0808 Q133.089 77.0808 136.191 79.5113 Q139.293 81.9187 139.293 86.0391 Q139.293 88.9094 137.65 90.9002 Q136.006 92.8677 132.974 93.6316 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip710)" d="M25.9905 910.542 L43.337 923.432 L61.6384 909.873 L61.6384 916.78 L47.6339 927.156 L61.6384 937.532 L61.6384 944.439 L42.9869 930.594 L25.9905 943.261 L25.9905 936.354 L38.6901 926.901 L25.9905 917.448 L25.9905 910.542 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip710)" d="M12.1769 887.53 Q19.4975 891.795 26.6589 893.863 Q33.8203 895.932 41.1727 895.932 Q48.5251 895.932 55.7502 893.863 Q62.9434 891.763 70.2321 887.53 L70.2321 892.622 Q62.7524 897.396 55.5274 899.784 Q48.3023 902.139 41.1727 902.139 Q34.0749 902.139 26.8817 899.784 Q19.6884 897.428 12.1769 892.622 L12.1769 887.53 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip710)" d="M15.869 870.374 L25.9905 870.374 L25.9905 858.311 L30.542 858.311 L30.542 870.374 L49.8937 870.374 Q54.2542 870.374 55.4955 869.196 Q56.7368 867.987 56.7368 864.327 L56.7368 858.311 L61.6384 858.311 L61.6384 864.327 Q61.6384 871.106 59.124 873.684 Q56.5777 876.262 49.8937 876.262 L30.542 876.262 L30.542 880.559 L25.9905 880.559 L25.9905 876.262 L15.869 876.262 L15.869 870.374 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip710)" d="M12.1769 851.531 L12.1769 846.439 Q19.6884 841.665 26.8817 839.309 Q34.0749 836.922 41.1727 836.922 Q48.3023 836.922 55.5274 839.309 Q62.7524 841.665 70.2321 846.439 L70.2321 851.531 Q62.9434 847.298 55.7502 845.229 Q48.5251 843.129 41.1727 843.129 Q33.8203 843.129 26.6589 845.229 Q19.4975 847.298 12.1769 851.531 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><polyline clip-path="url(#clip712)" style="stroke:#009af9; stroke-linecap:round; stroke-linejoin:round; stroke-width:8; stroke-opacity:1; fill:none" points="250.055,1094.82 296.477,1582.47 342.898,1686.38 389.319,1683.97 435.741,1660.24 482.162,1638.28 528.583,1622.41 575.005,1611.92 621.426,1605.28 667.848,1601.17 714.269,1598.64 760.69,1597.1 807.112,1596.17 853.533,1595.6 899.954,1595.26 946.376,1595.06 992.797,1594.93 1039.22,1594.85 1085.64,1594.81 1132.06,1594.78 1178.48,1594.76 1224.9,1594.75 1271.33,1594.75 1317.75,1594.74 1364.17,1594.74 1410.59,1594.74 1457.01,1594.74 1503.43,1594.74 1549.85,1594.74 1596.28,1594.74 1642.7,1594.74 1689.12,1594.74 1735.54,1594.74 1781.96,1594.74 1828.38,1594.74 1874.8,1594.74 1921.22,1594.74 1967.65,1594.74 2014.07,1594.74 2060.49,1594.74 2106.91,1594.74 2153.33,1594.74 2199.75,1594.74 2246.17,1594.74 2292.6,1594.74 2339.02,1594.74 2385.44,1594.74 2431.86,1594.74 2478.28,1594.74 2524.7,1594.74 2571.12,1594.74 "></polyline>
-<polyline clip-path="url(#clip712)" style="stroke:#e26f46; stroke-linecap:round; stroke-linejoin:round; stroke-width:8; stroke-opacity:1; fill:none" points="250.055,94.9858 296.477,849.015 342.898,1198.93 389.319,1374.26 435.741,1467.88 482.162,1520.25 528.583,1550.46 575.005,1568.23 621.426,1578.8 667.848,1585.14 714.269,1588.94 760.69,1591.24 807.112,1592.62 853.533,1593.46 899.954,1593.97 946.376,1594.27 992.797,1594.46 1039.22,1594.57 1085.64,1594.64 1132.06,1594.68 1178.48,1594.7 1224.9,1594.72 1271.33,1594.72 1317.75,1594.73 1364.17,1594.73 1410.59,1594.74 1457.01,1594.74 1503.43,1594.74 1549.85,1594.74 1596.28,1594.74 1642.7,1594.74 1689.12,1594.74 1735.54,1594.74 1781.96,1594.74 1828.38,1594.74 1874.8,1594.74 1921.22,1594.74 1967.65,1594.74 2014.07,1594.74 2060.49,1594.74 2106.91,1594.74 2153.33,1594.74 2199.75,1594.74 2246.17,1594.74 2292.6,1594.74 2339.02,1594.74 2385.44,1594.74 2431.86,1594.74 2478.28,1594.74 2524.7,1594.74 2571.12,1594.74 "></polyline>
-<path clip-path="url(#clip710)" d="M2269.61 258.993 L2558.74 258.993 L2558.74 103.473 L2269.61 103.473  Z" fill="#ffffff" fill-rule="evenodd" fill-opacity="1"></path>
-<polyline clip-path="url(#clip710)" style="stroke:#000000; stroke-linecap:round; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="2269.61,258.993 2558.74,258.993 2558.74,103.473 2269.61,103.473 2269.61,258.993 "></polyline>
-<polyline clip-path="url(#clip710)" style="stroke:#009af9; stroke-linecap:round; stroke-linejoin:round; stroke-width:8; stroke-opacity:1; fill:none" points="2296.95,155.313 2460.97,155.313 "></polyline>
-<path clip-path="url(#clip710)" d="M2512.96 146.667 L2503.58 159.283 L2513.44 172.593 L2508.42 172.593 L2500.88 162.408 L2493.33 172.593 L2488.31 172.593 L2498.38 159.028 L2489.16 146.667 L2494.19 146.667 L2501.06 155.903 L2507.94 146.667 L2512.96 146.667 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip710)" d="M2518.61 170.047 L2523.33 170.047 L2523.33 155.903 L2518.17 156.853 L2518.17 154.167 L2523.49 153.265 L2526.66 153.265 L2526.66 170.047 L2531.41 170.047 L2531.41 172.593 L2518.61 172.593 L2518.61 170.047 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><polyline clip-path="url(#clip710)" style="stroke:#e26f46; stroke-linecap:round; stroke-linejoin:round; stroke-width:8; stroke-opacity:1; fill:none" points="2296.95,207.153 2460.97,207.153 "></polyline>
-<path clip-path="url(#clip710)" d="M2512.96 198.507 L2503.58 211.123 L2513.44 224.433 L2508.42 224.433 L2500.88 214.248 L2493.33 224.433 L2488.31 224.433 L2498.38 210.868 L2489.16 198.507 L2494.19 198.507 L2501.06 207.743 L2507.94 198.507 L2512.96 198.507 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path><path clip-path="url(#clip710)" d="M2521.2 221.794 L2531.01 221.794 L2531.01 224.433 L2517.17 224.433 L2517.17 221.887 Q2517.96 221.169 2519.42 219.873 Q2527.38 212.813 2527.38 210.637 Q2527.38 209.109 2526.18 208.183 Q2524.97 207.234 2523.01 207.234 Q2521.8 207.234 2520.39 207.651 Q2518.98 208.044 2517.31 208.855 L2517.31 206.007 Q2519.09 205.359 2520.62 205.035 Q2522.17 204.711 2523.49 204.711 Q2526.85 204.711 2528.86 206.239 Q2530.88 207.767 2530.88 210.267 Q2530.88 213.484 2523.21 220.058 Q2521.92 221.169 2521.2 221.794 Z" fill="#000000" fill-rule="nonzero" fill-opacity="1"></path></svg>
+<img src="data:image/png;base64,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cuTIUCjkdCF6u+mmm2699daysjKnC3GDXbt23XXXXX/4wx8aGxvze2edwnj//v1VVVWZr/v27btv3z5n6wEO09DQcMstt/zgBz9wuhDtXXHFFcXFxXPmzFm0aBGfGXfH888/39jYOH36dKcLcYPy8vIzzjhDRJ577rlPfepTe/fuzePNdZrA5ff7E4lE5ut4PM6OyuhVWlpaLr744lmzZn3xi190uhbtLV26NBqNPvroo1dcccU777xTWlrqdEVaamxs/N73vrdixQqnC3GJadOmTZs2LfP1l770pd/85jc/+clP8nVznTrjoUOHvv/++5mvd+7cOWTIEEfLAT4SiUS+8IUvnHbaaXfeeafTtbhEMBi89tprTdN86623nK5FV5s2bdq2bduECRPKy8vvvvvuP/3pT+eee67TRbnE8ccfn9/RWZ3CeMaMGQ899JBlWU1NTY899tjMmTOdrggQEYlGo5dccskJJ5zw85//3OlatNfU1LR79+7M12vWrKmpqRk3bpyzJenrrLPOSiQSdXV1dXV1N99889VXX71y5Uqni9LY1q1bLcsSkerq6kcfffT000/P4811CuOvf/3rgUBg5MiR48aNu/TSS88++2ynK9LY5s2blVJXXXXV6tWrlVLf+MY3nK5IY6tWrXr55Zd//etfG4ahlAoEAk5XpLH6+vozzjhjxIgRo0aNuuqqqx5++OH+/fs7XRQgIjJ//vyqqqrx48ePGzfu/PPPv/766/N4c52WNmXU1taapllSUuJ0IQAKpba2VilVUVHhdCHAx0QikYaGhn79+uX9cGj9whgAAJfRaZgaAABXIowBAHAYYQwAgMMIYwAAHEYYAwDgMMIYAACHEcYAADiMMAaOIbfffvvNN9/sdBUADqfTqU0AumnTpk0tLS1OVwHgcIQxcKxYs2bNnj17YrHYE088ISIjRoyYMmWK00UBECGMgWPHX//61/fffz+VSv32t78VkYsuuogwBnoJ9qYGjiFXXHFFS0vLiy++6HQhAD6GCVwAADiMMAYAwGGEMQAADiOMgWOIz+dLpVJOVwHgcIQxcAwZOnToli1bamtrnS4EwMcQxsAxZM6cOX6/v6qqSil13XXXOV0OgCyWNgHHllQqtWvXrvr6+srKymHDhjldDgARwhgAAMcxTA0AgMMIYwAAHEYYAwDgMMIYAACHEcYAADiMMAYAwGGEMQAADvv/5TiflY83Rt0AAAAASUVORK5CYII=" class="figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-response-scalar-time-invariant-lqr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: The simulated response of the system to a nonzero initial state using the time-invariant LQR computed by solving CARE
@@ -1245,13 +1193,14 @@ Figure&nbsp;1: The simulated response of the system to a nonzero initial state u
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
