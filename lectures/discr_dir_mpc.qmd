@@ -94,6 +94,114 @@ $$
 
 Note that by using the upright front in $\mathbf x_t$ we emphasize that the current state plays (measured or estimated) the role of a parameter and not an optimization variable within this optimization problem.
 
+::: {#exm-mpc-regulation}
+### MPC
+
+We illustrate the key ingrediences of MPC using the following example. The plant to be regulated is a second-order LTI system with one control input, parameterized by the matrices $\mathbf A$ and $\mathbf B$, the latter actually a single-column matrix, with a quadratic cost parameterized by the matrices $\mathbf Q$ and $\mathbf R$, the latter actually a scalar, and with constraint control. The prediction horizon is set to 5. 
+``` {julia}
+#| code-fold: show
+using OSQP
+using JuMP
+using LinearAlgebra
+
+rhocp = Model(OSQP.Optimizer)    # Defining the receding-horizon (RH) optimal control problem (OCP).
+set_silent(rhocp)
+
+# System dynamics x(k+1) = A*x(k) + B*u(k):
+A = [6/5 6/5; -1/2 6/5]
+B = [1; 1/2]
+
+N_full = 30         # Total simulation length.
+N = 5               # Prediction horizon length.
+h = 1.0             # Sampling time.
+
+x_init = [3.0, 3.0] # Initial state.
+
+# Quadratic cost function weights:
+Q = Diagonal([1.0, 1.0])
+R = 5.0
+
+# Input constraints:
+u_min = -3.0
+u_max = 3.0
+
+n = size(A,1)                                   # Order of the system.
+
+# Building the optimization model for the receding-horizon optimal control problem RH-OCP:
+@variable(rhocp, x[1:n, 1:N+1])                 # State trajectory over the prediction horizon.
+@variable(rhocp, u_min <= u[1:N] <= u_max)      # Control trajectory over the prediction horizon.
+@constraint(rhocp, [i=1:N], x[:,i+1] == A*x[:,i] + B*u[i])
+fix(x[1,1], x_init[1])
+fix(x[2,1], x_init[2])
+@objective(rhocp, Min, sum(x[:,i]'*Q*x[:,i] + R*u[i]^2 for i=1:N) + x[:,N+1]'*Q*x[:,N+1])
+
+# Function that solves the RH OCP for the current state xₖ at time step k:
+function mpc_regulation(rhocp, xₖ, k, N)          
+    fix(x[1,1], xₖ[1])
+    fix(x[2,1], xₖ[2])  
+    optimize!(rhocp)
+    return value.(u), value.(x)
+end
+
+# Receding-horizon simulation:
+x_opt_full = [x_init,]
+u_opt_full = Float64[]
+x_pred_full = Vector{Matrix{Float64}}()
+u_pred_full = Vector{Vector{Float64}}()
+
+for k in 1:(N_full-N)                                   # Receding-horizon simulation loop.  
+    xₖ = x_opt_full[end]                                # Current state.  
+    u_pred, x_pred = mpc_regulation(rhocp, xₖ, k, N)    # Optimal control sequence over the prediction horizon.
+    uₖ = u_pred[1]                                      # Apply only the first control input.
+    x⁺ = x_pred[:,2]                                    # Next state from the predicted trajectory.
+    #x⁺ = x_pred[:,2] + randn(2)*0.1                     # True next state differs from the predicted trajectory due to the disturbance.
+    push!(x_opt_full, x⁺)
+    push!(u_opt_full, uₖ)
+    push!(x_pred_full, x_pred)
+    push!(u_pred_full, u_pred)
+end
+```
+
+``` {julia}
+#| code-fold: true
+#| fig-cap: Evolution of the state of a system from some nonzero initial state towards zero state using an MPC. The blue trajectory is the actual state trajectory as realized by the receding-horizon control, the gray trajectories are the predicted trajectories as computed at every time step. The length of the prediction horizon set to 5.
+#| label: fig-mpc-regulation-2d 
+using Plots
+x_opt = hcat(x_opt_full...)
+p1 = plot(x_opt[1,:], x_opt[2,:], label="x(k)", xlabel="x₁", ylabel="x₂", markershape=:circle, markersize=2, lw=2)
+for x_pred in x_pred_full
+    plot!(p1, x_pred[1,:], x_pred[2,:], label="", markershape=:diamond, markersize=1, lw=1, linecolor=:gray, alpha=0.5)
+end
+display(p1)
+```
+
+``` {julia}
+#| code-fold: true
+#| fig-cap: Evolution of the state variables and control input of a system from some nonzero initial state towards zero state using an MPC. The blue markers are the actual state and control trajectories as realized by the receding-horizon control, the gray markers are the predicted trajectories as computed at every time step. The length of the prediction horizon set to 5.
+#| label: fig-mpc-regulation-time
+p21 = plot(0:h:(N_full-N)*h, x_opt[1,:], xlims=(-0.1, N_full*h*1.01), label="x₁(k)", xlabel="k", ylabel="x₁(k)", markershape=:circle, markersize=2, lw=2)#, linetype=:steppost)
+
+for (k, x_pred) in enumerate(x_pred_full)
+    plot!(p21, (k-1)*h:h:(k-1)*h+h*size(x_pred,2)-h, x_pred[1,:], label="", markershape=:diamond, markersize=1, lw=1, linecolor=:gray, alpha=0.5)
+end
+
+p22 = plot(0:h:(N_full-N)*h, x_opt[2,:], xlims=(-0.1, N_full*h*1.01), label="x₂(k)", xlabel="k", ylabel="x₂(k)", markershape=:circle, markersize=2, lw=2)#, linetype=:steppost)
+
+for (k, x_pred) in enumerate(x_pred_full)
+    plot!(p22, (k-1)*h:h:(k-1)*h+h*size(x_pred,2)-h, x_pred[2,:], label="", markershape=:diamond, markersize=1, lw=1, linecolor=:gray, alpha=0.5)
+end
+
+p3 = plot(0:h:(N_full-N-1)*h, u_opt_full, xlims=(-0.1, N_full*h*1.01), label="u(k)", xlabel="k", ylabel="u(k)", markershape=:circle, markersize=2, lw=2)#, linetype=:steppost)    
+
+for (k, u_pred) in enumerate(u_pred_full)
+    plot!(p3, (k-1)*h:h:(k-1)*h+h*(length(u_pred)-1), u_pred, label="", markershape=:diamond, markersize=1, lw=1, linecolor=:gray, alpha=0.5)
+end
+
+display(plot(p21, p22, p3, layout=(3,1)))
+```
+
+:::
+
 Previously we have learnt how to rewrite this finite-horizon optimal control problem as a QP problem, which can then be solved with a dedicated QP solver. However, it is worth analyzing the case without the inequality constraints. We know that we can formulate a system of linear equations and solvem, which we formally write at
 $$
 \begin{bmatrix} \bm u_{t|t} \\ \bm u_{t+1|t} \\ \vdots \\ \bm u_{t+N-1|t} \end{bmatrix}
@@ -323,7 +431,7 @@ Another strategy for reducing the number of control variables is known as *move 
 
 ## Open questions (for us at this moment)
 
-- Can the stability of a closed-loop system with an MPC controller be guaranteed? Even in the linear case we cannot just have a look at some poles to make a conclusion.
-- What is the role of the terminal state cost in the MPC problem? And how shall we choose it? Apparently, if the original time horizon is finite but very long (say, 1000), with the prediction horizon set to 20, we can hardly argue that the corresponding term in the MPC cost function expresses our requirements on the behaviour of the system at time 1000.
+- Can the stability of a closed-loop system with an MPC controller be guaranteed? Even in the case of a linear system with no constraints we cannot just have a look at some poles to make a conclusion.
+- What is the role of the terminal state cost in the MPC problem? And how shall we choose it? Apparently, if the original time horizon is finite but very long (say, 1000), with the prediction horizon set to 20, we can hardly argue that the corresponding term in the MPC cost function expresses our requirements on the behaviour of the system at time 1000. Even less so if the original problem consider and infinite time horizon.
 
 We are going to come back to these after we investigate the other two approaches to discrete-time optimal control – the indirect approach and the dynamical programming.
