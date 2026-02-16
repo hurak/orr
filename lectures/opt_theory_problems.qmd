@@ -163,7 +163,7 @@ where $\mathcal{K}$ is a cone in $\mathbb R^n$.
 
 ::: {.callout-tip}
 ## Inequality interpreted as belonging to a cone
-A fundamental idea unrolled here: the inequality $\bm x\geq 0$ can be interpreted as $\bm x$ belonging to a componentwise nonegative cone, that is $\bm x \in \mathbb R_+^n$. What if some other cone $\mathcal K$ is considered? What would be the interpretation of the inequality then?
+A fundamental idea unrolled here: the inequality $\bm x\geq 0$ can be interpreted as $\bm x$ belonging to a componentwise nonnegative cone, that is $\bm x \in \mathbb R_+^n$. What if some other cone $\mathcal K$ is considered? What would be the interpretation of the inequality then?
 :::
 
 Sometimes in order to emphasize that the inequality is induced by the cone $\mathcal K$, we write it as $\geq_\mathcal{K}$. Another convention – the one we actually adopt here – is to use another symbol $\succeq$ for the inequality to distinguish it from the componentwise meaning, assuming that the cone is understood from the context. We then interpret conic inequalities such as
@@ -301,15 +301,27 @@ $$
 &\quad \bm X \in \mathcal S_+^n, 
 \end{aligned}
 $$
-where the latter constraint is more often than not written as $\bm X \succeq 0$, understanding from the context that the cone of positive definite matrices is assumed.
+where the latter constraint is more often than not written as $\bm X \succeq 0$, understanding from the context that the cone of symmetric positive definite matrices is assumed.
+
+Similarly as in the case of LP, practical problems can come in non-standard form. In particular, the constraints can come in the form of linear (actually affine) matrix inequalities (LMI):
+$$
+\mathbf F_0 + \sum_{i=1}^n \mathbf F_i \bm X_i \mathbf G_i  \succ 0.
+$$
+
+A prominent example of an LMI in the context of control theory is the Lyapunov inequality for assymptotic stability of a linear time-invariant system $\dot{\bm x} = \mathbf A \bm x$, specifically, $\mathbf A^\top \bm X + \bm X \mathbf A \prec 0$, where the optimization variable is the symmetric matrix $\bm  X = \bm X^\top$ and it is constrained to be positive definite, that is, $\bm X \succ 0$. To summarize, the two linear matrix inequalities that give conditions of asymptotic stability of an LTI system are
+$$
+\begin{aligned}
+\bm X &\succ 0,\\
+\mathbf A^\top \bm X + \bm X \mathbf A &\prec 0.
+\end{aligned}   
+$$
+
+Optimization problems with this kind of constraints are frequently encountered in control theory, and they can be solved efficiently using algorithms for semidefinite programming.
 
 #### Other conic programs
 
-We are not going to cover them here, but we only enumerate a few other cones useful in optimization: rotated second-order cone, exponential cone, power cone, ... A concise overview is in [@MOSEKModelingCookbook2024]
+We are not going to cover them here, but we only enumerate a few other cones useful in optimization: rotated second-order cone, exponential cone, power cone, ... A concise overview is in [@MOSEKModelingCookbook2024]. Indeed, we gain quite an advantage by reformulating optimization problems using cones, as we can then apply powerful algorithms for conic programming to solve them efficiently.
 
-### Geometric program (GP)
-
-#TODO: although of little immediate use in our course.
 
 ### Nonlinear program (NLP)
 
