@@ -281,19 +281,27 @@ The matrix is positive definite, so the stationary point is a minimum. In fact, 
 
 ```{julia}
 #| label: fig-quadratic_surface_minimum
-#| fig-cap: "Minimum of a quadratic function"
-#| fig-subcap:
-#|   - "Surface plot"
-#|   - "Contour plot"
-#| layout-ncol: 1
+#| fig-cap: "Quadratic function with a minimum"
+#| fig-subcap: 
+#|  - "Surface plot"
+#|  - "Contour plot"
+#| layout-ncol: 2
+
 f(x) = 1/2*dot(x,Q*x)+dot(x,r)
 x1_data = x2_data = -4:0.1:4;  
 f_data = [f([x1,x2]) for x2=x2_data, x1=x1_data];
 
 using Plots
-display(surface(x1_data,x2_data,f_data))
-contour(x1_data,x2_data,f_data)
-display(plot!([x_stationary[1]], [x_stationary[2]], marker=:circle, label="Stationary point"))
+
+# Create a 2x1 layout for the plots
+p1 = surface(x1_data, x2_data, f_data, xlabel="x₁", ylabel="x₂", zlabel="f(x)", colorbar=false)
+display(p1)
+
+# Create the second plot (contour)
+p2 = contour(x1_data, x2_data, f_data, xlabel="x₁", ylabel="x₂")
+# Add the stationary point to the contour plot
+scatter!([x_stationary[1]], [x_stationary[2]], marker=:circle, label="Stationary point")
+display(p2)
 ```
 :::
 
@@ -313,20 +321,27 @@ The matrix is indefinite, so the stationary point is a saddle point. Surface and
 
 ```{julia}
 #| label: fig-quadratic_surface_saddle
-#| fig-cap: "Saddle point of a quadratic function"
-#| fig-subcap:
-#|   - "Surface plot"
-#|   - "Contour plot"
-#| layout-ncol: 1
+#| fig-cap: "Quadratic function with a saddle point"
+#| fig-subcap: 
+#|  - "Surface plot"
+#|  - "Contour plot"
+#| layout-ncol: 2
+
 f(x) = 1/2*dot(x,Q*x)+dot(x,r)
 
 x1_data = x2_data = -4:0.1:4;  
 f_data = [f([x1,x2]) for x2=x2_data, x1=x1_data];
 
 using Plots
-display(surface(x1_data,x2_data,f_data))
-contour(x1_data,x2_data,f_data)
-display(plot!([x_stationary[1]], [x_stationary[2]], marker=:circle, label="Stationary point"))
+# Create a 2x1 layout for the plots
+p1 = surface(x1_data, x2_data, f_data, xlabel="x₁", ylabel="x₂", zlabel="f(x)", colorbar=false)
+display(p1)
+
+# Create the second plot (contour)
+p2 = contour(x1_data, x2_data, f_data, xlabel="x₁", ylabel="x₂")
+# Add the stationary point to the contour plot
+scatter!([x_stationary[1]], [x_stationary[2]], marker=:circle, label="Stationary point")
+display(p2)
 ```
 :::
 
@@ -344,25 +359,31 @@ eigvals(Q)
 The matrix `Q` is singular, which has two consequences: 
 
 - We cannot compute the stationary point since `Q` is not invertible. In fact, there is a whole line (a subspace) of stationary points. 
-- The matrix `Q` is positive semidefinite, which generally means that optimality cannot be concluded. But in this particular case of a quadratic function, there are no higher-order terms in the Taylor series expansion, so the stationary point is a minimum. 
+- The matrix `Q` is positive semidefinite, which generally means that optimality cannot be concluded. But in this particular case of a quadratic function, there are no higher-order terms in the Taylor series expansion, so the function attains the minimum at all stationary points. 
 
 Surface and contour plots of the function are shown below.
 
 ```{julia}
 #| label: fig-quadratic_surface_singular
-#| fig-cap: "Singular point of a quadratic function"
-#| fig-subcap:
-#|   - "Surface plot"
-#|   - "Contour plot"
-#| layout-ncol: 1
+#| fig-cap: "Quadratic function with a singular point"
+#| fig-subcap: 
+#|  - "Surface plot"
+#|  - "Contour plot"
+#| layout-ncol: 2
+
 f(x) = 1/2*dot(x,Q*x)+dot(x,r)
 
 x1_data = x2_data = -4:0.1:4;  
 f_data = [f([x1,x2]) for x2=x2_data, x1=x1_data];
 
 using Plots
-display(surface(x1_data,x2_data,f_data))
-display(contour(x1_data,x2_data,f_data))
+# Create a 2x1 layout for the plots
+p1 = surface(x1_data, x2_data, f_data, xlabel="x₁", ylabel="x₂", zlabel="f(x)", colorbar=false)
+display(p1) # This is only need here for Quarto to render the two subfigures side by side.
+
+# Create the second plot (contour)
+p2 = contour(x1_data, x2_data, f_data, xlabel="x₁", ylabel="x₂")
+display(p2)
 ```
 :::
 
@@ -386,20 +407,27 @@ This can also be visually confirmed by the surface and contour plots of the func
 
 ```{julia}
 #| label: fig-non-quadratic_surface_singular
-#| fig-cap: "Singular point of a non-quadratic function that turrns out to be a minimum"
-#| fig-subcap:
-#|   - "Surface plot"
-#|   - "Contour plot"
-#| layout-ncol: 1
+#| fig-cap: "Singular point of a non-quadratic function that turns out to be a minimum"
+#| fig-subcap: 
+#|  - "Surface plot"
+#|  - "Contour plot"
+#| layout-ncol: 2
+
 f(x) = x[1]^2 + x[2]^4
 
 x1_data = x2_data = -4:0.1:4;  
 f_data = [f([x1,x2]) for x2=x2_data, x1=x1_data];
 
 using Plots
-display(surface(x1_data,x2_data,f_data))
-contour(x1_data,x2_data,f_data)
-display(plot!([0.0], [0.0], marker=:circle, label="Stationary point"))
+# Create a 2x1 layout for the plots
+p1 = surface(x1_data, x2_data, f_data, xlabel="x₁", ylabel="x₂", zlabel="f(x)", colorbar=false)
+display(p1)
+
+# Create the second plot (contour)
+p2 = contour(x1_data, x2_data, f_data, xlabel="x₁", ylabel="x₂")
+# Add the stationary point to the contour plot
+scatter!([0.0], [0.0], marker=:circle, label="Stationary point")
+display(p2)
 ```
 :::
 
@@ -516,13 +544,14 @@ where $\mathbf g(\bm x) \in \mathbb R^p$ defines a set of $p$ inequalities.
 ### First-order necessary condition of optimality
 
 Karush-Kuhn-Tucker (KKT) conditions of optimality are then composed of these four (sets of) conditions
-$$
+$$\boxed{
 \begin{aligned}
  \nabla f(\bm x) + \sum_{i=1}^p \mu_i \nabla g_i(\bm x) &= \mathbf 0,\\
  \mathbf{g}(\bm{x}) &\leq \mathbf 0,\\
- \mu_i g_i(\bm x) &= 0,\quad i = 1,2,\ldots, m\\
- \mu_i &\geq 0,\quad   i = 1,2,\ldots, m.
+ \mu_i &\geq 0,\quad   i = 1,2,\ldots, m,\\
+ \mu_i g_i(\bm x) &= 0,\quad i = 1,2,\ldots, m.
 \end{aligned}
+}
 $$
 
 ## Equality and inequality constraints
@@ -538,14 +567,15 @@ $$
 
 The KKT conditions
 
-$$
+$$\boxed{
 \begin{aligned}
  \nabla f(\bm x) + \sum_{i=1}^m \lambda_i \nabla h_i(\bm x) + \sum_{i=1}^p \mu_i \nabla g_i(\bm x) &= \mathbf 0\\
  \mathbf{h}(\mathbf{x}) &= \mathbf 0\\
  \mathbf{g}(\mathbf{x}) &\leq \mathbf 0\\
- \mu_i g_i(\bm x) &= 0,\quad i = 1,\ldots, m\\
- \mu_i &\geq 0,\quad   i = 1,\ldots, m.
+ \mu_i &\geq 0,\quad   i = 1,\ldots, m,\\
+ \mu_i g_i(\bm x) &= 0,\quad i = 1,\ldots, m.
 \end{aligned}
+}
 $$
 
 ## Duality
@@ -585,4 +615,4 @@ $$
 q(\bm \lambda^\star,\bm \mu^\star) = f(\bm x^\star).
 $$ 
 
-This related dual optimization problem can have some advantages for development of both theory and algorithms. 
+This related dual optimization problem can have some advantages for development of both theory and algorithms.
