@@ -12,6 +12,9 @@ format:
 crossref:
   fig-prefix: Fig. 
   eq-prefix: Eq.
+execute:
+    cache: true
+    daemon: false
 engine: julia
 ---
 
@@ -214,11 +217,144 @@ Apparently, these are roughly the "cutt-off" values of $h$.
 
 ## Automatic (also Algorithmic) differentiation (AD) methods
 
-#TODO: in the meantime, have a look at [@grosNumericalOptimalControl2022, Chapter 5], or [@martinsEngineeringDesignOptimization2022, Section 6.6], or [@kochenderferAlgorithmsOptimization2019, Section 2].
+Here we only sketch the key ideas. Details can be found at [@grosNumericalOptimalControl2022, Chapter 5], or [@martinsEngineeringDesignOptimization2022, Section 6.6], or [@kochenderferAlgorithmsOptimization2019, Section 2].
 
 ### Forward AD
 
-#TODO
+:::{#exm-forward-ad}
+
+We explain the essence of the Forward AD by means of an example. Consider the scalar function $f(\bm x) = x_1x_2 + \sin(x_1)$ of a vector argument $\bm x\in \mathbb R^2$. We want to compute the derivatives with respect to the two inputs $\nabla f(\bm x) = \begin{bmatrix}\frac{\partial f}{\partial x_1} \\ \frac{\partial f}{\partial x_2} \end{bmatrix}$ at a particular value of $x_1$ and $x_2$, say, $x_1=2$ and $x_2=3$.
+
+We will find use of the computational graph of the function as is in @fig-computational-tree-forward-ad. 
+```{dot}
+//| label: fig-computational-tree-forward-ad
+//| fig-cap: Computational tree for the example
+//| fig-height: 200px
+//| fig-width: 5.5
+digraph G {
+    bgcolor = "transparent";
+    rankdir = "LR";
+    node [shape = rectangle, width = 0.3, height = 0.3, fixedsize = true]; x₁; x₂; y;
+    node [shape = circle, width = 0.5, height = 0.5, fixedsize = true]; sin;
+    node [shape = circle, label ="×", width = 0.5, height = 0.5, fixedsize = true]; mul;
+    node [shape = circle, label = "+", width = 0.5, height = 0.5, fixedsize = true]; plus;
+    x₁ -> mul [label = "v₁"];
+    x₂ -> mul [label = "v₂"];
+    x₁ -> sin [label = "v₁"];
+    mul -> plus [label = "v₃"];
+    sin -> plus [label = "v₄"];
+    plus -> y [label = "v₅"];
+}
+```
+The nodes correspond to the unary or binary operations and we label the edges corresponding to the flow of data with auxiliary $v_i$ variables. For given values of $x_1$ and $x_2$, we can evaluate the function by evaluating the values of the auxiliary variables in the order of their dependencies, that is, first $v_1$ and $v_2$, then $v_3$ and $v_4$, and finally $v_5$. For the the particular values of $x_1$ and $x_2$ given above, we have $v_1=2$, $v_2=3$, $v_3=6$, $v_4=\sin(2)$, and $v_5=6+\sin(2)$ as in the figure below.
+
+```{dot}
+//| label: fig-computational-tree-forward-ad-with-values
+//| fig-cap: Computational tree for the example, the values of the auxiliary variables are shown for the particular values of $x_1$ and $x_2$.
+//| fig-height: 200px
+//| fig-width: 5.5
+digraph G {
+    bgcolor = "transparent";
+    rankdir = "LR";
+    node [shape = rectangle, width = 0.3, height = 0.3, fixedsize = true]; x₁; x₂; y;
+    node [shape = circle, width = 0.5, height = 0.5, fixedsize = true]; sin;
+    node [shape = circle, label ="×", width = 0.5, height = 0.5, fixedsize = true]; mul;
+    node [shape = circle, label = "+", width = 0.5, height = 0.5, fixedsize = true]; plus;
+    x₁ -> mul [label = "v₁=2"];
+    x₂ -> mul [label = "v₂=3"];
+    x₁ -> sin [label = "v₁=2"];
+    mul -> plus [label = "v₃=6"];
+    sin -> plus [label = "v₄=sin(2)"];
+    plus -> y [label = "v₅=6+sin(2)"];
+}
+```
+
+
+We now go after the derivatives. In forward AD we computed the derivatives $\frac{\partial f}{\partial x_1}$ and $\frac{\partial f}{\partial x_2}$ at the given values of $x_1$ and $x_2$ *one by one*. 
+
+We invoke the chain rule for differentiation of composite functions to compute the derivative $\frac{\partial y}{\partial x_1}$ first. Namely,
+$$
+\begin{aligned}
+\frac{\partial y}{\partial x_1} &= \frac{\partial y}{\partial v_5}\frac{\partial v_5}{\partial x_1}\\
+&= \frac{\partial y}{\partial v_5}\left(\frac{\partial v_5}{\partial v_3}\frac{\partial v_3}{\partial x_1} + \frac{\partial v_5}{\partial v_4}\frac{\partial v_4}{\partial x_1}\right)\\
+&= \frac{\partial y}{\partial v_5}\left(\frac{\partial v_5}{\partial v_3}\left(\frac{\partial v_3}{\partial v_1}{\color{blue}\frac{\partial v_1}{\partial x_1}} + \frac{\partial v_3}{\partial v_2}{\color{blue}\frac{\partial v_2}{\partial x_1}}\right) + \frac{\partial v_5}{\partial v_4}\frac{\partial v_4}{\partial v_1}{\color{blue}\frac{\partial v_1}{\partial x_1}}\right)
+\end{aligned}
+$$
+
+We can now recognize that $\frac{\partial v_1}{\partial x_1}=1$ and that $\frac{\partial v_2}{\partial x_1}=0$. We can fill these into the above formula. 
+
+Note that we can write the other derivatives $\frac{\partial v_i}{\partial v_j}$ upon inspection of the computational graph, since each node corresponds to a simple unary or binary elementary operation.  
+
+But we structure this computation as follows. We denote $\frac{\partial v_i}{\partial x}$ as $\dot v_i$. We can therefore write $\dot v_1 = 1$ and $\dot v_2 = 0$ as the first step (this is also called the *seed*). And referring to the computational graph, we keep determining $\dot v_i$ for all the higher $i=3, 4, 5$, see the graph and the table below. 
+
+```{dot}
+//| label: fig-computational-tree-forward-ad-with-values-and-derivatives
+//| fig-cap: Computational tree for the example. Associated with each edge is not only the value $v_i$ but also the derivative $\dot v_i$.
+digraph G {
+    bgcolor = "transparent";
+    rankdir = "LR";
+
+    node [shape = rectangle, width = 0.3, height = 0.3, fixedsize = true]; x₁; x₂; y;
+    node [shape = circle, width = 0.5, height = 0.5, fixedsize = true]; sin;
+    node [shape = circle, label ="×", width = 0.5, height = 0.5, fixedsize = true]; mul;
+    node [shape = circle, label = "+", width = 0.5, height = 0.5, fixedsize = true]; plus;
+
+    x₁ -> mul [label=<
+        <TABLE BORDER="0" CELLBORDER="0" CELLPADDING="0">
+            <TR><TD>v₁</TD></TR>
+            <TR><TD><FONT COLOR="red">v̇₁</FONT></TD></TR>
+        </TABLE>
+    >];
+
+    x₂ -> mul [label=<
+        <TABLE BORDER="0" CELLBORDER="0" CELLPADDING="0">
+            <TR><TD>v₂</TD></TR>
+            <TR><TD><FONT COLOR="red">v̇₂</FONT></TD></TR>
+        </TABLE>
+    >];
+
+    x₁ -> sin [label=<
+        <TABLE BORDER="0" CELLBORDER="0" CELLPADDING="0">
+            <TR><TD>v₁</TD></TR>
+            <TR><TD><FONT COLOR="red">v̇₁</FONT></TD></TR>
+        </TABLE>
+    >];
+
+    mul -> plus [label=<
+        <TABLE BORDER="0" CELLBORDER="0" CELLPADDING="0">
+            <TR><TD>v₃</TD></TR>
+            <TR><TD><FONT COLOR="red">v̇₃</FONT></TD></TR>
+        </TABLE>
+    >];
+
+    sin -> plus [label=<
+        <TABLE BORDER="0" CELLBORDER="0" CELLPADDING="0">
+            <TR><TD>v₄</TD></TR>
+            <TR><TD><FONT COLOR="red">v̇₄</FONT></TD></TR>
+        </TABLE>
+    >];
+
+    plus -> y [label=<
+        <TABLE BORDER="0" CELLBORDER="0" CELLPADDING="0">
+            <TR><TD>v₅</TD></TR>
+            <TR><TD><FONT COLOR="red">v̇₅</FONT></TD></TR>
+        </TABLE>
+    >];
+}
+```
+
+| $v_i$ | $\dot v_i$ |
+| --- | --- |
+| $v_1 = x_1 = 2$ | ${\color{blue}\dot v_1 = 1}$ |
+| $v_2 = x_2 = 3$ | ${\color{blue}\dot v_2 = 0}$ |
+| $v_3 = v_1\cdot v_2 = 6$ | $\dot v_3 = \dot v_1 v_2 + v_1 \dot v_2 = 3$ |
+| $v_4 = \sin(v_1) = \sin(2)$ | $\dot v_4 = \cos(v_1)\cdot \dot v_1 = \cos(2)$ |
+| $v_5 = v_3 + v_4 = 6+\sin(2)$ | $\dot v_5 = \dot v_3 + \dot v_4 = 3+\cos(2)$ |
+
+Voila! We have obtained the value of the derivative $\frac{\partial y}{\partial x_1} = \dot v_5 = 3+\cos(2)$ at the given values of $x_1$ and $x_2$.
+
+If we now want to compute the other derivative $\frac{\partial y}{\partial x_2}$, we need to repeat the whole procedure, but now with the seed $\dot v_1 = 0$ and $\dot v_2 = 1$. We will then obtain $\frac{\partial y}{\partial x_2} = \dot v_5 = 2$.
+:::
 
 #### Implementation of Forward AD by dual numbers
 
@@ -335,6 +471,112 @@ Compare with the "exact"
 ```
 :::
 
+An alternative interpretation to the above Forward AD procedure is that instead of the passes through the computational graph represented by scalar operations, we can think of the procedure as a composed vector function of vector arguments
+
+$$
+y = f(\bm x) = e(\mathbf g(\mathbf h(\bm x))), 
+$$
+and 
+$$
+\begin{aligned}
+\bm u &= \mathbf h(\bm x) = \begin{bmatrix}x_1\\ x_2\\ \sin(x_1)\end{bmatrix},\\
+\bm v &= \mathbf g(\bm u) = \begin{bmatrix}u_1\cdot u_2\\ u_3\end{bmatrix},\\
+y &= e(\bm v) = v_1 + v_2.
+\end{aligned}
+$$
+The forward AD procedure then corresponds to the following application of the chain rule
+
+$$
+\frac{\partial e(\mathbf g (\mathbf h(\boldsymbol x)))}{\partial \boldsymbol x} =\frac{\partial }{\partial \boldsymbol x}(e\circ\mathbf g \circ \mathbf h)(\boldsymbol x)  = \underbrace{\frac{\partial e(\boldsymbol v)}{\partial \boldsymbol v}}_{1\times 2} \underbrace{\frac{\partial \mathbf g(\boldsymbol u)}{\partial \boldsymbol u}}_{2\times 3} \underbrace{\frac{\partial \mathbf h(\boldsymbol x)}{\partial \boldsymbol x}}_{3\times 2}.
+$$
+
+The three terms are Jacobians of the involved functions, generally rectangular matrices. Apparently, we can proceed in two ways in order to get the product of these three. We can first compute the product of the second and the third Jacoabians
+
+$$
+\underbrace{\frac{\partial e(\boldsymbol v)}{\partial \boldsymbol v}}_{1\times 2} \left(\underbrace{\frac{\partial \mathbf g(\boldsymbol u)}{\partial \boldsymbol u}}_{2\times 3} \underbrace{\frac{\partial \mathbf h(\boldsymbol x)}{\partial \boldsymbol x}}_{3\times 2}\right)
+$$
+or we can first compute the product of the first and the second Jacobians
+$$
+\left(\underbrace{\frac{\partial e(\boldsymbol v)}{\partial \boldsymbol v}}_{1\times 2} \underbrace{\frac{\partial \mathbf g(\boldsymbol u)}{\partial \boldsymbol u}}_{2\times 3}\right) \underbrace{\frac{\partial \mathbf h(\boldsymbol x)}{\partial \boldsymbol x}}_{3\times 2}.
+$$
+
+The two are mathematically equivalent, but the computational cost of the two is different. We will now leave it up to you to figure out why the latter is computationally cheaper in our particular case. 
+
+We only emphasize that the forward AD corresponds to the former. The reverse AD that we are going to introduce now corresponds to the latter.
+
 ### Reverse AD
 
-#TODO
+The reverse AD is a bit less intuitive, but it is more efficient than the forward AD when then number of inputs is larger than the number of outputs. The extreme case is a scalar function of a vector argument.
+
+Similarly as in the forward AD, we introduce an auxilliary variable correspondig to the derivative, but this time the notation is different 
+$$
+\bar v_i = \frac{\partial y}{\partial v_i}.
+$$
+
+We first fill in all the values of $v_i$ starting with the inputs, proceeding to the right. Once we reach the output, we set $\bar v_5 = \frac{\partial y}{\partial v_5} = 1$ as the seed. We then proceed to the left, filling in all the $\bar v_i$ until we reach the inputs. The value of $\bar v_1$ and $\bar v_2$ at the end of this procedure will give us the desired derivatives $\frac{\partial y}{\partial x_1}$ and $\frac{\partial y}{\partial x_2}$, respectively. 
+
+```{dot}
+//| label: fig-computational-tree-reverse-ad-with-values-and-derivatives
+//| fig-cap: Computational tree for the example. Associated with each edge is not only the value $v_i$ but also the derivative $\bar v_i$.
+digraph G {
+    bgcolor = "transparent";
+    rankdir = "LR";
+
+    node [shape = rectangle, width = 0.3, height = 0.3, fixedsize = true]; x₁; x₂; y;
+    node [shape = circle, width = 0.5, height = 0.5, fixedsize = true]; sin;
+    node [shape = circle, label ="×", width = 0.5, height = 0.5, fixedsize = true]; mul;
+    node [shape = circle, label = "+", width = 0.5, height = 0.5, fixedsize = true]; plus;
+
+    x₁ -> mul [label=<
+        <TABLE BORDER="0" CELLBORDER="0" CELLPADDING="0">
+            <TR><TD>v₁</TD></TR>
+            <TR><TD><FONT COLOR="red">v̄₁</FONT></TD></TR>
+        </TABLE>
+    >];
+
+    x₂ -> mul [label=<
+        <TABLE BORDER="0" CELLBORDER="0" CELLPADDING="0">
+            <TR><TD>v₂</TD></TR>
+            <TR><TD><FONT COLOR="red">v̄₂</FONT></TD></TR>
+        </TABLE>
+    >];
+
+    x₁ -> sin [label=<
+        <TABLE BORDER="0" CELLBORDER="0" CELLPADDING="0">
+            <TR><TD>v₁</TD></TR>
+            <TR><TD><FONT COLOR="red">v̄₁</FONT></TD></TR>
+        </TABLE>
+    >];
+
+    mul -> plus [label=<
+        <TABLE BORDER="0" CELLBORDER="0" CELLPADDING="0">
+            <TR><TD>v₃</TD></TR>
+            <TR><TD><FONT COLOR="red">v̄₃</FONT></TD></TR>
+        </TABLE>
+    >];
+
+    sin -> plus [label=<
+        <TABLE BORDER="0" CELLBORDER="0" CELLPADDING="0">
+            <TR><TD>v₄</TD></TR>
+            <TR><TD><FONT COLOR="red">v̄₄</FONT></TD></TR>
+        </TABLE>
+    >];
+
+    plus -> y [label=<
+        <TABLE BORDER="0" CELLBORDER="0" CELLPADDING="0">
+            <TR><TD>v₅</TD></TR>
+            <TR><TD><FONT COLOR="red">v̄₅</FONT></TD></TR>
+        </TABLE>
+    >];
+}
+```
+
+The table documents the computation. The left column is evaluated from the top to the bottom, while the right column is evaluated from the bottom to the top.
+
+| $v_i$ | $\bar v_i$ |
+| --- | --- |
+| $v_1 = x_1 = 2$ | $\bar v_1 \coloneqq \frac{\partial y}{\partial v_1} = \underbrace{\frac{\partial y}{\partial v_3}}_{\bar v_3} \frac{\partial v_3}{\partial v_1} + \underbrace{\frac{\partial y}{\partial v_4}}_{\bar v_4} \frac{\partial v_4}{\partial v_1} = 1\cdot 3 + 1\cdot \cos(2) = 3 + \cos(2)$ |
+| $v_2 = x_2 = 3$ | $\bar v_2 \coloneqq \frac{\partial y}{\partial v_2} = \underbrace{\frac{\partial y}{\partial v_3}}_{\bar v_3} \frac{\partial v_3}{\partial v_2} = 1 \cdot v_1 = 2$ |
+| $v_3 = v_1\cdot v_2 = 6$ | $\bar v_3 \coloneqq \frac{\partial y}{\partial v_3} = \underbrace{\frac{\partial y}{\partial v_5}}_{\bar v_5} \frac{\partial v_5}{\partial v_3} = 1 \cdot 1 = 1$ |
+| $v_4 = \sin(v_1) = \sin(2)$ | $\bar v_4 \coloneqq \frac{\partial y}{\partial v_4} = \underbrace{\frac{\partial y}{\partial v_5}}_{\bar v_5} \frac{\partial v_5}{\partial v_4} = 1 \cdot 1 = 1$ |
+| $v_5 = v_3 + v_4 = 6+\sin(2)$ | $\bar v_5 \coloneqq \frac{\partial y}{\partial v_5} = 1$ |
