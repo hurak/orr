@@ -577,3 +577,7 @@ The table documents the computation. The left column is evaluated from the top t
 | $v_3 = v_1\cdot v_2 = 6$ | $\bar v_3 \coloneqq \frac{\partial y}{\partial v_3} = \underbrace{\frac{\partial y}{\partial v_5}}_{\bar v_5} \frac{\partial v_5}{\partial v_3} = 1 \cdot 1 = 1$ |
 | $v_4 = \sin(v_1) = \sin(2)$ | $\bar v_4 \coloneqq \frac{\partial y}{\partial v_4} = \underbrace{\frac{\partial y}{\partial v_5}}_{\bar v_5} \frac{\partial v_5}{\partial v_4} = 1 \cdot 1 = 1$ |
 | $v_5 = v_3 + v_4 = 6+\sin(2)$ | $\bar v_5 \coloneqq \frac{\partial y}{\partial v_5} = 1$ |
+
+Voila! We have obtained the value of the derivative $\frac{\partial y}{\partial x_1} = \bar v_1 = 3+\cos(2)$ and $\frac{\partial y}{\partial x_2} = \bar v_2 = 2$ at the given values of $x_1$ and $x_2$, both as the result of the single (backward) pass through the computational graph (preceeded by the single forward pass to compute the values).
+
+We need to emphasize that our explanation of the AD method is really just very introductory. There are many details that we have not covered. Most often than not we are going to use the AD functionality provided by some library, such as `ForwardDiff.jl` for forward AD and `ReverseDiff.jl` or `Zygote.jl` for reverse AD. 
