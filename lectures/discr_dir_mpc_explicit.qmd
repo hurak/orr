@@ -16,23 +16,35 @@ engine: julia
 
 Model predictive control (MPC) is not computationally cheap (compared to, say, PID or LQG control) as it requires solving optimization problem – typically a quadratic program (QP) - online. The optimization solver needs to be a part of the controller. 
 
-There is an alternative, though, at least in some cases. It is called *explicit MPC*. The computationally heavy optimization is only perfomed only during the design process and the MPC controller is then implemented just as an affine state feedback
+There is an alternative, though, at least in the case of a quadratic cost and a constrained linear system. It is called *explicit MPC*. The computationally heavy optimization is only performed during the design process and the MPC controller is then implemented just as an affine state feedback
 
 $$\boxed{
 \bm u_k(\bm x_k) = \mathbf F^i \bm x_k + \mathbf g^i,\; \text{if}\; \bm x_k\in \mathcal R^i,}
 $$
-where $\mathcal R^i, \; i=1, 2, \ldots, p$ are polyhedral regions, into which the state space $\mathbb R^n$ is partitioned, and $\mathbf F^i$ and $\mathbf g^i$ are the coefficient matrices and vectors that parameterize the affine state feedback controller in that region. 
+where $\mathbf F^i$ and $\mathbf g^i$ are the coefficient matrices and vectors that parameterize the affine state feedback controller, and $\mathcal R^i, \; i=1, 2, \ldots, p$ are polyhedral regions, into which the state space $\mathbb R^n$, or more realistically its subset $\mathcal X \subset \mathbb R^n$ over which the control is considered, is partitioned, that is, $ \mathcal X = \bigcup_{i=1}^p \mathcal R^i$. The regions $\mathcal R^i$ are polygonal, that is, they can be characterized by a set of linear inequalities:
+$$\boxed{   
+\mathcal R^i = \{\bm x \in \mathbb R^n \;|\; \mathbf H^i \bm x \leq \mathbf k^i \}.}
+$$
 
-The regions $\mathcal R^i$ and the corresponding coefficients $\mathbf F^i$ and $\mathbf g^i$ are determined during the offline design process. Which set of coefficients is chosen is determined online (in real time) based on which region $\mathcal R^i$ the state $\bm x_k$ is located in. 
+The matrix and vector coefficients $\mathbf F^i, \mathbf g^i, \mathbf H^i, \mathbf k^i$ for $i=1, \ldots, p$ are determined during the offline design process. 
 
+What remains to be done online (in real time) is to determine the region $\mathcal R^i$ in which the current state $\bm x_k$ is located, and then apply the corresponding affine state feedback law. 
+ 
 ## Multiparametric programming
 
 The key technique for explicit MPC is *multi-parametric programming*. Consider the following optimization problem
 
 $$
-J^\star(\bm x) = \inf_{\bm z\in \mathbb R^m} J(\bm z;\bm x), 
+J^\star(\bm x) = \inf_{\bm u\in \mathbb R^m} J(\bm u;\bm x), 
 $$
-where $\bm z\in \mathbb R^m$ is an optimization (vector) variable, while $\bm x\in \mathbb R^n$ is a vector of parameters (it is a common notational convention to separate variables and parameters). For a given parameter $\bm x$, the cost function $J$ is to be minimized. We now want to study how the optimal cost $J^\star$ depends on the parameter. For a scalar parameter, this task is called *parametric programming*, for vector parameters, the name of the problem changes to *multiparametric programming*.
+where $\bm u\in \mathbb R^m$ is an optimization (vector) variable, while $\bm x\in \mathbb R^n$ is a vector of parameters.
+
+::: {.callout-tip}
+### Using a semicolon in function notation
+It is a common notational convention to separate variables and parameters using the semicolon.
+:::
+
+For a given parameter $\bm x$, the cost function $J$ is to be minimized. We now want to study how the optimal cost depends on the parameter. For a scalar parameter, this task is called *parametric programming*, for vector parameters, the name of the problem changes to *multiparametric programming*.
 
 ::: {#exm-parametric-program}
 ## Parametric programming
@@ -40,67 +52,67 @@ where $\bm z\in \mathbb R^m$ is an optimization (vector) variable, while $\bm x\
 Consider the following cost function $J(z;x)$ in $z\in\mathbb R$, parameterized by $x\in \mathbb R$. The optimization variable $z$ is subject to an inequality constraint, and this constraint is also parameterized by $x$.
 $$
 \begin{aligned}
-J(z;x) &= \frac{1}{2} z^2 + 2zx + 2x^2 \\
-\text{subject to} &\quad  z \leq 1 + x.
+J(u;x) &= \frac{1}{2} u^2 + 2ux + 2x^2 \\
+\text{subject to} &\quad  u \leq 1 + x.
 \end{aligned}
 $$
 
 In this simple case we can aim at analytical solution. We proceed in the standard way – we introduce a Lagrange multiplicator $\lambda$ and form the augmented cost function
 $$
-L(z,\lambda; x) = \frac{1}{2} z^2 + 2zx + 2x^2 + \lambda (z-1-x).
+L(u,\lambda; x) = \frac{1}{2} u^2 + 2ux + 2x^2 + \lambda (u-1-x).
 $$
 
 The necessary conditions of optimality for the inequality-constrained problem come in the form of KKT conditions
 $$
 \begin{aligned}
-z + 2x + \lambda &= 0,\\
-z - 1 - x &\leq  0,\\
+u + 2x + \lambda &= 0,\\
+u - 1 - x &\leq  0,\\
 \lambda & \geq 0,\\
-\lambda (z - 1 - x) &= 0.
+\lambda (u - 1 - x) &= 0.
 \end{aligned}
 $$
 
-The last condition – the complementarity condition – gives rise to two scenarios: one corresponding to $\lambda = 0$, and the other corresponding to $z - 1 - x = 0$. We consider them separately below.
+The last condition – the complementarity condition – gives rise to two scenarios: one corresponding to $\lambda = 0$, and the other corresponding to $u - 1 - x = 0$. We consider them separately below.
 
 After substituting $\lambda = 0$ into the KKT conditions, we get 
 $$
 \begin{aligned}
-z + 2x &= 0,\\
-z - 1 - x & \leq  0.
+u + 2x &= 0,\\
+u - 1 - x & \leq  0.
 \end{aligned}
 $$
 
-From the first equation we get how $z$ depends on $x$, and from the second we obtain a bound on $x$. Finally, we can also substitute the expression for $z$ into the cost function $J$ to get the optimal cost $J^\star$ as a function of $x$. All these are summarized here
+From the first equation we get how $u$ depends on $x$, and from the second we obtain a bound on $x$. Finally, we can also substitute the expression for $u$ into the cost function $J$ to get the optimal cost $J^\star$ as a function of $x$. All these are summarized here
 $$
 \begin{aligned}
-z &= -2x,\\
+u &= -2x,\\
 x & \geq -\frac{1}{3},\\
 J^\star(x) &= 0.
 \end{aligned}
 $$
 
-Now, the other scenario. Upon substituting $z - 1 - x = 0$ into the KKT conditions we get 
+Now, the other scenario. Upon substituting $u - 1 - x = 0$ into the KKT conditions we get 
 $$
 \begin{aligned}
-z + 2x + \lambda &= 0,\\
-z - 1 - x &=  0,\\
+u + 2x + \lambda &= 0,\\
+u - 1 - x &=  0,\\
 \lambda & \geq 0.
 \end{aligned}
 $$
 
-From the second equation we get the expression for $z$ in terms of $x$, substituting into the first equation and invoking the condition on nonnegativity of $\lambda$ we get the bound on $x$ (not suprisingly it complements the one obtained in the previous scenario). Finally, substituting for $z$ in the cost function $J$ we get a formula for the cost $J^\star$ as a function of $x$.
+From the second equation we get the expression for $u$ in terms of $x$, substituting into the first equation and invoking the condition on nonnegativity of $\lambda$ we get the bound on $x$ (not suprisingly it complements the one obtained in the previous scenario). Finally, substituting for $u$ in the cost function $J$ we get a formula for the cost $J^\star$ as a function of $x$.
 
 $$
 \begin{aligned}
-z &= 1 + x,\\
-\lambda &= -z - 2x \geq 0 \quad \implies \quad x \leq -\frac{1}{3},\\
+u &= 1 + x,\\
+\lambda &= -u - 2x \geq 0 \quad \implies \quad x \leq -\frac{1}{3},\\
 J^\star(x) &= \frac{9}{2}x^2 + 3x + \frac{1}{2}.
 \end{aligned}
 $$
 
-The two scenarios can now be combined into a single piecewise affine function $z^\star(x)$
+The two scenarios can now be combined into a single piecewise affine function $u^\star(x)$
 $$
-z^\star(x) = \begin{cases}
+u^\star(x) = \begin{cases}
 1+x & \text{if } x \leq -\frac{1}{3},\\
 -2x & \text{if } x > -\frac{1}{3}.
 \end{cases}
@@ -111,14 +123,14 @@ $$
 #| fig-cap: "Piecewise affine dependence of the minimizer on the parameter"
 
 x = range(-1, 1, length=100)
-z(x) = x <= -1/3 ? 1 + x : -2x
+u(x) = x <= -1/3 ? 1 + x : -2x
 Jstar(x) = x <= -1/3 ? 9/2*x^2 + 3x + 1/2 : 0
 
 using Plots
-plot(x, z.(x), label="",lw=2)
+plot(x, u.(x), label="",lw=2)
 vline!([-1/3],line=:dash, label="")
 xlabel!("x")
-ylabel!("z⋆(x)")
+ylabel!("u⋆(x)")
 ```
 
 and a piecewise quadratic cost function $J^\star(x)$
@@ -146,6 +158,12 @@ ylabel!("J⋆(x)")
 #TODO
 :::
 
+### Software for multiparametric programming
+
+- [MPT3](https://www.mpt3.org/) – a toolbox for Matlab, functionality for explicit MPC.
+- [POP](https://parametric.tamu.edu/POP/) - a toolbox for Matlab, interfacing with YALMIP.
+- [ParametricDAQP.jl](https://github.com/darnstrom/ParametricDAQP.jl/) – a Julia package for multiparametric quadratic programming.
+
 ## Explicit MPC
 
 As we have discussed a few times, the cost of a finite-horizon optimal control problem is a function of the control trajectory $\bm u_0, \bm u_1, \ldots, \bm u_{N-1}$, while the initial state $\bm x_0$ is a parameter (not subject to optimization)
@@ -154,7 +172,7 @@ $$
 J\left(\begin{bmatrix}\bm u_0\\ \bm u_1\\ \vdots \\ \bm u_{N-1}\end{bmatrix}; \bm x_0\right) = \phi(\bm x_N) + \sum_{k=0}^{N-1} L(\bm x_k, \bm u_k).
 $$
 
-You may now perhaps appreciate our choice of notation in the previous paragraphs in that we used $\bm x$ as the parameter. It fits here perfectly. The state at the beginning of the time horizon over which the optimal control is computed is a parameter.
+You may now perhaps appreciate our choice of notation in the previous paragraphs in that we used $\bm x$ as the parameter. It fits here perfectly. The state at the beginning of the time horizon over which the optimal control is computed is a parameter, while the optimization is performed over the sequence of controls (control trajectory).
 
 Considering that the cost function is quadratic, and parameterized by a vector, we can apply the multiparametric programming techniquest to find the optimal control law as a function of the state (here playing the role of a vector parameter).
 

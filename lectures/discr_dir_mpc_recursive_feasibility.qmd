@@ -10,3 +10,588 @@ crossref:
   eq-prefix: Eq.
 engine: julia
 ---
+
+## Loosing the feasibility in MPC
+
+When introducing the idea of receding-horizon control, we took for granted that the optimization problem solved at each time step is feasible, that is, that it has a solution. However, this is not guaranteed in general. We illustrate it with the following example.
+
+:::{#exm-mpc-recursive-feasibility}
+## Recursive feasibility in MPC lost when the input constraints are too restrictive
+
+We consider the standard discrete-time LTI system with state and input constraints, and a quadratic cost, for which the matrix parameters are given as follows: 
+```{julia}
+#| code-fold: show
+#| output: false
+
+using LinearAlgebra # Needed for Diagonal.
+
+# System dynamics x(k+1) = A*x(k) + B*u(k):
+A = [1.0 1.0; 0 1.0]
+B = [0.4, 1.0]
+
+x_init = [-1.0, 1.0] # Initial state.
+
+# Quadratic cost function weights:
+Q = Diagonal([1.0, 1.0])
+R = 10.0
+
+# State constraints:
+x_min = [-1.0, -1.0]
+x_max = [1.0, 1.0]
+
+# Input constraints:
+u_max = 0.3 
+u_min = -u_max
+```
+
+We set the prediction horizon to $N=3$:
+```{julia}
+#| code-fold: false
+#| output: false
+N = 3               # Prediction horizon length.
+N_sim = N+10        # Total simulation length.
+h = 1.0             # Sampling time period (just for generality).
+```
+
+and simulate the response of the closed-loop system under the receding-horizon control for a total of 10 time steps. The results are shown in @fig-mpc-recursive-feasible. Apparently, the optimization problem solved at each time step is feasible. If we extend the simulation time even further, the feasibility is not lost.
+
+```{julia}
+#| code-fold: true
+#| label: fig-mpc-recursive-feasible
+#| fig-cap: "Recursively feasible MPC example. The red square represents the state constraints."
+
+using OSQP
+using JuMP
+
+rhocp = Model(OSQP.Optimizer)    # Defining the receding-horizon (RH) optimal control problem (OCP).
+set_silent(rhocp)
+
+n = size(A,1)                                               # Order of the system.
+
+# Building the optimization model for the receding-horizon optimal control problem RH-OCP:
+@variable(rhocp, x[1:n, 1:N+1])                             # State trajectory over the prediction horizon.
+@variable(rhocp, u_min <= u[1:N] <= u_max)                  # Control trajectory over the prediction horizon.
+@constraint(rhocp, [i=1:N+1], x_min .<= x[:,i] .<= x_max)   # State constraints.
+@constraint(rhocp, [i=1:N], x[:,i+1] == A*x[:,i] + B*u[i])
+fix(x[1,1], x_init[1])
+fix(x[2,1], x_init[2])
+@objective(rhocp, Min, sum(x[:,i]'*Q*x[:,i] + R*u[i]^2 for i=1:N) + x[:,N+1]'*Q*x[:,N+1])
+
+# Function that solves the RH OCP for the current state xₖ at time step k:
+function mpc_regulation(rhocp, xₖ, k, N)          
+    fix(x[1,1], xₖ[1])
+    fix(x[2,1], xₖ[2])  
+    optimize!(rhocp)
+    return value.(u), value.(x)
+end
+
+# Receding-horizon simulation:
+x_opt_full = [x_init,]
+u_opt_full = Float64[]
+x_pred_full = Vector{Matrix{Float64}}()
+u_pred_full = Vector{Vector{Float64}}()
+
+for k in 1:(N_sim-N)                                   # Receding-horizon simulation loop.  
+    xₖ = x_opt_full[end]                                # Current state.  
+    u_pred, x_pred = mpc_regulation(rhocp, xₖ, k, N)    # Optimal control sequence over the prediction horizon.
+    uₖ = u_pred[1]                                      # Apply only the first control input.
+    x⁺ = x_pred[:,2]                                    # Next state from the predicted trajectory.
+    push!(x_opt_full, x⁺)
+    push!(u_opt_full, uₖ)
+    push!(x_pred_full, x_pred)
+    push!(u_pred_full, u_pred)
+end
+
+x_opt = hcat(x_opt_full...)
+
+# Plotting the results:
+using Plots
+x = [x_min[1], x_max[1], x_max[1], x_min[1], x_min[1]]
+y = [x_min[2], x_min[2], x_max[2], x_max[2], x_min[2]]
+p1 = plot(x, y, color=:red, alpha=0.2, linewidth=2, legend=false, aspect_ratio=:equal)
+plot!(p1,x_opt[1,:], x_opt[2,:], color=:blue,label="x(k)", xlabel="x₁", ylabel="x₂", markershape=:circle, markersize=2, lw=2, aspect_ratio=:equal)
+for x_pred in x_pred_full
+    plot!(p1, x_pred[1,:], x_pred[2,:], label="", markershape=:diamond, markersize=1, lw=1, linecolor=:gray, alpha=0.5)
+end
+display(p1)
+```
+
+Now, we make the control input constraints a bit more restrictive. With anticipation of problems, we also shorten the simulation time to just two time steps. The results are shown in @fig-mpc-recursive-infeasible.
+```{julia}
+#| code-fold: false
+#| output: false
+
+# Input constraints:
+u_max = 0.25    
+u_min = -u_max
+
+# Simulation horizon shortened to just two time steps:
+N_sim = N+2     
+```
+
+```{julia}
+#| code-fold: true
+#| label: fig-mpc-recursive-infeasible
+#| fig-cap: "Recursively infeasible MPC example. The red square represents the state constraints."
+
+using OSQP
+using JuMP
+
+rhocp = Model(OSQP.Optimizer)    # Defining the receding-horizon (RH) optimal control problem (OCP).
+#set_silent(rhocp)
+
+n = size(A,1)                                               # Order of the system.
+
+# Building the optimization model for the receding-horizon optimal control problem RH-OCP:
+@variable(rhocp, x[1:n, 1:N+1])                             # State trajectory over the prediction horizon.
+@variable(rhocp, u_min <= u[1:N] <= u_max)                  # Control trajectory over the prediction horizon.
+@constraint(rhocp, [i=1:N+1], x_min .<= x[:,i] .<= x_max)   # State constraints.
+@constraint(rhocp, [i=1:N], x[:,i+1] == A*x[:,i] + B*u[i])
+fix(x[1,1], x_init[1])
+fix(x[2,1], x_init[2])
+@objective(rhocp, Min, sum(x[:,i]'*Q*x[:,i] + R*u[i]^2 for i=1:N) + x[:,N+1]'*Q*x[:,N+1])
+
+# Function that solves the RH OCP for the current state xₖ at time step k:
+function mpc_regulation(rhocp, xₖ, k, N)          
+    fix(x[1,1], xₖ[1])
+    fix(x[2,1], xₖ[2])  
+    optimize!(rhocp)
+    return value.(u), value.(x)
+end
+
+# Receding-horizon simulation:
+x_opt_full = [x_init,]
+u_opt_full = Float64[]
+x_pred_full = Vector{Matrix{Float64}}()
+u_pred_full = Vector{Vector{Float64}}()
+
+for k in 1:(N_sim-N)                                   # Receding-horizon simulation loop.  
+    xₖ = x_opt_full[end]                                # Current state.  
+    u_pred, x_pred = mpc_regulation(rhocp, xₖ, k, N)    # Optimal control sequence over the prediction horizon.
+    uₖ = u_pred[1]                                      # Apply only the first control input.
+    x⁺ = x_pred[:,2]                                    # Next state from the predicted trajectory.
+    push!(x_opt_full, x⁺)
+    push!(u_opt_full, uₖ)
+    push!(x_pred_full, x_pred)
+    push!(u_pred_full, u_pred)
+end
+
+x_opt = hcat(x_opt_full...)
+
+# Plotting the results:
+
+using Plots
+x = [x_min[1], x_max[1], x_max[1], x_min[1], x_min[1]]
+y = [x_min[2], x_min[2], x_max[2], x_max[2], x_min[2]]
+p1 = plot(x, y, color=:red, alpha=0.2, linewidth=2, legend=false, aspect_ratio=:equal)
+plot!(p1,x_opt[1,:], x_opt[2,:], color=:blue,label="x(k)", xlabel="x₁", ylabel="x₂", markershape=:circle, markersize=2, lw=2, aspect_ratio=:equal)
+for x_pred in x_pred_full
+    plot!(p1, x_pred[1,:], x_pred[2,:], label="", markershape=:diamond, markersize=1, lw=1, linecolor=:gray, alpha=0.5)
+end
+display(p1)
+```
+
+We can see in the figure that although two time steps of the simulation were expected, plotted is only the outcome of the first one. The reason is that after the first optimization, the horizon moved forward and the optimization on the new horizon became infeasible, and the outcome of the simulation are just `NaN` values:
+```{julia}
+#| code-fold: false
+x_opt_full
+```
+:::
+
+Losing the feasibility of the optimization problem solved at each time step is a major problem. Just imagine that the MPC controller is a component of an ABS or an ESP system in a car, and that the optimization becomes infeasible at some point. 
+
+In this section we study if we can guarantee that the optimization problem solved at each time step is feasible. The property that we are interested in is called *recursive feasibility*.
+
+*Recursive feasibility of the MPC problem* 
+: means that if the MPC optimization problem solved at the *k*th time step is feasible, then the problem solved at the (*k*+1)th time step is also feasible. 
+
+The crucial concept to ensure recursive feasibility is the *control invariant set*. 
+
+## Control invariant set
+
+First, let's denote the set of *admissible* (allowed) states as $\mathcal{X}$ and the set of admissible control inputs as $\mathcal{U}$. In other words, the sets $\mathcal{X}$ and $\mathcal{U}$ represent the contstraints in our optimization. 
+
+In the following, we restrict ourselves to linear systems modelled by $\bm x^+ = \mathbf A\bm x + \mathbf B\bm u$, but the concepts we are now going to introduce hold for general systems. 
+
+We start with the definition of a *precursor set*, also called *one-step backward reachable set*. 
+
+Precursor set of a controlled system
+: Corresponding to a set $\mathcal{S}$ in the state space, the *precursor set* $\text{Pre}(\mathcal{S})$ of a system  is defined as the set of states $\bm x\in\mathbb R^n$ for which there exists a control input $\bm u \in \mathcal U$ such that the next state $\bm x^+=\mathbf A\bm x+\mathbf B\bm u$ belongs to $\mathcal{S}$, that is, 
+$$\text{Pre}(\mathcal{S}) = \{\bm x\in\mathbb R^n \mid \exists \bm u\in\mathcal{U}: \mathbf A\bm x+\mathbf B\bm u \in \mathcal{S}\}.$$
+
+Now, we are even more interested in the restriction of this set to the admissible states, that is, the set $\text{Pre}(\mathcal{S}) \cap \mathcal{X}$.
+
+One-step controllable set
+: A subset of the precursor set that only contains states that are also in the feasible set $\mathcal{X}$, that is,
+$$\text{Pre}(\mathcal{S})\cap \mathcal{X} = \{\bm x\in\mathbb R^n \mid \exists \bm u\in\mathcal{U}: \mathbf A\bm x+\mathbf B\bm u \in \mathcal{S}, \bm x \in \mathcal{X}\}.$$
+
+In other words, the the-one step controllable set contains only the states from which the system can be controlled to the set $\mathcal{S}$ in one time step, while satisfying the state and input constraints.
+
+Instead of some arbitrary set $\mathcal{S}$, we are now interested in the one-step controllable set of the feasible set of states $\mathcal X$, that is, $\text{Pre}(\mathcal{X})\cap \mathcal{X}$.
+
+How can we compute it? Assume that the feasible set of states $\mathcal{X}$ and control inputs $\mathcal{U}$ are polyhedral sets, that is, they can be described by a finite number of linear inequalities
+$$
+\mathcal{X} = \{\bm x\in\mathbb R^n \mid \mathbf H_x \bm x \leq \mathbf h_x\}, \quad \mathcal{U} = \{\bm u\in\mathbb R^m \mid \mathbf H_u \bm u \leq \mathbf h_u\}.
+$$
+
+Then the one-step controllable set $\text{Pre}(\mathcal{X})\cap \mathcal{X}$ can be written as 
+$$\boxed{
+\text{Pre}(\mathcal{X})\cap \mathcal{X} = \left\{\bm x\in\mathbb R^n \mid \exists \bm u\in\mathbb R^m: \mathbf H_x \bm x \leq \mathbf h_x, \mathbf H_u \bm u \leq \mathbf h_u, \mathbf H_x(\mathbf A\bm x+\mathbf B\bm u) \leq \mathbf h_x\right\}.
+}
+$$ 
+
+For convenience, we write the inequalities explicitly here:
+$$
+\begin{bmatrix} \mathbf H_x & \mathbf 0 \\ \mathbf 0 & \mathbf H_u \\ \mathbf H_x \mathbf A & \mathbf H_x \mathbf B \end{bmatrix}
+\begin{bmatrix} \bm x \\ \bm u \end{bmatrix} \leq \begin{bmatrix} \mathbf h_x \\ \mathbf h_u \\ \mathbf H_x \mathbf h_x \end{bmatrix}.
+$$
+
+The inequalities define a polyhedron in the $(\bm x, \bm u)$-space and the one-step controllable set $\text{Pre}(\mathcal{X})\cap \mathcal{X}$ is the *projection* of this polyhedron onto the $\bm x$-space.
+
+::: {#exm-one-step-controllable-set}
+### One-step controllable set
+
+```{julia}
+#| code-fold: false
+#| output: false
+A = [1.5 0.0; 1.0 -1.5]
+B = [1.0, 0.0]
+umin, umax = -5.0, 5.0
+xmin, xmax = -10.0, 10.0
+```
+
+In the code below we use a high-level library [Polyhedra.jl](https://github.com/JuliaPolyhedra/Polyhedra.jl) for manipulation with polyhedra, but it was mainly for convenience when finally plotting the polyhedra, the computational task consists in nothing else than just composing the corresponding linear inequalities. 
+```{julia}
+#| code-fold: show
+#| label: fig-one-step-controllable-set
+#| fig-cap: "One-step controllable set Pre(X) ∩ X for the example system on top of the state constraints (the square) and the precursor set Pre(X)"
+
+using Polyhedra
+using CDDLib
+using LinearAlgebra
+using Plots
+
+"""
+    precursor_polyhedron(S, U, A, B, X=nothing; restrict_to_X=false)
+
+Compute Pre(S) = { x | ∃u∈U : A*x + B*u ∈ S } for polyhedra S and U.
+
+If restrict_to_X=true, computes Pre(S) ∩ X, where X must be provided.
+
+S, U (and X if provided) must be Polyhedra polyhedra in H-rep (or convertible).
+Returns a Polyhedra polyhedron in x-space.
+"""
+function precursor_polyhedron(S, U, A, B, X=nothing; restrict_to_X=false)
+    n = size(A, 1)
+    m = size(B, 2)
+
+    # Extract Hs, hs (for constraints Hs * (Ax + Bu) ≤ hs)
+    Hs = reduce(vcat, (hs.a' for hs in Polyhedra.halfspaces(S)))  # each hs.a is a vector
+    hs = [hs.β for hs in Polyhedra.halfspaces(S)]
+
+    # Extract Hu, hu (for constraints Hu * u ≤ hu)
+    Hu = reduce(vcat, (hs.a' for hs in Polyhedra.halfspaces(U)))
+    hu = [hs.β for hs in Polyhedra.halfspaces(U)]
+
+    # Variables are y = [x; u] ∈ R^(n+m)
+    # Constraint 1: Hu*u ≤ hu  -> [0  Hu] * [x;u] ≤ hu
+    C1 = hcat(zeros(size(Hu, 1), n), Hu)
+    d1 = hu
+
+    # Constraint 2: Hs*(A*x + B*u) ≤ hs -> [Hs*A  Hs*B] * [x;u] ≤ hs
+    C2 = hcat(Hs * A, Hs * B)
+    d2 = hs
+
+    # If restriction x ∈ X: Hx*x ≤ hx -> [Hx  0] * [x;u] ≤ hx
+    if restrict_to_X
+        @assert X !== nothing "X must be provided when restrict_to_X=true"
+        Hx = reduce(vcat, (hs.a' for hs in Polyhedra.halfspaces(X)))
+        hx = [hs.β for hs in Polyhedra.halfspaces(X)]
+        C3 = hcat(Hx, zeros(size(Hx, 1), m))
+        d3 = hx
+        C = vcat(C1, C2, C3)
+        d = vcat(d1, d2, d3)
+    else
+        C = vcat(C1, C2)
+        d = vcat(d1, d2)
+    end
+
+    # Build lifted polyhedron in (x,u)
+    P_lift = polyhedron(hrep(C, d), lib)
+
+    # Project onto x-coordinates (eliminate u variables at indices n+1:n+m)
+    PreS = eliminate(P_lift, (n+1):(n+m),FourierMotzkin())
+
+    return PreS
+end
+
+# H-representation of interval [umin, umax]
+# For u ∈ [umin, umax], we need:
+#   u ≤ umax  (equivalently:  [1]*u ≤ umax)
+#   u ≥ umin  (equivalently: [-1]*u ≤ -umin)
+lib = CDDLib.Library()
+U = polyhedron(hrep([HalfSpace([1.0], umax), HalfSpace([-1.0], -umin)]), lib)
+
+# H-representation of square [xmin, xmax]²
+# For x ∈ [xmin, xmax]², we need:
+#   x₁ ≤ xmax  →  [1, 0]'x ≤ xmax
+#   x₁ ≥ xmin  →  [-1, 0]'x ≤ -xmin
+#   x₂ ≤ xmax  →  [0, 1]'x ≤ xmax
+#   x₂ ≥ xmin  →  [0, -1]'x ≤ -xmin
+X = polyhedron(hrep([
+    HalfSpace([1.0, 0.0], xmax),
+    HalfSpace([-1.0, 0.0], -xmin),
+    HalfSpace([0.0, 1.0], xmax),
+    HalfSpace([0.0, -1.0], -xmin)
+]), lib)
+
+PreX = precursor_polyhedron(X, U, A, B)  # Pre(X)
+CPreX = precursor_polyhedron(X, U, A, B, X; restrict_to_X=true)  # Pre(X) ∩ X
+
+plot(X, ratio=:equal, label="X", alpha=0.3, xlabel="x₁", ylabel="x₂")
+plot!(PreX, ratio=:equal, label="Pre(X)", alpha=0.3)
+plot!(CPreX, ratio=:equal, label="Pre(X) ∩ X", alpha=0.3)
+```
+:::
+
+Finally we are ready to define the control invariant set.
+
+:::{.callout-caution}
+# Yet some more names for the control invariant set
+- Since there are several notions of invariance in the literature on systems and control, sometimes the adjective *positive* or *forward* is added. But in our course we don't need it. 
+- Some authors call it *Viable* set.
+:::
+
+Control invariant set 
+: If the state of the system at a given time is in the control invariant set, it is guaranteed that a control exists such that the next state is also in the control invariant set.
+
+There is not just one control invariant set. Among many possible control invariant sets, we may be interested in the *maximal control invariant set*.
+
+Maximal control invariant set
+: The maximal control invariant set $\mathcal C_\infty$ is the largest subset of $\mathcal{X}$ that qualifies as a control invariant set. In other words, $\mathcal C_\infty$ is the control invariant set that contains all the other control invariant sets.
+
+We can compute the maximal control invariant set by the following iteration
+$$\boxed{
+\mathcal C_{i+1} = \text{Pre}(\mathcal C_i) \cap \mathcal{C}_i, \quad i=0,1,2,\ldots}
+$$
+starting with $\mathcal C_0 = \mathcal{X}$, and stopping when the change in volume of the set is sufficiently small, that is, when $\text{vol}(\mathcal C_{i+1}) - \text{vol}(\mathcal C_i) < \varepsilon$ for some small $\varepsilon > 0$.
+
+
+:::{#exm-control-invariant-set-1}
+Here we demonstrate computation of the maximal control invariant set for the data of @exm-one-step-controllable-set. 
+```{julia}
+#| code-fold: show
+"""
+    control_invariant_set(X, U, A, B; max_iterations=100, tol=1e-6)
+
+Compute the maximal control invariant set. A set X_inv is control invariant 
+if for all x ∈ X_inv, there exists u ∈ U such that A*x + B*u ∈ X_inv.
+
+The algorithm iterates Xᵢ₊₁ = Pre(Xᵢ) ∩ Xᵢ until convergence.
+"""
+function control_invariant_set(X, U, A, B; max_iterations=30, tol=1e-5)
+    lib = CDDLib.Library()
+    X_inv = X
+    
+    for iteration in 1:max_iterations
+        # Compute Pre(X_inv) ∩ X_inv
+        X_new = precursor_polyhedron(X_inv, U, A, B, X_inv; restrict_to_X=true)
+        
+        # Remove redundant constraints to speed up subsequent iterations
+        removehredundancy!(X_new)
+        
+        # Check convergence by comparing volumes
+        vol_old = volume(X_inv)
+        vol_new = volume(X_new)
+        
+        println("Iteration $iteration: volume = $vol_new (change: $(abs(vol_new - vol_old)))")
+        
+        if abs(vol_new - vol_old) < tol * (vol_old + 1e-10)
+            println("Converged after $iteration iterations")
+            return X_new
+        end
+        
+        X_inv = X_new
+    end
+    
+    println("Warning: did not converge after $max_iterations iterations")
+    return X_inv
+end
+
+# Compute the maximal control invariant set
+X_invariant = control_invariant_set(X, U, A, B; max_iterations=100, tol=1e-8)
+```
+```{julia}
+#| code-fold: true
+#| label: fig-control-invariant-set
+#| fig-cap: "Control invariant set on top of X, Pre(X), and Pre(X) ∩ X"
+plot(X, ratio=:equal, label="X", alpha=0.3)
+plot!(PreX, ratio=:equal, label="Pre(X)", alpha=0.3)
+plot!(CPreX, ratio=:equal, label="Pre(X) ∩ X", alpha=0.3)
+plot!(X_invariant, ratio=:equal, label="Control Invariant Set", linewidth=2)
+```
+:::
+
+:::{#exm-control-invariant-set-2}
+### Control invariant set for the example system of the recursive feasibility example
+Let's now do the same computation for the motivating @exm-mpc-recursive-feasibility from the beginning of this section.
+```{julia}
+#| code-fold: false
+#| output: false
+A = [1.0 1.0; 0 1.0]
+B = [0.4, 1.0]
+# State constraints:
+xmin, xmax = -1.0, 1.0
+
+# Input constraints:
+umin, umax = -0.25, 0.25
+```
+
+```{julia}
+#| code-fold: true
+#| label: fig-control-invariant-set-example_2
+#| fig-cap: "Control invariant set for the example system on top of X, Pre(X), and Pre(X) ∩ X"
+ 
+# H-representation of interval [umin, umax]
+# For u ∈ [umin, umax], we need:
+#   u ≤ umax  (equivalently:  [1]*u ≤ umax)
+#   u ≥ umin  (equivalently: [-1]*u ≤ -umin)
+lib = CDDLib.Library()
+U = polyhedron(hrep([HalfSpace([1.0], umax), HalfSpace([-1.0], -umin)]), lib)
+
+# H-representation of square [xmin, xmax]²
+# For x ∈ [xmin, xmax]², we need:
+#   x₁ ≤ xmax  →  [1, 0]'x ≤ xmax
+#   x₁ ≥ xmin  →  [-1, 0]'x ≤ -xmin
+#   x₂ ≤ xmax  →  [0, 1]'x ≤ xmax
+#   x₂ ≥ xmin  →  [0, -1]'x ≤ -xmin
+X = polyhedron(hrep([
+    HalfSpace([1.0, 0.0], xmax),
+    HalfSpace([-1.0, 0.0], -xmin),
+    HalfSpace([0.0, 1.0], xmax),
+    HalfSpace([0.0, -1.0], -xmin)
+]), lib)
+
+PreX = precursor_polyhedron(X, U, A, B; restrict_to_X=false)  # Pre(X)
+CPreX = precursor_polyhedron(X, U, A, B, X; restrict_to_X=true)  # Pre(X) ∩ X
+
+# Compute the maximal control invariant set
+X_invariant = control_invariant_set(X, U, A, B; max_iterations=100, tol=1e-8)
+
+# Plot the regions
+plot(X, ratio=:equal, label="X", alpha=0.3, xlabel="x₁", ylabel="x₂")
+plot!(PreX, ratio=:equal, label="Pre(X)", alpha=0.3)
+plot!(CPreX, ratio=:equal, label="Pre(X) ∩ X", alpha=0.3)
+plot!(X_invariant, ratio=:equal, label="Control Invariant Set", linewidth=2)
+
+```
+
+```{julia}
+#| code-fold: false
+#| output: true
+X_invariant
+```
+It is worth emphasizing that the control invariant set depends on the system dynamics and the constraints. For the same system, if we change the constraints, we get a different control invariant set. In this particular example, you can run the code after changing the input constraints to $u \in [-0.3, 0.3]$ and see how the control invariant set changes.
+:::
+
+## Recursive feasibility of MPC by imposing the control invariance at every time step
+
+Now that we know the concept of a control invariant set and we even know how to find the set of inequelities that decribe it, we can use this set to ensure the recursive feasibility of MPC. The immediate idea is to impose that the state at every time step within the prediction horizon belongs to the control invariant set. In this way, we ensure that the state never leaves the control invariant set, and hence that the optimization problem solved at each time step is feasible. 
+
+:::{#exm-mpc-recursive-feasibility-control-invariant-at-every-time-step}
+### Recursive feasibility of MPC by imposing the control invariance at every time step
+We continue with the @exm-mpc-recursive-feasibility. We use the setting for which the alowed set of initial states (the square) was not recursively feasible. Namely, we consider the control input constraints $u \in [-0.25, 0.25]$. For this we computed the control invariant set in the previous @exm-control-invariant-set-2. Apparently, this set does not contain the originally used initial state $x_\text{init} = [-1.0, 1.0]$ anymore and therefore we change the initial state to, say, $x_\text{init} = [-1.0, 0.975]$ that does belongs to the control invariant set, while still being at its boundary (actually at a vertex). The resulting simulated state trajectory is in @fig-mpc-recursive-feasible-control-invariant-at-every-time-step below.
+
+```{julia}
+#| code-fold: true
+#| label: fig-mpc-recursive-feasible-control-invariant-at-every-time-step
+#| fig-cap: "Recursively feasible MPC example by imposing the control invariance at every time step"
+using OSQP
+using JuMP
+using LinearAlgebra
+
+rhocp = Model(OSQP.Optimizer)    # Defining the receding-horizon (RH) optimal control problem (OCP).
+set_silent(rhocp)
+
+# System dynamics x(k+1) = A*x(k) + B*u(k):
+A = [1.0 1.0; 0 1.0]
+B = [0.4, 1.0]
+
+N = 3               # Prediction horizon length.
+N_full = N+10       # Total simulation length.
+h = 1.0             # Sampling time.
+
+x_init = [-1.0, 0.975] # Initial state.
+
+# Quadratic cost function weights:
+Q = Diagonal([1.0, 1.0])
+R = 10.0
+
+# State constraints:
+x_min = [-1.0, -1.0]
+x_max = [1.0, 1.0]
+
+# Input constraints:
+u_max = 0.25 # Recursive feasibility for 0.3, for 0.25 not recursively feasible
+u_min = -u_max 
+
+n = size(A,1)                                               # Order of the system.
+
+# Building the optimization model for the receding-horizon optimal control problem RH-OCP:
+@variable(rhocp, x[1:n, 1:N+1])                             # State trajectory over the prediction horizon.
+@variable(rhocp, u_min <= u[1:N] <= u_max)                  # Control trajectory over the prediction horizon.
+#@constraint(rhocp, [i=1:N+1], x_min .<= x[:,i] .<= x_max)   # State constraints.
+@constraint(rhocp, [i=1:N], x[:,i+1] == A*x[:,i] + B*u[i])
+@constraint(rhocp, [i=1:N+1], x[:,i] in X_invariant)        # State constrained to the control invariant set.
+fix(x[1,1], x_init[1])
+fix(x[2,1], x_init[2])
+@objective(rhocp, Min, sum(x[:,i]'*Q*x[:,i] + R*u[i]^2 for i=1:N) + x[:,N+1]'*Q*x[:,N+1])
+
+# Function that solves the RH OCP for the current state xₖ at time step k:
+function mpc_regulation(rhocp, xₖ, k, N)          
+    fix(x[1,1], xₖ[1])
+    fix(x[2,1], xₖ[2])  
+    optimize!(rhocp)
+    return value.(u), value.(x)
+end
+
+# Receding-horizon simulation:
+x_opt_full = [x_init,]
+u_opt_full = Float64[]
+x_pred_full = Vector{Matrix{Float64}}()
+u_pred_full = Vector{Vector{Float64}}()
+
+for k in 1:(N_full-N)                                   # Receding-horizon simulation loop.  
+    xₖ = x_opt_full[end]                                # Current state.  
+    u_pred, x_pred = mpc_regulation(rhocp, xₖ, k, N)    # Optimal control sequence over the prediction horizon.
+    uₖ = u_pred[1]                                      # Apply only the first control input.
+    x⁺ = x_pred[:,2]                                    # Next state from the predicted trajectory.
+    #x⁺ = x_pred[:,2] + randn(2)*0.1                     # True next state differs from the predicted trajectory due to the disturbance.
+    push!(x_opt_full, x⁺)
+    push!(u_opt_full, uₖ)
+    push!(x_pred_full, x_pred)
+    push!(u_pred_full, u_pred)
+end
+
+# Plotting the results:
+using Plots
+x_opt = hcat(x_opt_full...)
+
+p1 = plot(X, ratio=:equal, label="X", alpha=0.3, xlabel="x₁", ylabel="x₂")
+plot!(p1,X_invariant, ratio=:equal, label="Control Invariant Set", alpha=0.3)
+plot!(p1,x_opt[1,:], x_opt[2,:], label="x(k)", xlabel="x₁", ylabel="x₂", markershape=:circle, markersize=2, lw=2, aspect_ratio=:equal)
+for x_pred in x_pred_full
+    plot!(p1, x_pred[1,:], x_pred[2,:], label="", markershape=:diamond, markersize=1, lw=1, linecolor=:gray, alpha=0.5)
+end
+display(p1)
+```
+
+We highlight that the only change in the MPC optimization problem definition is the new line `@constraint(rhocp, [i=1:N+1], x[:,i] in X_invariant)` that enforces the control invariance constraint at every time step. Here we are taking advantage of the high-level syntax of JuMP but it represents nothing else than adding the corresponding linear inequalities defining the control invariant set (polyhedron) to the optimization problem definition.
+
+Clearly, the predicted trajectories at every time step remain in the control invariant set. You can even verify (by running the code by yourself) that this is the case when the prediction horizon is made even shorter, say $N=2$.
+:::
+
+## Recursive feasibility of MPC by imposing a control invariance at the terminal time step
+
+Another way to ensure the recursive feasibility of MPC is to impose the constraint that the state at the end of the prediction horizon is in the (maximal) control invariant set. This is a less restrictive condition than the previously discussed one, in which we imposed such constraint at every time step during the prediction horizon, and hence it allows for a larger set of initial states from which the system can be controlled to the origin. We will shortly discuss why this works, but we first illustrate the functionality with an example.
+
