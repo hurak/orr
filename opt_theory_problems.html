@@ -62,7 +62,7 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c30451789a0a2bcd5e941535c675cd30.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-251449ada0ddbdd49c494e2ec9d5d6a9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -487,14 +487,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_dir_mpc_stability.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Stability of MPC</span></a>
+  <a href="./discr_dir_mpc_recursive_feasibility.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Recursive feasibility</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./discr_dir_mpc_recursive_feasibility.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Recursive feasibility</span></a>
+  <a href="./discr_dir_mpc_stability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stability of MPC</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -1052,7 +1052,6 @@ window.Quarto = {
   <li><a href="#linear-program-lp" id="toc-linear-program-lp" class="nav-link" data-scroll-target="#linear-program-lp">Linear program (LP)</a></li>
   <li><a href="#quadratic-program-qp" id="toc-quadratic-program-qp" class="nav-link" data-scroll-target="#quadratic-program-qp">Quadratic program (QP)</a></li>
   <li><a href="#conic-program-cp" id="toc-conic-program-cp" class="nav-link" data-scroll-target="#conic-program-cp">Conic program (CP)</a></li>
-  <li><a href="#geometric-program-gp" id="toc-geometric-program-gp" class="nav-link" data-scroll-target="#geometric-program-gp">Geometric program (GP)</a></li>
   <li><a href="#nonlinear-program-nlp" id="toc-nonlinear-program-nlp" class="nav-link" data-scroll-target="#nonlinear-program-nlp">Nonlinear program (NLP)</a></li>
   </ul></li>
   </ul>
@@ -1244,7 +1243,7 @@ Figure&nbsp;1: Regular (pointed, convex, closed) cone in a plane
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A fundamental idea unrolled here: the inequality <span class="math inline">\bm x\geq 0</span> can be interpreted as <span class="math inline">\bm x</span> belonging to a componentwise nonegative cone, that is <span class="math inline">\bm x \in \mathbb R_+^n</span>. What if some other cone <span class="math inline">\mathcal K</span> is considered? What would be the interpretation of the inequality then?</p>
+<p>A fundamental idea unrolled here: the inequality <span class="math inline">\bm x\geq 0</span> can be interpreted as <span class="math inline">\bm x</span> belonging to a componentwise nonnegative cone, that is <span class="math inline">\bm x \in \mathbb R_+^n</span>. What if some other cone <span class="math inline">\mathcal K</span> is considered? What would be the interpretation of the inequality then?</p>
 </div>
 </div>
 <p>Sometimes in order to emphasize that the inequality is induced by the cone <span class="math inline">\mathcal K</span>, we write it as <span class="math inline">\geq_\mathcal{K}</span>. Another convention – the one we actually adopt here – is to use another symbol <span class="math inline">\succeq</span> for the inequality to distinguish it from the componentwise meaning, assuming that the cone is understood from the context. We then interpret conic inequalities such as <span class="math display">
@@ -1263,11 +1262,14 @@ Figure&nbsp;1: Regular (pointed, convex, closed) cone in a plane
 <div class="cell-output cell-output-stdout">
 <div class="ansi-escaped-output">
 <pre><span class="ansi-green-fg ansi-bold">Precompiling</span> packages...
-   7048.1 ms<span class="ansi-green-fg">  ✓ </span>QuartoNotebookWorkerMakieExt<span class="ansi-bright-black-fg"> (serial)</span>
+   2172.9 ms<span class="ansi-green-fg">  ✓ </span>QuartoNotebookWorkerTablesExt<span class="ansi-bright-black-fg"> (serial)</span>
+  1 dependency successfully precompiled in 3 seconds
+<span class="ansi-green-fg ansi-bold">Precompiling</span> packages...
+   7163.0 ms<span class="ansi-green-fg">  ✓ </span>QuartoNotebookWorkerMakieExt<span class="ansi-bright-black-fg"> (serial)</span>
   1 dependency successfully precompiled in 7 seconds
 <span class="ansi-green-fg ansi-bold">Precompiling</span> packages...
-   5116.9 ms<span class="ansi-green-fg">  ✓ </span>QuartoNotebookWorkerCairoMakieExt<span class="ansi-bright-black-fg"> (serial)</span>
-  1 dependency successfully precompiled in 5 seconds
+   6153.6 ms<span class="ansi-green-fg">  ✓ </span>QuartoNotebookWorkerCairoMakieExt<span class="ansi-bright-black-fg"> (serial)</span>
+  1 dependency successfully precompiled in 6 seconds
 </pre>
 </div>
 </div>
@@ -1358,16 +1360,22 @@ q
 \text{subject to} &amp;\quad \operatorname{Tr} \mathbf A_i \bm X = \mathbf b_i, \quad i=1, \ldots, m,\\
 &amp;\quad \bm X \in \mathcal S_+^n,
 \end{aligned}
-</span> where the latter constraint is more often than not written as <span class="math inline">\bm X \succeq 0</span>, understanding from the context that the cone of positive definite matrices is assumed.</p>
+</span> where the latter constraint is more often than not written as <span class="math inline">\bm X \succeq 0</span>, understanding from the context that the cone of symmetric positive definite matrices is assumed.</p>
+<p>Similarly as in the case of LP, practical problems can come in non-standard form. In particular, the constraints can come in the form of linear (actually affine) matrix inequalities (LMI): <span class="math display">
+\mathbf F_0 + \sum_{i=1}^n \mathbf F_i \bm X_i \mathbf G_i  \succ 0.
+</span></p>
+<p>A prominent example of an LMI in the context of control theory is the Lyapunov inequality for assymptotic stability of a linear time-invariant system <span class="math inline">\dot{\bm x} = \mathbf A \bm x</span>, specifically, <span class="math inline">\mathbf A^\top \bm X + \bm X \mathbf A \prec 0</span>, where the optimization variable is the symmetric matrix <span class="math inline">\bm  X = \bm X^\top</span> and it is constrained to be positive definite, that is, <span class="math inline">\bm X \succ 0</span>. To summarize, the two linear matrix inequalities that give conditions of asymptotic stability of an LTI system are <span class="math display">
+\begin{aligned}
+\bm X &amp;\succ 0,\\
+\mathbf A^\top \bm X + \bm X \mathbf A &amp;\prec 0.
+\end{aligned}   
+</span></p>
+<p>Optimization problems with this kind of constraints are frequently encountered in control theory, and they can be solved efficiently using algorithms for semidefinite programming.</p>
 </section>
 <section id="other-conic-programs" class="level4">
 <h4 class="anchored" data-anchor-id="other-conic-programs">Other conic programs</h4>
-<p>We are not going to cover them here, but we only enumerate a few other cones useful in optimization: rotated second-order cone, exponential cone, power cone, … A concise overview is in <span class="citation" data-cites="MOSEKModelingCookbook2024"><a href="#ref-MOSEKModelingCookbook2024" role="doc-biblioref">[1]</a></span></p>
+<p>We are not going to cover them here, but we only enumerate a few other cones useful in optimization: rotated second-order cone, exponential cone, power cone, … A concise overview is in <span class="citation" data-cites="MOSEKModelingCookbook2024"><a href="#ref-MOSEKModelingCookbook2024" role="doc-biblioref">[1]</a></span>. Indeed, we gain quite an advantage by reformulating optimization problems using cones, as we can then apply powerful algorithms for conic programming to solve them efficiently.</p>
 </section>
-</section>
-<section id="geometric-program-gp" class="level3">
-<h3 class="anchored" data-anchor-id="geometric-program-gp">Geometric program (GP)</h3>
-<p>#TODO: although of little immediate use in our course.</p>
 </section>
 <section id="nonlinear-program-nlp" class="level3">
 <h3 class="anchored" data-anchor-id="nonlinear-program-nlp">Nonlinear program (NLP)</h3>
