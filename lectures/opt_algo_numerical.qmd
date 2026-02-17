@@ -160,6 +160,7 @@ sends the algorithm into another reduction of $\alpha_k$ by $\alpha_k = \beta\al
 
 The backtracking algorithm can be implemented as follows
 ```{julia}
+#| code-fold: false
 function backtracking_line_search(f, ∇fₖ, xₖ, dₖ; α₀=1.0, β=0.5, γ=0.1)
     αₖ = α₀
     while f(xₖ)-f(xₖ+αₖ*dₖ) < -γ*αₖ*dot(dₖ,∇fₖ)
@@ -281,6 +282,7 @@ Consider minimization of the following cost function
 $$f(\bm x) = 1000x_1^2 + 40x_1x_2 + x_2^2.$$
 
 ```{julia}
+#| code-fold: false
 Q = [1000 20; 20 1]
 c = [0, 0]
 x0 = [1,1000]
@@ -302,6 +304,7 @@ $$
 Ideally this number should not be much larger than 1. In the example above it is 
 
 ```{julia}
+#| code-fold: false
 cond(Q)
 ```
 which is well above 1000. Is there anything that we can do about it? The answer is yes. We can scale the original date to improve the conditioning.
@@ -419,11 +422,12 @@ $$
 ## Newton's method for minimization in the scalar case
 We consider the scalar function of a single (real) variable
 ``` {julia}
-# f(x) = 3cos(x)*sin(2x+2)^2
+#| code-fold: false
 f(x) = -x^4 + 12x^3 - 47x^2 + 60x
 ```
 Let's have a look at its graph on some interval.
 ``` {julia}
+#| code-fold: false
 x_grid = 1:0.01:5.5
 f_grid = f.(x_grid)
 
@@ -432,22 +436,25 @@ plot(x_grid,f_grid,label="f(x)",xlabel="x")
 ```
 Now, the essence of the method is that at a given point $x_k$ we approximate the function locally by a quadratic function. Say, we choose
 ``` {julia}
-#xₖ = 0.25
+#| code-fold: false
 xₖ = 2.4
 ```
 We can evaluate at this point not only the function but its first and second derivatives as well. We use one of the packages for AD.
 ``` {julia}
+#| code-fold: false
 using ForwardDiff
 Df = x -> ForwardDiff.derivative(f,x)
 D²f = x -> ForwardDiff.derivative(Df,x)
 ```
 Now, we can write the quadratic "model function" as
 ``` {julia}
+#| code-fold: false
 mₖ(x) = f(xₖ) + Df(xₖ)*(x-xₖ) + 1/2*D²f(xₖ)*(x-xₖ)^2
 ```
 
 We now evaluate this model on the interval and plot it:
 ``` {julia}
+#| code-fold: false
 mₖ_grid = mₖ.(x_grid)
 
 plot!(x_grid,mₖ_grid,label="mₖ(x)")
@@ -456,16 +463,19 @@ scatter!([xₖ,],[f(xₖ),],label="f(xₖ)")
 
 From the formula for the Newton's step we get that 
 ``` {julia}
+#| code-fold: false
 xₖ₊₁ = xₖ - Df(xₖ)/D²f(xₖ)
 ```
 
 ``` {julia}
+#| code-fold: false
 scatter!([xₖ₊₁],[f(xₖ₊₁)],label="f(xₖ₊₁)")
 ```
 
 Let's go for another iteration:
 
 ``` {julia}
+#| code-fold: false
 plot(x_grid,f_grid,label="f(x)",xlabel="x")
 
 mₖ₊₁(x) = f(xₖ₊₁) + Df(xₖ₊₁)*(x-xₖ₊₁) + 1/2*D²f(xₖ₊₁)*(x-xₖ₊₁)^2
@@ -548,6 +558,7 @@ and similarly we do for the Hessian:
 
 We now consider a particular value of the vector variable and use not only the function value but also the gradient and the Hessian to compute the local quadratic model:
 ``` {julia}
+#| code-fold: false
 xₖ = [0.7,0.5]
 
 using LinearAlgebra     # Because of the dot function
@@ -566,6 +577,9 @@ scatter!([xₖ[1],],[xₖ[2],],label="xₖ")
 The following step of the Newton's method would constitute in finding the minimum of the quadratic function, that is, to localize the center of the contour ellipses. It can be guessed that such minimum will be located in the direction to the bottom left from the initial point, which is consistent with the contours of the original cost function. 
 
 ``` {julia}
+#| code-fold: false
+#| label: fig-newton-example-vector-first-step
+#| fig-cap: First step of the Newton's method for the example function
 xₖ₊₁ = xₖ - ∇²f(xₖ)\∇f(xₖ)
 scatter!([xₖ₊₁[1],],[xₖ₊₁[2],],label="xₖ₊₁")
 ```
@@ -592,6 +606,7 @@ end
 
 After setting the termination parameters we are ready to start the iterative algorithm:
 ``` {julia}
+#| code-fold: false
 ϵ = 1e-8
 N = 100
 x₀ = xₖ
@@ -602,6 +617,8 @@ f_opt,x_opt = newton_method(f,∇f,∇²f,x₀,ϵ,N)
 Finally, plot the minimizer into the contour plots.
 ``` {julia}
 #| code-fold: false
+#| label: fig-newton-example-vector-final
+#| fig-cap: Final result of the Newton's method for the example function
 scatter!([x_opt[1],],[x_opt[2],],label="x⋆")
 ```
 
@@ -619,6 +636,7 @@ where $\bm L$ is a lower triangular matrix.
 ::: {#exm-cholesky-decomposition}
 ## Solving a system of linear equations with a symmetric positive definite matrix using Cholesky decomposition
 ```{julia}
+#| code-fold: false
 A = [10 1 0; 1 20 3; 0 3 30]
 b = [1, 2, 3]
 
@@ -628,6 +646,7 @@ C = cholesky(A)
 
 `C` is a structure that contains the decomposition. We can access the lower triangular matrix $\bm L$ as 
 ```{julia}
+#| code-fold: false
 L = C.L
 ```
 
@@ -644,15 +663,18 @@ $$
 $$
 
 ```{julia}
+#| code-fold: false
 y = L\b
 ```
 
 ```{julia}
+#| code-fold: false
 x = L'\y
 ```
 
 Both steps are realized by the following single line of code in Julia, but note that what is behind is really solving the two triangular systems by backsubstitution
 ```{julia}
+#| code-fold: false
 x = C\b
 ```
 
@@ -702,8 +724,6 @@ Now that we admitted to have something else then just the (inverse of the) Hessi
 
 ### Quasi-Newton's methods
 
-#TODO In the meantime, have a look at [@martinsEngineeringDesignOptimization2022, Section 4.4.4], or [@kochenderferAlgorithmsOptimization2019, Section 6.3], or [@bierlaireOptimizationPrinciplesAlgorithms2018, Chapter 13].
-
 Similarly as we did when introducing the Newton's method, we start our exposition with solving equations. Quasi-Newton methods (indeed, the plural is appropriate here because there is a whole family of methods under this name) generalize the key idea behind the (scalar) secant method for rootfinding. Let's recall it here. The methods is based on *secant approximation* of the derivative:
 $$
 \dot f(x_k) \approx \frac{f(x_k)-f(x_{k-1})}{x_k-x_{k-1}}.
@@ -750,9 +770,9 @@ $$\boxed{
 \end{aligned}}
 $$
 
-## Trust region methods
+More in [@martinsEngineeringDesignOptimization2022, Section 4.4.4], or [@kochenderferAlgorithmsOptimization2019, Section 6.3], or [@bierlaireOptimizationPrinciplesAlgorithms2018, Chapter 13].
 
-#TODO In the meantime, have a look at [@martinsEngineeringDesignOptimization2022, Section 4.5], or [@kochenderferAlgorithmsOptimization2019, Section 4.4].
+## Trust region methods
 
 The key concept of trust region methods is that of... *trust region*. Trust region is a region (typically a ball or an ellipsoid) around the current point, in which we trust some approximation of the original cost function. We then find the minimum of this approximating function subject to the constraint on the norm of the step. Typically, the approximating function that is simple enough to minimize is a quadratic one: 
 $$
@@ -810,6 +830,8 @@ $$
 We shrink the region for small $\eta$ ($\approx 0$), and expand it for larger $\eta$ ($\approx 1$).
 
 We conclude this short discussion of trust region methods by comparing it with the descent methods. While in the descent methods we set the direction first, and the perform a line search in the chosen direction, in trust region methods this sequence is reversed. Kind of. By setting the radius of the trust region, we essentially set an upper bound on the step length. The subsequent optimization subproblem can be viewed as a search for a direction. 
+
+More in [@martinsEngineeringDesignOptimization2022, Section 4.5], or [@kochenderferAlgorithmsOptimization2019, Section 4.4].
 
 # Constrained optimization
 
@@ -897,6 +919,7 @@ end
 ```
 
 ``` {julia}
+#| code-fold: false
 x₀ = [1.5, 1.5]     # the initial vector
 
 xₗ = [0.0, 0.0]     # the lower bound
@@ -910,6 +933,7 @@ N  = 100;           # the maximum number of steps
 ```
 
 ``` {julia}
+#| code-fold: false
 f_opt,x_opt = projected_gradient_quadratic(Q,c,xₗ,xᵤ,x₀,ϵ,N)
 ```
 
@@ -973,19 +997,17 @@ xlabel!("x₁");ylabel!("x₂")
 #xlims!(-4,4); ylims!(-4,4)
 ```
 
-#### Splitting methods
-
-#TODO
-
 ## Nonlinear programming
 
 ### Sequential quadratic programming (SQP)
 
 KKT conditions for a nonlinear program with equality constraints solved by Newton's method. Interpretation: at each iteration, we solve a quadratic program (QP) with linear constraints.
 
+[@martinsEngineeringDesignOptimization2022, Section 5.5], or [@bierlaireOptimizationPrinciplesAlgorithms2018, Chapter 20].
+
 ### Interior point methods
 
-#TODO
+[@martinsEngineeringDesignOptimization2022, Section 5.6], or [@bierlaireOptimizationPrinciplesAlgorithms2018, Chapter 18].
 
 
 

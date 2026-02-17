@@ -55,6 +55,7 @@ The state at the final time is a function of the state at the initial time, henc
 :::
 
 ``` {julia}
+#| code-fold: false
 #| output: false
 function solve_for_final_state_fd(f, x₀, tspan, h)
     t0, tf = tspan
@@ -75,6 +76,7 @@ end
 
 And now we use the solver to compute the trajectory and the cost
 ``` {julia}
+#| code-fold: false
 g = 9.81
 l = 1.0
 f(x) = [x[2], -g/l*sin(x[1])]  
@@ -88,6 +90,7 @@ J([θ₀, ω₀])
 
 We now use the [Symbolics.jl](https://symbolics.juliasymbolics.org/) package to compute the gradient of the cost function at the initial state. We first define symbolic state variables and and then obtain the symbolic expression for the cost function just by evaluating the function we already have at these symbolic state variables.
 ``` {julia}
+#| code-fold: false
 using Symbolics
 @variables θ₀ ω₀
 J_sym = J([θ₀, ω₀])
@@ -95,6 +98,7 @@ J_sym = J([θ₀, ω₀])
 
 If the shortcomings of symbolic methods have not yet started surfacing, scroll to the right in the output field. Rather long, n'est-ce pas? And we have just started, because we now must differentiate this long expression symbolically (and then we convert it from a symbolic expression back to a standard function in Julia):
 ``` {julia}
+#| code-fold: false
 #| output: false
 ∇J_sym = Symbolics.gradient(J_sym,[θ₀, ω₀])
 ∇J_sym_expr = build_function(∇J_sym, [θ₀, ω₀])
@@ -104,6 +108,7 @@ If the shortcomings of symbolic methods have not yet started surfacing, scroll t
 Finally, let's do some benchmarking of evaluation of the gradient at the given (initial) state:
 
 ``` {julia}
+#| code-fold: false
 using BenchmarkTools
 @btime ∇J_sym_fun([π/4,0.0])
 ```
@@ -111,6 +116,7 @@ using BenchmarkTools
 As a teaser for what what is to come, we also benchmark the solution based on AD:
 
 ``` {julia}
+#| code-fold: false
 using ForwardDiff
 
 @btime ForwardDiff.gradient(J, [π/4,0.0])
@@ -145,12 +151,14 @@ The finite-difference methods only approximate the derivatives. The smaller the 
 ## Dependence of the error on the step size
 Consider a scalar function of a vector argument $f(\bm x) = \sum_{i=1}^n x_i^2$.
 ``` {julia}
+#| code-fold: false
 f(x) = sum(xᵢ^2 for xᵢ in x) 
 ```
 Now, in order to compute the gradient $\nabla f$, we need to compute all the individual partial derivatives, the individual components of the vector. Let's now restrict ourselves just to one component, say, the first one, that is, let's compute $\frac{\partial f(\mathbf x)}{\partial x_1}$. 
 
 In this simple example, a formula can be written down upon inspection: $\frac{\partial f(\mathbf x)}{\partial x_1} = 2x_1$:
 ``` {julia}
+#| code-fold: false
 x₀ = rand(10)
 ∇f_1_exact = 2*x₀[1]
 ```
@@ -159,6 +167,7 @@ but let's pretend that this answer is not available to us (we will only use it f
 We now give a function for computing the first entry in the gradient (vector) by using the forward FD method. Note that in defining the function we exploit the [multiple dispatch functionality of Julia](https://docs.julialang.org/en/v1/manual/methods/), thanks to which the function will handled the floating point model of the input appropriately. That is, the input vector could be [IEEE-754 double-precision floating-point](https://en.wikipedia.org/wiki/Double-precision_floating-point_format) format, or [IEEE-754 single-precision floating-point](https://en.wikipedia.org/wiki/Single-precision_floating-point_format) format (or perhaps even something else). 
 
 ``` {julia}
+#| code-fold: false
 function ∇f_1(f,x₀::Vector{T},h::T) where T<:Real
     (f(x₀[1]+h)-f(x₀[1]))/h
 end
@@ -166,11 +175,13 @@ end
 
 We can now compute the first entry of the gradient for the particular vector given in the *IEEE double* format (default for Julia)
 ``` {julia}
+#| code-fold: false
 ∇f_1(f,x₀,h)
 ```
 
 We can also compute the same quantity for the same vector represented in the *IEEE single* format:
 ``` {julia}
+#| code-fold: false
 ∇f_1(f,Vector{Float32}(x₀),Float32(h))
 ```
 
@@ -178,10 +189,17 @@ Obviously, both answers differ from the accurate one computed above.
 
 Now, let's examine the error as a function of the size of the interval $h$:
 ``` {julia}
+#| code-fold: false
+#| output: false
 h_range = exp10.(range(-13, stop=-1, length=1000));
 abs_err_64 = [abs((∇f_1_exact - ∇f_1(f,x₀,h))) for h in h_range];
 abs_err_32 = [abs((∇f_1_exact - ∇f_1(f,Vector{Float32}(x₀),Float32(h)))) for h in h_range];
+```
 
+``` {julia}
+#| code-fold: false
+#| label: fig-fd-error
+#| fig-cap: "Dependence of the absolute error of the FD approximation of the derivative on the step size $h$ for the 64- and 32-bit floating-point formats"
 using Plots
 plot(h_range, abs_err_64,xaxis=:log, yaxis=:log, xlabel="h", ylabel = "|e|", label = "IEEE double")
 plot!(h_range, abs_err_32,xaxis=:log, yaxis=:log, xlabel="h", ylabel = "|e|", label = "IEEE single")
@@ -189,23 +207,26 @@ plot!(h_range, abs_err_32,xaxis=:log, yaxis=:log, xlabel="h", ylabel = "|e|", la
 
 If we read the graph from right to left – as $h$ is getting smaller –, we observe that initially the error decreases for both 64- and 32-bit floating-point format, and it decreases at the same rate. The reason for this decrease is that the *trunction error* (essentially what we commit here by doing FD approximation is that we truncate the Taylor series) dominates here, and this error goes down with $h$.
 
-The major intended takeaway from this example is that this reduction of the error only takes place down to some $h$ below which the error no longer decreases; in fact, it actally increases as $h$ gets smaller. The reason is that for $h$ this small, the *rounding errors* dominate. Apparently, they start exhibitting themselves for smaller values with the 64-bit format than with 32-bit format. The rounding errors are getting dominant here as we are subtracting two numbers that are getting more and more similar as $h$ decreaces. This is known as the phenomenon of [catastrophic cancellation](https://en.wikipedia.org/wiki/Catastrophic_cancellation).
+The major intended takeaway from this example is that this reduction of the error only takes place down to some $h$ below which the error no longer decreases; in fact, it actally increases as $h$ gets smaller. The reason is that for $h$ this small, the *rounding errors* dominate. Apparently, they start exhibitting themselves for smaller values with the 64-bit format than with 32-bit format. The rounding errors are getting dominant here as we are subtracting two numbers that are getting more and more similar as $h$ decreases. This is known as the phenomenon of [catastrophic cancellation](https://en.wikipedia.org/wiki/Catastrophic_cancellation).
 
 It is known from rigorous numerical analysis that the error in the case of the simple backward or forward finite difference approximation to a scalar derivative scales with $\sqrt{\epsilon}$, where $\epsilon$ is the [machine epsilon](https://en.wikipedia.org/wiki/Machine_epsilon). Here we can expect even worse outcome as the dimension $n$ of the vector grows. Note that $\epsilon$ for double precision IEEE is
 
 ``` {julia}
+#| code-fold: false
 2^(-53)
 ```
 
 which is available in Julia through [eps()](https://docs.julialang.org/en/v1/manual/integers-and-floating-point-numbers/#Machine-epsilon) function with the type as the input argument (if no argument is given, it assumes `Float64`):
 
 ``` {julia}
+#| code-fold: false
 sqrt(eps())
 ```
 
 Similarly, the 32-bit version is
 
 ``` {julia}
+#| code-fold: false
 sqrt(eps(Float32))
 ```
 
@@ -227,7 +248,6 @@ We will find use of the computational graph of the function as is in @fig-comput
 //| label: fig-computational-tree-forward-ad
 //| fig-cap: Computational tree for the example
 //| fig-height: 200px
-//| fig-width: 5.5
 digraph G {
     bgcolor = "transparent";
     rankdir = "LR";
@@ -249,7 +269,6 @@ The nodes correspond to the unary or binary operations and we label the edges co
 //| label: fig-computational-tree-forward-ad-with-values
 //| fig-cap: Computational tree for the example, the values of the auxiliary variables are shown for the particular values of $x_1$ and $x_2$.
 //| fig-height: 200px
-//| fig-width: 5.5
 digraph G {
     bgcolor = "transparent";
     rankdir = "LR";
@@ -287,8 +306,7 @@ But we structure this computation as follows. We denote $\frac{\partial v_i}{\pa
 ```{dot}
 //| label: fig-computational-tree-forward-ad-with-values-and-derivatives
 //| fig-cap: Computational tree for the example. Associated with each edge is not only the value $v_i$ but also the derivative $\dot v_i$.
-//| fig-height: 200px
-//| fig-width: 5.5
+//| fig-height: 300px
 digraph G {
     bgcolor = "transparent";
     rankdir = "LR";
@@ -386,6 +404,7 @@ Let's now evaluate this result at a particular value of $x$, say
 
 ``` {julia}
 #| code-fold: false
+#| output: false
 x = 2
 ```
 
@@ -394,6 +413,7 @@ First, we are going to develop our own data class (actually `struct`) in Julia f
 Then we show the usage of a functionality already provided in [ForwardDiff.jl](https://github.com/JuliaDiff/ForwardDiff.jl) package implementing the forward mode AD. 
 
 ``` {julia}
+#| code-fold: false
 struct Dual
     v        # the VALUE part
     d        # the DERIVATIVE part
@@ -403,6 +423,7 @@ end
 Now we need to overload the involved basic operations such as `addition` and `multiplication` of two dual numbers, `multiplication by a scalar`, `squaring` and finding the value of `cosine` function.
 
 ``` {julia}
+#| code-fold: false
 Base.:+(a::Dual,b::Dual) = Dual(a.v+b.v,a.d+b.d)
 Base.:*(a::Dual,b::Dual) = Dual(a.v*b.v,a.d*b.v+b.d*a.v)
 Base.:*(a::Number,b::Dual) = Dual(a*b.v,a*b.d)
@@ -448,7 +469,7 @@ Finally, let's use the new functionality to compute the derivative of the assign
 cos(X^2)
 ```
 
-In practice, you will hardly feel a need to implement your own library for algorithmic differentiation. Instead, you may want to use one of those avaialable ones, such as `ForwardDiff.jl`.
+In practice, you will hardly feel a need to implement your own library for algorithmic differentiation. Instead, you may want to use one of those avaialable ones, such as [ForwardDiff.jl](https://github.com/JuliaDiff/ForwardDiff.jl).
 
 ``` {julia}
 #| code-fold: false
@@ -499,13 +520,13 @@ $$
 \left(\underbrace{\frac{\partial e(\boldsymbol v)}{\partial \boldsymbol v}}_{1\times 2} \underbrace{\frac{\partial \mathbf g(\boldsymbol u)}{\partial \boldsymbol u}}_{2\times 3}\right) \underbrace{\frac{\partial \mathbf h(\boldsymbol x)}{\partial \boldsymbol x}}_{3\times 2}.
 $$
 
-The two are mathematically equivalent, but the computational cost of the two is different. We will now leave it up to you to figure out why the latter is computationally cheaper in our particular case. 
+The two are mathematically equivalent, but the computational cost of the two is different. We will now leave it up to you to figure out why the latter is computationally cheaper in our particular case (hint: count the number of additions and multiplications). 
 
-We only emphasize that the forward AD corresponds to the former. The reverse AD that we are going to introduce now corresponds to the latter.
+We only state that the forward AD corresponds to the former. The reverse AD that we are going to introduce now corresponds to the latter.
 
 ### Reverse AD
 
-The reverse AD is a bit less intuitive, but it is more efficient than the forward AD when then number of inputs is larger than the number of outputs. The extreme case is a scalar function of a vector argument.
+The reverse AD is a bit less intuitive, but it is more efficient than the forward AD when then number of inputs is larger than the number of outputs. The extreme case is a scalar function of a vector argument, which was our case in the example above.
 
 Similarly as in the forward AD, we introduce an auxilliary variable correspondig to the derivative, but this time the notation is different 
 $$
@@ -517,8 +538,7 @@ We first fill in all the values of $v_i$ starting with the inputs, proceeding to
 ```{dot}
 //| label: fig-computational-tree-reverse-ad-with-values-and-derivatives
 //| fig-cap: Computational tree for the example. Associated with each edge is not only the value $v_i$ but also the derivative $\bar v_i$.
-//| fig-height: 200px
-//| fig-width: 5.5
+//| fig-height: 300px
 digraph G {
     bgcolor = "transparent";
     rankdir = "LR";
@@ -584,4 +604,23 @@ The table documents the computation. The left column is evaluated from the top t
 
 Voila! We have obtained the value of the derivative $\frac{\partial y}{\partial x_1} = \bar v_1 = 3+\cos(2)$ and $\frac{\partial y}{\partial x_2} = \bar v_2 = 2$ at the given values of $x_1$ and $x_2$, both as the result of the single (backward) pass through the computational graph (preceeded by the single forward pass to compute the values).
 
-We need to emphasize that our explanation of the AD method is really just very introductory. There are many details that we have not covered. Most often than not we are going to use the AD functionality provided by some library, such as `ForwardDiff.jl` for forward AD and `ReverseDiff.jl` or `Zygote.jl` for reverse AD. 
+We need to emphasize that our explanation of the AD method is really just very introductory. There are many details that we have not covered. These can be found in the references.
+
+## Implementation of AD methods
+
+### Julia
+
+[ForwardDiff.jl](https://github.com/JuliaDiff/ForwardDiff.jl) and [Enzyme.jl](https://github.com/EnzymeAD/Enzyme.jl) for forward AD. [Zygote.jl](https://github.com/FluxML/Zygote.jl) and [Enzyme.jl](https://github.com/EnzymeAD/Enzyme.jl) (and possibly [ReverseDiff.jl](https://github.com/JuliaDiff/ReverseDiff.jl) that is being superseded by Enzyme.jl) for reverse AD. 
+There are a few more but these should certainly suffice at the beginning. 
+
+It may be worth using the [DifferentiationInterface.jl](https://github.com/JuliaDiff/DifferentiationInterface.jl), which provides a common interface to different AD packages, and we can easily switch between them. 
+
+If may also be useful to check also [ChainRules.jl](https://github.com/JuliaDiff/ChainRules.jl), which support writing your own rules for differentiation of custom functions.
+
+Some more info can be found in the [discussion thread](https://discourse.julialang.org/t/state-of-ad-in-2024/112601) on [Julia Discourse](https://discourse.julialang.org). Although it is from 2024, it is still relevant.
+
+### Matlab
+
+Matlab has only started supporting AD relatively recently, see [Automatic Differentiation Background](https://www.mathworks.com/help/optim/ug/autodiff-background.html) and it is not intended to be used directly by users but rather as a backend for the optimization solvers.
+
+There is, however, a very popular third party package for AD (not only) in Matlab, which is [CasADi](https://web.casadi.org). It is written in C++ but has interfaces for Matlab and Python too. Very advanced, very popular in the computational/optimal control community. 
