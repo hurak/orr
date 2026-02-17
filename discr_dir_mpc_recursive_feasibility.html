@@ -1183,9 +1183,6 @@ window.Quarto = {
 <span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
 <span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(p1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>GKS: cannot open display - headless operation mode active</code></pre>
-</div>
 <div id="fig-mpc-recursive-feasible" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-mpc-recursive-feasible-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1199,71 +1196,71 @@ Figure&nbsp;1: Recursively feasible MPC example. The red square represents the s
 </div>
 <p>Now, we make the control input constraints a bit more restrictive. With anticipation of problems, we also shorten the simulation time to just two time steps. The results are shown in <a href="#fig-mpc-recursive-infeasible" class="quarto-xref">Fig.&nbsp;2</a>.</p>
 <div id="8" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Input constraints:</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>u_max <span class="op">=</span> <span class="fl">0.25</span>    </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>u_min <span class="op">=</span> <span class="op">-</span>u_max</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulation horizon shortened to just two time steps:</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>N_sim <span class="op">=</span> N<span class="op">+</span><span class="fl">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Input constraints:</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>u_max <span class="op">=</span> <span class="fl">0.25</span>    </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>u_min <span class="op">=</span> <span class="op">-</span>u_max</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulation horizon shortened to just two time steps:</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>N_sim <span class="op">=</span> N<span class="op">+</span><span class="fl">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="cell-fig-mpc-recursive-infeasible" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">OSQP</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">JuMP</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>rhocp <span class="op">=</span> <span class="fu">Model</span>(OSQP.Optimizer)    <span class="co"># Defining the receding-horizon (RH) optimal control problem (OCP).</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#set_silent(rhocp)</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="fu">size</span>(A,<span class="fl">1</span>)                                               <span class="co"># Order of the system.</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Building the optimization model for the receding-horizon optimal control problem RH-OCP:</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="pp">@variable</span>(rhocp, x[<span class="fl">1</span><span class="op">:</span>n, <span class="fl">1</span><span class="op">:</span>N<span class="op">+</span><span class="fl">1</span>])                             <span class="co"># State trajectory over the prediction horizon.</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="pp">@variable</span>(rhocp, u_min <span class="op">&lt;=</span> u[<span class="fl">1</span><span class="op">:</span>N] <span class="op">&lt;=</span> u_max)                  <span class="co"># Control trajectory over the prediction horizon.</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(rhocp, [i<span class="op">=</span><span class="fl">1</span><span class="op">:</span>N<span class="op">+</span><span class="fl">1</span>], x_min <span class="op">.&lt;=</span> x[<span class="op">:</span>,i] <span class="op">.&lt;=</span> x_max)   <span class="co"># State constraints.</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(rhocp, [i<span class="op">=</span><span class="fl">1</span><span class="op">:</span>N], x[<span class="op">:</span>,i<span class="op">+</span><span class="fl">1</span>] <span class="op">==</span> A<span class="op">*</span>x[<span class="op">:</span>,i] <span class="op">+</span> B<span class="op">*</span>u[i])</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">fix</span>(x[<span class="fl">1</span>,<span class="fl">1</span>], x_init[<span class="fl">1</span>])</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="fu">fix</span>(x[<span class="fl">2</span>,<span class="fl">1</span>], x_init[<span class="fl">2</span>])</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="pp">@objective</span>(rhocp, Min, <span class="fu">sum</span>(x[<span class="op">:</span>,i]<span class="ch">'*Q*x[:,i] + R*u[i]^2 for i=1:N) + x[:,N+1]'</span><span class="op">*</span>Q<span class="op">*</span>x[<span class="op">:</span>,N<span class="op">+</span><span class="fl">1</span>])</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Function that solves the RH OCP for the current state xₖ at time step k:</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">mpc_regulation</span>(rhocp, xₖ, k, N)          </span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fix</span>(x[<span class="fl">1</span>,<span class="fl">1</span>], xₖ[<span class="fl">1</span>])</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fix</span>(x[<span class="fl">2</span>,<span class="fl">1</span>], xₖ[<span class="fl">2</span>])  </span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">optimize!</span>(rhocp)</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">value</span>.(u), <span class="fu">value</span>.(x)</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Receding-horizon simulation:</span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>x_opt_full <span class="op">=</span> [x_init,]</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>u_opt_full <span class="op">=</span> <span class="dt">Float64</span>[]</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>x_pred_full <span class="op">=</span> <span class="fu">Vector</span><span class="dt">{Matrix{Float64}}</span>()</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>u_pred_full <span class="op">=</span> <span class="fu">Vector</span><span class="dt">{Vector{Float64}}</span>()</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>(N_sim<span class="op">-</span>N)                                   <span class="co"># Receding-horizon simulation loop.  </span></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    xₖ <span class="op">=</span> x_opt_full[<span class="kw">end</span>]                                <span class="co"># Current state.  </span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    u_pred, x_pred <span class="op">=</span> <span class="fu">mpc_regulation</span>(rhocp, xₖ, k, N)    <span class="co"># Optimal control sequence over the prediction horizon.</span></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    uₖ <span class="op">=</span> u_pred[<span class="fl">1</span>]                                      <span class="co"># Apply only the first control input.</span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    x⁺ <span class="op">=</span> x_pred[<span class="op">:</span>,<span class="fl">2</span>]                                    <span class="co"># Next state from the predicted trajectory.</span></span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">push!</span>(x_opt_full, x⁺)</span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">push!</span>(u_opt_full, uₖ)</span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">push!</span>(x_pred_full, x_pred)</span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">push!</span>(u_pred_full, u_pred)</span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>x_opt <span class="op">=</span> <span class="fu">hcat</span>(x_opt_full<span class="op">...</span>)</span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the results:</span></span>
-<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
-<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [x_min[<span class="fl">1</span>], x_max[<span class="fl">1</span>], x_max[<span class="fl">1</span>], x_min[<span class="fl">1</span>], x_min[<span class="fl">1</span>]]</span>
-<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> [x_min[<span class="fl">2</span>], x_min[<span class="fl">2</span>], x_max[<span class="fl">2</span>], x_max[<span class="fl">2</span>], x_min[<span class="fl">2</span>]]</span>
-<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">=</span> <span class="fu">plot</span>(x, y, color<span class="op">=:</span>red, alpha<span class="op">=</span><span class="fl">0.2</span>, linewidth<span class="op">=</span><span class="fl">2</span>, legend<span class="op">=</span><span class="cn">false</span>, aspect_ratio<span class="op">=:</span>equal)</span>
-<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(p1,x_opt[<span class="fl">1</span>,<span class="op">:</span>], x_opt[<span class="fl">2</span>,<span class="op">:</span>], color<span class="op">=:</span>blue,label<span class="op">=</span><span class="st">"x(k)"</span>, xlabel<span class="op">=</span><span class="st">"x₁"</span>, ylabel<span class="op">=</span><span class="st">"x₂"</span>, markershape<span class="op">=:</span>circle, markersize<span class="op">=</span><span class="fl">2</span>, lw<span class="op">=</span><span class="fl">2</span>, aspect_ratio<span class="op">=:</span>equal)</span>
-<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x_pred <span class="kw">in</span> x_pred_full</span>
-<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot!</span>(p1, x_pred[<span class="fl">1</span>,<span class="op">:</span>], x_pred[<span class="fl">2</span>,<span class="op">:</span>], label<span class="op">=</span><span class="st">""</span>, markershape<span class="op">=:</span>diamond, markersize<span class="op">=</span><span class="fl">1</span>, lw<span class="op">=</span><span class="fl">1</span>, linecolor<span class="op">=:</span>gray, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
-<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(p1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">OSQP</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">JuMP</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>rhocp <span class="op">=</span> <span class="fu">Model</span>(OSQP.Optimizer)    <span class="co"># Defining the receding-horizon (RH) optimal control problem (OCP).</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#set_silent(rhocp)</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="fu">size</span>(A,<span class="fl">1</span>)                                               <span class="co"># Order of the system.</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Building the optimization model for the receding-horizon optimal control problem RH-OCP:</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="pp">@variable</span>(rhocp, x[<span class="fl">1</span><span class="op">:</span>n, <span class="fl">1</span><span class="op">:</span>N<span class="op">+</span><span class="fl">1</span>])                             <span class="co"># State trajectory over the prediction horizon.</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="pp">@variable</span>(rhocp, u_min <span class="op">&lt;=</span> u[<span class="fl">1</span><span class="op">:</span>N] <span class="op">&lt;=</span> u_max)                  <span class="co"># Control trajectory over the prediction horizon.</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(rhocp, [i<span class="op">=</span><span class="fl">1</span><span class="op">:</span>N<span class="op">+</span><span class="fl">1</span>], x_min <span class="op">.&lt;=</span> x[<span class="op">:</span>,i] <span class="op">.&lt;=</span> x_max)   <span class="co"># State constraints.</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(rhocp, [i<span class="op">=</span><span class="fl">1</span><span class="op">:</span>N], x[<span class="op">:</span>,i<span class="op">+</span><span class="fl">1</span>] <span class="op">==</span> A<span class="op">*</span>x[<span class="op">:</span>,i] <span class="op">+</span> B<span class="op">*</span>u[i])</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">fix</span>(x[<span class="fl">1</span>,<span class="fl">1</span>], x_init[<span class="fl">1</span>])</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="fu">fix</span>(x[<span class="fl">2</span>,<span class="fl">1</span>], x_init[<span class="fl">2</span>])</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="pp">@objective</span>(rhocp, Min, <span class="fu">sum</span>(x[<span class="op">:</span>,i]<span class="ch">'*Q*x[:,i] + R*u[i]^2 for i=1:N) + x[:,N+1]'</span><span class="op">*</span>Q<span class="op">*</span>x[<span class="op">:</span>,N<span class="op">+</span><span class="fl">1</span>])</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Function that solves the RH OCP for the current state xₖ at time step k:</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">mpc_regulation</span>(rhocp, xₖ, k, N)          </span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fix</span>(x[<span class="fl">1</span>,<span class="fl">1</span>], xₖ[<span class="fl">1</span>])</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fix</span>(x[<span class="fl">2</span>,<span class="fl">1</span>], xₖ[<span class="fl">2</span>])  </span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">optimize!</span>(rhocp)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">value</span>.(u), <span class="fu">value</span>.(x)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Receding-horizon simulation:</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>x_opt_full <span class="op">=</span> [x_init,]</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>u_opt_full <span class="op">=</span> <span class="dt">Float64</span>[]</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>x_pred_full <span class="op">=</span> <span class="fu">Vector</span><span class="dt">{Matrix{Float64}}</span>()</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>u_pred_full <span class="op">=</span> <span class="fu">Vector</span><span class="dt">{Vector{Float64}}</span>()</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>(N_sim<span class="op">-</span>N)                                   <span class="co"># Receding-horizon simulation loop.  </span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    xₖ <span class="op">=</span> x_opt_full[<span class="kw">end</span>]                                <span class="co"># Current state.  </span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    u_pred, x_pred <span class="op">=</span> <span class="fu">mpc_regulation</span>(rhocp, xₖ, k, N)    <span class="co"># Optimal control sequence over the prediction horizon.</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    uₖ <span class="op">=</span> u_pred[<span class="fl">1</span>]                                      <span class="co"># Apply only the first control input.</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    x⁺ <span class="op">=</span> x_pred[<span class="op">:</span>,<span class="fl">2</span>]                                    <span class="co"># Next state from the predicted trajectory.</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">push!</span>(x_opt_full, x⁺)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">push!</span>(u_opt_full, uₖ)</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">push!</span>(x_pred_full, x_pred)</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">push!</span>(u_pred_full, u_pred)</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>x_opt <span class="op">=</span> <span class="fu">hcat</span>(x_opt_full<span class="op">...</span>)</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the results:</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [x_min[<span class="fl">1</span>], x_max[<span class="fl">1</span>], x_max[<span class="fl">1</span>], x_min[<span class="fl">1</span>], x_min[<span class="fl">1</span>]]</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> [x_min[<span class="fl">2</span>], x_min[<span class="fl">2</span>], x_max[<span class="fl">2</span>], x_max[<span class="fl">2</span>], x_min[<span class="fl">2</span>]]</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">=</span> <span class="fu">plot</span>(x, y, color<span class="op">=:</span>red, alpha<span class="op">=</span><span class="fl">0.2</span>, linewidth<span class="op">=</span><span class="fl">2</span>, legend<span class="op">=</span><span class="cn">false</span>, aspect_ratio<span class="op">=:</span>equal)</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(p1,x_opt[<span class="fl">1</span>,<span class="op">:</span>], x_opt[<span class="fl">2</span>,<span class="op">:</span>], color<span class="op">=:</span>blue,label<span class="op">=</span><span class="st">"x(k)"</span>, xlabel<span class="op">=</span><span class="st">"x₁"</span>, ylabel<span class="op">=</span><span class="st">"x₂"</span>, markershape<span class="op">=:</span>circle, markersize<span class="op">=</span><span class="fl">2</span>, lw<span class="op">=</span><span class="fl">2</span>, aspect_ratio<span class="op">=:</span>equal)</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x_pred <span class="kw">in</span> x_pred_full</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot!</span>(p1, x_pred[<span class="fl">1</span>,<span class="op">:</span>], x_pred[<span class="fl">2</span>,<span class="op">:</span>], label<span class="op">=</span><span class="st">""</span>, markershape<span class="op">=:</span>diamond, markersize<span class="op">=</span><span class="fl">1</span>, lw<span class="op">=</span><span class="fl">1</span>, linecolor<span class="op">=:</span>gray, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(p1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="fig-mpc-recursive-infeasible" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1278,7 +1275,7 @@ Figure&nbsp;2: Recursively infeasible MPC example. The red square represents the
 </div>
 <p>We can see in the figure that although two time steps of the simulation were expected, plotted is only the outcome of the first one. The reason is that after the first optimization, the horizon moved forward and the optimization on the new horizon became infeasible, and the outcome of the simulation are just <code>NaN</code> values:</p>
 <div id="12" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>x_opt_full</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x_opt_full</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>3-element Vector{Vector{Float64}}:
  [-1.0, 1.0]
@@ -1332,100 +1329,100 @@ A subset of the precursor set that only contains states that are also in the fea
 <div id="exm-one-step-controllable-set" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2 (One-step controllable set)</strong></span> &nbsp;</p>
 <div id="14" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">1.5</span> <span class="fl">0.0</span>; <span class="fl">1.0</span> <span class="op">-</span><span class="fl">1.5</span>]</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">0.0</span>]</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>umin, umax <span class="op">=</span> <span class="op">-</span><span class="fl">5.0</span>, <span class="fl">5.0</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>xmin, xmax <span class="op">=</span> <span class="op">-</span><span class="fl">10.0</span>, <span class="fl">10.0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">1.5</span> <span class="fl">0.0</span>; <span class="fl">1.0</span> <span class="op">-</span><span class="fl">1.5</span>]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">0.0</span>]</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>umin, umax <span class="op">=</span> <span class="op">-</span><span class="fl">5.0</span>, <span class="fl">5.0</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>xmin, xmax <span class="op">=</span> <span class="op">-</span><span class="fl">10.0</span>, <span class="fl">10.0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>In the code below we use a high-level library <a href="https://github.com/JuliaPolyhedra/Polyhedra.jl">Polyhedra.jl</a> for manipulation with polyhedra, but it was mainly for convenience when finally plotting the polyhedra, the computational task consists in nothing else than just composing the corresponding linear inequalities.</p>
 <div id="cell-fig-one-step-controllable-set" class="cell" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Polyhedra</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CDDLib</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="st">    precursor_polyhedron(S, U, A, B, X=nothing; restrict_to_X=false)</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="st">Compute Pre(S) = { x | ∃u∈U : A*x + B*u ∈ S } for polyhedra S and U.</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="st">If restrict_to_X=true, computes Pre(S) ∩ X, where X must be provided.</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="st">S, U (and X if provided) must be Polyhedra polyhedra in H-rep (or convertible).</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="st">Returns a Polyhedra polyhedron in x-space.</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">precursor_polyhedron</span>(S, U, A, B, X<span class="op">=</span><span class="cn">nothing</span>; restrict_to_X<span class="op">=</span><span class="cn">false</span>)</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="fu">size</span>(A, <span class="fl">1</span>)</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> <span class="fu">size</span>(B, <span class="fl">2</span>)</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract Hs, hs (for constraints Hs * (Ax + Bu) ≤ hs)</span></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    Hs <span class="op">=</span> <span class="fu">reduce</span>(vcat, (hs.a<span class="op">'</span> <span class="cf">for</span> hs <span class="kw">in</span> Polyhedra.<span class="fu">halfspaces</span>(S)))  <span class="co"># each hs.a is a vector</span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    hs <span class="op">=</span> [hs.β for hs <span class="kw">in</span> Polyhedra.<span class="fu">halfspaces</span>(S)]</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract Hu, hu (for constraints Hu * u ≤ hu)</span></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    Hu <span class="op">=</span> <span class="fu">reduce</span>(vcat, (hs.a<span class="op">'</span> <span class="cf">for</span> hs <span class="kw">in</span> Polyhedra.<span class="fu">halfspaces</span>(U)))</span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    hu <span class="op">=</span> [hs.β for hs <span class="kw">in</span> Polyhedra.<span class="fu">halfspaces</span>(U)]</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Variables are y = [x; u] ∈ R^(n+m)</span></span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Constraint 1: Hu*u ≤ hu  -&gt; [0  Hu] * [x;u] ≤ hu</span></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>    C1 <span class="op">=</span> <span class="fu">hcat</span>(<span class="fu">zeros</span>(<span class="fu">size</span>(Hu, <span class="fl">1</span>), n), Hu)</span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>    d1 <span class="op">=</span> hu</span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Constraint 2: Hs*(A*x + B*u) ≤ hs -&gt; [Hs*A  Hs*B] * [x;u] ≤ hs</span></span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    C2 <span class="op">=</span> <span class="fu">hcat</span>(Hs <span class="op">*</span> A, Hs <span class="op">*</span> B)</span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>    d2 <span class="op">=</span> hs</span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If restriction x ∈ X: Hx*x ≤ hx -&gt; [Hx  0] * [x;u] ≤ hx</span></span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> restrict_to_X</span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>        <span class="pp">@assert</span> X <span class="op">!==</span> <span class="cn">nothing</span> <span class="st">"X must be provided when restrict_to_X=true"</span></span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>        Hx <span class="op">=</span> <span class="fu">reduce</span>(vcat, (hs.a<span class="op">'</span> <span class="cf">for</span> hs <span class="kw">in</span> Polyhedra.<span class="fu">halfspaces</span>(X)))</span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>        hx <span class="op">=</span> [hs.β for hs <span class="kw">in</span> Polyhedra.<span class="fu">halfspaces</span>(X)]</span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>        C3 <span class="op">=</span> <span class="fu">hcat</span>(Hx, <span class="fu">zeros</span>(<span class="fu">size</span>(Hx, <span class="fl">1</span>), m))</span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>        d3 <span class="op">=</span> hx</span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>        C <span class="op">=</span> <span class="fu">vcat</span>(C1, C2, C3)</span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>        d <span class="op">=</span> <span class="fu">vcat</span>(d1, d2, d3)</span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
-<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>        C <span class="op">=</span> <span class="fu">vcat</span>(C1, C2)</span>
-<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>        d <span class="op">=</span> <span class="fu">vcat</span>(d1, d2)</span>
-<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Build lifted polyhedron in (x,u)</span></span>
-<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>    P_lift <span class="op">=</span> <span class="fu">polyhedron</span>(<span class="fu">hrep</span>(C, d), lib)</span>
-<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Project onto x-coordinates (eliminate u variables at indices n+1:n+m)</span></span>
-<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>    PreS <span class="op">=</span> <span class="fu">eliminate</span>(P_lift, (n<span class="op">+</span><span class="fl">1</span>)<span class="op">:</span>(n<span class="op">+</span>m),<span class="fu">FourierMotzkin</span>())</span>
-<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> PreS</span>
-<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
-<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a><span class="co"># H-representation of interval [umin, umax]</span></span>
-<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a><span class="co"># For u ∈ [umin, umax], we need:</span></span>
-<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a><span class="co">#   u ≤ umax  (equivalently:  [1]*u ≤ umax)</span></span>
-<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a><span class="co">#   u ≥ umin  (equivalently: [-1]*u ≤ -umin)</span></span>
-<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a>lib <span class="op">=</span> CDDLib.<span class="fu">Library</span>()</span>
-<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>U <span class="op">=</span> <span class="fu">polyhedron</span>(<span class="fu">hrep</span>([<span class="fu">HalfSpace</span>([<span class="fl">1.0</span>], umax), <span class="fu">HalfSpace</span>([<span class="op">-</span><span class="fl">1.0</span>], <span class="op">-</span>umin)]), lib)</span>
-<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a><span class="co"># H-representation of square [xmin, xmax]²</span></span>
-<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a><span class="co"># For x ∈ [xmin, xmax]², we need:</span></span>
-<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a><span class="co">#   x₁ ≤ xmax  →  [1, 0]'x ≤ xmax</span></span>
-<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a><span class="co">#   x₁ ≥ xmin  →  [-1, 0]'x ≤ -xmin</span></span>
-<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a><span class="co">#   x₂ ≤ xmax  →  [0, 1]'x ≤ xmax</span></span>
-<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a><span class="co">#   x₂ ≥ xmin  →  [0, -1]'x ≤ -xmin</span></span>
-<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> <span class="fu">polyhedron</span>(<span class="fu">hrep</span>([</span>
-<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a>    <span class="fu">HalfSpace</span>([<span class="fl">1.0</span>, <span class="fl">0.0</span>], xmax),</span>
-<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a>    <span class="fu">HalfSpace</span>([<span class="op">-</span><span class="fl">1.0</span>, <span class="fl">0.0</span>], <span class="op">-</span>xmin),</span>
-<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a>    <span class="fu">HalfSpace</span>([<span class="fl">0.0</span>, <span class="fl">1.0</span>], xmax),</span>
-<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a>    <span class="fu">HalfSpace</span>([<span class="fl">0.0</span>, <span class="op">-</span><span class="fl">1.0</span>], <span class="op">-</span>xmin)</span>
-<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a>]), lib)</span>
-<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a>PreX <span class="op">=</span> <span class="fu">precursor_polyhedron</span>(X, U, A, B)  <span class="co"># Pre(X)</span></span>
-<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a>CPreX <span class="op">=</span> <span class="fu">precursor_polyhedron</span>(X, U, A, B, X; restrict_to_X<span class="op">=</span><span class="cn">true</span>)  <span class="co"># Pre(X) ∩ X</span></span>
-<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(X, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"X"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, xlabel<span class="op">=</span><span class="st">"x₁"</span>, ylabel<span class="op">=</span><span class="st">"x₂"</span>)</span>
-<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(PreX, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"Pre(X)"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(CPreX, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"Pre(X) ∩ X"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Polyhedra</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">CDDLib</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="st">    precursor_polyhedron(S, U, A, B, X=nothing; restrict_to_X=false)</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="st">Compute Pre(S) = { x | ∃u∈U : A*x + B*u ∈ S } for polyhedra S and U.</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="st">If restrict_to_X=true, computes Pre(S) ∩ X, where X must be provided.</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="st">S, U (and X if provided) must be Polyhedra polyhedra in H-rep (or convertible).</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="st">Returns a Polyhedra polyhedron in x-space.</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">precursor_polyhedron</span>(S, U, A, B, X<span class="op">=</span><span class="cn">nothing</span>; restrict_to_X<span class="op">=</span><span class="cn">false</span>)</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="fu">size</span>(A, <span class="fl">1</span>)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> <span class="fu">size</span>(B, <span class="fl">2</span>)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract Hs, hs (for constraints Hs * (Ax + Bu) ≤ hs)</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    Hs <span class="op">=</span> <span class="fu">reduce</span>(vcat, (hs.a<span class="op">'</span> <span class="cf">for</span> hs <span class="kw">in</span> Polyhedra.<span class="fu">halfspaces</span>(S)))  <span class="co"># each hs.a is a vector</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    hs <span class="op">=</span> [hs.β for hs <span class="kw">in</span> Polyhedra.<span class="fu">halfspaces</span>(S)]</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract Hu, hu (for constraints Hu * u ≤ hu)</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    Hu <span class="op">=</span> <span class="fu">reduce</span>(vcat, (hs.a<span class="op">'</span> <span class="cf">for</span> hs <span class="kw">in</span> Polyhedra.<span class="fu">halfspaces</span>(U)))</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    hu <span class="op">=</span> [hs.β for hs <span class="kw">in</span> Polyhedra.<span class="fu">halfspaces</span>(U)]</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Variables are y = [x; u] ∈ R^(n+m)</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Constraint 1: Hu*u ≤ hu  -&gt; [0  Hu] * [x;u] ≤ hu</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    C1 <span class="op">=</span> <span class="fu">hcat</span>(<span class="fu">zeros</span>(<span class="fu">size</span>(Hu, <span class="fl">1</span>), n), Hu)</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>    d1 <span class="op">=</span> hu</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Constraint 2: Hs*(A*x + B*u) ≤ hs -&gt; [Hs*A  Hs*B] * [x;u] ≤ hs</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>    C2 <span class="op">=</span> <span class="fu">hcat</span>(Hs <span class="op">*</span> A, Hs <span class="op">*</span> B)</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>    d2 <span class="op">=</span> hs</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If restriction x ∈ X: Hx*x ≤ hx -&gt; [Hx  0] * [x;u] ≤ hx</span></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> restrict_to_X</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>        <span class="pp">@assert</span> X <span class="op">!==</span> <span class="cn">nothing</span> <span class="st">"X must be provided when restrict_to_X=true"</span></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>        Hx <span class="op">=</span> <span class="fu">reduce</span>(vcat, (hs.a<span class="op">'</span> <span class="cf">for</span> hs <span class="kw">in</span> Polyhedra.<span class="fu">halfspaces</span>(X)))</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>        hx <span class="op">=</span> [hs.β for hs <span class="kw">in</span> Polyhedra.<span class="fu">halfspaces</span>(X)]</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>        C3 <span class="op">=</span> <span class="fu">hcat</span>(Hx, <span class="fu">zeros</span>(<span class="fu">size</span>(Hx, <span class="fl">1</span>), m))</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>        d3 <span class="op">=</span> hx</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>        C <span class="op">=</span> <span class="fu">vcat</span>(C1, C2, C3)</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>        d <span class="op">=</span> <span class="fu">vcat</span>(d1, d2, d3)</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>        C <span class="op">=</span> <span class="fu">vcat</span>(C1, C2)</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>        d <span class="op">=</span> <span class="fu">vcat</span>(d1, d2)</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Build lifted polyhedron in (x,u)</span></span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>    P_lift <span class="op">=</span> <span class="fu">polyhedron</span>(<span class="fu">hrep</span>(C, d), lib)</span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Project onto x-coordinates (eliminate u variables at indices n+1:n+m)</span></span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>    PreS <span class="op">=</span> <span class="fu">eliminate</span>(P_lift, (n<span class="op">+</span><span class="fl">1</span>)<span class="op">:</span>(n<span class="op">+</span>m),<span class="fu">FourierMotzkin</span>())</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> PreS</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a><span class="co"># H-representation of interval [umin, umax]</span></span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a><span class="co"># For u ∈ [umin, umax], we need:</span></span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a><span class="co">#   u ≤ umax  (equivalently:  [1]*u ≤ umax)</span></span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a><span class="co">#   u ≥ umin  (equivalently: [-1]*u ≤ -umin)</span></span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>lib <span class="op">=</span> CDDLib.<span class="fu">Library</span>()</span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>U <span class="op">=</span> <span class="fu">polyhedron</span>(<span class="fu">hrep</span>([<span class="fu">HalfSpace</span>([<span class="fl">1.0</span>], umax), <span class="fu">HalfSpace</span>([<span class="op">-</span><span class="fl">1.0</span>], <span class="op">-</span>umin)]), lib)</span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a><span class="co"># H-representation of square [xmin, xmax]²</span></span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a><span class="co"># For x ∈ [xmin, xmax]², we need:</span></span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a><span class="co">#   x₁ ≤ xmax  →  [1, 0]'x ≤ xmax</span></span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a><span class="co">#   x₁ ≥ xmin  →  [-1, 0]'x ≤ -xmin</span></span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a><span class="co">#   x₂ ≤ xmax  →  [0, 1]'x ≤ xmax</span></span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a><span class="co">#   x₂ ≥ xmin  →  [0, -1]'x ≤ -xmin</span></span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> <span class="fu">polyhedron</span>(<span class="fu">hrep</span>([</span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a>    <span class="fu">HalfSpace</span>([<span class="fl">1.0</span>, <span class="fl">0.0</span>], xmax),</span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a>    <span class="fu">HalfSpace</span>([<span class="op">-</span><span class="fl">1.0</span>, <span class="fl">0.0</span>], <span class="op">-</span>xmin),</span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>    <span class="fu">HalfSpace</span>([<span class="fl">0.0</span>, <span class="fl">1.0</span>], xmax),</span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a>    <span class="fu">HalfSpace</span>([<span class="fl">0.0</span>, <span class="op">-</span><span class="fl">1.0</span>], <span class="op">-</span>xmin)</span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a>]), lib)</span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a>PreX <span class="op">=</span> <span class="fu">precursor_polyhedron</span>(X, U, A, B)  <span class="co"># Pre(X)</span></span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>CPreX <span class="op">=</span> <span class="fu">precursor_polyhedron</span>(X, U, A, B, X; restrict_to_X<span class="op">=</span><span class="cn">true</span>)  <span class="co"># Pre(X) ∩ X</span></span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(X, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"X"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, xlabel<span class="op">=</span><span class="st">"x₁"</span>, ylabel<span class="op">=</span><span class="st">"x₂"</span>)</span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(PreX, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"Pre(X)"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(CPreX, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"Pre(X) ∩ X"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="fig-one-step-controllable-set" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="1">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1477,45 +1474,45 @@ The maximal control invariant set <span class="math inline">\mathcal C_\infty</s
 <div id="18" class="cell" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="st">    control_invariant_set(X, U, A, B; max_iterations=100, tol=1e-6)</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="st">Compute the maximal control invariant set. A set X_inv is control invariant </span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="st">if for all x ∈ X_inv, there exists u ∈ U such that A*x + B*u ∈ X_inv.</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="st">The algorithm iterates Xᵢ₊₁ = Pre(Xᵢ) ∩ Xᵢ until convergence.</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">control_invariant_set</span>(X, U, A, B; max_iterations<span class="op">=</span><span class="fl">30</span>, tol<span class="op">=</span><span class="fl">1e-5</span>)</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    lib <span class="op">=</span> CDDLib.<span class="fu">Library</span>()</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    X_inv <span class="op">=</span> X</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> iteration <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>max_iterations</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Compute Pre(X_inv) ∩ X_inv</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>        X_new <span class="op">=</span> <span class="fu">precursor_polyhedron</span>(X_inv, U, A, B, X_inv; restrict_to_X<span class="op">=</span><span class="cn">true</span>)</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Remove redundant constraints to speed up subsequent iterations</span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>        <span class="fu">removehredundancy!</span>(X_new)</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Check convergence by comparing volumes</span></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>        vol_old <span class="op">=</span> <span class="fu">volume</span>(X_inv)</span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>        vol_new <span class="op">=</span> <span class="fu">volume</span>(X_new)</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>        <span class="fu">println</span>(<span class="st">"Iteration </span><span class="sc">$</span>iteration<span class="st">: volume = </span><span class="sc">$</span>vol_new<span class="st"> (change: </span><span class="sc">$</span>(<span class="fu">abs</span>(vol_new <span class="op">-</span> vol_old))<span class="st">)"</span>)</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="fu">abs</span>(vol_new <span class="op">-</span> vol_old) <span class="op">&lt;</span> tol <span class="op">*</span> (vol_old <span class="op">+</span> <span class="fl">1e-10</span>)</span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>            <span class="fu">println</span>(<span class="st">"Converged after </span><span class="sc">$</span>iteration<span class="st"> iterations"</span>)</span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> X_new</span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>        X_inv <span class="op">=</span> X_new</span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">"Warning: did not converge after </span><span class="sc">$</span>max_iterations<span class="st"> iterations"</span>)</span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> X_inv</span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the maximal control invariant set</span></span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>X_invariant <span class="op">=</span> <span class="fu">control_invariant_set</span>(X, U, A, B; max_iterations<span class="op">=</span><span class="fl">100</span>, tol<span class="op">=</span><span class="fl">1e-8</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="st">    control_invariant_set(X, U, A, B; max_iterations=100, tol=1e-6)</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="st">Compute the maximal control invariant set. A set X_inv is control invariant </span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="st">if for all x ∈ X_inv, there exists u ∈ U such that A*x + B*u ∈ X_inv.</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="st">The algorithm iterates Xᵢ₊₁ = Pre(Xᵢ) ∩ Xᵢ until convergence.</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">control_invariant_set</span>(X, U, A, B; max_iterations<span class="op">=</span><span class="fl">30</span>, tol<span class="op">=</span><span class="fl">1e-5</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    lib <span class="op">=</span> CDDLib.<span class="fu">Library</span>()</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    X_inv <span class="op">=</span> X</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> iteration <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>max_iterations</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Compute Pre(X_inv) ∩ X_inv</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        X_new <span class="op">=</span> <span class="fu">precursor_polyhedron</span>(X_inv, U, A, B, X_inv; restrict_to_X<span class="op">=</span><span class="cn">true</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Remove redundant constraints to speed up subsequent iterations</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>        <span class="fu">removehredundancy!</span>(X_new)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Check convergence by comparing volumes</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>        vol_old <span class="op">=</span> <span class="fu">volume</span>(X_inv)</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>        vol_new <span class="op">=</span> <span class="fu">volume</span>(X_new)</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>        <span class="fu">println</span>(<span class="st">"Iteration </span><span class="sc">$</span>iteration<span class="st">: volume = </span><span class="sc">$</span>vol_new<span class="st"> (change: </span><span class="sc">$</span>(<span class="fu">abs</span>(vol_new <span class="op">-</span> vol_old))<span class="st">)"</span>)</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="fu">abs</span>(vol_new <span class="op">-</span> vol_old) <span class="op">&lt;</span> tol <span class="op">*</span> (vol_old <span class="op">+</span> <span class="fl">1e-10</span>)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>            <span class="fu">println</span>(<span class="st">"Converged after </span><span class="sc">$</span>iteration<span class="st"> iterations"</span>)</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> X_new</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>        X_inv <span class="op">=</span> X_new</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">"Warning: did not converge after </span><span class="sc">$</span>max_iterations<span class="st"> iterations"</span>)</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> X_inv</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the maximal control invariant set</span></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>X_invariant <span class="op">=</span> <span class="fu">control_invariant_set</span>(X, U, A, B; max_iterations<span class="op">=</span><span class="fl">100</span>, tol<span class="op">=</span><span class="fl">1e-8</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Iteration 1: volume = 250.0 (change: 150.0)
@@ -1587,10 +1584,10 @@ Converged after 46 iterations</code></pre>
 <div id="cell-fig-control-invariant-set" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(X, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"X"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(PreX, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"Pre(X)"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(CPreX, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"Pre(X) ∩ X"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(X_invariant, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"Control Invariant Set"</span>, linewidth<span class="op">=</span><span class="fl">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(X, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"X"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(PreX, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"Pre(X)"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(CPreX, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"Pre(X) ∩ X"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(X_invariant, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"Control Invariant Set"</span>, linewidth<span class="op">=</span><span class="fl">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="fig-control-invariant-set" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="1">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1607,48 +1604,48 @@ Figure&nbsp;4: Control invariant set on top of X, Pre(X), and Pre(X) ∩ X
 <div id="exm-control-invariant-set-2" class="theorem example">
 <p><span class="theorem-title"><strong>Example 4 (Control invariant set for the example system of the recursive feasibility example)</strong></span> Let’s now do the same computation for the motivating <a href="#exm-mpc-recursive-feasibility" class="quarto-xref">Example&nbsp;1</a> from the beginning of this section.</p>
 <div id="22" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">0</span> <span class="fl">1.0</span>]</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> [<span class="fl">0.4</span>, <span class="fl">1.0</span>]</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># State constraints:</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>xmin, xmax <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span>, <span class="fl">1.0</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Input constraints:</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>umin, umax <span class="op">=</span> <span class="op">-</span><span class="fl">0.25</span>, <span class="fl">0.25</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">0</span> <span class="fl">1.0</span>]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> [<span class="fl">0.4</span>, <span class="fl">1.0</span>]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># State constraints:</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>xmin, xmax <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span>, <span class="fl">1.0</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Input constraints:</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>umin, umax <span class="op">=</span> <span class="op">-</span><span class="fl">0.25</span>, <span class="fl">0.25</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="cell-fig-control-invariant-set-example_2" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># H-representation of interval [umin, umax]</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># For u ∈ [umin, umax], we need:</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   u ≤ umax  (equivalently:  [1]*u ≤ umax)</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   u ≥ umin  (equivalently: [-1]*u ≤ -umin)</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>lib <span class="op">=</span> CDDLib.<span class="fu">Library</span>()</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>U <span class="op">=</span> <span class="fu">polyhedron</span>(<span class="fu">hrep</span>([<span class="fu">HalfSpace</span>([<span class="fl">1.0</span>], umax), <span class="fu">HalfSpace</span>([<span class="op">-</span><span class="fl">1.0</span>], <span class="op">-</span>umin)]), lib)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co"># H-representation of square [xmin, xmax]²</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># For x ∈ [xmin, xmax]², we need:</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   x₁ ≤ xmax  →  [1, 0]'x ≤ xmax</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   x₁ ≥ xmin  →  [-1, 0]'x ≤ -xmin</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   x₂ ≤ xmax  →  [0, 1]'x ≤ xmax</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   x₂ ≥ xmin  →  [0, -1]'x ≤ -xmin</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> <span class="fu">polyhedron</span>(<span class="fu">hrep</span>([</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">HalfSpace</span>([<span class="fl">1.0</span>, <span class="fl">0.0</span>], xmax),</span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">HalfSpace</span>([<span class="op">-</span><span class="fl">1.0</span>, <span class="fl">0.0</span>], <span class="op">-</span>xmin),</span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">HalfSpace</span>([<span class="fl">0.0</span>, <span class="fl">1.0</span>], xmax),</span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">HalfSpace</span>([<span class="fl">0.0</span>, <span class="op">-</span><span class="fl">1.0</span>], <span class="op">-</span>xmin)</span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>]), lib)</span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>PreX <span class="op">=</span> <span class="fu">precursor_polyhedron</span>(X, U, A, B; restrict_to_X<span class="op">=</span><span class="cn">false</span>)  <span class="co"># Pre(X)</span></span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>CPreX <span class="op">=</span> <span class="fu">precursor_polyhedron</span>(X, U, A, B, X; restrict_to_X<span class="op">=</span><span class="cn">true</span>)  <span class="co"># Pre(X) ∩ X</span></span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the maximal control invariant set</span></span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>X_invariant <span class="op">=</span> <span class="fu">control_invariant_set</span>(X, U, A, B; max_iterations<span class="op">=</span><span class="fl">100</span>, tol<span class="op">=</span><span class="fl">1e-8</span>)</span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the regions</span></span>
-<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(X, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"X"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, xlabel<span class="op">=</span><span class="st">"x₁"</span>, ylabel<span class="op">=</span><span class="st">"x₂"</span>)</span>
-<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(PreX, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"Pre(X)"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(CPreX, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"Pre(X) ∩ X"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(X_invariant, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"Control Invariant Set"</span>, linewidth<span class="op">=</span><span class="fl">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># H-representation of interval [umin, umax]</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># For u ∈ [umin, umax], we need:</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   u ≤ umax  (equivalently:  [1]*u ≤ umax)</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   u ≥ umin  (equivalently: [-1]*u ≤ -umin)</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>lib <span class="op">=</span> CDDLib.<span class="fu">Library</span>()</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>U <span class="op">=</span> <span class="fu">polyhedron</span>(<span class="fu">hrep</span>([<span class="fu">HalfSpace</span>([<span class="fl">1.0</span>], umax), <span class="fu">HalfSpace</span>([<span class="op">-</span><span class="fl">1.0</span>], <span class="op">-</span>umin)]), lib)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># H-representation of square [xmin, xmax]²</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># For x ∈ [xmin, xmax]², we need:</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   x₁ ≤ xmax  →  [1, 0]'x ≤ xmax</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   x₁ ≥ xmin  →  [-1, 0]'x ≤ -xmin</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   x₂ ≤ xmax  →  [0, 1]'x ≤ xmax</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   x₂ ≥ xmin  →  [0, -1]'x ≤ -xmin</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> <span class="fu">polyhedron</span>(<span class="fu">hrep</span>([</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">HalfSpace</span>([<span class="fl">1.0</span>, <span class="fl">0.0</span>], xmax),</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">HalfSpace</span>([<span class="op">-</span><span class="fl">1.0</span>, <span class="fl">0.0</span>], <span class="op">-</span>xmin),</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">HalfSpace</span>([<span class="fl">0.0</span>, <span class="fl">1.0</span>], xmax),</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">HalfSpace</span>([<span class="fl">0.0</span>, <span class="op">-</span><span class="fl">1.0</span>], <span class="op">-</span>xmin)</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>]), lib)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>PreX <span class="op">=</span> <span class="fu">precursor_polyhedron</span>(X, U, A, B; restrict_to_X<span class="op">=</span><span class="cn">false</span>)  <span class="co"># Pre(X)</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>CPreX <span class="op">=</span> <span class="fu">precursor_polyhedron</span>(X, U, A, B, X; restrict_to_X<span class="op">=</span><span class="cn">true</span>)  <span class="co"># Pre(X) ∩ X</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the maximal control invariant set</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>X_invariant <span class="op">=</span> <span class="fu">control_invariant_set</span>(X, U, A, B; max_iterations<span class="op">=</span><span class="fl">100</span>, tol<span class="op">=</span><span class="fl">1e-8</span>)</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the regions</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(X, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"X"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, xlabel<span class="op">=</span><span class="st">"x₁"</span>, ylabel<span class="op">=</span><span class="st">"x₂"</span>)</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(PreX, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"Pre(X)"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(CPreX, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"Pre(X) ∩ X"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(X_invariant, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"Control Invariant Set"</span>, linewidth<span class="op">=</span><span class="fl">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Iteration 1: volume = 3.1900000000000004 (change: 0.8099999999999996)
@@ -1670,7 +1667,7 @@ Figure&nbsp;5: Control invariant set for the example system on top of X, Pre(X),
 </div>
 </div>
 <div id="26" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>X_invariant</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>X_invariant</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>Polyhedron CDDLib.Polyhedron{Float64}:
 10-element iterator of Polyhedra.HalfSpace{Float64, Vector{Float64}}:
@@ -1708,84 +1705,84 @@ Figure&nbsp;5: Control invariant set for the example system on top of X, Pre(X),
 <div id="cell-fig-mpc-recursive-feasible-control-invariant-at-every-time-step" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">OSQP</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">JuMP</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>rhocp <span class="op">=</span> <span class="fu">Model</span>(OSQP.Optimizer)    <span class="co"># Defining the receding-horizon (RH) optimal control problem (OCP).</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set_silent</span>(rhocp)</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="co"># System dynamics x(k+1) = A*x(k) + B*u(k):</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">0</span> <span class="fl">1.0</span>]</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> [<span class="fl">0.4</span>, <span class="fl">1.0</span>]</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="fl">3</span>               <span class="co"># Prediction horizon length.</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>N_full <span class="op">=</span> N<span class="op">+</span><span class="fl">10</span>       <span class="co"># Total simulation length.</span></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> <span class="fl">1.0</span>             <span class="co"># Sampling time.</span></span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>x_init <span class="op">=</span> [<span class="op">-</span><span class="fl">1.0</span>, <span class="fl">0.975</span>] <span class="co"># Initial state.</span></span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Quadratic cost function weights:</span></span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> <span class="fu">Diagonal</span>([<span class="fl">1.0</span>, <span class="fl">1.0</span>])</span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>R <span class="op">=</span> <span class="fl">10.0</span></span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a><span class="co"># State constraints:</span></span>
-<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>x_min <span class="op">=</span> [<span class="op">-</span><span class="fl">1.0</span>, <span class="op">-</span><span class="fl">1.0</span>]</span>
-<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>x_max <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">1.0</span>]</span>
-<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Input constraints:</span></span>
-<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>u_max <span class="op">=</span> <span class="fl">0.25</span> <span class="co"># Recursive feasibility for 0.3, for 0.25 not recursively feasible</span></span>
-<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>u_min <span class="op">=</span> <span class="op">-</span>u_max </span>
-<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="fu">size</span>(A,<span class="fl">1</span>)                                               <span class="co"># Order of the system.</span></span>
-<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Building the optimization model for the receding-horizon optimal control problem RH-OCP:</span></span>
-<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a><span class="pp">@variable</span>(rhocp, x[<span class="fl">1</span><span class="op">:</span>n, <span class="fl">1</span><span class="op">:</span>N<span class="op">+</span><span class="fl">1</span>])                             <span class="co"># State trajectory over the prediction horizon.</span></span>
-<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a><span class="pp">@variable</span>(rhocp, u_min <span class="op">&lt;=</span> u[<span class="fl">1</span><span class="op">:</span>N] <span class="op">&lt;=</span> u_max)                  <span class="co"># Control trajectory over the prediction horizon.</span></span>
-<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a><span class="co">#@constraint(rhocp, [i=1:N+1], x_min .&lt;= x[:,i] .&lt;= x_max)   # State constraints.</span></span>
-<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(rhocp, [i<span class="op">=</span><span class="fl">1</span><span class="op">:</span>N], x[<span class="op">:</span>,i<span class="op">+</span><span class="fl">1</span>] <span class="op">==</span> A<span class="op">*</span>x[<span class="op">:</span>,i] <span class="op">+</span> B<span class="op">*</span>u[i])</span>
-<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(rhocp, [i<span class="op">=</span><span class="fl">1</span><span class="op">:</span>N<span class="op">+</span><span class="fl">1</span>], x[<span class="op">:</span>,i] <span class="kw">in</span> X_invariant)        <span class="co"># State constrained to the control invariant set.</span></span>
-<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a><span class="fu">fix</span>(x[<span class="fl">1</span>,<span class="fl">1</span>], x_init[<span class="fl">1</span>])</span>
-<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a><span class="fu">fix</span>(x[<span class="fl">2</span>,<span class="fl">1</span>], x_init[<span class="fl">2</span>])</span>
-<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a><span class="pp">@objective</span>(rhocp, Min, <span class="fu">sum</span>(x[<span class="op">:</span>,i]<span class="ch">'*Q*x[:,i] + R*u[i]^2 for i=1:N) + x[:,N+1]'</span><span class="op">*</span>Q<span class="op">*</span>x[<span class="op">:</span>,N<span class="op">+</span><span class="fl">1</span>])</span>
-<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Function that solves the RH OCP for the current state xₖ at time step k:</span></span>
-<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">mpc_regulation</span>(rhocp, xₖ, k, N)          </span>
-<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fix</span>(x[<span class="fl">1</span>,<span class="fl">1</span>], xₖ[<span class="fl">1</span>])</span>
-<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fix</span>(x[<span class="fl">2</span>,<span class="fl">1</span>], xₖ[<span class="fl">2</span>])  </span>
-<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a>    <span class="fu">optimize!</span>(rhocp)</span>
-<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">value</span>.(u), <span class="fu">value</span>.(x)</span>
-<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Receding-horizon simulation:</span></span>
-<span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a>x_opt_full <span class="op">=</span> [x_init,]</span>
-<span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a>u_opt_full <span class="op">=</span> <span class="dt">Float64</span>[]</span>
-<span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a>x_pred_full <span class="op">=</span> <span class="fu">Vector</span><span class="dt">{Matrix{Float64}}</span>()</span>
-<span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a>u_pred_full <span class="op">=</span> <span class="fu">Vector</span><span class="dt">{Vector{Float64}}</span>()</span>
-<span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-56"><a href="#cb20-56" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>(N_full<span class="op">-</span>N)                                   <span class="co"># Receding-horizon simulation loop.  </span></span>
-<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a>    xₖ <span class="op">=</span> x_opt_full[<span class="kw">end</span>]                                <span class="co"># Current state.  </span></span>
-<span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a>    u_pred, x_pred <span class="op">=</span> <span class="fu">mpc_regulation</span>(rhocp, xₖ, k, N)    <span class="co"># Optimal control sequence over the prediction horizon.</span></span>
-<span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a>    uₖ <span class="op">=</span> u_pred[<span class="fl">1</span>]                                      <span class="co"># Apply only the first control input.</span></span>
-<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a>    x⁺ <span class="op">=</span> x_pred[<span class="op">:</span>,<span class="fl">2</span>]                                    <span class="co"># Next state from the predicted trajectory.</span></span>
-<span id="cb20-61"><a href="#cb20-61" aria-hidden="true" tabindex="-1"></a>    <span class="co">#x⁺ = x_pred[:,2] + randn(2)*0.1                     # True next state differs from the predicted trajectory due to the disturbance.</span></span>
-<span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a>    <span class="fu">push!</span>(x_opt_full, x⁺)</span>
-<span id="cb20-63"><a href="#cb20-63" aria-hidden="true" tabindex="-1"></a>    <span class="fu">push!</span>(u_opt_full, uₖ)</span>
-<span id="cb20-64"><a href="#cb20-64" aria-hidden="true" tabindex="-1"></a>    <span class="fu">push!</span>(x_pred_full, x_pred)</span>
-<span id="cb20-65"><a href="#cb20-65" aria-hidden="true" tabindex="-1"></a>    <span class="fu">push!</span>(u_pred_full, u_pred)</span>
-<span id="cb20-66"><a href="#cb20-66" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
-<span id="cb20-67"><a href="#cb20-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-68"><a href="#cb20-68" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the results:</span></span>
-<span id="cb20-69"><a href="#cb20-69" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
-<span id="cb20-70"><a href="#cb20-70" aria-hidden="true" tabindex="-1"></a>x_opt <span class="op">=</span> <span class="fu">hcat</span>(x_opt_full<span class="op">...</span>)</span>
-<span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-72"><a href="#cb20-72" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">=</span> <span class="fu">plot</span>(X, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"X"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, xlabel<span class="op">=</span><span class="st">"x₁"</span>, ylabel<span class="op">=</span><span class="st">"x₂"</span>)</span>
-<span id="cb20-73"><a href="#cb20-73" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(p1,X_invariant, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"Control Invariant Set"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb20-74"><a href="#cb20-74" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(p1,x_opt[<span class="fl">1</span>,<span class="op">:</span>], x_opt[<span class="fl">2</span>,<span class="op">:</span>], label<span class="op">=</span><span class="st">"x(k)"</span>, xlabel<span class="op">=</span><span class="st">"x₁"</span>, ylabel<span class="op">=</span><span class="st">"x₂"</span>, markershape<span class="op">=:</span>circle, markersize<span class="op">=</span><span class="fl">2</span>, lw<span class="op">=</span><span class="fl">2</span>, aspect_ratio<span class="op">=:</span>equal)</span>
-<span id="cb20-75"><a href="#cb20-75" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x_pred <span class="kw">in</span> x_pred_full</span>
-<span id="cb20-76"><a href="#cb20-76" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot!</span>(p1, x_pred[<span class="fl">1</span>,<span class="op">:</span>], x_pred[<span class="fl">2</span>,<span class="op">:</span>], label<span class="op">=</span><span class="st">""</span>, markershape<span class="op">=:</span>diamond, markersize<span class="op">=</span><span class="fl">1</span>, lw<span class="op">=</span><span class="fl">1</span>, linecolor<span class="op">=:</span>gray, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb20-77"><a href="#cb20-77" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
-<span id="cb20-78"><a href="#cb20-78" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(p1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">OSQP</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">JuMP</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>rhocp <span class="op">=</span> <span class="fu">Model</span>(OSQP.Optimizer)    <span class="co"># Defining the receding-horizon (RH) optimal control problem (OCP).</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set_silent</span>(rhocp)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co"># System dynamics x(k+1) = A*x(k) + B*u(k):</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">0</span> <span class="fl">1.0</span>]</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> [<span class="fl">0.4</span>, <span class="fl">1.0</span>]</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="fl">3</span>               <span class="co"># Prediction horizon length.</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>N_full <span class="op">=</span> N<span class="op">+</span><span class="fl">10</span>       <span class="co"># Total simulation length.</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> <span class="fl">1.0</span>             <span class="co"># Sampling time.</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>x_init <span class="op">=</span> [<span class="op">-</span><span class="fl">1.0</span>, <span class="fl">0.975</span>] <span class="co"># Initial state.</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Quadratic cost function weights:</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> <span class="fu">Diagonal</span>([<span class="fl">1.0</span>, <span class="fl">1.0</span>])</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>R <span class="op">=</span> <span class="fl">10.0</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="co"># State constraints:</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>x_min <span class="op">=</span> [<span class="op">-</span><span class="fl">1.0</span>, <span class="op">-</span><span class="fl">1.0</span>]</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>x_max <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">1.0</span>]</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Input constraints:</span></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>u_max <span class="op">=</span> <span class="fl">0.25</span> <span class="co"># Recursive feasibility for 0.3, for 0.25 not recursively feasible</span></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>u_min <span class="op">=</span> <span class="op">-</span>u_max </span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="fu">size</span>(A,<span class="fl">1</span>)                                               <span class="co"># Order of the system.</span></span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Building the optimization model for the receding-horizon optimal control problem RH-OCP:</span></span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a><span class="pp">@variable</span>(rhocp, x[<span class="fl">1</span><span class="op">:</span>n, <span class="fl">1</span><span class="op">:</span>N<span class="op">+</span><span class="fl">1</span>])                             <span class="co"># State trajectory over the prediction horizon.</span></span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a><span class="pp">@variable</span>(rhocp, u_min <span class="op">&lt;=</span> u[<span class="fl">1</span><span class="op">:</span>N] <span class="op">&lt;=</span> u_max)                  <span class="co"># Control trajectory over the prediction horizon.</span></span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a><span class="co">#@constraint(rhocp, [i=1:N+1], x_min .&lt;= x[:,i] .&lt;= x_max)   # State constraints.</span></span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(rhocp, [i<span class="op">=</span><span class="fl">1</span><span class="op">:</span>N], x[<span class="op">:</span>,i<span class="op">+</span><span class="fl">1</span>] <span class="op">==</span> A<span class="op">*</span>x[<span class="op">:</span>,i] <span class="op">+</span> B<span class="op">*</span>u[i])</span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(rhocp, [i<span class="op">=</span><span class="fl">1</span><span class="op">:</span>N<span class="op">+</span><span class="fl">1</span>], x[<span class="op">:</span>,i] <span class="kw">in</span> X_invariant)        <span class="co"># State constrained to the control invariant set.</span></span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a><span class="fu">fix</span>(x[<span class="fl">1</span>,<span class="fl">1</span>], x_init[<span class="fl">1</span>])</span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a><span class="fu">fix</span>(x[<span class="fl">2</span>,<span class="fl">1</span>], x_init[<span class="fl">2</span>])</span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a><span class="pp">@objective</span>(rhocp, Min, <span class="fu">sum</span>(x[<span class="op">:</span>,i]<span class="ch">'*Q*x[:,i] + R*u[i]^2 for i=1:N) + x[:,N+1]'</span><span class="op">*</span>Q<span class="op">*</span>x[<span class="op">:</span>,N<span class="op">+</span><span class="fl">1</span>])</span>
+<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Function that solves the RH OCP for the current state xₖ at time step k:</span></span>
+<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">mpc_regulation</span>(rhocp, xₖ, k, N)          </span>
+<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fix</span>(x[<span class="fl">1</span>,<span class="fl">1</span>], xₖ[<span class="fl">1</span>])</span>
+<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fix</span>(x[<span class="fl">2</span>,<span class="fl">1</span>], xₖ[<span class="fl">2</span>])  </span>
+<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a>    <span class="fu">optimize!</span>(rhocp)</span>
+<span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">value</span>.(u), <span class="fu">value</span>.(x)</span>
+<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Receding-horizon simulation:</span></span>
+<span id="cb19-51"><a href="#cb19-51" aria-hidden="true" tabindex="-1"></a>x_opt_full <span class="op">=</span> [x_init,]</span>
+<span id="cb19-52"><a href="#cb19-52" aria-hidden="true" tabindex="-1"></a>u_opt_full <span class="op">=</span> <span class="dt">Float64</span>[]</span>
+<span id="cb19-53"><a href="#cb19-53" aria-hidden="true" tabindex="-1"></a>x_pred_full <span class="op">=</span> <span class="fu">Vector</span><span class="dt">{Matrix{Float64}}</span>()</span>
+<span id="cb19-54"><a href="#cb19-54" aria-hidden="true" tabindex="-1"></a>u_pred_full <span class="op">=</span> <span class="fu">Vector</span><span class="dt">{Vector{Float64}}</span>()</span>
+<span id="cb19-55"><a href="#cb19-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-56"><a href="#cb19-56" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>(N_full<span class="op">-</span>N)                                   <span class="co"># Receding-horizon simulation loop.  </span></span>
+<span id="cb19-57"><a href="#cb19-57" aria-hidden="true" tabindex="-1"></a>    xₖ <span class="op">=</span> x_opt_full[<span class="kw">end</span>]                                <span class="co"># Current state.  </span></span>
+<span id="cb19-58"><a href="#cb19-58" aria-hidden="true" tabindex="-1"></a>    u_pred, x_pred <span class="op">=</span> <span class="fu">mpc_regulation</span>(rhocp, xₖ, k, N)    <span class="co"># Optimal control sequence over the prediction horizon.</span></span>
+<span id="cb19-59"><a href="#cb19-59" aria-hidden="true" tabindex="-1"></a>    uₖ <span class="op">=</span> u_pred[<span class="fl">1</span>]                                      <span class="co"># Apply only the first control input.</span></span>
+<span id="cb19-60"><a href="#cb19-60" aria-hidden="true" tabindex="-1"></a>    x⁺ <span class="op">=</span> x_pred[<span class="op">:</span>,<span class="fl">2</span>]                                    <span class="co"># Next state from the predicted trajectory.</span></span>
+<span id="cb19-61"><a href="#cb19-61" aria-hidden="true" tabindex="-1"></a>    <span class="co">#x⁺ = x_pred[:,2] + randn(2)*0.1                     # True next state differs from the predicted trajectory due to the disturbance.</span></span>
+<span id="cb19-62"><a href="#cb19-62" aria-hidden="true" tabindex="-1"></a>    <span class="fu">push!</span>(x_opt_full, x⁺)</span>
+<span id="cb19-63"><a href="#cb19-63" aria-hidden="true" tabindex="-1"></a>    <span class="fu">push!</span>(u_opt_full, uₖ)</span>
+<span id="cb19-64"><a href="#cb19-64" aria-hidden="true" tabindex="-1"></a>    <span class="fu">push!</span>(x_pred_full, x_pred)</span>
+<span id="cb19-65"><a href="#cb19-65" aria-hidden="true" tabindex="-1"></a>    <span class="fu">push!</span>(u_pred_full, u_pred)</span>
+<span id="cb19-66"><a href="#cb19-66" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb19-67"><a href="#cb19-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-68"><a href="#cb19-68" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the results:</span></span>
+<span id="cb19-69"><a href="#cb19-69" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
+<span id="cb19-70"><a href="#cb19-70" aria-hidden="true" tabindex="-1"></a>x_opt <span class="op">=</span> <span class="fu">hcat</span>(x_opt_full<span class="op">...</span>)</span>
+<span id="cb19-71"><a href="#cb19-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-72"><a href="#cb19-72" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">=</span> <span class="fu">plot</span>(X, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"X"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, xlabel<span class="op">=</span><span class="st">"x₁"</span>, ylabel<span class="op">=</span><span class="st">"x₂"</span>)</span>
+<span id="cb19-73"><a href="#cb19-73" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(p1,X_invariant, ratio<span class="op">=:</span>equal, label<span class="op">=</span><span class="st">"Control Invariant Set"</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb19-74"><a href="#cb19-74" aria-hidden="true" tabindex="-1"></a><span class="fu">plot!</span>(p1,x_opt[<span class="fl">1</span>,<span class="op">:</span>], x_opt[<span class="fl">2</span>,<span class="op">:</span>], label<span class="op">=</span><span class="st">"x(k)"</span>, xlabel<span class="op">=</span><span class="st">"x₁"</span>, ylabel<span class="op">=</span><span class="st">"x₂"</span>, markershape<span class="op">=:</span>circle, markersize<span class="op">=</span><span class="fl">2</span>, lw<span class="op">=</span><span class="fl">2</span>, aspect_ratio<span class="op">=:</span>equal)</span>
+<span id="cb19-75"><a href="#cb19-75" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x_pred <span class="kw">in</span> x_pred_full</span>
+<span id="cb19-76"><a href="#cb19-76" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot!</span>(p1, x_pred[<span class="fl">1</span>,<span class="op">:</span>], x_pred[<span class="fl">2</span>,<span class="op">:</span>], label<span class="op">=</span><span class="st">""</span>, markershape<span class="op">=:</span>diamond, markersize<span class="op">=</span><span class="fl">1</span>, lw<span class="op">=</span><span class="fl">1</span>, linecolor<span class="op">=:</span>gray, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb19-77"><a href="#cb19-77" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb19-78"><a href="#cb19-78" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(p1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="fig-mpc-recursive-feasible-control-invariant-at-every-time-step" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">

@@ -1257,9 +1257,6 @@ y_1(t_\mathrm{f}) &amp;= \mathrm y_{1\mathrm{f}}.
 <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="fu">demo_shoot_pendulum</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>GKS: cannot open display - headless operation mode active</code></pre>
-</div>
 <div id="fig-bvp-pendulum" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bvp-pendulum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1296,59 +1293,59 @@ Figure&nbsp;2: Indirect shooting
 <div id="cell-fig-shooting-indirect-LQR" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DifferentialEquations</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">NLsolve</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Random</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">1234</span>)                                       <span class="co"># For reproducibility.</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">shoot_lq_fixed</span>(A,B,Q,R,xinitial,xfinal,tfinal)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="fu">size</span>(A)[<span class="fl">1</span>]</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> <span class="fu">statecostateeq!</span>(dw,w,p,t)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> w[<span class="fl">1</span><span class="op">:</span>n]</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        λ <span class="op">=</span> w[(n<span class="op">+</span><span class="fl">1</span>)<span class="op">:</span><span class="kw">end</span>]</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        dw[<span class="fl">1</span><span class="op">:</span>n] <span class="op">=</span> A<span class="op">*</span>x <span class="op">-</span> <span class="fu">B*</span>(R<span class="op">\</span>B<span class="op">'*</span>λ)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        dw[(n<span class="op">+</span><span class="fl">1</span>)<span class="op">:</span><span class="kw">end</span>] <span class="op">=</span> <span class="op">-</span>Q<span class="op">*</span>x <span class="op">-</span> A<span class="op">'*</span>λ</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    λinitial <span class="op">=</span> <span class="fu">zeros</span>(n)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    tspan <span class="op">=</span> (<span class="fl">0.0</span>,tfinal)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    tol <span class="op">=</span> <span class="fl">1e-5</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> <span class="fu">F</span>(λinitial)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        winitial <span class="op">=</span> <span class="fu">vcat</span>(xinitial,λinitial)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        prob <span class="op">=</span> <span class="fu">ODEProblem</span>(statecostateeq!,winitial,tspan)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        dsol <span class="op">=</span> <span class="fu">solve</span>(prob,<span class="fu">Tsit5</span>(),abstol<span class="op">=</span>tol<span class="op">/</span><span class="fl">10</span>,reltol<span class="op">=</span>tol<span class="op">/</span><span class="fl">10</span>)</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        xfinalsolved <span class="op">=</span> dsol[<span class="kw">end</span>][<span class="fl">1</span><span class="op">:</span>n]</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (xfinal<span class="op">-</span>xfinalsolved)</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    nsol <span class="op">=</span> <span class="fu">nlsolve</span>(F,λinitial,xtol<span class="op">=</span>tol)                 <span class="co"># Could add autodiff=:forward.</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    λinitial <span class="op">=</span> nsol.zero                                <span class="co"># Solving once again for plotting.</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    winitial <span class="op">=</span> <span class="fu">vcat</span>(xinitial,λinitial)</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    prob <span class="op">=</span> <span class="fu">ODEProblem</span>(statecostateeq!,winitial,tspan)</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    dsol <span class="op">=</span> <span class="fu">solve</span>(prob,<span class="fu">Tsit5</span>(),abstol<span class="op">=</span>tol<span class="op">/</span><span class="fl">10</span>,reltol<span class="op">=</span>tol<span class="op">/</span><span class="fl">10</span>)</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dsol</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">demo_shoot_lq_fixed</span>()</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="fl">2</span>                                               <span class="co"># Order of the system.</span></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> <span class="fl">1</span>                                               <span class="co"># Number of inputs.</span></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    A <span class="op">=</span> <span class="fu">rand</span>(n,n)                                       <span class="co"># Matrices modeling the system.</span></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    B <span class="op">=</span> <span class="fu">rand</span>(n,m)</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    Q <span class="op">=</span> <span class="fu">diagm</span>(<span class="fl">0</span><span class="op">=&gt;</span><span class="fu">rand</span>(n))                               <span class="co"># Weighting matrices for the quadratic cost function.</span></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    R <span class="op">=</span> <span class="fu">rand</span>(<span class="fl">1</span>,<span class="fl">1</span>)</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    xinitial <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">2.0</span>]</span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    xfinal <span class="op">=</span> [<span class="fl">3.0</span>, <span class="fl">4.0</span>]</span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    tfinal <span class="op">=</span> <span class="fl">5.0</span> </span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    dsol <span class="op">=</span> <span class="fu">shoot_lq_fixed</span>(A,B,Q,R,xinitial,xfinal,tfinal)</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>    p1 <span class="op">=</span> <span class="fu">plot</span>(dsol,idxs<span class="op">=</span>(<span class="fl">1</span><span class="op">:</span><span class="fl">2</span>),lw<span class="op">=</span><span class="fl">2</span>,legend<span class="op">=</span><span class="cn">false</span>,xlabel<span class="op">=</span><span class="st">"Time"</span>,ylabel<span class="op">=</span><span class="st">"State"</span>)</span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>    p2 <span class="op">=</span> <span class="fu">plot</span>(dsol,idxs<span class="op">=</span>(<span class="fl">3</span><span class="op">:</span><span class="fl">4</span>),lw<span class="op">=</span><span class="fl">2</span>,legend<span class="op">=</span><span class="cn">false</span>,xlabel<span class="op">=</span><span class="st">"Time"</span>,ylabel<span class="op">=</span><span class="st">"Costate"</span>)</span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display</span>(<span class="fu">plot</span>(p1,p2,layout<span class="op">=</span>(<span class="fl">2</span>,<span class="fl">1</span>)))</span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="fu">demo_shoot_lq_fixed</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DifferentialEquations</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">NLsolve</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Random</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">1234</span>)                                       <span class="co"># For reproducibility.</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">shoot_lq_fixed</span>(A,B,Q,R,xinitial,xfinal,tfinal)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="fu">size</span>(A)[<span class="fl">1</span>]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> <span class="fu">statecostateeq!</span>(dw,w,p,t)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> w[<span class="fl">1</span><span class="op">:</span>n]</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        λ <span class="op">=</span> w[(n<span class="op">+</span><span class="fl">1</span>)<span class="op">:</span><span class="kw">end</span>]</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        dw[<span class="fl">1</span><span class="op">:</span>n] <span class="op">=</span> A<span class="op">*</span>x <span class="op">-</span> <span class="fu">B*</span>(R<span class="op">\</span>B<span class="op">'*</span>λ)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        dw[(n<span class="op">+</span><span class="fl">1</span>)<span class="op">:</span><span class="kw">end</span>] <span class="op">=</span> <span class="op">-</span>Q<span class="op">*</span>x <span class="op">-</span> A<span class="op">'*</span>λ</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    λinitial <span class="op">=</span> <span class="fu">zeros</span>(n)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    tspan <span class="op">=</span> (<span class="fl">0.0</span>,tfinal)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    tol <span class="op">=</span> <span class="fl">1e-5</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> <span class="fu">F</span>(λinitial)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        winitial <span class="op">=</span> <span class="fu">vcat</span>(xinitial,λinitial)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        prob <span class="op">=</span> <span class="fu">ODEProblem</span>(statecostateeq!,winitial,tspan)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        dsol <span class="op">=</span> <span class="fu">solve</span>(prob,<span class="fu">Tsit5</span>(),abstol<span class="op">=</span>tol<span class="op">/</span><span class="fl">10</span>,reltol<span class="op">=</span>tol<span class="op">/</span><span class="fl">10</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        xfinalsolved <span class="op">=</span> dsol[<span class="kw">end</span>][<span class="fl">1</span><span class="op">:</span>n]</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (xfinal<span class="op">-</span>xfinalsolved)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    nsol <span class="op">=</span> <span class="fu">nlsolve</span>(F,λinitial,xtol<span class="op">=</span>tol)                 <span class="co"># Could add autodiff=:forward.</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    λinitial <span class="op">=</span> nsol.zero                                <span class="co"># Solving once again for plotting.</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    winitial <span class="op">=</span> <span class="fu">vcat</span>(xinitial,λinitial)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    prob <span class="op">=</span> <span class="fu">ODEProblem</span>(statecostateeq!,winitial,tspan)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    dsol <span class="op">=</span> <span class="fu">solve</span>(prob,<span class="fu">Tsit5</span>(),abstol<span class="op">=</span>tol<span class="op">/</span><span class="fl">10</span>,reltol<span class="op">=</span>tol<span class="op">/</span><span class="fl">10</span>)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dsol</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">demo_shoot_lq_fixed</span>()</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="fl">2</span>                                               <span class="co"># Order of the system.</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> <span class="fl">1</span>                                               <span class="co"># Number of inputs.</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    A <span class="op">=</span> <span class="fu">rand</span>(n,n)                                       <span class="co"># Matrices modeling the system.</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    B <span class="op">=</span> <span class="fu">rand</span>(n,m)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    Q <span class="op">=</span> <span class="fu">diagm</span>(<span class="fl">0</span><span class="op">=&gt;</span><span class="fu">rand</span>(n))                               <span class="co"># Weighting matrices for the quadratic cost function.</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    R <span class="op">=</span> <span class="fu">rand</span>(<span class="fl">1</span>,<span class="fl">1</span>)</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    xinitial <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">2.0</span>]</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    xfinal <span class="op">=</span> [<span class="fl">3.0</span>, <span class="fl">4.0</span>]</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    tfinal <span class="op">=</span> <span class="fl">5.0</span> </span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    dsol <span class="op">=</span> <span class="fu">shoot_lq_fixed</span>(A,B,Q,R,xinitial,xfinal,tfinal)</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    p1 <span class="op">=</span> <span class="fu">plot</span>(dsol,idxs<span class="op">=</span>(<span class="fl">1</span><span class="op">:</span><span class="fl">2</span>),lw<span class="op">=</span><span class="fl">2</span>,legend<span class="op">=</span><span class="cn">false</span>,xlabel<span class="op">=</span><span class="st">"Time"</span>,ylabel<span class="op">=</span><span class="st">"State"</span>)</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    p2 <span class="op">=</span> <span class="fu">plot</span>(dsol,idxs<span class="op">=</span>(<span class="fl">3</span><span class="op">:</span><span class="fl">4</span>),lw<span class="op">=</span><span class="fl">2</span>,legend<span class="op">=</span><span class="cn">false</span>,xlabel<span class="op">=</span><span class="st">"Time"</span>,ylabel<span class="op">=</span><span class="st">"Costate"</span>)</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display</span>(<span class="fu">plot</span>(p1,p2,layout<span class="op">=</span>(<span class="fl">2</span>,<span class="fl">1</span>)))</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="fu">demo_shoot_lq_fixed</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="fig-shooting-indirect-lqr" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
