@@ -1104,7 +1104,7 @@ Note
 <p>Typically there are two types of constraints that can be imposed on the optimization variable <span class="math inline">\bm x</span>:</p>
 <ul>
 <li>explicit characterization of the set such as <span class="math inline">\bm x \in \mathbb{R}^n</span> or <span class="math inline">\bm x \in \mathbb{Z}^n</span>, possibly even a direct enumeration such as <span class="math inline">\bm x \in \{0,1\}^n</span> in the case of binary variables,</li>
-<li>implicit characterization of the set using equations and inequalities such as <span class="math inline">g_i(\bm x) \leq 0</span> and <span class="math inline">h_i(\bm x) = 0</span> for <span class="math inline">i = 1, \ldots, m</span> and <span class="math inline">j = 1, \ldots, p</span>.</li>
+<li>implicit characterization of the set using equations and inequalities such as <span class="math inline">g_i(\bm x) \leq 0</span> and <span class="math inline">h_j(\bm x) = 0</span> for <span class="math inline">i = 1, \ldots, m</span> and <span class="math inline">j = 1, \ldots, p</span>.</li>
 </ul>
 <p>An example of a more structured and yet sufficiently general optimization problems over several real and integer variables is <span class="math display">
 \begin{aligned}
@@ -1131,7 +1131,7 @@ Note
 \begin{aligned}
 \operatorname*{minimize}_{\bm x \in \mathbb{R}^n} \quad &amp; f(\bm x) \\
 \text{subject to} \quad &amp; g_i(\bm x) \leq 0, \quad i = 1, \ldots, m, \\
-&amp; h_i(\bm x) = 0, \quad i = 1, \ldots, p,
+&amp; h_j(\bm x) = 0, \quad j = 1, \ldots, p,
 \end{aligned}
 </span> which can also be written using vector-valued functions (reflected in the use of the bold face for their names) <span class="math display">
 \begin{aligned}
@@ -1207,7 +1207,7 @@ If the objective function and the feasible set are convex (the latter holds when
 </section>
 <section id="conic-program-cp" class="level3">
 <h3 class="anchored" data-anchor-id="conic-program-cp">Conic program (CP)</h3>
-<p>First, what is a cone? It is a set such that if something is in the cone, then a multiple of it by a nonnegative number is still in the set. We are going to restrict ourselves to <em>regular cones</em>, which are are pointed, closed and convex. An example of such regular cone in a plane is in <a href="#fig-cone" class="quarto-xref">Fig.&nbsp;1</a> below.</p>
+<p>First, what is a cone? It is a set such that if something is in the cone, then a multiple of it by a nonnegative number is still in the set. We are going to restrict ourselves to <em>regular cones</em>, which are pointed, closed and convex. An example of such regular cone in a plane is in <a href="#fig-cone" class="quarto-xref">Fig.&nbsp;1</a> below.</p>
 <div id="fig-cone" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cone-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1259,17 +1259,6 @@ Figure&nbsp;1: Regular (pointed, convex, closed) cone in a plane
 </span></p>
 <p>and is visualized in <a href="#fig-soc-cone" class="quarto-xref">Fig.&nbsp;2</a> below.</p>
 <div id="cell-fig-soc-cone" class="cell" data-execution_count="1">
-<div class="cell-output cell-output-stdout">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-green-fg ansi-bold">Precompiling</span> packages...
-   7451.9 ms<span class="ansi-green-fg">  ✓ </span>QuartoNotebookWorkerMakieExt<span class="ansi-bright-black-fg"> (serial)</span>
-  1 dependency successfully precompiled in 8 seconds
-<span class="ansi-green-fg ansi-bold">Precompiling</span> packages...
-   5517.7 ms<span class="ansi-green-fg">  ✓ </span>QuartoNotebookWorkerCairoMakieExt<span class="ansi-bright-black-fg"> (serial)</span>
-  1 dependency successfully precompiled in 6 seconds
-</pre>
-</div>
-</div>
 <div id="fig-soc-cone" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="1">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-soc-cone-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
