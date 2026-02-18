@@ -981,6 +981,8 @@ F,X = projected_gradient_quadratic(Q,c,xₗ,xᵤ,x₀,ϵ,N)
 
 ``` {julia}
 #| code-fold: true
+#| fig-cap: Contour graph of the quadratic function with the sequence of iterates of the projected gradient method
+#| label: fig-projected-gradient-quadratic
 x1_grid = x2_grid = -2:0.01:4;
 f(x) = 1/2*dot(x,Q,x)+dot(x,c)
 z_grid = [f([x1,x2]) for x2=x2_grid, x1=x1_grid];
