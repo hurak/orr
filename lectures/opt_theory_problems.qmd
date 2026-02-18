@@ -301,14 +301,14 @@ $$
 &\quad \bm X \in \mathcal S_+^n, 
 \end{aligned}
 $$
-where the latter constraint is more often than not written as $\bm X \succeq 0$, understanding from the context that the cone of symmetric positive definite matrices is assumed.
+where the latter constraint is more often than not written as $\bm X \succeq 0$, understanding from the context that the cone of symmetric positive semidefinite matrices is assumed.
 
 Similarly as in the case of LP, practical problems can come in non-standard form. In particular, the constraints can come in the form of linear (actually affine) matrix inequalities (LMI):
 $$
-\mathbf F_0 + \sum_{i=1}^n \mathbf F_i \bm X_i \mathbf G_i  \succ 0.
+\mathbf F_0 + \sum_{i=1}^n \mathbf F_i \bm X_i \mathbf G_i  \succeq 0.
 $$
 
-A prominent example of an LMI in the context of control theory is the Lyapunov inequality for assymptotic stability of a linear time-invariant system $\dot{\bm x} = \mathbf A \bm x$, specifically, $\mathbf A^\top \bm X + \bm X \mathbf A \prec 0$, where the optimization variable is the symmetric matrix $\bm  X = \bm X^\top$ and it is constrained to be positive definite, that is, $\bm X \succ 0$. To summarize, the two linear matrix inequalities that give conditions of asymptotic stability of an LTI system are
+A prominent example of an LMI in the context of control theory is the Lyapunov inequality for assymptotic stability of a linear time-invariant system $\dot{\bm x} = \mathbf A \bm x$, specifically, $\mathbf A^\top \bm X + \bm X \mathbf A \prec 0$, where the optimization variable is the symmetric matrix $\bm  X = \bm X^\top$. The matrix is, however, constrained to be positive definite and not just semidefinite, that is, $\bm X \succ 0$. To summarize, the two linear matrix inequalities that give conditions of asymptotic stability of an LTI system are
 $$
 \begin{aligned}
 \bm X &\succ 0,\\
