@@ -34,7 +34,7 @@ If maximization of the objective function $f()$ is desired, we can simply multip
 Typically there are two types of constraints that can be imposed on the optimization variable $\bm x$:
 
 - explicit characterization of the set such as $\bm x \in \mathbb{R}^n$ or $\bm x \in \mathbb{Z}^n$, possibly even a direct enumeration such as $\bm x \in \{0,1\}^n$ in the case of binary variables, 
-- implicit characterization of the set using equations and inequalities such as $g_i(\bm x) \leq 0$ and $h_i(\bm x) = 0$ for $i = 1, \ldots, m$ and $j = 1, \ldots, p$.
+- implicit characterization of the set using equations and inequalities such as $g_i(\bm x) \leq 0$ and $h_j(\bm x) = 0$ for $i = 1, \ldots, m$ and $j = 1, \ldots, p$.
 
 An example of a more structured and yet sufficiently general optimization problems over several real and integer variables is
 $$
@@ -57,7 +57,7 @@ $$
 \begin{aligned}
 \operatorname*{minimize}_{\bm x \in \mathbb{R}^n} \quad & f(\bm x) \\
 \text{subject to} \quad & g_i(\bm x) \leq 0, \quad i = 1, \ldots, m, \\
-& h_i(\bm x) = 0, \quad i = 1, \ldots, p,
+& h_j(\bm x) = 0, \quad j = 1, \ldots, p,
 \end{aligned}
 $$
 which can also be written using vector-valued functions (reflected in the use of the bold face for their names)
@@ -136,7 +136,7 @@ A QCQP problem is convex if and only if the the constraints define a convex feas
 
 ### Conic program (CP)
 
-First, what is a cone? It is a set such that if something is in the cone, then a multiple of it by a nonnegative number is still in the set. We are going to restrict ourselves to *regular cones*, which are are pointed, closed and convex. An example of such regular cone in a plane is in @fig-cone below.
+First, what is a cone? It is a set such that if something is in the cone, then a multiple of it by a nonnegative number is still in the set. We are going to restrict ourselves to *regular cones*, which are pointed, closed and convex. An example of such regular cone in a plane is in @fig-cone below.
 
 ![Regular (pointed, convex, closed) cone in a plane](figures/cone.png){#fig-cone width="50%"}
 
