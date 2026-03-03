@@ -60,7 +60,7 @@ $$
 
 ## Discrete-time algebraic Riccati equation
 
-Leaving aside for the moment the important question whether and under which conditions such a limit $\mathbf S_\infty$ exists, the immediate question is how to compute such limit. One straightforward strategy is to run the recurrent scheme (Riccati equation) and generate the sequence $\mathbf S_{N}, \mathbf S_{N-1}, \mathbf S_{N-2}, \ldots$ so long as there is a nonnegligible improvement, that is, once $\mathbf S_{k}\approx\mathbf S_{k+1}$, stop iterating. That is certainly doable.   
+Leaving aside for the moment the important question whether and under which conditions such a limit $\mathbf S_\infty$ exists, the immediate question is how to compute such limit. One straightforward strategy is to evaluate the Riccati recursion and generate the sequence $\mathbf S_{N}, \mathbf S_{N-1}, \mathbf S_{N-2}, \ldots$ so long as there is a nonnegligible improvement, that is, once $\mathbf S_{k}\approx\mathbf S_{k+1}$, stop iterating. That is certainly doable.   
 
 There is, however, another idea. We apply the steady-state condition
 $$
@@ -103,15 +103,15 @@ s₁, s₂ = (-p₁ + sqrt(p₁^2 - 4*p₂*p₀))/(2*p₂), (-p₁ - sqrt(p₁^2
 ```
 :::
 
-But the sequence produced by original discrete-time recurrent Riccati equation is determined uniquely by $s_N$! What's up? How are the solutions to ARE related to the limiting solution of recursive Riccati equation? Answering this question will keep us busy for the rest of this lecture. We will structure this broad question into several sub-questions
+But the sequence produced by original discrete-time Riccati recursion is determined uniquely by $s_N$! What's up? How are the solutions to ARE related to the limiting solution of recursive Riccati equation? Answering this question will keep us busy for the rest of this lecture. We will structure this broad question into several sub-questions
 
 - Under which conditions is it guaranteed that there exists a (bounded) limiting solution $\mathbf S_\infty$ to the recursive Riccati equation for all initial (actually final) values $\mathbf S_N$?
 - Under which conditions is the limit solution unique for arbitrary $\mathbf S_N$?
 - Under which conditions is it guaranteed that the time-invariant feedback gain $\mathbf K_\infty$ computed from $\mathbf S_\infty$ stabilizes the system (on the infinite control interval)? 
 
-## Boundedness of the solution to recurrent Riccati equation
+## Boundedness of the solution to the Riccati recursion
 
-Let us state the answer first: the system $\bm x_{k+1}=\mathbf A \bm x_k+\mathbf B \bm u_k$ must be stabilizable in order to guarantee existence of a bounded limiting solution $\mathbf S_\infty$ to Riccati solution.
+Let us state the answer first: the system $\bm x_{k+1}=\mathbf A \bm x_k+\mathbf B \bm u_k$ must be stabilizable in order to guarantee existence of a bounded limiting solution $\mathbf S_\infty$ to the Riccati recursion.
 
 To see this, note that for a stabilizable system, we can find some time-invariant feedback gain, which guarantes that $\bm x_k\rightarrow 0$ as $k\rightarrow \infty$. Note, once again, that for LTI systems the situation with fixed and finite $N$ and $k$ going toward $-\infty$, can be viewed equivalently as if $k$ goes from 0 to $\infty$. Invoking this and recalling also that our cost is
 $$
@@ -181,13 +181,15 @@ The ultimate condition under which the blowing up of the system state variables 
 
 ## Uniqueness of the stabilizing solution
 
-The last issue that we have to solve is *uniqueness*. Why do we need to care? We have already discussed that the ARE, being a quadratic equation, can have more than just one solution. In the scalar case it can have two real solutions (or no real because both complex). In general there are then several posibilities
+The last issue that we have to solve is *uniqueness*. Why do we need to care? We have already discussed that the ARE, being a quadratic equation, can have more than just one solution. 
 
-- None of them is nonnegative. Bad luck, no stabilizing solution can be found. This can be, however, excluded if the system $(\mathbf A,\mathbf B)$ is stabilizable as discussed before.
+In the scalar case it can have two real solutions (or no real solution because both are complex). These are the possibilities:
+
+- None of the solutions is nonnegative. Bad luck, no stabilizing solution can be found. This can be, however, excluded if the system $(\mathbf A,\mathbf B)$ is stabilizable as discussed before.
 - Only one of them is nonnegative. We are lucky because this is our stabilizing solution.  
-- Both solutions are nonnegative. Which one we shall pick? Both seem to be acceptable candidates but only one of them truly corresponds to the optimal solution. 
+- Both solutions are nonnegative. But then only one of them can correspond to the unique solution of the Riccati recursion, hence only one of them is guaranteed to yield a stabilizing feedback controller. 
 
-Our goal is to study if we can exclude the last scenario – multiple positive semidefinite solutions of ARE. Provided the system is stabilizable, we know that one of them is our optimal solution but we will have troubles to identify the correct solution. In other words, we are asking if there is a unique stabilizing solution to ARE. We will use ARE in the Joseph stabilized form
+We now ask if we can exclude the last scenario – multiple nonnegative (or positive semidefinite in the general matrix case) solutions of ARE. In other words, we are asking if the positive semidefinite stabilizing solution to ARE is unique. We will use ARE in the Joseph stabilized form
 $$
  \mathbf S = (\mathbf A-\mathbf B\mathbf K)^\top  \mathbf S(\mathbf A-\mathbf B\mathbf K) + \mathbf K^\top  \mathbf R\mathbf K + \mathbf Q,
 $$
@@ -196,7 +198,7 @@ $$
  \mathbf S = (\mathbf A-\mathbf B\mathbf K)^\top  \mathbf S(\mathbf A-\mathbf B\mathbf K) + \begin{bmatrix}\mathbf C^\top& \mathbf K\mathbf D^\top\end{bmatrix}\begin{bmatrix}\mathbf C\\ \mathbf D\mathbf K\end{bmatrix}.
 $$
 
-Observe that for a fixed (optimal) $\mathbf K$ the above equation is actually a Lyapunov equation for an equivalent system with the state matrices $(\mathbf A-\mathbf B\mathbf K,\begin{bmatrix}\mathbf C\\ \mathbf D\mathbf K\end{bmatrix})$. We have already refreshed the well-known facts about Lypunov equation that provided the system is stable (and in our case it is since $(\mathbf A-\mathbf B\mathbf K)$ matrix is) and observable, the equation has a unique positive definite solution. If observability is not guranteeed, there is a positive definite solution.
+Observe that for a fixed (optimal) $\mathbf K$ the above equation is actually a Lyapunov equation for an equivalent system with the state matrices $(\mathbf A-\mathbf B\mathbf K,\begin{bmatrix}\mathbf C\\ \mathbf D\mathbf K\end{bmatrix})$. We have previously refreshed the well-known fact about Lyapunov equation that if the system is stable (which it is in our case since $(\mathbf A-\mathbf B\mathbf K)$ matrix is) and observable, the equation has a unique positive definite solution. We only state it here that if the observability is relaxed to detectability, existence of a unique positive definite solution is guaranteed instead.
 
 Clearly, what remains to be shown is that the system $(\mathbf A-\mathbf B\mathbf K,\begin{bmatrix}\mathbf C\\ \mathbf D\mathbf K\end{bmatrix})$ is observable. Let us invoke one of the tests of observability --- the popular PBH test. For a system $(\mathbf A, \mathbf C)$ it consists in creating a matrix $\begin{bmatrix}z\mathbf I - \mathbf A\\ \mathbf C\end{bmatrix}$ and checking if it is full rank for every complex $z$. In our case this test specializes to checking the rank of
 $$
@@ -215,7 +217,7 @@ is full rank. In other words, the system $(\mathbf A, \mathbf C)$, where $\mathb
 
 Let us summarize the findings: although detectability of $(\mathbf A, \mathbf C)$ is enough to guarantee the existence of a positive semidefinite $\mathbf S$ which stabilizes the system, if the detectability condition is made stronger by requiring observability, it is guaranteed that there will be a unique positive definite solution to ARE.
 
-Why do we need to care about positive definiteness of $\mathbf S$? Let us consider a scalar case for illustration again, in particular the scalar DARE in @eq-scalar-DARE. Trivial analysis shows that for $q=0$, one of the roots is $s_1=0$ and the other is always $s_2<0$. Hence the solution of ARE that represents the steady-state solution of the recurrent Riccati equation is $s=0$. 
+Why do we need to care about positive definiteness of $\mathbf S$? Let us consider a scalar case for illustration again, in particular the scalar DARE in @eq-scalar-DARE. Trivial analysis shows that for $q=0$, one of the roots is $s_1=0$ and the other is always $s_2<0$. Hence the solution of ARE that represents the steady-state solution of the discrete-time Riccati equation is $s=0$. 
 
 ::: {#exm-scalar-dare-detectable}
 ## Unique positive semidefinite solution to the scalar DARE

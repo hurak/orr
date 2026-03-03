@@ -225,7 +225,7 @@ An immediate extension of the regulation problem is that we replace the desired 
 $$
 \begin{aligned}
 J(\ldots) &= \frac{1}{2} (\bm x_{t+N_\mathrm{p}|t}-{\color{blue}\mathbf x^\mathrm{ref}})^\top \mathbf S \, (\bm x_{t+N_\mathrm{p}|t}-{\color{blue}\mathbf x^\mathrm{ref}})\\ 
- & \qquad\qquad + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \left((\bm x_{t+k|t}-{\color{blue}\mathbf x^\mathrm{ref}})^\top \mathbf Q \, (\bm x_{t+k|t}-{\color{blue}\mathbf x^\mathrm{ref}}) + \bm u_{t+k|t}^\top \mathbf R \bm u_{t+k|t}\right).
+ & \qquad + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \left((\bm x_{t+k|t}-{\color{blue}\mathbf x^\mathrm{ref}})^\top \mathbf Q \, (\bm x_{t+k|t}-{\color{blue}\mathbf x^\mathrm{ref}}) + \bm u_{t+k|t}^\top \mathbf R \bm u_{t+k|t}\right).
 \end{aligned} 
 $$
 
@@ -244,7 +244,7 @@ Fixing the value of the steady state vector $\bm x^\mathrm{ss}$ to $\mathbf x^\m
 $$
 \begin{aligned}
 J(\ldots) &= \frac{1}{2} (\bm x_{t+N_\mathrm{p}|t}-{\color{blue}\mathbf x^\mathrm{ref}})^\top \mathbf S \, (\bm x_{t+N_\mathrm{p}|t}-{\color{blue}\mathbf x^\mathrm{ref}})\\ 
- & \qquad\qquad + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \left((\bm x_{t+k|t}-{\color{blue}\mathbf x^\mathrm{ref}})^\top \mathbf Q \, (\bm x_{t+k|t}-{\color{blue}\mathbf x^\mathrm{ref}}) + (\bm u_{t+k|t}-{\color{red}\bm u^\mathrm{ss}})^\top \mathbf R (\bm u_{t+k|t}-{\color{red}\bm u^\mathrm{ss}})\right), 
+ & \qquad + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \left((\bm x_{t+k|t}-{\color{blue}\mathbf x^\mathrm{ref}})^\top \mathbf Q \, (\bm x_{t+k|t}-{\color{blue}\mathbf x^\mathrm{ref}}) + (\bm u_{t+k|t}-{\color{red}\bm u^\mathrm{ss}})^\top \mathbf R (\bm u_{t+k|t}-{\color{red}\bm u^\mathrm{ss}})\right), 
 \end{aligned} 
 $$
 in which we regard ${\color{blue}\mathbf x^\mathrm{ref}}$ as an input to the optimal control problem, and ${\color{ss}\bm u^\mathrm{ss}}$ is a new unknown. 
@@ -253,7 +253,7 @@ The optimization problem to be solved at every discrete- time $t$ is then
 $$
 \begin{aligned}
  \operatorname*{minimize}_{\bm u_{t|t},u_{t+1}\ldots, \bm u_{t+N_\mathrm{p}-1}, \bm x_{t|t},\ldots, \bm x_{t+N_\mathrm{p}|t}, {\color{red}\bm u^\mathrm{ss}}} &\quad  \frac{1}{2} (\bm x_{t+N_\mathrm{p}|t}-{\color{blue}\mathbf x^\mathrm{ref}})^\top \mathbf S \, (\bm x_{t+N_\mathrm{p}|t}-{\color{blue}\mathbf x^\mathrm{ref}})\\ 
- & \qquad\qquad + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \left((\bm x_{t+k|t}-{\color{blue}\mathbf x^\mathrm{ref}})^\top \mathbf Q \, (\bm x_{t+k|t}-{\color{blue}\mathbf x^\mathrm{ref}}) + (\bm u_{t+k|t}-{\color{red}\bm u^\mathrm{ss}})^\top \mathbf R (\bm u_{t+k|t}-{\color{red}\bm u^\mathrm{ss}})\right)\\ 
+ & \qquad + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \left((\bm x_{t+k|t}-{\color{blue}\mathbf x^\mathrm{ref}})^\top \mathbf Q \, (\bm x_{t+k|t}-{\color{blue}\mathbf x^\mathrm{ref}}) + (\bm u_{t+k|t}-{\color{red}\bm u^\mathrm{ss}})^\top \mathbf R (\bm u_{t+k|t}-{\color{red}\bm u^\mathrm{ss}})\right)\\ 
 \text{subject to}   &\quad \bm x_{t+k+1|t} = \mathbf A\bm x_{t+k|t} + \mathbf B\bm u_{t+k|t},\quad k = 0, \ldots, N_\mathrm{p}-1, \\
                     &\quad \bm x_{t|t} = \mathbf x_t, \\
                     &\quad \mathbf B {\color{red}\bm u^\mathrm{ss}} = (\mathbf I-\mathbf A) {\color{blue}\mathbf x^\mathrm{ref}},\\
@@ -335,7 +335,7 @@ With this new system we can now proceed to formulate the MPC tracking problem
 $$
 \begin{aligned}
  \operatorname*{minimize}_{\Delta \bm u_{t|t},\Delta u_{t+1}\ldots, \Delta \bm u_{t+N_\mathrm{p}-1}, \bm x_{t|t},\ldots, \bm x_{t+N_\mathrm{p}|t}} &\quad  \frac{1}{2} (\mathbf{\widetilde{C}}\tilde{\bm{x}}_{t+N_\mathrm{p}|t} - \mathbf y^\mathrm{ref})^\top \mathbf S \, (\mathbf{\widetilde{C}}\tilde{\bm{x}}_{t+N_\mathrm{p}|t} - \mathbf y^\mathrm{ref}) \\
- &\qquad \qquad + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \left((\mathbf{\widetilde{C}}\tilde{\bm{x}}_{t+k|t} - \mathbf y^\mathrm{ref})^\top \mathbf Q \, (\mathbf{\widetilde{C}}\tilde{\bm{x}}_{t+k|t} - \mathbf y^\mathrm{ref}) + \Delta \bm u_{t+k|t}^\top \mathbf R \, \Delta \bm u_{t+k|t} \right)\\ 
+ &\qquad + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \left((\mathbf{\widetilde{C}}\tilde{\bm{x}}_{t+k|t} - \mathbf y^\mathrm{ref})^\top \mathbf Q \, (\mathbf{\widetilde{C}}\tilde{\bm{x}}_{t+k|t} - \mathbf y^\mathrm{ref}) + \Delta \bm u_{t+k|t}^\top \mathbf R \, \Delta \bm u_{t+k|t} \right)\\ 
 \text{subject to}   &\quad \tilde{\bm{x}}_{t+k+1|t} = \mathbf{\widetilde{A}}\tilde{\bm{x}}_{t+k|t} + \mathbf{\widetilde{B}}\Delta \bm u_{t+k|t},\quad k = 0, \ldots, N_\mathrm{p}-1, \\
                     &\quad \tilde{\bm{x}}_{t|t} = \begin{bmatrix}\mathbf x_t\\ \mathbf u_{t-1}\end{bmatrix}, \\
                     &\quad \mathbf x^{\min} \leq \begin{bmatrix}\bm I & \mathbf 0 \end{bmatrix} \tilde{\bm x}_{t+k|t} \leq \mathbf x^{\max},\quad k = 0, \ldots, N_\mathrm{p},\\
@@ -355,7 +355,7 @@ Finally, we consider not just a single value of the output vector $\mathbf y^\ma
 $$
 \begin{aligned}
  \operatorname*{minimize}_{\Delta \bm u_{t|t},\Delta u_{t+1}\ldots, \Delta \bm u_{t+N_\mathrm{p}-1}, \bm x_{t|t},\ldots, \bm x_{t+N_\mathrm{p}|t}} &\quad  \frac{1}{2} (\mathbf{\widetilde{C}}\tilde{\bm{x}}_{t+N_\mathrm{p}|t} - {\color{orange}\mathbf y_{t+N_\mathrm{p}}^\mathrm{ref}})^\top \mathbf S \, (\mathbf{\widetilde{C}}\tilde{\bm{x}}_{t+N_\mathrm{p}|t} - {\color{orange}\mathbf y_{t+N_\mathrm{p}}^\mathrm{ref}}) \\
- &\qquad \qquad + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \left((\mathbf{\widetilde{C}}\tilde{\bm{x}}_{t+k|t} - {\color{orange}\mathbf y_{t+k}^\mathrm{ref}})^\top \mathbf Q \, (\mathbf{\widetilde{C}}\tilde{\bm{x}}_{t+k|t} - {\color{orange}\mathbf y_{t+k}^\mathrm{ref}}) + \Delta \bm u_{t+k|t}^\top \mathbf R \, \Delta \bm u_{t+k|t} \right)\\ 
+ &\qquad + \frac{1}{2} \sum_{k=0}^{N_\mathrm{p}-1} \left((\mathbf{\widetilde{C}}\tilde{\bm{x}}_{t+k|t} - {\color{orange}\mathbf y_{t+k}^\mathrm{ref}})^\top \mathbf Q \, (\mathbf{\widetilde{C}}\tilde{\bm{x}}_{t+k|t} - {\color{orange}\mathbf y_{t+k}^\mathrm{ref}}) + \Delta \bm u_{t+k|t}^\top \mathbf R \, \Delta \bm u_{t+k|t} \right)\\ 
 \text{subject to}   &\quad \tilde{\bm{x}}_{t+k+1|t} = \mathbf{\widetilde{A}}\tilde{\bm{x}}_{t+k|t} + \mathbf{\widetilde{B}}\Delta \bm u_{t+k|t},\quad k = 0, \ldots, N_\mathrm{p}-1, \\
                     &\quad \tilde{\bm{x}}_{t|t} = \begin{bmatrix}\mathbf x_t\\ \mathbf u_{t-1}\end{bmatrix}, \\
                     &\quad \mathbf x^{\min} \leq \begin{bmatrix}\bm I & \mathbf 0 \end{bmatrix} \tilde{\bm x}_{t+k|t} \leq \mathbf x^{\max},\quad k = 0, \ldots, N_\mathrm{p},\\
