@@ -141,19 +141,21 @@ When it comes to the computation of $\mathbf S_\infty$, besides the implementati
 $$
 \mathbf S_k = \mathbf S_{k+1},
 $$
-which turns the difference Lyapunov equation into the even more famous **algebraic Lyapunov equation** (ALE)
+which turns the difference Lyapunov equation into the even more famous **(algebraic) Lyapunov equation** 
 $$
 \boxed{\mathbf S = \mathbf A^\top \mathbf S\mathbf A+\mathbf Q.}
 $$
 
-Notoriously known facts about this equation (studied in introductory courses on linear systems) are
+The following facts about this equation are typically studied in courses on linear systems (and that is why we omit their proofs here):
 
-- If $\mathbf A$ stable and $\mathbf Q\succeq 0$, then there is a solution to the ALE satisfying $\mathbf S\succeq 0$.
-- If $\mathbf A$ stable and $(\mathbf A,\sqrt{\mathbf Q})$ observable, then there is a {\color{blue}unique} solution to ALE satisfying $\mathbf S\succ 0$.
+- If $\mathbf A$ stable and $\mathbf Q = \mathbf Q^\top$ , then there is a unique solution $\mathbf S = \sum_{k=0}^\infty \left(\mathbf A^\top\right)^k \mathbf Q \mathbf A^k$ .
+- If $\mathbf A$ stable and $\mathbf Q\succeq 0$ , then there is a unique solution $\mathbf S\succeq 0$ .
+- If $\mathbf A$ stable and $(\mathbf A,\sqrt{\mathbf Q})$ observable, then there is a unique solution $\mathbf S\succ 0$ .
+	- Furthermore, if $\mathbf A$ stable and there is a solution $\mathbf S\succ 0$ , then $(\mathbf A,\sqrt{\mathbf Q})$ is observable.
 
 If the system is unstable, the cost can be finite or infinite, depending on $\mathbf Q$. As a trivial example, for $\mathbf Q=0$, the cost will stay finite --- exactly zero --- disregarding the system blowing out.
 
-Concerning methods for numerical solution, ALE is just a linear equation and as such can be reformulated into the standard $\mathbf A \bm x=\mathbf b$ form (using a trick based on *Kronecker product*, see [kron](https://www.mathworks.com/help/matlab/ref/kron.html) in Matlab). Specialized algorithms exist and some of them are implemented in [dlyap](https://www.mathworks.com/help/control/ref/dlyap.html) function in Matlab. State-of-the-art Julia implementations are in [MatrixEquations.jl](https://github.com/andreasvarga/MatrixEquations.jl) package.
+Concerning methods for numerical solution, Lyapunov equation is just a linear equation and as such can be reformulated into the standard $\mathbf A \bm x=\mathbf b$ form (using a trick based on *Kronecker product*, see [kron](https://www.mathworks.com/help/matlab/ref/kron.html) in Matlab). Specialized algorithms exist and some of them are implemented in [dlyap](https://www.mathworks.com/help/control/ref/dlyap.html) function in Matlab. State-of-the-art Julia implementations are in [MatrixEquations.jl](https://github.com/andreasvarga/MatrixEquations.jl) package.
 
 ## Fixed final state and finite time horizon
 
@@ -366,7 +368,7 @@ $$
 }
 $$
 
-This is a superfamous equation and is called **difference (or discrete-time) Riccati equation**. When initialized with $\mathbf S_N$, it generates the sequence of matrices $\mathbf S_{N-1}, \mathbf S_{N-2}, \mathbf S_{N-3},\ldots$ Indeed, a noteworthy feature of this sequence is that it is initialized at the final time and the equation prescribes how the sequence evolves backwards.
+This is a superfamous equation and is called **discrete-time Riccati equation** or **Riccati difference equation** or **discrete-time Riccati recursion**. When initialized with $\mathbf S_N$, it generates the sequence of matrices $\mathbf S_{N-1}, \mathbf S_{N-2}, \mathbf S_{N-3},\ldots$ Indeed, a noteworthy feature of this sequence is that it is initialized at the final time and the equation prescribes how the sequence evolves backwards.
 
 Once we have generated a sufficiently long sequence (down to $\mathbf S_{1}$), the optimal control sequence $\bm u_0, \bm u_1, \ldots, \bm u_{N-1}$ is then computed using the stationary equation
 $$
