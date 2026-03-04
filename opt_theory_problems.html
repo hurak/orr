@@ -1259,6 +1259,20 @@ Figure&nbsp;1: Regular (pointed, convex, closed) cone in a plane
 </span></p>
 <p>and is visualized in <a href="#fig-soc-cone" class="quarto-xref">Fig.&nbsp;2</a> below.</p>
 <div id="cell-fig-soc-cone" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-stdout">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-green-fg ansi-bold">Precompiling</span> packages...
+   2036.5 ms<span class="ansi-green-fg">  ✓ </span>QuartoNotebookWorkerTablesExt<span class="ansi-bright-black-fg"> (serial)</span>
+  1 dependency successfully precompiled in 2 seconds
+<span class="ansi-green-fg ansi-bold">Precompiling</span> packages...
+   6524.8 ms<span class="ansi-green-fg">  ✓ </span>QuartoNotebookWorkerMakieExt<span class="ansi-bright-black-fg"> (serial)</span>
+  1 dependency successfully precompiled in 7 seconds
+<span class="ansi-green-fg ansi-bold">Precompiling</span> packages...
+   5533.7 ms<span class="ansi-green-fg">  ✓ </span>QuartoNotebookWorkerCairoMakieExt<span class="ansi-bright-black-fg"> (serial)</span>
+  1 dependency successfully precompiled in 6 seconds
+</pre>
+</div>
+</div>
 <div id="fig-soc-cone" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="1">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-soc-cone-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1346,11 +1360,11 @@ q
 \text{subject to} &amp;\quad \operatorname{Tr} \mathbf A_i \bm X = \mathbf b_i, \quad i=1, \ldots, m,\\
 &amp;\quad \bm X \in \mathcal S_+^n,
 \end{aligned}
-</span> where the latter constraint is more often than not written as <span class="math inline">\bm X \succeq 0</span>, understanding from the context that the cone of symmetric positive definite matrices is assumed.</p>
+</span> where the latter constraint is more often than not written as <span class="math inline">\bm X \succeq 0</span>, understanding from the context that the cone of symmetric positive semidefinite matrices is assumed.</p>
 <p>Similarly as in the case of LP, practical problems can come in non-standard form. In particular, the constraints can come in the form of linear (actually affine) matrix inequalities (LMI): <span class="math display">
-\mathbf F_0 + \sum_{i=1}^n \mathbf F_i \bm X_i \mathbf G_i  \succ 0.
+\mathbf F_0 + \sum_{i=1}^n \mathbf F_i \bm X_i \mathbf G_i  \succeq 0.
 </span></p>
-<p>A prominent example of an LMI in the context of control theory is the Lyapunov inequality for assymptotic stability of a linear time-invariant system <span class="math inline">\dot{\bm x} = \mathbf A \bm x</span>, specifically, <span class="math inline">\mathbf A^\top \bm X + \bm X \mathbf A \prec 0</span>, where the optimization variable is the symmetric matrix <span class="math inline">\bm  X = \bm X^\top</span> and it is constrained to be positive definite, that is, <span class="math inline">\bm X \succ 0</span>. To summarize, the two linear matrix inequalities that give conditions of asymptotic stability of an LTI system are <span class="math display">
+<p>A prominent example of an LMI in the context of control theory is the Lyapunov inequality for assymptotic stability of a linear time-invariant system <span class="math inline">\dot{\bm x} = \mathbf A \bm x</span>, specifically, <span class="math inline">\mathbf A^\top \bm X + \bm X \mathbf A \prec 0</span>, where the optimization variable is the symmetric matrix <span class="math inline">\bm  X = \bm X^\top</span>. The matrix is, however, constrained to be positive definite and not just semidefinite, that is, <span class="math inline">\bm X \succ 0</span>. To summarize, the two linear matrix inequalities that give conditions of asymptotic stability of an LTI system are <span class="math display">
 \begin{aligned}
 \bm X &amp;\succ 0,\\
 \mathbf A^\top \bm X + \bm X \mathbf A &amp;\prec 0.

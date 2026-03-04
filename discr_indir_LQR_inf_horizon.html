@@ -1083,7 +1083,7 @@ window.Quarto = {
   <li><a href="#why-the-infinite-time-horizon" id="toc-why-the-infinite-time-horizon" class="nav-link active" data-scroll-target="#why-the-infinite-time-horizon">Why the infinite time horizon?</a></li>
   <li><a href="#steady-state-solution-to-discrete-time-riccati-equation-yields-subpoptimal-control-on-a-finite-and-optimal-on-the-infinite-time-horizon" id="toc-steady-state-solution-to-discrete-time-riccati-equation-yields-subpoptimal-control-on-a-finite-and-optimal-on-the-infinite-time-horizon" class="nav-link" data-scroll-target="#steady-state-solution-to-discrete-time-riccati-equation-yields-subpoptimal-control-on-a-finite-and-optimal-on-the-infinite-time-horizon">Steady-state solution to discrete-time Riccati equation yields subpoptimal control on a finite and optimal on the infinite time horizon</a></li>
   <li><a href="#discrete-time-algebraic-riccati-equation" id="toc-discrete-time-algebraic-riccati-equation" class="nav-link" data-scroll-target="#discrete-time-algebraic-riccati-equation">Discrete-time algebraic Riccati equation</a></li>
-  <li><a href="#boundedness-of-the-solution-to-recurrent-riccati-equation" id="toc-boundedness-of-the-solution-to-recurrent-riccati-equation" class="nav-link" data-scroll-target="#boundedness-of-the-solution-to-recurrent-riccati-equation">Boundedness of the solution to recurrent Riccati equation</a></li>
+  <li><a href="#boundedness-of-the-solution-to-the-riccati-recursion" id="toc-boundedness-of-the-solution-to-the-riccati-recursion" class="nav-link" data-scroll-target="#boundedness-of-the-solution-to-the-riccati-recursion">Boundedness of the solution to the Riccati recursion</a></li>
   <li><a href="#stabilizing-solution-of-are" id="toc-stabilizing-solution-of-are" class="nav-link" data-scroll-target="#stabilizing-solution-of-are">Stabilizing solution of ARE</a></li>
   <li><a href="#uniqueness-of-the-stabilizing-solution" id="toc-uniqueness-of-the-stabilizing-solution" class="nav-link" data-scroll-target="#uniqueness-of-the-stabilizing-solution">Uniqueness of the stabilizing solution</a></li>
   </ul>
@@ -1171,7 +1171,7 @@ J_0^\infty = \frac{1}{2}\sum_{k=0}^{\infty}\left[\bm x_k^\top \mathbf Q \bm x_k+
 </section>
 <section id="discrete-time-algebraic-riccati-equation" class="level2">
 <h2 class="anchored" data-anchor-id="discrete-time-algebraic-riccati-equation">Discrete-time algebraic Riccati equation</h2>
-<p>Leaving aside for the moment the important question whether and under which conditions such a limit <span class="math inline">\mathbf S_\infty</span> exists, the immediate question is how to compute such limit. One straightforward strategy is to run the recurrent scheme (Riccati equation) and generate the sequence <span class="math inline">\mathbf S_{N}, \mathbf S_{N-1}, \mathbf S_{N-2}, \ldots</span> so long as there is a nonnegligible improvement, that is, once <span class="math inline">\mathbf S_{k}\approx\mathbf S_{k+1}</span>, stop iterating. That is certainly doable.</p>
+<p>Leaving aside for the moment the important question whether and under which conditions such a limit <span class="math inline">\mathbf S_\infty</span> exists, the immediate question is how to compute such limit. One straightforward strategy is to evaluate the Riccati recursion and generate the sequence <span class="math inline">\mathbf S_{N}, \mathbf S_{N-1}, \mathbf S_{N-2}, \ldots</span> so long as there is a nonnegligible improvement, that is, once <span class="math inline">\mathbf S_{k}\approx\mathbf S_{k+1}</span>, stop iterating. That is certainly doable.</p>
 <p>There is, however, another idea. We apply the steady-state condition <span class="math display">
 \mathbf S_{\infty} = \mathbf S_k=\mathbf S_{k+1}
 </span> to the Riccati equation. The resulting equation <span class="math display">\boxed{
@@ -1203,16 +1203,16 @@ b^2s_\infty^2 + (r - ra^2 - qb^2)s_\infty - qr = 0.}
 </div>
 </div>
 </div>
-<p>But the sequence produced by original discrete-time recurrent Riccati equation is determined uniquely by <span class="math inline">s_N</span>! What’s up? How are the solutions to ARE related to the limiting solution of recursive Riccati equation? Answering this question will keep us busy for the rest of this lecture. We will structure this broad question into several sub-questions</p>
+<p>But the sequence produced by original discrete-time Riccati recursion is determined uniquely by <span class="math inline">s_N</span>! What’s up? How are the solutions to ARE related to the limiting solution of recursive Riccati equation? Answering this question will keep us busy for the rest of this lecture. We will structure this broad question into several sub-questions</p>
 <ul>
 <li>Under which conditions is it guaranteed that there exists a (bounded) limiting solution <span class="math inline">\mathbf S_\infty</span> to the recursive Riccati equation for all initial (actually final) values <span class="math inline">\mathbf S_N</span>?</li>
 <li>Under which conditions is the limit solution unique for arbitrary <span class="math inline">\mathbf S_N</span>?</li>
 <li>Under which conditions is it guaranteed that the time-invariant feedback gain <span class="math inline">\mathbf K_\infty</span> computed from <span class="math inline">\mathbf S_\infty</span> stabilizes the system (on the infinite control interval)?</li>
 </ul>
 </section>
-<section id="boundedness-of-the-solution-to-recurrent-riccati-equation" class="level2">
-<h2 class="anchored" data-anchor-id="boundedness-of-the-solution-to-recurrent-riccati-equation">Boundedness of the solution to recurrent Riccati equation</h2>
-<p>Let us state the answer first: the system <span class="math inline">\bm x_{k+1}=\mathbf A \bm x_k+\mathbf B \bm u_k</span> must be stabilizable in order to guarantee existence of a bounded limiting solution <span class="math inline">\mathbf S_\infty</span> to Riccati solution.</p>
+<section id="boundedness-of-the-solution-to-the-riccati-recursion" class="level2">
+<h2 class="anchored" data-anchor-id="boundedness-of-the-solution-to-the-riccati-recursion">Boundedness of the solution to the Riccati recursion</h2>
+<p>Let us state the answer first: the system <span class="math inline">\bm x_{k+1}=\mathbf A \bm x_k+\mathbf B \bm u_k</span> must be stabilizable in order to guarantee existence of a bounded limiting solution <span class="math inline">\mathbf S_\infty</span> to the Riccati recursion.</p>
 <p>To see this, note that for a stabilizable system, we can find some time-invariant feedback gain, which guarantes that <span class="math inline">\bm x_k\rightarrow 0</span> as <span class="math inline">k\rightarrow \infty</span>. Note, once again, that for LTI systems the situation with fixed and finite <span class="math inline">N</span> and <span class="math inline">k</span> going toward <span class="math inline">-\infty</span>, can be viewed equivalently as if <span class="math inline">k</span> goes from 0 to <span class="math inline">\infty</span>. Invoking this and recalling also that our cost is <span class="math display">
 J_i = \frac{1}{2}\bm x_N^\top\mathbf S_N \bm x_N + \frac{1}{2}\sum_{k=i}^{N-1}\bm x_k^\top\mathbf Q \bm x_k + \bm u_k^\top\mathbf R \bm u_k,
 </span> we can argue that <span class="math inline">\lim_{i\rightarrow -\infty} J_i</span> is finite. At the same moment, the cost function <span class="math inline">J_i</span> at any <span class="math inline">i</span> for any suboptimal feedback gain must be higher or equal to the cost function for the optimal state feedback gain; this is the very definition of an optimal solution: <span class="math display">
@@ -1261,19 +1261,20 @@ J_{\infty}^\star = \frac{1}{2}\sum_{k=i}^\infty\bm y_k^\top\bm y_k&lt; \infty.
 </section>
 <section id="uniqueness-of-the-stabilizing-solution" class="level2">
 <h2 class="anchored" data-anchor-id="uniqueness-of-the-stabilizing-solution">Uniqueness of the stabilizing solution</h2>
-<p>The last issue that we have to solve is <em>uniqueness</em>. Why do we need to care? We have already discussed that the ARE, being a quadratic equation, can have more than just one solution. In the scalar case it can have two real solutions (or no real because both complex). In general there are then several posibilities</p>
+<p>The last issue that we have to solve is <em>uniqueness</em>. Why do we need to care? We have already discussed that the ARE, being a quadratic equation, can have more than just one solution.</p>
+<p>In the scalar case it can have two real solutions (or no real solution because both are complex). These are the possibilities:</p>
 <ul>
-<li>None of them is nonnegative. Bad luck, no stabilizing solution can be found. This can be, however, excluded if the system <span class="math inline">(\mathbf A,\mathbf B)</span> is stabilizable as discussed before.</li>
+<li>None of the solutions is nonnegative. Bad luck, no stabilizing solution can be found. This can be, however, excluded if the system <span class="math inline">(\mathbf A,\mathbf B)</span> is stabilizable as discussed before.</li>
 <li>Only one of them is nonnegative. We are lucky because this is our stabilizing solution.<br>
 </li>
-<li>Both solutions are nonnegative. Which one we shall pick? Both seem to be acceptable candidates but only one of them truly corresponds to the optimal solution.</li>
+<li>Both solutions are nonnegative. But then only one of them can correspond to the unique solution of the Riccati recursion, hence only one of them is guaranteed to yield a stabilizing feedback controller.</li>
 </ul>
-<p>Our goal is to study if we can exclude the last scenario – multiple positive semidefinite solutions of ARE. Provided the system is stabilizable, we know that one of them is our optimal solution but we will have troubles to identify the correct solution. In other words, we are asking if there is a unique stabilizing solution to ARE. We will use ARE in the Joseph stabilized form <span class="math display">
+<p>We now ask if we can exclude the last scenario – multiple nonnegative (or positive semidefinite in the general matrix case) solutions of ARE. In other words, we are asking if the positive semidefinite stabilizing solution to ARE is unique. We will use ARE in the Joseph stabilized form <span class="math display">
 \mathbf S = (\mathbf A-\mathbf B\mathbf K)^\top  \mathbf S(\mathbf A-\mathbf B\mathbf K) + \mathbf K^\top  \mathbf R\mathbf K + \mathbf Q,
 </span> in which we stop using <span class="math inline">\infty</span> in the lower index for notational brevity. Using our factorization of <span class="math inline">\mathbf Q</span> and <span class="math inline">\mathbf R</span> we can write the Riccati equation as <span class="math display">
 \mathbf S = (\mathbf A-\mathbf B\mathbf K)^\top  \mathbf S(\mathbf A-\mathbf B\mathbf K) + \begin{bmatrix}\mathbf C^\top&amp; \mathbf K\mathbf D^\top\end{bmatrix}\begin{bmatrix}\mathbf C\\ \mathbf D\mathbf K\end{bmatrix}.
 </span></p>
-<p>Observe that for a fixed (optimal) <span class="math inline">\mathbf K</span> the above equation is actually a Lyapunov equation for an equivalent system with the state matrices <span class="math inline">(\mathbf A-\mathbf B\mathbf K,\begin{bmatrix}\mathbf C\\ \mathbf D\mathbf K\end{bmatrix})</span>. We have already refreshed the well-known facts about Lypunov equation that provided the system is stable (and in our case it is since <span class="math inline">(\mathbf A-\mathbf B\mathbf K)</span> matrix is) and observable, the equation has a unique positive definite solution. If observability is not guranteeed, there is a positive definite solution.</p>
+<p>Observe that for a fixed (optimal) <span class="math inline">\mathbf K</span> the above equation is actually a Lyapunov equation for an equivalent system with the state matrices <span class="math inline">(\mathbf A-\mathbf B\mathbf K,\begin{bmatrix}\mathbf C\\ \mathbf D\mathbf K\end{bmatrix})</span>. We have previously refreshed the well-known fact about Lyapunov equation that if the system is stable (which it is in our case since <span class="math inline">(\mathbf A-\mathbf B\mathbf K)</span> matrix is) and observable, the equation has a unique positive definite solution. We only state it here that if the observability is relaxed to detectability, existence of a unique positive definite solution is guaranteed instead.</p>
 <p>Clearly, what remains to be shown is that the system <span class="math inline">(\mathbf A-\mathbf B\mathbf K,\begin{bmatrix}\mathbf C\\ \mathbf D\mathbf K\end{bmatrix})</span> is observable. Let us invoke one of the tests of observability — the popular PBH test. For a system <span class="math inline">(\mathbf A, \mathbf C)</span> it consists in creating a matrix <span class="math inline">\begin{bmatrix}z\mathbf I - \mathbf A\\ \mathbf C\end{bmatrix}</span> and checking if it is full rank for every complex <span class="math inline">z</span>. In our case this test specializes to checking the rank of <span class="math display">
   \begin{bmatrix}z\mathbf I - (\mathbf A-\mathbf B\mathbf K)\\ \mathbf C\\ \mathbf D\mathbf K\end{bmatrix},
 </span> which can be shown to be equal to the rank of <span class="math display">
@@ -1283,7 +1284,7 @@ J_{\infty}^\star = \frac{1}{2}\sum_{k=i}^\infty\bm y_k^\top\bm y_k&lt; \infty.
 \begin{bmatrix}z\mathbf I - \mathbf A\\ \mathbf C\end{bmatrix}
 </span> is full rank. In other words, the system <span class="math inline">(\mathbf A, \mathbf C)</span>, where <span class="math inline">\mathbf C=\sqrt{\mathbf Q}</span>, must be observable.</p>
 <p>Let us summarize the findings: although detectability of <span class="math inline">(\mathbf A, \mathbf C)</span> is enough to guarantee the existence of a positive semidefinite <span class="math inline">\mathbf S</span> which stabilizes the system, if the detectability condition is made stronger by requiring observability, it is guaranteed that there will be a unique positive definite solution to ARE.</p>
-<p>Why do we need to care about positive definiteness of <span class="math inline">\mathbf S</span>? Let us consider a scalar case for illustration again, in particular the scalar DARE in <a href="#eq-scalar-DARE" class="quarto-xref">Eq.&nbsp;1</a>. Trivial analysis shows that for <span class="math inline">q=0</span>, one of the roots is <span class="math inline">s_1=0</span> and the other is always <span class="math inline">s_2&lt;0</span>. Hence the solution of ARE that represents the steady-state solution of the recurrent Riccati equation is <span class="math inline">s=0</span>.</p>
+<p>Why do we need to care about positive definiteness of <span class="math inline">\mathbf S</span>? Let us consider a scalar case for illustration again, in particular the scalar DARE in <a href="#eq-scalar-DARE" class="quarto-xref">Eq.&nbsp;1</a>. Trivial analysis shows that for <span class="math inline">q=0</span>, one of the roots is <span class="math inline">s_1=0</span> and the other is always <span class="math inline">s_2&lt;0</span>. Hence the solution of ARE that represents the steady-state solution of the discrete-time Riccati equation is <span class="math inline">s=0</span>.</p>
 <div id="exm-scalar-dare-detectable" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2 (Unique positive semidefinite solution to the scalar DARE)</strong></span> &nbsp;</p>
 <div id="4" class="cell" data-execution_count="1">
@@ -1479,6 +1480,14 @@ Table&nbsp;1: The two input and six state variables
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>p3 <span class="op">=</span> <span class="fu">plot</span>(t,y<span class="op">'</span>, label<span class="op">=</span>[L<span class="st">"r_\mathrm{w} \mathrm{(deg/s)}"</span> L<span class="st">"p \mathrm{(deg/s)}"</span> L<span class="st">"</span><span class="sc">\b</span><span class="st">eta \mathrm{(deg)}"</span> L<span class="st">"\phi \mathrm{(deg)}"</span>], xlabel<span class="op">=</span><span class="st">"Time (s)"</span>, ylabel<span class="op">=</span><span class="st">"Outputs"</span>,markershape<span class="op">=:</span>circle,markersize<span class="op">=</span><span class="fl">1</span>,linetype<span class="op">=:</span>steppost)</span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(p1,p2,p3,layout<span class="op">=</span>(<span class="fl">3</span>,<span class="fl">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-green-fg ansi-bold">Precompiling</span> packages...
+   1137.6 ms<span class="ansi-green-fg">  ✓ </span>QuartoNotebookWorkerLaTeXStringsExt<span class="ansi-bright-black-fg"> (serial)</span>
+  1 dependency successfully precompiled in 1 seconds
+</pre>
+</div>
+</div>
 <div id="fig-simulation-outcomes-f16" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="1">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-simulation-outcomes-f16-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">

@@ -1222,16 +1222,20 @@ J_0^\infty = \frac{1}{2}\bm x_0^\top \mathbf S_\infty \bm x_0.
 <p>Even though this result was derived for the no-control case, which is not what we are after in the course on control design, it is still useful. It gives some hint as for the structure of the cost function. Indeed, we will see later that even in the case of nonzero control, the cost will be a quadratic function of the initial state.</p>
 <p>When it comes to the computation of <span class="math inline">\mathbf S_\infty</span>, besides the implementation of the limiting iterative process, we may exploit the fact that in the steady state <span class="math display">
 \mathbf S_k = \mathbf S_{k+1},
-</span> which turns the difference Lyapunov equation into the even more famous <strong>algebraic Lyapunov equation</strong> (ALE) <span class="math display">
+</span> which turns the difference Lyapunov equation into the even more famous <strong>(algebraic) Lyapunov equation</strong> <span class="math display">
 \boxed{\mathbf S = \mathbf A^\top \mathbf S\mathbf A+\mathbf Q.}
 </span></p>
-<p>Notoriously known facts about this equation (studied in introductory courses on linear systems) are</p>
+<p>The following facts about this equation are typically studied in courses on linear systems (and that is why we omit their proofs here):</p>
 <ul>
-<li>If <span class="math inline">\mathbf A</span> stable and <span class="math inline">\mathbf Q\succeq 0</span>, then there is a solution to the ALE satisfying <span class="math inline">\mathbf S\succeq 0</span>.</li>
-<li>If <span class="math inline">\mathbf A</span> stable and <span class="math inline">(\mathbf A,\sqrt{\mathbf Q})</span> observable, then there is a {unique} solution to ALE satisfying <span class="math inline">\mathbf S\succ 0</span>.</li>
+<li>If <span class="math inline">\mathbf A</span> stable and <span class="math inline">\mathbf Q = \mathbf Q^\top</span> , then there is a unique solution <span class="math inline">\mathbf S = \sum_{k=0}^\infty \left(\mathbf A^\top\right)^k \mathbf Q \mathbf A^k</span> .</li>
+<li>If <span class="math inline">\mathbf A</span> stable and <span class="math inline">\mathbf Q\succeq 0</span> , then there is a unique solution <span class="math inline">\mathbf S\succeq 0</span> .</li>
+<li>If <span class="math inline">\mathbf A</span> stable and <span class="math inline">(\mathbf A,\sqrt{\mathbf Q})</span> observable, then there is a unique solution <span class="math inline">\mathbf S\succ 0</span> .
+<ul>
+<li>Furthermore, if <span class="math inline">\mathbf A</span> stable and there is a solution <span class="math inline">\mathbf S\succ 0</span> , then <span class="math inline">(\mathbf A,\sqrt{\mathbf Q})</span> is observable.</li>
+</ul></li>
 </ul>
 <p>If the system is unstable, the cost can be finite or infinite, depending on <span class="math inline">\mathbf Q</span>. As a trivial example, for <span class="math inline">\mathbf Q=0</span>, the cost will stay finite — exactly zero — disregarding the system blowing out.</p>
-<p>Concerning methods for numerical solution, ALE is just a linear equation and as such can be reformulated into the standard <span class="math inline">\mathbf A \bm x=\mathbf b</span> form (using a trick based on <em>Kronecker product</em>, see <a href="https://www.mathworks.com/help/matlab/ref/kron.html">kron</a> in Matlab). Specialized algorithms exist and some of them are implemented in <a href="https://www.mathworks.com/help/control/ref/dlyap.html">dlyap</a> function in Matlab. State-of-the-art Julia implementations are in <a href="https://github.com/andreasvarga/MatrixEquations.jl">MatrixEquations.jl</a> package.</p>
+<p>Concerning methods for numerical solution, Lyapunov equation is just a linear equation and as such can be reformulated into the standard <span class="math inline">\mathbf A \bm x=\mathbf b</span> form (using a trick based on <em>Kronecker product</em>, see <a href="https://www.mathworks.com/help/matlab/ref/kron.html">kron</a> in Matlab). Specialized algorithms exist and some of them are implemented in <a href="https://www.mathworks.com/help/control/ref/dlyap.html">dlyap</a> function in Matlab. State-of-the-art Julia implementations are in <a href="https://github.com/andreasvarga/MatrixEquations.jl">MatrixEquations.jl</a> package.</p>
 </section>
 <section id="fixed-final-state-and-finite-time-horizon" class="level2">
 <h2 class="anchored" data-anchor-id="fixed-final-state-and-finite-time-horizon">Fixed final state and finite time horizon</h2>
@@ -1388,7 +1392,7 @@ J = \sum_{k=0}^N \mathbf u^\top_k\;\bm u_k = \sum_{k=0}^N \|\mathbf u\|_2^2,
 \mathbf S_k = \mathbf Q+\mathbf A^\top\mathbf S_{k+1}(\mathbf I+\mathbf B\mathbf R^{-1}\mathbf B^\top\mathbf S_{k+1})^{-1}\mathbf A.
 }
 </span></p>
-<p>This is a superfamous equation and is called <strong>difference (or discrete-time) Riccati equation</strong>. When initialized with <span class="math inline">\mathbf S_N</span>, it generates the sequence of matrices <span class="math inline">\mathbf S_{N-1}, \mathbf S_{N-2}, \mathbf S_{N-3},\ldots</span> Indeed, a noteworthy feature of this sequence is that it is initialized at the final time and the equation prescribes how the sequence evolves backwards.</p>
+<p>This is a superfamous equation and is called <strong>discrete-time Riccati equation</strong> or <strong>Riccati difference equation</strong> or <strong>discrete-time Riccati recursion</strong>. When initialized with <span class="math inline">\mathbf S_N</span>, it generates the sequence of matrices <span class="math inline">\mathbf S_{N-1}, \mathbf S_{N-2}, \mathbf S_{N-3},\ldots</span> Indeed, a noteworthy feature of this sequence is that it is initialized at the final time and the equation prescribes how the sequence evolves backwards.</p>
 <p>Once we have generated a sufficiently long sequence (down to <span class="math inline">\mathbf S_{1}</span>), the optimal control sequence <span class="math inline">\bm u_0, \bm u_1, \ldots, \bm u_{N-1}</span> is then computed using the stationary equation <span class="math display">
 \bm u_k = -\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda_{k+1}=-\mathbf R^{-1}\mathbf B^\top\mathbf S_{k+1}\bm x_{k+1}.
 </span></p>

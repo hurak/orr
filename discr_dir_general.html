@@ -1138,8 +1138,8 @@ Figure&nbsp;1: Three approaches to discrete-time optimal control
 \text{subject to}  &amp;\quad \bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k),\quad k=i, \ldots, N-1,\\
                     &amp;\quad \bm u_k \in \mathcal U_k,\quad k=i, \ldots, N-1,\\
                     &amp;\quad \bm x_k \in \mathcal X_k,\quad k=i+1, \ldots, N-1,\\
-                    &amp;\quad \bm x_i \in \mathcal X_\mathrm{init},\\
-                    &amp;\quad \bm x_N \in \mathcal X_\mathrm{final}.
+                    &amp;\quad \bm x_i \in \mathcal X^\mathrm{init},\\
+                    &amp;\quad \bm x_N \in \mathcal X^\mathrm{final}.
 \end{aligned}
 </span></p>
 <p>In particular, at the initial time just one particular state is often considered. At the final time, the state might be required to be equal to some given value, it might be required to be in some set defined through equations or inequalities, or it might be left unconstrained. Finally, the constraints on the control and states typically (but not always) come in the form of lower and upper bounds. The optimal control problem then specializes to <span class="math display">
