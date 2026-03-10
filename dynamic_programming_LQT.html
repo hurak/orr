@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Solving LQ tracking (LQT) via dynamic programming – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>LQ tracking (LQT) via dynamic programming – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,6 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./dynamic_programming_references.html" rel="next">
+<link href="./dynamic_programming_LQR.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -125,9 +127,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
-      B(E)3M35ORR – Optimal and Robust Control
-      </li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dynamic_programming_goals.html">4. Discrete-time optimal control – dynamic programming (DP)</a></li><li class="breadcrumb-item"><a href="./dynamic_programming_LQT.html">LQ tracking via DP</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -425,6 +425,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./dynamic_programming_LQR.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">LQR via DP</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming_LQT.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">LQ tracking via DP</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -1005,15 +1011,22 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#reference-trajectories-compatible-with-the-system" id="toc-reference-trajectories-compatible-with-the-system" class="nav-link active" data-scroll-target="#reference-trajectories-compatible-with-the-system">Reference trajectories compatible with the system</a></li>
+  <li><a href="#reference-trajectories-incompatible-with-the-system" id="toc-reference-trajectories-incompatible-with-the-system" class="nav-link" data-scroll-target="#reference-trajectories-incompatible-with-the-system">Reference trajectories incompatible with the system</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./dynamic_programming_goals.html">4. Discrete-time optimal control – dynamic programming (DP)</a></li><li class="breadcrumb-item"><a href="./dynamic_programming_LQT.html">LQ tracking via DP</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Solving LQ tracking (LQT) via dynamic programming</h1>
+<h1 class="title">LQ tracking (LQT) via dynamic programming</h1>
 </div>
 
 
@@ -1040,61 +1053,129 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>We use the abbreviation LQT for LQ tracking. Admittedly, in contrast to LQR, the abbreviation LQT is not common and widely accepted. But it seems not yet reserved for anything else, so why not using it?</p>
+<p>We use the abbreviation LQT for LQ tracking. Admittedly, in contrast to LQR, the abbreviation LQT is not common and widely used.</p>
 </div>
 </div>
 <p>As usual, we consider a discrete-time LTI system modelled by <span id="eq-state-equation"><span class="math display">
 \bm x_{k+1} = \mathbf A\bm x_k + \mathbf B\bm u_k,
-\tag{1}</span></span> but this time we we want to minimize the quadratic cost given by <span id="eq-cost-reference-tracking"><span class="math display">
+\tag{1}</span></span> but this time we want to minimize the quadratic cost given by <span id="eq-cost-reference-tracking"><span class="math display">
 \begin{aligned}
 J_0(\bm x_0, \bm u_0, \bm u_1, \ldots, \bm u_{N-1}) &amp;= \frac{1}{2}(\bm x_N-\mathbf x_N^\mathrm{ref})^\top \mathbf S_N (\bm x_N-\mathbf x_N^\mathrm{ref})\\
 &amp;\qquad + \frac{1}{2}\sum_{k=0}^{N-1}\left[(\bm x_k-\mathbf x_k^\mathrm{ref})^\top \mathbf Q (\bm x_k-\mathbf x_k^\mathrm{ref}) + (\bm u_k-\mathbf u_k^\mathrm{ref})^\top \mathbf R (\bm u_k-\mathbf u_k^\mathrm{ref})\right],
 \end{aligned}
 \tag{2}</span></span> where <span class="math inline">\{\mathbf x_k^\mathrm{ref}\}_{k=0}^N</span> and <span class="math inline">\{\mathbf u_k^\mathrm{ref}\}_{k=0}^{N-1}</span> are prescribed reference state and control trajectories, respectively, and we impose the usual assumption on the symmetric weighing matrices <span class="math inline">\mathbf S_N\succeq 0, \mathbf Q\succeq 0, \mathbf R\succ 0</span>.</p>
-<p>Here we assume that the reference state and control trajectories are compatible with the system, that is, that they satisfy <span id="eq-reference-compatible"><span class="math display">
+<p>There are now two possible cases.</p>
+<section id="reference-trajectories-compatible-with-the-system" class="level3">
+<h3 class="anchored" data-anchor-id="reference-trajectories-compatible-with-the-system">Reference trajectories compatible with the system</h3>
+<p>First, we assume that the reference state and control trajectories are compatible with the system, that is, that they satisfy <span id="eq-reference-compatible"><span class="math display">
 \mathbf x_{k+1}^\mathrm{ref} = \mathbf A\mathbf  x_k^\mathrm{ref} + \mathbf B\mathbf u_k^\mathrm{ref}.
 \tag{3}</span></span></p>
-<p>This will naturally be the case when such trajectories are obtained as a solution to an optimal control problem, perhaps by using direct methods. Since such pair of control-state trajectories only constitutes an open-loop control strategy, we are now after a feedback control strategy that will track the reference trajectories.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>What if the reference trajectory is unrelated to the system dynamics?
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>It is also fairly common to have the reference trajectory <span class="math inline">\{\mathbf x_k^\mathrm{ref}\}_{k=0}^N</span> that was not generated by the model of the system, but was obtained from some other source. In this case, the procedure that we are about to describe will have to be modified. #TODO: decide whether or not we promise including such derivation or at least a hint then.</p>
-</div>
-</div>
-<p>Thanks to the fact that the state-control pair of trajectorie satisfies <a href="#eq-reference-compatible" class="quarto-xref">Eq.&nbsp;3</a>, we can substract <span class="math inline">\mathbf x_{k+1}^\mathrm{ref}</span> from both sides of <a href="#eq-state-equation" class="quarto-xref">Eq.&nbsp;1</a> to get <span class="math display">
-\underbrace{\bm x_{k+1} - \mathbf x_{k+1}^\mathrm{ref}}_{\delta x_{k+1}} = \mathbf A (\underbrace{\bm x_k- \mathbf x_{k}^\mathrm{ref}}_{\delta x_k}) + \mathbf B(\underbrace{\bm u_k - \mathbf u_{k}^\mathrm{ref}}_{\delta u_k}),
-</span> which we can interpret – and we have already done it in the above equation – as a linear model in deviation (from the reference) variables.</p>
+<p>This will naturally be the case when such state and control trajectories are obtained as a solution to an optimal control problem, perhaps by using direct methods. Direct methods solve the optimal control problem for trajectories, hence, they provide open-loop control. One way to introduce feedback into the control scheme, that is particularly useful for control of nonlinear systems, is to design a feedback controller that tracks the reference trajectories.</p>
+<p>They do so by using a local linear model linearized around the reference trajectory, which enables to use the linear techniques such as LQR. However, since he operating point <span class="math inline">(\bm x_k^\mathrm{ref}, \bm u_k^\mathrm{ref})</span> in the state-control space, around which the linearization is to be performed, changes with time, the linear model is time-varying. Luckily, this imposes no problem for the LQR design, since on a finite time horizon, the LQR design leads to a time-varying state feedback controller anyway.</p>
+<p>Let’s now be more concrete. In this case of compatible reference trajectories, the problem of tracking can be equivalently rewritten as a standard LQR problem in deviation variables, which we can get by subtracting <a href="#eq-reference-compatible" class="quarto-xref">Eq.&nbsp;3</a> from <a href="#eq-state-equation" class="quarto-xref">Eq.&nbsp;1</a> <span class="math display">
+\underbrace{\bm x_{k+1} - \mathbf x_{k+1}^\mathrm{ref}}_{\delta x_{k+1}} = \mathbf A (\underbrace{\bm x_k- \mathbf x_{k}^\mathrm{ref}}_{\delta x_k}) + \mathbf B(\underbrace{\bm u_k - \mathbf u_{k}^\mathrm{ref}}_{\delta u_k}).
+</span></p>
+<p>Not much more is needed here. For the linear system in deviation variables, we can apply the standard LQR design, which will give us a time-varying state feedback controller in deviation variables. The resulting control law will be of the form <span class="math display">
+\bm u_k = \mathbf u_k^\mathrm{ref} - \mathbf K_k (\bm x_k - \mathbf x_k^\mathrm{ref}),
+</span> where <span class="math inline">\mathbf K_k</span> is the time-varying feedback gain obtained from the LQR design.</p>
+<!-- Indeed, the resulting model is a linear one, albeit  in deviation (from the reference) variables. -->
+</section>
+<section id="reference-trajectories-incompatible-with-the-system" class="level3">
+<h3 class="anchored" data-anchor-id="reference-trajectories-incompatible-with-the-system">Reference trajectories incompatible with the system</h3>
+<p>Here we do not assume that the reference trajectories are compatible wit the system. How could that happen? Perhaps they represent requirements specified by an external entity and the dynamics of the system were not known at the time of creating this specification. Frequently, the reference control trajectory <span class="math inline">\bm u_k^\mathrm{ref}</span> is not a part of such specification, in which case we can simply set <span class="math inline">\bm u_k^\mathrm{ref} = \mathbf 0</span> for all <span class="math inline">k</span>.</p>
 <p>We now try to mimic the derivation of the LQR algorithm using DP. We start at the end of the time interval and find the optimal cost <span class="math display">
 J_N^\star(\bm x_N) = \frac{1}{2}(\bm x_N-\mathbf x_N^\mathrm{ref})^\top \mathbf S_N (\bm x_N-\mathbf x_N^\mathrm{ref}).
 </span></p>
-<p>Let’s multiple the brackets out <span id="eq-final-optimal-cost-to-go"><span class="math display">
+<p>Let’s multiply the brackets out <span id="eq-final-optimal-cost-to-go"><span class="math display">
 \begin{aligned}
 J_N^\star(\bm x_N) &amp;= \frac{1}{2}(\bm x_N-\mathbf x_N^\mathrm{ref})^\top \mathbf S_N (\bm x_N-\mathbf x_N^\mathrm{ref})\\
-&amp;= \frac{1}{2}(\bm x_N^\top \mathbf S_N \bm x_N - 2\bm x_N^\top \mathbf S_N \mathbf x_N^\mathrm{ref} + \mathbf x_N^\mathrm{ref}\mathbf S_N \mathbf x_N^\mathrm{ref})\\
-&amp;= \frac{1}{2}\bm x_N^\top \mathbf S_N \bm x_N - \bm x_N^\top \underbrace{\mathbf S_N \mathbf x_N^\mathrm{ref}}_{\mathbf c_N} + \underbrace{\frac{1}{2}\mathbf x_N^\mathrm{ref}\mathbf S_N \mathbf x_N^\mathrm{ref}}_{d_N}.
+&amp;= \frac{1}{2}(\bm x_N^\top \mathbf S_N \bm x_N - 2\bm x_N^{\mathrm{ref}\top} \mathbf S_N \mathbf x_N + \mathbf x_N^\mathrm{ref}\mathbf S_N \mathbf x_N^\mathrm{ref})\\
+&amp;= \frac{1}{2}\bm x_N^\top \mathbf S_N \bm x_N + \left(\underbrace{-\mathbf S_N \mathbf x_N^{\mathrm{ref}}}_{\mathbf c_N}\right)^\top\bm x_N + \underbrace{\frac{1}{2}\mathbf x_N^{\mathrm{ref}\top}\mathbf S_N \mathbf x_N^\mathrm{ref}}_{d_N}.
 \end{aligned}
 \tag{4}</span></span></p>
-<p>There is a major difference from the final cost of the LQR problem, because now we also have linear (in <span class="math inline">\mathrm x_N</span>) and constant terms, for which we identified the vector coefficient <span class="math inline">\mathbf c_N=\mathbf S_N \mathbf x_N^\mathrm{ref}</span> and the constant coefficient <span class="math inline">d_N=\frac{1}{2}\mathbf x_N^\mathrm{ref}\mathbf S_N \mathbf x_N^\mathrm{ref}</span>.</p>
-<p>Decreasing the discrete time to <span class="math inline">N-1</span>, we can invoke the principle of optimality to write <span class="math display">
-J^\star_{N-1}(\bm x_{N-1}) = \min_{\bm u_{N-1}\in\mathbb R^m} \left[L(\bm x_{N-1},\bm u_{N-1}) + J^\star_{N}(\bm x_{N}) \right],
-</span> where <span class="math display">
+<p>There is a major difference from the final cost of the LQR problem, because now we also have linear (in <span class="math inline">\mathrm x_N</span>) and constant terms, for which we identified the vector coefficient <span class="math inline">\mathbf c_N</span> and the constant coefficient <span class="math inline">d_N</span> <span class="math display">
+\mathbf c_N=-\mathbf S_N \mathbf x_N^\mathrm{ref}, \qquad d_N=\frac{1}{2}\mathbf x_N^{\mathrm{ref}\top}\mathbf S_N \mathbf x_N^\mathrm{ref}.
+</span></p>
+<p>We write it down explicitly for later reference <span id="eq-final-optimal-cost-to-go-affine"><span class="math display">
+J_N^\star(\bm x_N) = \frac{1}{2}\bm x_N^\top \mathbf S_N \bm x_N + \mathbf c_N^\top \bm x_N + d_N.
+\tag{5}</span></span></p>
+<p>Our plan is now to use the Bellman equation to find the optimal cost at time <span class="math inline">N-1</span> and identify the three coefficients of the quadratic, linear, and constant terms in <span class="math inline">J_{N-1}^\star(\bm x_{N-1})</span>, from which we will induce the general recursion for these three coefficients.</p>
+<p>Decreasing the discrete time to <span class="math inline">N-1</span>, we can write the Q-function as <span class="math display">
+Q_{N-1}^\star(\bm x_{N-1},\bm u_{N-1}) = L(\bm x_{N-1},\bm u_{N-1}) + J^\star_{N}(\bm x_{N}),
+</span> which sets us to some journey of algebraic manipulations <span class="math display">
 \begin{aligned}
-J_{N-1}(\bm x_{N-1},\bm u_{N-1}) &amp;= \frac{1}{2} \left[(\bm x_{N-1}-\mathbf x_{N-1}^\mathrm{ref})^\top \mathbf Q (\bm x_{N-1}-\mathbf x_{N-1}^\mathrm{ref}) + (\bm u_{N-1}-\mathbf u_{N-1}^\mathrm{ref})^\top \mathbf R (\bm u_{N-1}-\mathbf u_{N-1}^\mathrm{ref}) \right] + J^\star_{N}(\bm x_{N})\\    
-&amp;= \frac{1}{2} \left[(\bm x_{N-1}-\mathbf x_{N-1}^\mathrm{ref})^\top \mathbf Q (\bm x_{N-1}-\mathbf x_{N-1}^\mathrm{ref}) + (\bm u_{N-1}-\mathbf u_{N-1}^\mathrm{ref})^\top \mathbf R (\bm u_{N-1}-\mathbf u_{N-1}^\mathrm{ref}) \right] + \frac{1}{2}\bm x_N^\top \mathbf S_N \bm x_N\\
-&amp;= \frac{1}{2} \left[ (\bm x_{N-1}-\mathbf x_{N-1}^\mathrm{ref})^\top \mathbf Q (\bm x_{N-1}-\mathbf x_{N-1}^\mathrm{ref}) + (\bm u_{N-1}-\mathbf u_{N-1}^\mathrm{ref})^\top \mathbf R (\bm u_{N-1}-\mathbf u_{N-1}^\mathrm{ref}) + \bm x_N^\top \mathbf S_N \bm x_N \right]\\
-&amp;= \frac{1}{2} \left[ \bm x_{N-1}^\top \mathbf Q \bm x_{N-1} - 2\bm x_{N-1}^\top \mathbf Q \mathbf x_{N-1}^\mathrm{ref} + \mathbf x_{N-1}^\mathrm{ref}\mathbf Q \mathbf x_{N-1}^\mathrm{ref} + \bm u_{N-1}^\top \mathbf R \bm u_{N-1} - 2\bm u_{N-1}^\top \mathbf R \mathbf u_{N-1}^\mathrm{ref} + \mathbf u_{N-1}^\mathrm{ref}\mathbf R \mathbf u_{N-1}^\mathrm{ref} + \bm x_N^\top \mathbf S_N \bm x_N \right]\\
-&amp;= \frac{1}{2} \left[ \bm x_{N-1}^\top \mathbf Q \bm x_{N-1} + \bm u_{N-1}^\top \mathbf R \bm u_{N-1} + \bm x_N^\top \mathbf S_N \bm x_N - 2\bm x_{N-1}^\top \mathbf Q \mathbf x_{N-1}^\mathrm{ref} - 2\bm u_{N-1}^\top \mathbf R \mathbf u_{N-1}^\mathrm{ref} + \mathbf x_{N-1}^\mathrm{ref}\mathbf Q \mathbf x_{N-1}^\mathrm{ref} + \mathbf u_{N-1}^\mathrm{ref}\mathbf R \mathbf u_{N-1}^\mathrm{ref} \right]
+Q_{N-1}^\star(\bm x_{N-1},\bm u_{N-1}) &amp;= \frac{1}{2} \left[(\bm x_{N-1}-\mathbf x_{N-1}^\mathrm{ref})^\top \mathbf Q (\bm x_{N-1}-\mathbf x_{N-1}^\mathrm{ref}) + (\bm u_{N-1}-\mathbf u_{N-1}^\mathrm{ref})^\top \mathbf R (\bm u_{N-1}-\mathbf u_{N-1}^\mathrm{ref}) \right] + J^\star_{N}(\bm x_{N})\\
+&amp;= \frac{1}{2} \left[(\bm x_{N-1}-\mathbf x_{N-1}^\mathrm{ref})^\top \mathbf Q (\bm x_{N-1}-\mathbf x_{N-1}^\mathrm{ref}) + (\bm u_{N-1}-\mathbf u_{N-1}^\mathrm{ref})^\top \mathbf R (\bm u_{N-1}-\mathbf u_{N-1}^\mathrm{ref}) \right] + J^\star_{N}(\mathbf A\bm x_{N-1} + \mathbf B\bm u_{N-1}),\\
+&amp;= \frac{1}{2} \left[(\bm x_{N-1}-\mathbf x_{N-1}^\mathrm{ref})^\top \mathbf Q (\bm x_{N-1}-\mathbf x_{N-1}^\mathrm{ref}) + (\bm u_{N-1}-\mathbf u_{N-1}^\mathrm{ref})^\top \mathbf R (\bm u_{N-1}-\mathbf u_{N-1}^\mathrm{ref}) \right]\\
+&amp;\qquad + \frac{1}{2}(\bm x_{N-1}^\top \mathbf A^\top + \bm u_{N-1}^\top \mathbf B^\top) \mathbf S_N (\mathbf A\bm x_{N-1} + \mathbf B\bm u_{N-1}) + \mathbf c_N^\top (\mathbf A \bm x_{N-1} + \mathbf B \bm u_{N-1}) + d_N\\
+&amp;= \frac{1}{2}\left [ \bm x_{N-1}^\top \mathbf Q \bm x_{N-1} - 2\bm x_{N-1}^{\mathrm{ref}\top} \mathbf Q \mathbf x_{N-1} + \mathbf x_{N-1}^{\mathrm{ref}\top}\mathbf Q \mathbf x_{N-1}^\mathrm{ref} + \bm u_{N-1}^\top \mathbf R \bm u_{N-1} - 2\bm u_{N-1}^{\mathrm{ref}\top} \mathbf R \mathbf u_{N-1} + \mathbf u_{N-1}^{\mathrm{ref}\top}\mathbf R \mathbf u_{N-1}^\mathrm{ref} \right] \\
+&amp;\qquad + \frac{1}{2}\left [ \bm x_{N-1}^\top \mathbf A^\top \mathbf S_N \mathbf A \bm x_{N-1} + 2\bm x_{N-1}^\top \mathbf A^\top \mathbf S_N \mathbf B \bm u_{N-1} + \bm u_{N-1}^\top \mathbf B^\top \mathbf S_N \mathbf B \bm u_{N-1}\right] + c_N^\top \mathbf A \bm x_{N-1} + c_N^\top \mathbf B \bm u_{N-1} + d_N\\
+&amp;=  \frac{1}{2}\bm u_{N-1}^\top (\mathbf R + \mathbf B^\top \mathbf S_N \mathbf B) \bm u_{N-1} + (-\bm u_{N-1}^{\mathrm{ref}\top} \mathbf R + \bm x_{N-1}^\top \mathbf A^\top \mathbf S_N \mathbf B + \mathbf c_N^\top \mathbf B) \bm u_{N-1}\\
+&amp;\qquad + \frac{1}{2}\bm x_{N-1}^\top (\mathbf Q + \mathbf A^\top \mathbf S_N \mathbf A) \bm x_{N-1} + (-\bm x_{N-1}^{\mathrm{ref}\top} \mathbf Q + \mathbf c_N^\top \mathbf A) \bm x_{N-1} + \frac{1}{2}\left[ \mathbf x_{N-1}^{\mathrm{ref}\top}\mathbf Q \mathbf x_{N-1}^\mathrm{ref} + \mathbf u_{N-1}^{\mathrm{ref}\top}\mathbf R \mathbf u_{N-1}^\mathrm{ref}\right] + \mathbf d_N.
 \end{aligned}
 </span></p>
+<p>The gradient of <span class="math inline">Q_{N-1}^\star(\bm x_{N-1},\bm u_{N-1})</span> with respect to <span class="math inline">\bm u_{N-1}</span> is given by <span class="math display">\nabla_{\bm u_{N-1}} Q_{N-1}^\star(\bm x_{N-1},\bm u_{N-1}) = (\mathbf R + \mathbf B^\top \mathbf S_N \mathbf B)\bm u_{N-1} + (- \mathbf R\bm u_{N-1}^{\mathrm{ref}} + \mathbf B^\top \mathbf S_N \mathbf A \bm x_{N-1} + \mathbf B^\top \mathbf c_N).
+</span> Setting the gradient to zero, we can solve for the optimal control input <span class="math inline">\bm u_{N-1}^\star</span> as <span class="math display">\begin{aligned}
+\bm u_{N-1}^\star &amp;= -(\mathbf R + \mathbf B^\top \mathbf S_N \mathbf B)^{-1}(\mathbf B^\top \mathbf S_N \mathbf A\bm x_{N-1} - \mathbf R \mathbf u_{N-1}^\mathrm{ref}  + \mathbf B^\top \mathbf c_N)\\
+&amp;= -\underbrace{(\mathbf R + \mathbf B^\top \mathbf S_N \mathbf B)^{-1}\mathbf B^\top \mathbf S_N \mathbf A}_{\mathbf K_{N-1}}\bm x_{N-1} + \underbrace{(\mathbf R + \mathbf B^\top \mathbf S_N \mathbf B)^{-1}(\mathbf R \mathbf u_{N-1}^\mathrm{ref} - \mathbf B^\top \mathbf c_N)}_{\mathbf k_{N-1}}.
+\end{aligned}
+</span></p>
+<p>We write it down explicitly <span id="eq-optimal-control-input"><span class="math display">\boxed{
+\bm u_{N-1}^\star = -\mathbf K_{N-1}\bm x_{N-1} + \mathbf k_{N-1},}
+\tag{6}</span></span> where <span id="eq-feedback-gain-and-feedforward-term"><span class="math display">\boxed{
+\mathbf K_{N-1} = (\mathbf R + \mathbf B^\top \mathbf S_N \mathbf B)^{-1}\mathbf B^\top \mathbf S_N \mathbf A, \qquad \mathbf k_{N-1} = (\mathbf R + \mathbf B^\top \mathbf S_N \mathbf B)^{-1}(\mathbf R \mathbf u_{N-1}^\mathrm{ref} -  \mathbf B^\top\mathbf c_N).}
+\tag{7}</span></span></p>
+<p>Substituting the optimal control input <span class="math inline">\bm u_{N-1}^\star</span> back into <span class="math inline">Q_{N-1}^\star(\bm x_{N-1},\bm u_{N-1})</span>, we can obtain the optimal cost <span class="math inline">J^\star_{N-1}</span> as <span class="math display">\begin{aligned}
+J_{N-1}^\star(\bm x_{N-1}) &amp;= \frac{1}{2}(-\mathbf K_{N-1}\bm x_{N-1} + \mathbf k_{N-1})^\top (\mathbf R + \mathbf B^\top \mathbf S_N \mathbf B) (-\mathbf K_{N-1}\bm x_{N-1} + \mathbf k_{N-1}) + (-\bm u_{N-1}^{\mathrm{ref}\top} \mathbf R + \bm x_{N-1}^\top \mathbf A^\top \mathbf S_N \mathbf B + \mathbf c_N^\top \mathbf B) (-\mathbf K_{N-1}\bm x_{N-1} + \mathbf k_{N-1})\\
+&amp;\qquad + \frac{1}{2}\bm x_{N-1}^\top (\mathbf Q + \mathbf A^\top \mathbf S_N \mathbf A) \bm x_{N-1} + (-\bm x_{N-1}^{\mathrm{ref}\top} \mathbf Q + \mathbf c_N^\top \mathbf A) \bm x_{N-1} + \frac{1}{2}\left[ \mathbf x_{N-1}^{\mathrm{ref}\top}\mathbf Q \mathbf x_{N-1}^\mathrm{ref} + \mathbf u_{N-1}^{\mathrm{ref}\top}\mathbf R \mathbf u_{N-1}^\mathrm{ref}\right] + \mathbf d_N.
+\end{aligned}
+</span></p>
+<p>Now we aim at collecting the terms of equal powers of <span class="math inline">\bm x_{N-1}</span>: <span class="math display">
+\begin{aligned}
+J_{N-1}^\star(\bm x_{N-1}) &amp;= \frac{1}{2}\bm x_{N-1}^\top \mathbf K_{N-1}^\top (\mathbf R + \mathbf B^\top \mathbf S_N \mathbf B) \mathbf K_{N-1} \bm x_{N-1} + \frac{1}{2}\bm x_{N-1}^\top (\mathbf Q + \mathbf A^\top \mathbf S_N \mathbf A) \bm x_{N-1} - \bm x_{N-1}^\top \mathbf A^\top \mathbf S_N \mathbf B \mathbf K_{N-1} \bm x_{N-1}\\
+&amp;\qquad -\mathbf k_{N-1}^\top (\mathbf R + \mathbf B^\top \mathbf S_N \mathbf B) \mathbf K_{N-1} \bm x_{N-1} - (-\bm u_{N-1}^{\mathrm{ref}\top}\mathbf R + \mathbf c_n^\top \mathbf B)\mathbf K_{N-1}\bm x_{N-1}  + \underbrace{\bm x_{N-1}^\top \mathbf A^\top \mathbf S_N \mathbf B \mathbf k_{N-1}}_{\mathbf k_{N-1}^\top \mathbf B^\top \mathbf S_N \mathbf A\bm x_{N-1}} + (-\bm x_{N-1}^{\mathrm{ref}\top}\mathbf Q + \mathbf c_N^\top \mathbf A)\bm x_{N-1} \\
+&amp;\qquad + \frac{1}{2}\mathbf k_{N-1}^\top (\mathbf R + \mathbf B^\top \mathbf S_N \mathbf B) \mathbf k_{N-1} + \left(-\bm u_{N-1}^{\mathrm{ref}\top} \mathbf R + \mathbf c_N^\top \mathbf B\right) \mathbf k_{N-1} + \frac{1}{2}\left( \mathbf x_{N-1}^{\mathrm{ref}\top}\mathbf Q \mathbf x_{N-1}^\mathrm{ref} + \mathbf u_{N-1}^{\mathrm{ref}\top}\mathbf R \mathbf u_{N-1}^\mathrm{ref}\right) + \mathbf d_N.
+\end{aligned}
+</span></p>
+<p>From this we can identify the three terms characterizing the optimal cost <span class="math inline">J_{N-1}^\star</span> as a quadratic function of <span class="math inline">\bm x_{N-1}</span>, that is, the matrix coefficient <span class="math inline">\mathbf S_{N-1}</span> of the quadratic term, the vector coefficient <span class="math inline">\mathbf c_{N-1}</span> of the linear term, and the constant coefficient <span class="math inline">d_{N-1}</span>. We start with the quadratic term <span class="math display">
+\mathbf S_{N-1} = \mathbf K_{N-1}^\top\mathbf R \mathbf K_{N-1} + \mathbf K_{N-1}^\top \mathbf B^\top \mathbf S_N \mathbf B \mathbf K_{N-1} + \mathbf Q + \mathbf A^\top \mathbf S_N \mathbf A - 2\mathbf A^\top \mathbf S_N \mathbf B \mathbf K_{N-1}.
+</span></p>
+<p>We can symmetrize the last term by <span class="math inline">\mathbf A^\top \mathbf S_N \mathbf B \mathbf K_{N-1} = \frac{1}{2}\left(\mathbf A^\top \mathbf S_N \mathbf B \mathbf K_{N-1} + \mathbf K_{N-1}^\top \mathbf B^\top \mathbf S_N \mathbf A\right)</span> (since this has no impact on the value of the corresponding scalar cost function) to get <span class="math display">
+\mathbf S_{N-1} = \mathbf K_{N-1}^\top\mathbf R \mathbf K_{N-1} + \mathbf K_{N-1}^\top \mathbf B^\top \mathbf S_N \mathbf B \mathbf K_{N-1} + \mathbf Q + \mathbf A^\top \mathbf S_N \mathbf A - \mathbf A^\top \mathbf S_N \mathbf B \mathbf K_{N-1} - \mathbf K_{N-1}^\top \mathbf B^\top \mathbf S_N \mathbf A.
+</span></p>
+<p>From what we have so far, we could write down the recursion for <span class="math inline">\mathbf S_{k}</span>, but we can still do some simplification. Note that the second, the fourth, the fifth and the sixth terms can be grouped together to get the ultimate expression <span id="eq-recursion-S"><span class="math display">\boxed{
+\mathbf S_{N-1} = \mathbf K_{N-1}^\top \mathbf R \mathbf K_{N-1} + (\mathbf A-\mathbf B\mathbf K_{N-1})^\top \mathbf S_N(\mathbf A-\mathbf B\mathbf K_{N-1}) + \mathbf Q.}
+\tag{8}</span></span></p>
+<p>We are all certainly recognizing the good old Riccati recursion that have already derived for the standard discrete-time LQR problem. We now proceed with the remaining two terms, the linear term and the constant term. The transposed linear term is given by <span class="math display">
+\mathbf c_{N-1}^\top = -\mathbf k_{N-1}^\top (\mathbf R + \mathbf B^\top \mathbf S_N \mathbf B) \mathbf K_{N-1} + \bm u_{N-1}^{\mathrm{ref}\top}\mathbf R - \mathbf c_N^\top \mathbf B\mathbf K_{N-1}  + \mathbf k_{N-1}^\top \mathbf B^\top \mathbf S_N \mathbf A -\bm x_{N-1}^{\mathrm{ref}\top}\mathbf Q + \mathbf c_N^\top \mathbf A.
+</span></p>
+<p>Once again, this is enough to write down the recursion for <span class="math inline">\mathbf c_k</span>, but we can still do some simplification. Substituting for <span class="math inline">\mathbf K_{N-1}</span> from <a href="#eq-feedback-gain-and-feedforward-term" class="quarto-xref">Eq.&nbsp;7</a>, but only into the first term, we can get <span class="math display">
+\mathbf c_{N-1}^\top = -\mathbf k_{N-1}^\top (\mathbf R + \mathbf B^\top \mathbf S_N \mathbf B) (\mathbf R + \mathbf B^\top \mathbf S_N \mathbf B)^{-1}\mathbf B^\top \mathbf S_N \mathbf A + \bm u_{N-1}^{\mathrm{ref}\top}\mathbf R - \mathbf c_N^\top \mathbf B\mathbf K_{N-1}  + \mathbf k_{N-1}^\top \mathbf B^\top \mathbf S_N \mathbf A -\bm x_{N-1}^{\mathrm{ref}\top}\mathbf Q + \mathbf c_N^\top \mathbf A,
+</span> in which after cancelling the two identical terms with <span class="math inline">\mathbf k_{N-1}</span> we get <span class="math display">
+\mathbf c_{N-1}^\top = \bm u_{N-1}^{\mathrm{ref}\top}\mathbf R - \bm x_{N-1}^{\mathrm{ref}\top}\mathbf Q + \mathbf c_N^\top (\mathbf A - \mathbf B\mathbf K_{N-1}),
+</span> and after transposing we have the final expression <span id="eq-recursion-c"><span class="math display">\boxed{
+\mathbf c_{N-1} = \mathbf R\bm u_{N-1}^{\mathrm{ref}} - \mathbf Q\bm x_{N-1}^{\mathrm{ref}} + (\mathbf A - \mathbf B\mathbf K_{N-1})^\top\mathbf c_N.}
+\tag{9}</span></span></p>
+<p>Finally, the constant term is <span class="math display">
+d_{N-1} = \frac{1}{2}\mathbf k_{N-1}^\top (\mathbf R + \mathbf B^\top \mathbf S_N \mathbf B) \mathbf k_{N-1} + \left(-\bm u_{N-1}^{\mathrm{ref}\top} \mathbf R + \mathbf c_N^\top \mathbf B\right) \mathbf k_{N-1} + \frac{1}{2}\left( \mathbf x_{N-1}^{\mathrm{ref}\top}\mathbf Q \mathbf x_{N-1}^\mathrm{ref} + \mathbf u_{N-1}^{\mathrm{ref}\top}\mathbf R \mathbf u_{N-1}^\mathrm{ref}\right) + \mathbf d_N.
+</span></p>
+<p>This too can be simplified by substituting for <span class="math inline">\mathbf k_{N-1}</span> from <a href="#eq-feedback-gain-and-feedforward-term" class="quarto-xref">Eq.&nbsp;7</a>, but only into the second occurence, to get <span class="math display">
+d_{N-1} = \frac{1}{2}\mathbf k_{N-1}^\top (\mathbf R + \mathbf B^\top \mathbf S_N \mathbf B) (\mathbf R + \mathbf B^\top \mathbf S_N \mathbf B)^{-1}(\mathbf R \mathbf u_{N-1}^\mathrm{ref} -  \mathbf B^\top\mathbf c_N) + \left(-\bm u_{N-1}^{\mathrm{ref}\top} \mathbf R + \mathbf c_N^\top \mathbf B\right) \mathbf k_{N-1} + \frac{1}{2}\left( \mathbf x_{N-1}^{\mathrm{ref}\top}\mathbf Q \mathbf x_{N-1}^\mathrm{ref} + \mathbf u_{N-1}^{\mathrm{ref}\top}\mathbf R \mathbf u_{N-1}^\mathrm{ref}\right) + \mathbf d_N,
+</span> in which the the first two terms subtract to yield the final expression <span id="eq-recursion-d"><span class="math display">\boxed{d_{N-1} = \frac{1}{2}\left( \mathbf x_{N-1}^{\mathrm{ref}\top}\mathbf Q \mathbf x_{N-1}^\mathrm{ref} + \mathbf u_{N-1}^{\mathrm{ref}\top}\mathbf R \mathbf u_{N-1}^\mathrm{ref}\right) + \mathbf d_N.}
+\tag{10}</span></span></p>
+<p>We now summarize all the formulas for general discrete time <span class="math inline">k</span> <span id="eq-summary-all-formulas"><span class="math display">\boxed{\begin{aligned}
+\bm u_k &amp;= -\mathbf K_k \bm x_k + \mathbf k_k,\\
+\mathbf K_k &amp;= (\mathbf R + \mathbf B^\top \mathbf S_{k+1} \mathbf B)^{-1}\mathbf B^\top \mathbf S_{k+1} \mathbf A,\\
+\mathbf k_k &amp;= (\mathbf R + \mathbf B^\top \mathbf S_{k+1} \mathbf B)^{-1}(\mathbf R \mathbf u_{k}^\mathrm{ref} -  \mathbf B^\top\mathbf c_{k+1}),\\
+\mathbf S_k &amp;= \mathbf K_k^\top \mathbf R \mathbf K_k + (\mathbf A-\mathbf B\mathbf K_k)^\top \mathbf S_{k+1}(\mathbf A-\mathbf B\mathbf K_k) + \mathbf Q,\\
+\mathbf c_k &amp;= \mathbf R\bm u_{k}^\mathrm{ref} - \mathbf Q\bm x_{k}^\mathrm{ref} + (\mathbf A - \mathbf B\mathbf K_k)^\top\mathbf c_{k+1},\\
+d_k &amp;= \frac{1}{2}\left( \mathbf x_{k}^{\mathrm{ref}\top}\mathbf Q \mathbf x_{k}^\mathrm{ref} + \mathbf u_{k}^{\mathrm{ref}\top}\mathbf R \mathbf u_{k}^\mathrm{ref}\right) + \mathbf d_{k+1},
+\end{aligned}}
+\tag{11}</span></span> with the terminal conditions <span id="eq-terminal-conditions"><span class="math display">\boxed{\mathbf S_N = \mathbf S_N, \qquad \mathbf c_N = -\mathbf S_N \mathbf x_N^\mathrm{ref}, \qquad d_N = \frac{1}{2}\mathbf x_N^{\mathrm{ref}\top}\mathbf S_N \mathbf x_N^\mathrm{ref}.}
+\tag{12}</span></span></p>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1497,6 +1578,18 @@ J_{N-1}(\bm x_{N-1},\bm u_{N-1}) &amp;= \frac{1}{2} \left[(\bm x_{N-1}-\mathbf x
     }
   });
   </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./dynamic_programming_LQR.html" class="pagination-link" aria-label="LQR via DP">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">LQR via DP</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./dynamic_programming_references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
@@ -1505,7 +1598,7 @@ J_{N-1}(\bm x_{N-1},\bm u_{N-1}) &amp;= \frac{1}{2} \left[(\bm x_{N-1}-\mathbf x
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2025, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

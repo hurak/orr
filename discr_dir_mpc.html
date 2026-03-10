@@ -487,6 +487,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./dynamic_programming_LQT.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LQ tracking via DP</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./dynamic_programming_references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -1342,7 +1348,7 @@ J(\ldots) &amp;= \frac{1}{2} (\bm x_{t+N_\mathrm{p}|t}-{\color{blue}\mathbf x^\m
 <p>Rewriting this, we get <span class="math display">
 (\mathbf A - \mathbf I) \bm x^\mathrm{ss} + \mathbf B \bm u^\mathrm{ss} = \mathbf 0.
 </span></p>
-<p>Fixing the value of the steady state vector <span class="math inline">\bm x^\mathrm{ss}</span> to <span class="math inline">\mathbf x^\mathrm{ref}</span>, we see that <span class="math inline">\bm u^\mathrm{ss} = \mathbf 0</span> if <span class="math inline">(\mathbf A - \mathbf I) \bm x^\mathrm{ref}</span>, that is, if the desired steady state <span class="math inline">\bm x^\mathrm{ref}</span> is in the null space of <span class="math inline">(\mathbf A - \mathbf I)</span>. If the desired steady state does not satisfy the condition, which will generally be the case, the corresponding control is necessarily nonzero. It then makes no sense to penalize the control itself. Instead, its deviation from the compatible nonzero value should be penalized. As a consequence, the cost function should be modified to</p>
+<p>Fixing the value of the steady state vector <span class="math inline">\bm x^\mathrm{ss}</span> to <span class="math inline">\mathbf x^\mathrm{ref}</span>, we see that <span class="math inline">\bm u^\mathrm{ss} = \mathbf 0</span> if <span class="math inline">(\mathbf A - \mathbf I) \bm x^\mathrm{ref}</span>, that is, if the desired steady state <span class="math inline">\bm x^\mathrm{ref}</span> is in the null space of <span class="math inline">(\mathbf A - \mathbf I)</span>. If the desired steady state does not satisfy the condition, which will generally be the case, the corresponding control is necessarily nonzero. It then it makes no sense to penalize the control itself. Instead, its deviation from the compatible nonzero value should be penalized. As a consequence, the cost function should be modified to</p>
 <p><span class="math display">
 \begin{aligned}
 J(\ldots) &amp;= \frac{1}{2} (\bm x_{t+N_\mathrm{p}|t}-{\color{blue}\mathbf x^\mathrm{ref}})^\top \mathbf S \, (\bm x_{t+N_\mathrm{p}|t}-{\color{blue}\mathbf x^\mathrm{ref}})\\
