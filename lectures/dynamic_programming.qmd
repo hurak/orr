@@ -7,9 +7,9 @@ format:
     html:
         html-math-method: katex
         code-fold: true
-execute:
-    enabled: false
-    warning: false
+crossref:
+  fig-prefix: Fig. 
+  eq-prefix: Eq.
 engine: julia
 ---
 
@@ -185,11 +185,19 @@ $$
 which makes it more apparent.
 :::
 
-Once we have the optimal cost function $J^\star_{k}$, the optimal control $\bm u_k^\star(x_k)$ at a given time $k$ and state $\bm x_k$ is obtained by 
+Once we have the optimal cost function $J^\star_{k}$, the optimal control $\bm u_k^\star$ at a given time $k$ and state $\bm x_k$ is obtained by 
 $$
 \boxed{
-    \bm u_k^\star(\bm x_k) = \arg \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\mathbf f_k(\bm x_k,\bm u_k))\right).}
+    \bm u_k^\star = \arg \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\mathbf f_k(\bm x_k,\bm u_k))\right).}
 $$
+
+We emphasize that this is indeed a feedback control law. The (optimal) control is a function of the current state $\bm x_k$ (and discrete time $k$ too). This is sometimes emphasized by explicitly introducing a symbol for such function, for example, $\bm \mu_k^\star(\bm x_k)$, and writing
+$$\bm u_k^\star = \bm \mu_k^\star(\bm x_k) \coloneqq \arg \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\mathbf f_k(\bm x_k,\bm u_k))\right).$$
+
+::: {.callout-warning}
+#### Alternation notation and terminology for the optimal control law
+In the literature by the authors from outside the control systems community, typically from computer science flavoured reinforcement learning, symbols such as $\pi_k^\star(\bm x_k)$ are used for the optimal control law; control law is called a *policy*; And the control itself is renamed to *action*;. the cost function is renamed to *value function* or *state-value function*; and the Q-function (introduced below) is renamed to *action-value function* or *state-action-value function*. We will stick to the control systems community notation and terminology, but it is good to be aware of the alternative one as well.
+:::
 
 ### Alternative formulation of dynamic programming using Q-functions
 
@@ -212,6 +220,51 @@ $$
 
 Optimal control is then obtained from the optimal Q-function as the minimizing control
 $$
-\boxed{\bm u_k^\star(\bm x_k) = \arg \min_{\bm u_k} Q_k^\star(\bm x_k,\bm u_k).}
+\boxed{\bm u_k^\star = \arg \min_{\bm u_k} Q_k^\star(\bm x_k,\bm u_k).}
 $$
+
+## Multistep look-ahead optimization
+
+We can can some important insight if we unroll the Bellman's principle of optimality for several steps. For example, if we unroll it for two steps, we get
+$$
+\begin{aligned}
+J_k^\star(\bm x_k) &= \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1})\right)\\
+&= \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + \min_{\bm u_{k+1}}\left(L_{k+1}(\bm x_{k+1},\bm u_{k+1}) + J_{k+2}^\star(\bm x_{k+2})\right)\right).
+\end{aligned}
+$$
+
+If we unroll for $N$ steps, we get
+$$
+\begin{aligned}
+J_k^\star(\bm x_k) &= \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + \min_{\bm u_{k+1}}\left(L_{k+1}(\bm x_{k+1},\bm u_{k+1}) + \min_{\bm u_{k+2}}\left(L_{k+2}(\bm x_{k+2},\bm u_{k+2}) + \ldots + \min_{\bm u_{k+N-1}}\left(L_{k+N-1}(\bm x_{k+N-1},\bm u_{k+N-1}) + J_{k+N}^\star(\bm x_{k+N})\right)\right)\right)\right).
+\end{aligned}
+$$
+
+Now, we concentrate all the minimizations into one big minimization over the whole sequence of controls $\bm u_k, \bm u_{k+1},\ldots, \bm u_{k+N-1}$, and we get
+$$
+\begin{aligned}
+J_k^\star(\bm x_k) &= \min_{\bm u_k, \bm u_{k+1},\ldots, \bm u_{k+N-1}}\left(L_k(\bm x_k,\bm u_k) + L_{k+1}(\bm x_{k+1},\bm u_{k+1}) + \ldots + L_{k+N-1}(\bm x_{k+N-1},\bm u_{k+N-1}) + J_{k+N}^\star(\bm x_{k+N})\right)\\
+&= \min_{\bm u_k, \bm u_{k+1},\ldots, \bm u_{k+N-1}} \left( \sum_{i=0}^{N-1} L_{k+i}(\bm x_{k+i},\bm u_{k+i}) + J_{k+N}^\star(\bm x_{k+N}) \right).
+\end{aligned}
+$$
+
+This particular optimization problem resembles something, doesn't it? It resembles the finite-horizon optimal control problem that is repeatedly solved in the receding horizon control (RHC) or model predictive control (MPC) framework. The only difference is that here we have the optimal cost function $J_{k+N}^\star(\bm x_{k+N})$ as the terminal cost, while in RHC/MPC we typically have some hand-crafted terminal cost, which may be even zero. This gives some hint to the task of choosing the terminal cost in RHC/MPC – it should approximate the optimal cost-to-go function. This has also implications on the closed-loop stability of a system control with an RHC/MPC, but we postpone such discussion till the next chapter/week.
+
+## Dynamic programming on an infinite time horizon 
+
+It seems that the idea of dynamic programming is only applicable to finite-horizon problems. However, it can be extended to infinite-horizon problems too. The key idea is that if the problem is time-invariant (i.e., neither the dynamics given by $\mathbf f()$ nor the stage cost $L()$ depend explicitly on time), the optimal cost-to-go function $J^\star()$ does not have time as one of its input arguments either. Hence, we can drop the time dependence from the notation and write the Bellman's principle of optimality for an infinite-horizon problem as
+$$
+J^\star(\bm x_k) = \min_{\bm u_k}\left(L(\bm x_k,\bm u_k) + J^\star(\bm x_{k+1})\right).
+$$
+
+In fact, we can go even further drop the time index from the state and control variables altogether and write
+$$
+\boxed{J^\star(\bm x) = \min_{\bm u}\left(L(\bm x,\bm u) + J^\star(\mathbf f(\bm x,\bm u))\right).}
+$$
+
+The optimal control at a given discrete time $k$ is then obtained as usual by one-step optimization
+$$
+\boxed{\bm u_k^\star = \arg \min_{\bm u} \left(L(\bm x,\bm u) + J^\star(\mathbf f(\bm x,\bm u))\right).}
+$$
+
 
