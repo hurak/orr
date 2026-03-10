@@ -594,7 +594,7 @@ p3 = plot(0:1:N,x,xlabel="i",ylabel="State",label="x",markershape=:circ,markersi
 plot(p1,p2,p3,layout=(3,1))
 ```
 
-The last outputs suggests that both $s_N$ and $K_k$ stay constant for most of the time interval and they only change dramatically towards the end of the control interval.
+The last output suggests that both $s_N$ and $k_k$ stay constant for most of the time interval and they only change dramatically towards the end of the control interval.
 
 The observation in the example poses a question of how much is lost after replacing the optimal control represented by the sequence $\mathbf K_k$ by some constant value $\mathbf K$. A natural candidate is the steady-state value that $\mathbf K_k$  has as the beginning of the control interval, that is at $k=0$ in our case.     
 
