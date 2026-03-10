@@ -1021,6 +1021,8 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#alternative-formulation-of-dynamic-programming-using-q-functions" id="toc-alternative-formulation-of-dynamic-programming-using-q-functions" class="nav-link" data-scroll-target="#alternative-formulation-of-dynamic-programming-using-q-functions">Alternative formulation of dynamic programming using Q-functions</a></li>
   </ul></li>
+  <li><a href="#multistep-look-ahead-optimization" id="toc-multistep-look-ahead-optimization" class="nav-link" data-scroll-target="#multistep-look-ahead-optimization">Multistep look-ahead optimization</a></li>
+  <li><a href="#dynamic-programming-on-an-infinite-time-horizon" id="toc-dynamic-programming-on-an-infinite-time-horizon" class="nav-link" data-scroll-target="#dynamic-programming-on-an-infinite-time-horizon">Dynamic programming on an infinite time horizon</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -1469,7 +1471,7 @@ L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1}).
 <p>Bellman’s principle of optimality states that if we optimize the above expression over <span class="math inline">\bm u_k</span>, we get the optimal cost <span class="math inline">J_k^\star(\bm x_k)</span> at time <span class="math inline">k</span> <span id="eq-bellman_for_discrete_time_optimal_control"><span class="math display">
 \boxed{J_k^\star(\bm x_k) = \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1})\right).}
 \tag{3}</span></span></p>
-<p>Hence, at a given state <span class="math inline">\bm x_{k}</span> and time <span class="math inline">k</span>, the optimization is performed over only one (possibly vector) control <span class="math inline">\bm u_k</span> and not the whole trajectory as the definition of the optimal cost in <a href="#eq-optimal_cost_function" class="quarto-xref">Equation&nbsp;1</a> suggests! What a simplification!</p>
+<p>Hence, at a given state <span class="math inline">\bm x_{k}</span> and time <span class="math inline">k</span>, the optimization is performed over only one (possibly vector) control <span class="math inline">\bm u_k</span> and not the whole trajectory as the definition of the optimal cost in <a href="#eq-optimal_cost_function" class="quarto-xref">Eq.&nbsp;1</a> suggests! What a simplification!</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1480,18 +1482,32 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The minimization needs to be performed over the whole sum <span class="math inline">L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1})</span>, because <span class="math inline">\bm x_{k+1}</span> is a function of <span class="math inline">\bm u_k</span> (recall that <span class="math inline">\bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k)</span>). We can also write <a href="#eq-bellman_for_discrete_time_optimal_control" class="quarto-xref">Equation&nbsp;3</a> as <span class="math display">
+<p>The minimization needs to be performed over the whole sum <span class="math inline">L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1})</span>, because <span class="math inline">\bm x_{k+1}</span> is a function of <span class="math inline">\bm u_k</span> (recall that <span class="math inline">\bm x_{k+1} = \mathbf f_k(\bm x_k,\bm u_k)</span>). We can also write <a href="#eq-bellman_for_discrete_time_optimal_control" class="quarto-xref">Eq.&nbsp;3</a> as <span class="math display">
 J_k^\star(\bm x_k) = \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\mathbf f_k(\bm x_k,\bm u_k))\right),
 </span> which makes it more apparent.</p>
 </div>
 </div>
-<p>Once we have the optimal cost function <span class="math inline">J^\star_{k}</span>, the optimal control <span class="math inline">\bm u_k^\star(x_k)</span> at a given time <span class="math inline">k</span> and state <span class="math inline">\bm x_k</span> is obtained by <span class="math display">
+<p>Once we have the optimal cost function <span class="math inline">J^\star_{k}</span>, the optimal control <span class="math inline">\bm u_k^\star</span> at a given time <span class="math inline">k</span> and state <span class="math inline">\bm x_k</span> is obtained by <span class="math display">
 \boxed{
-    \bm u_k^\star(\bm x_k) = \arg \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\mathbf f_k(\bm x_k,\bm u_k))\right).}
+    \bm u_k^\star = \arg \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\mathbf f_k(\bm x_k,\bm u_k))\right).}
 </span></p>
+<p>We emphasize that this is indeed a feedback control law. The (optimal) control is a function of the current state <span class="math inline">\bm x_k</span> (and discrete time <span class="math inline">k</span> too). This is sometimes emphasized by explicitly introducing a symbol for such function, for example, <span class="math inline">\bm \mu_k^\star(\bm x_k)</span>, and writing <span class="math display">\bm u_k^\star = \bm \mu_k^\star(\bm x_k) \coloneqq \arg \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\mathbf f_k(\bm x_k,\bm u_k))\right).</span></p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Alternation notation and terminology for the optimal control law
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In the literature by the authors from outside the control systems community, typically from computer science flavoured reinforcement learning, symbols such as <span class="math inline">\pi_k^\star(\bm x_k)</span> are used for the optimal control law; control law is called a <em>policy</em>; And the control itself is renamed to <em>action</em>;. the cost function is renamed to <em>value function</em> or <em>state-value function</em>; and the Q-function (introduced below) is renamed to <em>action-value function</em> or <em>state-action-value function</em>. We will stick to the control systems community notation and terminology, but it is good to be aware of the alternative one as well.</p>
+</div>
+</div>
 <section id="alternative-formulation-of-dynamic-programming-using-q-functions" class="level3">
 <h3 class="anchored" data-anchor-id="alternative-formulation-of-dynamic-programming-using-q-functions">Alternative formulation of dynamic programming using Q-functions</h3>
-<p>The cost function in <a href="#eq-cost_of_the_all_but_one_optimal_controls" class="quarto-xref">Equation&nbsp;2</a> is sometimes called <em>Q-function</em> and we denote it <span class="math inline">Q_k^\star(\bm x_k,\bm u_k)</span>. We write its definition here for convenience <span class="math display">
+<p>The cost function in <a href="#eq-cost_of_the_all_but_one_optimal_controls" class="quarto-xref">Eq.&nbsp;2</a> is sometimes called <em>Q-function</em> and we denote it <span class="math inline">Q_k^\star(\bm x_k,\bm u_k)</span>. We write its definition here for convenience <span class="math display">
 Q^\star_k(\bm x_k,\bm u_k) = L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1}).
 </span></p>
 <p>It is a cost of choosing the control <span class="math inline">\bm u_k</span> at state <span class="math inline">\bm x_k</span> at time <span class="math inline">k</span> and then following the optimal control from the next time on.</p>
@@ -1502,11 +1518,44 @@ J_k^\star(\bm x_k) = \min_{\bm u_k} Q_k^\star(\bm x_k,\bm u_k).
 \boxed{Q_k^\star(\bm x_k,\bm u_k) = L_k(\bm x_k,\bm u_k) + \min_{\bm u_{k+1}} Q_{k+1}^\star(\bm x_{k+1},\bm u_{k+1})}.
 </span></p>
 <p>Optimal control is then obtained from the optimal Q-function as the minimizing control <span class="math display">
-\boxed{\bm u_k^\star(\bm x_k) = \arg \min_{\bm u_k} Q_k^\star(\bm x_k,\bm u_k).}
+\boxed{\bm u_k^\star = \arg \min_{\bm u_k} Q_k^\star(\bm x_k,\bm u_k).}
+</span></p>
+</section>
+</section>
+<section id="multistep-look-ahead-optimization" class="level2">
+<h2 class="anchored" data-anchor-id="multistep-look-ahead-optimization">Multistep look-ahead optimization</h2>
+<p>We can can some important insight if we unroll the Bellman’s principle of optimality for several steps. For example, if we unroll it for two steps, we get <span class="math display">
+\begin{aligned}
+J_k^\star(\bm x_k) &amp;= \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + J_{k+1}^\star(\bm x_{k+1})\right)\\
+&amp;= \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + \min_{\bm u_{k+1}}\left(L_{k+1}(\bm x_{k+1},\bm u_{k+1}) + J_{k+2}^\star(\bm x_{k+2})\right)\right).
+\end{aligned}
+</span></p>
+<p>If we unroll for <span class="math inline">N</span> steps, we get <span class="math display">
+\begin{aligned}
+J_k^\star(\bm x_k) &amp;= \min_{\bm u_k}\left(L_k(\bm x_k,\bm u_k) + \min_{\bm u_{k+1}}\left(L_{k+1}(\bm x_{k+1},\bm u_{k+1}) + \min_{\bm u_{k+2}}\left(L_{k+2}(\bm x_{k+2},\bm u_{k+2}) + \ldots + \min_{\bm u_{k+N-1}}\left(L_{k+N-1}(\bm x_{k+N-1},\bm u_{k+N-1}) + J_{k+N}^\star(\bm x_{k+N})\right)\right)\right)\right).
+\end{aligned}
+</span></p>
+<p>Now, we concentrate all the minimizations into one big minimization over the whole sequence of controls <span class="math inline">\bm u_k, \bm u_{k+1},\ldots, \bm u_{k+N-1}</span>, and we get <span class="math display">
+\begin{aligned}
+J_k^\star(\bm x_k) &amp;= \min_{\bm u_k, \bm u_{k+1},\ldots, \bm u_{k+N-1}}\left(L_k(\bm x_k,\bm u_k) + L_{k+1}(\bm x_{k+1},\bm u_{k+1}) + \ldots + L_{k+N-1}(\bm x_{k+N-1},\bm u_{k+N-1}) + J_{k+N}^\star(\bm x_{k+N})\right)\\
+&amp;= \min_{\bm u_k, \bm u_{k+1},\ldots, \bm u_{k+N-1}} \left( \sum_{i=0}^{N-1} L_{k+i}(\bm x_{k+i},\bm u_{k+i}) + J_{k+N}^\star(\bm x_{k+N}) \right).
+\end{aligned}
+</span></p>
+<p>This particular optimization problem resembles something, doesn’t it? It resembles the finite-horizon optimal control problem that is repeatedly solved in the receding horizon control (RHC) or model predictive control (MPC) framework. The only difference is that here we have the optimal cost function <span class="math inline">J_{k+N}^\star(\bm x_{k+N})</span> as the terminal cost, while in RHC/MPC we typically have some hand-crafted terminal cost, which may be even zero. This gives some hint to the task of choosing the terminal cost in RHC/MPC – it should approximate the optimal cost-to-go function. This has also implications on the closed-loop stability of a system control with an RHC/MPC, but we postpone such discussion till the next chapter/week.</p>
+</section>
+<section id="dynamic-programming-on-an-infinite-time-horizon" class="level2">
+<h2 class="anchored" data-anchor-id="dynamic-programming-on-an-infinite-time-horizon">Dynamic programming on an infinite time horizon</h2>
+<p>It seems that the idea of dynamic programming is only applicable to finite-horizon problems. However, it can be extended to infinite-horizon problems too. The key idea is that if the problem is time-invariant (i.e., neither the dynamics given by <span class="math inline">\mathbf f()</span> nor the stage cost <span class="math inline">L()</span> depend explicitly on time), the optimal cost-to-go function <span class="math inline">J^\star()</span> does not have time as one of its input arguments either. Hence, we can drop the time dependence from the notation and write the Bellman’s principle of optimality for an infinite-horizon problem as <span class="math display">
+J^\star(\bm x_k) = \min_{\bm u_k}\left(L(\bm x_k,\bm u_k) + J^\star(\bm x_{k+1})\right).
+</span></p>
+<p>In fact, we can go even further drop the time index from the state and control variables altogether and write <span class="math display">
+\boxed{J^\star(\bm x) = \min_{\bm u}\left(L(\bm x,\bm u) + J^\star(\mathbf f(\bm x,\bm u))\right).}
+</span></p>
+<p>The optimal control at a given discrete time <span class="math inline">k</span> is then obtained as usual by one-step optimization <span class="math display">
+\boxed{\bm u_k^\star = \arg \min_{\bm u} \left(L(\bm x,\bm u) + J^\star(\mathbf f(\bm x,\bm u))\right).}
 </span></p>
 
 
-</section>
 </section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
