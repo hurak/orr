@@ -239,7 +239,7 @@ $$
 (\mathbf A - \mathbf I) \bm x^\mathrm{ss} + \mathbf B \bm u^\mathrm{ss} = \mathbf 0.
 $$
 
-Fixing the value of the steady state vector $\bm x^\mathrm{ss}$ to $\mathbf x^\mathrm{ref}$, we see that $\bm u^\mathrm{ss} = \mathbf 0$ if $(\mathbf A - \mathbf I) \bm x^\mathrm{ref}$, that is, if the desired steady state $\bm x^\mathrm{ref}$ is in the null space of $(\mathbf A - \mathbf I)$. If the desired steady state does not satisfy the condition, which will generally be the case, the corresponding control is necessarily nonzero. It then makes no sense to penalize the control itself. Instead, its deviation from the compatible nonzero value should be penalized. As a consequence, the cost function should be modified to  
+Fixing the value of the steady state vector $\bm x^\mathrm{ss}$ to $\mathbf x^\mathrm{ref}$, we see that $\bm u^\mathrm{ss} = \mathbf 0$ if $(\mathbf A - \mathbf I) \bm x^\mathrm{ref}$, that is, if the desired steady state $\bm x^\mathrm{ref}$ is in the null space of $(\mathbf A - \mathbf I)$. If the desired steady state does not satisfy the condition, which will generally be the case, the corresponding control is necessarily nonzero. It then it makes no sense to penalize the control itself. Instead, its deviation from the compatible nonzero value should be penalized. As a consequence, the cost function should be modified to  
 
 $$
 \begin{aligned}
