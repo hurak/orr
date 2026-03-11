@@ -14,7 +14,7 @@ engine: julia
 ## Reference state tracking using LQR
 Instead of controlling (regulating) the system to the origin (zero state), we may want to control it to some nonzero reference state $\mathbf x^\mathbf{ref}\neq 0$. The immediate idea might be that the cost function then changes to
 $$\boxed{
-J(\ldots) = \frac{1}{2} \sum_{k=0}^{t_\mathrm{final}} \left((\bm x_{k}-{\color{blue}\mathbf x^\mathrm{ref}})^\top \mathbf Q \, (\bm x_{k}-{\color{blue}\mathbf x^\mathrm{ref}}) + \bm u_{k}^\top \mathbf R \bm u_{k}\right).}
+J(\ldots) = \frac{1}{2} \sum_{k=0}^{N} \left((\bm x_{k}-{\color{blue}\mathbf x^\mathrm{ref}})^\top \mathbf Q \, (\bm x_{k}-{\color{blue}\mathbf x^\mathrm{ref}}) + \bm u_{k}^\top \mathbf R \bm u_{k}\right).}
 $${#eq-LQR-tracking-cost-function-finite-horizon}
 
 While this is perfectly reasonable, it is also true that as soon as we extend the time horizon to infinity, that is, for the cost function  
