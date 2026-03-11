@@ -145,7 +145,7 @@ Before concluding, we should note that upon transforming the reference utput tra
 :::{#exm-LQR-output-tracking}
 ### Reference output tracking on an infinite time-horizon
 
-Standard double-mass-spring-damper system. Fourth-order system with one control input (force acting on the first mass) and one output (the position of the second mass).
+Two masses interconnected with a spring and a damper. The first mass is also connected to a fixed wall via a spring and a damper. Modelled by a fourth-order state-space model with one control input (force acting on the first mass) and one output (the position of the second mass).
 ```{julia}
 #| code-fold: show
 #| output: false
@@ -153,26 +153,28 @@ using ControlSystems
 using LinearAlgebra
 using Plots
 
-# Example 8.3 (double-mass-spring-damper system), page 287, Digital Control of Dynamic Systems, Franklin, Powell, Emami-Naeini, 3rd edition.
-M = 1
-m = 0.1
-b = 0.036
-k = 0.091
+# System parameters
+m₁ = 1      # Mass 1
+m₂ = 0.1    # Mass 2
+b₁₂ = 0.03  # Damping coefficient between the two masses
+k₁₂ = 0.09  # Spring stiffness between the two masses
+b₀₁ = 0.3   # Damping coefficient between the first mass and the wall
+k₀₁ = 0.5   # Spring stiffness between the first mass and the wall
 
 # State vector: x = [y'; y; d'; d], 
 # where y is the position of the first mass, and d is the position of the second mass.
-A = [-b/M -k/M b/M k/M;
+A = [-(b₁₂+b₀₁)/m₁ -(k₁₂+k₀₁)/m₁ b₁₂/m₁ k₁₂/m₁;
     1 0 0 0;
-    b/m k/m -b/m -k/m;
+    b₁₂/m₂ k₁₂/m₂ -b₁₂/m₂ -k₁₂/m₂;
     0 0 1 0]
-B = [1/m; 0; 0; 0]
-C = [0 0 0 1] # We want to control the position of the second mass, d.
+B = [1/m₁; 0; 0; 0]         # The force (the control input) acts on the first mass.
+C = [0 0 0 1]               # We want to control the position of the second mass, d.
 D = [0]
 
 G = ss(A, B, C, D)
-h = 0.1                         # Sampling time
+h = 0.1                     # Sampling time
 Gd = c2d(G, h)
-A, B, C, D = ssdata(Gd)         # Rewriting the original matrices by those correspoinding to the discretized system
+A, B, C, D = ssdata(Gd)     # Rewriting the original matrices by those correspoinding to the discretized system
 
 N = [A-I B; C 0]\[0; 0; 0; 0; 1]
 Nₓ = N[1:4]
@@ -181,7 +183,7 @@ Nᵤ = N[5]
 # Setting up the cost function
 Q_y = 10.0 
 Q = C'*Q_y*C
-rank(obsv(A,Q))                 # Check the observability of the system with the new Q matrix. Should be 4.
+rank(obsv(A,Q))             # Check the observability of the system with the new Q matrix. Should be 4.
 R = 1.0
 
 # Solving the LQR problem
@@ -193,7 +195,7 @@ N = K*Nₓ .+ Nᵤ                  # Dot needed here because K*Nₓ is a 1x1 ma
 u(x,t)  = -K*x .+ N*y_ref(t)    # Control law (u is a function of t and x)
 
 # Simulate the closed-loop system
-t = 0:h:10                      # Time vector
+t = 0:h:20                      # Time vector
 x0 = [0, 0.0, 0, 0.0]           # Initial condition
 res = lsim(G,u,t,x0=x0)         # Simulation results
 ```
