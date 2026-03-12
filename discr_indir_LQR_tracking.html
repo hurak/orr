@@ -1289,7 +1289,7 @@ Figure&nbsp;5: Tracking a reference output with integral action
 </figure>
 </div>
 <p>The control law is given by <span class="math display">\boxed{
-\bm u_k = - \begin{bmatrix}\mathbf K &amp; \mathbf K^\mathrm{I}\end{bmatrix} \begin{bmatrix}\bm x_k \\ \bm x_k^\mathrm{I}\end{bmatrix} + \mathbf K \mathbf N_\mathrm{u} \mathbf y^\mathrm{ref}.}
+\bm u_k = - \begin{bmatrix}\mathbf K &amp; \mathbf K^\mathrm{I}\end{bmatrix} \begin{bmatrix}\bm x_k \\ \bm x_k^\mathrm{I}\end{bmatrix} + \mathbf K \mathbf N_\mathrm{x} \mathbf y^\mathrm{ref}.}
 </span></p>
 <p>It is worth noting that the (discrete-time approximation of the) integrator serves the very much similar role as the feedforward term <span class="math inline">\bm u^\mathrm{ss}</span> does in the scheme of <a href="#fig-reference_output_LQ_tracking" class="quarto-xref">Fig.&nbsp;2</a> – it provides the constant offset to the control even if the regulation error is zero.</p>
 
