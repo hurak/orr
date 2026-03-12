@@ -195,7 +195,7 @@ N = K*Nₓ .+ Nᵤ                  # Dot needed here because K*Nₓ is a 1x1 ma
 u(x,t)  = -K*x .+ N*y_ref(t)    # Control law (u is a function of t and x)
 
 # Simulate the closed-loop system
-t = 0:h:20                      # Time vector
+t = 0:h:15                      # Time vector
 x0 = [0, 0.0, 0, 0.0]           # Initial condition
 res = lsim(G,u,t,x0=x0)         # Simulation results
 ```
@@ -206,16 +206,16 @@ We explicitly show here that the system is observable with the new $Q$ matrix:
 rank(obsv(A,Q))                 # The square root is not even needed
 ```
 
-Finally, we plot the simulation results.
+Finally, we plot the simulation results in @fig-lqr-output-tracking.
 ```{julia}
 #| code-fold: true
 #| fig-cap: "Reference output tracking using LQR. Unit step in the reference value of the output occurs at time 1.5."
-#| label: fig-LQR-output-tracking
+#| label: fig-lqr-output-tracking
 p1 = plot(res, ylabel="Tracked output", lab="d", ploty=true, plotx=false, plotu=false, layout=1, sp=1, lw=2, seriestype=:steppost, color=palette(:default)[4])
 plot!(t, y_ref.(t), lab="reference", lw=2, ls=:dash, layout=(3,1), sp=1, seriestype=:steppost)
-p2 = plot(res, ylabel="State", lab=["y dot" "y" "d dot" "d"], ploty=false, plotx=true, plotu=false, layout=1, sp=1, lw=2, seriestype=:steppost)
+p2 = plot(res, ylabel="State", lab=["y dot" "y" "d dot" "d"], ploty=false, plotx=true, plotu=false, layout=1, sp=1, lw=2, seriestype=:steppost, legend_position = :topright)
 p3 = plot(res, ylabel="Control", lab="u", ploty=false, plotx=false, plotu=true, layout=1, sp=1, lw=2, seriestype=:steppost)
-plot(p1, p2, p3, layout=(3,1), size=(800,900))
+plot(p1, p2, p3, layout=(3,1))
 ```
 :::
 
@@ -237,5 +237,88 @@ $$\boxed{
 \bm u_k = - \begin{bmatrix}\mathbf K & \mathbf K^\mathrm{I}\end{bmatrix} \begin{bmatrix}\bm x_k \\ \bm x_k^\mathrm{I}\end{bmatrix} + \mathbf K \mathbf N_\mathrm{x} \mathbf y^\mathrm{ref}.}
 $$
 
-
 It is worth noting that the (discrete-time approximation of the) integrator serves the very much similar role as the feedforward term $\bm u^\mathrm{ss}$ does in the scheme of @fig-reference_output_LQ_tracking – it provides the constant offset to the control even if the regulation error is zero.
+
+::: {#exm-LQI-tracking}
+### Reference output tracking using LQI
+We consider the same system as in the previous example, but now we introduce an integral action to the controller. 
+
+``` {julia}
+#| code-fold: show
+#| output: false
+
+using ControlSystems
+using LinearAlgebra
+using Plots
+
+# System parameters
+m₁ = 1      # Mass 1
+m₂ = 0.1    # Mass 2
+b₁₂ = 0.03  # Damping coefficient between the two masses
+k₁₂ = 0.09  # Spring stiffness between the two masses
+b₀₁ = 0.3   # Damping coefficient between the first mass and the wall
+k₀₁ = 0.5   # Spring stiffness between the first mass and the wall
+
+# State vector: x = [y'; y; d'; d], 
+# where y is the position of the first mass, and d is the position of the second mass.
+A = [-(b₁₂+b₀₁)/m₁ -(k₁₂+k₀₁)/m₁ b₁₂/m₁ k₁₂/m₁;
+    1 0 0 0;
+    b₁₂/m₂ k₁₂/m₂ -b₁₂/m₂ -k₁₂/m₂;
+    0 0 1 0]
+B = [1/m₁; 0; 0; 0]         # The force (the control input) acts on the first mass.
+C = [0 0 0 1]               # We want to control the position of the second mass, d.
+D = [0]
+
+G = ss(A, B, C, D)
+h = 0.1                     # Sampling time
+Gd = c2d(G, h)
+A, B, C, D = ssdata(Gd)     # Rewriting the original matrices by those correspoinding to the discretized system
+
+Nₓ = pinv(C)
+
+# Building the augmented system for integral control
+A_aug = [A zeros(4,1); -C 1]
+B_u_aug = [B; zeros(1,1)]
+B_y_aug = [zeros(4,1); 1]  
+C_aug = [C zeros(1,1)]
+D_aug = [0 0] 
+G_aug = ss(A_aug, [B_u_aug B_y_aug], C_aug, D_aug, h)
+
+#Weights for the LQR controller
+Q_aug = 1.0* Matrix(I, 5, 5)
+Q_aug[1,1] = 1
+Q_aug[2,2] = 1
+Q_aug[3,3] = 1
+Q_aug[4,4] = 1
+Q_aug[5,5] = 0.02           # Penalize the integral of the error as well
+R = 1.0
+
+# Design the LQR controller for the augmented system
+K_aug = lqr(Discrete, A_aug, B_u_aug, Q_aug, R)
+K = K_aug[:, 1:4]
+Kᵢ = K_aug[:, 5:end] 
+y_ref(t) = t >= 1.5 ? 1.0 : 0.0         # Reference output (step function starting at t=1.5)      
+u(x_aug, t) = (-K*x_aug[1:4] - Kᵢ*x_aug[5] + K*Nₓ*y_ref(t))[1]  # Without the [1] at the end, u would be a 1x1 matrix.
+uy(x_aug, t) = [u(x_aug, t), y_ref(t)]  # The first column is the control input, and the second column is the output reference. This is needed for simulating the augmented system.
+
+# Simulate the closed-loop system
+t = 0:h:15
+x0 = [0, 0.0, 0, 0.0]       # Initial values of the original (physical) state variables.
+xᵢ0 = [0.0]                 # Initial value of the integral-of-the-tracking-error state variable. 
+y, t, x, uout = lsim(G_aug, uy, t, x0=vcat(x0, xᵢ0)) 
+```
+
+Finally we plot the results in @fig-lqi-output-tracking.
+
+```{julia}
+#| code-fold: true
+#| fig-cap: "Reference output tracking using LQI. Unit step in the reference value of the output occurs at time 1.5."
+#| label: fig-lqi-output-tracking
+p1 = plot(t, y', ylabel="Tracked output", lab="d", lw=2, seriestype=:steppost, color=palette(:default)[4])
+plot!(t, y_ref.(t), lab="reference", lw=2, ls=:dash, seriestype=:steppost)
+p2 = plot(t, x[1:4,:]', ylabel="State", lab=["y dot" "y" "d dot" "d"], lw=2, seriestype=:steppost, legend_position = :topright)
+p3 = plot(t, x[5,:], ylabel="State xᵢ", lab="xᵢ", lw=2, seriestype=:steppost)
+p4 = plot(t, uout[1,:], ylabel="Control", lab="u", lw=2, seriestype=:steppost, xlabel="Time")
+plot(p1, p2, p3, p4, layout=(4,1))
+```
+:::
