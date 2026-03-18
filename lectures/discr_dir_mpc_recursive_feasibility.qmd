@@ -225,7 +225,7 @@ One-step controllable set
 : A subset of the precursor set that only contains states that are also in the feasible set $\mathcal{X}$, that is,
 $$\text{Pre}(\mathcal{S})\cap \mathcal{X} = \{\bm x\in\mathbb R^n \mid \exists \bm u\in\mathcal{U}: \mathbf A\bm x+\mathbf B\bm u \in \mathcal{S}, \bm x \in \mathcal{X}\}.$$
 
-In other words, the the-one step controllable set contains only the states from which the system can be controlled to the set $\mathcal{S}$ in one time step, while satisfying the state and input constraints.
+In other words, the one step controllable set contains only the states from which the system can be controlled to the set $\mathcal{S}$ in one time step, while satisfying the state and input constraints.
 
 Instead of some arbitrary set $\mathcal{S}$, we are now interested in the one-step controllable set of the feasible set of states $\mathcal X$, that is, $\text{Pre}(\mathcal{X})\cap \mathcal{X}$.
 
@@ -619,7 +619,93 @@ Note that by replacing the symbol of optimality with the tilde we explicitly ind
 
 Since the new terminal state $\tilde{\bm x}_{N+1|1}$ is again in $\mathcal{X}_{\text{inv}}$, the same construction can be repeated at every subsequent time step.
 
+::: {#exm-mpc-recursive-feasibility-control-invariant-at-the-terminal-time-step}
+### Recursive feasibility of MPC by imposing a control invariance at the terminal time step
 
+The same data as before.
+```{julia}
+#| code-fold: true
+#| label: fig-mpc-recursive-feasible-control-invariant-at-the-terminal-time-step
+#| fig-cap: "Recursively feasible MPC example by imposing the control invariance at the terminal time step"
+using OSQP
+using JuMP
+using LinearAlgebra
 
+rhocp = Model(OSQP.Optimizer)    # Defining the receding-horizon (RH) optimal control problem (OCP).
+set_silent(rhocp)
+
+# System dynamics x(k+1) = A*x(k) + B*u(k):
+A = [1.0 1.0; 0 1.0]
+B = [0.4, 1.0]
+
+N = 3               # Prediction horizon length.
+N_full = N+10       # Total simulation length.
+h = 1.0             # Sampling time.
+
+x_init = [-1.0, 0.975] # Initial state.
+
+# Quadratic cost function weights:
+Q = Diagonal([1.0, 1.0])
+R = 10.0
+
+# State constraints:
+x_min = [-1.0, -1.0]
+x_max = [1.0, 1.0]
+
+# Input constraints:
+u_max = 0.25 # Recursive feasibility for 0.3, for 0.25 not recursively feasible
+u_min = -u_max 
+
+n = size(A,1)                                               # Order of the system.
+
+# Building the optimization model for the receding-horizon optimal control problem RH-OCP:
+@variable(rhocp, x[1:n, 1:N+1])                             # State trajectory over the prediction horizon.
+@variable(rhocp, u_min <= u[1:N] <= u_max)                  # Control trajectory over the prediction horizon.
+@constraint(rhocp, [i=1:N+1], x_min .<= x[:,i] .<= x_max)   # State constraints.
+@constraint(rhocp, [i=1:N], x[:,i+1] == A*x[:,i] + B*u[i])
+@constraint(rhocp, x[:,N+1] in X_invariant)                 # Terminal state constrained to the control invariant set.
+fix(x[1,1], x_init[1])
+fix(x[2,1], x_init[2])
+@objective(rhocp, Min, sum(x[:,i]'*Q*x[:,i] + R*u[i]^2 for i=1:N) + x[:,N+1]'*Q*x[:,N+1])
+
+# Function that solves the RH OCP for the current state xₖ at time step k:
+function mpc_regulation(rhocp, xₖ, k, N)          
+    fix(x[1,1], xₖ[1])
+    fix(x[2,1], xₖ[2])  
+    optimize!(rhocp)
+    return value.(u), value.(x)
+end
+
+# Receding-horizon simulation:
+x_opt_full = [x_init,]
+u_opt_full = Float64[]
+x_pred_full = Vector{Matrix{Float64}}()
+u_pred_full = Vector{Vector{Float64}}()
+
+for k in 1:(N_full-N)                                   # Receding-horizon simulation loop.  
+    xₖ = x_opt_full[end]                                # Current state.  
+    u_pred, x_pred = mpc_regulation(rhocp, xₖ, k, N)    # Optimal control sequence over the prediction horizon.
+    uₖ = u_pred[1]                                      # Apply only the first control input.
+    x⁺ = x_pred[:,2]                                    # Next state from the predicted trajectory.
+    #x⁺ = x_pred[:,2] + randn(2)*0.1                     # True next state differs from the predicted trajectory due to the disturbance.
+    push!(x_opt_full, x⁺)
+    push!(u_opt_full, uₖ)
+    push!(x_pred_full, x_pred)
+    push!(u_pred_full, u_pred)
+end
+
+# Plotting the results:
+using Plots
+x_opt = hcat(x_opt_full...)
+
+p1 = plot(X, ratio=:equal, label="X", alpha=0.3, xlabel="x₁", ylabel="x₂")
+plot!(p1,X_invariant, ratio=:equal, label="Control Invariant Set", alpha=0.3)
+plot!(p1,x_opt[1,:], x_opt[2,:], label="x(k)", xlabel="x₁", ylabel="x₂", markershape=:circle, markersize=2, lw=2, aspect_ratio=:equal)
+for x_pred in x_pred_full
+    plot!(p1, x_pred[1,:], x_pred[2,:], label="", markershape=:diamond, markersize=1, lw=1, linecolor=:gray, alpha=0.5)
+end
+display(p1)
+```
+:::
 
 
