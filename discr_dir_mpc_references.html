@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -968,8 +988,16 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#stability-and-recursive-feasibility-of-mpc" id="toc-stability-and-recursive-feasibility-of-mpc" class="nav-link active" data-scroll-target="#stability-and-recursive-feasibility-of-mpc">Stability and recursive feasibility of MPC</a></li>
+  <li><a href="#explicit-mpc" id="toc-explicit-mpc" class="nav-link" data-scroll-target="#explicit-mpc">Explicit MPC</a></li>
+  <li><a href="#economic-mpc" id="toc-economic-mpc" class="nav-link" data-scroll-target="#economic-mpc">Economic MPC</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -993,10 +1021,44 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="stability-and-recursive-feasibility-of-mpc" class="level2">
+<h2 class="anchored" data-anchor-id="stability-and-recursive-feasibility-of-mpc">Stability and recursive feasibility of MPC</h2>
+</section>
+<section id="explicit-mpc" class="level2">
+<h2 class="anchored" data-anchor-id="explicit-mpc">Explicit MPC</h2>
+<p>It is generally agreed that the idea of explicit MPC for was first proposed by <span class="citation" data-cites="bemporadModelPredictiveControl2002"><a href="#ref-bemporadModelPredictiveControl2002" role="doc-biblioref">[1]</a></span>. Comprehensive treatment is in the freely online available (text)book <span class="citation" data-cites="borrelliPredictiveControlLinear2017"><a href="#ref-borrelliPredictiveControlLinear2017" role="doc-biblioref">[2]</a></span> by the same authors. Last but not least, the lecture slides <span class="citation" data-cites="bemporadModelPredictiveControl2021"><a href="#ref-bemporadModelPredictiveControl2021" role="doc-biblioref">[3]</a></span> are recommendable too.</p>
+</section>
+<section id="economic-mpc" class="level2">
+<h2 class="anchored" data-anchor-id="economic-mpc">Economic MPC</h2>
+<p><span class="citation" data-cites="ellisEconomicModelPredictive2017"><a href="#ref-ellisEconomicModelPredictive2017" role="doc-biblioref">[4]</a></span>, <span class="citation" data-cites="ellisTutorialReviewEconomic2014"><a href="#ref-ellisTutorialReviewEconomic2014" role="doc-biblioref">[5]</a></span>, <span class="citation" data-cites="faulwasserEconomicNonlinearModel2018"><a href="#ref-faulwasserEconomicNonlinearModel2018" role="doc-biblioref">[6]</a></span>, <span class="citation" data-cites="rawlingsFundamentalsEconomicModel2012"><a href="#ref-rawlingsFundamentalsEconomicModel2012" role="doc-biblioref">[7]</a></span></p>
 
 
 
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list">
+<div id="ref-bemporadModelPredictiveControl2002" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">A. Bemporad, F. Borrelli, and M. Morari, <span>“Model predictive control based on linear programming - the explicit solution,”</span> <em>IEEE Transactions on Automatic Control</em>, vol. 47, no. 12, pp. 1974–1985, Dec. 2002, doi: <a href="https://doi.org/10.1109/TAC.2002.805688">10.1109/TAC.2002.805688</a>.</div>
+</div>
+<div id="ref-borrelliPredictiveControlLinear2017" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">F. Borrelli, A. Bemporad, and M. Morari, <em>Predictive <span>Control</span> for <span>Linear</span> and <span>Hybrid Systems</span></em>. Cambridge, New York: Cambridge University Press, 2017. Available: <a href="http://cse.lab.imtlucca.it/~bemporad/publications/papers/BBMbook.pdf">http://cse.lab.imtlucca.it/~bemporad/publications/papers/BBMbook.pdf</a></div>
+</div>
+<div id="ref-bemporadModelPredictiveControl2021" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">A. Bemporad, <span>“Model <span>Predictive Control</span>: <span>Quadratic</span> programming and explicit <span>MPC</span>.”</span> May 2021. Available: <a href="http://cse.lab.imtlucca.it/~bemporad/teaching/mpc/imt/3-qp_explicit.pdf">http://cse.lab.imtlucca.it/~bemporad/teaching/mpc/imt/3-qp_explicit.pdf</a></div>
+</div>
+<div id="ref-ellisEconomicModelPredictive2017" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">M. Ellis, J. Liu, and P. D. Christofides, <em>Economic <span>Model Predictive Control</span>: <span>Theory</span>, <span>Formulations</span> and <span>Chemical Process Applications</span></em>. in Advances in <span>Industrial Control</span>. Cham: Springer, 2017. Available: <a href="https://doi.org/10.1007/978-3-319-41108-8">https://doi.org/10.1007/978-3-319-41108-8</a></div>
+</div>
+<div id="ref-ellisTutorialReviewEconomic2014" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">M. Ellis, H. Durand, and P. D. Christofides, <span>“A tutorial review of economic model predictive control methods,”</span> <em>Journal of Process Control</em>, vol. 24, no. 8, pp. 1156–1178, Aug. 2014, doi: <a href="https://doi.org/10.1016/j.jprocont.2014.03.010">10.1016/j.jprocont.2014.03.010</a>.</div>
+</div>
+<div id="ref-faulwasserEconomicNonlinearModel2018" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">T. Faulwasser, L. Grüne, and M. A. Müller, <span>“Economic <span>Nonlinear Model Predictive Control</span>,”</span> <em>Foundations and Trends<span></span> in Systems and Control</em>, vol. 5, no. 1, pp. 1–98, Jan. 2018, doi: <a href="https://doi.org/10.1561/2600000014">10.1561/2600000014</a>.</div>
+</div>
+<div id="ref-rawlingsFundamentalsEconomicModel2012" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">J. B. Rawlings, D. Angeli, and C. N. Bates, <span>“Fundamentals of economic model predictive control,”</span> in <em>2012 <span>IEEE</span> 51st <span>IEEE Conference</span> on <span>Decision</span> and <span>Control</span> (<span>CDC</span>)</em>, Dec. 2012, pp. 3851–3861. doi: <a href="https://doi.org/10.1109/CDC.2012.6425822">10.1109/CDC.2012.6425822</a>.</div>
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -1417,7 +1479,7 @@ ul.task-list li input[type="checkbox"] {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2025, Zdeněk Hurák</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

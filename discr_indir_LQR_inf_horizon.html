@@ -1410,7 +1410,7 @@ Table&nbsp;1: The two input and six state variables
 <span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>A,B,C,D <span class="op">=</span> Gd.A,Gd.B,Gd.C,Gd.D</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>([0.9226667967276305 0.0061993687563318516 … 0.00021217263359090186 0.0; -0.13246631436182107 0.9997066454002713 … 0.00031188493568957813 0.0; … ; 0.0 0.0 … 0.13265546508012172 0.0; 2.292290658677099 0.004976965360488232 … -0.009375212477843127 0.9048374180359594], [2.8216137958947887e-5 0.00018468401795193414; -0.0014496061397921438 0.00025320960350156183; … ; 0.0 0.8673445349198778; -0.0037522412534400315 -0.007373986216857326], [0.0 0.0 … 0.0 -1.0; 0.0 0.0 … 0.0 0.0; 57.2958 0.0 … 0.0 0.0; 0.0 57.2958 … 0.0 0.0], [0.0 0.0; 0.0 0.0; 0.0 0.0; 0.0 0.0])</code></pre>
+<pre><code>([0.9226667967276305 0.0061993687563318516 … 0.0002121726335909019 0.0; -0.1324663143618211 0.9997066454002713 … 0.00031188493568957813 0.0; … ; 0.0 0.0 … 0.13265546508012172 0.0; 2.292290658677099 0.004976965360488232 … -0.009375212477843127 0.9048374180359594], [2.821613795894789e-5 0.00018468401795193416; -0.001449606139792144 0.00025320960350156183; … ; 0.0 0.8673445349198778; -0.0037522412534400328 -0.007373986216857326], [0.0 0.0 … 0.0 -1.0; 0.0 0.0 … 0.0 0.0; 57.2958 0.0 … 0.0 0.0; 0.0 57.2958 … 0.0 0.0], [0.0 0.0; 0.0 0.0; 0.0 0.0; 0.0 0.0])</code></pre>
 </div>
 </div>
 <p>And in the following code we define the weights for the LQR controller and design the controller</p>
@@ -1474,6 +1474,14 @@ Table&nbsp;1: The two input and six state variables
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>p3 <span class="op">=</span> <span class="fu">plot</span>(t,y<span class="op">'</span>, label<span class="op">=</span>[L<span class="st">"r_\mathrm{w} \mathrm{(deg/s)}"</span> L<span class="st">"p \mathrm{(deg/s)}"</span> L<span class="st">"</span><span class="sc">\b</span><span class="st">eta \mathrm{(deg)}"</span> L<span class="st">"\phi \mathrm{(deg)}"</span>], xlabel<span class="op">=</span><span class="st">"Time (s)"</span>, ylabel<span class="op">=</span><span class="st">"Outputs"</span>,markershape<span class="op">=:</span>circle,markersize<span class="op">=</span><span class="fl">1</span>,linetype<span class="op">=:</span>steppost)</span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(p1,p2,p3,layout<span class="op">=</span>(<span class="fl">3</span>,<span class="fl">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-green-fg ansi-bold">Precompiling</span> packages...
+   1132.2 ms<span class="ansi-green-fg">  ✓ </span>QuartoNotebookWorkerLaTeXStringsExt<span class="ansi-bright-black-fg"> (serial)</span>
+  1 dependency successfully precompiled in 1 seconds
+</pre>
+</div>
+</div>
 <div id="fig-simulation-outcomes-f16" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="1">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-simulation-outcomes-f16-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
