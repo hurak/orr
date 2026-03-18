@@ -593,5 +593,33 @@ Clearly, the predicted trajectories at every time step remain in the control inv
 
 ## Recursive feasibility of MPC by imposing a control invariance at the terminal time step
 
-Another way to ensure the recursive feasibility of MPC is to impose the constraint that the state at the end of the prediction horizon is in the (maximal) control invariant set. This is a less restrictive condition than the previously discussed one, in which we imposed such constraint at every time step during the prediction horizon, and hence it allows for a larger set of initial states from which the system can be controlled to the origin. We will shortly discuss why this works, but we first illustrate the functionality with an example.
+Another way to ensure the recursive feasibility of MPC is to impose the constraint that the state at the end of the prediction horizon is in the (maximal) control invariant set. This is a less restrictive condition than the previously discussed one, in which we imposed such constraint at every time step during the prediction horizon, and hence it allows for a larger set of initial states from which the system can be controlled to the origin. But we must make sure that at least in the initial time the optimization problem is feasible.
+
+We briefly explain why including the control invariance only at the terminal time step is sufficient. Say, we start at time $k=0$ as usual at the initial state $\bm x_0$. We include in the optimization over the horizon $[0, N]$ the terminal constraint $\bm x_N \in \mathcal X_{\text{inv}}$. The optimization gives us the sequence of optimal control inputs
+$$
+\bm u_{0|0}^\star, \bm u_{1|0}^\star, \ldots, \bm u_{N-1|0}^\star
+$$
+and the corresponding predicted state trajectory (initialized at $\bm x_0$)
+$$
+\bm x_0, \bm x_{1|0}^\star, \ldots, \bm x_{N|0}^\star.
+$$
+
+Now, in the next time step $k=1$, we start at the state $\bm x_1 = \bm x_{1|0}^\star$ that is the outcome of applying the control input $\bm u_{0|0}^\star$ to the system, and while facing the task of finding the control sequence over the horizon $[1, N+1]$, such that the terminal constraint is satisfied at the time step $N+1$, we can recycle the solution from the previous time step for all the time steps but the new terminal one. For that one, we can use the fact that the previous terminal state was in the control invariant set, which means, that we are guaranteed that we can design a standard unconstrained LQR state feedback control law, and yet both the input constraint and the terminal constraint will be preserved.
+
+The control sequence will be 
+$$
+\tilde{\bm u}_{1|1} = \bm u_{1|0}^\star,\; \tilde{\bm u}_{2|1} = \bm u_{2|0}^\star,\; \ldots, \tilde{\bm u}_{N-1|1} = \bm u_{N-1|0}^\star,\; \tilde{\bm u}_{N|1} = -\mathbf K \bm x_{N|0}^\star, 
+$$
+in which it is guaranteed that $-\mathbf{K}\bm x_{N|0}^\star \in \mathcal{U}$, so the appended input is admissible, and also that 
+$$
+\tilde{\bm x}_{N+1|1} \in \mathcal X_{\text{inv}}. 
+$$
+
+Note that by replacing the symbol of optimality with the tilde we explicitly indicate that the control sequence is not necessarily optimal in the current time step, but it is feasible.
+
+Since the new terminal state $\tilde{\bm x}_{N+1|1}$ is again in $\mathcal{X}_{\text{inv}}$, the same construction can be repeated at every subsequent time step.
+
+
+
+
 
