@@ -19,10 +19,9 @@ crossref:
 engine: julia
 ---
 
-Since in our quest for the optimal control we optimize over functions (trajectories), we can view our optimization as cast in an infinite-dimensional vector space. The mathematical discipline of *calculus of variations* provides concepts and tools for such optimization. The general task (in a scalar version) is to find
-
+Since in our quest for the optimal control we optimize over functions (trajectories), we can view our optimization as cast in an infinite-dimensional vector space. The mathematical discipline of *calculus of variations* provides concepts and tools for such optimization. The general task (in a scalar version) is to do the following optimization
 $$ 
-\min_{y(x)\in\mathcal C^1[a,b]} J(y(x)),
+\operatorname*{minimize}_{y(\cdot)\in\mathcal C^1[a,b]} J(y(\cdot)),
 $$
 where we relabelled the variables in the following sense: the optimization is performed over functions $y(\cdot)$, which are functions of the independent scalar variable $x$. The reason for this notational choice is that many of the results in calculus of variations were motivated by problems where the independent variable was length or position. This change of notation is reflected in @fig-many-ys, which shows a few members of the space in which we search for a minimizer. 
 
