@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Calculus of variations – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -34,15 +37,14 @@ ul.task-list li input[type="checkbox"] {
 <link href="./cont_indir_overview.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-251449ada0ddbdd49c494e2ec9d5d6a9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-3af3864096cac646a9a6049d66e54d16.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -1052,9 +1054,8 @@ window.Quarto = {
 </header>
 
 
-<p>Since in our quest for the optimal control we optimize over functions (trajectories), we can view our optimization as cast in an infinite-dimensional vector space. The mathematical discipline of <em>calculus of variations</em> provides concepts and tools for such optimization. The general task (in a scalar version) is to find</p>
-<p><span class="math display">
-\min_{y(x)\in\mathcal C^1[a,b]} J(y(x)),
+<p>Since in our quest for the optimal control we optimize over functions (trajectories), we can view our optimization as cast in an infinite-dimensional vector space. The mathematical discipline of <em>calculus of variations</em> provides concepts and tools for such optimization. The general task (in a scalar version) is to do the following optimization <span class="math display">
+\operatorname*{minimize}_{y(\cdot)\in\mathcal C^1[a,b]} J(y(\cdot)),
 </span> where we relabelled the variables in the following sense: the optimization is performed over functions <span class="math inline">y(\cdot)</span>, which are functions of the independent scalar variable <span class="math inline">x</span>. The reason for this notational choice is that many of the results in calculus of variations were motivated by problems where the independent variable was length or position. This change of notation is reflected in <a href="#fig-many-ys" class="quarto-xref">Fig.&nbsp;1</a>, which shows a few members of the space in which we search for a minimizer.</p>
 <div id="fig-many-ys" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
