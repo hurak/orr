@@ -184,7 +184,7 @@ $$
 \mathcal{K}_\mathrm{SOC}^3 = \left\{ \bm x \in \mathbb R^3 \mid \sqrt{x_1^2 + x_2^2} \leq x_3 \right\}.
 $$
 
-and is visualized in @fig-soc-cone below. 
+<!-- and is visualized in @fig-soc-cone below. 
 
 ```{julia}
 #| echo: false
@@ -197,7 +197,7 @@ lower = fill(Point3f(0,0,0), 100)
 upper = [Point3f(sin(x), cos(x), 1.0) for x in range(0,2pi, length=100)]
 col = repeat([1:50;50:-1:1],outer=2)
 band(lower, upper, color=col, axis=(type=Axis3,xlabel="x₁",ylabel="x₂",zlabel="x₃"))
-```
+``` -->
 
 Which of the three axes plays the role of the axis of symmetry for the cone must be agreed beforehand. Singling this direction out, the SOC in $\mathbb R^n$ can also be formulated as 
 $$
