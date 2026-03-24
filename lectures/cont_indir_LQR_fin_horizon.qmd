@@ -15,37 +15,34 @@ engine: julia
 ---
 
 To get some more insight and also to develop a practical design tool, let us consider the LQR version of this general problem. The Hamiltonian is
-<!-- $$
- L^\text{aug}(\bm x, \bm u, \bm \lambda) = \frac{1}{2}\left(\bm x^\top\mathbf Q \bm x + \bm u^\top\mathbf R\bm u\right) + \bm \lambda^\top\,(\dot{\bm x}-\mathbf A\bm x-\mathbf B\bm u).
-$$ -->
 $$
- H(\bm x, \bm u, \bm \lambda) = \bm \lambda^\top\, (\mathbf A\bm x+\mathbf B\bm u) - \frac{1}{2}\left(\bm x^\top\mathbf Q \bm x + \bm u^\top\mathbf R\bm u\right), 
-$$
+ H(\bm x, \bm u, \bm \lambda) = \frac{1}{2}\left(\bm x^\top\mathbf Q \bm x + \bm u^\top\mathbf R\bm u\right) + \bm \lambda^\top\, (\mathbf A\bm x+\mathbf B\bm u), 
+$${#eq-hamiltonian-LQ}
 in which we note that it does not explicitly depend on time.
 
 The three necessary conditions of optimality (the state, costate and stationarity equations) are then 
 $$\boxed{
 \begin{aligned}
 \dot {\bm x} &= \nabla_{\bm \lambda} H(\bm x,\bm u,\bm \lambda) = \mathbf A\bm x + \mathbf B\bm u,\\
-\dot{\boldsymbol\lambda} &= -\nabla_{\bm x} H(\bm x,\bm u,\bm \lambda) = \mathbf Q\bm x - \mathbf A^\top\boldsymbol\lambda,\\ 
-\bm 0 &= \nabla_{\bm u} H(\bm x,\bm u,\bm \lambda) = \mathbf R\bm u - \mathbf B^\top\boldsymbol\lambda.
+\dot{\boldsymbol\lambda} &= -\nabla_{\bm x} H(\bm x,\bm u,\bm \lambda) = -\mathbf Q\bm x - \mathbf A^\top\boldsymbol\lambda,\\ 
+\bm 0 &= \nabla_{\bm u} H(\bm x,\bm u,\bm \lambda) = \mathbf R\bm u + \mathbf B^\top\boldsymbol\lambda.
 \end{aligned}}
 $${#eq-necessary-conditions-LQ}
 
-Provided $\mathbf R>0$, we can express $\bm u$ from the third equation (aka the stationarity equation) 
+Provided $\mathbf R\succ 0$, we can express $\bm u$ from the third equation (aka the stationarity equation) 
 $$\boxed{
- \bm u = \mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda.}
+ \bm u = -\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda.}
 $${#eq-u}
 and substitute into the first one. This leaves us with just two differential equations 
 
 $$
 \begin{aligned}
-\dot {\bm x} &= \mathbf A\bm x + \mathbf B\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda,\\
-\dot{\boldsymbol\lambda} &= \mathbf Q\bm x - \mathbf A^\top\boldsymbol\lambda.
+\dot {\bm x} &= \mathbf A\bm x - \mathbf B\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda,\\
+\dot{\boldsymbol\lambda} &= -\mathbf Q\bm x - \mathbf A^\top\boldsymbol\lambda.
 \end{aligned} 
 $$
 
-This is a set of 2$n$ differential equations of the first order (we assume that $\bm x\in \mathbb R^n$). We need $2n$ boundary values to fully specify the solution. Where do we get them? 
+This is a system of 2$n$ differential equations of the first order (we assume that $\bm x\in \mathbb R^n$). We need $2n$ boundary values to fully specify the solution. Where do we get them? 
 
 ## LQR on a finite and fixed time horizon with a fixed final state
 
@@ -64,15 +61,15 @@ $$
 \end{bmatrix}}_{\dot{\bm{w}}}
 = 
 \underbrace{\begin{bmatrix}
- \mathbf A & \mathbf B\mathbf R^{-1}\mathbf B^\top\\
- \mathbf Q & - \mathbf A^\top
+ \mathbf A & -\mathbf B\mathbf R^{-1}\mathbf B^\top\\
+ -\mathbf Q & - \mathbf A^\top
 \end{bmatrix}}_{\mathbf{H}}
 \underbrace{\begin{bmatrix}
  \bm x \\ \boldsymbol\lambda
 \end{bmatrix}}_{\mathbf{w}}
 $${#eq-IVP-LQ}
 
-Similarly as in the discrete-time case, we can find the solution numerically by relating the the state and costate at both ends of the time interval. In the continuous-time setting, it is the exponential of the matrix in the above equation that will be used for that purpose. Let's do it now. By labelling the block matrix in the above as $\mathbf{H}$ and the vector composed of the state and costate vectors  as $\mathbf{w}$, we can write
+Similarly as in the discrete-time case, we can find the solution numerically by relating the state and costate at both ends of the time interval. In the continuous-time setting, it is the exponential of the matrix in the above equation that will be used for that purpose. Let's do it now. By labelling the block matrix in the above as $\mathbf{H}$ and the vector composed of the state and costate vectors  as $\mathbf{w}$, we can write
 $$
  \mathbf{w}(t_\mathrm{f}) = \underbrace{\mathrm{e}^{\mathbf{H}t_\mathrm{f}}}_{\boldsymbol\Phi(t_\mathrm{f})}\mathbf{w}(0),
 $$
@@ -113,7 +110,7 @@ t1 = 10                # final time
 
 # Building Hamiltonian system and solving for the missing boundary conditions using a state-transition matrix
 
-H = [A B/R*B'; Q -A']  # the combined matrix for the Hamiltonian cannonical equations
+H = [A -B/R*B'; -Q -A']  # the combined matrix for the Hamiltonian cannonical equations
 P = exp(H*t1)          # "state"-transition matrix
 
 P11 = P[1:n,1:n]
@@ -135,7 +132,7 @@ v(w,t) = [0]
 y, t, w, uout = lsim(G,v,t,x0=w0)
 x = w[1:n,:]            # state
 λ = w[n+1:end,:]        # costate
-u = (R\B'*λ)'           # optimal control from the stationarity equation
+u = -(R\B'*λ)'           # optimal control from the stationarity equation
 
 # Plotting the responses
 
@@ -159,7 +156,7 @@ While it is quite common to encounter references to integrals of squares of some
 The procedure for solving the problem 
 $$
 \begin{aligned}
-\dot {\bm x} &= \mathbf A\bm x + \mathbf B\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda,\\
+\dot {\bm x} &= \mathbf A\bm x - \mathbf B\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda,\\
 \dot{\boldsymbol\lambda} &= - \mathbf A^\top\boldsymbol\lambda
 \end{aligned}
 $$
@@ -170,27 +167,27 @@ $$
  
 We substitute into the state equation
 $$
- \dot {\bm x}(t) = \mathbf A\bm x(t) + \mathbf B\mathbf R^{-1}\mathbf B^\top\mathrm{e}^{-\mathbf A^\top(t-t_\mathrm{f})}\bm \lambda(t_\mathrm{f})
+ \dot {\bm x}(t) = \mathbf A\bm x(t) - \mathbf B\mathbf R^{-1}\mathbf B^\top\mathrm{e}^{-\mathbf A^\top(t-t_\mathrm{f})}\bm \lambda(t_\mathrm{f})
 $$
 and solve for $\bm x(t)$
 $$
- \bm x(t) = \mathrm{e}^{\mathbf A\mathbf(t-0)} \mathbf x_0 + \int_{0}^{t}\left[\mathrm{e}^{\mathbf A^\top(t-\tau)}\mathbf B\mathbf R^{-1}\mathbf B^\top\mathrm{e}^{-\mathbf A^\top(\tau-t_\mathrm{f})}\bm \lambda(t_\mathrm{f})\right]\text{d}\tau.
+ \bm x(t) = \mathrm{e}^{\mathbf A\mathbf(t-0)} \mathbf x_0 - \int_{0}^{t}\left[\mathrm{e}^{\mathbf A^\top(t-\tau)}\mathbf B\mathbf R^{-1}\mathbf B^\top\mathrm{e}^{-\mathbf A^\top(\tau-t_\mathrm{f})}\bm \lambda(t_\mathrm{f})\right]\text{d}\tau.
 $$
 
 Evaluating this at $t=t_\mathrm{f}$, and moving the costate at the final time outside of the integral, we get
 $$
- \mathbf x_\mathrm{f} = \mathrm{e}^{\mathbf A\mathbf(t_\mathrm{f}-0)} \mathbf x_0 + \underbrace{\int_{0}^{t_\mathrm{f}}\left[\mathrm{e}^{\mathbf A^\top(t_\mathrm{f}-\tau)}\mathbf B\mathbf R^{-1}\mathbf B^\top\mathrm{e}^{\mathbf A^\top(t_\mathrm{f}-\tau)}\right]\text{d}\tau}_{\mathbf G_R(0,t_\mathrm{f})}\bm \lambda(t_\mathrm{f}).
+ \mathbf x_\mathrm{f} = \mathrm{e}^{\mathbf A\mathbf(t_\mathrm{f}-0)} \mathbf x_0 - \underbrace{\int_{0}^{t_\mathrm{f}}\left[\mathrm{e}^{\mathbf A^\top(t_\mathrm{f}-\tau)}\mathbf B\mathbf R^{-1}\mathbf B^\top\mathrm{e}^{\mathbf A^\top(t_\mathrm{f}-\tau)}\right]\text{d}\tau}_{\mathbf G_R(0,t_\mathrm{f})}\bm \lambda(t_\mathrm{f}).
 $$
 
 The as of yet unknown $\bm \lambda(t_\mathrm{f})$ can finally be extracted 
 $$
- \bm \lambda(t_\mathrm{f}) = \mathbf G_R(0,t_1)^{-1}\left(\mathbf x_\mathrm{f} - \mathrm{e}^{\mathbf A t_\mathrm{f}} \mathbf x_0\right),
+ \bm \lambda(t_\mathrm{f}) = -\mathbf G_R(0,t_1)^{-1}\left(\mathbf x_\mathrm{f} - \mathrm{e}^{\mathbf A t_\mathrm{f}} \mathbf x_0\right),
 $$
 where $\mathbf G_R(0,t_1)$ is the *weighted controllability/reachability Gramian*. Remember that its inverse only exists if the system is controllable/reachable. The last step constitutes in bringing this value back into the formula for the optimal control
 $$
 \begin{aligned}
-\bm u(t) &= \mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda(t),\\
-              &= \mathbf R^{-1}\mathbf B^\top\mathrm{e}^{-\mathbf A^\top(t-t_\mathrm{f})}\bm \lambda(t_\mathrm{f})\mathbf G_R(0,t_1)^{-1}\left(\bm x_\mathrm{f} - \mathrm{e}^{\mathbf A\mathbf(t_\mathrm{f}-0)} x_0\right).
+\bm u(t) &= -\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda(t),\\
+        &= \mathbf R^{-1}\mathbf B^\top\mathrm{e}^{-\mathbf A^\top(t-t_\mathrm{f})}\mathbf G_R(0,t_1)^{-1}\left(\bm x_\mathrm{f} - \mathrm{e}^{\mathbf A\mathbf(t_\mathrm{f}-0)} x_0\right).
 \end{aligned} 
 $$
 
@@ -201,9 +198,9 @@ The conclusions are similar if not identical to those in the discrete-time setti
 
 Honestly, from a practical viewpoint, it is hard to view the usefulness of the above procedure (exploiting the structure of the problem when $\mathbf Q=\mathbf 0$) as anything else than just giving us some insight. We have already learnt during our previous treatment of discrete-time systems that much more useful kind of a control – feedback control – can be computed if we relax the final state constraint. We are going to show this for continuous-time systems too. 
 
-Before we do that, we should address sufficiency. #TODO
+<!-- Before we do that, we should address sufficiency. #TODO
 
-<!-- For that we need to find $L^\text{aug}_{\dot x\dot x}$
+For that we need to find $L^\text{aug}_{\dot x\dot x}$
 $$
 L^\text{aug}_{\dot x\dot x} = \mathbf R.
 $$
@@ -235,7 +232,7 @@ $$
 \delta J = \left.\frac{\partial L(x,y,y')}{\partial y'}\delta y(x)\right|_{b} + \int_a^b \left( \frac{\partial L(x,y,y')}{\partial y}-\frac{\text{d}}{\text{d}x}\frac{\partial L(x,y,y')}{\partial y'}\right)\delta y(x)\text{d}x.  
 $$
 
-The sum must be equal to zero. Note that even though we relaxed the condition on one end of the curve, the family of perturbations still contains (also) the functions that vanish at the end point, that is $\delta y(b)=0$. Such extremals must still satisfy the EL equation, hence the second term (the integral) must vanish too. But if the EL equation is satisfied for perturbations vanishing at the end, the the integral must be zero also for the perturbations not vanishing at the end. As a consequence, the first term on the right must be equal to zero as well. To conclude, setting one of the ends free, the necessary conditions of optimality are still given by the EL equation, but the boundary condition $y(b)=\mathrm y_b$ is replaced by
+The sum must be equal to zero. Note that even though we relaxed the condition on one end of the curve, the family of perturbations still contains (also) the functions that vanish at the end point, that is $\delta y(b)=0$. Such extremals must still satisfy the EL equation, hence the second term (the integral) must vanish too. But if the EL equation is satisfied for perturbations vanishing at the end, then the integral must be zero also for the perturbations not vanishing at the end. As a consequence, the first term on the right must be equal to zero as well. To conclude, setting one of the ends free, the necessary conditions of optimality are still given by the EL equation, but the boundary condition $y(b)=\mathrm y_b$ is replaced by
 $$
  \left.\frac{\partial L(x,y,y')}{\partial y'}\right|_{b} = 0.
 $${#eq-boundary-condition-free-end-calculus}
@@ -251,7 +248,7 @@ $$
 
 When deriving this, recall that we need to apply the condition @eq-boundary-condition-free-end-calculus to the augmented Lagrangian in the optimal control problem. 
 
-Now let's include the term penalizing the final state. This is actually quite easy: what we need to do is to bring that term under the integral sign
+Now let's include the term penalizing the final state. This is actually quite easy: all we need to do is to move that term under the integral sign
 $$
 \begin{aligned}
  \phi(\bm x(t_\mathrm{f})) &= \int_{t_\mathrm{i}}^{t_\mathrm{f}}\frac{\text{d}\phi}{\text{d}t}\text{d}t + \phi(\bm x(t_\mathrm{i})),\\
@@ -263,12 +260,12 @@ Note that the last term on the right (the one corresponding to $\bm x(t_\mathrm{
 
 Restricting our attention to time-invariant cases in favor of simplicity (assuming $\frac{\partial \phi}{\partial t} = 0$), the augmented Lagrangian is modified to
 $$
- J^\mathrm{aug}(t,\bm x(\cdot),\dot{\mathbf{x}}(\cdot),\bm u(\cdot),\bm \lambda(\cdot)) = \int_{t_\mathrm{i}}^{t_\mathrm{f}}\left[\underbrace{ L(\bm x,\bm u,t)+(\nabla_\mathbf{x} \phi)^\top\dot{\bm x}+ \bm \lambda^\top\left( \dot {\bm x}(t) - \mathbf f(\bm x,\bm u,\mathbf t)\right)}_{L^\text{aug}}\right ]\text{d}t.
+ J^\mathrm{aug}(t,\bm x(\cdot),\dot{\mathbf{x}}(\cdot),\bm u(\cdot),\bm \lambda(\cdot)) = \int_{t_\mathrm{i}}^{t_\mathrm{f}}\left[\underbrace{ L(\bm x,\bm u,t)+(\nabla_\mathbf{x} \phi)^\top\dot{\bm x}+ \bm \lambda^\top\left(\mathbf f(\bm x,\bm u,\mathbf t) - \dot {\bm x}(t)\right)}_{L^\text{aug}}\right ]\text{d}t.
 $$
 
 Substituting to @eq-boundary-condition-free-end-calculus, the new boundary condition corresponding to the final time is
 $$\boxed{
- (\nabla_\mathbf{x} \phi)(t_\mathrm{f}) + \boldsymbol\lambda(t_\mathrm{f}) = 0. }
+ (\nabla_\mathbf{x} \phi)(t_\mathrm{f}) - \boldsymbol\lambda(t_\mathrm{f}) = 0. }
 $$
 
 ## LQR on a finite and fixed time horizon with a free final state
@@ -280,22 +277,22 @@ $$
 
 we get the new boundary condition
 $$\boxed{
- \mathbf S_\mathrm{f} \bm x(t_\mathrm{f}) + \boldsymbol\lambda(t_\mathrm{f}) = 0.} 
+ \mathbf S_\mathrm{f} \bm x(t_\mathrm{f}) - \boldsymbol\lambda(t_\mathrm{f}) = 0.} 
 $${#eq-boundary-free-final-LQ}
 
-This looks already familiar, doesn't it? We found an identical relationship between the state and the costate at the final time in the discrete-time setting\footnote{Note that there was actually a difference in sign. This is due to our arbitrary choice while defining the augmented Lagrangian. See the discussion of this at the end of this text.}. The difference is in the sign, we will comment on this in a while. Suffice to say for now that this has (surprisingly) no impact on the solution.
+This looks already familiar, doesn't it? We found an identical relationship between the state and the costate at the final time in the discrete-time setting.
 
-Restate here the full necessary conditions for the LQ problem. The state and the costate equations are
+We restate here the full necessary conditions for the LQ problem. The state and the costate equations are
 $$\boxed{
 \begin{aligned}
-\dot {\bm x} &= \mathbf A\bm x + \mathbf B\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda,\\
-\dot{\boldsymbol\lambda} &= \mathbf Q\bm x - \mathbf A^\top\boldsymbol\lambda.
+\dot {\bm x} &= \mathbf A\bm x - \mathbf B\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda,\\
+\dot{\boldsymbol\lambda} &= -\mathbf Q\bm x - \mathbf A^\top\boldsymbol\lambda.
 \end{aligned}} 
 $$
 
 The stationarity equation is
 $$\boxed{
- \bm u = \mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda.}
+ \bm u = -\mathbf R^{-1}\mathbf B^\top\boldsymbol\lambda.}
 $$
 
 The two sets of boundary equations are @eq-boundary-free-final-LQ and $\bm x(0)=\mathbf x_0$.
@@ -348,7 +345,7 @@ t1 = 10                # final time
 
 # Building Hamiltonian system and solving for the missing boundary conditions using a state-transition matrix
 
-H = [A B/R*B'; Q -A'] # the combined matrix for the Hamiltonian cannonical equations
+H = [A -B/R*B'; -Q -A'] # the combined matrix for the Hamiltonian cannonical equations
 P = exp(H*t1)        # "state"-transition matrix
 
 P11 = P[1:n,1:n]
@@ -370,7 +367,7 @@ v(w,t) = [0]
 y, t, w, uout = lsim(G,v,t,x0=w0)
 x = w[1:n,:]           # state
 λ = w[n+1:end,:]  # costate
-u = (R\B'*λ)'  # optimal control from the stationarity equation
+u = -(R\B'*λ)'  # optimal control from the stationarity equation
 
 # Plotting the responses
 
@@ -387,15 +384,15 @@ plot(p1,p2,p3,layout=(3,1))
 
 Nonetheless, computing the solution numerically, some important opportunity is escaping our attention. In order to discover it, we need to dig a bit deeper. First, we recall that the boundary condition at the end of the interval gives us a linear relation between the state and the costate. We now assume that this linear relation also holds throughout the time interval. This is the *sweep method* that we have already encountered in the discrete-time setting:
 $$\boxed{
- \bm S(t) \bm x(t) = - \boldsymbol\lambda(t).} 
+ \bm S(t) \bm x(t) = \boldsymbol\lambda(t).} 
 $${#eq-sweep}
 
 We differentiate both sides to obtain
 $$
- \dot{\bm S} \bm x + \bm S \dot{\bm x}= - \dot{\bm \lambda}.
+ \dot{\bm S} \bm x + \bm S \dot{\bm x}= \dot{\bm \lambda}.
 $$
 
-Substituting the state equation for $\dot{\bm x}$ on the left and for $\dot{\boldsymbol\lambda}$ on the right we get
+Substituting the state equation for $\dot{\bm x}$ on the left and costate equation for $\dot{\boldsymbol\lambda}$ on the right we get
 $$
  \dot{\bm S} \bm x + \bm S (\mathbf A\bm x - \mathbf B\mathbf R^{-1}\mathbf B^\top \bm S\bm x) = -\mathbf Q\bm x - \mathbf A^\top \bm S\bm x,
 $$

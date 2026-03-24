@@ -68,7 +68,7 @@ It may take a few seconds to realize that if $y^\star$ is a strong minimum, it i
 ![Optimal function $y^\star$ and a neighbourhood in the sense of $\|.\|_0$ norm in the left and $\|.\|_1$ norm in the right. The difference is that in the left any smooth function can be considered that fits into the graphical bounds, whereas in the right not only the magnitude (the graphical boundary) matters but the rate of change is bounded as well.](figures/strong_vs_weak.png){#fig-strong-vs-weak width=50%}
 
 ::: {#exm-strong-vs-weak}
-Consider the minimization of the functional $J(y)=\int_\mathrm{i}^1[(y'(x))^2(1-(y'(x))^2)]\text{d}x$ for which it is requested that $y(a)=y(b)=0$. Clearly $y(x)=0$ is a weak minimum but is not a strong minimum. Just observe that even for tiny perturbations in magnitude, if the derivative is high, that is, $(y'(x))^2>1$, the functional $J$ is negative. 
+Consider the minimization of the functional $J(y)=\int_\mathrm{a}^\mathrm{b}[(y'(x))^2(1-(y'(x))^2)]\text{d}x$ for which it is requested that $y(a)=y(b)=0$. Clearly $y(x)=0$ is a weak minimum but is not a strong minimum. Just observe that even for tiny perturbations in magnitude, if the derivative is high, that is, $(y'(x))^2>1$, the functional $J$ is negative. 
 :::
  
 What is the role of these two norms in our course? The former---the $\|.\|_0$ norm---and the related concept of strong minimum are what we would like to test for, while the latter---the $\|.\|_1$ norm---and the related concept of weak minimum are just mathematically more convenient. It is much easier to show that a point is a weak minimum. Nonetheless, the distinction between these two will only be relevant once we want to find sufficient conditions of optimality, and we are not there yet. First we need to find the (first-order) necessary conditions of optimality. 
@@ -165,7 +165,7 @@ $$
 Given a rope of length $c$, what is the maximum area this rope can circumscribe? Obviously, here we have a problem with an equality-type constraint
 $$
 \begin{aligned}
- \operatorname*{minimize}_{y\in\mathcal{C}^1_{[a,b]}} &\quad \int_a^b y(x)\text{d}x,\\
+ \operatorname*{maximize}_{y\in\mathcal{C}^1_{[a,b]}} &\quad \int_a^b y(x)\text{d}x,\\
  \text{subject to} &\quad \int_a^b \sqrt{1+(y'(x))^2}\text{d}x = c.
 \end{aligned}
 $$
@@ -212,7 +212,7 @@ $$
 ## Basic problem of calculus of variations with fixed ends
 The only motivation for including those few simple examples was to justify the following general problem. We will call this \textit{the basic problem of calculus of variations with fixed ends}. We will keep considering $\mathcal{C}^1$ functions of $x$ defined on an interval $[a,b]$ with the values at the beginning and end of the interval fixed
 $$
- y(a) = \mathrm y_a,\qquad y(a) = \mathrm y_b,
+ y(a) = \mathrm y_a,\qquad y(b) = \mathrm y_b,
 $$
 see @fig-fixed-ends and the task is to find $y^\star\in\mathcal{C}^1_{[a,b]}$ minimizing the functional of the following type  
 $$

@@ -34,10 +34,15 @@ There is, of course, no term in the cost function penalizing the state at the fi
 
 ## First-order necessary conditions of optimality
 
-The augmented cost function and the augmented Lagrangian are
+The augmented cost function is
 $$
- J^\mathrm{aug}(t,\bm x(\cdot),\dot{\bm x}(\cdot),\bm u(\cdot),\bm\lambda(\cdot)) = \int_{t_\mathrm{i}}^{t_\mathrm{f}}\left[\underbrace{ L(\bm x,\bm u,t)+\bm\lambda^\top\left( \dot {\bm x}-\mathbf f(\bm x,\bm u,\mathbf t)\right)}_{L^\text{aug}}\right ]\text{d}t.
+ J^\mathrm{aug}(t,\bm x(\cdot),\dot{\bm x}(\cdot),\bm u(\cdot),\bm\lambda(\cdot)) = \int_{t_\mathrm{i}}^{t_\mathrm{f}}\left[\underbrace{ L(\bm x,\bm u,t)+\bm\lambda^\top\left(\mathbf f(\bm x,\bm u,\mathbf t)-\dot {\bm x}\right)}_{L^\text{aug}}\right ]\text{d}t,
 $$ {#eq-augmented-cost-function}
+in which we have also identified the augmented Lagrangian 
+$$
+L^\text{aug}(\bm x,\bm u,\dot{\bm x},\bm\lambda,t) = L(\bm x,\bm u,t)+\bm\lambda^\top\left(\mathbf f(\bm x,\bm u,\mathbf t)-\dot {\bm x}\right).
+$${#eq-augmented-lagrangian}
+
 
 Note also that compared to the original unconstrained calculus of variations setting, here we made a notational shift from $x$ to $t$ as the independent variable, and from $y$ to the triplet $(\bm x,\bm u,\bm \lambda)$ as the triplet of dependent variables (possibly vector ones). Finally, note that the only derivative appearing in the augmented Lagrangian is $\dot{\bm x}$.
 
@@ -56,27 +61,27 @@ $$ {#eq-euler-lagrange-augmented}
 These can be expanded in terms of the unconstrained Lagrangian. First, we assume scalar functions for notational simplicity: 
 $$
 \begin{aligned}
-\frac{\partial L}{\partial x} - \lambda \frac{\partial f}{\partial x}&= \dot{\lambda},\\ 
-\frac{\partial L}{\partial u} - \lambda \frac{\partial f}{\partial u} &= 0,\\
-\dot {x} - f(x,u,t) &= 0.
+\frac{\partial L}{\partial x} + \lambda \frac{\partial f}{\partial x}&= -\dot{\lambda},\\ 
+\frac{\partial L}{\partial u} + \lambda \frac{\partial f}{\partial u} &= 0,\\
+f(x,u,t) - \dot {x} &= 0.
 \end{aligned}
 $$
 
 In the vector case (wherein $\bm x$, hence $\mathbf f()$, and/or $\bm u$ are vectors): 
 $$
 \begin{aligned}
-\nabla_{\bm{x}} L - \sum_{i=1}^n \lambda_i \nabla_{\bm{x}} f_i(\bm x, \bm u) &= \dot{\bm{\lambda}},\\ 
-\nabla_{\bm{u}} L - \sum_{i=1}^n \lambda_i \nabla_{\bm{u}} f_i(\bm x, \bm u) &= \mathbf 0,\\
-\dot{\bm{x}} - \mathbf{f}(\bm x,\bm u,t) &= \mathbf 0.
+\nabla_{\bm{x}} L + \sum_{i=1}^n \lambda_i \nabla_{\bm{x}} f_i(\bm x, \bm u) &= -\dot{\bm{\lambda}},\\ 
+\nabla_{\bm{u}} L + \sum_{i=1}^n \lambda_i \nabla_{\bm{u}} f_i(\bm x, \bm u) &= \mathbf 0,\\
+\mathbf{f}(\bm x,\bm u,t) - \dot{\bm{x}} &= \mathbf 0.
 \end{aligned}
 $$
 
 We can also write the same result in the compact vector form. Recall that we agreed in this course to regard gradients as column vectors and that $\nabla \mathbf f$ for a vector function $\mathbf{f}$ is a matrix whose columns are gradients $\nabla_\mathbf{x} f_i$ of the individual elements of the vector function. We can then write the first order conditions compactly as 
 $$
 \begin{aligned}
-\nabla_\mathbf{x}L - \nabla_\mathbf{x} \mathbf{f} \; \bm\lambda &= \dot{\bm\lambda},\\ 
-\nabla_\mathbf{u}L - \nabla_\mathbf{u} \mathbf{f} \; \bm\lambda &= \mathbf 0,\\
-\dot {\mathbf{x}} - \mathbf{f}(\bm x,\bm u,t) &= \mathbf 0.
+\nabla_\mathbf{x}L + \nabla_\mathbf{x} \mathbf{f} \; \bm\lambda &= -\dot{\bm\lambda},\\ 
+\nabla_\mathbf{u}L + \nabla_\mathbf{u} \mathbf{f} \; \bm\lambda &= \mathbf 0,\\
+\mathbf{f}(\bm x,\bm u,t) - \dot {\mathbf{x}} &= \mathbf 0.
 \end{aligned}
 $$
 
@@ -84,8 +89,8 @@ After reordering the equations and shuffling the terms within the equations, we 
 $$\boxed{
 \begin{aligned}
 \dot {\mathbf{x}}(t) &= \mathbf{f}(\bm x(t),\bm u(t),t),\\
-\dot{\bm\lambda}(t) &= \nabla_\mathbf{x}L(\bm x(t),\bm u(t),t) - \nabla_\mathbf{x} \mathbf{f}(\bm x(t),\bm u(t),t) \, \bm\lambda(t),\\ 
-\mathbf 0 &= \nabla_\mathbf{u}L(\bm x(t),\bm u(t),t) - \nabla_\mathbf{u} \mathbf{f}(\bm x(t),\bm u(t),t) \, \bm\lambda(t).
+-\dot{\bm\lambda}(t) &= \nabla_\mathbf{x}L(\bm x(t),\bm u(t),t) + \nabla_\mathbf{x} \mathbf{f}(\bm x(t),\bm u(t),t) \, \bm\lambda(t),\\ 
+\mathbf 0 &= \nabla_\mathbf{u}L(\bm x(t),\bm u(t),t) + \nabla_\mathbf{u} \mathbf{f}(\bm x(t),\bm u(t),t) \, \bm\lambda(t).
 \end{aligned}}
 $${#eq-first-order-conditions-optimal-control-nonlinear-vector}
 
@@ -111,27 +116,19 @@ This class of problems is called *two-point boundary value problem* (BVP) and ge
 
 ### First-order necessary conditions of optimality using the Hamiltonian function
 
-We now introduce an auxilliary function called *Hamiltonian*, which not only makes the conditions of optimality even more compact, but also – and even more importantly – it strengthens the link with the physics-motivated calculus of variations. Recall that the Hamiltonian function in the calculus of variations is defined as $H(x,y,y') = py'-L$. In the optimal control setting, since we consider constraints in the form of the state equation, we need to use the augmented Lagrangian, which we defined as
-
-$$
-L^\mathrm{aug}(\bm x,\bm u,\bm \lambda,t) = L(\bm x,\bm u,t)+\bm \lambda^\top\left( \dot {\bm x}-\mathbf f(\bm x,\bm u,\mathbf t)\right).
-$$ 
-
-We now define the optimal control related Hamiltonian in the same way – product of the auxillary variable and the state variable minus the (augmented) Lagrangian:
+We now introduce an auxilliary function called *Hamiltonian*, which not only makes the conditions of optimality even more compact, but also – and even more importantly – it strengthens the link with the physics-motivated calculus of variations. We expand the definition of the augmented Lagrangian 
 $$
 \begin{aligned}
- H(\bm x,\bm u,\dot{\bm{x}},\bm\lambda,t) &= \bm\lambda^\top \, \dot{\bm x} - L^\text{aug},\nonumber\\
- &= \bm\lambda^\top \,\dot{\mathbf{x}}-L(\bm x,\bm u,t) - \bm\lambda^\top \, \dot{\bm x}+\bm\lambda^\top \, \mathbf f(\bm x,\bm u, t),\nonumber\\
- &=\bm\lambda^\top \, \mathbf f(\bm x,\bm u, t)-L(\bm x,\bm u,t).
+L^\mathrm{aug}(\bm x,\bm u,\bm \lambda,t) &= L(\bm x,\bm u,t)+\bm \lambda^\top\left(\mathbf f(\bm x,\bm u,\mathbf t)-\dot {\bm x}\right)\\
+&= L(\bm x,\bm u,t)+\bm \lambda^\top \mathbf f(\bm x,\bm u,\mathbf t) - \bm \lambda^\top \dot {\bm x}. 
 \end{aligned}
-$$
-
-Realizing that through the state equation $\dot{\bm x}=\mathbf f(\bm x,\bm u, t)$ the derivative $\dot{\bm x}$ at a given state $x$ (and time $t$) is uniquelly determined by $u$, we can consider the control-related Hamiltonian as a function of $t, \mathbf x, \mathbf u$ and $\bm\lambda$ (and discard the $\dot{\bm x}$ argument):
+$${#eq-augmented-lagrangian-expanded} 
+and label the first two terms as $H(\bm x,\bm u,\bm\lambda,t)$, that is, we define
 $$\boxed{
-H(\bm x,\bm u,\bm\lambda,t) = \bm\lambda^\top \mathbf f(\bm x,\bm u,t) - L(\bm x,\bm u,t).}
-$${#eq-control-hamiltonian}
+H(\bm x,\bm u,\bm\lambda,t) \coloneqq L(\bm x,\bm u,t)+\bm \lambda^\top \mathbf f(\bm x,\bm u,\mathbf t).}
+$${#eq-hamiltonian}
 
-The necessary conditions of optimality in @eq-first-order-conditions-optimal-control-nonlinear-vector can be rewritten in a more compact form:
+Using this new function, the necessary conditions of optimality in @eq-first-order-conditions-optimal-control-nonlinear-vector can be rewritten in a more compact form:
 $$\boxed{
 \begin{aligned}
 \dot {\mathbf{x}} &= \nabla_{\bm \lambda} H(\bm x,\bm u,\bm \lambda, t),\\
@@ -142,10 +139,26 @@ $${#eq-first-order-conditions-optimal-control-nonlinear-vector-Hamiltonian}
 
 Of course, we must not forget to add the boundary conditions @eq-boundary-conditions to have a full set of necessary conditions of optimality.
 
-::: {.callout-warning}
-## Two different conventions for defining the Hamiltonian in optimal control
-Our choice of the Hamiltonian function was determined by our somewhat arbitrary choice of formulating the constraint function (that is, the function that should be equal to zero) as $\dot {\bm x}-\mathbf f(\bm x,\bm u,\mathbf t)$ when defining the augmented Lagrangian $L^\mathrm{aug}(\bm x,\bm u,\bm\lambda,t) = L(\bm x,\bm u,t)+\bm\lambda^\top\left( \dot {\bm x}-\mathbf f(\bm x,\bm u,\mathbf t)\right)$. If only we (equally arbitrarily) had chosen to define the constraint function as $\mathbf f(\bm x,\bm u,\mathbf t)-\dot {\bm x}$, we would have ended up with a different augmented Lagrangian, for which the more appropriate definition of the Hamiltonian function would be $H(\bm x,\bm u,\bm\lambda,t) = L(\bm x,\bm u,t)+ \bm\lambda^\top \mathbf f(\bm x,\bm u,t)$. More on the implications of this in the [dedicated section](cont_indir_notation.qmd). 
-:::
+Now, I promised some connection with the (physics-motivated) calculus of variations. Recall that the Hamiltonian function in the calculus of variations is defined as $H(x,y,y') = py'-L$. At first sight, this does not seem to resemble the function we have just defined in @eq-hamiltonian for optimal control. First, the control Hamiltonian does not explicitly depend on the derivative of any function. But realizing that through the state equation $\dot{\bm x}=\mathbf f(\bm x,\bm u, t)$, the derivative $\dot{\bm x}$ at a given state $x$ (and time $t$) is uniquelly determined by $u$, we can consider the control-related Hamiltonian as a function of just $t, \mathbf x, \mathbf u$ and $\bm\lambda$ (and discard the $\dot{\bm x}$ argument). Second, in the optimal control setting we consider constraints in the form of the state equation, hence we need to use the augmented Lagrangian, which is related to the Hamiltonian function as
+$$
+H(\bm x,\bm u,\bm \lambda, t) = \bm \lambda^\top\dot {\bm x} + L^\mathrm{aug}(\bm x,\bm u,\bm \lambda,t).
+$$
+
+This is nearly it, barring the sign in front of the Lagrangian (that the new independent variable is $t$ while it was $x$ in the calculus of variations, and that the new dependent variables are $\bm x$ and $\bm u$ and $\bm \lambda$, the latter playing the the role of $p$, is perhaps obvious). We could leave it at it, with the comment that the optimal control has just a different sign convention. But if you want to dig deeper, note that our choice of the constraint function in the augmented Lagrangian @eq-augmented-lagrangian was somewhat arbitrary – we could have defined it as $\dot {\bm x}-\mathbf f(\bm x,\bm u,\mathbf t)$ instead of $\mathbf f(\bm x,\bm u,\mathbf t)-\dot {\bm x}$, which would have resulted in a different augmented Lagrangian, namely 
+$$
+\tilde L^\mathrm{aug}(\bm x,\bm u,\bm \lambda,t) = L(\bm x,\bm u,t)+\bm \lambda^\top\left( \dot {\bm x}-\mathbf f(\bm x,\bm u,\mathbf t)\right).
+$$ 
+
+If we now defined the Hamiltonian function as 
+$$
+\tilde H(\bm x,\bm u,\bm\lambda,t) \coloneqq \bm\lambda^\top \mathbf f(\bm x,\bm u,t) - L(\bm x,\bm u,t),
+$${#eq-hamiltonian-alternative}
+we could relate it to the augmented Lagrangian as
+$$
+\tilde H(\bm x,\bm u,\dot{\bm{x}},\bm\lambda,t) = \bm\lambda^\top \, \dot{\bm x} - \tilde L^\text{aug},
+$$
+whis now matches the structure of the Hamiltonian even more closely. But this is all just a matter of a sign convention, and the fact is that the former definition of the control Hamiltonian in @eq-hamiltonian is more common in the optimal control literature, so we stick to it. 
+
 
 ::: {#exm-two-point-boundary-value-problem-for-pendulum-swingup}
 ## Pendulum swingup problem approached as an optimal control problem and solved as a two-point boundary value problem
