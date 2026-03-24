@@ -549,12 +549,6 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_trajectory_stabilization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Trajectory stabilization and neigboring extremals</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./cont_indir_software.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Software for continuous-time LQR and CARE</span></a>
   </div>
@@ -1121,7 +1115,7 @@ Figure&nbsp;2: Optimal function <span class="math inline">y^\star</span> and a n
 </figure>
 </div>
 <div id="exm-strong-vs-weak" class="theorem example">
-<p><span class="theorem-title"><strong>Example 1</strong></span> Consider the minimization of the functional <span class="math inline">J(y)=\int_\mathrm{i}^1[(y'(x))^2(1-(y'(x))^2)]\text{d}x</span> for which it is requested that <span class="math inline">y(a)=y(b)=0</span>. Clearly <span class="math inline">y(x)=0</span> is a weak minimum but is not a strong minimum. Just observe that even for tiny perturbations in magnitude, if the derivative is high, that is, <span class="math inline">(y'(x))^2&gt;1</span>, the functional <span class="math inline">J</span> is negative.</p>
+<p><span class="theorem-title"><strong>Example 1</strong></span> Consider the minimization of the functional <span class="math inline">J(y)=\int_\mathrm{a}^\mathrm{b}[(y'(x))^2(1-(y'(x))^2)]\text{d}x</span> for which it is requested that <span class="math inline">y(a)=y(b)=0</span>. Clearly <span class="math inline">y(x)=0</span> is a weak minimum but is not a strong minimum. Just observe that even for tiny perturbations in magnitude, if the derivative is high, that is, <span class="math inline">(y'(x))^2&gt;1</span>, the functional <span class="math inline">J</span> is negative.</p>
 </div>
 <p>What is the role of these two norms in our course? The former—the <span class="math inline">\|.\|_0</span> norm—and the related concept of strong minimum are what we would like to test for, while the latter—the <span class="math inline">\|.\|_1</span> norm—and the related concept of weak minimum are just mathematically more convenient. It is much easier to show that a point is a weak minimum. Nonetheless, the distinction between these two will only be relevant once we want to find sufficient conditions of optimality, and we are not there yet. First we need to find the (first-order) necessary conditions of optimality.</p>
 </section>
@@ -1202,7 +1196,7 @@ Figure&nbsp;3: Minimum distance between two points
 <h3 class="anchored" data-anchor-id="didos-problem">Dido’s problem</h3>
 <p>Given a rope of length <span class="math inline">c</span>, what is the maximum area this rope can circumscribe? Obviously, here we have a problem with an equality-type constraint <span class="math display">
 \begin{aligned}
-\operatorname*{minimize}_{y\in\mathcal{C}^1_{[a,b]}} &amp;\quad \int_a^b y(x)\text{d}x,\\
+\operatorname*{maximize}_{y\in\mathcal{C}^1_{[a,b]}} &amp;\quad \int_a^b y(x)\text{d}x,\\
 \text{subject to} &amp;\quad \int_a^b \sqrt{1+(y'(x))^2}\text{d}x = c.
 \end{aligned}
 </span></p>
@@ -1244,7 +1238,7 @@ J = \int_a^b \frac{\text{d}s}{v}= \int_a^b \frac{\sqrt{1+(y'(x))^2}}{\sqrt{2gy(x
 <section id="basic-problem-of-calculus-of-variations-with-fixed-ends" class="level2">
 <h2 class="anchored" data-anchor-id="basic-problem-of-calculus-of-variations-with-fixed-ends">Basic problem of calculus of variations with fixed ends</h2>
 <p>The only motivation for including those few simple examples was to justify the following general problem. We will call this . We will keep considering <span class="math inline">\mathcal{C}^1</span> functions of <span class="math inline">x</span> defined on an interval <span class="math inline">[a,b]</span> with the values at the beginning and end of the interval fixed <span class="math display">
-y(a) = \mathrm y_a,\qquad y(a) = \mathrm y_b,
+y(a) = \mathrm y_a,\qquad y(b) = \mathrm y_b,
 </span> see <a href="#fig-fixed-ends" class="quarto-xref">Fig.&nbsp;5</a> and the task is to find <span class="math inline">y^\star\in\mathcal{C}^1_{[a,b]}</span> minimizing the functional of the following type<br>
 <span class="math display">
 J(y(\cdot)) = \int_a^b L(x,y(x),y'(x))\text{d}x.

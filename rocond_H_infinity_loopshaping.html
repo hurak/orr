@@ -607,12 +607,6 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_trajectory_stabilization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Trajectory stabilization and neigboring extremals</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./cont_indir_software.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Software for continuous-time LQR and CARE</span></a>
   </div>
@@ -1370,6 +1364,14 @@ G_\mathrm{d}(s) = \frac{100}{10s+1}.
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>Gd <span class="op">=</span> <span class="fu">tf</span>(<span class="fl">100</span>, [<span class="fl">10</span>, <span class="fl">1</span>]); Gd <span class="op">=</span> <span class="fu">ss</span>(Gd);</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>W1 <span class="op">=</span> <span class="fu">tf</span>([<span class="fl">1</span>, <span class="fl">2</span>], [<span class="fl">1</span>, <span class="fl">1e-6</span>]); W1 <span class="op">=</span> <span class="fu">ss</span>(W1);</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>K, γ, info <span class="op">=</span> <span class="fu">glover_mcfarlane</span>(G, <span class="fl">1.1</span>; W1);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-yellow-fg ansi-bold">┌ </span><span class="ansi-yellow-fg ansi-bold">Warning: </span>Runtime invalidation was disabled, but the CPU info is out-of-date.
+<span class="ansi-yellow-fg ansi-bold">│ </span>Will continue with incorrect CPU name (from build time).
+<span class="ansi-yellow-fg ansi-bold">└ </span><span class="ansi-bright-black-fg">@ HostCPUFeatures ~/.julia/packages/HostCPUFeatures/ZTXz4/src/cpu_info.jl:71</span>
+</pre>
+</div>
+</div>
 </div>
 <p>The Bode plots of the plant and then both the nonrobust and the robustified open-loop transfer functions are at <a href="#fig-bode-open-loop" class="quarto-xref">Fig.&nbsp;8</a>.</p>
 <div id="cell-fig-bode-open-loop" class="cell" data-execution_count="1">

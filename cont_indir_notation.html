@@ -53,7 +53,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./cont_indir_trajectory_stabilization.html" rel="next">
+<link href="./cont_indir_software.html" rel="next">
 <link href="./cont_indir_LQR_inf_horizon.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -569,12 +569,6 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cont_indir_trajectory_stabilization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Trajectory stabilization and neigboring extremals</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./cont_indir_software.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Software for continuous-time LQR and CARE</span></a>
   </div>
@@ -1065,45 +1059,41 @@ window.Quarto = {
 </header>
 
 
+<p>Here we summarize the notational clashes that we encountered in our derivation. There is no need to read this section since we discussed these during the derivation. Here we only state it for convenient reference.</p>
 <section id="hamiltonian" class="level2">
 <h2 class="anchored" data-anchor-id="hamiltonian">Hamiltonian</h2>
-<p>Note that there was some ambiguity in our derivation when we were forming the augmented Lagrangian. Somehow arbitrarily we decided to define the augmented Lagrangian as <span class="math display">
-L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  L(\bm x,\bm u,t)+\boldsymbol \lambda^\top (t)\left[ \dot {\bm x}(t) - \mathbf f(\bm x,\bm u,\mathbf t)\right]
-</span> but we could easily formulate it also as <span class="math display">
-\hat L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  L(\bm x,\bm u,t)+\hat{\boldsymbol \lambda}^\top (t)\left[\mathbf f(\bm x,\bm u,\mathbf t)-\dot {\bm x}(t)\right].
+<p>In our derivation we had to form the augmented Lagrangian. There were two ways to do it. We could write it as <span class="math display">
+L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  L(\bm x,\bm u,t)+ \boldsymbol \lambda^\top (t)\left[\mathbf f(\bm x,\bm u,\mathbf t)-\dot {\bm x}(t)\right],
+</span> but we could also easily formulate it as <span class="math display">
+\tilde L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  L(\bm x,\bm u,t)+ \tilde{\boldsymbol \lambda}^\top (t)\left[ \dot {\bm x}(t) - \mathbf f(\bm x,\bm u,\mathbf t)\right].
 </span></p>
-<p>Both are clearly correct. Indeed, although the intermediate steps differ, the final results (Riccati equation, state feedback gain) are identical.</p>
-<p>But was our choice really completely arbitrary? Well, not really. The former (the one used in this lecture) enables us to write the augmented Lagrangian using a Hamiltonian as <span class="math display">
-L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  \boldsymbol \lambda^\top (t) \dot {\bm x}(t) - H(t,\bm x,\bm u,\boldsymbol\lambda)
-</span> where the Hamiltonian is defined as <span class="math display">\boxed{
-H(\bm x,\bm u,\boldsymbol \lambda, t) = \boldsymbol \lambda^\top (t) \mathbf f(\bm x,\bm u,t) - L(\bm x,\bm u, t).}
-</span></p>
-<p>Recall that the concept of Hamiltonian was introduced in the context of the (physics-motivated) <a href="./cont_indir_calculus_of_variations.html">calculus of variations</a>: <span class="math display">
-H(x,y,y',p) = py'-L.
-</span></p>
-<p>Replacing the momentum <span class="math inline">p</span> with the costate <span class="math inline">\boldsymbol \lambda</span>, and replacing <span class="math inline">y'</span> with the function <span class="math inline">\mathbf f</span> definining the state equation, we obtain the Hamiltonian in the context of optimal control. Indeed, this was admittedly our motivation: we wanted to adhere as much as possible to what had already been done well before the advent of optimal control theory.</p>
-<p>For completeness we also show that the latter choice of the constraint function leads to expressing the augmented Lagrangian as <span class="math display">
-\hat L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  \hat H(\bm x,\bm u,\hat{\boldsymbol \lambda}, t) - \hat{\boldsymbol \lambda}^\top (t) \dot {\bm x}(t),
+<p>Both are clearly correct. Indeed, although the intermediate steps differ, the final results (Riccati equation, optimal state feedback gains) are identical.</p>
+<p>The former choice, the one that we used in our derivation, <span class="math display">
+L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  H(\bm x,\bm u,\hat{\boldsymbol \lambda}, t) - \boldsymbol \lambda^\top (t) \dot {\bm x}(t),
 </span> where <span class="math display">\boxed{
-\hat H(\bm x,\bm u,\hat{\boldsymbol \lambda},t) = L(\bm x,\bm u, t)+\hat{\boldsymbol \lambda}^\top (t) \mathbf f(\bm x,\bm u,t).}
+H(\bm x,\bm u,\boldsymbol \lambda,t) = L(\bm x,\bm u, t)+\boldsymbol \lambda^\top (t) \mathbf f(\bm x,\bm u,t).}
 </span></p>
-<p>Does this definition of the Hamiltonian look familiar? Yep, this is the definition that we usee (again, somewhat arbitrarily) in our lecture on discrete-time systems.</p>
+<p>The latter choice, which can also be encountered in the literature, enables us to write the augmented Lagrangian using a Hamiltonian as <span class="math display">
+\tilde L^\text{aug}(\bm x,\bm u,\boldsymbol \lambda, t) =  \tilde {\boldsymbol \lambda}^\top (t) \dot {\bm x}(t) - \tilde H(t,\bm x,\bm u,\tilde {\boldsymbol\lambda})
+</span> where the Hamiltonian is defined as <span class="math display">\boxed{
+\tilde H(\bm x,\bm u,\tilde {\boldsymbol \lambda}, t) = \tilde{\boldsymbol \lambda}^\top (t) \mathbf f(\bm x,\bm u,t) - L(\bm x,\bm u, t).}
+</span></p>
 <p>Whether one or the other, the canonical equations are identical. It is only that the second-order sufficiency conditions show maximization of the Hamiltonian in one case and minimization in the other. This can be concluded by observing that <span class="math display">
-H(\bm x,\bm u,\boldsymbol \lambda, t) = -\hat H(\bm x,\bm u,\hat{\boldsymbol \lambda}, t).
+H(\bm x,\bm u,\boldsymbol \lambda, t) = -\tilde H(\bm x,\bm u,\tilde{\boldsymbol \lambda}, t).
 </span></p>
 <p>Also <span class="math display">
-\hat{\boldsymbol \lambda} = -\boldsymbol \lambda.
+\tilde{\boldsymbol \lambda} = -\boldsymbol \lambda.
 </span></p>
-<p>While I confess I am hesitating whether or not this complication due to two different definitions of the Hamiltonian is worth mentioning in an introductory text, the reality is that both conventions can be encountered in the literature and one should be aware of it. Most standard books rarely warn the reader about it. One of a few discussions of this frequent source of notational confusion is in <span class="citation" data-cites="liberzonCalculusVariationsOptimal2011"><a href="#ref-liberzonCalculusVariationsOptimal2011" role="doc-biblioref">[1, Sec. 3.4.4]</a></span>.</p>
+<p>While I confess I hesitated whether or not this complication due to two different definitions of the Hamiltonian is worth mentioning in our introductory text, the reality is that both conventions can be encountered in the literature and one should be aware of it. Most standard books rarely warn the reader about it. One of a few discussions of this frequent source of notational confusion is in <span class="citation" data-cites="liberzonCalculusVariationsOptimal2011"><a href="#ref-liberzonCalculusVariationsOptimal2011" role="doc-biblioref">[1, Sec. 3.4.4]</a></span>.</p>
 </section>
 <section id="variation" class="level2">
 <h2 class="anchored" data-anchor-id="variation">Variation</h2>
-<p>Upon consulting numerous textbooks and monographs, it appears that the authors are far from the accord regarding the definition of <em>variation</em> (within the context of calculus of variations). Two main definitions appear</p>
+<p>Upon consulting numerous textbooks and monographs, it appears that the authors are far from the accord regarding the definition of <em>variation</em> (within the context of calculus of variations). Two main definitions appear:</p>
 <ul>
 <li><p>The one that we followed in this lecture defines the variation as an extension of the concept of a differential. That is, a variation <span class="math inline">\delta J</span> of a (cost) functional is the first-order approximation to the increment <span class="math inline">\Delta J</span> in the (cost) functional <span class="math inline">J</span>. This we discussed in quite some detail in the text.</p></li>
 <li><p>The other one defines variation as the derivative of the (cost) functional with respect to the real (perturbation) parameter. In our text, it is the <span class="math inline">\frac{\mathrm{d}J}{\mathrm{d}\alpha}</span> (for fixed <span class="math inline">y(x)</span> and <span class="math inline">\eta(x)</span>) that would be called a variation and labelled <span class="math inline">\delta J</span>. The increment in the (cost) functional would be then be approximated by <span class="math inline">\delta J\;\alpha</span>.</p></li>
 </ul>
-<p>Both definitions are often encountered in the literature, but we prefer the former because the definitions of variation of a functional <span class="math inline">\delta J</span> and variation of a function <span class="math inline">\delta y(x)</span> are consistent. Both serve as first-order approximations to increments.</p>
+<p>Both definitions are often encountered in the literature, but we prefer the former because the definitions of variation of a functional <span class="math inline">\delta J</span> and variation of a function <span class="math inline">\delta y(x)</span> are consistent. It is also the convention followed by the popular reference <span class="citation" data-cites="kirkOptimalControlTheory2004"><a href="#ref-kirkOptimalControlTheory2004" role="doc-biblioref">[2]</a></span>, while the latter definition is followed by <span class="citation" data-cites="liberzonCalculusVariationsOptimal2011"><a href="#ref-liberzonCalculusVariationsOptimal2011" role="doc-biblioref">[1]</a></span>.</p>
 
 
 
@@ -1112,6 +1102,9 @@ H(\bm x,\bm u,\boldsymbol \lambda, t) = -\hat H(\bm x,\bm u,\hat{\boldsymbol \la
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list">
 <div id="ref-liberzonCalculusVariationsOptimal2011" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[1] </div><div class="csl-right-inline">D. Liberzon, <em>Calculus of <span>Variations</span> and <span>Optimal Control Theory</span>: <span>A Concise Introduction</span></em>. Princeton University Press, 2011. Available: <a href="http://liberzon.csl.illinois.edu/teaching/cvoc/cvoc.html">http://liberzon.csl.illinois.edu/teaching/cvoc/cvoc.html</a></div>
+</div>
+<div id="ref-kirkOptimalControlTheory2004" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">D. E. Kirk, <em>Optimal <span>Control Theory</span>: <span>An Introduction</span></em>, Reprint of the 1970 edition. Dover Publications, 2004.</div>
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1521,8 +1514,8 @@ H(\bm x,\bm u,\boldsymbol \lambda, t) = -\hat H(\bm x,\bm u,\hat{\boldsymbol \la
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cont_indir_trajectory_stabilization.html" class="pagination-link" aria-label="Trajectory stabilization and neigboring extremals">
-        <span class="nav-page-text">Trajectory stabilization and neigboring extremals</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cont_indir_software.html" class="pagination-link" aria-label="Software for continuous-time LQR and CARE">
+        <span class="nav-page-text">Software for continuous-time LQR and CARE</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
