@@ -66,12 +66,12 @@ $$
 \end{bmatrix}}_{\mathbf{H}}
 \underbrace{\begin{bmatrix}
  \bm x \\ \boldsymbol\lambda
-\end{bmatrix}}_{\mathbf{w}}
+\end{bmatrix}}_{\bm{w}}
 $${#eq-IVP-LQ}
 
 Similarly as in the discrete-time case, we can find the solution numerically by relating the state and costate at both ends of the time interval. In the continuous-time setting, it is the exponential of the matrix in the above equation that will be used for that purpose. Let's do it now. By labelling the block matrix in the above as $\mathbf{H}$ and the vector composed of the state and costate vectors  as $\mathbf{w}$, we can write
 $$
- \mathbf{w}(t_\mathrm{f}) = \underbrace{\mathrm{e}^{\mathbf{H}t_\mathrm{f}}}_{\boldsymbol\Phi(t_\mathrm{f})}\mathbf{w}(0),
+ \bm{w}(t_\mathrm{f}) = \underbrace{\mathrm{e}^{\mathbf{H}t_\mathrm{f}}}_{\boldsymbol\Phi(t_\mathrm{f})}\bm{w}(0),
 $$
 where $\boldsymbol\Phi(t)$ is a *state-costate transition matrix*. Labelling the blocks as in
 $$
