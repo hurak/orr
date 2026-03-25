@@ -1120,10 +1120,10 @@ H(\bm x, \bm u, \bm \lambda) = \frac{1}{2}\left(\bm x^\top\mathbf Q \bm x + \bm 
 \end{bmatrix}}_{\mathbf{H}}
 \underbrace{\begin{bmatrix}
 \bm x \\ \boldsymbol\lambda
-\end{bmatrix}}_{\mathbf{w}}
+\end{bmatrix}}_{\bm{w}}
 \tag{5}</span></span></p>
 <p>Similarly as in the discrete-time case, we can find the solution numerically by relating the state and costate at both ends of the time interval. In the continuous-time setting, it is the exponential of the matrix in the above equation that will be used for that purpose. Let’s do it now. By labelling the block matrix in the above as <span class="math inline">\mathbf{H}</span> and the vector composed of the state and costate vectors as <span class="math inline">\mathbf{w}</span>, we can write <span class="math display">
-\mathbf{w}(t_\mathrm{f}) = \underbrace{\mathrm{e}^{\mathbf{H}t_\mathrm{f}}}_{\boldsymbol\Phi(t_\mathrm{f})}\mathbf{w}(0),
+\bm{w}(t_\mathrm{f}) = \underbrace{\mathrm{e}^{\mathbf{H}t_\mathrm{f}}}_{\boldsymbol\Phi(t_\mathrm{f})}\bm{w}(0),
 </span> where <span class="math inline">\boldsymbol\Phi(t)</span> is a <em>state-costate transition matrix</em>. Labelling the blocks as in <span class="math display">
 \boldsymbol \Phi(t) = \begin{bmatrix}
                         \boldsymbol\Phi_{11}(t) &amp; \boldsymbol\Phi_{12}(t)\\
@@ -1190,14 +1190,6 @@ H(\bm x, \bm u, \bm \lambda) = \frac{1}{2}\left(\bm x^\top\mathbf Q \bm x + \bm 
 <span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(p1,p2,p3,layout<span class="op">=</span>(<span class="fl">3</span>,<span class="fl">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-green-fg ansi-bold">Precompiling</span> packages...
-   2532.4 ms<span class="ansi-green-fg">  ✓ </span>QuartoNotebookWorkerPlotsExt<span class="ansi-bright-black-fg"> (serial)</span>
-  1 dependency successfully precompiled in 3 seconds
-</pre>
-</div>
-</div>
 <div id="fig-lqr-bvp-fixed-final-state" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="1">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-lqr-bvp-fixed-final-state-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
