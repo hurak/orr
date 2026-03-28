@@ -58,7 +58,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -79,7 +99,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-3af3864096cac646a9a6049d66e54d16.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-2a8600961620fb22bbdc41287d7e474a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -1079,7 +1099,6 @@ window.Quarto = {
 </header>
 
 
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/YiIksQcg8EU?si=s-mTICVGUH27_OkN" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <p>The task of bringing the system from a given state to some given final state (either a single state or a set of states) can be formulated by setting <span class="math display">
 L = 1,
 </span> which turns the cost functional to <span class="math display">
@@ -1096,23 +1115,23 @@ J = \int_{t_\mathrm{i}}^{t_\mathrm{f}}1\text{d}t = t_\mathrm{f}-t_\mathrm{i}.
 |u_i(t)| \leq 1\quad \forall i, \; \forall t.
 </span></p>
 <p>The necessary conditions can be assembled immediately by forming the Hamiltonian <span class="math display">
-H = \boldsymbol\lambda^\top \,(\mathbf A\bm x+\mathbf B\bm u) - 1,
+H = 1 + \boldsymbol\lambda^\top \,(\mathbf A\bm x+\mathbf B\bm u),
 </span> and substituting into the (control) Hamilton canonical equations <span class="math display">
 \begin{aligned}
 \dot{\bm x} &amp;= \nabla_{\boldsymbol\lambda}H = \mathbf A\bm x + \mathbf B\bm u,\\
 \dot{\boldsymbol \lambda} &amp;= -\nabla_{\bm x}H = -\mathbf A^\top \boldsymbol \lambda.
 \end{aligned}
-</span> plus the Pontryagin’s statement about maximization of <span class="math inline">H</span> with respect to <span class="math inline">\bm u</span> <span class="math display">
-H(t, \bm x^\star ,\bm u^\star ,\boldsymbol\lambda^\star ) \geq  H(t, \bm x^\star ,\bm u, \boldsymbol\lambda^\star ), \; u_i(t)\in [-1,1]\; \forall i, \; \forall t.
+</span> plus the Pontryagin’s statement about minimization of <span class="math inline">H</span> with respect to <span class="math inline">\bm u</span> <span class="math display">
+H(t, \bm x^\star ,\bm u^\star ,\boldsymbol\lambda^\star ) \leq  H(t, \bm x^\star ,\bm u, \boldsymbol\lambda^\star ), \; u_i(t)\in [-1,1]\; \forall i, \; \forall t.
 </span></p>
 <p>Application of Pontryagin’s principle gives <span class="math display">
-(\boldsymbol\lambda^\star )^\top \, (\mathbf A\bm x^\star +\mathbf B\bm u^\star ) - 1 \geq (\boldsymbol\lambda^\star )^\top \, (\mathbf A\bm x^\star +\mathbf B\bm u) - 1,\quad u_i\in [-1,1]\; \forall i, \; \forall t.
+1 + (\boldsymbol\lambda^\star )^\top \, (\mathbf A\bm x^\star +\mathbf B\bm u^\star ) \leq 1 + (\boldsymbol\lambda^\star )^\top \, (\mathbf A\bm x^\star +\mathbf B\bm u),\quad u_i\in [-1,1]\; \forall i, \; \forall t.
 </span></p>
 <p>Cancelling the identical terms on both sides we are left with <span class="math display">
-(\boldsymbol\lambda^\star )^\top \, \mathbf B\bm u^\star  \geq (\boldsymbol\lambda^\star )^\top \, \mathbf B\bm u,\quad u_i\in [-1,1]\; \forall i, \; \forall t.
+(\boldsymbol\lambda^\star )^\top \, \mathbf B\bm u^\star  \leq (\boldsymbol\lambda^\star )^\top \, \mathbf B\bm u,\quad u_i\in [-1,1]\; \forall i, \; \forall t.
 </span></p>
 <p>It turns out that if this inequality is to hold then with the <span class="math inline">\bm u</span> arbitrary on the left (within the bounds), the only way to guarantee the validity is to have <span class="math display">
-\bm u^\star  = \text{\textbf{sgn}}\left( (\boldsymbol\lambda^\star )^\top \, \mathbf B\right),
+\bm u^\star  = - \text{\textbf{sgn}}\left( (\boldsymbol\lambda^\star )^\top \, \mathbf B\right),
 </span> where the signum function is applied elementwise. Clearly the optimal control is <em>switching</em> between the minimum and maximum values, which is 1 and -1. This is visualized in <a href="#fig-switching-function" class="quarto-xref">Fig.&nbsp;1</a> for a scalar case (the <span class="math inline">\mathbf B</span> matrix has only a single column).</p>
 <div id="fig-switching-function" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1124,7 +1143,7 @@ Figure&nbsp;1: Switching function and an optimal control derived from it.
 </figcaption>
 </figure>
 </div>
-<p>Well, in fact to support this claim, it must be rigorously excluded that the argument of the signum function, the so-called switching function can assume zero value for longer then just a time instant (although repeatedly). Check this by yourself in (or its online version). Search for .</p>
+<p>As a matter of fact, to prove this claim, we should rigorously exclude that the argument of the signum function – the <em>switching function</em> – can assume zero value for anything longer then just a time instant (although repeatedly). Here we skip the details and refer the reader to <span class="citation" data-cites="liberzonCalculusVariationsOptimal2011"><a href="#ref-liberzonCalculusVariationsOptimal2011" role="doc-biblioref">[1]</a></span> (see the <em>normality conditions</em> keyword).</p>
 <section id="time-optimal-control-for-a-double-integrator-system" class="level3">
 <h3 class="anchored" data-anchor-id="time-optimal-control-for-a-double-integrator-system">Time-optimal control for a double integrator system</h3>
 <p>Let us analyze the situation for a double integrator. This corresponds to a system described by the second Newton’s law. For a normalized mass the state space model is <span class="math display">
@@ -1145,9 +1164,9 @@ Figure&nbsp;1: Switching function and an optimal control derived from it.
 u.
 </span></p>
 <p>The switching function is obviously <span class="math inline">\lambda_2(t)</span> and an optimal control is given by <span class="math display">
-u(t) = \text{sgn} \lambda_2(t).
+u(t) = -\text{sgn} \lambda_2(t).
 </span></p>
-<p>We do not know <span class="math inline">\lambda_2(t)</span>. In order to get it, we may need to solve the costate equations. Indeed, we can solve them independently of the state equations since it is decoupled from them <span class="math display">
+<p>We do not know <span class="math inline">\lambda_2(t)</span>. In order to get it, we may need to solve the costate equations. Indeed, we can solve them independently of the state equations since they are decopled. The costate equations are <span class="math display">
 \begin{bmatrix}
   \dot \lambda_1\\ \dot \lambda_2
 \end{bmatrix}
@@ -1178,7 +1197,7 @@ Figure&nbsp;2: Possible evolutions of the costate <span class="math inline">\lam
 </figcaption>
 </figure>
 </div>
-<p>What we have learnt is that the costate <span class="math inline">\lambda_2</span> would go through zero at most once during the whole control interval. Therefore we will have at most one switching of the control signal. This is a valuable observation.</p>
+<p>What we have learnt is that the costate <span class="math inline">\lambda_2</span> would go <strong>through zero at most once</strong> during the whole control interval. Therefore we will have at most one switching of the control signal. This is a valuable observation.</p>
 <p>We are approaching the final stage of the derivations. So far we have learnt that we can only consider <span class="math inline">u(t)=1</span> and <span class="math inline">u(t)=-1</span>. The state equations can be easily integrated to get <span class="math display">
 v(t) = v(0) + ut,\quad y(t) = y(0) + v(0)t + \frac{1}{2}ut^2.
 </span></p>
@@ -1306,14 +1325,33 @@ Figure&nbsp;4: Response of a double integrator with a time-optimal (bang-bang) f
 </figure>
 </div>
 </div>
-<p>In the plots you can find a confirmation of the fact that we derived rigorously—the fact that there will be at most one switch in the control signal… Ooops… This is actually not quite what we see in the plot above, is it? We can see that the control variable switches for the first time at about 2.2 s, but then it switches again at time close to 3.5 s. And it then keeps switching very fast. Consequently, the simulation gets significantly slower and the solver may even appear to get stuck.</p>
-<p>Obviosly, what is going on is that the simulator is tempted to include not just two but in fact a huge number of switches in the control signal as it approaches the origin. This is quite characteristic of bang-bang control – a phenomenon called <em>chattering</em>. In this particular example we may decide to ignore it since both state variables are already close enough to the origin and we may want to declare the control task as finished. Generally, this chattering phenomenon needs to be handled somehow systematically. Any suggestion?</p>
+<p>In the plots you can find a confirmation of the fact that we derived rigorously – the fact that there will be at most one switch in the control signal… Ooops… This is actually not quite what we see in the plot above, is it? We can see that the control variable switches for the first time at about 2.2 s, but then it switches again at time close to 3.5 s. And it then keeps switching very fast. Consequently, the simulation gets significantly slower and the solver may even appear to get stuck.</p>
+<p>Obviosly, what is going on is that the simulator is tempted to include not just two but in fact a huge number of switches in the control signal as it approaches the origin. This is quite characteristic of the naive implementation of bang-bang control – a phenomenon called <em>chattering</em>. In this particular example we may decide to ignore it since both state variables are already close enough to the origin and we may want to declare the control task as finished. Generally, this chattering phenomenon needs to be handled somehow systematically. Any suggestion?</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that the video linked below, which covers the material of this lecture, uses the other convention for the control Hamiltonian, the one leading to the maximization of the Hamiltonian. Other than that, the (structure of the) results is the same.</p>
+</div>
+</div>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/YiIksQcg8EU?si=s-mTICVGUH27_OkN" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+
 
 
 </section>
 </section>
 
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list">
+<div id="ref-liberzonCalculusVariationsOptimal2011" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">D. Liberzon, <em>Calculus of <span>Variations</span> and <span>Optimal Control Theory</span>: <span>A Concise Introduction</span></em>. Princeton University Press, 2011. Available: <a href="http://liberzon.csl.illinois.edu/teaching/cvoc/cvoc.html">http://liberzon.csl.illinois.edu/teaching/cvoc/cvoc.html</a></div>
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
