@@ -14,7 +14,6 @@ crossref:
 engine: julia
 ---
 
-{{< video https://youtu.be/YiIksQcg8EU?si=s-mTICVGUH27_OkN >}}
 
 The task of bringing the system from a given state to some given final state (either a single state or a set of states) can be formulated by setting 
 $$
@@ -43,7 +42,7 @@ $$
 
 The necessary conditions can be assembled immediately by forming the Hamiltonian
 $$
- H = \boldsymbol\lambda^\top \,(\mathbf A\bm x+\mathbf B\bm u) - 1,
+ H = 1 + \boldsymbol\lambda^\top \,(\mathbf A\bm x+\mathbf B\bm u),
 $$
 and substituting into the (control) Hamilton canonical equations 
 $$
@@ -52,30 +51,30 @@ $$
  \dot{\boldsymbol \lambda} &= -\nabla_{\bm x}H = -\mathbf A^\top \boldsymbol \lambda.
 \end{aligned}
 $$
-plus the Pontryagin's statement about maximization of $H$ with respect to $\bm u$
+plus the Pontryagin's statement about minimization of $H$ with respect to $\bm u$
 $$
-H(t, \bm x^\star ,\bm u^\star ,\boldsymbol\lambda^\star ) \geq  H(t, \bm x^\star ,\bm u, \boldsymbol\lambda^\star ), \; u_i(t)\in [-1,1]\; \forall i, \; \forall t.
+H(t, \bm x^\star ,\bm u^\star ,\boldsymbol\lambda^\star ) \leq  H(t, \bm x^\star ,\bm u, \boldsymbol\lambda^\star ), \; u_i(t)\in [-1,1]\; \forall i, \; \forall t.
 $$
 
 Application of Pontryagin's principle gives
 $$
-(\boldsymbol\lambda^\star )^\top \, (\mathbf A\bm x^\star +\mathbf B\bm u^\star ) - 1 \geq (\boldsymbol\lambda^\star )^\top \, (\mathbf A\bm x^\star +\mathbf B\bm u) - 1,\quad u_i\in [-1,1]\; \forall i, \; \forall t.
+1 + (\boldsymbol\lambda^\star )^\top \, (\mathbf A\bm x^\star +\mathbf B\bm u^\star ) \leq 1 + (\boldsymbol\lambda^\star )^\top \, (\mathbf A\bm x^\star +\mathbf B\bm u),\quad u_i\in [-1,1]\; \forall i, \; \forall t.
 $$
 
 Cancelling the identical terms on both sides we are left with 
 $$
-(\boldsymbol\lambda^\star )^\top \, \mathbf B\bm u^\star  \geq (\boldsymbol\lambda^\star )^\top \, \mathbf B\bm u,\quad u_i\in [-1,1]\; \forall i, \; \forall t.
+(\boldsymbol\lambda^\star )^\top \, \mathbf B\bm u^\star  \leq (\boldsymbol\lambda^\star )^\top \, \mathbf B\bm u,\quad u_i\in [-1,1]\; \forall i, \; \forall t.
 $$
 
 It turns out that if this inequality is to hold then with the $\bm u$ arbitrary on the left (within the bounds), the only way to guarantee the validity is to have
 $$
-\bm u^\star  = \text{\textbf{sgn}}\left( (\boldsymbol\lambda^\star )^\top \, \mathbf B\right),
+\bm u^\star  = - \text{\textbf{sgn}}\left( (\boldsymbol\lambda^\star )^\top \, \mathbf B\right),
 $$
 where the signum function is applied elementwise. Clearly the optimal control is *switching* between the minimum and maximum values, which is 1 and -1. This is visualized in @fig-switching-function for a scalar case (the $\mathbf B$ matrix has only a single column).
 
 ![Switching function and an optimal control derived from it.](./figures/switching_function.png){#fig-switching-function width=50% }
 
-Well, in fact to support this claim, it must be rigorously excluded that the argument of the signum function, the so-called switching function can assume zero value for longer then just a time instant (although repeatedly). Check this by yourself in \cite{liberzon_calculus_2011} (or its online version). Search for \textit{normality conditions}.
+As a matter of fact, to prove this claim, we should rigorously exclude that the argument of the signum function – the *switching function* – can assume zero value for anything longer then just a time instant (although repeatedly). Here we skip the details and refer the reader to @liberzonCalculusVariationsOptimal2011 (see the *normality conditions* keyword).
 
 ### Time-optimal control for a double integrator system
 
@@ -100,10 +99,10 @@ $$
 
 The switching function is obviously $\lambda_2(t)$ and an optimal control is given by
 $$
- u(t) = \text{sgn} \lambda_2(t).
+ u(t) = -\text{sgn} \lambda_2(t).
 $$
 
-We do not know $\lambda_2(t)$. In order to get it, we may need to solve the costate equations. Indeed, we can solve them independently of the state equations since it is decoupled from them
+We do not know $\lambda_2(t)$. In order to get it, we may need to solve the costate equations. Indeed, we can solve them independently of the state equations since they are decopled. The costate equations are
 $$
  \begin{bmatrix}
   \dot \lambda_1\\ \dot \lambda_2
@@ -135,7 +134,7 @@ We can now sketch possible profiles of the switching function. A few characteris
 
 ![Possible evolutions of the costate $\lambda_2$ in time-optimal control](figures/time_optimal_costate_lambda_2.png){#fig-time-optimal-costate width=50%}
 
-What we have learnt is that the costate $\lambda_2$ would go through zero at most once during the whole control interval. Therefore we will have at most one switching of the control signal. This is a valuable observation.
+What we have learnt is that the costate $\lambda_2$ would go **through zero at most once** during the whole control interval. Therefore we will have at most one switching of the control signal. This is a valuable observation.
 
 We are approaching the final stage of the derivations. So far we have learnt that we can only consider $u(t)=1$ and $u(t)=-1$. The state equations can be easily integrated to get
 $$
@@ -255,6 +254,12 @@ end
 simulate_time_optimal_double_integrator()
 ```
 
-In the plots you can find a confirmation of the fact that we derived rigorously---the fact that there will be at most one switch in the control signal... Ooops... This is actually not quite what we see in the plot above, is it? We can see that the control variable switches for the first time at about 2.2 s, but then it switches again at time close to 3.5 s. And it then keeps switching very fast. Consequently, the simulation gets significantly slower and the solver may even appear to get stuck. 
+In the plots you can find a confirmation of the fact that we derived rigorously – the fact that there will be at most one switch in the control signal... Ooops... This is actually not quite what we see in the plot above, is it? We can see that the control variable switches for the first time at about 2.2 s, but then it switches again at time close to 3.5 s. And it then keeps switching very fast. Consequently, the simulation gets significantly slower and the solver may even appear to get stuck. 
 
-Obviosly, what is going on is that the simulator is tempted to include not just two but in fact a huge number of switches in the control signal as it approaches the origin. This is quite characteristic of bang-bang control – a phenomenon called *chattering*. In this particular example we may decide to ignore it since both state variables are already close enough to the origin and we may want to declare the control task as finished. Generally, this chattering phenomenon needs to be handled somehow systematically. Any suggestion?
+Obviosly, what is going on is that the simulator is tempted to include not just two but in fact a huge number of switches in the control signal as it approaches the origin. This is quite characteristic of the naive implementation of bang-bang control – a phenomenon called *chattering*. In this particular example we may decide to ignore it since both state variables are already close enough to the origin and we may want to declare the control task as finished. Generally, this chattering phenomenon needs to be handled somehow systematically. Any suggestion?
+
+:::{.callout-warning}
+Note that the video linked below, which covers the material of this lecture, uses the other convention for the control Hamiltonian, the one leading to the maximization of the Hamiltonian. Other than that, the (structure of the) results is the same.
+:::
+
+{{< video https://youtu.be/YiIksQcg8EU?si=s-mTICVGUH27_OkN >}}

@@ -14,27 +14,29 @@ crossref:
 engine: julia
 ---
 
-The techniques of calculus of variations introduced in the previous lecture/chapter significantly extended our toolset for solving optimal control problems – instead of optimizing over (finite) sequences of real numbers we are now able to optimize over functions (or continuous-time trajectories if you like). Nonetheless, the methods were also subject to severe restrictions. For example, the property that the optimal control maximizes the Hamiltonian were checked by testing the derivative of the Hamiltonian, which only makes sense if 
+The techniques of calculus of variations introduced in the previous lecture/chapter significantly extended our toolset for solving optimal control problems – instead of optimizing over (finite) sequences of real numbers we are now able to optimize over functions (or continuous-time trajectories if you like). Nonetheless, the methods were also subject to severe restrictions. For example, the property that the optimal control minimizes (or maximizes, depending on the definition of) the Hamiltonian were checked by testing the derivative of the Hamiltonian, which only makes sense if 
 
 - the Hamiltonian is differentiable with respect to control, and 
 - the optimal control is inside the set of allowable controls (vanishing derivative of Hamiltonian on the boundary is not a necessary condition for the Hamiltonian to achieve a maximum value there). 
 
 It also appears that the classes of perturbations modelled by $\mathcal C^1_{[a,b]}$ spaces of smooth functions defined on an interval and endowed with 1-norm or 0-norm are not rich enough for practical applications. Just consider switched (on-off) control trajectories that differ in the times of switching. 
 
-For all these reasons, some more advanced mathematical machinery has been developed. Unfortunately, it calls for a different and a bit more advanced mathematics than what we used in the calculus of variations. Therefore we will only state the most important result – the powerful *Pontryagin's principle of maximum* (PMP). 
+For all these reasons, some more advanced mathematical machinery has been developed. Unfortunately, it calls for a different and a bit more advanced mathematics than what we used in the calculus of variations. Therefore we will only state the most important result – the powerful *Pontryagin's principle of maximum* (PMP). As a matter of fact, with our convention of defining the Hamiltonian, it is actually a *Pontryagin's principle of minimum* (luckily, at least the abbreviation PMP is the same in both cases). 
 
-Although PMP sort of supersedes some of the previous results (and you might even start complaining why on earth we spent time with calculus of variations), thanks to having been introduced to the calculus of variations-style of reasoning, we are now certainly well-equipped to digest at least the very statement of the powerful result by Pontryagin. A motivated (and courageous) reader will find a proof elsewhere (see the recommended literature).
+Although PMP sort of supersedes some of the previous results (and you might even start complaining why on earth we spent time with calculus of variations), thanks to having been introduced to the calculus of variations-style of reasoning, we are now certainly well-equipped to digest at least the very statement of the powerful result by Pontryagin. A motivated reader will find a proof elsewhere (see the recommended literature).
 
-{{< video https://youtu.be/Bxc4iy2xUjc?si=KEFjkliCcdn7J_7k >}}
+## Pontryagin's principle of minimum (maximum)
 
-## Pontryagin's principle of maximum
-
-We have already seen in the calculus of variations that the Hamiltonian when evaluated along the extremal, has the property that
+We have already seen in the calculus of variations that the Hamiltonian defined as 
+$$
+H(x,y,y',p) = p \, y' - L(x,y,y'),
+$$
+when evaluated along the extremal, has the property that it is stationary with respect to $y'$. In other words, the derivative of the Hamiltonian with respect to $y'$ evaluated on the extremal vanishes, that is,
 $$
  \left.\frac{\partial H(x,y,y',p)}{\partial y'}\right|_{p = \frac{\partial L(x,y,y')}{\partial y'}} = 0.
 $${#eq-derivative-of-Hamiltonian-vanishing-in-calculus-of-variations}
 
-Combining this result with the second-order necessary condition of minimum
+Combining this result with the Legendre second-order necessary condition of minimum
 
 $$
 L_{y'y'} \geq 0,
@@ -49,94 +51,104 @@ $$
  H(x,y^\star,(y^\star)',p^\star) \geq  H(x,y^\star,y',p^\star).
 $$
 
-This is a major observation and would probably never be obtained without viewing $y'$ as a separate variable (see @sussmann300YearsOptimal1997 for an insightful discussion). 
+This is a major observation and would probably never be obtained without viewing $y'$ as an independent variable (see @sussmann300YearsOptimal1997 for an insightful discussion). We quite here from the paper:
 
-After the (now surely familiar) notational transition to the optimal control setting ($t$ instead of $x$, $\bm x(\cdot)$ instead of $y(\cdot)$, $\bm u(\cdot)$ instead of $y'(\cdot)$, $\bm \lambda(\cdot)$ instead of $p(\cdot)$), and invoking the definition of the Hamiltonian
+> "let us tell the story of how Hamilton almost got there himself, but missed, and Weierstrass got even closer, but missed as well.""
+
+After the (now surely familiar) notational transition to the optimal control setting 
+
+| Calculus of variations | Optimal control      |
+|------------------------|----------------------|
+| $x$                    | $t$                  |
+| $y(\cdot)$             | $\bm x(\cdot)$       |
+| $y'(\cdot)$            | $\bm u(\cdot)$       |
+| $p(\cdot)$             | $\bm \lambda(\cdot)$ |
+
+and invoking the definition of the control Hamiltonian (in which we assume for simplicity that both the system and the cost are time-invariant, hence independent of $t$)
 $$
- H(\bm x ,\bm u ,\bm \lambda) = \bm \lambda^\top \, \mathbf f- L, 
+ H(\bm x ,\bm u ,\bm \lambda) = L + \bm \lambda^\top \, \mathbf f, 
 $$
-we make an important observation that as $\bm u$ now plays the role of $y'$ in calculus of variations, the optimal control analog of @eq-derivative-of-Hamiltonian-vanishing-in-calculus-of-variations is given by the equation of stationarity
+we make an important observation that as $\bm u$ now plays the role of $y'$ in calculus of variations, the optimal control analogy of @eq-derivative-of-Hamiltonian-vanishing-in-calculus-of-variations is given by the equation of stationarity
 $$
-\nabla_{\bm u} H(\bm x ,\bm u ,\bm \lambda) = \nabla_{\bm u}\mathbf f \, \bm \lambda - \nabla_{\bm u} L = 0.
+\nabla_{\bm u} H(\bm x ,\bm u ,\bm \lambda) = \nabla_{\bm u} L + \nabla_{\bm u}\mathbf f \, \bm \lambda = 0.
 $$
 
-Combined with the second-order necessary condition of minimum 
+Combined with the second-order necessary condition of minimum, which in the optimal control setting is 
 $$
   \nabla_{\bm u \bm u}L(\bm x ,\bm u) \succeq 0,
 $$
-which reads that the Hessian of the integrand $L$ with respect to $\bm u$ is positive semi-definite, we conclude that the Hamiltonian is not only stationary *on the extremal*, it is actually *maximized on the extremal*. If we now denote the set of all allowable controls as $\mathcal{U}$, the result on maximization of Hamiltonian can then be written as
+which reads that the Hessian of the integrand $L$ with respect to $\bm u$ is positive semi-definite, we conclude that the Hamiltonian is not only stationary *on the extremal*, it is actually *minimized on the extremal*. If we now denote the set of all allowable controls as $\mathcal{U}$, the result on minimization of Hamiltonian can then be written as
 $$\boxed{
- H(\bm x^\star ,\bm u^\star ,\boldsymbol\lambda^\star ) \geq  H(\bm x^\star ,{\color{blue}\bm u} , \boldsymbol\lambda^\star ),\quad \forall {\color{blue}\bm u} \in\mathcal{U},}
-$${#eq-pontryagins-principle-of-maximum-inequality}
-where $\bm x^\star$ is the optimal state trajectory, $\bm u^\star$ is the optimal control, and $\boldsymbol\lambda^\star$ is the costate.
-
-where $\bm u^\star$ is the optimal control.
-or, equivalently (and emphasizing that it holds at every time $t$) as
+ H(\bm x^\star ,\bm u^\star ,\boldsymbol\lambda^\star ) \leq  H(\bm x^\star ,{\color{blue}\bm u} , \boldsymbol\lambda^\star ),\quad \forall {\color{blue}\bm u} \in\mathcal{U},}
+$${#eq-pontryagins-principle-of-minimum-inequality}
+where $\bm x^\star$ is the optimal state trajectory, $\bm u^\star$ is the optimal control, and $\boldsymbol\lambda^\star$ is the costate. Equivalently (and emphasizing that it holds at every time $t$) we can write
 $$\boxed{
- \bm u^\star(t)  = \operatorname*{argmax}_{\color{blue}\bm u(t)  \in\mathcal{U}} H(\bm x^\star(t) ,{\color{blue}\bm u(t)}, \boldsymbol\lambda^\star(t)).}
-$${#eq-pontryagins-principle-of-maximum-argmax}
+ \bm u^\star(t)  = \operatorname*{argmin}_{\color{blue}\bm u(t)  \in\mathcal{U}} H(\bm x^\star(t) ,{\color{blue}\bm u(t)}, \boldsymbol\lambda^\star(t)).}
+$${#eq-pontryagins-principle-of-minimum-argmin}
 
-The essence of the celebrated Pontryagin's principle is that actually the maximization of the Hamiltonian that is the fundamental necessary condition of optimality. The fact that 
+The essence of the celebrated Pontryagin's principle is that actually it is the minimization of the Hamiltonian that is the fundamental necessary condition of optimality. The fact that 
 $$
  \nabla_{\bm u}H = 0
 $$
-is just a consequence in the situation when $\nabla_{\bm u}H$ exists and the set of allowable controls $u$ is not bounded. 
+is just a consequence in the situation when $\nabla_{\bm u}H$ exists and the control $u$ is unconstrained. 
 
 And that is it! 
 
-To summarize, the celebrated Pontryagin's principle of maximum just replaces the equation of stationarity $\nabla_{\bm u} H = \bm 0$ in the necessary conditions of optimality by @eq-pontryagins-principle-of-maximum-inequality or @eq-pontryagins-principle-of-maximum-argmax. Let's now summarize the necessary conditions of optimality in the form of a theorem for later reference
+To summarize, the celebrated Pontryagin's principle of maximum just replaces the equation of stationarity $\nabla_{\bm u} H = \bm 0$ in the necessary conditions of optimality by @eq-pontryagins-principle-of-minimum-inequality or @eq-pontryagins-principle-of-minimum-argmin. Let's now summarize the necessary conditions of optimality in the form of a theorem for later reference.
 
-::: {#thm-pontryagins-principle-of-maximum}
-## Pontryagin's principle of maximum 
+::: {#thm-pontryagins-principle-of-minimum}
+## Pontryagin's principle of minimum 
  For a given optimal control problem, let $\bm u^\star \in \mathcal{U}$ be *an* optimal control, then there is a variable called costate which together with the state variable satisfies the Hamilton canonical equations
 $$
 \begin{aligned}
  \dot{\bm x} &= \left.\nabla_{\bm \lambda}H\right|_{\bm x = \bm x^\star, \bm u = \bm u^\star, \bm \lambda = \bm \lambda^\star},\\
- \dot{\bm \lambda} &= \left.-\nabla_{\bm{x}}H\right|_{\bm x = \bm x^\star, \bm u = \bm u^\star, \bm \lambda = \bm \lambda^\star},\\
- H(\bm x^\star ,\bm u^\star ,\boldsymbol\lambda^\star, t) &\geq  H(\bm x^\star ,{\color{blue}\bm u} , \boldsymbol\lambda^\star, t), \; {\color{blue}\bm u} \in \mathcal{U},
+ \dot{\bm \lambda} &= \left.-\nabla_{\bm{x}}H\right|_{\bm x = \bm x^\star, \bm u = \bm u^\star, \bm \lambda = \bm \lambda^\star},
 \end{aligned}
+$$
+and
+$$
+ H(\bm x^\star ,\bm u^\star ,\boldsymbol\lambda^\star, t) \leq  H(\bm x^\star ,{\color{blue}\bm u} , \boldsymbol\lambda^\star, t), \; {\color{blue}\bm u} \in \mathcal{U},
 $$
 where 
 $$
- H(\bm x ,\bm u ,\boldsymbol\lambda, t) = \boldsymbol\lambda^\top(t)\, \mathbf f(\bm x,\bm u, t) - L(\bm x,\bm u,t).
+ H(\bm x ,\bm u ,\boldsymbol\lambda, t) := L(\bm x,\bm u,t) + \boldsymbol\lambda^\top(t)\, \mathbf f(\bm x,\bm u, t).
 $$
 
 Moreover, the corresponding boundary conditions must hold.
 :::
 
-In other words, Pontryagin's principle just replaces the equation of stationarity $\nabla_{\bm u} H = \bm 0$ in the necessary conditions of optimality by @eq-pontryagins-principle-of-maximum-inequality or @eq-pontryagins-principle-of-maximum-argmax.
+In other words, Pontryagin's principle just replaces the equation of stationarity $\nabla_{\bm u} H = \bm 0$ in the necessary conditions of optimality by @eq-pontryagins-principle-of-minimum-inequality or @eq-pontryagins-principle-of-minimum-argmin.
 
-Although we opt to skip the proof of the theorem in our course (it is really rather advanced), we must certainly at least mention that it does not relly on the smoothness of the function as the calculus of variations did. Less regular function are allowed. In particular, the set of admissible control trajectories $\bm u(\cdot)$ also contains piecewise continuous functions (technically speaking, the set contains measurable functions). This can also be used as at least a partial justification of our hand-wavy approach to introducing the calculus of variations.
+Although we opt to skip the proof of the theorem in our course (it is really rather advanced, interested readers are invited to consult the [References](cont_indir_references_2.qmd)), we must certainly at least mention that it does not relly on the smoothness of the function as the calculus of variations does. Less regular function are allowed. In particular, the set of admissible control trajectories $\bm u(\cdot)$ also contains piecewise continuous functions (technically speaking, the set contains measurable functions). This can also be used as at least a partial justification of our hand-wavy approach to introducing the calculus of variations.
 
 ::: {.callout-important}
-## Pontryagin's principle of minimum
-If we used the alternative definition of the Hamiltonian
+## Pontryagin's principle of minimum or maximum?
+If we used the alternative definition of the Hamiltonian (we discussed [the two notational conventions for control Hamiltonian](cont_indir_notation.qmd))
 $$
- H(\bm x ,\bm u ,\bm \lambda, t) = L(\bm x,\bm u,t) + \bm \lambda^\top \, \mathbf f(\bm x,\bm u,t),
+ H(\bm x ,\bm u ,\bm \lambda, t) = \bm \lambda^\top \, \mathbf f(\bm x,\bm u,t) - L(\bm x,\bm u,t),
 $$
-then the Hessian of the Hamiltonian with respect to $\bm u$ evaluated on the extremal would be positive semi-definite, and the necessary condition of optimality would be that the Hamiltonian is minimized on the extremal. We would then call the result *Pontryagin's principle of minimum*. While our guess is that the this "minimum version" of Pontryagin's principle prevails in the literature (perhaps to emphasize its striking similarity with the continuous-time version of dynamica programming – HJB equation), the originally published result uses maximum of Hamiltonian.
+then the Hessian of the Hamiltonian with respect to $\bm u$ evaluated on the extremal would be negative semi-definite, and the necessary condition of optimality would be that the Hamiltonian be maximized on the extremal. We would then call the result *Pontryagin's principle of maximum*. That is actually the way the result was originally formulated and published. Perhaps because this version of the control Hamiltonian resembles the Hamiltonian of the calculus of variations a bit better. Nonetheless, in our course we decided to follow the "minimum version" of Pontryagin's principle as it prevails in the literature (perhaps to emphasize its striking similarity with the continuous-time version of dynamic programming – HJB equation).
 :::
 
-We could certainly rederive our previous results on LQ-optimal control with fixed and free final states. Nonetheless, this would be an overkill unless constraints are imposed on the controls. We consider such constrained LQR case below. 
+We could certainly use the new result to rederive our previous results on the LQ-optimal control with fixed and free final states. But this would bring nothing new to use. Instead, we can see the power of the new result if we impose constraints on the controls. 
 
-::: {#exm-pontryagins-principle-of-maximum-constrained-lqr}
 ## Constrained LQR
 We consider a system modelled by $\dot{\bm x} = \mathbf A \bm x + \mathbf b u$, in which we restrict ourselves to scalar control inputs for convenience. The task is to find a control $u$ on the fixed interval $[0,t_\mathrm{f}]$ such that the system is brought from a given initial state to a given final state, while the control satisfies $\mathrm{u}^{\min}\leq u\leq \mathrm{u}^{\max}$. The two-point boundary value problem is
 $$
 \begin{aligned}
 \dot{\bm{x}} &= \mathbf A\bm x + \mathbf b u,\\
-\dot{\bm{\lambda}} &= \mathbf Q\bm x - \mathbf A^\top\bm\lambda,\\ 
-u^\star &= \operatorname*{arg max}_{u\in[\mathrm u^{\min},\mathrm u^{\max}]}\cancel{-\frac{1}{2}\bm x^\top\mathbf Q\bm x} - \frac{\mathbf r}{2}u^2 + \bm\lambda^\top (\cancel{\mathbf A \bm x} + \mathbf b u),\\
+\dot{\bm{\lambda}} &= -\mathbf Q\bm x - \mathbf A^\top\bm\lambda,\\ 
+u^\star &= \operatorname*{arg min}_{u\in[\mathrm u^{\min},\mathrm u^{\max}]}\cancel{\frac{1}{2}\bm x^\top\mathbf Q\bm x} + \frac{\mathbf r}{2}u^2 + \bm\lambda^\top (\cancel{\mathbf A \bm x} + \mathbf b u),\\
  \bm x(0) &= \mathbf x_0,\\
  \bm x(t_{\mathrm{f}}) &= \mathbf x_{\mathrm{f}}.
 \end{aligned}
 $$
 
-In the maximization above we could cancel the two terms that do not depend on $u$. It is just a maximization of a quadratic (in $u$) function with an interval constraint. We can write its solution as
+The minimization above works with a quadratic (in $u$) function with an interval constraint (we cancelled the two terms that do not depend on $u$ since they have no effect on the minimizers). We can write its solution as
 $$
 \begin{aligned}
-u^\star &= \operatorname*{argmax}_{u\in[\mathrm u^{\min},\mathrm u^{\max}]} \left(\bm\lambda^\top \mathbf b u - \frac{1}{2}\mathrm{r} u^2\right)\\
-&= \operatorname{sat}_{\mathrm u^{\min}}^{\mathrm u^{\max}}\frac{\bm\lambda^\top \mathbf b}{\mathrm{r}},
+u^\star &= \operatorname*{argmin}_{u\in[\mathrm u^{\min},\mathrm u^{\max}]} \left(\frac{1}{2}\mathrm{r} u^2 + \bm\lambda^\top \mathbf b u\right)\\
+&= \operatorname{sat}_{\mathrm u^{\min}}^{\mathrm u^{\max}}\left(-\frac{\bm\lambda^\top \mathbf b}{\mathrm{r}}\right),
 \end{aligned}
 $$
 where the $\operatorname{sat}()$ has the usual meaning of a *saturation* function with the lower and upper saturation bounds.
@@ -145,8 +157,8 @@ The BVP problem that needs to be solved is then
 $$
 \begin{aligned}
 \dot{\bm{x}} &= \mathbf A\bm x + \mathbf b u,\\
-\dot{\bm{\lambda}} &= \mathbf Q\bm x - \mathbf A^\top\bm\lambda,\\ 
-u^\star &= \operatorname{sat}_{u^{\min}}^{u^{\max}}\frac{\bm\lambda^\top \mathbf b}{\mathrm{r}},\\
+\dot{\bm{\lambda}} &= -\mathbf Q\bm x - \mathbf A^\top\bm\lambda,\\ 
+u^\star &= \operatorname{sat}_{u^{\min}}^{u^{\max}}\left(-\frac{\bm\lambda^\top \mathbf b}{\mathrm{r}}\right),\\
  \bm x(0) &= \mathbf x_0,\\
  \bm x(t_\mathrm{f}) &= \mathbf x_\mathrm{f}.
 \end{aligned}
@@ -156,7 +168,7 @@ $$
 using DifferentialEquations
 using LinearAlgebra
 using Random
-Random.seed!(1234)
+Random.seed!(1235)
 
 function cont_indir_constrained_lqr_via_pontryagin_bvp()
     n = 2                                   # Order of the system.
@@ -164,40 +176,36 @@ function cont_indir_constrained_lqr_via_pontryagin_bvp()
     A = rand(n,n)
     B = rand(n,m)
 
-    umin = -2.0                             # Lower bound on control.
-    umax = 2.0                              # Upper bound on control.
+    umin = -5.0                             # Lower bound on control.
+    umax = 5.0                              # Upper bound on control.
 
     q = 1
     r = 1
-    s = 1
     Q = diagm(0=>q*ones(n))                 # Weighting matrices for the quadratic cost function.
     R = diagm(0=>r*ones(m))
-    S₁ = diagm(0=>s*ones(n))
-    t₀ = 0.0
-    t₁ = 10.0
+    t₀ = 0.0                                # Initial time.
+    t₁ = 10.0                               # Final time.
     xinit = [1.0, 2.0]                      # Initial state.
     xfinal = [0.0, 0.0]                     # Final state.
 
     function statecostateeq!(dw, w, p, t)
         x = w[1:2]                          # State vector [θ, ω].
         λ = w[3:4]                          # Costate vector.
-        u = min.(max.(R\B'*λ,umin),umax)    # Optimal control (Pontryagin).
+        u = clamp.(-R\B'*λ,umin,umax)       # Optimal control (Pontryagin).
         dw[1:2] .= A*x + B*u                # State equation.
-        dw[3:4] .= Q*x - A'*λ               # Co-state equation.
+        dw[3:4] .= -Q*x - A'*λ              # Co-state equation.
     end
-    function bc!(res, w, p,t)               
-        res[1:2] .= w(t₀)[1:2] - xinit      # Initial state boundary condition.
-        res[3:4] .= w(t₁)[1:2] - xfinal     # Final state boundary condition.
-    end
+    bca!(res, ua, p) = (res .= ua[1:2] - xinit)    # Initial state boundary condition.
+    bcb!(res, ub, p) = (res .= ub[1:2] - xfinal)   # Final state boundary condition.
 
     w0 = [xinit[1], xinit[2], 0.0, 0.0]     # Use the initial state and guess at the initial costate.
-    
-    bvprob = BVProblem(statecostateeq!, bc!, w0, (t₀, t₁)) # Boundary value problem.
-    sol = solve(bvprob, MIRK4(), dt=0.1)    # Solve the BVP.
+
+    bvprob = TwoPointBVProblem(statecostateeq!, (bca!, bcb!), w0, (t₀, t₁); bcresid_prototype=(zeros(2), zeros(2))) # Boundary value problem.
+    sol = solve(bvprob, MIRK4(), dt=0.1, adaptive=false, abstol=1e-8, reltol=1e-8)  # Solve the BVP.
     
     x = hcat(sol.u...)[1:2,:]               # State trajectory.
     λ = hcat(sol.u...)[3:4,:]               # Costate trajectory.
-    u = min.(max.(R\B'*λ,umin),umax)        # Optimal control.
+    u = clamp.(-R\B'*λ,umin,umax)           # Optimal control.
     t = sol.t
     return (x,λ,u,t)
 end
@@ -212,7 +220,12 @@ p3 = plot(t,u',ylabel="u",label="",lw=2,xlabel="t")
 plot(p1,p2,p3,layout=(3,1))
 ```
 
-Note that this optimal solution of a constrained LQR problem is not equal to the "clamped" solution of the unconstrained LQR problem. From an implementation viewpoint, unlike in the unconstrained problem, here the solution does not come in the form of a state-feedback controller, but rather in the form of precomputed state and control trajectories.
+Note that this optimal solution of a constrained LQR problem is not equal to the *saturated* (or *clamped*) solution of the unconstrained LQR problem. From an implementation viewpoint, unlike in the unconstrained problem, here the solution does not come in the form of a state-feedback controller, but rather in the form of precomputed state and control trajectories.
+
+The good news is that there are scenarios, in which the Pontryagin's principle leads to feedback controllers. One of them is the *minimum-time problem*. The task is to bring the system to a given state in the shortest time possible. Apparently, with no bounds on controls, the time can be shrunk to zero (the control signal approaching the Dirac impulse). Therefore, bounds must to be imposed on the magnitudes of control signals in order to compute realistic outcomes. Pontryagin's principle is used for this. Furthermore, we must also know how our necessary conditions change if we relax the final time, that is, if the final time becomes one of the optimization variables. This is what we are going to investigate next.
+
+:::{.callout-warning}
+Note that the video linked below, which covers the material of this lecture, uses the other convention for the control Hamiltonian, the one leading to the maximization of the Hamiltonian. Other than that, the (structure of the) results is the same.
 :::
 
-The good news is that there are scenarios, in which the Pontryagin's principle leads to feedback controllers. One of them is the *minimum-time problem*. The task is to bring the system to a given state in the shortest time possible. Apparently, with no bounds on controls, the time can be shrunk to zero (the control signal approaching the shape of a Dirac impulse). Therefore, bounds must to be imposed on the magnitudes of control signals in order to compute realistic outcomes. Pontryagin's principle is used for this. Furthermore, we must also know how our necessary conditions change if we relax the final time, that is, if the final time becomes one of the optimization variables. This is what we are going to investigate next.
+{{< video https://youtu.be/Bxc4iy2xUjc?si=KEFjkliCcdn7J_7k >}}

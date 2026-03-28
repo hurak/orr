@@ -33,7 +33,7 @@ $$
 
 ::: {.callout-caution}
 ## $b$ is the stationary value of the right end of the interval
-We do not use $b^\star$ for the stationary value of the right end of the interval in favour of notational simplicity. But this comes at the cost of losing a bit of consistency in the notation.
+We do not use $b^\star$ for the stationary value of the right end of the interval in favour of notational simplicity. Admittedly, this comes at the cost of losing a bit of consistency in the notation.
 :::
 
 Note that we have a minor technical problem here since the function $y^\star$ is only defined on the interval $[a,b]$. But there is an easy fix: we define a continuation of the function to the right of $b$ in the form of a linear approximation given by the derivative of $y^\star$ at $b$. We will exploit it in a while.
@@ -111,70 +111,60 @@ $$
 
 We have already seen that the integrand of the augmented cost function now contains not only the term that corresponds to the Lagrange multiplier but also the term that penalizes the state at the final time, that is, 
 $$
- L^\mathrm{aug}(\bm x,\bm u,\boldsymbol \lambda, t) = L(\bm x,\bm u,t) + \underbrace{\frac{\partial \phi}{\partial t} + (\nabla_{\bm x}\phi)^\top \frac{\mathrm d \bm x }{\mathrm d t}}_{\frac{\mathrm d \phi(\bm x(t), t)}{\mathrm d t}} + \boldsymbol{\lambda}^\top (\dot{\bm{x}} - \mathbf f(\bm x,\bm u,t))
+ L^\mathrm{aug}(\bm x,\bm u,\boldsymbol \lambda, t) = L(\bm x,\bm u,t) + \underbrace{\frac{\partial \phi}{\partial t} + (\nabla_{\bm x}\phi)^\top \frac{\mathrm d \bm x }{\mathrm d t}}_{\frac{\mathrm d \phi(\bm x(t), t)}{\mathrm d t}} + \boldsymbol{\lambda}^\top (\mathbf f(\bm x,\bm u,t)-\dot{\bm{x}}).
 $${#eq-augmented-lagrangian-free-final-state}
 
 We then rewrite the boundary conditions @eq-transversality-free-state-collected as
 $$\boxed{
- \left.(\nabla_\mathbf{x}\phi+\boldsymbol \lambda)\right|_{t=t_\mathrm{f}}^\top \mathrm{d}\mathbf{x}_\mathrm{f} + \left.\left(L+\frac{\partial \phi}{\partial t}-\boldsymbol \lambda^\top  f(\bm x, \bm u, t)\right)\right|_{t=t_\mathrm{f}}\mathrm d t_\mathrm{f}.}
+ \left.(\nabla_\mathbf{x}\phi-\boldsymbol \lambda)\right|_{t=t_\mathrm{f}}^\top \mathrm{d}\mathbf{x}_\mathrm{f} + \left.\left(L+\frac{\partial \phi}{\partial t}+\boldsymbol \lambda^\top  f(\bm x, \bm u, t)\right)\right|_{t=t_\mathrm{f}}\mathrm d t_\mathrm{f}.}
 $$
 
-Since here we assume that the final time and the state at the final time are independent, this single conditions breaks down into two boundary conditions\footnote{Note that here we commit the common abuse of notation in writing the functions to be differentiated as explicitnly dependent on $t_\mathrm{f}$ such as in $\frac{\partial \phi(\mathbf{x}(t_\mathrm{f}),t_\mathrm{f})}{\partial t}$. Instead, we should perhaps keep writing it as $\left.\frac{\partial \phi(\mathbf{x}(t),t)}{\partial t}\right|_{t=t_\mathrm{f}}$ but it is tiring and the formulas look cluttered.}
+Since here we assume that the final time and the state at the final time are independent, this single conditions breaks down into two boundary conditions
 
 $$
 \begin{aligned}
- \nabla_\mathbf{x}\phi(x(t_\mathrm{f}),t_\mathrm{f})+\boldsymbol \lambda(t_\mathrm{f}) &=0\\
- L(x(t_\mathrm{f}),u(t_\mathrm{f}),t_\mathrm{f})+\frac{\partial \phi(\mathbf{x}(t_\mathrm{f}),t_\mathrm{f})}{\partial t}-\boldsymbol \lambda^\top (t_\mathrm{f}) f(\bm x(t_\mathrm{f}), \bm u(t_\mathrm{f}), t_\mathrm{f}) &=0.
+ \nabla_\mathbf{x}\phi(x(t_\mathrm{f}),t_\mathrm{f})-\boldsymbol \lambda(t_\mathrm{f}) &=0\\
+ L(x(t_\mathrm{f}),u(t_\mathrm{f}),t_\mathrm{f})+\frac{\partial \phi(\mathbf{x}(t_\mathrm{f}),t_\mathrm{f})}{\partial t}+\boldsymbol \lambda^\top (t_\mathrm{f}) f(\bm x(t_\mathrm{f}), \bm u(t_\mathrm{f}), t_\mathrm{f}) &=0.
 \end{aligned}
 $$
 
 The first one is actually representing $n$ scalar conditions, the second one is just a single scalar condition. Hence, altogether we have $n+1$ boundary conditions.
 
-Let's try to get some more insight into this. Let's assume now that the term penalizing the state at the final time does not explicitly depend on time, that is, $\frac{\partial \phi}{\partial t}=0$. Then the boundary condition modifies to
+::: {.callout-note}
+Here we commit the common abuse of notation in writing the functions to be differentiated as explicitly dependent on $t_\mathrm{f}$ such as in $\frac{\partial \phi(\mathbf{x}(t_\mathrm{f}),t_\mathrm{f})}{\partial t}$. Instead, we should perhaps keep writing it as $\left.\frac{\partial \phi(\mathbf{x}(t),t)}{\partial t}\right|_{t=t_\mathrm{f}}$, but the formulas then look rather cluttered.
+:::
+
+Let's try to get some more insight into this. We assume now that the term penalizing the state at the final time does not explicitly depend on time, that is, $\frac{\partial \phi}{\partial t}=0$. Then the boundary condition modifies to
 $$
- \left.(\nabla_\mathbf{x}\phi+\boldsymbol \lambda)\right|_{t=t_\mathrm{f}}^\top \mathrm{d}\mathbf{x}_\mathrm{f} + \left.\left(L-\boldsymbol \lambda^\top  f(\bm x, \bm u, t)\right)\right|_{t=t_\mathrm{f}}\mathrm d t_\mathrm{f},
+ \left.(\nabla_\mathbf{x}\phi-\boldsymbol \lambda)\right|_{t=t_\mathrm{f}}^\top \mathrm{d}\mathbf{x}_\mathrm{f} + \left.\left(L+\boldsymbol \lambda^\top  f(\bm x, \bm u, t)\right)\right|_{t=t_\mathrm{f}}\mathrm d t_\mathrm{f},
 $$
 which can be rewritten as
 $$
- \left.(\nabla_\mathbf{x}\phi+\boldsymbol \lambda)\right|_{t=t_\mathrm{f}}^\top \mathrm{d}\mathbf{x}_\mathrm{f} - \left.H(\bm x,\bm u,\boldsymbol \lambda,t)\right|_{t=t_\mathrm{f}}\mathrm d t_\mathrm{f},
+ \left.(\nabla_\mathbf{x}\phi-\boldsymbol \lambda)\right|_{t=t_\mathrm{f}}^\top \mathrm{d}\mathbf{x}_\mathrm{f} + \left.H(\bm x,\bm u,\boldsymbol \lambda,t)\right|_{t=t_\mathrm{f}}\mathrm d t_\mathrm{f},
 $$
 which, in turn, enforces the scalar boundary condition (on top of those other $n$ conditions)
 $$\boxed{
 \left.H(\bm x(t),\bm u(t),\boldsymbol \lambda(t),t)\right|_{t=t_\mathrm{f}}\mathrm d t_\mathrm{f}=0}.
 $$
 
-This is an observation that is worth memorizing---for a free final time optimal control problem, Hamiltonian vanishes at the end of the time interval.
+This observation is worth memorizing – for a free-final-time optimal control problem, Hamiltonian vanishes at the end of the time interval.
 
-Let's now add one more observation. We could have mentioned it even in the previous lecture since it is a general property of a Hamiltonian evaluated along the optimal solution---the total derivative of a Hamiltonian (evaluated along the solution) with respect to time is equal to its partial derivative with respect to time:
+Let's now add one more observation. We could have mentioned it even in the previous lecture since it is a general property of a Hamiltonian evaluated along the optimal solution – the total derivative of a Hamiltonian with respect to time, when evaluated along the solution, is equal to its partial derivative with respect to time:
 $$
  \frac{\mathrm{d}H}{\mathrm{d}t} = \underbrace{\frac{\partial H}{\partial \bm x}}_{-\dot{\boldsymbol \lambda}}\frac{\mathrm{d}\bm x}{\mathrm{d}t} + \underbrace{\frac{\partial H}{\partial \boldsymbol \lambda}}_{\dot{\mathbf{x}}}\frac{\mathrm{d}\boldsymbol \lambda}{\mathrm{d}t} + \underbrace{\frac{\partial H}{\partial \bm u}}_{0}\frac{\mathrm{d}\bm u}{\mathrm{d}t} + \frac{\partial H}{\partial t} = \frac{\partial H}{\partial t}.
 $$
 
-Now, if neither the system equations nor the optimal control cost function depend \textit{explicitly} on time, that is, if $\frac{\partial H}{\partial t}=0$, the Hamiltonian remains constant along the optimal solution (trajectory), that is, 
+Now, if neither the system equations nor the optimal control cost function depend *explicitly* on time, that is, if $\frac{\partial H}{\partial t}=0$, the Hamiltonian remains constant along the optimal trajectory, that is, 
 $$\boxed{
  H(\bm x(t),\bm u(t),\boldsymbol \lambda(t)) = \mathrm{const.}\quad \forall t}
 $$
 
-Combined with the previous result (boundary value of $H$ at the end of the free time interval is zero), we obtain the powerful conclusion that the Hamiltonian evaluated alon the optimal trajectory is always zero in the free final time scenario:
+Combined with the previous result (boundary value of $H$ at the end of the free time interval is zero), we obtain the powerful conclusion that the Hamiltonian evaluated along the optimal trajectory is always zero in the free-final-time scenario:
 $$\boxed{
  H(\bm x(t),\bm u(t),\boldsymbol \lambda(t)) = 0\quad \forall t}
 $$
 
-This is a pretty insightful piece of information. Since some (numerical) techniques for optimal control are based on iterative minimization of a Hamiltonian, here we already know the minimum value.
-
-### The boundary condition for the other definition of Hamiltonian
-In the previous lecture/chapter we already discussed the unfortunate discrepancy in the definition of Hamiltonian in the literature. Perhaps there is no need to come back to this topic because you are now aware of the problem, but we just want to have the formulas corresponding to the other definition of the Hamiltonian at hand. So, if instead of @eq-augmented-lagrangian-free-final-state we write the augmented Lagrangian as 
-$$
- \hat L^\mathrm{aug}(\bm x,\bm u,\hat{\boldsymbol \lambda}, t) = L(\bm x,\bm u,t) + \underbrace{\frac{\partial \phi}{\partial t} + (\nabla_{\bm x}\phi)^\top \frac{\mathrm d \bm x }{\mathrm d t}}_{\left.\frac{\mathrm d \phi(\bm x(t), t)}{\mathrm d t}\right|_{t=t_{\mathrm f}}} + \hat{\boldsymbol{\lambda}}^\top  (f(\bm x,\bm u,t) - \dot{\mathbf{x}}),
-$$
-the boundary condition would then modify to 
-$$\boxed{
- \left.(\nabla_\mathbf{x}\phi-\hat{\boldsymbol \lambda})\right|_{t=t_\mathrm{f}}^\top \mathrm{d}\mathbf{x}_\mathrm{f} + \left.\left(L+\frac{\partial \phi}{\partial t}+\hat{\boldsymbol \lambda}^\top  f(\bm x, \bm u, t)\right)\right|_{t=t_\mathrm{f}}\mathrm d t_\mathrm{f},}
-$$
-which can be rewritten in the case of $\frac{\partial \phi(\mathbf{x}(t_\mathrm{f}),t_\mathrm{f})}{\partial t}=0$ and using the alternative definition of the Hamiltonian $\hat H = L+\hat{\boldsymbol \lambda}^\top  \mathbf f$ as
-$$
- \left.(\nabla_\mathbf{x}\phi-\hat{\boldsymbol \lambda})\right|_{t=t_\mathrm{f}}^\top \mathrm{d}\mathbf{x}_\mathrm{f} + \left.\hat H(\bm x,\bm u,\hat{\boldsymbol \lambda},t)\right|_{t=t_\mathrm{f}}\mathrm d t_\mathrm{f},
-$$
+This is an insightful piece of information. Since some (numerical) techniques for optimal control are based on iterative minimization of a Hamiltonian, here we already know the minimum value.
 
 ## Free final time but the final state on a prescribed curve
 
@@ -261,15 +251,15 @@ $$
 \end{aligned}
 $$
 
-Translating the above derived transversality condition from the domain (and notation) of calculus of variations into the optimal control setting gives
+Translating the above derived transversality condition from the domain (and notation) of calculus of variations to the optimal control setting gives
 $$\boxed{
- \left.(\nabla_\mathbf{x}\phi+\boldsymbol \lambda)^\top \dot{\boldsymbol\psi}(t) + L+\frac{\partial \phi}{\partial t}-\boldsymbol \lambda^\top  \mathbf f(\bm x, \bm u, t)\right|_{t=t_\mathrm{f}}=0.}
+ \left.(\nabla_\mathbf{x}\phi-\boldsymbol \lambda)^\top \dot{\boldsymbol\psi}(t) + L+\frac{\partial \phi}{\partial t}+\boldsymbol \lambda^\top  \mathbf f(\bm x, \bm u, t)\right|_{t=t_\mathrm{f}}=0.}
 $$
 
 Of course, on top of this single condition, the $2n$ boundary conditions shown above must be added
 $$\boxed{
 \begin{aligned}
- \bm x(t_\mathrm{i}) &= \mathbf x_\mathrm{i}\\
+ \bm x(t_\mathrm{i}) &= \mathbf x_\mathrm{i},\\
  \bm x(t_\mathrm{f}) &= \boldsymbol \psi(t_\mathrm{f}).
 \end{aligned}}
 $$
