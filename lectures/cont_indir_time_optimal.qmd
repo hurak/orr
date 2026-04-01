@@ -206,8 +206,8 @@ $$\boxed{
 u(t) = 
 \left\{
 \begin{array}{cl}
--1 & \text{if } y(t)>-\frac{1}{2}v(t)|v(t)|\text{ or if } y(t)= -\frac{1}{2}v(t)|v(t)| \text{ and }y<0,\\
-1 & \text{if } y(t) < -\frac{1}{2}v(t)|v(t)|\text{ or if } y(t)= -\frac{1}{2}v(t)|v(t)| \text{ and }y>0.
+-1 & \text{if } y(t)>-\frac{1}{2}v(t)|v(t)|\text{ or if } y(t)= -\frac{1}{2}v(t)|v(t)| \text{ and }v>0,\\
+1 & \text{if } y(t) < -\frac{1}{2}v(t)|v(t)|\text{ or if } y(t)= -\frac{1}{2}v(t)|v(t)| \text{ and }v<0.
 \end{array}
 \right.}
 $$
@@ -216,7 +216,7 @@ Equivalently, we can write the condition in terms of the *switching function* $s
 $$\boxed{
 s(y,v) = y + \frac{1}{2}v|v|}
 $$
-by checking if the function is positive or negative (or zero within some numerical tolerance).
+by checking if the function is positive or negative (or zero within some numerical tolerance, as we discuss later).
 
 The code below implements this optimal control law.
 ``` {julia}
@@ -225,45 +225,36 @@ The code below implements this optimal control law.
 using DifferentialEquations
 using Plots
 
-function time_optimal_bang_bang_control(x, umin, umax, ϵ = 1e-3)
+function time_optimal_bang_bang_control(x, umin, umax)
     y = x[1]                    # Position.
     v = x[2]                    # Velocity.
     s = y+1/2*v*abs(v)          # Switching curve s(y,v) = 0.
-    if abs(s) <= ϵ              # If on the switching curve:
-        if y < 0
-            u = umin
-        elseif y > 0
-            u = umax
-        end
-    elseif s > 0                # If above the curve:
-        u = umin
-    elseif s < 0                # If below the curve:
-        u = umax
-    elseif y^2 + v^2 <= 1e-3    # If at (0,0).
-        u = 0                           
+    if s == 0                   # If on the switching curve:
+        return v >= 0 ? umin : umax
+    elseif s > 0               # If above the curve:
+        return umin
+    else                        # If below the curve:
+        return umax
     end
-    return u
 end
 
 function simulate_time_optimal_double_integrator()
     A = [0 1; 0 0]
     B = [0, 1]
-    umin = -1.0
-    umax = 1.0
-    tfinal = 3.6
-    tspan = (0.0,tfinal)
+    umin, umax = (-1.0, 1.0)
+    tspan = (0.0, 3.6)
     x₀ = [1.0,1.0]
     f(x,p,t) = A*x + B*time_optimal_bang_bang_control(x,umin,umax)
     prob = ODEProblem(f,x₀,tspan)
     xopt = solve(prob, Tsit5(), reltol=1e-8, abstol=1e-8, dtmax=0.01)
-    uopt = time_optimal_bang_bang_control.(xopt.u,umin,umax)  # Remember that the package uses `u` as the state variable.
+    uopt = time_optimal_bang_bang_control.(xopt.u,umin,umax)  # Remember the package uses `u` as the state variable.
     return xopt, uopt
 end
 
 xopt, uopt = simulate_time_optimal_double_integrator()
 ```
 
-The state trajectory in the state space is in @fig-time-optimal-state-portrait, while the state and control trajectories in time are in @fig-time-optimal-control.
+We plot the state trajectory in the state space in @fig-time-optimal-state-portrait. Things look fine. We can see a compliance with the fact we have derived rigorously – there is (at most) one switching.
 ``` {julia}
 #| code-fold: true
 #| fig-cap: "State trajectory of the double integrator system under time-optimal (bang-bang) feedback control in the state space. The trajectory starts at (1,1) and ends at the origin."
@@ -271,6 +262,7 @@ The state trajectory in the state space is in @fig-time-optimal-state-portrait, 
 plot(xopt[1,:],xopt[2,:],linewidth=2,xaxis="Position",yaxis="Velocity",label="State trajectory")
 ```
 
+Really? We now plot the state and control trajectories as they evolve in time in @fig-time-optimal-control. 
 ``` {julia}
 #| code-fold: true
 #| fig-cap: "Response of a double integrator with a time-optimal (bang-bang) feedback control to a nonzero initial state. Chattering phenomenon is visible in the control signal as the system approaches the origin."
@@ -280,9 +272,62 @@ p2 = plot(xopt.t,uopt,linewidth=2,xaxis="Time",yaxis="Control",label="u")
 plot(p1,p2,layout=(2,1))
 ```
 
-In the plots we can find a confirmation of the fact that we derived rigorously – the fact that there will be at most one switch in the control signal... Ooops... This is actually not quite what we see in the plot above, is it? We can see that the control variable switches for the first time at about 2.2 s, but then it switches again at time close to 3.5 s. And it then keeps switching very fast. Consequently, the simulation gets significantly slower and the solver may even appear to get stuck. 
+Ooops... This is actually not quite what the theory predicted. We can see that the control variable switches for the first time at about 2.2 s, but then it switches again at time close to 3.5 s. And it then keeps switching very fast. 
 
-Obviosly, what is going on is that the simulator is tempted to include not just two but in fact a huge number of switches in the control signal as it approaches the origin. This is quite characteristic of the naive implementation of bang-bang control – a phenomenon called *chattering*. In this particular example we may decide to ignore it since both state variables are already close enough to the origin and we may want to declare the control task as finished. Generally, this chattering phenomenon needs to be handled somehow systematically. Any suggestion?
+Consequently, the simulation gets significantly slower and the solver may even appear to get stuck. 
+
+This behaviour is quite characteristic of the naive implementation of bang-bang control – a phenomenon called *chattering*. 
+
+Any suggestions for handling it, however heuristically? First, note that the condition `if s==0` is completely useless for a floating point number `s`. The condition will most likely never be satisfied. We can introduce some small insensitivity band around the switching curve. And we can also implement a stopping criterion for control once we are close enough to the origin – the control switches to zero (it would be perhaps more appropriate in practice to switch off the controll completely but rather switch to some local controller such as LQR). This is implemented in the code below. 
+
+``` {julia}
+#| code-fold: show
+#| output: false
+function time_optimal_bang_bang_control(x, umin, umax; ϵₛ = 1e-3, ϵₓ = 5e-3)
+    y = x[1]                    # Position.
+    v = x[2]                    # Velocity.
+    s = y+1/2*v*abs(v)          # Switching curve s(y,v) = 0.
+    if y^2 + v^2 <= ϵₓ^2        # If close enough to the origin, stop controlling:
+        return 0.0
+    elseif abs(s) <= ϵₛ         # If in the band around the switching curve:
+        return v >= 0 ? umin : umax
+    elseif s > ϵₛ               # If above the curve, considering also the band:
+        return umin
+    else                        # If below the curve, considering also the band:
+        return umax
+    end
+end
+```
+
+The resulting state and control trajectories are shown in @fig-time-optimal-control-mitigated. 
+``` {julia}
+#| code-fold: true
+#| fig-cap: "State trajectory of the double integrator system under time-optimal (bang-bang) feedback control in the state space. The trajectory starts at (1,1) and ends at the origin. The chattering phenomenon is mitigated by introducing an insensitivity region around the switching curve and stopping the integration once the state is close enough to the origin."
+#| label: fig-time-optimal-control-mitigated
+function simulate_time_optimal_double_integrator()
+    A = [0 1; 0 0]
+    B = [0, 1]
+    umin, umax = (-1.0, 1.0)
+    tspan = (0.0, 3.6)
+    x₀ = [1.0,1.0]
+    ϵₛ = 1e-3
+    ϵₓ = 5e-3
+    f(x,p,t) = A*x + B*time_optimal_bang_bang_control(x, umin, umax; ϵₛ=ϵₛ, ϵₓ=ϵₓ)
+
+    prob = ODEProblem(f,x₀,tspan)
+    xopt = solve(prob, Tsit5(), reltol=1e-8, abstol=1e-8, dtmax=0.01)
+    uopt = time_optimal_bang_bang_control.(xopt.u,umin,umax; ϵₛ=ϵₛ, ϵₓ=ϵₓ)  # Remember that the package uses `u` as the state variable.
+    return xopt, uopt
+end
+
+xopt, uopt = simulate_time_optimal_double_integrator()
+
+plot(xopt[1,:],xopt[2,:],linewidth=2,xaxis="Position",yaxis="Velocity",label="State trajectory")
+
+p1 = plot(xopt,linewidth=2,xaxis="",yaxis="States",label=["y" "v"]) 
+p2 = plot(xopt.t,uopt,linewidth=2,xaxis="Time",yaxis="Control",label="u")
+plot(p1,p2,layout=(2,1))
+```
 
 :::{.callout-warning}
 Note that the video linked below, which covers the material of this lecture, uses the other convention for the control Hamiltonian, the one leading to the maximization of the Hamiltonian. Other than that, the (structure of the) results is the same.
