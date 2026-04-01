@@ -123,11 +123,11 @@ $$
 $$
 and 
 $$
- \lambda_2(t) = c_1t+c_2.
+ \lambda_2(t) = -c_1t+c_2.
 $$
 for some constants $c_1$ and $c_2$. To determine the constants, we will have to bring the boundary conditions finally into the game. The condition that $H(t_\mathrm{f}) = 0$ gives
 $$
- \lambda_2(t_\mathrm{f})u(t_\mathrm{f}) = 1.
+ \lambda_2(t_\mathrm{f})u(t_\mathrm{f}) = -1.
 $$
   
 We can now sketch possible profiles of the switching function. A few characteristic versions are in @fig-time-optimal-costate 
@@ -212,24 +212,35 @@ u(t) =
 \right.}
 $$
 
+Equivalently, we can write the condition in terms of the *switching function* $s(y,v)$ defined by
+$$\boxed{
+s(y,v) = y + \frac{1}{2}v|v|}
+$$
+by checking if the function is positive or negative (or zero within some numerical tolerance).
+
+The code below implements this optimal control law.
 ``` {julia}
-#| label: fig-time-optimal-control
-#| fig-cap: "Response of a double integrator with a time-optimal (bang-bang) feedback regulator to a nonzero initial state"
+#| code-fold: show
+#| output: false
 using DifferentialEquations
 using Plots
-function time_optimal_bang_bang_control(x,umin,umax)
+
+function time_optimal_bang_bang_control(x, umin, umax, ϵ = 1e-3)
     y = x[1]                    # Position.
     v = x[2]                    # Velocity.
     s = y+1/2*v*abs(v)          # Switching curve s(y,v) = 0.
-    if s > 0                    # If above the curve:
+    if abs(s) <= ϵ              # If on the switching curve:
+        if y < 0
+            u = umin
+        elseif y > 0
+            u = umax
+        end
+    elseif s > 0                # If above the curve:
         u = umin
     elseif s < 0                # If below the curve:
         u = umax
-    elseif s == 0 && v > 0      # If on the switching curve on the left:
-        u = umin
-    elseif s == 0 && v < 0      # If on the switching curve on the right:
-        u = umax
-    else u = 0                  # If at (0,0).
+    elseif y^2 + v^2 <= 1e-3    # If at (0,0).
+        u = 0                           
     end
     return u
 end
@@ -244,17 +255,32 @@ function simulate_time_optimal_double_integrator()
     x₀ = [1.0,1.0]
     f(x,p,t) = A*x + B*time_optimal_bang_bang_control(x,umin,umax)
     prob = ODEProblem(f,x₀,tspan)
-    sol = solve(prob, Tsit5(), reltol=1e-8, abstol=1e-8)
-    uopt = time_optimal_bang_bang_control.(sol.u,umin,umax);                         # Remember that the package uses `u` as the state variable.
-    p1 = plot(sol,linewidth=2,xaxis="",yaxis="States",label=["x" "v"]) 
-    p2 = plot(sol.t,uopt,linewidth=2,xaxis="Time",yaxis="Control",label="u")
-    plot(p1,p2,layout=(2,1))
+    xopt = solve(prob, Tsit5(), reltol=1e-8, abstol=1e-8, dtmax=0.01)
+    uopt = time_optimal_bang_bang_control.(xopt.u,umin,umax)  # Remember that the package uses `u` as the state variable.
+    return xopt, uopt
 end
 
-simulate_time_optimal_double_integrator()
+xopt, uopt = simulate_time_optimal_double_integrator()
 ```
 
-In the plots you can find a confirmation of the fact that we derived rigorously – the fact that there will be at most one switch in the control signal... Ooops... This is actually not quite what we see in the plot above, is it? We can see that the control variable switches for the first time at about 2.2 s, but then it switches again at time close to 3.5 s. And it then keeps switching very fast. Consequently, the simulation gets significantly slower and the solver may even appear to get stuck. 
+The state trajectory in the state space is in @fig-time-optimal-state-portrait, while the state and control trajectories in time are in @fig-time-optimal-control.
+``` {julia}
+#| code-fold: true
+#| fig-cap: "State trajectory of the double integrator system under time-optimal (bang-bang) feedback control in the state space. The trajectory starts at (1,1) and ends at the origin."
+#| label: fig-time-optimal-state-portrait
+plot(xopt[1,:],xopt[2,:],linewidth=2,xaxis="Position",yaxis="Velocity",label="State trajectory")
+```
+
+``` {julia}
+#| code-fold: true
+#| fig-cap: "Response of a double integrator with a time-optimal (bang-bang) feedback control to a nonzero initial state. Chattering phenomenon is visible in the control signal as the system approaches the origin."
+#| label: fig-time-optimal-control
+p1 = plot(xopt,linewidth=2,xaxis="",yaxis="States",label=["y" "v"]) 
+p2 = plot(xopt.t,uopt,linewidth=2,xaxis="Time",yaxis="Control",label="u")
+plot(p1,p2,layout=(2,1))
+```
+
+In the plots we can find a confirmation of the fact that we derived rigorously – the fact that there will be at most one switch in the control signal... Ooops... This is actually not quite what we see in the plot above, is it? We can see that the control variable switches for the first time at about 2.2 s, but then it switches again at time close to 3.5 s. And it then keeps switching very fast. Consequently, the simulation gets significantly slower and the solver may even appear to get stuck. 
 
 Obviosly, what is going on is that the simulator is tempted to include not just two but in fact a huge number of switches in the control signal as it approaches the origin. This is quite characteristic of the naive implementation of bang-bang control – a phenomenon called *chattering*. In this particular example we may decide to ignore it since both state variables are already close enough to the origin and we may want to declare the control task as finished. Generally, this chattering phenomenon needs to be handled somehow systematically. Any suggestion?
 
