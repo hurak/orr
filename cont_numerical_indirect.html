@@ -1112,7 +1112,7 @@ window.Quarto = {
 \begin{aligned}
 \dot{\bm{x}} &amp;= \nabla_{\bm\lambda} H(\bm x,\bm u,\bm \lambda) \\
 \dot{\bm{\lambda}} &amp;= -\nabla_{\bm x} H(\bm x,\bm u,\bm \lambda) \\
-\mathbf 0 &amp;= \nabla_{\bm u} H(\bm x,\bm u,\bm \lambda)\qquad (\text{or} \qquad \bm u^\star = \text{argmax } H(\bm x^\star,\bm u, \bm\lambda^\star),\quad \bm u \in\mathcal{U})\\
+\mathbf 0 &amp;= \nabla_{\bm u} H(\bm x,\bm u,\bm \lambda)\qquad (\text{or} \qquad \bm u^\star = \text{argmin} H(\bm x^\star,\bm u, \bm\lambda^\star),\quad \bm u \in\mathcal{U})\\
 \bm x(t_\mathrm{i}) &amp;=\mathbf x_\mathrm{i}\\
 \bm \lambda(t_\mathrm{f}) &amp;= \nabla\phi(\bm{x}(t_\mathrm{f})).
 \end{aligned}
@@ -1477,15 +1477,18 @@ Figure&nbsp;4: Indirect multiple shooting
 <p>Hermite-Simpson method can actually come in three forms (this is from <span class="citation" data-cites="bettsPracticalMethodsOptimal2020"><a href="#ref-bettsPracticalMethodsOptimal2020" role="doc-biblioref">[1]</a></span>):</p>
 <section id="primary-form" class="level6">
 <h6 class="anchored" data-anchor-id="primary-form">Primary form</h6>
-<p>There are two equations for the given integration interval <span class="math inline">[t_k,t_{k+1}]</span> <span class="math display">x_{k+1} = x_k + h_k \left(\frac{1}{6}f_k + \frac{2}{3}f_{k2} + \frac{1}{6}f_{k+1}\right),</span> <span class="math display">x_{k2} = x_k + h_k \left(\frac{5}{24}f_k + \frac{1}{3}f_{k2} - \frac{1}{24}f_{k+1}\right),</span> where the <span class="math inline">f</span> symbols are just shorthand notations for values of the function at a certain point <span class="math display">f_k = f(x_k,u(t_k),t_k),</span> <span class="math display">f_{k2} = f(x_{k2},u(t_{k2}),t_{k2}),</span> <span class="math display">f_{k+1} = f(x_{k+1},u(t_{k+1}),t_{k+1}),</span> and the off-grid time <span class="math inline">t_{k2}</span> is given by <span class="math display">t_{k2} = t_k + \frac{1}{2}h_k.</span></p>
-<p>The first of the two equations can be recognized as Simpson’s rule for computing a definite integral. Note that while considering the right hand sides as functions of the control inputs, we also correctly express at which time (the collocation time) we consider the value of the control variable.</p>
-<p>Being this general allows considering general control inputs and not only piecewise constant control inputs. For example, if we consider piecewise linear control inputs, then <span class="math inline">u(t_{k2}) = \frac{u_k + u_{k+1}}{2}</span>. But if we stick to the (more common) piecewise constant controls, not surprisingly <span class="math inline">u(t_{k2}) = u_k</span>. Typically we format the equations as <em>defect equations</em>, that is, with zero on the right hand side <span class="math display">
+<p>There are two equations for the given integration interval <span class="math inline">[t_k,t_{k+1}]</span> <span class="math display">x_{k+1} = x_k + h_k \left(\frac{1}{6}f_k + \frac{2}{3}f_{k2} + \frac{1}{6}f_{k+1}\right),</span> <span class="math display">x_{k2} = x_k + h_k \left(\frac{5}{24}f_k + \frac{1}{3}f_{k2} - \frac{1}{24}f_{k+1}\right),</span> where the <span class="math inline">f</span> symbols are just shorthand notations for values of the function at a certain point <span class="math display">f_k = f(x_k,t_k),</span> <span class="math display">f_{k2} = f(x_{k2},u(t_{k2}),t_{k2}),</span> <span class="math display">f_{k+1} = f(x_{k+1}),t_{k+1}),</span> and the off-grid time <span class="math inline">t_{k2}</span> is given by <span class="math display">t_{k2} = t_k + \frac{1}{2}h_k.</span></p>
+<p>The first of the two equations can be recognized as Simpson’s rule for computing a definite integral. <!-- Note that while considering the right hand sides as functions of the control inputs, we also correctly express at which time (the collocation time) we consider the value of the control variable. --></p>
+<!-- Being this general allows considering general control inputs and not only piecewise constant control inputs.
+For example, if we consider piecewise linear control inputs, then $u(t_{k2}) = \frac{u_k + u_{k+1}}{2}$.
+But if we stick to the (more common) piecewise constant controls, not surprisingly $u(t_{k2}) = u_k$. -->
+<p>We format the equations as <em>defect equations</em>, that is, with zero on the right hand side <span class="math display">
 \begin{aligned}
 x_{k+1} - x_k - h_k \left(\frac{1}{6}f_k + \frac{2}{3}f_{k2} + \frac{1}{6}f_{k+1}\right) &amp;= 0,\\
 x_{k2} - x_k - h_k \left(\frac{5}{24}f_k + \frac{1}{3}f_{k2} - \frac{1}{24}f_{k+1}\right) &amp;= 0.
 \end{aligned}
 </span></p>
-<p>The optimization variables for every integration interval are <span class="math inline">x_k,u_k,x_{k2}, u_{k2}</span>.</p>
+<p>The optimization variables for every integration interval are <span class="math inline">x_k,x_{k2}</span>.</p>
 </section>
 <section id="hermite-simpson-separated-hss-method" class="level6">
 <h6 class="anchored" data-anchor-id="hermite-simpson-separated-hss-method">Hermite-Simpson Separated (HSS) method</h6>
@@ -1495,7 +1498,7 @@ x_{k+1} - x_k - h_k \left(\frac{1}{6}f_k + \frac{2}{3}f_{k2} + \frac{1}{6}f_{k+1
 x_{k2} - \frac{x_k + x_{k+1}}{2} - \frac{h_k}{8} \left(f_k - f_{k+1}\right) &amp;= 0.
 \end{aligned}
 </span></p>
-<p>While we already know (from some paragraph above) that the first equation is Simpson’s rule, the second equation is an outcome of Hermite intepolation. Hence the name. The optimization variables for every integration interval are the same as before, that is, <span class="math inline">x_k,u_k,x_{k2}, u_{k2}</span> .</p>
+<p>While we already know (from some paragraph above) that the first equation is Simpson’s rule, the second equation is an outcome of Hermite intepolation. Hence the name. The optimization variables for every integration interval are the same as before, that is, <span class="math inline">x_k,x_{k2}</span>.</p>
 </section>
 <section id="hermite-simpson-condensed-hsc-method" class="level6">
 <h6 class="anchored" data-anchor-id="hermite-simpson-condensed-hsc-method">Hermite-Simpson Condensed (HSC) method</h6>
@@ -1520,7 +1523,7 @@ Figure&nbsp;5: Indirect collocation
 </div>
 <p>Finding a solution amounts to determining all those coefficients. Once we have them, the (approximate) solution is given by a piecewise polynomial.</p>
 <p>How to determine the coefficients? By interpolation. But we will see in a moment that two types of interpolation are needed – interpolation of the value of the solution and <em>interpolation of the derivative</em> of the solution.</p>
-<p>The former is only performed at the beginning of each interval, that is, at every discretization point (or grid point or node or knot). The condition reads that the polynomial <span class="math inline">p_{k-1}(t)</span> approximating the solution <span class="math inline">x(t)</span> on the <span class="math inline">(k-1)th</span> interval should attain the same value at the end of that interval, that is, at <span class="math inline">t_{k-1} + h_{k-1}</span>, as the polynomial <span class="math inline">p_k(t)</span> approximating the solution <span class="math inline">x(t)</span> on the <span class="math inline">k</span>th interval attains at the same point, which from its perspective is the beginning of the <span class="math inline">k</span>th interval, that is, <span class="math inline">t_k</span>. We express this condition formally as <span class="math display">\boxed{p_{k-1}(\underbrace{t_{k-1}+h_{k-1}}_{t_{k}}) = p_k(t_k).}</span></p>
+<p>The former is only performed at the beginning of each interval, that is, at every <em>discretization point </em>(or <em>grid point</em> or <em>node</em> or <em>knot</em>). The condition reads that the polynomial <span class="math inline">p_{k-1}(t)</span> approximating the solution <span class="math inline">x(t)</span> on the <span class="math inline">(k-1)th</span> interval should attain the same value at the end of that interval, that is, at <span class="math inline">t_{k-1} + h_{k-1}</span>, as the polynomial <span class="math inline">p_k(t)</span> approximating the solution <span class="math inline">x(t)</span> on the <span class="math inline">k</span>th interval attains at the same point, which from its perspective is the beginning of the <span class="math inline">k</span>th interval, that is, <span class="math inline">t_k</span>. We express this condition formally as <span class="math display">\boxed{p_{k-1}(\underbrace{t_{k-1}+h_{k-1}}_{t_{k}}) = p_k(t_k).}</span></p>
 <p>Expanding the two polynomials, we get <span class="math display">p_{k-1,0} + p_{k-1,1}h_{k-1} + p_{k-1,2}h_{k-1}^2+\ldots + p_{k-1,s}h_{k-1}^s = p_{k0}.</span></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
