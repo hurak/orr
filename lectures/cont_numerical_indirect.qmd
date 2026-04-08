@@ -26,7 +26,7 @@ $$
 \begin{aligned}
 \dot{\bm{x}} &= \nabla_{\bm\lambda} H(\bm x,\bm u,\bm \lambda) \\
 \dot{\bm{\lambda}} &= -\nabla_{\bm x} H(\bm x,\bm u,\bm \lambda) \\
-\mathbf 0 &= \nabla_{\bm u} H(\bm x,\bm u,\bm \lambda)\qquad (\text{or} \qquad \bm u^\star = \text{argmax } H(\bm x^\star,\bm u, \bm\lambda^\star),\quad \bm u \in\mathcal{U})\\
+\mathbf 0 &= \nabla_{\bm u} H(\bm x,\bm u,\bm \lambda)\qquad (\text{or} \qquad \bm u^\star = \text{argmin} H(\bm x^\star,\bm u, \bm\lambda^\star),\quad \bm u \in\mathcal{U})\\
 \bm x(t_\mathrm{i}) &=\mathbf x_\mathrm{i}\\
 \bm \lambda(t_\mathrm{f}) &= \nabla\phi(\bm{x}(t_\mathrm{f})).
 \end{aligned}
@@ -447,17 +447,18 @@ Hermite-Simpson method can actually come in three forms (this is from @bettsPrac
 There are two equations for the given integration interval $[t_k,t_{k+1}]$
 $$x_{k+1} = x_k + h_k \left(\frac{1}{6}f_k + \frac{2}{3}f_{k2} + \frac{1}{6}f_{k+1}\right),$$ $$x_{k2} = x_k + h_k \left(\frac{5}{24}f_k + \frac{1}{3}f_{k2} - \frac{1}{24}f_{k+1}\right),$$ 
 where the $f$ symbols are just shorthand notations for values of the function at a certain point
-$$f_k = f(x_k,u(t_k),t_k),$$ $$f_{k2} = f(x_{k2},u(t_{k2}),t_{k2}),$$ $$f_{k+1} = f(x_{k+1},u(t_{k+1}),t_{k+1}),$$ 
+$$f_k = f(x_k,t_k),$$ $$f_{k2} = f(x_{k2},u(t_{k2}),t_{k2}),$$ 
+$$f_{k+1} = f(x_{k+1}),t_{k+1}),$$ 
 and the off-grid time $t_{k2}$ is given by
 $$t_{k2} = t_k + \frac{1}{2}h_k.$$ 
 
 The first of the two equations can be recognized as Simpson's rule for computing a definite integral.
-Note that while considering the right hand sides as functions of the control inputs, we also correctly express at which time (the collocation time) we consider the value of the control variable.
+<!-- Note that while considering the right hand sides as functions of the control inputs, we also correctly express at which time (the collocation time) we consider the value of the control variable. -->
 
-Being this general allows considering general control inputs and not only piecewise constant control inputs.
+<!-- Being this general allows considering general control inputs and not only piecewise constant control inputs.
 For example, if we consider piecewise linear control inputs, then $u(t_{k2}) = \frac{u_k + u_{k+1}}{2}$.
-But if we stick to the (more common) piecewise constant controls, not surprisingly $u(t_{k2}) = u_k$.
-Typically we format the equations as *defect equations*, that is, with zero on the right hand side
+But if we stick to the (more common) piecewise constant controls, not surprisingly $u(t_{k2}) = u_k$. -->
+We format the equations as *defect equations*, that is, with zero on the right hand side
 $$
 \begin{aligned}
 x_{k+1} - x_k - h_k \left(\frac{1}{6}f_k + \frac{2}{3}f_{k2} + \frac{1}{6}f_{k+1}\right) &= 0,\\ 
@@ -465,7 +466,7 @@ x_{k2} - x_k - h_k \left(\frac{5}{24}f_k + \frac{1}{3}f_{k2} - \frac{1}{24}f_{k+
 \end{aligned}
 $$ 
 
-The optimization variables for every integration interval are $x_k,u_k,x_{k2}, u_{k2}$.
+The optimization variables for every integration interval are $x_k,x_{k2}$.
 
 ###### Hermite-Simpson Separated (HSS) method
 Alternatively, we can express $f_{k2}$ in the first equation as a function of the remaining terms and then substitute to the second equation. This will transform the second equation such that only the terms indexed with $k$ and $k+1$ are present.
@@ -477,7 +478,7 @@ x_{k2} - \frac{x_k + x_{k+1}}{2} - \frac{h_k}{8} \left(f_k - f_{k+1}\right) &= 0
 $$ 
 
 While we already know (from some paragraph above) that the first equation is Simpson's rule, the second equation is an outcome of Hermite intepolation. Hence the name.
-The optimization variables for every integration interval are the same as before, that is, $x_k,u_k,x_{k2}, u_{k2}$ .
+The optimization variables for every integration interval are the same as before, that is, $x_k,x_{k2}$.
 
 ###### Hermite-Simpson Condensed (HSC) method
 Yet some more simplification can be obtained from HSS. Namely, the second equation can be actually used to directly prescribe $x_{k2}$
@@ -500,7 +501,7 @@ Finding a solution amounts to determining all those coefficients. Once we have t
 
 How to determine the coefficients? By interpolation. But we will see in a moment that two types of interpolation are needed – interpolation of the value of the solution and *interpolation of the derivative* of the solution.   
 
-The former is only performed at the beginning of each interval, that is, at every discretization point (or grid point or node or knot). The condition reads that the polynomial $p_{k-1}(t)$ approximating the solution $x(t)$ on the $(k-1)th$ interval should attain the same value at the end of that interval, that is, at $t_{k-1} + h_{k-1}$, as the polynomial $p_k(t)$ approximating the solution $x(t)$ on the $k$th interval attains at the same point, which from its perspective is the beginning of the $k$th interval, that is, $t_k$. We express this condition formally as
+The former is only performed at the beginning of each interval, that is, at every *discretization point *(or *grid point* or *node* or *knot*). The condition reads that the polynomial $p_{k-1}(t)$ approximating the solution $x(t)$ on the $(k-1)th$ interval should attain the same value at the end of that interval, that is, at $t_{k-1} + h_{k-1}$, as the polynomial $p_k(t)$ approximating the solution $x(t)$ on the $k$th interval attains at the same point, which from its perspective is the beginning of the $k$th interval, that is, $t_k$. We express this condition formally as
 $$\boxed{p_{k-1}(\underbrace{t_{k-1}+h_{k-1}}_{t_{k}}) = p_k(t_k).}$$ 
 
 Expanding the two polynomials, we get
