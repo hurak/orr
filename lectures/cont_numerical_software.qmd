@@ -18,8 +18,14 @@ engine: julia
 
 The methods studied in this chapter are already quite mature and well described. Software implementations exist. Here we enumerate some of them. 
 
-[acados](https://github.com/acados/acados) Implemented in C but interfaces exist for Matlab and Python FOSS [@verschuerenAcadosModularOpensource2022]
+[InfiniteOpt.jl](https://infiniteopt.github.io/InfiniteOpt.jl/stable/)
 
-[GPOPS-II](https://www.gpops2.com/) Matlab
+[OptimalControl.jl](https://control-toolbox.org/OptimalControl.jl/stable/)
+
+[CasADi](https://web.casadi.org/) In C++ but interfaces exist for Matlab and Python. Strictly speaking it is not a tool dedicated to optimal control, but provides symbolic expressions and automatic differentiation, which are very useful for optimal control problems. 
+
+[acados](https://github.com/acados/acados) Implemented in C but interfaces exist for Matlab and Python [@verschuerenAcadosModularOpensource2022].
+
+[GPOPS-II](https://www.gpops2.com/) In Matlab. Commercial.
 
 [rockit](https://gitlab.kuleuven.be/meco-software/rockit) In Python, built on top of CasADi, interface to Matlab. 

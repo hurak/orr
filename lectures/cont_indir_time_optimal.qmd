@@ -278,7 +278,7 @@ Consequently, the simulation gets significantly slower and the solver may even a
 
 This behaviour is quite characteristic of the naive implementation of bang-bang control – a phenomenon called *chattering*. 
 
-Any suggestions for handling it, however heuristically? First, note that the condition `if s==0` is completely useless for a floating point number `s`. The condition will most likely never be satisfied. We can introduce some small insensitivity band around the switching curve. And we can also implement a stopping criterion for control once we are close enough to the origin – the control switches to zero (it would be perhaps more appropriate in practice to switch off the controll completely but rather switch to some local controller such as LQR). This is implemented in the code below. 
+Any suggestions for handling it, however heuristically? First, note that the condition `if s==0` is completely useless for a floating point number `s`. The condition will most likely never be satisfied. We can introduce some small insensitivity band around the switching curve. And we can also implement a stopping criterion for control once we are close enough to the origin – the control switches to zero (it would be perhaps more appropriate in practice to switch to some local controller such as LQR). This is implemented in the code below. 
 
 ``` {julia}
 #| code-fold: show

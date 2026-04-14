@@ -527,9 +527,9 @@ $$
 
 This gives us the complete set of equations for each interval. For the considered example of a cubic polynomial, we have one interpolation condition at the beginning of the interval and then three collocation conditions at the collocation points. In total, we have four equations for each interval. The number of equations is equal to the number of coefficients of the polynomial. Before the system of equations can solved for the coefficients, we must specifies the collocation points. Based on these, the collocation methods split into three families:
 
-- Gauss or Gauss-Legendre methods – the collocation points are strictly inside each interval.
-- Lobatto methods – the collocation points include also both ends of each interval.
-- Radau methods – the collocation points include just one end of the interval.
+- Gauss or Legendre-Gauss (LG) methods – the collocation points are strictly inside each interval.
+- Lobatto or Legendre-Gauss_Lobatto (LGL) methods – the collocation points include also both ends of each interval.
+- Radau methods or Legendre-Gauss-Radau (LGR) methods – the collocation points include just one end of the interval.
 
 ![Single (sub)interval in indirect collocation – a cubic polynomial calls for three collocation points, two of which coincide with the discretization points (discrete-times); the continuity is enforced at the discretization point at the beginning of the interval](figures/indirect_collocation_single_interval.png){width=50% #fig-indirect-collocation-single-interval}
 
