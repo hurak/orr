@@ -1,0 +1,526 @@
+---
+title: "Singular control"
+bibliography: 
+    - ref_optimal_control.bib
+    - ref_numerical_optimal_control.bib
+csl: ieee-control-systems.csl
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+        code-summary: "Show the code"
+crossref:
+  fig-prefix: Fig. 
+  eq-prefix: Eq.
+engine: julia
+---
+
+In this section we elaborate on a particularly delicate and yet practically relevant issue. We have learnt through Pontryagin's minimum principle (PMP) that the optimal control minimizes the Hamiltonian function over all admissible controls $u(t)\in \mathcal{U}$ at each time instant $t$. But can it happen that this condition does not uniquely determine the optimal control? 
+
+The answer is yes, it can, unfortunately. And if it happens, the standard first-order conditions of optimality composed of the state equations, costate equations and the minimization of the Hamiltonian then do not uniquely specify the optimal control then.
+
+Under which conditions does it happen? One such condition is the **linearity of the Hamiltonian in the control $u$**. Why? 
+
+::: {.callout-note}
+In the following we restrict ourselves to the case of a single control input for simplicity, but the same reasoning applies to multiple controls. 
+:::
+
+If the Hamiltonian is linear in $u$, then the derivative $\frac{\partial H}{\partial u}$, which we denote $H_u$ for brevity, does not depend on $u$. The stationarity equation $H_u = 0$ (one of the first-order necessary conditions of optimality) then does not give us any information about the optimal control. 
+
+Equivalently, since $H_u$ is required to be zero, the Hamiltonian is neither increasing nor decreasing in $u$; it is constant in $u$. But then PMP does not specify a unique optimal control since a constant function has no unique minimum over its domain. 
+
+If this only happens for a single time instant, then it is not a problem as we have already seen in the case of a time-optimal control of the double integrator. Let's recall the relevant details of that example here.
+
+::: {#exm-double-integrator-singular}
+## Time-optimal control of the double integrator
+Recall that the Hamiltonian for the time-optimal control of the double integrator is given by
+$$
+H(\bm x, u, \bm \lambda) = \left( 1 + \lambda_1 x_2 + \lambda_2 u \right),
+$$
+which is linear in the control $u$. Then 
+$$
+H_u = \lambda_2,
+$$
+and from the stationarity condition $H_u = 0$, we cannot tell anything about the optimal control. From PMP we know that the optimal control is given by
+$$
+\begin{aligned}
+u^\star &= \operatorname*{argmin}_{u\in [-1,1]} 1 + \lambda_1 x_2 + \lambda_2 u \\
+&= \operatorname*{argmin}_{u\in [-1,1]} \lambda_2 u \\
+&= -\mathrm{sign}(\lambda_2),
+\end{aligned}
+$$
+which is not uniquely defined when $\lambda_2 = 0$. 
+
+Note that it will not help here if we define the signum function at zero as returning zero. 
+
+We have seen previously that the switching function $\lambda_2 \eqqcolon H_u$ can only be zero at isolated time instants, and that the optimal control is bang-bang, that is, it switches between the boundary values (with at most one switch). But are we sure that $\lambda_2$ cannot be zero over a non-trivial time interval? 
+
+We learnt previously that $\lambda_2(t) = -c_1t+c_2$ and therefore $\lambda_2=0$ for a nontrivial interval implies that $c_1=0$ and $c_2=0$, which when combined with $\lambda_1(t) = c_1$ further implies that $\lambda_1=0$. But this would mean that $H = 1$, which contradicts the condition that $H=0$ along the optimal trajectory (combined implication of the free final time and time invariance). Therefore, $\lambda_2$ cannot be zero over a non-trivial time interval.
+:::
+
+This was an example in which the PMP does give a unique optimal control. The following example demonstrates that this is not always the case. 
+
+A control that is indeterminate from the PMP conditions is called **singular control**, and the time interval on which it applies is called a **singular arc**.
+
+::: {#exm-goddard}
+## Goddard Rocket Problem
+This is a famous problem in optimal control, originally posed by Robert H. Goddard in 1919 @goddardMethodReachingExtreme1919, and since then described in a number of publications such as the classical reference on optimal control @brysonAppliedOptimalControl1975 as well as the overview paper @limebeerFasterHigherGreener2015.  
+
+It models a vertically ascending rocket subject to gravity and atmospheric drag, with the goal of maximizing the final altitude. The control variable is the thrust $T(t)$, which can be varied continuously between zero and a maximum value $T_\mathrm{max}$. The goal is to find the thrust $T(t)$ over the time interval $[0, t_\mathrm{f}]$, with $t_\mathrm{f}$ a free final time, that maximizes the final altitude $h(t_\mathrm{f})$, that is, it minimizes the cost 
+$$J = -h(t_\mathrm{f}).$$ 
+
+The equations of motion are
+$$
+\begin{aligned}
+  \dot v(t) &= \frac{T(t) - D(v,h)}{m(t)} - g,\\
+  \dot h(t) &= v(t),\\
+  \dot m(t) &= -T(t) / c,
+\end{aligned}
+$$
+where $v$ is the velocity, $h$ is the altitude, $m$ is the mass, $g$ is the gravitational acceleration, $c$ is the effective exhaust velocity (a constant parameter here), and $D(v,h)$ is the drag force. We will assume a specific form of the drag function
+$$
+D(v,h) = \frac{1}{2} \rho_0 C_\mathrm{D} S v^2 \exp(-\beta h),
+$$
+where $\rho_0$ is the sea-level air density, $C_\mathrm{D}$ is the drag coefficient, $S$ is the reference area of the rocket, and $\beta$ is a decay constant that models how quickly the atmosphere thins with altitude.
+
+
+#### Symbolic computation of the control on the singular arc
+
+We are going to use symbolic manipulations, that is why we start with 
+``` {julia}
+#| code-fold: false
+#| output: false
+using Symbolics
+```
+
+We now define the needed symbolic variables, parameters and functions:
+``` {julia}
+#| code-fold: false
+#| output: false
+@variables v h m T      # State variables and control.
+@variables g c β        # Parameters in the dynamics.
+@variables λᵥ λₕ λₘ     # Costate variables.    
+@variables D(..)        # Drag function D(v, h).
+```
+
+Concerning the drag function $D(v,h)$, although we have specified its form, in the derivations we would like to keep it unexpanded. We only specified its form above because it reveals how the partial derivatives are related to D itself. Namely, 
+
+$$
+\begin{aligned}
+  \frac{\partial D}{\partial v} &= \frac{2D}{v}, & \frac{\partial D}{\partial h} &= -\beta D, \\
+  \frac{\partial^2 D}{\partial v^2} &= \frac{2D}{v^2}, & \frac{\partial^2 D}{\partial v \partial h} &= -\frac{2\beta D}{v}
+\end{aligned}
+$$
+
+We encode these rules in Julia as a dictionary mapping the relevant derivatives to their simplified forms:
+``` {julia}
+#| code-fold: false
+#| output: false
+D_rules = Dict(
+    Symbolics.derivative(D(v, h), v)                          => 2*D(v,h)/v,
+    Symbolics.derivative(D(v, h), h)                          => -β*D(v,h),
+    Symbolics.derivative(Symbolics.derivative(D(v, h), v), v) => 2*D(v,h)/v^2,
+    Symbolics.derivative(Symbolics.derivative(D(v, h), h), v) => -2*β*D(v,h)/v,
+    Symbolics.derivative(Symbolics.derivative(D(v, h), v), h) => -2*β*D(v,h)/v,
+)
+
+# Apply D_rules repeatedly until the expression stops changing.
+function apply_D_rules(expr)
+    prev = nothing
+    while !isequal(prev, expr)
+        prev = expr
+        expr = simplify(expand(substitute(expand_derivatives(expr), D_rules)))
+    end
+    expr
+end
+```
+
+We now define the state equations
+``` {julia}
+#| code-fold: false
+#| output: false
+fᵥ = (T - D(v, h)) / m - g     # dv/dt
+fₕ = v                         # dh/dt
+fₘ = -T / c                    # dm/dt
+```
+the Hamiltonian $H = \lambda^\top f$  (note that $L = 0$)
+``` {julia}
+#| code-fold: false
+H = expand(λᵥ * fᵥ + λₕ * fₕ + λₘ * fₘ)
+```
+
+As can be seen, $H$ is linear in the control $T$. No surprise that the partial derivative of the Hamiltonian with respect to the control $T$, which we keep denoting $H_u$
+
+``` {julia}
+#| code-fold: false
+Hᵤ = expand_derivatives(Symbolics.derivative(H, T))
+```
+
+does not contain $T$, which implies that the control is potentially singular.
+
+In what follows, we will need the costate equations
+$$
+\begin{aligned}
+  \dot \lambda_v &= -\frac{\partial H}{\partial v}, \\
+  \dot \lambda_h &= -\frac{\partial H}{\partial h}, \\
+  \dot \lambda_m &= -\frac{\partial H}{\partial m}.
+\end{aligned}
+$$
+
+We form them now. Note how the rules for the partial derivatives of $D$ that we defined previously are applied here to keep the results free from the partials of $D$ and instead express everything in terms of $D$ itself.
+``` {julia}
+#| code-fold: false
+dλᵥ_dt = apply_D_rules(-expand_derivatives(Symbolics.derivative(H, v)))
+dλₕ_dt = apply_D_rules(-expand_derivatives(Symbolics.derivative(H, h)))
+dλₘ_dt = apply_D_rules(-expand_derivatives(Symbolics.derivative(H, m)))
+```
+
+Now comes a definition of a function for computing the total time derivative along the optimal trajectory. Note that for a general function $\phi(v, h, m, \lambda_v, \lambda_h, \lambda_m)$, the total time derivative along the optimal trajectory is given by
+$$
+\frac{\mathrm d \phi}{\mathrm dt} = \frac{\partial \phi}{\partial v} \dot v + \frac{\partial \phi}{\partial h} \dot h + \frac{\partial \phi}{\partial m}  \dot m + \frac{\partial \phi}{\partial \lambda_v} \dot \lambda_v + \frac{\partial \phi}{\partial \lambda_h} \dot \lambda_h + \frac{\partial \phi}{\partial \lambda_m} \dot \lambda_m.
+$$
+
+``` {julia}
+#| code-fold: false
+#| output: false
+function total_dt(φ)
+    dφ = (Symbolics.derivative(φ, v)   * fᵥ
+        + Symbolics.derivative(φ, h)   * fₕ
+        + Symbolics.derivative(φ, m)   * fₘ
+        + Symbolics.derivative(φ, λᵥ) * dλᵥ_dt
+        + Symbolics.derivative(φ, λₕ) * dλₕ_dt
+        + Symbolics.derivative(φ, λₘ) * dλₘ_dt)
+    apply_D_rules(expand_derivatives(dφ))
+end
+```
+
+We now compute $\frac{\mathrm d}{\mathrm dt} H_u$, the first time derivative of $Hᵤ$ along the optimal trajectory, which is needed for the singular arc condition.
+``` {julia}
+#| code-fold: false
+dHᵤ_dt = total_dt(Hᵤ)
+```
+
+Clearly, still no $T$ in $\frac{\mathrm d}{\mathrm dt} H_u$. We need to differentiate once more to get $T$ into the picture, but before that, let's write down the singularity condition. On a singular arc, the following three conditions must hold identically (recall that the first one comes from the the fact that in the time-invariang case the Hamiltonian is constant along the optimal trajectory, and in the free final time case, the Hamiltonian vanishes at the final time):
+$$
+\begin{aligned}
+  H &= 0, \\
+  H_u &= 0, \\
+  \frac{\mathrm d}{\mathrm dt} H_u &= 0.
+\end{aligned}
+$$
+
+Each of these is linear in the costates $\lambda_v, \lambda_h, \lambda_m$, and we can write them all in a single vector-matrix form as
+$$
+\mathbf M \cdot \begin{bmatrix} \lambda_v \\ \lambda_h \\ \lambda_m \end{bmatrix} = 0,
+$$
+where row $i$ of $\mathbf M$ contains the coefficients of $\lambda_v, \lambda_h, \lambda_m$ in the $i$th condition.  A non-trivial costate exists if and only if $\mathrm{det}(\mathbf M) = 0$.
+
+We now assemble the coefficient matrix $\mathbf M$ for the three conditions, and compute its determinant.
+``` {julia}
+#| code-fold: false
+costates = [λᵥ, λₕ, λₘ]
+conditions = [H, Hᵤ, dHᵤ_dt]
+
+M = simplify.(expand.([Symbolics.coeff(eq, λ) for eq in conditions, λ in costates]))
+
+# LinearAlgebra.det performs numeric structure checks (istriu etc.) that fail
+# on symbolic matrices.  Use explicit cofactor expansion along the first row.
+detM = simplify(expand(
+    M[1,1] * (M[2,2]*M[3,3] - M[2,3]*M[3,2]) -
+    M[1,2] * (M[2,1]*M[3,3] - M[2,3]*M[3,1]) +
+    M[1,3] * (M[2,1]*M[3,2] - M[2,2]*M[3,1])
+))
+```
+
+Since we are only interested in this expression being zero, we can ignore the denominator and just analyze when the numerator equals zero. This gives the condition that the trajectory is a singular arc:
+
+$$\boxed{
+(c+v)\,D(v, h) =  cmg.} 
+$${#eq-goddard-singularity-condition}
+
+Now, on a singular arc, $H_u \equiv 0$ identically in time, so all its time derivatives must also be zero. We differentiate repeatedly until $T$ appears in the expression. We now do one further differentiation with respect to time to see if we can get $T$ into the picture.
+``` {julia}
+#| code-fold: false
+d2Hᵤ_dt2 = total_dt(dHᵤ_dt)
+```
+
+It appears that we finally have some expression for the control $T$. We need to combine this with the previous two conditions to get a system of three equations in the three unknowns $\lambda_v, \lambda_h, \lambda_m$ that must hold on the singular arc, namely
+$$
+\begin{aligned}
+    H_u &= 0, \\
+    \frac{\mathrm d}{\mathrm dt} H_u &= 0, \\
+    \frac{\mathrm d^2}{\mathrm dt^2} H_u &= 0.
+\end{aligned}
+$$
+
+These are, once again, linear in the costates, and we can write them in the same matrix form as before, but now with a different coefficient matrix $\mathbf M_2$. The condition for a non-trivial costate is that the determinant of the coefficient matrix of this system is zero. Since $T$ appears in the last row of this matrix, $\mathrm{det}(\mathbf M_2) = 0$ becomes an equation that can be solved for $T$. 
+``` {julia}
+#| code-fold: false
+conditions2 = [Hᵤ, dHᵤ_dt, d2Hᵤ_dt2]
+
+M2 = simplify.(expand.([Symbolics.coeff(eq, λ) for eq in conditions2, λ in costates]))
+
+detM2 = simplify(expand(
+    M2[1,1] * (M2[2,2]*M2[3,3] - M2[2,3]*M2[3,2]) -
+    M2[1,2] * (M2[2,1]*M2[3,3] - M2[2,3]*M2[3,1]) +
+    M2[1,3] * (M2[2,1]*M2[3,2] - M2[2,2]*M2[3,1])
+))
+```
+
+We now solve the singularity condition $\mathrm{det}(\mathbf M_2) = 0$ for the control (thrust) $T$. Since this is the control that is only going to be used on the singular arc, we will denote it $T_\mathrm{singular}$. Note that although some general symbolic solver could be used here, the structure of $\mathrm{det}(\mathbf M_2)$ is such that it is linear in $T$, so we can extract the coefficients to write the determinant in the form
+$$
+\mathrm{det}(\mathbf M_2) = a \cdot T + b,
+$$
+and solve 
+$$
+a \cdot T + b = 0
+$$
+for $T$ directly as
+$$
+T_\mathrm{singular} = -\frac{b}{a}.
+$$
+
+``` {julia}
+#| code-fold: false
+a  = simplify(expand(Symbolics.coeff(detM2, T)))
+b  = simplify(expand(substitute(detM2, Dict(T => 0))))
+T_singular = simplify(-b / a)
+```
+
+We can now render the resulting expression for $T_\mathrm{singular}$ in a more readable form  
+``` {julia}
+#| output: asis
+using Latexify
+Latexify.set_default(; starred=true)
+println("\$\$T_{\\mathrm{singular}} = " * replace(String(latexify(T_singular)), "\$" => "") * "\$\$")
+```
+
+We can observe that the $D(v,h)$ term can be isolated, which could perhaps make the result a bit more compact
+
+``` {julia}
+#| code-fold: false
+num_Ts  = Symbolics.numerator(T_singular)
+den_Ts  = Symbolics.denominator(T_singular)
+
+coeff_D = simplify(expand(Symbolics.coeff(expand(num_Ts), D(v, h))))
+rem_Ts  = simplify(expand(substitute(expand(num_Ts), Dict(D(v, h) => 0))))
+
+T_singular = simplify(coeff_D / den_Ts) * D(v, h) + simplify(expand(rem_Ts / den_Ts))
+```
+
+``` {julia}
+#| output: asis
+using Latexify
+Latexify.set_default(; starred=true)
+println("\$\$\\boxed{T_{\\mathrm{singular}} = " * replace(String(latexify(T_singular)), "\$" => "") * "}\$\$")
+```
+
+We could perhaps simplify this expression further, manually or with some more advanced symbolic manipulation, but we will stop here. The expression is already compact and transparent enough to be directly implemented as a Julia function, which is what we will do next.
+
+
+#### Numerical simulation
+
+Now we are ready to do the numerical simulation with the control that we have just derived. Before we proceed, note that our results are still in the symbolic form and they must be converted to a standard Julia function before we can use them in the numerical simulation. We use `build_function` for that. Note also that our `D(v,h)` in the code is a symbolic function, so we substitute it with a plain scalar symbolic argument `D_val`.
+
+``` {julia}
+#| code-fold: false
+#| output: false
+@variables D_val
+
+T_s_expr  = substitute(T_singular, Dict(D(v, h) => D_val))
+detM_expr = substitute(detM,         Dict(D(v, h) => D_val))
+
+T_singular_fn = build_function(T_s_expr,  v, h, m, g, c, β, D_val; expression=Val{false})
+detM_fn       = build_function(detM_expr, v, h, m, g, c, β, D_val; expression=Val{false})
+```
+
+We are also going to reuse the symbolic state equations by extracting their Julia expressions, then substituting the numerical drag function at call time.
+
+The control strategy on the singular arc is going to be given by `T = T_singular_fn(v, h, m, g_n, c_n, β_n, D_num(v,h))`.
+
+The full optimal trajectory has three phases:
+
+1. **Full thrust**  $T(t) = T_{\max}$  until the singular arc is entered
+2. **Singular arc** $T(t) = T_s(v(t),h(t))$ until the fuel exhausted (or $t_f$ is reached)
+3. **Coast**        $T(t) = 0$ until the final time $t_f$ reached
+
+The numerical parameters of the problem in SI units are as follows (see @limebeerFasterHigherGreener2015):
+``` {julia}
+#| code-fold: false
+#| output: false
+const m_0    = 12500.0
+const m_f    = 4539.0
+const g_n    = 9.81
+const β_n    = 1.0/90000.0
+const c_n    = 2058.0
+const T_max  = 1.9 * m_0 * g_n
+const ρ_0C_DS = 45360.0 * g_n / 1828.8^2      # Stands for ρ_0 * C_D * S.
+
+# Numerical drag function (concrete form of the abstract D(v,h) above)
+D_num(v, h) = 0.5 * ρ_0C_DS * v^2 * exp(-β_n * h)
+```
+
+Now we reuse the symbolic expressions for the state derivatives, substituting the numerical drag function at call time. The resulting functions `fᵥ_fn`, `fₕ_fn`, `fₘ_fn` are pure arithmetic functions that can be used in the ODE right-hand side.
+``` {julia}
+#| code-fold: false
+#| output: false
+@variables D_val_dyn  # temporary scalar for D in the dynamics expressions
+
+fᵥ_fn = build_function(substitute(fᵥ, Dict(D(v,h) => D_val_dyn, g => g_n, c => c_n)), v, m, T, D_val_dyn; expression=Val{false})
+fₕ_fn = build_function(substitute(fₕ, Dict(D(v,h) => D_val_dyn)), v; expression=Val{false})
+fₘ_fn = build_function(substitute(fₘ, Dict(c => c_n)), m, T; expression=Val{false})
+```
+
+When implementing the simulation, we store the index of the phase in the mutable parameter vector `p`. The phase index can take three values:
+
+- p[1] = 1: full thrust  (T = T_max)
+- p[1] = 2: singular arc (T = T_s)
+- p[1] = 3: coast        (T = 0)
+
+Conditions for the transitions (in order, with discontinuous jumps in T) are:
+
+- 1 → 2 : det(M) = 0 first becomes satisfied. M is formed from H, Hᵤ, d/dt Hᵤ — none of these contain T, so det(M) is purely a function of state (v, h, m) and parameters. det(M) crosses zero (enters the singular region); T jumps discontinuously from T_max to T_s.
+- 2 → 3 : fuel reaches m_f — singular arc ends, rocket coasts with T = 0.
+- any   : fuel exhausted (m = m_tf) → terminate
+
+The ODE model is defined in the code below.
+``` {julia}
+#| code-fold: show
+#| output: false
+
+using OrdinaryDiffEq
+
+function T_s_raw(x)
+    D_val = D_num(x[1], x[2])
+    T_singular_fn(x[1], x[2], x[3], g_n, c_n, β_n, D_val)
+end
+
+function thrust(x, phase)
+    phase == 1 && return T_max
+    phase == 3 && return 0.0
+    T_s = T_s_raw(x)                         # phase 2: singular
+    @assert 0.0 ≤ T_s ≤ T_max "Singular thrust T_s = $T_s out of bounds"
+    return T_s
+end
+
+# ODE right-hand side
+function goddard!(dx, x, p, _t)
+    v_c, h_c, m_c = x
+    T     = thrust(x, p[1])
+    D_val = D_num(v_c, h_c)
+    dx[1] = fᵥ_fn(v_c, m_c, T, D_val)
+    dx[2] = fₕ_fn(v_c)
+    dx[3] = fₘ_fn(m_c, T)
+end
+
+# Callbacks 
+# det(M) as a function of state only (no T dependence).
+detM_num(x) = detM_fn(x[1], x[2], x[3], g_n, c_n, β_n, D_num(x[1], x[2]))
+
+# p = [phase, t_enter_singular, t_enter_coast]
+# Transition times are stored in p so they can be used after the solve
+# to compute Ts at exactly the same time points as sol.t.
+
+# 1→2: det(M) crosses zero entering the singular region (only active in phase 1).
+cb_enter_singular = ContinuousCallback(
+    (x, t, integrator) -> integrator.p[1] == 1 ? detM_num(x) : one(t),
+    integrator -> (integrator.p[1] = 2; integrator.p[2] = integrator.t;
+                   @info "t=$(integrator.t): phase 1→2 (singular)"))
+
+# 2→3: fuel reaches m_f — singular arc ends, rocket coasts with T = 0.
+cb_enter_coast = ContinuousCallback(
+    (x, t, integrator) -> integrator.p[1] == 2 ? x[3] - m_f : one(t),
+    integrator -> (integrator.p[1] = 3; integrator.p[3] = integrator.t;
+                   @info "t=$(integrator.t): phase 2→3 (coast, m=m_f)"))
+
+callbacks = CallbackSet(cb_enter_singular, cb_enter_coast)
+```
+
+What remains is to set the initial conditions, the time span, and initialise the parameter vector `p`, and then call the ODE solver.
+``` {julia}
+#| code-fold: false
+#| output: false
+
+# Initial conditions, time span and the parameter vector p.
+x0    = [0.0, 0.0, m_0]
+tspan = (0.0, 200.0)
+p0    = [1, Inf, Inf]   # [phase, t_enter_singular, t_enter_coast]
+
+prob = ODEProblem(goddard!, x0, tspan, p0)
+sol  = solve(prob, Tsit5(); reltol=1e-8, abstol=1e-8, dtmax=1.0, callback=callbacks)
+```
+
+<!-- The simulation results
+``` {julia}
+#| code-fold: true
+println("  Final time    : ", sol.t[end], " s")
+println("  Final altitude: ", sol.u[end][2] / 1000, " km")
+println("  Final velocity: ", sol.u[end][1], " m/s")
+println("  Final mass    : ", sol.u[end][3], " kg")
+``` -->
+
+``` {julia}
+#| code-fold: true
+#| output: false
+# Extract solution arrays
+ts = sol.t
+vs = [u[1] for u in sol.u]
+hs = [u[2] for u in sol.u] ./ 1000   # km
+ms = [u[3] for u in sol.u]
+# Compute Ts at exactly sol.t using the recorded transition times.
+t12, t23 = sol.prob.p[2], sol.prob.p[3]
+println("  Entered singular arc at t = ", t12, " s")
+println("  Entered coast        at t = ", t23, " s")
+
+Ts = map(zip(sol.t, sol.u)) do (t, u)
+    if t < t12
+        T_max
+    elseif t < t23
+        T_s_raw(u)
+    else
+        0.0
+    end
+end
+```
+
+Finally, we plot the results in @fig-goddard-trajectories. The three phases are coloured red (full thrust), orange (singular arc) and green (coast).
+``` {julia}
+#| code-fold: true
+#| fig-cap: "Optimal trajectories of the Goddard rocket with a singular arc. The three phases are coloured red (full thrust), orange (singular arc) and green (coast)."
+#| label: fig-goddard-trajectories
+using Plots, Measures
+
+# Split time indices by phase
+idx1 = ts .<  t12                  # full thrust (red)
+idx2 = (ts .>= t12) .& (ts .< t23) # singular arc (orange)
+idx3 = ts .>= t23                  # coast (green)
+
+# Helper: plot a quantity y split into the three coloured phase segments.
+# The first call creates the plot; subsequent phases use plot!.
+function plot_phases(ts, y; ylabel, legend_pos=:topleft, kw...)
+    plt = plot(; ylabel, xlabel="Time (s)", legend=legend_pos, kw...)
+    any(idx1) && plot!(plt, ts[idx1], y[idx1]; lw=2, color=:red,    label="full thrust")
+    any(idx2) && plot!(plt, ts[idx2], y[idx2]; lw=2, color=:orange, label="singular arc")
+    any(idx3) && plot!(plt, ts[idx3], y[idx3]; lw=2, color=:green,  label="coast")
+    plt
+end
+
+p1 = plot_phases(ts, hs;       ylabel="Altitude (km)",  legend_pos=:topleft, left_margin=5mm)
+p2 = plot_phases(ts, vs;       ylabel="Velocity (m/s)", legend_pos=:topright, left_margin=5mm)
+p3 = plot_phases(ts, ms;       ylabel="Mass (kg)",      legend_pos=:topright, left_margin=5mm)
+
+# Thrust: insert NaN at phase boundaries to break the connecting line.
+Ts_plot = copy(Float64.(Ts)) ./ 1000
+boundary_indices = findlast(idx1), findfirst(idx3)
+for i in boundary_indices
+    i !== nothing && (Ts_plot[i] = NaN)
+end
+p4 = plot_phases(ts, Ts_plot; ylabel="Thrust (kN)", legend_pos=:topright, left_margin=5mm)
+hline!(p4, [T_max/1000]; ls=:dash, color=:red, label="T_max", lw=1, alpha=0.5)
+
+plot(p1, p2, p3, p4; layout=(4,1), size=(900,1200))
+```
+
+We would like to alert the reader that the singular control is discontinuous both at the entry and exit of the singular arc, which is a common phenomenon in optimal control problems with singular arcs. 
+:::
+
