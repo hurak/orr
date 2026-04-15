@@ -53,14 +53,75 @@ which is not uniquely defined when $\lambda_2 = 0$.
 
 Note that it will not help here if we define the signum function at zero as returning zero. 
 
-We have seen previously that the switching function $\lambda_2 \eqqcolon H_u$ can only be zero at isolated time instants, and that the optimal control is bang-bang, that is, it switches between the boundary values (with at most one switch). But are we sure that $\lambda_2$ cannot be zero over a non-trivial time interval? 
+We assumed previously that the switching function $\lambda_2 \eqqcolon H_u$ can only be zero at isolated time instants, and that the optimal control is bang-bang, that is, it switches between the boundary values (with at most one switch). But are we sure that $\lambda_2$ cannot be zero over a non-trivial time interval? In other words, can we exclude the possibility that $\frac{\mathrm{d}}{\mathrm{d}t} H_u = 0$ (and possibly some higher derivatives as well if needed)?
 
-We learnt previously that $\lambda_2(t) = -c_1t+c_2$ and therefore $\lambda_2=0$ for a nontrivial interval implies that $c_1=0$ and $c_2=0$, which when combined with $\lambda_1(t) = c_1$ further implies that $\lambda_1=0$. But this would mean that $H = 1$, which contradicts the condition that $H=0$ along the optimal trajectory (combined implication of the free final time and time invariance). Therefore, $\lambda_2$ cannot be zero over a non-trivial time interval.
+We know that $\frac{\mathrm{d}}{\mathrm{d}t} H_u = \dot\lambda_2$, but from the costate equations we have $\dot\lambda_2 = -\lambda_1$. Therefore, $\frac{\mathrm{d}}{\mathrm{d}t} H_u = 0$ boils down to requiring $\lambda_1=0$. But with both costate variables being zero,this would mean that $H = 1$, which contradicts the condition that $H=0$ along the optimal trajectory (combined implication of the free final time and time invariance). Therefore, the switching function cannot be zero over a non-trivial time interval and the optimal control is indeed bang-bang.
 :::
 
-This was an example in which the PMP does give a unique optimal control. The following example demonstrates that this is not always the case. 
+A control that cannot be determined from the PMP conditions is called **singular control**, and the time interval on which it applies is called a **singular arc**.
 
-A control that is indeterminate from the PMP conditions is called **singular control**, and the time interval on which it applies is called a **singular arc**.
+For a time-optimal control of a general linear system $\dot{\bm{x}} = \mathbf A \bm{x} + \mathbf b u$ (we keep restricting ourselves to single-input system), the switching funtion is
+$$
+H_u = \bm \lambda^\top \mathbf b,
+$$
+and in order to exclude the possibility of a singular arc, we need to exclude the possibility that together with $\bm \lambda^\top \mathbf b \neq 0$, the following condition hold:
+$$
+\frac{\mathrm{d^k}}{\mathrm{d}t^k} H_u = 0, \quad \text{for all } k = 1, 2, \ldots
+$$ 
+
+This specializes to the conditions
+$$
+\frac{\mathrm{d^k}}{\mathrm{d}t^k}\bm \lambda^\top \mathbf b = 0, \quad \text{for all } k = 1, 2, \ldots
+$$ 
+
+We start with $k=1$. From the costate equations, we have 
+$$ 
+\dot {\bm \lambda} = -\mathbf A^\top \bm \lambda,
+$$
+from which we can write
+$$
+\bm \lambda(t) = e^{-\mathbf A^\top t} \bm \lambda(0).
+$$
+
+When substituting into the condition $\dot{ \bm \lambda}^\top \mathbf b = 0$, we get
+$$
+-\left(\mathbf A^\top e^{-\mathbf A^\top t}\bm \lambda(0)\right)^\top  \mathbf b = 0.
+$$
+
+Now consider $k=2$. Following the same reasoning, we have
+$$
+\left((\mathbf A^\top)^2 e^{-\mathbf A^\top t}\bm \lambda(0)\right)^\top  \mathbf b = 0.
+$$
+
+For a general $k$, we have
+$$
+(-1)^k \left(\underbrace{e^{-\mathbf A^\top t}\bm \lambda(0)}_{\bm \lambda(t)}\right)^\top \mathbf A^k \mathbf b = 0.
+$$
+
+Assembling all these conditions together, 
+$$
+(-1)^k\bm \lambda(t)^\top \begin{bmatrix} \mathbf b & \mathbf A \mathbf b & \mathbf A^2 \mathbf b & \cdots \end{bmatrix} = 0.
+$$
+
+Discarding the minus signa and transposing, we get
+$$
+\begin{bmatrix} \mathbf b & \mathbf A \mathbf b & \mathbf A^2 \mathbf b & \cdots \end{bmatrix}^\top \bm \lambda(t) = 0.$$
+
+Since we alread know that not all costate variables can be zero because this would lead to $H=1$, contradicting with the condition on the Hamiltonian $H=0$, we need to require that the matrix
+$$
+\begin{bmatrix} 
+\mathbf b & \mathbf A \mathbf b & \mathbf A^2 \mathbf b & \cdots 
+\end{bmatrix} 
+$$
+has a full rank. We know from linear system theory that there is no need to consider $k$ larger than $n-1$, where $n$ is the state dimension. Therefore, the condition for excluding singular arcs in a time-optimal control of a linear system is that the matrix
+$$
+\begin{bmatrix}
+\mathbf b & \mathbf A \mathbf b & \mathbf A^2 \mathbf b & \cdots & \mathbf A^{n-1} \mathbf b
+\end{bmatrix}
+$$
+has a full rank. This is exactly the *controllability matrix* of the system, and the condition that it has a full rank is exactly the controllability condition. Therefore, we can conclude that for a time-optimal control of a linear system, singular arcs are excluded if and only if the system is controllable. In case of a multiple-input system,     this analysis must be taken with respect to each input. The resulting condition that the system is controllable from each input is called *normality* of the system.
+
+We now have a look at an example which genuinely contains a singular arc, and we will see how to derive the optimal control on the singular arc.
 
 ::: {#exm-goddard}
 ## Goddard Rocket Problem
