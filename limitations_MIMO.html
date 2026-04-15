@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -76,10 +76,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-2a8600961620fb22bbdc41287d7e474a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-bfc81c90a4e668f7cc6782dca231ae32.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -640,6 +640,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cont_indir_singular.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Singular control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./cont_indir_references_2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -1140,6 +1146,17 @@ window.Quarto = {
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>step_response <span class="op">=</span> <span class="fu">step</span>(<span class="fu">G*tf</span>([<span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>])) <span class="co"># Cannot just multiply a matrix of tf's by a vector.</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(step_response, title<span class="op">=</span><span class="st">""</span>, xlabel<span class="op">=</span><span class="st">"Time (s)"</span>, ylabel<span class="op">=</span>[<span class="st">"y₁"</span> <span class="st">"y₂"</span>], lw<span class="op">=</span><span class="fl">2</span>, label<span class="op">=</span><span class="st">""</span>, legend<span class="op">=:</span>topright)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-green-fg ansi-bold">Precompiling</span> packages...
+   1194.8 ms<span class="ansi-green-fg">  ✓ </span>QuartoNotebookWorkerJSONExt<span class="ansi-bright-black-fg"> (serial)</span>
+  1 dependency successfully precompiled in 1 seconds
+<span class="ansi-green-fg ansi-bold">Precompiling</span> packages...
+   2562.8 ms<span class="ansi-green-fg">  ✓ </span>QuartoNotebookWorkerPlotsExt<span class="ansi-bright-black-fg"> (serial)</span>
+  1 dependency successfully precompiled in 3 seconds
+</pre>
+</div>
+</div>
 <div id="fig-step-response-mimo-rhp-1" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="1">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-step-response-mimo-rhp-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
