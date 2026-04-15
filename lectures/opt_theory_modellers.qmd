@@ -56,6 +56,7 @@ $$
 $$
 
 ```{julia}
+#| eval: false
 using COSMO
 using SparseArrays
 
@@ -84,6 +85,7 @@ Although the two solvers are solving the same problem, the data has to be format
 What if we could formulate the same problem without considering the pecualiarities of each solver? It turns out that it is possible. In Julia we can use [JuMP.jl](https://jump.dev/JuMP.jl/stable/):
 
 ```{julia}
+#| eval: false
 using JuMP
 using SparseArrays
 using OSQP, COSMO
