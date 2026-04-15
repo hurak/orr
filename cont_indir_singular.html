@@ -1521,7 +1521,7 @@ D\left( v, h \right) + \frac{ - 2 ~ c^{2} ~ g ~ m - 2 ~ c ~ g ~ m ~ v - v^{2} ~ 
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>sol  <span class="op">=</span> <span class="fu">solve</span>(prob, <span class="fu">Tsit5</span>(); reltol<span class="op">=</span><span class="fl">1e-8</span>, abstol<span class="op">=</span><span class="fl">1e-8</span>, dtmax<span class="op">=</span><span class="fl">1.0</span>, callback<span class="op">=</span>callbacks)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <!-- The simulation results
-``` ljwpaex
+``` gzhqbre
 #| code-fold: true
 println("  Final time    : ", sol.t[end], " s")
 println("  Final altitude: ", sol.u[end][2] / 1000, " km")
