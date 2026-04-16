@@ -53,23 +53,32 @@ which is not uniquely defined when $\lambda_2 = 0$.
 
 Note that it will not help here if we define the signum function at zero as returning zero. 
 
-We assumed previously that the switching function $\lambda_2 \eqqcolon H_u$ can only be zero at isolated time instants, and that the optimal control is bang-bang, that is, it switches between the boundary values (with at most one switch). But are we sure that $\lambda_2$ cannot be zero over a non-trivial time interval? In other words, can we exclude the possibility that $\frac{\mathrm{d}}{\mathrm{d}t} H_u = 0$ (and possibly some higher derivatives as well if needed)?
+We assumed previously that the switching function $H_u\coloneqq \lambda_2$ can only be zero at isolated time instants, and that the optimal control is bang-bang, that is, it switches between the boundary values (with at most one switch). But are we sure that $\lambda_2$ cannot be zero over a non-trivial time interval? In other words, the question is if we can exclude the possibility that 
+
+$$
+\begin{aligned}
+\frac{\mathrm{d}}{\mathrm{d}t} H_u &= 0,\\ 
+\frac{\mathrm{d}^2}{\mathrm{d}t^2} H_u &= 0,\\
+\frac{\mathrm{d}^3}{\mathrm{d}t^3} H_u &= 0,\\
+\vdots
+\end{aligned}
+$$
 
 We know that $\frac{\mathrm{d}}{\mathrm{d}t} H_u = \dot\lambda_2$, but from the costate equations we have $\dot\lambda_2 = -\lambda_1$. Therefore, $\frac{\mathrm{d}}{\mathrm{d}t} H_u = 0$ boils down to requiring $\lambda_1=0$. But with both costate variables being zero,this would mean that $H = 1$, which contradicts the condition that $H=0$ along the optimal trajectory (combined implication of the free final time and time invariance). Therefore, the switching function cannot be zero over a non-trivial time interval and the optimal control is indeed bang-bang.
 :::
 
 A control that cannot be determined from the PMP conditions is called **singular control**, and the time interval on which it applies is called a **singular arc**.
 
-For a time-optimal control of a general linear system $\dot{\bm{x}} = \mathbf A \bm{x} + \mathbf b u$ (we keep restricting ourselves to single-input system), the switching funtion is
+For a time-optimal control of a general linear system $\dot{\bm{x}} = \mathbf A \bm{x} + \mathbf b u$ (we keep restricting ourselves to a single-input system), the switching funtion is
 $$
 H_u = \bm \lambda^\top \mathbf b,
 $$
-and in order to exclude the possibility of a singular arc, we need to exclude the possibility that together with $\bm \lambda^\top \mathbf b \neq 0$, the following condition hold:
+and in order to exclude the possibility of a singular arc, we need to exclude the possibility that together with $\bm \lambda^\top \mathbf b \neq 0$, the following conditions hold:
 $$
 \frac{\mathrm{d^k}}{\mathrm{d}t^k} H_u = 0, \quad \text{for all } k = 1, 2, \ldots
 $$ 
 
-This specializes to the conditions
+These specialize to
 $$
 \frac{\mathrm{d^k}}{\mathrm{d}t^k}\bm \lambda^\top \mathbf b = 0, \quad \text{for all } k = 1, 2, \ldots
 $$ 
@@ -98,30 +107,30 @@ $$
 (-1)^k \left(\underbrace{e^{-\mathbf A^\top t}\bm \lambda(0)}_{\bm \lambda(t)}\right)^\top \mathbf A^k \mathbf b = 0.
 $$
 
-Assembling all these conditions together, 
+Assembling all these conditions together, we obtain
 $$
 (-1)^k\bm \lambda(t)^\top \begin{bmatrix} \mathbf b & \mathbf A \mathbf b & \mathbf A^2 \mathbf b & \cdots \end{bmatrix} = 0.
 $$
 
-Discarding the minus signa and transposing, we get
+Discarding the minus sign and transposing, we get
 $$
 \begin{bmatrix} \mathbf b & \mathbf A \mathbf b & \mathbf A^2 \mathbf b & \cdots \end{bmatrix}^\top \bm \lambda(t) = 0.$$
 
-Since we alread know that not all costate variables can be zero because this would lead to $H=1$, contradicting with the condition on the Hamiltonian $H=0$, we need to require that the matrix
+Since we already know that not all costate variables can be zero because this would lead to $H=1$, contradicting with the condition on the Hamiltonian $H=0$, we need to require that the matrix
 $$
 \begin{bmatrix} 
 \mathbf b & \mathbf A \mathbf b & \mathbf A^2 \mathbf b & \cdots 
 \end{bmatrix} 
 $$
-has a full rank. We know from linear system theory that there is no need to consider $k$ larger than $n-1$, where $n$ is the state dimension. Therefore, the condition for excluding singular arcs in a time-optimal control of a linear system is that the matrix
+has a full rank. We know from the linear system theory that there is no need to consider $k>n-1$, where $n$ is the state space dimension. Therefore, the condition for excluding singular arcs in a time-optimal control of a linear system is that the matrix
 $$
 \begin{bmatrix}
 \mathbf b & \mathbf A \mathbf b & \mathbf A^2 \mathbf b & \cdots & \mathbf A^{n-1} \mathbf b
 \end{bmatrix}
 $$
-has a full rank. This is exactly the *controllability matrix* of the system, and the condition that it has a full rank is exactly the controllability condition. Therefore, we can conclude that for a time-optimal control of a linear system, singular arcs are excluded if and only if the system is controllable. In case of a multiple-input system,     this analysis must be taken with respect to each input. The resulting condition that the system is controllable from each input is called *normality* of the system.
+has a full rank. This is exactly the *controllability matrix* of the system, and the condition that it has a full rank is exactly the controllability condition. Therefore, we can conclude that for a time-optimal control of a linear system, singular arcs are excluded if and only if the system is controllable. In the case of a multiple-input system, this analysis must be taken with respect to each input. The resulting condition that the system is controllable from each input is called *normality* of the system.
 
-We now have a look at an example which genuinely contains a singular arc, and we will see how to derive the optimal control on the singular arc.
+We now have a look at an optimal control problem whose solution can contain a singular arc. And we will show how to derive the optimal control on the singular arc.
 
 ::: {#exm-goddard}
 ## Goddard Rocket Problem
