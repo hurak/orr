@@ -1128,16 +1128,24 @@ u^\star &amp;= \operatorname*{argmin}_{u\in [-1,1]} 1 + \lambda_1 x_2 + \lambda_
 \end{aligned}
 </span> which is not uniquely defined when <span class="math inline">\lambda_2 = 0</span>.</p>
 <p>Note that it will not help here if we define the signum function at zero as returning zero.</p>
-<p>We assumed previously that the switching function <span class="math inline">\lambda_2 \eqqcolon H_u</span> can only be zero at isolated time instants, and that the optimal control is bang-bang, that is, it switches between the boundary values (with at most one switch). But are we sure that <span class="math inline">\lambda_2</span> cannot be zero over a non-trivial time interval? In other words, can we exclude the possibility that <span class="math inline">\frac{\mathrm{d}}{\mathrm{d}t} H_u = 0</span> (and possibly some higher derivatives as well if needed)?</p>
+<p>We assumed previously that the switching function <span class="math inline">H_u\coloneqq \lambda_2</span> can only be zero at isolated time instants, and that the optimal control is bang-bang, that is, it switches between the boundary values (with at most one switch). But are we sure that <span class="math inline">\lambda_2</span> cannot be zero over a non-trivial time interval? In other words, the question is if we can exclude the possibility that</p>
+<p><span class="math display">
+\begin{aligned}
+\frac{\mathrm{d}}{\mathrm{d}t} H_u &amp;= 0,\\
+\frac{\mathrm{d}^2}{\mathrm{d}t^2} H_u &amp;= 0,\\
+\frac{\mathrm{d}^3}{\mathrm{d}t^3} H_u &amp;= 0,\\
+\vdots
+\end{aligned}
+</span></p>
 <p>We know that <span class="math inline">\frac{\mathrm{d}}{\mathrm{d}t} H_u = \dot\lambda_2</span>, but from the costate equations we have <span class="math inline">\dot\lambda_2 = -\lambda_1</span>. Therefore, <span class="math inline">\frac{\mathrm{d}}{\mathrm{d}t} H_u = 0</span> boils down to requiring <span class="math inline">\lambda_1=0</span>. But with both costate variables being zero,this would mean that <span class="math inline">H = 1</span>, which contradicts the condition that <span class="math inline">H=0</span> along the optimal trajectory (combined implication of the free final time and time invariance). Therefore, the switching function cannot be zero over a non-trivial time interval and the optimal control is indeed bang-bang.</p>
 </div>
 <p>A control that cannot be determined from the PMP conditions is called <strong>singular control</strong>, and the time interval on which it applies is called a <strong>singular arc</strong>.</p>
-<p>For a time-optimal control of a general linear system <span class="math inline">\dot{\bm{x}} = \mathbf A \bm{x} + \mathbf b u</span> (we keep restricting ourselves to single-input system), the switching funtion is <span class="math display">
+<p>For a time-optimal control of a general linear system <span class="math inline">\dot{\bm{x}} = \mathbf A \bm{x} + \mathbf b u</span> (we keep restricting ourselves to a single-input system), the switching funtion is <span class="math display">
 H_u = \bm \lambda^\top \mathbf b,
-</span> and in order to exclude the possibility of a singular arc, we need to exclude the possibility that together with <span class="math inline">\bm \lambda^\top \mathbf b \neq 0</span>, the following condition hold: <span class="math display">
+</span> and in order to exclude the possibility of a singular arc, we need to exclude the possibility that together with <span class="math inline">\bm \lambda^\top \mathbf b \neq 0</span>, the following conditions hold: <span class="math display">
 \frac{\mathrm{d^k}}{\mathrm{d}t^k} H_u = 0, \quad \text{for all } k = 1, 2, \ldots
 </span></p>
-<p>This specializes to the conditions <span class="math display">
+<p>These specialize to <span class="math display">
 \frac{\mathrm{d^k}}{\mathrm{d}t^k}\bm \lambda^\top \mathbf b = 0, \quad \text{for all } k = 1, 2, \ldots
 </span></p>
 <p>We start with <span class="math inline">k=1</span>. From the costate equations, we have <span class="math display">
@@ -1154,21 +1162,21 @@ H_u = \bm \lambda^\top \mathbf b,
 <p>For a general <span class="math inline">k</span>, we have <span class="math display">
 (-1)^k \left(\underbrace{e^{-\mathbf A^\top t}\bm \lambda(0)}_{\bm \lambda(t)}\right)^\top \mathbf A^k \mathbf b = 0.
 </span></p>
-<p>Assembling all these conditions together, <span class="math display">
+<p>Assembling all these conditions together, we obtain <span class="math display">
 (-1)^k\bm \lambda(t)^\top \begin{bmatrix} \mathbf b &amp; \mathbf A \mathbf b &amp; \mathbf A^2 \mathbf b &amp; \cdots \end{bmatrix} = 0.
 </span></p>
-<p>Discarding the minus signa and transposing, we get <span class="math display">
+<p>Discarding the minus sign and transposing, we get <span class="math display">
 \begin{bmatrix} \mathbf b &amp; \mathbf A \mathbf b &amp; \mathbf A^2 \mathbf b &amp; \cdots \end{bmatrix}^\top \bm \lambda(t) = 0.</span></p>
-<p>Since we alread know that not all costate variables can be zero because this would lead to <span class="math inline">H=1</span>, contradicting with the condition on the Hamiltonian <span class="math inline">H=0</span>, we need to require that the matrix <span class="math display">
+<p>Since we already know that not all costate variables can be zero because this would lead to <span class="math inline">H=1</span>, contradicting with the condition on the Hamiltonian <span class="math inline">H=0</span>, we need to require that the matrix <span class="math display">
 \begin{bmatrix}
 \mathbf b &amp; \mathbf A \mathbf b &amp; \mathbf A^2 \mathbf b &amp; \cdots
 \end{bmatrix}
-</span> has a full rank. We know from linear system theory that there is no need to consider <span class="math inline">k</span> larger than <span class="math inline">n-1</span>, where <span class="math inline">n</span> is the state dimension. Therefore, the condition for excluding singular arcs in a time-optimal control of a linear system is that the matrix <span class="math display">
+</span> has a full rank. We know from the linear system theory that there is no need to consider <span class="math inline">k&gt;n-1</span>, where <span class="math inline">n</span> is the state space dimension. Therefore, the condition for excluding singular arcs in a time-optimal control of a linear system is that the matrix <span class="math display">
 \begin{bmatrix}
 \mathbf b &amp; \mathbf A \mathbf b &amp; \mathbf A^2 \mathbf b &amp; \cdots &amp; \mathbf A^{n-1} \mathbf b
 \end{bmatrix}
-</span> has a full rank. This is exactly the <em>controllability matrix</em> of the system, and the condition that it has a full rank is exactly the controllability condition. Therefore, we can conclude that for a time-optimal control of a linear system, singular arcs are excluded if and only if the system is controllable. In case of a multiple-input system, this analysis must be taken with respect to each input. The resulting condition that the system is controllable from each input is called <em>normality</em> of the system.</p>
-<p>We now have a look at an example which genuinely contains a singular arc, and we will see how to derive the optimal control on the singular arc.</p>
+</span> has a full rank. This is exactly the <em>controllability matrix</em> of the system, and the condition that it has a full rank is exactly the controllability condition. Therefore, we can conclude that for a time-optimal control of a linear system, singular arcs are excluded if and only if the system is controllable. In the case of a multiple-input system, this analysis must be taken with respect to each input. The resulting condition that the system is controllable from each input is called <em>normality</em> of the system.</p>
+<p>We now have a look at an optimal control problem whose solution can contain a singular arc. And we will show how to derive the optimal control on the singular arc.</p>
 <div id="exm-goddard" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2 (Goddard Rocket Problem)</strong></span> This is a famous problem in optimal control, originally posed by Robert H. Goddard in 1919 <span class="citation" data-cites="goddardMethodReachingExtreme1919"><a href="#ref-goddardMethodReachingExtreme1919" role="doc-biblioref">[1]</a></span>, and since then described in a number of publications such as the classical reference on optimal control <span class="citation" data-cites="brysonAppliedOptimalControl1975"><a href="#ref-brysonAppliedOptimalControl1975" role="doc-biblioref">[2]</a></span> as well as the overview paper <span class="citation" data-cites="limebeerFasterHigherGreener2015"><a href="#ref-limebeerFasterHigherGreener2015" role="doc-biblioref">[3]</a></span>.</p>
 <p>It models a vertically ascending rocket subject to gravity and atmospheric drag, with the goal of maximizing the final altitude. The control variable is the thrust <span class="math inline">T(t)</span>, which can be varied continuously between zero and a maximum value <span class="math inline">T_\mathrm{max}</span>. The goal is to find the thrust <span class="math inline">T(t)</span> over the time interval <span class="math inline">[0, t_\mathrm{f}]</span>, with <span class="math inline">t_\mathrm{f}</span> a free final time, that maximizes the final altitude <span class="math inline">h(t_\mathrm{f})</span>, that is, it minimizes the cost <span class="math display">J = -h(t_\mathrm{f}).</span></p>
@@ -1521,7 +1529,7 @@ D\left( v, h \right) + \frac{ - 2 ~ c^{2} ~ g ~ m - 2 ~ c ~ g ~ m ~ v - v^{2} ~ 
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>sol  <span class="op">=</span> <span class="fu">solve</span>(prob, <span class="fu">Tsit5</span>(); reltol<span class="op">=</span><span class="fl">1e-8</span>, abstol<span class="op">=</span><span class="fl">1e-8</span>, dtmax<span class="op">=</span><span class="fl">1.0</span>, callback<span class="op">=</span>callbacks)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <!-- The simulation results
-``` gzhqbre
+``` rjcqlnh
 #| code-fold: true
 println("  Final time    : ", sol.t[end], " s")
 println("  Final altitude: ", sol.u[end][2] / 1000, " km")
