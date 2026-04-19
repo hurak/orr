@@ -1163,48 +1163,76 @@ w(t)
 <p>The wind torque is modelled as white noise with a spectral density <span class="math inline">S_w=500 \text{N}^2\text{m}^2/\text{Hz}</span>.</p>
 <p>The requirement is to keep the pointing (angular) error below <span class="math inline">1^\circ</span>. We parameterize the cost function as <span class="math display">
 J = \mathbb E\left\{\begin{bmatrix}\theta(\infty)&amp;\dot\theta(\infty)\end{bmatrix}\begin{bmatrix}180 &amp; 0\\ 0 &amp; 0\end{bmatrix}\begin{bmatrix}\theta(\infty)\\\dot\theta(\infty)\end{bmatrix}+u^2(\infty)\right\},
-</span> in which we obviously do not to penalize the second state variable – the angular ratem, and we will have to check if the conditions of the existence and uniqueness of a stabilizing LQR are satisfied.</p>
+</span> in which we obviously do not to penalize the second state variable – the angular rate, and we will have to check if the conditions of the existence and uniqueness of a stabilizing LQR are satisfied.</p>
+<p>In the code below, we first compute the optimal feedback gain matrix <span class="math inline">\mathbf K</span> by solving the continuous-time algebraic Riccati equation (CARE). Since the matrix weight <span class="math inline">\mathbf Q</span> has a zero on the diagonal, we should also check the detectability (or even the observability). Indeed, in the design phase, there is no difference with respect to the deterministic case.</p>
+<div id="2" class="cell" data-execution_count="1">
+<details open="" class="code-fold">
+<summary>Show the code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span> <span class="co"># For identity matrix I</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ControlSystems</span> <span class="co"># For lqr</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">0</span> <span class="fl">1</span>; <span class="fl">0</span> <span class="op">-</span><span class="fl">0.1</span>]       <span class="co"># d/dt x = A x + B u + Bw w</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> [<span class="fl">0</span>; <span class="fl">0.001</span>]          <span class="co"># Input matrix for the control input.</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Bw <span class="op">=</span> [<span class="fl">0</span>; <span class="fl">0.001</span>]         <span class="co"># Input matrix for the disturbance.</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> [<span class="fl">180.0</span> <span class="fl">0</span>; <span class="fl">0</span> <span class="fl">0</span>]      <span class="co"># Weight for states. Note that we do not penalize the second state variable.</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>R <span class="op">=</span> I                   <span class="co"># Weight for control input.</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>Sw <span class="op">=</span> <span class="fl">500</span>                <span class="co"># Spectral density of the disturbance. Note that it is not used in the design.</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">rank</span>(<span class="fu">ctrb</span>(A,B))         <span class="co"># Check the controllability.</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rank</span>(<span class="fu">obsv</span>(A,<span class="fu">sqrt</span>(Q)))   <span class="co"># Check the observability.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>2</code></pre>
+</div>
+</div>
+<div id="4" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="fu">lqr</span>(Continuous,A,B,Q,R)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>1×2 Matrix{Float64}:
+ 13.4164  91.9188</code></pre>
+</div>
+</div>
+<p>In the code below we simulate the response of the system to a nonzero initial condition and a random wind torque modelled as a white noise.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Simulation of stochastic systems in continuous time leads to stochastic differential equations (SDE)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Since we are considering a continuous-time system, simulating the response to a random disturbance is not as straightforward as in the discrete-time case, where we can just generate a sequence of random numbers. We need to use some numerical methods for simulating stochastic differential equations (SDEs). We skip the details in our course, though.</p>
+</div>
+</div>
 <div id="cell-fig-stochastic-LQR-satellite-tracking-antenna" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span> <span class="co"># For identity matrix I</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ControlSystems</span> <span class="co"># For lqr</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DifferentialEquations</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Random</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">1235</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">0</span> <span class="fl">1</span>; <span class="fl">0</span> <span class="op">-</span><span class="fl">0.1</span>]</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> [<span class="fl">0</span>; <span class="fl">0.001</span>]</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>Bw <span class="op">=</span> [<span class="fl">0</span>; <span class="fl">0.001</span>]</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> [<span class="fl">180.0</span> <span class="fl">0</span>; <span class="fl">0</span> <span class="fl">0</span>]</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>R <span class="op">=</span> I</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>Sw <span class="op">=</span> <span class="fl">500</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> [<span class="fl">2.0</span>, <span class="fl">0.0</span>]</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>tspan <span class="op">=</span> (<span class="fl">0.0</span>, <span class="fl">100.0</span>)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">rank</span>(<span class="fu">ctrb</span>(A,B))</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">rank</span>(<span class="fu">obsv</span>(A,<span class="fu">sqrt</span>(Q)))</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="fu">lqr</span>(Continuous,A,B,Q,R)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>Acl <span class="op">=</span> A<span class="op">-</span>B<span class="op">*</span>K</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">f!</span>(dx, x, p, t) </span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>   dx <span class="op">.=</span> Acl <span class="op">*</span> x</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">g!</span>(dx, x, p, t)</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>   dx <span class="op">.=</span> <span class="fu">Bw*sqrt</span>(Sw)</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>prob <span class="op">=</span> <span class="fu">SDEProblem</span>(f!, g!, x0, tspan)    <span class="co"># dx/dt = f(x,t) + g(x,t)*w(t)</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> <span class="fl">1</span> <span class="op">//</span> <span class="fl">2</span><span class="op">^</span>(<span class="fl">4</span>)</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>sol <span class="op">=</span> <span class="fu">solve</span>(prob, <span class="fu">SRIW1</span>(), dt <span class="op">=</span> dt)</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">=</span> <span class="fu">plot</span>(sol.t,sol[<span class="fl">1</span>,<span class="op">:</span>],lw<span class="op">=</span><span class="fl">2</span>, lab<span class="op">=</span><span class="st">""</span>, xlabel<span class="op">=</span><span class="st">"Time [s]"</span>, ylabel<span class="op">=</span><span class="st">"Angle"</span>, title<span class="op">=</span><span class="st">""</span>)</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>p2 <span class="op">=</span> <span class="fu">plot</span>(sol.t,sol[<span class="fl">2</span>,<span class="op">:</span>],lw<span class="op">=</span><span class="fl">2</span>, lab<span class="op">=</span><span class="st">""</span>, xlabel<span class="op">=</span><span class="st">"Time [s]"</span>, ylabel<span class="op">=</span><span class="st">"Angular rate (rad/s)"</span>, title<span class="op">=</span><span class="st">""</span>)</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(p1, p2, layout <span class="op">=</span> (<span class="fl">2</span>, <span class="fl">1</span>), size<span class="op">=</span>(<span class="fl">600</span>, <span class="fl">400</span>), title<span class="op">=</span><span class="st">""</span>, label<span class="op">=</span><span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">DifferentialEquations</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Random</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">1235</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>Acl <span class="op">=</span> A<span class="op">-</span>B<span class="op">*</span>K</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">f!</span>(dx, x, p, t) </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>   dx <span class="op">.=</span> Acl <span class="op">*</span> x</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">g!</span>(dx, x, p, t)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>   dx <span class="op">.=</span> <span class="fu">Bw*sqrt</span>(Sw)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> [<span class="fl">2.0</span>, <span class="fl">0.0</span>]</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>tspan <span class="op">=</span> (<span class="fl">0.0</span>, <span class="fl">100.0</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>prob <span class="op">=</span> <span class="fu">SDEProblem</span>(f!, g!, x0, tspan)    <span class="co"># dx/dt = f(x,t) + g(x,t)*w(t)</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> <span class="fl">1</span> <span class="op">//</span> <span class="fl">2</span><span class="op">^</span>(<span class="fl">4</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>sol <span class="op">=</span> <span class="fu">solve</span>(prob, <span class="fu">SRIW1</span>(), dt <span class="op">=</span> dt)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">=</span> <span class="fu">plot</span>(sol.t,sol[<span class="fl">1</span>,<span class="op">:</span>],lw<span class="op">=</span><span class="fl">2</span>, lab<span class="op">=</span><span class="st">""</span>, xlabel<span class="op">=</span><span class="st">"Time [s]"</span>, ylabel<span class="op">=</span><span class="st">"Angle"</span>, title<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>p2 <span class="op">=</span> <span class="fu">plot</span>(sol.t,sol[<span class="fl">2</span>,<span class="op">:</span>],lw<span class="op">=</span><span class="fl">2</span>, lab<span class="op">=</span><span class="st">""</span>, xlabel<span class="op">=</span><span class="st">"Time [s]"</span>, ylabel<span class="op">=</span><span class="st">"Angular rate (rad/s)"</span>, title<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(p1, p2, layout <span class="op">=</span> (<span class="fl">2</span>, <span class="fl">1</span>), size<span class="op">=</span>(<span class="fl">600</span>, <span class="fl">400</span>), title<span class="op">=</span><span class="st">""</span>, label<span class="op">=</span><span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="fig-stochastic-lqr-satellite-tracking-antenna" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="1">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1218,9 +1246,9 @@ Figure&nbsp;1: Simulated response of a satellite tracking antenna to nonzero ini
 </div>
 </div>
 <p>The steady-state covariance matrix <span class="math inline">\bm P_x(\infty)</span> can be computed by solving the algebraic Lyapunov equation</p>
-<div id="4" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MatrixEquations</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> <span class="fu">lyap</span>(Acl, Bw<span class="op">*</span>Sw<span class="op">*</span>Bw<span class="op">'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="8" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MatrixEquations</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> <span class="fu">lyap</span>(Acl, Bw<span class="op">*</span>Sw<span class="op">*</span>Bw<span class="op">'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>2×2 Matrix{Float64}:
  0.0970926    1.73472e-18
@@ -1228,8 +1256,8 @@ Figure&nbsp;1: Simulated response of a satellite tracking antenna to nonzero ini
 </div>
 </div>
 <p>The standard deviation for the steady-state angle (in degrees) is</p>
-<div id="6" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>stdev_theta <span class="op">=</span> <span class="fu">sqrt</span>(P[<span class="fl">1</span>,<span class="fl">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="10" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>stdev_theta <span class="op">=</span> <span class="fu">sqrt</span>(P[<span class="fl">1</span>,<span class="fl">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>0.31159691409890833</code></pre>
 </div>
@@ -1238,12 +1266,12 @@ Figure&nbsp;1: Simulated response of a satellite tracking antenna to nonzero ini
 <div id="cell-fig-ensemble-stochastic-LQR-satellite-tracking-antenna" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ensembleprob <span class="op">=</span> <span class="fu">EnsembleProblem</span>(prob)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sol <span class="op">=</span> <span class="fu">solve</span>(ensembleprob, <span class="fu">EnsembleThreads</span>(), trajectories <span class="op">=</span> <span class="fl">100</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(sol, lab<span class="op">=</span>[<span class="st">"Position"</span> <span class="st">"Velocity"</span>], xlabel<span class="op">=</span><span class="st">"Time [s]"</span>, ylabel<span class="op">=</span><span class="st">"State"</span>, title<span class="op">=</span><span class="st">""</span>,size<span class="op">=</span>(<span class="fl">600</span>, <span class="fl">400</span>))</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#using DifferentialEquations.EnsembleAnalysis</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#summ = EnsembleSummary(sol, 0:0.1:100)</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(summ, xlabel="Time [s]", ylabel="State", label = "Middle 95%")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ensembleprob <span class="op">=</span> <span class="fu">EnsembleProblem</span>(prob)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sol <span class="op">=</span> <span class="fu">solve</span>(ensembleprob, <span class="fu">EnsembleThreads</span>(), trajectories <span class="op">=</span> <span class="fl">100</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(sol, lab<span class="op">=</span>[<span class="st">"Position"</span> <span class="st">"Velocity"</span>], xlabel<span class="op">=</span><span class="st">"Time [s]"</span>, ylabel<span class="op">=</span><span class="st">"State"</span>, title<span class="op">=</span><span class="st">""</span>,size<span class="op">=</span>(<span class="fl">600</span>, <span class="fl">400</span>))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#using DifferentialEquations.EnsembleAnalysis</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#summ = EnsembleSummary(sol, 0:0.1:100)</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(summ, xlabel="Time [s]", ylabel="State", label = "Middle 95%")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="fig-ensemble-stochastic-lqr-satellite-tracking-antenna" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="1">
 <figure class="quarto-float quarto-float-fig figure">

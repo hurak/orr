@@ -73,6 +73,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -995,7 +1038,47 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-%
+<p>We are now going to do the same as we did it while discussing the LQR control for a system with stochastic disturbances. We have seen that the optimal control problem of minimizing the expected value of an integral quadratic cost can be reformulated as a problem of minimizing the <span class="math inline">\mathcal{H}_2</span> system norm of a certain interconnection of the system and the controller. This is illustrated in <a href="#fig-LQG_as_H2" class="quarto-xref">Fig.&nbsp;1</a>.</p>
+<div id="fig-LQG_as_H2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-LQG_as_H2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/LQG_as_H2.png" class="img-fluid figure-img" style="width:55.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-LQG_as_H2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: LQG problem formulated as the H2-optimal control problem for an interconnection of the generalized plant and the feedback controller
+</figcaption>
+</figure>
+</div>
+<p>The generalized plant (the gray block in the figure) has</p>
+<ul>
+<li>two types of inputs:
+<ul>
+<li>exogenous input, here composed of the random disturbance <span class="math inline">w(t)</span> and the measurement noise <span class="math inline">v(t)</span>, both modelled as white noise,</li>
+<li>control input <span class="math inline">u(t)</span>,</li>
+</ul></li>
+<li>two types of outputs:
+<ul>
+<li>regulated outputs to be regulated (close) to zero, here the two variables <span class="math inline">z_1(t)</span> and <span class="math inline">z_2(t)</span>,</li>
+<li>measured outputs <span class="math inline">y(t)</span>.</li>
+</ul></li>
+</ul>
+<p>Having seen another instance of this reformulation, we now formulate the <span class="math inline">\mathcal{H}_2</span>-optimal control problem in full generality. For the feedback interconnection of a generalized plant <span class="math inline">\mathbf P</span> and a controller <span class="math inline">\bm K</span> as in <a href="#fig-H2-optimal-control" class="quarto-xref">Fig.&nbsp;2</a>, we want to find the controller that minimizes the <span class="math inline">\mathcal{H}_2</span> norm of the closed-loop transfer function from the exogenous inputs <span class="math inline">\bm w</span> to the regulated outputs <span class="math inline">\bm z</span>.</p>
+<div id="fig-H2-optimal-control" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-H2-optimal-control-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/H2_optimal_control.png" class="img-fluid figure-img" style="width:35.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-H2-optimal-control-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Feedback interconnection for H2-optimal control
+</figcaption>
+</figure>
+</div>
+<p>Denoting the closed-loop transfer function as <span class="math inline">\mathbf N(\mathbf P, \bm K)</span>, the optimal control problem is then given by <span class="math display">\boxed{
+\operatorname*{minimize}_{\bm K(s)\text{ stabilizing}}\|\mathbf N(\mathbf P, \bm K)\|_{2}
+}
+</span></p>
+<p>To conclude, while our main approach towards optimal control design so far has been to <strong>minimize the integral of some functions of the states and the control inputs</strong>, we have just seen that such problem can be reformulated as the <strong>minimization of the <span class="math inline">\mathcal H_2</span> norm of a feedback interconnection</strong> of a special artificial/auxiliary/<strong>generalized system</strong> and the feedback controller.</p>
+<p>While this reformulation by itself may open some new perspectives on the problem, it also opens the door to a whole new family of optimal control problems that are defined by using other system norms instead of the <span class="math inline">\mathcal H_2</span> norm. We will see some of these problems in the next lectures.</p>
 
 
 
