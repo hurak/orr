@@ -115,32 +115,45 @@ The requirement is to keep the pointing (angular) error below $1^\circ$. We para
 $$
 J = \mathbb E\left\{\begin{bmatrix}\theta(\infty)&\dot\theta(\infty)\end{bmatrix}\begin{bmatrix}180 & 0\\ 0 & 0\end{bmatrix}\begin{bmatrix}\theta(\infty)\\\dot\theta(\infty)\end{bmatrix}+u^2(\infty)\right\},
 $$
-in which we obviously do not to penalize the second state variable – the angular ratem, and we will have to check if the conditions of the existence and uniqueness of a stabilizing LQR are satisfied. 
+in which we obviously do not to penalize the second state variable – the angular rate, and we will have to check if the conditions of the existence and uniqueness of a stabilizing LQR are satisfied. 
+
+In the code below, we first compute the optimal feedback gain matrix $\mathbf K$ by solving the continuous-time algebraic Riccati equation (CARE). Since the matrix weight $\mathbf Q$ has a zero on the diagonal, we should also check the detectability (or even the observability). Indeed, in the design phase, there is no difference with respect to the deterministic case.
 
 ``` {julia}
+#| code-fold: show
+using LinearAlgebra # For identity matrix I
+using ControlSystems # For lqr
+
+A = [0 1; 0 -0.1]       # d/dt x = A x + B u + Bw w
+B = [0; 0.001]          # Input matrix for the control input.
+Bw = [0; 0.001]         # Input matrix for the disturbance.
+Q = [180.0 0; 0 0]      # Weight for states. Note that we do not penalize the second state variable.
+R = I                   # Weight for control input.
+Sw = 500                # Spectral density of the disturbance. Note that it is not used in the design.
+
+rank(ctrb(A,B))         # Check the controllability.
+rank(obsv(A,sqrt(Q)))   # Check the observability. 
+```
+
+``` {julia}
+#| code-fold: false
+K = lqr(Continuous,A,B,Q,R)
+```
+
+In the code below we simulate the response of the system to a nonzero initial condition and a random wind torque modelled as a white noise. 
+
+::: {.callout-important}
+### Simulation of stochastic systems in continuous time leads to stochastic differential equations (SDE)
+Since we are considering a continuous-time system, simulating the response to a random disturbance is not as straightforward as in the discrete-time case, where we can just generate a sequence of random numbers. We need to use some numerical methods for simulating stochastic differential equations (SDEs). We skip the details in our course, though.
+:::
+``` {julia}
+#| code-fold: true
 #| fig-cap: "Simulated response of a satellite tracking antenna to nonzero initial conditions and random wind torque"
 #| label: fig-stochastic-LQR-satellite-tracking-antenna
-using LinearAlgebra # For identity matrix I
 using Plots
-using ControlSystems # For lqr
 using DifferentialEquations
 using Random
 Random.seed!(1235)
-
-A = [0 1; 0 -0.1]
-B = [0; 0.001]
-Bw = [0; 0.001]
-Q = [180.0 0; 0 0]
-R = I
-Sw = 500
-
-x0 = [2.0, 0.0]
-tspan = (0.0, 100.0)
-
-rank(ctrb(A,B))
-rank(obsv(A,sqrt(Q)))
-
-K = lqr(Continuous,A,B,Q,R)
 
 Acl = A-B*K
 function f!(dx, x, p, t) 
@@ -149,6 +162,9 @@ end
 function g!(dx, x, p, t)
    dx .= Bw*sqrt(Sw)
 end
+
+x0 = [2.0, 0.0]
+tspan = (0.0, 100.0)
 
 prob = SDEProblem(f!, g!, x0, tspan)    # dx/dt = f(x,t) + g(x,t)*w(t)
 dt = 1 // 2^(4)
@@ -175,6 +191,7 @@ stdev_theta = sqrt(P[1,1])
 which is below the requirement of $1^\circ$ (even when two or three standard deviations are considered). This can be also confirmed by some Monte Carlo simulations.
 
 ``` {julia}
+#| code-fold: true
 #| fig-cap: "Ensemble of simulated responses of a satellite tracking antenna to nonzero initial conditions and several realizoations of random wind torque"
 #| label: fig-ensemble-stochastic-LQR-satellite-tracking-antenna
 ensembleprob = EnsembleProblem(prob)
