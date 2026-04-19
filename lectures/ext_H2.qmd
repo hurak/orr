@@ -17,58 +17,30 @@ crossref:
 engine: julia
 ---
 
-\begin{frame}
-\frametitle{LQG as $\mathcal{H}_2$-optimal control}
-\pause
-\begin{center}
- \includegraphics[scale=0.5]{./figures/LQG_as_H2.pdf}
- % LQG_as_H2.pdf: 595x842 pixel, 72dpi, 20.99x29.70 cm, bb=0 0 595 842
-\end{center}
-\pause
-Generalized plant
-\pause
-\begin{itemize}
- \item two types of inputs: \pause
-  \begin{itemize}
-   \item exogenous inputs: random disturbance $w(t)$ and noise $v(t)$ \pause
-   \item control inputs: control command $u(t)$ \pause
-  \end{itemize}
- \item two types of outputs: \pause
-  \begin{itemize}
-   \item regulated outputs: $z_1(t)$ and $z_2(t)$ to be beaten to zero\pause
-   \item measured outputs: $y(t)$
-  \end{itemize}
-\end{itemize}
-\end{frame}
+We are now going to do the same as we did it while discussing the LQR control for a system with stochastic disturbances. We have seen that the optimal control problem of minimizing the expected value of an integral quadratic cost can be reformulated as a problem of minimizing the $\mathcal{H}_2$ system norm of a certain interconnection of the system and the controller. This is illustrated in @fig-LQG_as_H2.
 
-\begin{frame}
-\frametitle{$\mathcal{H}_2$-optimal control in full generality}
-\pause
-\begin{center}
- \includegraphics[scale=0.6]{./figures/H2.pdf}
- % H2.pdf: 595x842 pixel, 72dpi, 20.99x29.70 cm, bb=0 0 595 842
-\end{center}
-\pause 
+![LQG problem formulated as the H2-optimal control problem for an interconnection of the generalized plant and the feedback controller](figures/LQG_as_H2.png){#fig-LQG_as_H2 width=55%}  
 
+The generalized plant (the gray block in the figure) has
+
+- two types of inputs: 
+  - exogenous input, here composed of the random disturbance $w(t)$ and the measurement noise $v(t)$, both modelled as white noise,
+  - control input $u(t)$, 
+- two types of outputs: 
+  - regulated outputs to be regulated (close) to zero, here the two variables $z_1(t)$ and $z_2(t)$, 
+  - measured outputs $y(t)$.
+
+Having seen another instance of this reformulation, we now formulate the $\mathcal{H}_2$-optimal control problem in full generality. For the feedback interconnection of a generalized plant $\mathbf P$ and a controller $\bm K$ as in @fig-H2-optimal-control, we want to find the controller that minimizes the $\mathcal{H}_2$ norm of the closed-loop transfer function from the exogenous inputs $\bm w$ to the regulated outputs $\bm z$.
+
+![Feedback interconnection for H2-optimal control](figures/H2_optimal_control.png){#fig-H2-optimal-control width=35%}
+
+Denoting the closed-loop transfer function as $\mathbf N(\mathbf P, \bm K)$, the optimal control problem is then given by
 $$\boxed{
-\minimize_{K(s)\text{ stabilizing}}\|N(P,K)\|_{2}
+\operatorname*{minimize}_{\bm K(s)\text{ stabilizing}}\|\mathbf N(\mathbf P, \bm K)\|_{2}
 }
 $$
-\end{frame}
 
-% \begin{frame}
-% \frametitle{Ex.: $\mathcal{H}_2$-optimal control}
-% 
-% \end{frame}
+To conclude, while our main approach towards optimal control design so far has been to **minimize the integral of some functions of the states and the control inputs**, we have just seen that 
+such problem can be reformulated as the **minimization of the $\mathcal H_2$ norm of a feedback interconnection** of a special artificial/auxiliary/**generalized system** and the feedback controller.
 
-\begin{frame}
-\frametitle{To conclude the LQ story}
-\pause
-\begin{enumerate}
-\item design usable controllers by minimizing the integral of some functions of the states and the inputs
-\item minimization of an LQ integral cost can be reformulated as H2 system norm minization
-\end{enumerate} 
-\pause
-
-How about using other system norms?
-\end{frame}
+While this reformulation by itself may open some new perspectives on the problem, it also opens the door to a whole new family of optimal control problems that are defined by using other system norms instead of the $\mathcal H_2$ norm. We will see some of these problems in the next lectures.
