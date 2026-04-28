@@ -1086,26 +1086,33 @@ window.Quarto = {
 
 <section id="base-neutralization-process" class="level2">
 <h2 class="anchored" data-anchor-id="base-neutralization-process">Base neutralization process</h2>
-<p>In this homework, you will design a controller for a base neutralization system that operates in two stages, as illustrated in the figure below.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figures/neutralization_process.svg" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption>Neutralization process</figcaption>
+<p>Your task is to design a feedback controller for a base neutralization system that operates in two stages, as illustrated in <a href="#fig-neutralization" class="quarto-xref">Fig.&nbsp;1</a> below.</p>
+<div id="fig-neutralization" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-neutralization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/neutralization_process.svg" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-neutralization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Neutralization process
+</figcaption>
 </figure>
 </div>
-<p>The bulk of the neutralization takes place in the first tank, where a large amount of acid (<span class="math inline">u_1</span>) is mixed with the basic solution (<span class="math inline">d</span>) to reduce the pH (<span class="math inline">y_1</span>) to approximately 10. In the second tank, the pH (<span class="math inline">y_2</span>) is further adjusted to a target value of around 7 by adding a smaller amount of acid (<span class="math inline">u_2</span>).</p>
-<p>The system can be modeled using the following signal flow diagram</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figures/neutralization_process_flow.svg" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption>Signal flow diagram</figcaption>
+<p>The bulk of the neutralization takes place in the first tank, where a large amount of acid (the control input <span class="math inline">u_1</span>) is mixed with the basic solution (the disturbance variable <span class="math inline">d</span>) to reduce the pH (the output variable <span class="math inline">y_1</span>) to the approximate value of 10. In the second tank, the pH (the other output variable <span class="math inline">y_2</span>) is further adjusted to a target value of around 7 by adding a small amount of acid (the other control input <span class="math inline">u_2</span>).</p>
+<p>The system can be modeled using the signal flow diagram in <a href="#fig-block-diagram" class="quarto-xref">Fig.&nbsp;2</a> below.</p>
+<div id="fig-block-diagram" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-block-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/neutralization_process_flow.svg" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-block-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Signal flow diagram
+</figcaption>
 </figure>
 </div>
-<p>Where the transfer functions are given as</p>
-<p><span class="math display">
+<p>The transfer functions are given by <span class="math display">
 G_1(s) = \frac{1.5}{100s+1}, \quad G_2(s) = \frac{1.0}{50s+1}.
 </span></p>
-<p>Your goal is to design a controller which ensures <span class="math inline">y_2 \approx r</span> with a closed-loop bandwidth <span class="math inline">\omega_b = 1.0</span> rad/s, while also keeping <span class="math inline">u_2</span> small at low frequencies. The controller <span class="math inline">\bm{K}</span> should be of the form <span class="math display">
+<p>Design a controller that ensures <span class="math inline">y_2 \approx r</span> with a closed-loop bandwidth <span class="math inline">\omega_b = 1.0</span> rad/s, while also keeping <span class="math inline">u_2</span> small at low frequencies. The controller <span class="math inline">\bm{K}</span> should be of the form <span class="math display">
 \begin{bmatrix}
 u_1 \\
 u_2
@@ -1114,41 +1121,24 @@ u_2
 r - y_2
 \end{bmatrix}.
 </span></p>
-<p>You should use the <span class="math inline">H_\infty</span> signal-based design method to achieve this goal, that is, design the controller by solving <span class="math display">
-\operatorname*{minimize}_{\bm{K} \text{ stabilizing}}  \lVert \operatorname{LFT}(\bm{P}, \bm{K}) \rVert_{\infty},
-</span> where <span class="math inline">\bm{P}</span> is the generalized plant, which includes the dynamics of the base neutralization process along with weighting functions used to express performance objectives. It maps the exogenous inputs (e.g., reference <span class="math inline">r</span>, disturbance <span class="math inline">d</span>) and the control inputs <span class="math inline">(u_1, u_2)</span> to the performance outputs (such as tracking error and control effort) and to the measured signals used by the controller.</p>
-<p>The operator <span class="math inline">\operatorname{LFT}(\bm{P}, \bm{K})</span> denotes the lower linear fractional transformation, which represents the closed-loop transfer function from the exogenous inputs to the performance outputs when the controller <span class="math inline">\bm{K}</span> is connected to the generalized plant <span class="math inline">\bm{P}</span> via feedback.</p>
+<p>Formulate the control design problem within the <span class="math inline">\mathcal H_\infty</span> signal-based framework, and then design the controller by solving the <span class="math inline">\mathcal H_\infty</span>-optimization problem <span class="math display">
+\operatorname*{minimize}_{\bm{K} \text{ stabilizing}}  \lVert \mathcal{F}_\mathrm{l}(\mathbf{P}, \bm{K}) \rVert_{\infty},
+</span> where <span class="math inline">\mathbf{P}</span> is the generalized plant, which includes the dynamics of the base neutralization process along with weighting functions used to express performance objectives. It maps the exogenous inputs (e.g., the reference <span class="math inline">r</span>, the disturbance <span class="math inline">d</span>) and the control inputs <span class="math inline">(u_1, u_2)</span> to the performance outputs (such as the tracking error and the control effort) and to the measured signals used by the controller to compute the control inputs.</p>
+<p>The operator <span class="math inline">\mathcal{F}_\mathrm{l}(\mathbf{P}, \bm{K})</span> denotes the lower linear fractional transformation, which represents the closed-loop transfer function from the exogenous inputs to the regulated outputs when the controller <span class="math inline">\bm{K}</span> is connected to the generalized plant <span class="math inline">\mathbf{P}</span> via feedback.</p>
 <section id="tasks" class="level3">
 <h3 class="anchored" data-anchor-id="tasks">Tasks</h3>
 <p>You should follow these steps to complete the homework</p>
 <ol type="1">
-<li><p>Create the generalized plant <span class="math inline">\bm{P}</span> using the transfer functions <span class="math inline">G_1(s)</span> and <span class="math inline">G_2(s)</span>, along with your chosen exogenous inputs, performance outputs, and weighting filters. The weighting filters should be designed to ensure that the closed-loop system meets the performance objectives, such as reference tracking and control effort requirements.</p></li>
-<li><p>Use the <a href="https://juliacomputing.github.io/JuliaSimControl.jl/stable/api/#JuliaSimControl.hinfsyn_lmi-Union%7BTuple%7BExtendedStateSpace%7BContinuous,%20T%7D%7D,%20Tuple%7BT%7D%7D%20where%20T"><code>hinfsyn_lmi</code></a> function from <a href="https://juliacomputing.github.io/JuliaSimControl.jl/stable/"><code>JuliaSimControl</code></a> to solve the <span class="math inline">H_\infty</span> optimization problem. This function will compute the optimal controller <span class="math inline">\bm{K}</span> and the appropriate <span class="math inline">\gamma</span> upper bound on the <span class="math inline">H_\infty</span> norm of the LFT. We suggest using <code>γrel = 1.05</code> as the relative tolerance for the optimization.</p></li>
+<li><p>Create the generalized plant <span class="math inline">\mathbf{P}(s)</span> using the transfer functions <span class="math inline">G_1(s)</span> and <span class="math inline">G_2(s)</span>, along with your chosen exogenous inputs, regulated outputs, and weighting filters. The weighting filters should be designed to ensure that the closed-loop system meets the performance objectives, such as reference tracking and control effort requirements.</p></li>
+<li><p>Use the <a href="https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/api/#RobustAndOptimalControl.hinfsynthesize-Union%7BTuple%7BExtendedStateSpace%7BContinuous,%20T,%20S%7D%20where%20S%3C:AbstractStateSpace%7BContinuous%7D%7D,%20Tuple%7BT%7D%7D%20where%20T">hinfsynthesize</a> function from <a href="https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/"><code>RobustAndOptimalControl.jl</code></a> to solve the <span class="math inline">\mathcal H_\infty</span>-optimal control problem (<a href="https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/#H_\infty-and-H_2-design">some more related functions</a> might be useful). This function will compute the optimal controller <span class="math inline">\bm{K}</span> and the appropriate <span class="math inline">\gamma</span> upper bound on the <span class="math inline">\mathcal H_\infty</span> norm of the LFT. We suggest using <code>γrel = 1.05</code> as the relative tolerance for the optimization.</p></li>
 <li><p>Prepare a concise report (<code>hw.pdf</code>) and include the controller design code (<code>hw.jl</code>). Compress the report and code into a zip file named <code>hw.zip</code> and submit it to the <a href="https://cw.felk.cvut.cz/brute">BRUTE</a> system.</p></li>
 </ol>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>JuliaSim
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><code>JuliaSimControl</code> is not a package that is available in the Julia package registry because it is not a free software. It is a commercial package that is part of the JuliaSim suite, which is a collection of modeling and simulation tools for Julia. However, to our luck, it is for non-commercial academic teaching and research purposes.</p>
-<p>Installing <code>JuliaSimControl</code> is more involved than your run of the mill Julia package, but not by much.</p>
-<p>First, you need to register yourself on the <a href="https://juliahub.com">JuliaHub</a> website.</p>
-<p>After that, follow the instruction on <a href="https://help.juliahub.com/juliasim/stable/gettingstarted/juliahubregistry/">Using JuliaSim Packages Locally via the JuliaHub Registry</a> to add the JuliaHub registry to your Julia installation.</p>
-<p>Once you have done that, you can install <code>JuliaSimControl</code> in the standard way using the Julia package manager.</p>
-</div>
-</div>
 </section>
 <section id="report-instructions" class="level3">
 <h3 class="anchored" data-anchor-id="report-instructions">Report instructions</h3>
 <p>Your report should contain the following</p>
 <ol type="1">
-<li><p>A description of the generalized plant <span class="math inline">\bm{P}</span>, including your choice of exogenous inputs, performance outputs, and weighting functions. Briefly explain the reasoning behind your design choices.</p></li>
+<li><p>A description of the generalized plant <span class="math inline">\mathbf{P}</span>, including your choice of exogenous inputs, regulated outputs, and weighting functions. Briefly explain the reasoning behind your design choices.</p></li>
 <li><p>Closed-loop performance analysis, namely show</p>
 <ul>
 <li>the time response of the output <span class="math inline">y_2</span> and control input <span class="math inline">u_2</span> to a step change in the reference <span class="math inline">r</span>.</li>
@@ -1160,19 +1150,20 @@ r - y_2
 <section id="template" class="level3">
 <h3 class="anchored" data-anchor-id="template">Template</h3>
 <div id="2" class="cell" data-execution_count="0">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">JuliaSimControl</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span>, <span class="bu">Plots</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> <span class="fu">tf</span>(<span class="st">"s"</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>G₁ <span class="op">=</span> <span class="fl">1.5</span><span class="op">/</span>(<span class="fl">100</span>s<span class="op">+</span><span class="fl">1</span>) <span class="op">|&gt;</span> ss</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>G₂ <span class="op">=</span> <span class="fl">1</span><span class="op">/</span>(<span class="fl">50</span>s<span class="op">+</span><span class="fl">1</span>) <span class="op">|&gt;</span> ss</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">## </span><span class="al">TODO</span><span class="co">: Form the generalized plant P</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">## </span><span class="al">TODO</span><span class="co">: Find the controller K using hinfsyn_lmi</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">## </span><span class="al">TODO</span><span class="co">: Simulate the closed-loop system</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ControlSystems</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">RobustAndOptimalControl</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span>, <span class="bu">Plots</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> <span class="fu">tf</span>(<span class="st">"s"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>G₁ <span class="op">=</span> <span class="fl">1.5</span><span class="op">/</span>(<span class="fl">100</span>s<span class="op">+</span><span class="fl">1</span>) <span class="op">|&gt;</span> ss</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>G₂ <span class="op">=</span> <span class="fl">1</span><span class="op">/</span>(<span class="fl">50</span>s<span class="op">+</span><span class="fl">1</span>) <span class="op">|&gt;</span> ss</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">## </span><span class="al">TODO</span><span class="co">: Form the generalized plant P</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">## </span><span class="al">TODO</span><span class="co">: Find the controller K using hinfsynthesize</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">## </span><span class="al">TODO</span><span class="co">: Simulate the closed-loop system</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 

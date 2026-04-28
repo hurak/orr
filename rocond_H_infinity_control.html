@@ -1256,7 +1256,24 @@ Figure&nbsp;4: Q-parameterization of all stabilizing controllers that quarantee 
 </section>
 <section id="conditions-of-existence-of-the-mathcal-h_infty-optimal-controller" class="level3">
 <h3 class="anchored" data-anchor-id="conditions-of-existence-of-the-mathcal-h_infty-optimal-controller">Conditions of existence of the <span class="math inline">\mathcal H_\infty</span> optimal controller</h3>
-<p>#TODO</p>
+<p>Consider the state-space model of the generalized plant parameterized by the quadruple of matrices <span class="math inline">(\mathbf A, \mathbf B, \mathbf C, \mathbf D)</span>, which can be partitioned as <span class="math display">
+\left[
+\begin{array}{l|ll}
+\mathbf A_{1} &amp; \mathbf B_1 &amp; \mathbf B_2\\
+\hline
+\mathbf C_1 &amp; \mathbf D_{11} &amp; \mathbf D_{12}\\
+\mathbf C_2 &amp; \mathbf D_{21} &amp; \mathbf D_{22}
+\end{array}
+\right].
+</span></p>
+<p>Conditions for existence of <span class="math inline">\bm K</span> minimizing <span class="math inline">\|F_l(P,K)\|_{\infty}</span> are:</p>
+<ul>
+<li>the system <span class="math inline">(\mathbf A, \mathbf B_2, \mathbf C_2)</span> is stabilizable and detectable,</li>
+<li>the matrix <span class="math inline">\mathbf D_{12}</span> has a full column rank and the matrix <span class="math inline">\mathbf D_{21}</span> has a full row rank, otherwise the controller has high gain at high frequency (nonproper),</li>
+<li>the matrix <span class="math inline">\begin{bmatrix}\mathbf A-j\omega I &amp; \mathbf B_2\\ \mathbf C_1 &amp; \mathbf D_{12}\end{bmatrix}</span> full column rank for all <span class="math inline">\omega</span>,</li>
+<li>the matrix <span class="math inline">\begin{bmatrix}\mathbf A-j\omega I &amp; \mathbf B_1\\ \mathbf C_2 &amp; \mathbf D_{21}\end{bmatrix}</span> full row rank for all <span class="math inline">\omega</span> (to prevent low damped poles of the controller),</li>
+</ul>
+<p>In some literature, the assumption that <span class="math inline">\mathbf D_{11}=0</span> and <span class="math inline">\mathbf D_{22}=0</span> is made. But it is not necessary. It only simplifies the formulas. If the original problem does not satisfy these assumptions, the original problem can be transformed.</p>
 </section>
 <section id="structure-of-the-mathcalh_infty-optimal-controller" class="level3">
 <h3 class="anchored" data-anchor-id="structure-of-the-mathcalh_infty-optimal-controller">Structure of the <span class="math inline">\mathcal{H}_\infty</span>-optimal controller</h3>

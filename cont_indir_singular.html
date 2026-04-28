@@ -1246,7 +1246,7 @@ D(v,h) = \frac{1}{2} \rho_0 C_\mathrm{D} S v^2 \exp(-\beta h),
 <div id="12" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Hᵤ <span class="op">=</span> <span class="fu">expand_derivatives</span>(Symbolics.<span class="fu">derivative</span>(H, T))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>λᵥ / m + (-λₘ) / c</code></pre>
+<pre><code>(-λₘ) / c + λᵥ / m</code></pre>
 </div>
 </div>
 <p>does not contain <span class="math inline">T</span>, which implies that the control is potentially singular.</p>
@@ -1529,7 +1529,7 @@ D\left( v, h \right) + \frac{ - 2 ~ c^{2} ~ g ~ m - 2 ~ c ~ g ~ m ~ v - v^{2} ~ 
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>sol  <span class="op">=</span> <span class="fu">solve</span>(prob, <span class="fu">Tsit5</span>(); reltol<span class="op">=</span><span class="fl">1e-8</span>, abstol<span class="op">=</span><span class="fl">1e-8</span>, dtmax<span class="op">=</span><span class="fl">1.0</span>, callback<span class="op">=</span>callbacks)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <!-- The simulation results
-``` vuhwfzf
+``` ekcbeuh
 #| code-fold: true
 println("  Final time    : ", sol.t[end], " s")
 println("  Final altitude: ", sol.u[end][2] / 1000, " km")

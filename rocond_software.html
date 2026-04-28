@@ -1021,6 +1021,7 @@ window.Quarto = {
   <li><a href="#julia" id="toc-julia" class="nav-link active" data-scroll-target="#julia">Julia</a>
   <ul class="collapse">
   <li><a href="#robustandoptimalcontrol.jl" id="toc-robustandoptimalcontrol.jl" class="nav-link" data-scroll-target="#robustandoptimalcontrol.jl">RobustAndOptimalControl.jl</a></li>
+  <li><a href="#dyadcontrolsystems.jl" id="toc-dyadcontrolsystems.jl" class="nav-link" data-scroll-target="#dyadcontrolsystems.jl">DyadControlSystems.jl</a></li>
   </ul></li>
   <li><a href="#matlab" id="toc-matlab" class="nav-link" data-scroll-target="#matlab">Matlab</a>
   <ul class="collapse">
@@ -1058,13 +1059,19 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="robustandoptimalcontrol.jl">RobustAndOptimalControl.jl</h3>
 <p>The main package for robust and optimal control in Julia. Documentation at <a href="https://juliacontrol.github.io/RobustAndOptimalControl.jl/stable/">RobustAndOptimalControl.jl</a>. There is a <a href="https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/#H_\infty-and-H_2-design">dedicated section</a> in the manual on the <span class="math inline">\mathcal H_\infty</span> control design.</p>
 <ul>
-<li><a href="https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/api/#RobustAndOptimalControl.hinfsynthesize-Union%7BTuple%7BExtendedStateSpace%7BContinuous,%20T%7D%7D,%20Tuple%7BT%7D%7D%20where%20T">hinfsynthesize</a>: control design by minimizing the <span class="math inline">\mathcal{H}_\infty</span> norm the the mixed-sensitivity function.</li>
-<li><a href="https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/api/#RobustAndOptimalControl.hinfpartition-NTuple%7B4,%20Any%7D">hinfpartition</a></li>
+<li><a href="https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/api/#RobustAndOptimalControl.hinfsynthesize-Union%7BTuple%7BExtendedStateSpace%7BContinuous,%20T%7D%7D,%20Tuple%7BT%7D%7D%20where%20T">hinfsynthesize</a>: control design by minimizing the <span class="math inline">\mathcal{H}_\infty</span> norm of the lower LFT of of the generalized plant with respect to the feedback controller.</li>
+<li><a href="https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/api/#RobustAndOptimalControl.hinfpartition-NTuple%7B4,%20Any%7D">hinfpartition</a>: creates a generalized plant such that the <span class="math inline">\mathcal{H}_\infty</span>-optimal control problem with this plant is equivalent to the mixed-sensitivity problem with the given weighting filters.</li>
+<li><a href="https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/api/#RobustAndOptimalControl.partition-Tuple%7BAbstractStateSpace%7D">partition</a>: creates a generalized plant from the given state-space model and the specified partition of the input and output channels into exogenous inputs, control inputs, regulated outputs, and measured outputs.</li>
 <li><a href="https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/api/#RobustAndOptimalControl.specificationplot">specificationsplot</a>: plotting the sensitivity, complementary sensitivity and input sensitivity functions and corresponding weighting filters relevant in the mixed sensitivity design.</li>
 <li><a href="https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/api/#RobustAndOptimalControl.glover_mcfarlane">glover_mcfarlane</a>: Glover-McFarlane method of robust stabilization of a loop-shaping design based on <span class="math inline">\mathcal{H}_\infty</span> optimal control.</li>
 <li><a href="https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/api/#RobustAndOptimalControl.glover_mcfarlane_2dof">glover_mcfarlane_2dof</a>: the same as above, but yielding a two-degree-of-freedom controller.</li>
 <li><a href="https://juliacontrol.github.io/RobustAndOptimalControl.jl/dev/api/#RobustAndOptimalControl.hanus-Tuple%7BAny%7D">hanus</a>: a technique for antiwindup.</li>
 </ul>
+</section>
+<section id="dyadcontrolsystems.jl" class="level3">
+<h3 class="anchored" data-anchor-id="dyadcontrolsystems.jl">DyadControlSystems.jl</h3>
+<p>Documentation at <a href="https://help.juliahub.com/dyad/DyadControlSystems.jl/stable/">DyadControlSystems.jl</a>. This package (formerly named JuliaSimControl as a part of the JuliaSim project) is a part of the <a href="https://juliahub.com/products/dyad">Dyad</a> project and contains some additional methods for <span class="math inline">\mathcal{H}_\infty</span> control design. In particular, it implements the LMI-based solver for the general <span class="math inline">\mathcal{H}_\infty</span> control problem, which relaxes some of the assumptions that the Riccati equation based solver implemented in RobustAndOptimalControl.jl needs. However, the package is not a free software. Documentation at <a href="https://juliacontrol.github.io/DyadControlSystems.jl/dev/">DyadControlSystems.jl</a>.</p>
+<p>The package, although free for nonncommercial use, is not available in the public Julia package registry. To install Dyad.jl and DyadControlSystems.jl, you need to follow their <a href="https://help.juliahub.com/dyad/stable/installation.html">installation instructions</a>.</p>
 </section>
 </section>
 <section id="matlab" class="level2">
@@ -1072,10 +1079,11 @@ window.Quarto = {
 <section id="robust-control-toolbox" class="level3">
 <h3 class="anchored" data-anchor-id="robust-control-toolbox">Robust Control Toolbox</h3>
 <ul>
-<li><p><a href="https://www.mathworks.com/help/robust/ref/dynamicsystem.mixsyn.html">mixsyn</a>: control design by minimizing the <span class="math inline">\mathcal{H}_\infty</span> norm the the mixed-sensitivity function.</p></li>
-<li><p><a href="https://www.mathworks.com/help/robust/ref/dynamicsystem.hinfsyn.html">hinfsyn</a>: control design by minimizing the <span class="math inline">\mathcal{H}_\infty</span> norm of a closed-loop transfer function formulated using an LFT.</p></li>
-<li><p><a href="https://www.mathworks.com/help/robust/ref/lti.ncfsyn.html">ncfsyn</a>: Glover-McFarlane method of robust stabilization of a loop-shaping design based on <span class="math inline">\mathcal{H}_\infty</span> optimal control.</p></li>
-<li><p><a href="https://www.mathworks.com/help/robust/ref/uss.musyn.html">musyn</a>: similar general setup as the hinfsyn method, but it considers a structure in the <span class="math inline">\Delta</span> term. It is regarded by some as the culmination of the <span class="math inline">\mathcal{H}_\infty</span> control design methods. The disadvantage is that it is the most computationally intensive of the methods we covered, and the resulting controller is typically of rather high order.</p></li>
+<li><a href="https://www.mathworks.com/help/robust/ref/dynamicsystem.mixsyn.html">mixsyn</a>: control design by minimizing the <span class="math inline">\mathcal{H}_\infty</span> norm the the mixed-sensitivity function.</li>
+<li><a href="https://www.mathworks.com/help/robust/ref/dynamicsystem.hinfsyn.html">hinfsyn</a>: control design by minimizing the <span class="math inline">\mathcal{H}_\infty</span> norm of a closed-loop transfer function formulated using an LFT.</li>
+<li><a href="https://www.mathworks.com/help/robust/ref/dynamicsystem.hinfstruct.html">hinfstruct</a>: fixed-structure <span class="math inline">\mathcal{H}_\infty</span> control design by minimizing the <span class="math inline">\mathcal{H}_\infty</span> norm of a closed-loop transfer function formulated using an LFT.</li>
+<li><a href="https://www.mathworks.com/help/robust/ref/lti.ncfsyn.html">ncfsyn</a>: Glover-McFarlane method of robust stabilization of a loop-shaping design based on <span class="math inline">\mathcal{H}_\infty</span> optimal control.</li>
+<li><a href="https://www.mathworks.com/help/robust/ref/uss.musyn.html">musyn</a>: similar general setup as the hinfsyn method, but it considers a structure in the <span class="math inline">\Delta</span> term. It is regarded by some as the culmination of the <span class="math inline">\mathcal{H}_\infty</span> control design methods. The disadvantage is that it is the most computationally intensive of the methods we covered, and the resulting controller is typically of rather high order.</li>
 </ul>
 </section>
 </section>
