@@ -19,10 +19,10 @@ In the previous chapter we mentioned that there are several ways to characterize
 
 This chosen framework has two benefits: 
 
-- First, having being **formulated in frequency domain**, it offers us to take advantage of the insight developed in introductory courses on automatic control, that typically invest quite some effort into developing frequency domain concepts such as magnitude and phase Bode plots, Nyquist plot, and sensitivity and complementary sensitivity functions. Generations of control engineers have contributed to the collective know-how carried by these classical concepts and techniques.
+- First, having been **formulated in the frequency domain**, it offers us to take advantage of the insight developed in introductory courses on automatic control, that typically invest quite some effort into developing frequency domain concepts such as magnitude and phase Bode plots, Nyquist plot, and sensitivity and complementary sensitivity functions. Generations of control engineers have contributed to the collective know-how carried by these classical concepts and techniques.
 - Second, by formulating the requirements on robust stability, nominal stability and robust performance as constraints on $\mathcal H_\infty$ norms of some closed-loop systems, an immediate extension from analysis to **automated synthesis** (control design) is enabled by availability of numerical methods for $\mathcal H_\infty$ **optimization**. This enhances the classical frequency-domain control design techniques in that while the classical methods require that we know **what** we want and we also know **how** to achieve it, the $\mathcal H_\infty$ optimization based methods require that we **only know what we want** (and express our requirements in frequency domain). We don't have to bother with how to achieve it because there are numerical solvers that will do the job for us.
 
-Let's introduce the first instance of such methodology. We have learnt that the robust performance condition in presence of multiplicative uncertainty is formulated as a bound on the $\mathcal H_\infty$ norm of the *mixed sensitivity function* $\begin{bmatrix}W_\mathrm{p}S\\WT\end{bmatrix}$, namely
+Let's introduce the first instance of such methodology. We have learnt that the robust performance condition in presence of multiplicative uncertainty is formulated as an upper bound on the $\mathcal H_\infty$ norm of the *mixed sensitivity function* $\begin{bmatrix}W_\mathrm{p}S\\WT\end{bmatrix}$, namely
 $$
 \left\|
 \begin{bmatrix}
@@ -53,7 +53,7 @@ Such optimization solvers are indeed [available](rocond_software.qmd).
 In anticipation of what is to come, we note here that the above minimization of the $\mathcal H_\infty$ norm of the mixed sensitivity function is a special case of the more general $\mathcal H_\infty$ optimization problem (minimization of the norm of a general closed-loop transfer function). Therefore, even if your software tools does not have a specific function for mixed sensitivity optimization, chances are that a solver for the general $\mathcal H_\infty$ optimization function is available. And we will soon see how to reformulate the mixed sensitivity minimization as the [general $\mathcal H_\infty$ optimization problem](rocond_H_infinity_control.qmd).
 :::
 
-Having derived the bound on the norm of the mixed sensitivity function (equal to $1/\sqrt{2}$ in the SISO case), it may now be tempting to conclude that the only goal of the optimization is to find a controller that satisfies this bound. However, it turns out that the optimization has another useful property – it is called *self-equalizing property*. We are not going to prove it, we will be happy just to interpret it: it means that with the optimal controller the frequency response of the considered (weighted and possibly mixed) sensitivity function is *flat* (constant over all frequencies). 
+Having derived the bound on the norm of the mixed sensitivity function (equal to $1/\sqrt{2}$ in the SISO case), it may now be tempting to conclude that the only goal of the optimization is to find a controller that satisfies this bound. However, it turns out that the optimization has another useful property – it is called *self-equalizing property*. We are not going to prove it, it will be sufficient for us just to interpret it: it means that with the optimal controller the frequency response of the considered (weighted and possibly mixed) sensitivity function is *flat* (constant over all frequencies). 
 
 In order to understand the impact of this property, let us consider the problem of minimizing just $\|WT\|_\infty$. We choose this problem even though practically it is not really useful to require just (robust) stability. For $\gamma = \min_{K}\|WT\|_\infty$, the flatness of the frequency response $|W(j\omega)T(j\omega)|$ means that the magnitude frequency response $|T(j\omega)|$ is proportional to $1/|W(j\omega)|$, that is, 
 
@@ -73,9 +73,9 @@ W_1S\\W_2KS\\W_3T
 \right\|_{\infty}.
 $$
 
-The middle term penalizes control (it is a closed-loop transfer function from the output disturbance to the control). It resembles the role of the $\mathbf R$ term in the LQR cost $\int(\bm x^\top \mathbf Q\bm x+\bm u^\top \mathbf R\bm u)\text{d}t$. Typically we set $W_2$ equal to a small  nonnegative constant.
+The middle term penalizes the control (it is the closed-loop transfer function from the output disturbance to the control). It resembles the role of the $\mathbf R$ term in the LQR cost $\int(\bm x^\top \mathbf Q\bm x+\bm u^\top \mathbf R\bm u)\text{d}t$. Typically we set $W_2$ equal to a small  nonnegative constant.
 
-An important property of this method is that it extends to the multiple-input-multiple-output (MIMO) case. Nothing needs to be changes in the formal problem statement as the $\mathcal H_\infty$ norm is defined for MIMO systems as well. For completeness, we state the MIMO version of the problem (well, the statement only differs in the fonts)
+An important property of this method is that it extends to the multiple-input-multiple-output (MIMO) case. Nothing needs to be changed in the formal problem statement as the $\mathcal H_\infty$ norm is defined for MIMO systems as well. For completeness, we state the MIMO version of the problem (the statement only differs in the fonts)
 
 $$\boxed
 {\operatorname*{minimize}_{\mathbf K \text{ stabilizing}}  
@@ -135,25 +135,33 @@ G₀ = ss(A,B,C,D);
 The weights for the mixed sensitivity designed are defined in the following code.
 ``` {julia}
 #| code-fold: false
+#| output: false
 Mₛ = 2; Aₛ = 0.003; ωₛ = 5;
 W₁=tf([1/Mₛ,ωₛ],[1,Aₛ*ωₛ])
 
-W₂ = 0.05;
+W₂ = 0.05
 
 τ = 1/50; r₀ = 0.3; r∞ = 100;
-W₃ = tf([τ,r₀],[τ/r∞,1]);
+W₃ = tf([τ,r₀],[τ/r∞,1])
 ```
 
-Now, we form the generalized plant, check if the solvability conditions are satisfied, and call the solver of the general $\mathcal H_\infty$ optimal control problem. Finally, we form the three closed-loop sensitivity functions.
+Now, we form the generalized plant, check if the solvability conditions are satisfied, and call the solver of the general $\mathcal H_\infty$ optimal control problem. 
 ``` {julia}
 #| code-fold: false
+#| output: false
 using RobustAndOptimalControl
 
-P = hinfpartition(G₀, W₁, W₂, W₃);
+P = hinfpartition(G₀, W₁, W₂, W₃)
 hinfassumptions(P, verbose=false)
 
-K, γ = hinfsynthesize(P, γrel=1.05);
-Pcl, S, KS, T = hinfsignals(P, G₀, K);
+K, γ = hinfsynthesize(P, γrel=1.05)
+```
+
+Finally, we form the three closed-loop sensitivity functions.
+``` {julia}
+#| code-fold: false
+#| output: false
+Pcl, S, KS, T = hinfsignals(P, G₀, K)
 ```
 
 The magnitude (actually the largest singular values) frequency responses of the closed-loop transfer functions $\mathbf S$, $\mathbf T$ and $\mathbf{KS}$ are shown in @fig-himat-mixed-sensitivity.
