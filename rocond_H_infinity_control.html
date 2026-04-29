@@ -1057,7 +1057,7 @@ window.Quarto = {
   <li><a href="#signal-based-mathcalh_infty-optimal-control-problem" id="toc-signal-based-mathcalh_infty-optimal-control-problem" class="nav-link" data-scroll-target="#signal-based-mathcalh_infty-optimal-control-problem">Signal-based <span class="math inline">\mathcal{H}_\infty</span>-optimal control problem</a></li>
   <li><a href="#solving-the-mathcalh_infty-optimal-control-problem" id="toc-solving-the-mathcalh_infty-optimal-control-problem" class="nav-link" data-scroll-target="#solving-the-mathcalh_infty-optimal-control-problem">Solving the <span class="math inline">\mathcal{H}_\infty</span> optimal control problem</a></li>
   <li><a href="#all-mathcal-h_infty-optimal-controllers" id="toc-all-mathcal-h_infty-optimal-controllers" class="nav-link" data-scroll-target="#all-mathcal-h_infty-optimal-controllers">All <span class="math inline">\mathcal H_\infty</span> optimal controllers</a></li>
-  <li><a href="#conditions-of-existence-of-the-mathcal-h_infty-optimal-controller" id="toc-conditions-of-existence-of-the-mathcal-h_infty-optimal-controller" class="nav-link" data-scroll-target="#conditions-of-existence-of-the-mathcal-h_infty-optimal-controller">Conditions of existence of the <span class="math inline">\mathcal H_\infty</span> optimal controller</a></li>
+  <li><a href="#sufficient-conditions-of-existence-of-the-mathcal-h_infty-optimal-controller" id="toc-sufficient-conditions-of-existence-of-the-mathcal-h_infty-optimal-controller" class="nav-link" data-scroll-target="#sufficient-conditions-of-existence-of-the-mathcal-h_infty-optimal-controller">Sufficient conditions of existence of the <span class="math inline">\mathcal H_\infty</span> optimal controller</a></li>
   <li><a href="#structure-of-the-mathcalh_infty-optimal-controller" id="toc-structure-of-the-mathcalh_infty-optimal-controller" class="nav-link" data-scroll-target="#structure-of-the-mathcalh_infty-optimal-controller">Structure of the <span class="math inline">\mathcal{H}_\infty</span>-optimal controller</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -1254,8 +1254,8 @@ Figure&nbsp;4: Q-parameterization of all stabilizing controllers that quarantee 
 </span></p>
 <p>It is useful to note that the order of the central regulator is that same as that of the generalized plant <span class="math inline">\mathbf P</span>.</p>
 </section>
-<section id="conditions-of-existence-of-the-mathcal-h_infty-optimal-controller" class="level3">
-<h3 class="anchored" data-anchor-id="conditions-of-existence-of-the-mathcal-h_infty-optimal-controller">Conditions of existence of the <span class="math inline">\mathcal H_\infty</span> optimal controller</h3>
+<section id="sufficient-conditions-of-existence-of-the-mathcal-h_infty-optimal-controller" class="level3">
+<h3 class="anchored" data-anchor-id="sufficient-conditions-of-existence-of-the-mathcal-h_infty-optimal-controller">Sufficient conditions of existence of the <span class="math inline">\mathcal H_\infty</span> optimal controller</h3>
 <p>Consider the state-space model of the generalized plant parameterized by the quadruple of matrices <span class="math inline">(\mathbf A, \mathbf B, \mathbf C, \mathbf D)</span>, which can be partitioned as <span class="math display">
 \left[
 \begin{array}{l|ll}
@@ -1266,14 +1266,15 @@ Figure&nbsp;4: Q-parameterization of all stabilizing controllers that quarantee 
 \end{array}
 \right].
 </span></p>
-<p>Conditions for existence of <span class="math inline">\bm K</span> minimizing <span class="math inline">\|F_l(P,K)\|_{\infty}</span> are:</p>
-<ul>
+<p>Sufficient conditions for existence of <span class="math inline">\bm K</span> minimizing <span class="math inline">\|F_l(P,K)\|_{\infty}</span> are:</p>
+<ol type="1">
 <li>the system <span class="math inline">(\mathbf A, \mathbf B_2, \mathbf C_2)</span> is stabilizable and detectable,</li>
 <li>the matrix <span class="math inline">\mathbf D_{12}</span> has a full column rank and the matrix <span class="math inline">\mathbf D_{21}</span> has a full row rank, otherwise the controller has high gain at high frequency (nonproper),</li>
-<li>the matrix <span class="math inline">\begin{bmatrix}\mathbf A-j\omega I &amp; \mathbf B_2\\ \mathbf C_1 &amp; \mathbf D_{12}\end{bmatrix}</span> full column rank for all <span class="math inline">\omega</span>,</li>
-<li>the matrix <span class="math inline">\begin{bmatrix}\mathbf A-j\omega I &amp; \mathbf B_1\\ \mathbf C_2 &amp; \mathbf D_{21}\end{bmatrix}</span> full row rank for all <span class="math inline">\omega</span> (to prevent low damped poles of the controller),</li>
-</ul>
+<li>the matrix <span class="math inline">\begin{bmatrix}\mathbf A-j\omega I &amp; \mathbf B_2\\ \mathbf C_1 &amp; \mathbf D_{12}\end{bmatrix}</span> has full column rank for all <span class="math inline">\omega</span>,</li>
+<li>the matrix <span class="math inline">\begin{bmatrix}\mathbf A-j\omega I &amp; \mathbf B_1\\ \mathbf C_2 &amp; \mathbf D_{21}\end{bmatrix}</span> has full row rank for all <span class="math inline">\omega</span> (to prevent low damped poles of the controller),</li>
+</ol>
 <p>In some literature, the assumption that <span class="math inline">\mathbf D_{11}=0</span> and <span class="math inline">\mathbf D_{22}=0</span> is made. But it is not necessary. It only simplifies the formulas. If the original problem does not satisfy these assumptions, the original problem can be transformed.</p>
+<p>Note that these are all just sufficient conditions. They rule out some degenerate cases. Even in those cases, the optimal solution may still exist.</p>
 </section>
 <section id="structure-of-the-mathcalh_infty-optimal-controller" class="level3">
 <h3 class="anchored" data-anchor-id="structure-of-the-mathcalh_infty-optimal-controller">Structure of the <span class="math inline">\mathcal{H}_\infty</span>-optimal controller</h3>

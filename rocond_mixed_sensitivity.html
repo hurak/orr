@@ -1171,10 +1171,10 @@ W_1S\\W_2KS\\W_3T
 <li>angle of attack <span class="math inline">\alpha</span></li>
 <li>pitch angle <span class="math inline">\theta</span>.</li>
 </ul>
-<p>If you are not familiar with these and feel uneasy about it, you can consult the original paper. But here we view them as generic inputs and outputs of a MIMO system.</p>
-<p>The following code defines the (model of the) system.</p>
+<p>If you are not familiar with these and feel uneasy about it, you can consult the original paper. But for our purposes in this lecture we do not rely on a domain-specific expertize – we view these variables as generic inputs and outputs of a MIMO system.</p>
+<p>We proceed by definining the (model of the) system:</p>
 <div id="2" class="cell" data-execution_count="1">
-<details class="code-fold">
+<details open="" class="code-fold">
 <summary>Show the code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ControlSystems</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1202,7 +1202,7 @@ W_1S\\W_2KS\\W_3T
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>G₀ <span class="op">=</span> <span class="fu">ss</span>(A,B,C,D);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>The weights for the mixed sensitivity designed are defined in the following code.</p>
+<p>The weights for the mixed sensitivity designed are defined in the following code:</p>
 <div id="4" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Mₛ <span class="op">=</span> <span class="fl">2</span>; Aₛ <span class="op">=</span> <span class="fl">0.003</span>; ωₛ <span class="op">=</span> <span class="fl">5</span>;</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>W₁<span class="op">=</span><span class="fu">tf</span>([<span class="fl">1</span><span class="op">/</span>Mₛ,ωₛ],[<span class="fl">1</span>,Aₛ<span class="op">*</span>ωₛ])</span>
@@ -1212,25 +1212,46 @@ W_1S\\W_2KS\\W_3T
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>τ <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">50</span>; r₀ <span class="op">=</span> <span class="fl">0.3</span>; r∞ <span class="op">=</span> <span class="fl">100</span>;</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>W₃ <span class="op">=</span> <span class="fu">tf</span>([τ,r₀],[τ<span class="op">/</span>r∞,<span class="fl">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Now, we form the generalized plant, check if the solvability conditions are satisfied, and call the solver of the general <span class="math inline">\mathcal H_\infty</span> optimal control problem.</p>
+<p>Now, we form the generalized plant, check if the solvability conditions are satisfied, and call the solver of the general <span class="math inline">\mathcal H_\infty</span> optimal control problem:</p>
 <div id="6" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">RobustAndOptimalControl</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> <span class="fu">hinfpartition</span>(G₀, W₁, W₂, W₃)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hinfassumptions</span>(P, verbose<span class="op">=</span><span class="cn">false</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>K, γ <span class="op">=</span> <span class="fu">hinfsynthesize</span>(P, γrel<span class="op">=</span><span class="fl">1.05</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hinfassumptions</span>(P, verbose<span class="op">=</span><span class="cn">false</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-yellow-fg ansi-bold">┌ </span><span class="ansi-yellow-fg ansi-bold">Warning: </span>Runtime invalidation was disabled, but the CPU info is out-of-date.
+<span class="ansi-yellow-fg ansi-bold">│ </span>Will continue with incorrect CPU name (from build time).
+<span class="ansi-yellow-fg ansi-bold">└ </span><span class="ansi-bright-black-fg">@ HostCPUFeatures ~/.julia/packages/HostCPUFeatures/ZTXz4/src/cpu_info.jl:71</span>
+</pre>
 </div>
-<p>Finally, we form the three closed-loop sensitivity functions.</p>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>true</code></pre>
+</div>
+</div>
+<p>Finally, we call the solver of the general <span class="math inline">\mathcal H_\infty</span> optimal control problem:</p>
 <div id="8" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Pcl, S, KS, T <span class="op">=</span> <span class="fu">hinfsignals</span>(P, G₀, K)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>K, γ <span class="op">=</span> <span class="fu">hinfsynthesize</span>(P, γrel<span class="op">=</span><span class="fl">1.05</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The second input argument for the <code>hinfsynthesize</code> solver requires some explanation. Solvers for <span class="math inline">\mathcal H_\infty</span> optimization problems typically implement the so-called <span class="math inline">\gamma</span> iteration, which means that they start with some value of <span class="math inline">\gamma</span>, attempt to solve the problem of searching for a stabilizing controller with which the <span class="math inline">\mathcal H_\infty</span> norm of the corresponding closed-loop transfer function satisfies the upper bound <span class="math inline">\|\cdot\|_\infty &lt; \gamma</span>, if it succeeds, it tries the same for a smaller <span class="math inline">\gamma</span>, if it fails, it increases <span class="math inline">\gamma</span> and tries again. This is then repeated until the smallest possible <span class="math inline">\gamma</span> is found for which the problem is solvable. The <code>γrel</code> input argument specifies how much larger than the smallest possible <span class="math inline">\gamma</span> we want to be. Setting <code>γrel=1.05</code> means that we want to be 5% larger than the smallest possible <span class="math inline">\gamma</span>. It is typically not a good idea to aim at achieving the smallest possible <span class="math inline">\gamma</span> (the optimal solution) because the existing methods experience numerical issues as they approach the optimal solution. Here the achieved (suboptimal) <span class="math inline">\gamma</span> is</p>
+<div id="10" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>γ</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>2.292116779799731</code></pre>
+</div>
+</div>
+<p>Recall that we developed our robust performance condition as the upper-boundedness of the norm by some constant (at least in the SISO case). Here we apparently violate the condition. But it is up to us to decide whether the resulting closed-loop responses are satisfactory. The minimization of <span class="math inline">\gamma</span> is just a tool to shape the closed-loop magnitude frequency responses. After all, now that we also included also the <span class="math inline">\mathbf{KS}</span> in the mixed sensitivity function, the particular value of <span class="math inline">\gamma</span> has no longer a direct interpretation.</p>
+<p>Finally, we form the three closed-loop sensitivity functions.</p>
+<div id="12" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Pcl, S, KS, T <span class="op">=</span> <span class="fu">hinfsignals</span>(P, G₀, K)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The magnitude (actually the largest singular values) frequency responses of the closed-loop transfer functions <span class="math inline">\mathbf S</span>, <span class="math inline">\mathbf T</span> and <span class="math inline">\mathbf{KS}</span> are shown in <a href="#fig-himat-mixed-sensitivity" class="quarto-xref">Fig.&nbsp;1</a>.</p>
 <div id="cell-fig-himat-mixed-sensitivity" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">specificationplot</span>([S, KS, T], [W₁, W₂, W₃], γ, ylabel<span class="op">=</span><span class="st">"Magnitude (-)"</span>, title<span class="op">=</span><span class="st">""</span>, lw<span class="op">=</span><span class="fl">2</span>, nsigma<span class="op">=</span><span class="fl">1</span>, s_labels<span class="op">=</span>[<span class="st">"σ̄(S)"</span>, <span class="st">"σ̄(KS)"</span>, <span class="st">"σ̄(T)"</span>], w_labels<span class="op">=</span>[<span class="st">"γ/|W₁|"</span>, <span class="st">"γ/|W₂|"</span>, <span class="st">"γ/|W₃|"</span>],hz<span class="op">=</span><span class="cn">false</span>, xticks<span class="op">=</span><span class="fl">10.0</span><span class="op">.^</span>[<span class="op">-</span><span class="fl">3</span><span class="op">:</span><span class="fl">5</span><span class="op">...</span>],ylims<span class="op">=</span>(<span class="fl">10</span><span class="op">^</span>(<span class="op">-</span><span class="fl">6</span>),<span class="fl">100</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">specificationplot</span>([S, KS, T], [W₁, W₂, W₃], γ, ylabel<span class="op">=</span><span class="st">"Magnitude (-)"</span>, title<span class="op">=</span><span class="st">""</span>, lw<span class="op">=</span><span class="fl">2</span>, nsigma<span class="op">=</span><span class="fl">1</span>, s_labels<span class="op">=</span>[<span class="st">"σ̄(S)"</span>, <span class="st">"σ̄(KS)"</span>, <span class="st">"σ̄(T)"</span>], w_labels<span class="op">=</span>[<span class="st">"γ/|W₁|"</span>, <span class="st">"γ/|W₂|"</span>, <span class="st">"γ/|W₃|"</span>],hz<span class="op">=</span><span class="cn">false</span>, xticks<span class="op">=</span><span class="fl">10.0</span><span class="op">.^</span>[<span class="op">-</span><span class="fl">3</span><span class="op">:</span><span class="fl">5</span><span class="op">...</span>],ylims<span class="op">=</span>(<span class="fl">10</span><span class="op">^</span>(<span class="op">-</span><span class="fl">6</span>),<span class="fl">100</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="fig-himat-mixed-sensitivity" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="1">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1243,20 +1264,13 @@ Figure&nbsp;1: Several magnitude frequency responses of the closed-loop system: 
 </figure>
 </div>
 </div>
-<p>Besides the achieved closed-loop transfer functions <span class="math inline">\mathbf S</span>, <span class="math inline">\mathbf T</span> and <span class="math inline">\mathbf{KS}</span> , the figure also shows the bounds, which are given by reciprocal values of the weighting filters. There is an important implementation detail here: the bounds in the plot are not given just by <span class="math inline">\frac{1}{|W_i(j\omega)|}</span>, which we may expect after having developed the conditions of robust performance, but rather by <span class="math inline">\frac{\gamma}{|W_i(j\omega)|}</span>. Why is that? The algorithm implements the so-called <span class="math inline">\gamma</span> iteration, which means that it starts with some value of <span class="math inline">\gamma</span>, attempts to solve the corresponding <span class="math inline">\mathcal H_\infty</span> optimal control problem, if it succeeds, it tries the same for a smaller <span class="math inline">\gamma</span>, it it fails, it increases <span class="math inline">\gamma</span> and tries again. This is then repeated untill the smallest possible <span class="math inline">\gamma</span> is found for which the problem is solvable. Here the smallest <span class="math inline">\gamma</span> is</p>
-<div id="12" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>γ</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>2.292116779799731</code></pre>
-</div>
-</div>
-<p>It is up to us to decide whether the resulting closed-loop responses are satisfactory. The minimization of <span class="math inline">\gamma</span> was just a tool to shape the closed-loop magnitude frequency responses. Now that we included also the <span class="math inline">\mathbf{KS}</span> in the mixed sensitivity function, the particular value of <span class="math inline">\gamma</span> has no longer a direct interpretation.</p>
+<p>Besides the achieved closed-loop transfer functions <span class="math inline">\mathbf S</span>, <span class="math inline">\mathbf T</span> and <span class="math inline">\mathbf{KS}</span> , the figure also shows the bounds, which are given by reciprocal values of the weighting filters. There is an important implementation detail here: the bounds in the plot are not given just by <span class="math inline">\frac{1}{|W_i(j\omega)|}</span>, which we may expect after having developed the conditions of robust performance, but rather by <span class="math inline">\frac{\gamma}{|W_i(j\omega)|}</span>.</p>
 <p>The time responses to steps in the reference value of the two angles are shown in <a href="#fig-himat-mixed-sensitivity-step-response-alpha" class="quarto-xref">Fig.&nbsp;2</a>.</p>
 <div id="cell-fig-himat-mixed-sensitivity-step-response-alpha" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>step_response <span class="op">=</span> <span class="fu">step</span>(T)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(step_response, title<span class="op">=</span><span class="st">""</span>, xlabel<span class="op">=</span><span class="st">"Time (s)"</span>, ylabel<span class="op">=</span>[<span class="st">"α"</span> <span class="st">"θ"</span>], lw<span class="op">=</span><span class="fl">2</span>, label<span class="op">=</span>[<span class="st">"From α_ref"</span> <span class="st">"From α_ref"</span> <span class="st">"From θ_ref"</span> <span class="st">"From θ_ref"</span>], legend<span class="op">=:</span>topright)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>step_response <span class="op">=</span> <span class="fu">step</span>(T)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(step_response, title<span class="op">=</span><span class="st">""</span>, xlabel<span class="op">=</span><span class="st">"Time (s)"</span>, ylabel<span class="op">=</span>[<span class="st">"α"</span> <span class="st">"θ"</span>], lw<span class="op">=</span><span class="fl">2</span>, label<span class="op">=</span>[<span class="st">"From α_ref"</span> <span class="st">"From α_ref"</span> <span class="st">"From θ_ref"</span> <span class="st">"From θ_ref"</span>], legend<span class="op">=:</span>topright)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="fig-himat-mixed-sensitivity-step-response-alpha" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="1">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1271,7 +1285,7 @@ Figure&nbsp;2: Response of the closed-loop system to a unit step at the referenc
 </div>
 <p>We can observe in <a href="#fig-himat-mixed-sensitivity-step-response-alpha" class="quarto-xref">Fig.&nbsp;2</a> decent tracking of step changes in the two angles. But we can also see some cross-coupling – it is up to us to decide whether or not it is acceptable.</p>
 </div>
-<p>Admittedly, in this section we have provided no details regarding the numerical methods used to solved the problem of minimizing the <span class="math inline">\mathcal H_\infty</span> norm of the mixed sensitivity function; we relied on the availability of dedicated software tools. But in the next section we will have a look under the hood of these solvers. It turns out that the mixed sensitivity problem is just a special case of the general <span class="math inline">\mathcal H_\infty</span> optimal control problem, and that is why we are going to discuss it next.</p>
+<p>Admittedly, in this section we have provided no details regarding the methods used to solved the problem of minimizing the <span class="math inline">\mathcal H_\infty</span> norm of the mixed sensitivity function; we relied on the availability of dedicated software tools. But in the next section we will have a look under the hood of these solvers. It turns out that the mixed sensitivity problem is just a special case of the general <span class="math inline">\mathcal H_\infty</span> optimal control problem, and that is why we are going to discuss it next.</p>
 
 
 
