@@ -177,7 +177,7 @@ $$
 
 It is useful to note that the order of the central regulator is that same as that of the generalized plant $\mathbf P$. 
 
-### Conditions of existence of the $\mathcal H_\infty$ optimal controller
+### Sufficient conditions of existence of the $\mathcal H_\infty$ optimal controller
 
 Consider the state-space model of the generalized plant parameterized by the quadruple of matrices $(\mathbf A, \mathbf B, \mathbf C, \mathbf D)$, which can be partitioned as
 $$
@@ -191,14 +191,16 @@ $$
 \right].
 $$
 
-Conditions for existence of $\bm K$ minimizing $\|F_l(P,K)\|_{\infty}$ are:
+Sufficient conditions for existence of $\bm K$ minimizing $\|F_l(P,K)\|_{\infty}$ are:
 
-- the system $(\mathbf A, \mathbf B_2, \mathbf C_2)$ is stabilizable and detectable,
-- the matrix $\mathbf D_{12}$ has a full column rank and the matrix $\mathbf D_{21}$ has a full row rank, otherwise the controller has high gain at high frequency (nonproper),
-- the matrix $\begin{bmatrix}\mathbf A-j\omega I & \mathbf B_2\\ \mathbf C_1 & \mathbf D_{12}\end{bmatrix}$ full column rank for all $\omega$,
-- the matrix $\begin{bmatrix}\mathbf A-j\omega I & \mathbf B_1\\ \mathbf C_2 & \mathbf D_{21}\end{bmatrix}$ full row rank for all $\omega$ (to prevent low damped poles of the controller),
+1. the system $(\mathbf A, \mathbf B_2, \mathbf C_2)$ is stabilizable and detectable,
+2. the matrix $\mathbf D_{12}$ has a full column rank and the matrix $\mathbf D_{21}$ has a full row rank, otherwise the controller has high gain at high frequency (nonproper),
+3. the matrix $\begin{bmatrix}\mathbf A-j\omega I & \mathbf B_2\\ \mathbf C_1 & \mathbf D_{12}\end{bmatrix}$ has full column rank for all $\omega$,
+4. the matrix $\begin{bmatrix}\mathbf A-j\omega I & \mathbf B_1\\ \mathbf C_2 & \mathbf D_{21}\end{bmatrix}$ has full row rank for all $\omega$ (to prevent low damped poles of the controller),
 
 In some literature, the assumption that $\mathbf D_{11}=0$ and $\mathbf D_{22}=0$ is made. But it is not necessary. It only simplifies the formulas. If the original problem does not satisfy these assumptions, the original problem can be transformed. 
+
+Note that these are all just sufficient conditions. They rule out some degenerate cases. Even in those cases, the optimal solution may still exist. 
  
 ### Structure of the $\mathcal{H}_\infty$-optimal controller
 
