@@ -103,10 +103,12 @@ and the measured outputs are
 - angle of attack $\alpha$
 - pitch angle $\theta$.
 
-If you are not familiar with these and feel uneasy about it, you can consult the original paper. But here we view them as generic inputs and outputs of a MIMO system.
+If you are not familiar with these and feel uneasy about it, you can consult the original paper. But for our purposes in this lecture we do not rely on a domain-specific expertize – we view these variables as generic inputs and outputs of a MIMO system.
 
-The following code defines the (model of the) system.
+We proceed by definining the (model of the) system:
 ``` {julia}
+#| code-fold: show
+#| output: false
 using ControlSystems
 
 A = [
@@ -132,7 +134,7 @@ D = [0     0;
 
 G₀ = ss(A,B,C,D);
 ```
-The weights for the mixed sensitivity designed are defined in the following code.
+The weights for the mixed sensitivity designed are defined in the following code:
 ``` {julia}
 #| code-fold: false
 #| output: false
@@ -145,17 +147,29 @@ W₂ = 0.05
 W₃ = tf([τ,r₀],[τ/r∞,1])
 ```
 
-Now, we form the generalized plant, check if the solvability conditions are satisfied, and call the solver of the general $\mathcal H_\infty$ optimal control problem. 
+Now, we form the generalized plant, check if the solvability conditions are satisfied, and call the solver of the general $\mathcal H_\infty$ optimal control problem: 
 ``` {julia}
 #| code-fold: false
-#| output: false
 using RobustAndOptimalControl
 
 P = hinfpartition(G₀, W₁, W₂, W₃)
 hinfassumptions(P, verbose=false)
+```
 
+Finally, we call the solver of the general $\mathcal H_\infty$ optimal control problem:
+``` {julia}
+#| code-fold: false
+#| output: false
 K, γ = hinfsynthesize(P, γrel=1.05)
 ```
+
+The second input argument for the `hinfsynthesize` solver requires some explanation. Solvers for $\mathcal H_\infty$ optimization problems typically implement the so-called $\gamma$ iteration, which means that they start with some value of $\gamma$, attempt to solve the problem of searching for a stabilizing controller with which the $\mathcal H_\infty$ norm of the corresponding closed-loop transfer function satisfies the upper bound $\|\cdot\|_\infty < \gamma$, if it succeeds, it tries the same for a smaller $\gamma$, if it fails, it increases $\gamma$ and tries again. This is then repeated until the smallest possible $\gamma$ is found for which the problem is solvable. The `γrel` input argument specifies how much larger than the smallest possible $\gamma$ we want to be. Setting `γrel=1.05` means that we want to be 5% larger than the smallest possible $\gamma$. It is typically not a good idea to aim at achieving the smallest possible $\gamma$ (the optimal solution) because the existing methods experience numerical issues as they approach the optimal solution. Here the achieved (suboptimal) $\gamma$ is
+``` {julia}
+#| code-fold: false
+γ
+```
+
+Recall that we developed our robust performance condition as the upper-boundedness of the norm by some constant (at least in the SISO case). Here we apparently violate the condition. But it is up to us to decide whether the resulting closed-loop responses are satisfactory. The minimization of $\gamma$ is just a tool to shape the closed-loop magnitude frequency responses. After all, now that we also included also the $\mathbf{KS}$ in the mixed sensitivity function, the particular value of $\gamma$ has no longer a direct interpretation.
 
 Finally, we form the three closed-loop sensitivity functions.
 ``` {julia}
@@ -172,13 +186,7 @@ using Plots
 specificationplot([S, KS, T], [W₁, W₂, W₃], γ, ylabel="Magnitude (-)", title="", lw=2, nsigma=1, s_labels=["σ̄(S)", "σ̄(KS)", "σ̄(T)"], w_labels=["γ/|W₁|", "γ/|W₂|", "γ/|W₃|"],hz=false, xticks=10.0.^[-3:5...],ylims=(10^(-6),100))
 ```
 
-Besides the achieved closed-loop transfer functions $\mathbf S$, $\mathbf T$ and $\mathbf{KS}$ , the figure also shows the bounds, which are given by reciprocal values of the weighting filters. There is an important implementation detail here: the bounds in the plot are not given just by $\frac{1}{|W_i(j\omega)|}$, which we may expect after having developed the conditions of robust performance, but rather by $\frac{\gamma}{|W_i(j\omega)|}$. Why is that? The algorithm implements the so-called $\gamma$ iteration, which means that it starts with some value of $\gamma$, attempts to solve the corresponding $\mathcal H_\infty$ optimal control problem, if it succeeds, it tries the same for a smaller $\gamma$, it it fails, it increases $\gamma$ and tries again. This is then repeated untill the smallest possible $\gamma$ is found for which the problem is solvable. Here the smallest $\gamma$ is
-
-``` {julia}
-#| code-fold: false
-γ    
-```
-It is up to us to decide whether the resulting closed-loop responses are satisfactory. The minimization of $\gamma$ was just a tool to shape the closed-loop magnitude frequency responses. Now that we included also the $\mathbf{KS}$ in the mixed sensitivity function, the particular value of $\gamma$ has no longer a direct interpretation.
+Besides the achieved closed-loop transfer functions $\mathbf S$, $\mathbf T$ and $\mathbf{KS}$ , the figure also shows the bounds, which are given by reciprocal values of the weighting filters. There is an important implementation detail here: the bounds in the plot are not given just by $\frac{1}{|W_i(j\omega)|}$, which we may expect after having developed the conditions of robust performance, but rather by $\frac{\gamma}{|W_i(j\omega)|}$. 
 
 The time responses to steps in the reference value of the two angles are shown in @fig-himat-mixed-sensitivity-step-response-alpha.
 ``` {julia}
@@ -191,4 +199,4 @@ plot(step_response, title="", xlabel="Time (s)", ylabel=["α" "θ"], lw=2, label
 We can observe in @fig-himat-mixed-sensitivity-step-response-alpha decent tracking of step changes in the two angles. But we can also see some cross-coupling – it is up to us to decide whether or not it is acceptable. 
 :::
 
-Admittedly, in this section we have provided no details regarding the numerical methods used to solved the problem of minimizing the $\mathcal H_\infty$ norm of the mixed sensitivity function; we relied on the availability of dedicated software tools. But in the next section we will have a look under the hood of these solvers. It turns out that the mixed sensitivity problem is just a special case of the general $\mathcal H_\infty$ optimal control problem, and that is why we are going to discuss it next.
+Admittedly, in this section we have provided no details regarding the methods used to solved the problem of minimizing the $\mathcal H_\infty$ norm of the mixed sensitivity function; we relied on the availability of dedicated software tools. But in the next section we will have a look under the hood of these solvers. It turns out that the mixed sensitivity problem is just a special case of the general $\mathcal H_\infty$ optimal control problem, and that is why we are going to discuss it next.
