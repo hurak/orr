@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Learning goals – B(E)3M35ORR – Optimal and Robust Control</title>
+<title>References – B(E)3M35ORR – Optimal and Robust Control</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,7 +23,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -33,8 +53,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./rocond_mixed_sensitivity.html" rel="next">
-<link href="./roban_hw.html" rel="prev">
+<link href="./limitations_goals.html" rel="next">
+<link href="./rocond_H_infinity_loopshaping.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -129,7 +149,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rocond_goals.html">11. Robust control</a></li><li class="breadcrumb-item"><a href="./rocond_goals.html">Learning goals</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rocond_goals_2.html">12. Robust control II.</a></li><li class="breadcrumb-item"><a href="./rocond_references_2.html">References</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -837,7 +857,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rocond_goals.html" class="sidebar-item-text sidebar-link active">
+  <a href="./rocond_goals.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Learning goals</span></a>
   </div>
 </li>
@@ -908,7 +928,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rocond_references_2.html" class="sidebar-item-text sidebar-link">
+  <a href="./rocond_references_2.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -1013,22 +1033,15 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#knowledge-remember-and-understand" id="toc-knowledge-remember-and-understand" class="nav-link active" data-scroll-target="#knowledge-remember-and-understand">Knowledge (remember and understand)</a></li>
-  <li><a href="#skills-use-the-knowledge-to-solve-a-problem" id="toc-skills-use-the-knowledge-to-solve-a-problem" class="nav-link" data-scroll-target="#skills-use-the-knowledge-to-solve-a-problem">Skills (use the knowledge to solve a problem)</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rocond_goals.html">11. Robust control</a></li><li class="breadcrumb-item"><a href="./rocond_goals.html">Learning goals</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rocond_goals_2.html">12. Robust control II.</a></li><li class="breadcrumb-item"><a href="./rocond_references_2.html">References</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Learning goals</h1>
+<h1 class="title">References</h1>
 </div>
 
 
@@ -1045,24 +1058,17 @@ window.Quarto = {
 </header>
 
 
-<section id="knowledge-remember-and-understand" class="level2">
-<h2 class="anchored" data-anchor-id="knowledge-remember-and-understand">Knowledge (remember and understand)</h2>
-<ul>
-<li>Write down the cost function for the control-design procedure based on minimizing the <span class="math inline">\mathcal H_\infty</span>-norm of the <em>mixed sensitivity</em> function.</li>
-<li>Explain the control design procedure based on minimizing the <span class="math inline">\mathcal H_\infty</span>-norm of the <em>linear fractional transformation (LFT)</em> of a <em>generalized plant</em> and a stabilizing controller.</li>
-</ul>
-</section>
-<section id="skills-use-the-knowledge-to-solve-a-problem" class="level2">
-<h2 class="anchored" data-anchor-id="skills-use-the-knowledge-to-solve-a-problem">Skills (use the knowledge to solve a problem)</h2>
-<ul>
-<li>Design a robust controller for an LTI system (possibly a MIMO system) by minimizing the <span class="math inline">\mathcal H_\infty</span> norm of <em>mixed sensitivity</em> function.</li>
-<li>Design a robust controller for an LTI system (possibly a MIMO system) by minimizing the <span class="math inline">\mathcal H_\infty</span> norm of an appropriate closed-loop system. The first subtask is to formulate the control design problem as the optimization problem based on provided control requirements. The second subtask of numerically solving the optimization problem is typically handled by a software tool, and you should demonstrate awareness of existence and capability to use at least one such tool (in Julia, Matlab, Python, …).</li>
-</ul>
+<p>Control design for systems with <em>structured uncertainties</em> relies on the concept of a <em>structured singular value</em> (SSU, mu, <span class="math inline">\mu</span>), hence the name <span class="math inline">\mu</span> synthesis. It is covered in <span class="citation" data-cites="skogestadMultivariableFeedbackControl2005"><a href="#ref-skogestadMultivariableFeedbackControl2005" role="doc-biblioref">[1, Sec. 8.12]</a></span>.</p>
+<p>The <span class="math inline">\mathcal H_\infty</span> optimization-based loop-shaping method is thoroughly explained in <span class="citation" data-cites="skogestadMultivariableFeedbackControl2005"><a href="#ref-skogestadMultivariableFeedbackControl2005" role="doc-biblioref">[1, Sec. 9.3.6]</a></span>. It also contains a detailed discussion of an extension to the 2DOF case, implementation in the observer-state-feedback form, and some sort of antiwindup technique called <em>self-conditioning</em>.</p>
 
 
-</section>
 
-<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-entry-spacing="0" role="list">
+<div id="ref-skogestadMultivariableFeedbackControl2005" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">S. Skogestad and I. Postlethwaite, <em>Multivariable <span>Feedback Control</span>: <span>Analysis</span> and <span>Design</span></em>, 2nd ed. Wiley, 2005. Available: <a href="https://folk.ntnu.no/skoge/book/">https://folk.ntnu.no/skoge/book/</a></div>
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -1465,13 +1471,13 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./roban_hw.html" class="pagination-link" aria-label="Homework">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Homework</span>
+      <a href="./rocond_H_infinity_loopshaping.html" class="pagination-link" aria-label="H-infinity loop-shaping">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">H-infinity loop-shaping</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./rocond_mixed_sensitivity.html" class="pagination-link" aria-label="Mixed sensitivity design">
-        <span class="nav-page-text">Mixed sensitivity design</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./limitations_goals.html" class="pagination-link" aria-label="Learning goals">
+        <span class="nav-page-text">Learning goals</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1483,7 +1489,7 @@ window.Quarto = {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright 2025, Zdeněk Hurák</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions"><ul><li><a href="https://github.com/hurak/orr/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
