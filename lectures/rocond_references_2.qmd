@@ -1,0 +1,21 @@
+---
+title: "References"
+bibliography: 
+    - ref_optimal_control.bib
+    - ref_robust_control.bib
+csl: ieee-control-systems.csl
+format:
+    html:
+        html-math-method: katex
+        code-fold: true
+        code-summary: "Show the code"
+crossref:
+  fig-prefix: Fig. 
+  eq-prefix: Eq.
+engine: julia
+---
+
+Control design for systems with *structured uncertainties* relies on the concept of a *structured singular value* (SSU, mu, $\mu$), hence the name $\mu$ synthesis. It is covered in [@skogestadMultivariableFeedbackControl2005, Section 8.12]. 
+
+The $\mathcal H_\infty$ optimization-based loop-shaping method is thoroughly explained in [@skogestadMultivariableFeedbackControl2005, Section 9.3.6]. It also contains a detailed discussion of an extension to the 2DOF case, implementation in the observer-state-feedback form, and some sort of antiwindup technique called *self-conditioning*.
+
