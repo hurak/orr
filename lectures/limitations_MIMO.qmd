@@ -81,8 +81,12 @@ Similarly for the direction of $\begin{bmatrix}0\\1\end{bmatrix}$ – the unders
 step_response = step(G*tf([0,1])) # Cannot just multiply a matrix of tf's by a vector.
 plot(step_response, title="", xlabel="Time (s)", ylabel=["y₁" "y₂"], lw=2, label="", legend=:topright)
 ```
+:::
 
-To conclude, we have learnt here that a phenomenon of a RHP zero in a MIMO system can be observed only if the input is applied in a certain direction. This is an encouraging result, because have seen previously, that the RHP zero imposes a limitation on the achievable closed-loop bandwidth. We now have hope that perhaps this limitation is only restricted to some direction in the input space. Let's see if this is indeed the case.
+We have just learnt by means of an example that the phenomenon of a RHP zero in a MIMO system can be observed only if the input is applied in a certain direction. This is an encouraging result, because have seen previously, that the RHP zero imposes a limitation on the achievable closed-loop bandwidth. We now have hope that perhaps this limitation is only restricted to some direction in the input space. Let's see if this is indeed the case. And we do it through an example again.
+
+::: {#exm-shifting-the-effect-of-rhp-zero-to-one-direction}
+## Shifting the effect of RHP zero to one direction
 
 We consider the mixed-sensitivity problem 
 $$
@@ -177,7 +181,7 @@ In the step responses in @fig-step-response-closed_mimo-rhp we can see that in t
 
 ## Input and output directions, directions of poles and zeros
 
-It is not only the RHP zeros with which directions are associated. Directions can also be associated with unstable poles, and also with disturbances (we will explain this later). Furthermore, we can consider input and output directions (we will explain this later too). We state that in control analysis and synthesis, the output variants are a bit more useful. To summarize, we have::
+It is not only the RHP zeros with which directions are associated. Directions can also be associated with unstable poles, and also with disturbances (we will explain this later). Furthermore, we can consider input and output directions (we will explain this later too); the output variants being a bit more useful. To summarize, we are going to talk about:
 
 - output direction $\bm y_z$ of an RHP zero $z$ (constant),
 - output direction $\bm y_p$ of an unstable pole $p$ (constant),
@@ -188,7 +192,7 @@ It is not only the RHP zeros with which directions are associated. Directions ca
 
 We will now find use for the first two types of directions.
 
-### Interpolation conditions: RHP zeros and their directions
+### Interpolation conditions: RHP zeros and unstable poles and their output directions
 
 The sensitivity $\mathbf S$ and complementary sensitivity functions $\mathbf T$ of a stable closed feedback loop are constrained not only by poles and zeros of the MIMO plant $\mathbf G$ (as they are in the SISO case), but also by their directions. Namely, if the plant $\mathbf G$ has a RHP zero $z$, then the sensitivity and complementary sensitivity functions satisfy the interpolation conditions
 $$\boxed{
@@ -407,11 +411,237 @@ RGA enjoys a number of properties:
 - the RGA for a triangular system is an identity matrix,
 - the relative uncertainty of an element of a transfer function matrix equal to (negative) inverse of the corresponding RGA entry makes the system singular.
 
+::: {#exm-relative-gain-array}
+## Relative gain array (RGA) and conditioning
+Consider the matrix that models a MIMO system at steady state
+$$
+\mathbf G = \begin{bmatrix} 1 & 0.1 \\ 0.1 & 1 \end{bmatrix}.
+$$
+
+The condition number of this matrix can be computed as
+``` {julia}
+#| code-fold: false
+G = [1 0.1; 0.1 1]
+γ = cond(G)
+```
+which is small and perfectly acceptable. The system is well-conditioned. Anyway, we also compute the relative gain array (RGA)
+``` {julia}
+#| code-fold: false
+G = [1 0.1; 0.1 1]
+G_inv = inv(G)
+RGA = G.*G_inv'
+```
+
+The sum of the absolute values of the entries
+``` {julia}
+#| code-fold: false
+sum(abs.(RGA))
+```
+is close to the condition number that we computed above, both are low, which confirms that the system is well-conditioned.
+:::
+
+::: {#exm-relative-gain-array-diagonal}
+## Another RGA and conditioning
+
+Consider the diagonal matrix that models a MIMO system at steady state
+$$
+\mathbf G = \begin{bmatrix} 100 & 0 \\ 0 & 1 \end{bmatrix}.
+$$
+
+The matrix is obviously ill-conditioned, with $\gamma(\mathbf G) = 100$. The relative gain array can be computed as
+``` {julia}
+#| code-fold: false
+G = [100 0; 0 1]
+G_inv = inv(G)
+RGA = G.*G_inv'
+```
+
+Apparently, from the small entries in the RGA, we can conclude that the optimized condition number $\gamma^\star(\mathbf G)$ is also small, which means that the system is well-conditioned (the ill-conditioning of the original matrix can be mitigated by scaling).
+:::
+
 ## Functional controllability
+
+A transfer function matrix as an LTI model of a MIMO system is evaluated at some given point along the imaginary axis, that is, at some given frequency, the model is just a matrix of complex numbers. As such it can be regarded as a linear map from the space of inputs to the space of outputs. If it is required that the output should be controllable in an arbitrary direction, it requires that the matrix should be full row rank at that frequency. If the matrix has some zero singular values at that frequency, the corresponding output singular vector gives the direction in which the output is not controllable. 
+
+::: {#exm-functional-controllability}
+Consider the MIMO LTI system
+$$
+\mathbf G(s) 
+= 
+\begin{bmatrix}
+	\frac{1}{s+1} & \frac{2}{s+1}\\
+	\frac{2}{s+2} & \frac{4}{s+2}
+\end{bmatrix}
+$$
+
+```{julia}
+#| code-fold: false
+#| output: false
+using ControlSystems
+G11 = tf([1],[1, 1])
+G12 = tf([2],[1, 1])
+G21 = tf([2],[1, 2])
+G22 = tf([4],[1, 2])
+G = [G11 G12; G21 G22]
+```
+
+We now compute the singular value decomposition of the transfer function matrix at zero frequency:
+```{julia}
+#| code-fold: false
+U0,S0,V0 = svd(evalfr(G, 0))
+```
+
+We can see that of the two singular values, one is effectively zero, which means that the system is not controllable in the direction of the corresponding (normalized) output singular vector 
+$$
+y_o(0) = \frac{1}{\sqrt{2}}\begin{bmatrix}1\\-1\end{bmatrix}.
+$$
+
+And now at very high frequency (as an approximation of the behavior at infinity):
+``` {julia}
+#| code-fold: false
+Uinf,Sinf,Vinf = svd(evalfr(G, 1e6))
+```
+Once again, the matrix does not have a full (row) rank, but the direction in which the system is not controllable is different from the one at zero frequency, it is given by the corresponding (normalized) output singular vector
+$$
+y_o(\infty) = \frac{1}{\sqrt{5}}\begin{bmatrix}2\\-1\end{bmatrix}
+$$
+:::
+
+::: {.callout-note}
+### Functional controllability vs "placeability" of poles
+Some practically oriented control systems researchers (Skogestad, for example) are apparently not quite happy about the common usage of the term "controllability" in the control theory community. Traditional definition is that a system is controllable if it is possible to steer the state of the system from any initial state to any final state in finite time, which in the case of an LTI system is equivalent to the posibility to find a matrix $\mathbf K$ of state feedback gains such that the eigenvalues of $\mathbf A-\mathbf B\mathbf K$ are placed at any desired locations in the complex plane. 
+:::
 
 ## Limitations given by uncertainty in the model: in open loop
 
+With MIMO systems, even when restricting the model of uncertainty to the multiplicative form, we need to distinguish between the uncertainty at the input and at the output, that is, we need to distinguish between the *input multiplicative uncertainty*
+
+$$
+\mathbf G = \mathbf G_0(\mathbf I+\mathbf E_\mathrm{I})
+$${#eq-uncertain-plant-with-input-multiplicative-uncertainty}
+and and the *output multiplicative uncertainty*
+$$
+\mathbf G = (\mathbf I+\mathbf E_\mathrm{O})\mathbf G_0.
+$${#eq-uncertain-plant-with-output-multiplicative-uncertainty}
+
+In the above two models, we used $\mathbf E_\mathrm{I}$ and $\mathbf E_\mathrm{O}$ to stand for the uncertain parts. We can restrict ourselves to scalar weighting filters, in which case we can write $\mathbf E_\mathrm{I} = W\mathbf \Delta$ (and similarly for $\mathbf E_\mathrm{O}$), or for more generality, we can consider full matrix weighting filters, in which case we write $\mathbf E_\mathrm{I} = \mathbf W_{2}\mathbf \Delta \mathbf W_{1}$ (and similarly for $\mathbf E_\mathrm{O}$). Anyway, from @eq-uncertain-plant-with-input-multiplicative-uncertainty, we can write
+$$
+\mathbf E_\mathrm{I} = \mathbf G_0^{-1}(\mathbf G-\mathbf G_0)
+$${#eq-input-multiplicative-uncertainty}
+and from @eq-uncertain-plant-with-output-multiplicative-uncertainty, we can write
+$$
+\mathbf E_\mathrm{O} = (\mathbf G-\mathbf G_0)\mathbf G_0^{-1}.
+$${#eq-output-multiplicative-uncertainty}
+
+These are the two matrix extensions of the relative error of the model, which we discussed in the context of uncertain SISO systems. 
+
 ### In open loop
+
+If an feedforward controller $K$ is to be used, the best possible candidate for such a controller is the inverse of the nominal model $\mathbf G_0$, that is, $\mathbf K = \mathbf G_0^{-1}$. The control is then 
+$$
+\bm u = \mathbf G_0^{-1}\mathbf r
+$$
+and the tracking error is then given by
+$$
+\begin{aligned}
+\bm e_0 &= \bm y_0 - \mathbf r\\
+ &= \mathbf G_0 \bm  u-\mathbf r\\
+&= \mathbf G_0\mathbf G_0^{-1}\mathbf r-\mathbf r, 
+\end{aligned}
+$$
+which is zero. But for an uncertain system to be controlled, with the uncertainty modelled as the output multiplicative uncertainty, the tracking error is
+$$
+\begin{aligned}
+\bm e &= \bm y - \mathbf r\\
+ &= \mathbf G \bm  u-\mathbf r\\
+ &= \mathbf G\mathbf G_0^{-1}\mathbf r-\mathbf r\\
+ &= (\mathbf G\mathbf G_0^{-1}-\mathbf I)\mathbf r\\
+ &= \mathbf E_\mathrm{O}\mathbf r. 
+\end{aligned}
+$$
+
+If the uncertainty is modelled at the input instead, the tracking error is
+$$
+\begin{aligned}
+\bm e &= \bm y - \mathbf r\\
+ &= \mathbf G_0(\mathbf I+\mathbf E_\mathrm{I}) \bm  u-\mathbf r\\
+ &= \mathbf G_0(\mathbf I+\mathbf E_\mathrm{I})\mathbf G_0^{-1}\mathbf r-\mathbf r\\
+ &= (\mathbf I + \mathbf G_0\mathbf E_\mathrm{I}\mathbf G_0^{-1})\mathbf r-\mathbf r\\
+ &= \mathbf G_0\mathbf E_\mathrm{I}\mathbf G_0^{-1}\mathbf r.
+\end{aligned}
+$$
+
+Clearly, if the control requirement is formulated such that $|\bm e| \leq 1$, it must hold that
+$$
+\bar\sigma (\mathbf E_\mathrm{O}(j\omega)) \leq 1 \; \forall \omega,
+$$
+and
+$$
+\bar\sigma (\mathbf G_0(j\omega)\mathbf E_\mathrm{I}(j\omega)\mathbf G_0^{-1}(j\omega)) \leq 1 \; \forall \omega,
+$$
+for the two respective models of uncertainty.
+
+While the implication of the former condition is straightforward, the implication of the latter condition is a bit more intricate. In the following we omit the explicit dependence on the frequency variable $\omega$. We first state without a proof that
+$$
+\bar\sigma (\mathbf G_0\mathbf E_\mathrm{I}\mathbf G_0^{-1}) \leq \bar \sigma (\mathbf E_\mathrm{I})\gamma(\mathbf G_0).
+$$
+
+This bound is tight (the equality can always be achieved for some $\mathbf E_\mathrm{I}$). The implication is that for an ill-conditioned system, for which $\gamma(\mathbf G_0)$ is large, the uncertainty at the input can be amplified significantly. In turn, the practically useful control requirements may lead to unrealistically small bounds on the uncertainty at the input. Ill-conditioned systems are very difficult to control when uncerainty is present at the input, which it always is (typically at least some 10 % relative error is a reasonable lower estimate).
 
 ### In closed loop
 
+What changes by introduction of feedback?
+$$
+\begin{aligned}
+\mathbf S &= (\mathbf I+\mathbf G\mathbf K)^{-1}\\
+  &= (\mathbf I + (\mathbf I + \mathbf E_\mathrm{O})\mathbf G_0\mathbf K)^{-1}\\
+  &= \left((\mathbf I+ \mathbf E_\mathrm{O}\underbrace{\mathbf G_0\mathbf K(I+\mathbf G_0\mathbf K)^{-1}}_{\mathbf T_0})(\mathbf I+\mathbf G_0\mathbf K)\right)^{-1}\\
+  &= \mathbf S_0(\mathbf I+\mathbf E_\mathrm{O}\mathbf T_0)^{-1}.
+\end{aligned} 
+$$
+
+The difference between the nominal and the uncertain sensitivity and complementary sensitivity functions is
+$$
+\mathbf S_0-\mathbf S = \mathbf T-\mathbf T_0 = \mathbf S\mathbf E_\mathrm{O}\mathbf T_0,
+$$
+hence the deviation of regulation error
+$$
+\bm e-\bm e_0 = -\bm Sr - (-\bm S_0r) = (\bm S_0-\bm S)r = \bm S\mathbf E_\mathrm{O}\mathbf T_0r.
+$$
+
+#### Upper bound on $\bar{\sigma}(S)$ for uncertainty at the output
+$$
+\bar{\sigma}(\mathbf S) \leq \bar{\sigma}(\mathbf S_0)\bar{\sigma}((\mathbf I+\mathbf E_\mathrm{O}\mathbf T_0)^{-1}) \leq \frac{\bar{\sigma}(\mathbf S_0)}{1-|W_\mathrm{O}|\bar{\sigma}(\mathbf T_0)}
+$$
+
+#### Upper bound on $\bar{\sigma}(S)$ for uncertainty at the input
+First 
+$$
+\begin{aligned}
+\mathbf S &= \mathbf S_0(\mathbf I+\mathbf G_0\mathbf E_\mathrm{I}\mathbf G_0^{-1}\mathbf T_{0\mathrm{I}})^{-1}\\ 
+        &= \mathbf S_0\mathbf G_0(\mathbf I+\mathbf E_\mathrm{I}\mathbf T_{0\mathrm{I}})^{-1}\mathbf G_0^{-1}\\
+        &= (\mathbf I+\mathbf T_0\mathbf K^{-1}\mathbf E_\mathrm{I}\mathbf K)^{-1}\mathbf S_0\\ 
+        &= \mathbf K^{-1}(\mathbf I+\mathbf T_{0\mathrm{I}}\mathbf E_\mathrm{I})^{-1}\mathbf K\mathbf S.
+\end{aligned}
+$$
+where $\mathbf T_{0\mathrm{I}}$ is input complementary sensitivity for the nominal system $\mathbf G_0$
+$$
+\mathbf T_{0{\mathrm{I}}}= \mathbf K\mathbf G_0(\mathbf I+\mathbf K\mathbf G_0)^{-1}.
+$$
+
+For arbitrary or diagonal uncertainty and arbitrary controller 
+$$
+\begin{aligned}
+\bar{\sigma}(\mathbf S) &\leq \gamma(\mathbf G_0)\bar{\sigma}(\mathbf S_0)\bar{\sigma}((\mathbf I+\mathbf E_\mathrm{I}\mathbf T_{0\mathrm{I}})^{-1}) \leq \gamma(\mathbf G_0)\frac{\bar{\sigma}(\mathbf S_0)}{1-|\mathbf W_\mathrm{I}|\bar{\sigma}(\mathbf T_{0\mathrm{I}})}\\
+\bar{\sigma}(\mathbf S) &\leq \gamma(\mathbf K)\bar{\sigma}(\mathbf S_0)\bar{\sigma}((\mathbf I+\mathbf T_{0\mathrm{I}}\mathbf E_\mathrm{I})^{-1}) \leq \gamma(\mathbf K)\frac{\bar{\sigma}(\mathbf S_0)}{1-|\mathbf W_\mathrm{I}|\bar{\sigma}(\mathbf T_{0\mathrm{I}})}
+\end{aligned} 
+$$
+
+Findings: ill-conditioned system can be very nonrobust for uncertainty at the input. But can be conservative.
+
+#### Decoupling controllers
+Considering controllers $\mathbf K(s) = l(s) \mathbf G^{-1}(s)$. Then $\mathbf S = s\mathbf I$ and $\mathbf T=t\mathbf I$ and input uncertainty at each input $w_\mathrm{I}$. Then there is a model from the full family such that
+$$
+\bar{\sigma}(\mathbf S) \geq \bar{\sigma}(\mathbf S_0) \left(1+\frac{|w_\mathrm{I}t_0|}{1+|w_\mathrm{I}t_0|}\|\Lambda(\mathbf G_0)\|_{i\infty}\right),
+$$
+where $\|\Lambda(\mathbf G_0)\|_{i\infty}$ is row-sum-abs norm and $\bar{\sigma}(\mathbf S_0)$ is $|s_0|$. (For proof see the book, page 249)
