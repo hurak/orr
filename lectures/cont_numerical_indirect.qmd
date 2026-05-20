@@ -184,7 +184,7 @@ function demo_shoot_pendulum()
         xinitial = [θ₀,0.0]
         prob = remake(prob,u0=xinitial)
         sol = solve(prob,Tsit5(),reltol=tol/10,abstol=tol/10)
-        return θfinal-sol[end][1]
+        return θfinal-sol.u[end][1]
     end
     θinitial = find_zero(F,(-pi,pi))	# Solving the equation F(θ)=0 using Roots package. In general can find more solutions.
     xinitial = [θinitial,0.0]
@@ -243,7 +243,7 @@ function shoot_lq_fixed(A,B,Q,R,xinitial,xfinal,tfinal)
         winitial = vcat(xinitial,λinitial)
         prob = ODEProblem(statecostateeq!,winitial,tspan)
         dsol = solve(prob,Tsit5(),abstol=tol/10,reltol=tol/10)
-        xfinalsolved = dsol[end][1:n]
+        xfinalsolved = dsol.u[end][1:n]
         return (xfinal-xfinalsolved)
     end
     nsol = nlsolve(F,λinitial,xtol=tol)                 # Could add autodiff=:forward.
