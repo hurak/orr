@@ -175,7 +175,8 @@ The pendulum is initially at rest in the downward vertical position, that is, $\
 ``` {julia}
 #| label: fig-pendulum-swingup-solved-as-bvp
 #| fig-cap: Optimal trajectories of state, costate and control for the pendulum swingup problem.
-using DifferentialEquations
+
+using BoundaryValueDiffEq
 function pendulum_swingup_bvp()
     g = 9.81                                                        # Gravitational acceleration.
     l = 1.0                                                         # Length of the pendulum.
