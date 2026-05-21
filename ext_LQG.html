@@ -99,7 +99,7 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-bfc81c90a4e668f7cc6782dca231ae32.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-84365199647afda7ec578bfe13ef3742.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -1229,71 +1229,72 @@ Figure&nbsp;1: LQG controller in an output feedback loop
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">MatrixEquations</span>: arec</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SparseArrays</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Random</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">1234</span>) <span class="co"># For reproducibility</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Model of the plant</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">0.0</span> <span class="fl">1.0</span>; <span class="fl">0.0</span> <span class="op">-</span><span class="fl">0.1</span>] </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> [<span class="fl">0.0</span>, <span class="fl">0.001</span>] </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>Bw <span class="op">=</span> [<span class="fl">0.0</span>, <span class="fl">0.001</span>] </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> [<span class="fl">1.0</span> <span class="fl">0.0</span>] </span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> <span class="fu">ss</span>(A,[B Bw],C,<span class="fl">0</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Model of the stochastic disturbance and measurement noise</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>Sw <span class="op">=</span> <span class="fl">5000.0</span>   <span class="co"># Spectral density (N^2 m^2 / Hz)</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>Sv <span class="op">=</span> <span class="fl">1.0</span>      <span class="co"># Noise spectral density (deg^2/Hz)</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Design of the LQR controller</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>q1 <span class="op">=</span> <span class="fl">180.0</span> </span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>Q1 <span class="op">=</span> [q1 <span class="fl">0.0</span>; <span class="fl">0.0</span> <span class="fl">0.0</span>]</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>R1 <span class="op">=</span> <span class="fl">1.0</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="fu">lqr</span>(G[<span class="op">:</span>,<span class="fl">1</span>],Q1,R1)     <span class="co"># LQR controller gain</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Design of the Kalman filter</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">#L = kalman(G[:,2],Sw,Sv) # Beware that they assume the plant in the form dx/dt = Ax + Bu + w, that is, Bw=I.</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>P, cleigvals <span class="op">=</span> <span class="fu">arec</span>(A<span class="op">'</span>, C<span class="op">'/</span>Sv<span class="op">*</span>C, Bw<span class="op">*</span>Sw<span class="op">*</span>Bw<span class="op">'</span>)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> P<span class="op">*</span>C<span class="op">'/</span>Sv               <span class="co"># Kalman filter gain</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial state for the closed-loop system, that is, both the plant state and the observer error state</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>x₀ <span class="op">=</span> [<span class="fl">2.0</span>, <span class="op">-</span><span class="fl">1.0</span>]</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>x̂₀ <span class="op">=</span> [<span class="fl">0.0</span>, <span class="fl">0.0</span>]</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>e₀ <span class="op">=</span> x₀ <span class="op">-</span> x̂₀</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>xe₀ <span class="op">=</span> <span class="fu">vcat</span>(x₀, e₀)</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulation of the response of the closed-loop system to random disturbance and noise. </span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co"># The problem must be formulated as a stochastic differential equation (SDE) problem.</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="co"># See https://docs.sciml.ai/DiffEqDocs/stable/types/sde_types/.</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">f!</span>(dxe, xe, p, t) </span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>   dxe <span class="op">.=</span> [A<span class="op">-</span>B<span class="op">*</span>K B<span class="op">*</span>K; <span class="fu">zeros</span>(<span class="dt">Float64</span>,<span class="fl">2</span>,<span class="fl">2</span>) A<span class="op">-</span>L<span class="op">*</span>C]<span class="op">*</span>xe  </span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">g!</span>(dxe, xe, p, t)</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>   dxe <span class="op">.=</span> [<span class="fu">Bw*sqrt</span>(Sw) <span class="fu">zeros</span>(<span class="dt">Float64</span>,<span class="fl">2</span>,<span class="fl">1</span>); <span class="fu">Bw*sqrt</span>(Sw) <span class="fu">-L*sqrt</span>(Sv)]</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="fu">zeros</span>(<span class="fl">4</span>, <span class="fl">2</span>)     <span class="co"># This encodes the random process structure in the SDE, </span></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>N[<span class="fl">2</span>, <span class="fl">1</span>] <span class="op">=</span> <span class="fl">1</span>         <span class="co"># see https://docs.sciml.ai/DiffEqDocs/stable/tutorials/sde_example/#Example-4:-Systems-of-SDEs-with-Non-Diagonal-Noise</span></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>N[<span class="fl">4</span>, <span class="fl">1</span>] <span class="op">=</span> <span class="fl">1</span></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>N[<span class="fl">3</span>, <span class="fl">2</span>] <span class="op">=</span> <span class="fl">1</span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>N[<span class="fl">4</span>, <span class="fl">2</span>] <span class="op">=</span> <span class="fl">1</span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="fu">sparse</span>(N)       </span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulation parameters</span></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> <span class="fl">1</span> <span class="op">//</span> <span class="fl">2</span><span class="op">^</span>(<span class="fl">4</span>)</span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>tspan <span class="op">=</span> (<span class="fl">0.0</span>, <span class="fl">100.0</span>)</span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating and solving the SDE problem</span></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>prob <span class="op">=</span> <span class="fu">SDEProblem</span>(f!, g!, xe₀, tspan, noise_rate_prototype <span class="op">=</span> N)</span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>sol <span class="op">=</span> <span class="fu">solve</span>(prob, <span class="fu">SRA1</span>(), dt <span class="op">=</span> dt)      <span class="co"># Not all SDE solvers can be used here, non-diagonal solvers needed.</span></span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="co"># Computging the control input</span></span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> [<span class="op">-</span>K K]<span class="op">*</span>sol[<span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,<span class="op">:</span>]</span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the results</span></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">=</span> <span class="fu">plot</span>(sol.t,sol[<span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="op">:</span>]<span class="ch">',lw=2, lab=["Angle (deg)" "Angular rate (deg/s)"], xlabel="Time [s]", ylabel="State", title="")</span></span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>p2 <span class="op">=</span> <span class="fu">plot</span>(sol.t, u<span class="op">'</span>, lw<span class="op">=</span><span class="fl">2</span>, xlabel<span class="op">=</span><span class="st">"Time [s]"</span>, ylabel<span class="op">=</span><span class="st">"Control"</span>, title<span class="op">=</span><span class="st">""</span>,label<span class="op">=</span><span class="st">"Torque (Nm)"</span>)</span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(p1, p2, layout<span class="op">=</span>(<span class="fl">2</span>,<span class="fl">1</span>), size<span class="op">=</span>(<span class="fl">800</span>,<span class="fl">600</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">StochasticDiffEq</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Random</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="bu">Random</span>.<span class="fu">seed!</span>(<span class="fl">1234</span>) <span class="co"># For reproducibility</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Model of the plant</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> [<span class="fl">0.0</span> <span class="fl">1.0</span>; <span class="fl">0.0</span> <span class="op">-</span><span class="fl">0.1</span>] </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> [<span class="fl">0.0</span>, <span class="fl">0.001</span>] </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>Bw <span class="op">=</span> [<span class="fl">0.0</span>, <span class="fl">0.001</span>] </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> [<span class="fl">1.0</span> <span class="fl">0.0</span>] </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> <span class="fu">ss</span>(A,[B Bw],C,<span class="fl">0</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Model of the stochastic disturbance and measurement noise</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>Sw <span class="op">=</span> <span class="fl">5000.0</span>   <span class="co"># Spectral density (N^2 m^2 / Hz)</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>Sv <span class="op">=</span> <span class="fl">1.0</span>      <span class="co"># Noise spectral density (deg^2/Hz)</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Design of the LQR controller</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>q1 <span class="op">=</span> <span class="fl">180.0</span> </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>Q1 <span class="op">=</span> [q1 <span class="fl">0.0</span>; <span class="fl">0.0</span> <span class="fl">0.0</span>]</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>R1 <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="fu">lqr</span>(G[<span class="op">:</span>,<span class="fl">1</span>],Q1,R1)     <span class="co"># LQR controller gain</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Design of the Kalman filter</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co">#L = kalman(G[:,2],Sw,Sv) # Beware that they assume the plant in the form dx/dt = Ax + Bu + w, that is, Bw=I.</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>P, cleigvals <span class="op">=</span> <span class="fu">arec</span>(A<span class="op">'</span>, C<span class="op">'/</span>Sv<span class="op">*</span>C, Bw<span class="op">*</span>Sw<span class="op">*</span>Bw<span class="op">'</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> P<span class="op">*</span>C<span class="op">'/</span>Sv               <span class="co"># Kalman filter gain</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial state for the closed-loop system, that is, both the plant state and the observer error state</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>x₀ <span class="op">=</span> [<span class="fl">2.0</span>, <span class="op">-</span><span class="fl">1.0</span>]</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>x̂₀ <span class="op">=</span> [<span class="fl">0.0</span>, <span class="fl">0.0</span>]</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>e₀ <span class="op">=</span> x₀ <span class="op">-</span> x̂₀</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>xe₀ <span class="op">=</span> <span class="fu">vcat</span>(x₀, e₀)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulation of the response of the closed-loop system to random disturbance and noise. </span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="co"># The problem must be formulated as a stochastic differential equation (SDE) problem.</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="co"># See https://docs.sciml.ai/DiffEqDocs/stable/types/sde_types/.</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">f!</span>(dxe, xe, p, t) </span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>   dxe <span class="op">.=</span> [A<span class="op">-</span>B<span class="op">*</span>K B<span class="op">*</span>K; <span class="fu">zeros</span>(<span class="dt">Float64</span>,<span class="fl">2</span>,<span class="fl">2</span>) A<span class="op">-</span>L<span class="op">*</span>C]<span class="op">*</span>xe  </span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">g!</span>(dxe, xe, p, t)</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>   dxe <span class="op">.=</span> [<span class="fu">Bw*sqrt</span>(Sw) <span class="fu">zeros</span>(<span class="dt">Float64</span>,<span class="fl">2</span>,<span class="fl">1</span>); <span class="fu">Bw*sqrt</span>(Sw) <span class="fu">-L*sqrt</span>(Sv)]</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="fu">zeros</span>(<span class="fl">4</span>, <span class="fl">2</span>)     <span class="co"># This encodes the random process structure in the SDE, </span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>N[<span class="fl">2</span>, <span class="fl">1</span>] <span class="op">=</span> <span class="fl">1</span>         <span class="co"># see https://docs.sciml.ai/DiffEqDocs/stable/tutorials/sde_example/#Example-4:-Systems-of-SDEs-with-Non-Diagonal-Noise</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>N[<span class="fl">4</span>, <span class="fl">1</span>] <span class="op">=</span> <span class="fl">1</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>N[<span class="fl">3</span>, <span class="fl">2</span>] <span class="op">=</span> <span class="fl">1</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>N[<span class="fl">4</span>, <span class="fl">2</span>] <span class="op">=</span> <span class="fl">1</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="fu">sparse</span>(N)       </span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulation parameters</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> <span class="fl">1</span> <span class="op">//</span> <span class="fl">2</span><span class="op">^</span>(<span class="fl">4</span>)</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>tspan <span class="op">=</span> (<span class="fl">0.0</span>, <span class="fl">100.0</span>)</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating and solving the SDE problem</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>prob <span class="op">=</span> <span class="fu">SDEProblem</span>(f!, g!, xe₀, tspan, noise_rate_prototype <span class="op">=</span> N)</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>sol <span class="op">=</span> <span class="fu">solve</span>(prob, <span class="fu">SRA1</span>(), dt <span class="op">=</span> dt)      <span class="co"># Not all SDE solvers can be used here, non-diagonal solvers needed.</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="co"># Computging the control input</span></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> [<span class="op">-</span>K K]<span class="op">*</span>sol[<span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,<span class="op">:</span>]</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting the results</span></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>p1 <span class="op">=</span> <span class="fu">plot</span>(sol.t,sol[<span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="op">:</span>]<span class="ch">',lw=2, lab=["Angle (deg)" "Angular rate (deg/s)"], xlabel="Time [s]", ylabel="State", title="")</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>p2 <span class="op">=</span> <span class="fu">plot</span>(sol.t, u<span class="op">'</span>, lw<span class="op">=</span><span class="fl">2</span>, xlabel<span class="op">=</span><span class="st">"Time [s]"</span>, ylabel<span class="op">=</span><span class="st">"Control"</span>, title<span class="op">=</span><span class="st">""</span>,label<span class="op">=</span><span class="st">"Torque (Nm)"</span>)</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(p1, p2, layout<span class="op">=</span>(<span class="fl">2</span>,<span class="fl">1</span>), size<span class="op">=</span>(<span class="fl">800</span>,<span class="fl">600</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="fig-lqg-satellite" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="1">
 <figure class="quarto-float quarto-float-fig figure">

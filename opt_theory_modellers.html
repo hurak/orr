@@ -79,7 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-bfc81c90a4e668f7cc6782dca231ae32.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-84365199647afda7ec578bfe13ef3742.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -1127,7 +1127,7 @@ window.Quarto = {
   \text{subject to} &amp; \quad \begin{bmatrix} -1 &amp; -1\\ -1 &amp; 0\\ 0 &amp; -1\\ 1 &amp; 1\\ 1 &amp; 0\\ 0 &amp; 1\end{bmatrix}\bm x + \begin{bmatrix}1 \\ 0.7 \\ 0.7 \\ -1 \\ 0 \\ 0\end{bmatrix} \geq  \mathbf 0.
 \end{aligned}
 </span></p>
-<div id="4" class="cell" data-execution_count="0">
+<div id="4" class="cell" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Show the code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">COSMO</span></span>
@@ -1152,42 +1152,79 @@ window.Quarto = {
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>results_COSMO <span class="op">=</span> COSMO.<span class="fu">optimize!</span>(problem_COSMO)</span>
 <span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>results_COSMO.x</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>2-element Vector{Float64}:
+ 0.30000000000000143
+ 0.6999999999999995</code></pre>
+</div>
 </div>
 <p>Although the two solvers are solving the same problem, the data has to be formatted differently for each of them (and the difference in syntax is not negligible either).</p>
 <p>What if we could formulate the same problem without considering the pecualiarities of each solver? It turns out that it is possible. In Julia we can use <a href="https://jump.dev/JuMP.jl/stable/">JuMP.jl</a>:</p>
-<div id="6" class="cell" data-execution_count="0">
+<div id="6" class="cell" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Show the code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">JuMP</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SparseArrays</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">OSQP</span>, <span class="bu">COSMO</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the problem data and build the problem description</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">4.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">2.0</span>])</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">1.0</span>]</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">0.0</span>; <span class="fl">0.0</span> <span class="fl">1.0</span>])</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.0</span>; <span class="fl">0.0</span>]</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.7</span>; <span class="fl">0.7</span>]</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>model_JuMP <span class="op">=</span> <span class="fu">Model</span>()</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="pp">@variable</span>(model_JuMP, x[<span class="fl">1</span><span class="op">:</span><span class="fl">2</span>])</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="pp">@objective</span>(model_JuMP, Min, <span class="fl">0.5</span><span class="op">*</span>x<span class="op">'*</span>P<span class="op">*</span>x <span class="op">+</span> q<span class="op">'*</span>x)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(model_JuMP, A<span class="op">*</span>x <span class="op">.&lt;=</span> u)</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(model_JuMP, A<span class="op">*</span>x <span class="op">.&gt;=</span> l)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the optimization problem using OSQP and show the results</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="fu">set_silent</span>(model_JuMP)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="fu">set_optimizer</span>(model_JuMP, OSQP.Optimizer)</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu">optimize!</span>(model_JuMP)</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="fu">termination_status</span>(model_JuMP)</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>x_OSQP <span class="op">=</span> <span class="fu">value</span>.(x)</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Now solve the problem using COSMO and show the results</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="fu">set_optimizer</span>(model_JuMP, COSMO.Optimizer)</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="fu">optimize!</span>(model_JuMP)</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="fu">termination_status</span>(model_JuMP)</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>x_COSMO <span class="op">=</span> <span class="fu">value</span>.(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">JuMP</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SparseArrays</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">OSQP</span>, <span class="bu">COSMO</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the problem data and build the problem description</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">4.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">2.0</span>])</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">1.0</span>]</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">sparse</span>([<span class="fl">1.0</span> <span class="fl">1.0</span>; <span class="fl">1.0</span> <span class="fl">0.0</span>; <span class="fl">0.0</span> <span class="fl">1.0</span>])</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.0</span>; <span class="fl">0.0</span>]</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> [<span class="fl">1.0</span>; <span class="fl">0.7</span>; <span class="fl">0.7</span>]</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>model_JuMP <span class="op">=</span> <span class="fu">Model</span>()</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="pp">@variable</span>(model_JuMP, x[<span class="fl">1</span><span class="op">:</span><span class="fl">2</span>])</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="pp">@objective</span>(model_JuMP, Min, <span class="fl">0.5</span><span class="op">*</span>x<span class="op">'*</span>P<span class="op">*</span>x <span class="op">+</span> q<span class="op">'*</span>x)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(model_JuMP, A<span class="op">*</span>x <span class="op">.&lt;=</span> u)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="pp">@constraint</span>(model_JuMP, A<span class="op">*</span>x <span class="op">.&gt;=</span> l)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve the optimization problem using OSQP and show the results</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="fu">set_silent</span>(model_JuMP)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="fu">set_optimizer</span>(model_JuMP, OSQP.Optimizer)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="fu">optimize!</span>(model_JuMP)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="fu">termination_status</span>(model_JuMP)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>x_OSQP <span class="op">=</span> <span class="fu">value</span>.(x)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Now solve the problem using COSMO and show the results</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="fu">set_optimizer</span>(model_JuMP, COSMO.Optimizer)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="fu">optimize!</span>(model_JuMP)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="fu">termination_status</span>(model_JuMP)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>x_COSMO <span class="op">=</span> <span class="fu">value</span>.(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Minimize ScalarQuadraticFunction{Float64}:
+ 0.0 + 1.0 x[1] + 1.0 x[2] + 2.0 x[1]² + 1.0 x[2]*x[1] + 1.0 x[2]²
+
+Subject to:
+
+VectorAffineFunction{Float64}-in-Nonnegatives
+ ┌                          ┐
+ │-1.0 + 1.0 x[1] + 1.0 x[2]│
+ └                          ┘ ∈ Nonnegatives(1)
+ ┌              ┐
+ │0.0 + 1.0 x[1]│
+ └              ┘ ∈ Nonnegatives(1)
+ ┌              ┐
+ │0.0 + 1.0 x[2]│
+ └              ┘ ∈ Nonnegatives(1)
+ ┌                         ┐
+ │1.0 - 1.0 x[1] - 1.0 x[2]│
+ └                         ┘ ∈ Nonnegatives(1)
+ ┌              ┐
+ │0.7 - 1.0 x[1]│
+ └              ┘ ∈ Nonnegatives(1)
+ ┌              ┐
+ │0.7 - 1.0 x[2]│
+ └              ┘ ∈ Nonnegatives(1)
+</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>2-element Vector{Float64}:
+ 0.2999999999999993
+ 0.7000000000000002</code></pre>
+</div>
 </div>
 </div>
 <p>Notice how the optimization problem is defined just once in the last code and then different solvers can be chosen to solve it. The code represents an instance of a so-called <em>optimization modelling language (OML)</em>, or actually its major class called <em>algebraic modelling language (AML)</em>.</p>

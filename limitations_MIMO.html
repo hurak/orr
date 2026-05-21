@@ -79,7 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-bfc81c90a4e668f7cc6782dca231ae32.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-84365199647afda7ec578bfe13ef3742.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -1060,7 +1060,7 @@ window.Quarto = {
   <li><a href="#input-and-output-directions-directions-of-poles-and-zeros" id="toc-input-and-output-directions-directions-of-poles-and-zeros" class="nav-link" data-scroll-target="#input-and-output-directions-directions-of-poles-and-zeros">Input and output directions, directions of poles and zeros</a></li>
   <li><a href="#interpolation-conditions-for-mimo-systems" id="toc-interpolation-conditions-for-mimo-systems" class="nav-link" data-scroll-target="#interpolation-conditions-for-mimo-systems">Interpolation conditions for MIMO systems</a>
   <ul class="collapse">
-  <li><a href="#interpolation-conditions-rhp-zeros-and-their-directions" id="toc-interpolation-conditions-rhp-zeros-and-their-directions" class="nav-link" data-scroll-target="#interpolation-conditions-rhp-zeros-and-their-directions">Interpolation conditions: RHP zeros and their directions</a></li>
+  <li><a href="#interpolation-conditions-rhp-zeros-and-unstable-poles-and-their-output-directions" id="toc-interpolation-conditions-rhp-zeros-and-unstable-poles-and-their-output-directions" class="nav-link" data-scroll-target="#interpolation-conditions-rhp-zeros-and-unstable-poles-and-their-output-directions">Interpolation conditions: RHP zeros and unstable poles and their output directions</a></li>
   </ul></li>
   <li><a href="#bandwidth-limitations-due-to-unstable-poles-and-zeros" id="toc-bandwidth-limitations-due-to-unstable-poles-and-zeros" class="nav-link" data-scroll-target="#bandwidth-limitations-due-to-unstable-poles-and-zeros">Bandwidth limitations due to unstable poles and zeros</a></li>
   <li><a href="#limitations-given-by-presence-of-disturbance-andor-reference" id="toc-limitations-given-by-presence-of-disturbance-andor-reference" class="nav-link" data-scroll-target="#limitations-given-by-presence-of-disturbance-andor-reference">Limitations given by presence of disturbance and/or reference</a></li>
@@ -1193,8 +1193,10 @@ Figure&nbsp;3: Response of a MIMO system with an RHP zero to a (vector) unit ste
 </figure>
 </div>
 </div>
-<p>To conclude, we have learnt here that a phenomenon of a RHP zero in a MIMO system can be observed only if the input is applied in a certain direction. This is an encouraging result, because have seen previously, that the RHP zero imposes a limitation on the achievable closed-loop bandwidth. We now have hope that perhaps this limitation is only restricted to some direction in the input space. Let’s see if this is indeed the case.</p>
-<p>We consider the mixed-sensitivity problem <span class="math display">
+</div>
+<p>We have just learnt by means of an example that the phenomenon of a RHP zero in a MIMO system can be observed only if the input is applied in a certain direction. This is an encouraging result, because have seen previously, that the RHP zero imposes a limitation on the achievable closed-loop bandwidth. We now have hope that perhaps this limitation is only restricted to some direction in the input space. Let’s see if this is indeed the case. And we do it through an example again.</p>
+<div id="exm-shifting-the-effect-of-rhp-zero-to-one-direction" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2 (Shifting the effect of RHP zero to one direction)</strong></span> We consider the mixed-sensitivity problem <span class="math display">
 \operatorname*{minimize}_{\mathbf K}\left\|\begin{bmatrix}\mathbf W_1\mathbf S\\ \mathbf W_2 \mathbf K\mathbf S\\ \mathbf W_3 \mathbf T\end{bmatrix}\right\|_{\infty},
 </span> in which we choose the weighting filter <span class="math inline">\mathbf W_1</span> as a scalar one, or, equivalently as as a diagonal one with identical elements on the diagonal, that is, <span class="math inline">\mathbf W_1(s) = W_1(s) \mathbf I</span>. We choose the popular parameterization</p>
 <p><span class="math display">
@@ -1221,14 +1223,6 @@ W_1(s) = \frac{s/M+\omega_\mathrm{B}}{s+\omega_\mathrm{B}A},
 <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>K, γ <span class="op">=</span> <span class="fu">hinfsynthesize</span>(P, γrel<span class="op">=</span><span class="fl">1.05</span>);</span>
 <span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>Pcl1, S1, KS1, T1 <span class="op">=</span> <span class="fu">hinfsignals</span>(P, G, K);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-yellow-fg ansi-bold">┌ </span><span class="ansi-yellow-fg ansi-bold">Warning: </span>Runtime invalidation was disabled, but the CPU info is out-of-date.
-<span class="ansi-yellow-fg ansi-bold">│ </span>Will continue with incorrect CPU name (from build time).
-<span class="ansi-yellow-fg ansi-bold">└ </span><span class="ansi-bright-black-fg">@ HostCPUFeatures ~/.julia/packages/HostCPUFeatures/ZTXz4/src/cpu_info.jl:71</span>
-</pre>
-</div>
-</div>
 </div>
 <div id="cell-fig-sensitivity-weights-1" class="cell" data-execution_count="1">
 <details class="code-fold">
@@ -1315,7 +1309,7 @@ Figure&nbsp;6: Response of a closed feedback loop containing a MIMO plant with a
 </section>
 <section id="input-and-output-directions-directions-of-poles-and-zeros" class="level2">
 <h2 class="anchored" data-anchor-id="input-and-output-directions-directions-of-poles-and-zeros">Input and output directions, directions of poles and zeros</h2>
-<p>It is not only the RHP zeros with which directions are associated. Directions can also be associated with unstable poles, and also with disturbances (we will explain this later). Furthermore, we can consider input and output directions (we will explain this later too). We state that in control analysis and synthesis, the output variants are a bit more useful. To summarize, we have::</p>
+<p>It is not only the RHP zeros with which directions are associated. Directions can also be associated with unstable poles, and also with disturbances (we will explain this later). Furthermore, we can consider input and output directions (we will explain this later too); the output variants being a bit more useful. To summarize, we are going to talk about:</p>
 <ul>
 <li>output direction <span class="math inline">\bm y_z</span> of an RHP zero <span class="math inline">z</span> (constant),</li>
 <li>output direction <span class="math inline">\bm y_p</span> of an unstable pole <span class="math inline">p</span> (constant),</li>
@@ -1326,8 +1320,8 @@ Figure&nbsp;6: Response of a closed feedback loop containing a MIMO plant with a
 <section id="interpolation-conditions-for-mimo-systems" class="level2">
 <h2 class="anchored" data-anchor-id="interpolation-conditions-for-mimo-systems">Interpolation conditions for MIMO systems</h2>
 <p>We will now find use for the first two types of directions.</p>
-<section id="interpolation-conditions-rhp-zeros-and-their-directions" class="level3">
-<h3 class="anchored" data-anchor-id="interpolation-conditions-rhp-zeros-and-their-directions">Interpolation conditions: RHP zeros and their directions</h3>
+<section id="interpolation-conditions-rhp-zeros-and-unstable-poles-and-their-output-directions" class="level3">
+<h3 class="anchored" data-anchor-id="interpolation-conditions-rhp-zeros-and-unstable-poles-and-their-output-directions">Interpolation conditions: RHP zeros and unstable poles and their output directions</h3>
 <p>The sensitivity <span class="math inline">\mathbf S</span> and complementary sensitivity functions <span class="math inline">\mathbf T</span> of a stable closed feedback loop are constrained not only by poles and zeros of the MIMO plant <span class="math inline">\mathbf G</span> (as they are in the SISO case), but also by their directions. Namely, if the plant <span class="math inline">\mathbf G</span> has a RHP zero <span class="math inline">z</span>, then the sensitivity and complementary sensitivity functions satisfy the interpolation conditions <span class="math display">\boxed{
 \bm y_z^*\mathbf T(z)=0, \qquad \bm y_z^*\mathbf S(z)=\bm y_z^*.}
 </span></p>
@@ -1525,19 +1519,236 @@ The \textbf{necessary} condition is then $k>-0.54$. (Other factor as well, input
 <li>the RGA for a triangular system is an identity matrix,</li>
 <li>the relative uncertainty of an element of a transfer function matrix equal to (negative) inverse of the corresponding RGA entry makes the system singular.</li>
 </ul>
+<div id="exm-relative-gain-array" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3 (Relative gain array (RGA) and conditioning)</strong></span> Consider the matrix that models a MIMO system at steady state <span class="math display">
+\mathbf G = \begin{bmatrix} 1 &amp; 0.1 \\ 0.1 &amp; 1 \end{bmatrix}.
+</span></p>
+<p>The condition number of this matrix can be computed as</p>
+<div id="24" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> [<span class="fl">1</span> <span class="fl">0.1</span>; <span class="fl">0.1</span> <span class="fl">1</span>]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>γ <span class="op">=</span> <span class="fu">cond</span>(G)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>1.2222222222222225</code></pre>
+</div>
+</div>
+<p>which is small and perfectly acceptable. The system is well-conditioned. Anyway, we also compute the relative gain array (RGA)</p>
+<div id="26" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> [<span class="fl">1</span> <span class="fl">0.1</span>; <span class="fl">0.1</span> <span class="fl">1</span>]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>G_inv <span class="op">=</span> <span class="fu">inv</span>(G)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>RGA <span class="op">=</span> G<span class="op">.*</span>G_inv<span class="op">'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>2×2 Matrix{Float64}:
+  1.0101    -0.010101
+ -0.010101   1.0101</code></pre>
+</div>
+</div>
+<p>The sum of the absolute values of the entries</p>
+<div id="28" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">abs</span>.(RGA))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>2.0404040404040407</code></pre>
+</div>
+</div>
+<p>is close to the condition number that we computed above, both are low, which confirms that the system is well-conditioned.</p>
+</div>
+<div id="exm-relative-gain-array-diagonal" class="theorem example">
+<p><span class="theorem-title"><strong>Example 4 (Another RGA and conditioning)</strong></span> Consider the diagonal matrix that models a MIMO system at steady state <span class="math display">
+\mathbf G = \begin{bmatrix} 100 &amp; 0 \\ 0 &amp; 1 \end{bmatrix}.
+</span></p>
+<p>The matrix is obviously ill-conditioned, with <span class="math inline">\gamma(\mathbf G) = 100</span>. The relative gain array can be computed as</p>
+<div id="30" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> [<span class="fl">100</span> <span class="fl">0</span>; <span class="fl">0</span> <span class="fl">1</span>]</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>G_inv <span class="op">=</span> <span class="fu">inv</span>(G)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>RGA <span class="op">=</span> G<span class="op">.*</span>G_inv<span class="op">'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>2×2 Matrix{Float64}:
+ 1.0  0.0
+ 0.0  1.0</code></pre>
+</div>
+</div>
+<p>Apparently, from the small entries in the RGA, we can conclude that the optimized condition number <span class="math inline">\gamma^\star(\mathbf G)</span> is also small, which means that the system is well-conditioned (the ill-conditioning of the original matrix can be mitigated by scaling).</p>
+</div>
 </section>
 <section id="functional-controllability" class="level2">
 <h2 class="anchored" data-anchor-id="functional-controllability">Functional controllability</h2>
+<p>A transfer function matrix as an LTI model of a MIMO system is evaluated at some given point along the imaginary axis, that is, at some given frequency, the model is just a matrix of complex numbers. As such it can be regarded as a linear map from the space of inputs to the space of outputs. If it is required that the output should be controllable in an arbitrary direction, it requires that the matrix should be full row rank at that frequency. If the matrix has some zero singular values at that frequency, the corresponding output singular vector gives the direction in which the output is not controllable.</p>
+<div id="exm-functional-controllability" class="theorem example">
+<p><span class="theorem-title"><strong>Example 5</strong></span> Consider the MIMO LTI system <span class="math display">
+\mathbf G(s)
+=
+\begin{bmatrix}
+    \frac{1}{s+1} &amp; \frac{2}{s+1}\\
+    \frac{2}{s+2} &amp; \frac{4}{s+2}
+\end{bmatrix}
+</span></p>
+<div id="32" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ControlSystems</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>G11 <span class="op">=</span> <span class="fu">tf</span>([<span class="fl">1</span>],[<span class="fl">1</span>, <span class="fl">1</span>])</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>G12 <span class="op">=</span> <span class="fu">tf</span>([<span class="fl">2</span>],[<span class="fl">1</span>, <span class="fl">1</span>])</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>G21 <span class="op">=</span> <span class="fu">tf</span>([<span class="fl">2</span>],[<span class="fl">1</span>, <span class="fl">2</span>])</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>G22 <span class="op">=</span> <span class="fu">tf</span>([<span class="fl">4</span>],[<span class="fl">1</span>, <span class="fl">2</span>])</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> [G11 G12; G21 G22]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We now compute the singular value decomposition of the transfer function matrix at zero frequency:</p>
+<div id="34" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>U0,S0,V0 <span class="op">=</span> <span class="fu">svd</span>(<span class="fu">evalfr</span>(G, <span class="fl">0</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>SVD{Float64, Float64, Matrix{Float64}, Vector{Float64}}
+U factor:
+2×2 Matrix{Float64}:
+ -0.707107  -0.707107
+ -0.707107   0.707107
+singular values:
+2-element Vector{Float64}:
+ 3.162277660168379
+ 0.0
+Vt factor:
+2×2 Matrix{Float64}:
+ -0.447214  -0.894427
+ -0.894427   0.447214</code></pre>
+</div>
+</div>
+<p>We can see that of the two singular values, one is effectively zero, which means that the system is not controllable in the direction of the corresponding (normalized) output singular vector <span class="math display">
+y_o(0) = \frac{1}{\sqrt{2}}\begin{bmatrix}1\\-1\end{bmatrix}.
+</span></p>
+<p>And now at very high frequency (as an approximation of the behavior at infinity):</p>
+<div id="36" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>Uinf,Sinf,Vinf <span class="op">=</span> <span class="fu">svd</span>(<span class="fu">evalfr</span>(G, <span class="fl">1e6</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>SVD{Float64, Float64, Matrix{Float64}, Vector{Float64}}
+U factor:
+2×2 Matrix{Float64}:
+ -0.447214  -0.894427
+ -0.894427   0.447214
+singular values:
+2-element Vector{Float64}:
+ 4.9999910000174005e-6
+ 0.0
+Vt factor:
+2×2 Matrix{Float64}:
+ -0.447214  -0.894427
+ -0.894427   0.447214</code></pre>
+</div>
+</div>
+<p>Once again, the matrix does not have a full (row) rank, but the direction in which the system is not controllable is different from the one at zero frequency, it is given by the corresponding (normalized) output singular vector <span class="math display">
+y_o(\infty) = \frac{1}{\sqrt{5}}\begin{bmatrix}2\\-1\end{bmatrix}
+</span></p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Functional controllability vs “placeability” of poles
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Some practically oriented control systems researchers (Skogestad, for example) are apparently not quite happy about the common usage of the term “controllability” in the control theory community. Traditional definition is that a system is controllable if it is possible to steer the state of the system from any initial state to any final state in finite time, which in the case of an LTI system is equivalent to the posibility to find a matrix <span class="math inline">\mathbf K</span> of state feedback gains such that the eigenvalues of <span class="math inline">\mathbf A-\mathbf B\mathbf K</span> are placed at any desired locations in the complex plane.</p>
+</div>
+</div>
 </section>
 <section id="limitations-given-by-uncertainty-in-the-model-in-open-loop" class="level2">
 <h2 class="anchored" data-anchor-id="limitations-given-by-uncertainty-in-the-model-in-open-loop">Limitations given by uncertainty in the model: in open loop</h2>
+<p>With MIMO systems, even when restricting the model of uncertainty to the multiplicative form, we need to distinguish between the uncertainty at the input and at the output, that is, we need to distinguish between the <em>input multiplicative uncertainty</em></p>
+<p><span id="eq-uncertain-plant-with-input-multiplicative-uncertainty"><span class="math display">
+\mathbf G = \mathbf G_0(\mathbf I+\mathbf E_\mathrm{I})
+\tag{1}</span></span> and and the <em>output multiplicative uncertainty</em> <span id="eq-uncertain-plant-with-output-multiplicative-uncertainty"><span class="math display">
+\mathbf G = (\mathbf I+\mathbf E_\mathrm{O})\mathbf G_0.
+\tag{2}</span></span></p>
+<p>In the above two models, we used <span class="math inline">\mathbf E_\mathrm{I}</span> and <span class="math inline">\mathbf E_\mathrm{O}</span> to stand for the uncertain parts. We can restrict ourselves to scalar weighting filters, in which case we can write <span class="math inline">\mathbf E_\mathrm{I} = W\mathbf \Delta</span> (and similarly for <span class="math inline">\mathbf E_\mathrm{O}</span>), or for more generality, we can consider full matrix weighting filters, in which case we write <span class="math inline">\mathbf E_\mathrm{I} = \mathbf W_{2}\mathbf \Delta \mathbf W_{1}</span> (and similarly for <span class="math inline">\mathbf E_\mathrm{O}</span>). Anyway, from <a href="#eq-uncertain-plant-with-input-multiplicative-uncertainty" class="quarto-xref">Eq.&nbsp;1</a>, we can write <span id="eq-input-multiplicative-uncertainty"><span class="math display">
+\mathbf E_\mathrm{I} = \mathbf G_0^{-1}(\mathbf G-\mathbf G_0)
+\tag{3}</span></span> and from <a href="#eq-uncertain-plant-with-output-multiplicative-uncertainty" class="quarto-xref">Eq.&nbsp;2</a>, we can write <span id="eq-output-multiplicative-uncertainty"><span class="math display">
+\mathbf E_\mathrm{O} = (\mathbf G-\mathbf G_0)\mathbf G_0^{-1}.
+\tag{4}</span></span></p>
+<p>These are the two matrix extensions of the relative error of the model, which we discussed in the context of uncertain SISO systems.</p>
 <section id="in-open-loop" class="level3">
 <h3 class="anchored" data-anchor-id="in-open-loop">In open loop</h3>
+<p>If an feedforward controller <span class="math inline">K</span> is to be used, the best possible candidate for such a controller is the inverse of the nominal model <span class="math inline">\mathbf G_0</span>, that is, <span class="math inline">\mathbf K = \mathbf G_0^{-1}</span>. The control is then <span class="math display">
+\bm u = \mathbf G_0^{-1}\mathbf r
+</span> and the tracking error is then given by <span class="math display">
+\begin{aligned}
+\bm e_0 &amp;= \bm y_0 - \mathbf r\\
+&amp;= \mathbf G_0 \bm  u-\mathbf r\\
+&amp;= \mathbf G_0\mathbf G_0^{-1}\mathbf r-\mathbf r,
+\end{aligned}
+</span> which is zero. But for an uncertain system to be controlled, with the uncertainty modelled as the output multiplicative uncertainty, the tracking error is <span class="math display">
+\begin{aligned}
+\bm e &amp;= \bm y - \mathbf r\\
+&amp;= \mathbf G \bm  u-\mathbf r\\
+&amp;= \mathbf G\mathbf G_0^{-1}\mathbf r-\mathbf r\\
+&amp;= (\mathbf G\mathbf G_0^{-1}-\mathbf I)\mathbf r\\
+&amp;= \mathbf E_\mathrm{O}\mathbf r.
+\end{aligned}
+</span></p>
+<p>If the uncertainty is modelled at the input instead, the tracking error is <span class="math display">
+\begin{aligned}
+\bm e &amp;= \bm y - \mathbf r\\
+&amp;= \mathbf G_0(\mathbf I+\mathbf E_\mathrm{I}) \bm  u-\mathbf r\\
+&amp;= \mathbf G_0(\mathbf I+\mathbf E_\mathrm{I})\mathbf G_0^{-1}\mathbf r-\mathbf r\\
+&amp;= (\mathbf I + \mathbf G_0\mathbf E_\mathrm{I}\mathbf G_0^{-1})\mathbf r-\mathbf r\\
+&amp;= \mathbf G_0\mathbf E_\mathrm{I}\mathbf G_0^{-1}\mathbf r.
+\end{aligned}
+</span></p>
+<p>Clearly, if the control requirement is formulated such that <span class="math inline">|\bm e| \leq 1</span>, it must hold that <span class="math display">
+\bar\sigma (\mathbf E_\mathrm{O}(j\omega)) \leq 1 \; \forall \omega,
+</span> and <span class="math display">
+\bar\sigma (\mathbf G_0(j\omega)\mathbf E_\mathrm{I}(j\omega)\mathbf G_0^{-1}(j\omega)) \leq 1 \; \forall \omega,
+</span> for the two respective models of uncertainty.</p>
+<p>While the implication of the former condition is straightforward, the implication of the latter condition is a bit more intricate. In the following we omit the explicit dependence on the frequency variable <span class="math inline">\omega</span>. We first state without a proof that <span class="math display">
+\bar\sigma (\mathbf G_0\mathbf E_\mathrm{I}\mathbf G_0^{-1}) \leq \bar \sigma (\mathbf E_\mathrm{I})\gamma(\mathbf G_0).
+</span></p>
+<p>This bound is tight (the equality can always be achieved for some <span class="math inline">\mathbf E_\mathrm{I}</span>). The implication is that for an ill-conditioned system, for which <span class="math inline">\gamma(\mathbf G_0)</span> is large, the uncertainty at the input can be amplified significantly. In turn, the practically useful control requirements may lead to unrealistically small bounds on the uncertainty at the input. Ill-conditioned systems are very difficult to control when uncerainty is present at the input, which it always is (typically at least some 10 % relative error is a reasonable lower estimate).</p>
 </section>
 <section id="in-closed-loop" class="level3">
 <h3 class="anchored" data-anchor-id="in-closed-loop">In closed loop</h3>
+<p>What changes by introduction of feedback? <span class="math display">
+\begin{aligned}
+\mathbf S &amp;= (\mathbf I+\mathbf G\mathbf K)^{-1}\\
+  &amp;= (\mathbf I + (\mathbf I + \mathbf E_\mathrm{O})\mathbf G_0\mathbf K)^{-1}\\
+  &amp;= \left((\mathbf I+ \mathbf E_\mathrm{O}\underbrace{\mathbf G_0\mathbf K(I+\mathbf G_0\mathbf K)^{-1}}_{\mathbf T_0})(\mathbf I+\mathbf G_0\mathbf K)\right)^{-1}\\
+  &amp;= \mathbf S_0(\mathbf I+\mathbf E_\mathrm{O}\mathbf T_0)^{-1}.
+\end{aligned}
+</span></p>
+<p>The difference between the nominal and the uncertain sensitivity and complementary sensitivity functions is <span class="math display">
+\mathbf S_0-\mathbf S = \mathbf T-\mathbf T_0 = \mathbf S\mathbf E_\mathrm{O}\mathbf T_0,
+</span> hence the deviation of regulation error <span class="math display">
+\bm e-\bm e_0 = -\bm Sr - (-\bm S_0r) = (\bm S_0-\bm S)r = \bm S\mathbf E_\mathrm{O}\mathbf T_0r.
+</span></p>
+<section id="upper-bound-on-barsigmas-for-uncertainty-at-the-output" class="level4">
+<h4 class="anchored" data-anchor-id="upper-bound-on-barsigmas-for-uncertainty-at-the-output">Upper bound on <span class="math inline">\bar{\sigma}(S)</span> for uncertainty at the output</h4>
+<p><span class="math display">
+\bar{\sigma}(\mathbf S) \leq \bar{\sigma}(\mathbf S_0)\bar{\sigma}((\mathbf I+\mathbf E_\mathrm{O}\mathbf T_0)^{-1}) \leq \frac{\bar{\sigma}(\mathbf S_0)}{1-|W_\mathrm{O}|\bar{\sigma}(\mathbf T_0)}
+</span></p>
+</section>
+<section id="upper-bound-on-barsigmas-for-uncertainty-at-the-input" class="level4">
+<h4 class="anchored" data-anchor-id="upper-bound-on-barsigmas-for-uncertainty-at-the-input">Upper bound on <span class="math inline">\bar{\sigma}(S)</span> for uncertainty at the input</h4>
+<p>First <span class="math display">
+\begin{aligned}
+\mathbf S &amp;= \mathbf S_0(\mathbf I+\mathbf G_0\mathbf E_\mathrm{I}\mathbf G_0^{-1}\mathbf T_{0\mathrm{I}})^{-1}\\
+        &amp;= \mathbf S_0\mathbf G_0(\mathbf I+\mathbf E_\mathrm{I}\mathbf T_{0\mathrm{I}})^{-1}\mathbf G_0^{-1}\\
+        &amp;= (\mathbf I+\mathbf T_0\mathbf K^{-1}\mathbf E_\mathrm{I}\mathbf K)^{-1}\mathbf S_0\\
+        &amp;= \mathbf K^{-1}(\mathbf I+\mathbf T_{0\mathrm{I}}\mathbf E_\mathrm{I})^{-1}\mathbf K\mathbf S.
+\end{aligned}
+</span> where <span class="math inline">\mathbf T_{0\mathrm{I}}</span> is input complementary sensitivity for the nominal system <span class="math inline">\mathbf G_0</span> <span class="math display">
+\mathbf T_{0{\mathrm{I}}}= \mathbf K\mathbf G_0(\mathbf I+\mathbf K\mathbf G_0)^{-1}.
+</span></p>
+<p>For arbitrary or diagonal uncertainty and arbitrary controller <span class="math display">
+\begin{aligned}
+\bar{\sigma}(\mathbf S) &amp;\leq \gamma(\mathbf G_0)\bar{\sigma}(\mathbf S_0)\bar{\sigma}((\mathbf I+\mathbf E_\mathrm{I}\mathbf T_{0\mathrm{I}})^{-1}) \leq \gamma(\mathbf G_0)\frac{\bar{\sigma}(\mathbf S_0)}{1-|\mathbf W_\mathrm{I}|\bar{\sigma}(\mathbf T_{0\mathrm{I}})}\\
+\bar{\sigma}(\mathbf S) &amp;\leq \gamma(\mathbf K)\bar{\sigma}(\mathbf S_0)\bar{\sigma}((\mathbf I+\mathbf T_{0\mathrm{I}}\mathbf E_\mathrm{I})^{-1}) \leq \gamma(\mathbf K)\frac{\bar{\sigma}(\mathbf S_0)}{1-|\mathbf W_\mathrm{I}|\bar{\sigma}(\mathbf T_{0\mathrm{I}})}
+\end{aligned}
+</span></p>
+<p>Findings: ill-conditioned system can be very nonrobust for uncertainty at the input. But can be conservative.</p>
+</section>
+<section id="decoupling-controllers" class="level4">
+<h4 class="anchored" data-anchor-id="decoupling-controllers">Decoupling controllers</h4>
+<p>Considering controllers <span class="math inline">\mathbf K(s) = l(s) \mathbf G^{-1}(s)</span>. Then <span class="math inline">\mathbf S = s\mathbf I</span> and <span class="math inline">\mathbf T=t\mathbf I</span> and input uncertainty at each input <span class="math inline">w_\mathrm{I}</span>. Then there is a model from the full family such that <span class="math display">
+\bar{\sigma}(\mathbf S) \geq \bar{\sigma}(\mathbf S_0) \left(1+\frac{|w_\mathrm{I}t_0|}{1+|w_\mathrm{I}t_0|}\|\Lambda(\mathbf G_0)\|_{i\infty}\right),
+</span> where <span class="math inline">\|\Lambda(\mathbf G_0)\|_{i\infty}</span> is row-sum-abs norm and <span class="math inline">\bar{\sigma}(\mathbf S_0)</span> is <span class="math inline">|s_0|</span>. (For proof see the book, page 249)</p>
 
 
+</section>
 </section>
 </section>
 

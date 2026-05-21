@@ -99,7 +99,7 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-bfc81c90a4e668f7cc6782dca231ae32.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-84365199647afda7ec578bfe13ef3742.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -1239,7 +1239,7 @@ y_1(t_\mathrm{f}) &amp;= \mathrm y_{1\mathrm{f}}.
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        xinitial <span class="op">=</span> [θ₀,<span class="fl">0.0</span>]</span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        prob <span class="op">=</span> <span class="fu">remake</span>(prob,u0<span class="op">=</span>xinitial)</span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        sol <span class="op">=</span> <span class="fu">solve</span>(prob,<span class="fu">Tsit5</span>(),reltol<span class="op">=</span>tol<span class="op">/</span><span class="fl">10</span>,abstol<span class="op">=</span>tol<span class="op">/</span><span class="fl">10</span>)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> θfinal<span class="op">-</span>sol[<span class="kw">end</span>][<span class="fl">1</span>]</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> θfinal<span class="op">-</span>sol.u[<span class="kw">end</span>][<span class="fl">1</span>]</span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    θinitial <span class="op">=</span> <span class="fu">find_zero</span>(F,(<span class="op">-</span><span class="cn">pi</span>,<span class="cn">pi</span>))    <span class="co"># Solving the equation F(θ)=0 using Roots package. In general can find more solutions.</span></span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    xinitial <span class="op">=</span> [θinitial,<span class="fl">0.0</span>]</span>
@@ -1310,7 +1310,7 @@ Figure&nbsp;2: Indirect shooting
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        winitial <span class="op">=</span> <span class="fu">vcat</span>(xinitial,λinitial)</span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        prob <span class="op">=</span> <span class="fu">ODEProblem</span>(statecostateeq!,winitial,tspan)</span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        dsol <span class="op">=</span> <span class="fu">solve</span>(prob,<span class="fu">Tsit5</span>(),abstol<span class="op">=</span>tol<span class="op">/</span><span class="fl">10</span>,reltol<span class="op">=</span>tol<span class="op">/</span><span class="fl">10</span>)</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        xfinalsolved <span class="op">=</span> dsol[<span class="kw">end</span>][<span class="fl">1</span><span class="op">:</span>n]</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        xfinalsolved <span class="op">=</span> dsol.u[<span class="kw">end</span>][<span class="fl">1</span><span class="op">:</span>n]</span>
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (xfinal<span class="op">-</span>xfinalsolved)</span>
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
 <span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    nsol <span class="op">=</span> <span class="fu">nlsolve</span>(F,λinitial,xtol<span class="op">=</span>tol)                 <span class="co"># Could add autodiff=:forward.</span></span>

@@ -99,7 +99,7 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-bfc81c90a4e668f7cc6782dca231ae32.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-84365199647afda7ec578bfe13ef3742.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -1239,7 +1239,7 @@ D(v,h) = \frac{1}{2} \rho_0 C_\mathrm{D} S v^2 \exp(-\beta h),
 <div id="10" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>H <span class="op">=</span> <span class="fu">expand</span>(λᵥ <span class="op">*</span> fᵥ <span class="op">+</span> λₕ <span class="op">*</span> fₕ <span class="op">+</span> λₘ <span class="op">*</span> fₘ)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>((T - D(v, h))*λᵥ) / m + (-T*λₘ) / c - g*λᵥ + v*λₕ</code></pre>
+<pre><code>(-T*λₘ) / c + ((T - D(v, h))*λᵥ) / m - g*λᵥ + v*λₕ</code></pre>
 </div>
 </div>
 <p>As can be seen, <span class="math inline">H</span> is linear in the control <span class="math inline">T</span>. No surprise that the partial derivative of the Hamiltonian with respect to the control <span class="math inline">T</span>, which we keep denoting <span class="math inline">H_u</span></p>
@@ -1529,7 +1529,7 @@ D\left( v, h \right) + \frac{ - 2 ~ c^{2} ~ g ~ m - 2 ~ c ~ g ~ m ~ v - v^{2} ~ 
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>sol  <span class="op">=</span> <span class="fu">solve</span>(prob, <span class="fu">Tsit5</span>(); reltol<span class="op">=</span><span class="fl">1e-8</span>, abstol<span class="op">=</span><span class="fl">1e-8</span>, dtmax<span class="op">=</span><span class="fl">1.0</span>, callback<span class="op">=</span>callbacks)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <!-- The simulation results
-``` wucprwe
+``` akzscva
 #| code-fold: true
 println("  Final time    : ", sol.t[end], " s")
 println("  Final altitude: ", sol.u[end][2] / 1000, " km")
